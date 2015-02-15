@@ -1,67 +1,67 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd" xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>/xenserver-ssds--vm-storage-performance/</loc>
+    <loc>http://smcleod.net/building-a-high-performance-ssd-san/</loc>
+    <lastmod>2015-02-16T00:00:00+11:00</lastmod>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>http://smcleod.net/xenserver-ssds--vm-storage-performance/</loc>
     <lastmod>2015-02-15T00:00:00+11:00</lastmod>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>/the-best-of--2014-edition/</loc>
+    <loc>http://smcleod.net/the-best-of--2014-edition/</loc>
     <lastmod>2015-02-15T00:00:00+11:00</lastmod>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>/talk-24-months/</loc>
+    <loc>http://smcleod.net/talk-24-months/</loc>
     <lastmod>2015-02-15T00:00:00+11:00</lastmod>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>/search--a-journey-of-delivery-on-a-budget/</loc>
+    <loc>http://smcleod.net/search--a-journey-of-delivery-on-a-budget/</loc>
     <lastmod>2015-02-15T00:00:00+11:00</lastmod>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>/limited-pagination-in-jekyll-with-liquid/</loc>
+    <loc>http://smcleod.net/limited-pagination-in-jekyll-with-liquid/</loc>
     <lastmod>2015-02-15T00:00:00+11:00</lastmod>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>/directattach-ssd-storage--performance--comparisons/</loc>
+    <loc>http://smcleod.net/directattach-ssd-storage--performance--comparisons/</loc>
     <lastmod>2015-02-15T00:00:00+11:00</lastmod>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>/continuous-integration-for-the-linux-kernel--built-within-docker/</loc>
+    <loc>http://smcleod.net/continuous-integration-for-the-linux-kernel--built-within-docker/</loc>
     <lastmod>2015-02-15T00:00:00+11:00</lastmod>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>/building-a-high-performance-ssd-san/</loc>
-    <lastmod>2015-02-15T00:00:00+11:00</lastmod>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>/404.html</loc>
-    <lastmod>2015-02-15T20:57:01+11:00</lastmod>
+    <loc>http://smcleod.net/404.html</loc>
+    <lastmod>2015-02-16T12:09:16+11:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>/posts/</loc>
-    <lastmod>2015-02-15T20:57:01+11:00</lastmod>
+    <loc>http://smcleod.net/tags/</loc>
+    <lastmod>2015-02-16T12:09:16+11:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>/tags/</loc>
-    <lastmod>2015-02-15T20:57:01+11:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>/</loc>
-    <lastmod>2015-02-15T20:57:01+11:00</lastmod>
+    <loc>http://smcleod.net/</loc>
+    <lastmod>2015-02-16T12:09:16+11:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
+  </url>
+  <url>
+    <loc>http://smcleod.net/posts/</loc>
+    <lastmod>2015-02-16T12:09:16+11:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
   </url>
 </urlset>

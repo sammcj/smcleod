@@ -20,4 +20,4 @@ After a successfully building the kernel package, the kernel will be copied to /
 
 [Code - https://github.com/sammcj/kernel-ci](https://github.com/sammcj/kernel-ci)
 
-![Gitlab-Kernel-CI](images/ci/kernelci.png)
+![Gitlab-Kernel-CI](/images/ci/kernelci.png)

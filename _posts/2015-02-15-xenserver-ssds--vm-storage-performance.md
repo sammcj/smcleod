@@ -1,17 +1,12 @@
 ---
 layout: post
-title: XenServer, SSDs & VM Storage Performance
+title: 'XenServer, SSDs & VM Storage Performance'
 categories: []
-tags: [ops,storage,ssd]
+tags: [ops, storage, ssd]
 published: True
-excerpt_separator: <!--more-->
-image:
-  feature:
-  credit:
-  creditlink:
 ---
 
-## Intro
+##Intro
 
 At Infoxchange we use XenServer as our Virtualisation of choice.
 There are many reasons for this including:
@@ -26,14 +21,12 @@ There are many reasons for this including:
 * OpenStack while interesting, is not yet reliable or streamlined enough for our small team of 4 to implement and manage.
 * XenServer Storage & Filesystems
 
-<!--more-->
-
 Unfortunately the downside to XenServer is that it’s underlying OS is quite old.
 The latest version (6.5) about to be released is still based on Centos 5 and still lacks any form of EXT4 and BTRFS support, direct disk access is not available… without some tweaking and has no real support for TRIM unless you have direct disk access and are happy with EXT3.
 
 Despite this, XenServer still manages to easily outperform VMware in both storage and CPU performance while costing… nothing unless you purchase support!
 
-## Direct disk access
+##Direct disk access
 
 It turns out, that you can add custom udev rules to pass through devices directly to VMs.
 
@@ -99,11 +92,11 @@ We have some 1GB cache cards arriving in the following weeks which we will upgra
 
 EXT4 Bonnie++ Results w/ 2x SSD in RAID1, XenServer 6.5 RC1, LVM:
 
-![](images/xenserver/dl360-lvm.jpg)
+![](/images/xenserver/dl360-lvm.jpg)
 
 EXT4 Bonnie++ Results w/ 2x SSD in RAID1, XenServer 6.5 RC1, Direct Disk:
 
-![](images/xenserver/dl360-dd.jpg)
+![](/images/xenserver/dl360-dd.jpg)
 
 EXT4 dd Results w/ 2x SSD in RAID0, XenServer 6.5 RC1, LVM:
 

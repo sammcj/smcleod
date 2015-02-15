@@ -1,16 +1,16 @@
 title:            smcleod.net
 description:      Brian Dump Of Sam McLeod, Melbourne
-disqus_shortname: hpstrtheme
+disqus_shortname: smcleod.net 
 reading_time:     true
 words_per_minute: 200
 # Your site's domain goes here (eg: //mmistakes.github.io, http://mademistakes.com, etc)
 # When testing locally leave blank or use http://localhost:4000
-url:
+url: http://smcleod.net
 
 # Owner/author information
 owner:
   name:           Sam McLeod
-  avatar:         avatar.jpg
+  avatar:         /avatar.jpg
   bio:            "Ops Lead @Infoxchange"
   email:          smj(at)fastmail(dot)com
   # Social networking links used in footer. Update and remove as you like.
@@ -19,7 +19,7 @@ owner:
   linkedin: au.linkedin.com/in/sammcj/en
 
 # Background image to be tiled on all pages
-background: black_lozenge.png
+background: /black_lozenge.png
 
 # Analytics and webmaster tools stuff goes here
 google_analytics: UA-59178670-1
