@@ -1,0 +1,475 @@
+<!doctype html>
+<!--[if lt IE 7]><html class="no-js lt-ie9 lt-ie8 lt-ie7" lang="en"> <![endif]-->
+<!--[if (IE 7)&!(IEMobile)]><html class="no-js lt-ie9 lt-ie8" lang="en"><![endif]-->
+<!--[if (IE 8)&!(IEMobile)]><html class="no-js lt-ie9" lang="en"><![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en"><!--<![endif]-->
+<head>
+<meta charset="utf-8">
+<title>Building a high performance SSD SAN - Part 1 &#8211; smcleod.net</title>
+<meta name="description" content="Brian Dump Of Sam McLeod, Melbourne">
+<meta name="keywords" content="storage, ssd, ops">
+
+<!-- Twitter Cards -->
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="/images/">
+<meta name="twitter:title" content="Building a high performance SSD SAN - Part 1">
+<meta name="twitter:description" content="Brian Dump Of Sam McLeod, Melbourne">
+<meta name="twitter:creator" content="@s_mcleod">
+
+<!-- Open Graph -->
+<meta property="og:locale" content="en_US">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Building a high performance SSD SAN - Part 1">
+<meta property="og:description" content="Brian Dump Of Sam McLeod, Melbourne">
+<meta property="og:url" content="/building-a-high-performance-ssd-san/">
+<meta property="og:site_name" content="smcleod.net">
+
+
+
+
+
+<link rel="canonical" href="/building-a-high-performance-ssd-san/">
+<link href="/feed.xml" type="application/atom+xml" rel="alternate" title="smcleod.net Feed">
+
+<!-- http://t.co/dKP3o1e -->
+<meta name="HandheldFriendly" content="True">
+<meta name="MobileOptimized" content="320">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/assets/css/main.css">
+<!-- Webfonts -->
+<link href="//fonts.googleapis.com/css?family=Lato:300,400,700,300italic,400italic" rel="stylesheet" type="text/css">
+
+<meta http-equiv="cleartype" content="on">
+
+<!-- Load Modernizr -->
+<script src="/assets/js/vendor/modernizr-2.6.2.custom.min.js"></script>
+
+<!-- Icons -->
+<!-- 16x16 -->
+<link rel="shortcut icon" href="/favicon.ico">
+<!-- 32x32 -->
+<link rel="shortcut icon" href="/favicon.png">
+<!-- 57x57 (precomposed) for iPhone 3GS, pre-2011 iPod Touch and older Android devices -->
+<link rel="apple-touch-icon-precomposed" href="/images/apple-touch-icon-precomposed.png">
+<!-- 72x72 (precomposed) for 1st generation iPad, iPad 2 and iPad mini -->
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="/images/apple-touch-icon-72x72-precomposed.png">
+<!-- 114x114 (precomposed) for iPhone 4, 4S, 5 and post-2011 iPod Touch -->
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="/images/apple-touch-icon-114x114-precomposed.png">
+<!-- 144x144 (precomposed) for iPad 3rd and 4th generation -->
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="/images/apple-touch-icon-144x144-precomposed.png">
+
+
+
+
+<style type="text/css">body {background-image:url(/images/black_lozenge.png);}</style>
+
+
+</head>
+
+<body id="post" >
+
+<!--[if lt IE 9]><div class="upgrade"><strong><a href="http://whatbrowser.org/">Your browser is quite old!</strong> Why not upgrade to a different browser to better enjoy this site?</a></div><![endif]-->
+<nav id="dl-menu" class="dl-menuwrapper" role="navigation">
+	<button class="dl-trigger">Open Menu</button>
+	<ul class="dl-menu">
+		<li><a href="/">Home</a></li>
+		<li>
+			<a href="#">About</a>
+			<ul class="dl-submenu">
+				<li>
+					<img src="/images/avatar.jpg" alt="Sam McLeod photo" class="author-photo">
+					<h4>Sam McLeod</h4>
+					<p>Ops Lead @Infoxchange</p>
+				</li>
+				<li><a href="/about/"><span class="btn btn-inverse">Learn More</span></a></li>
+				<li>
+					<a href="mailto:smj(at)fastmail(dot)com"><i class="fa fa-fw fa-envelope"></i> Email</a>
+				</li>
+				<li>
+					<a href="http://twitter.com/s_mcleod"><i class="fa fa-fw fa-twitter"></i> Twitter</a>
+				</li>
+				
+				
+				<li>
+					<a href="http://linkedin.com/in/au.linkedin.com/in/sammcj/en"><i class="fa fa-fw fa-linkedin"></i> LinkedIn</a>
+				</li>
+				<li>
+					<a href="http://github.com/sammcj"><i class="fa fa-fw fa-github"></i> GitHub</a>
+				</li>
+				
+				
+				
+				
+			</ul><!-- /.dl-submenu -->
+		</li>
+		<li>
+			<a href="#">Posts</a>
+			<ul class="dl-submenu">
+				<li><a href="/posts/">All Posts</a></li>
+				<li><a href="/tags/">All Tags</a></li>
+			</ul>
+		</li>
+		
+	    
+	    <li><a href="http://mondotunes.org" target="_blank">Mondotunes</a></li>
+	  
+	    
+	    <li><a href="http://last.fm/user/sammcj2000" target="_blank">Last.fm</a></li>
+	  
+	    
+	    <li><a href="http://ixa.io" target="_blank">Infoxchange Tech Blog</a></li>
+	  
+	</ul><!-- /.dl-menu -->
+</nav><!-- /.dl-menuwrapper -->
+
+
+
+
+<div id="main" role="main">
+  <article class="hentry">
+    <header class="header-title">
+      <div class="header-title-wrap">
+        
+          <h1 class="entry-title"><a href="/building-a-high-performance-ssd-san/" rel="bookmark" title="Building a high performance SSD SAN - Part 1">Building a high performance SSD SAN - Part 1</a></h1>
+        
+        <h2><span class="entry-date date published"><time datetime="2015-02-15T00:00:00+11:00">February 15, 2015</time></span></h2>
+        
+        <p class="entry-reading-time">
+          <i class="fa fa-clock-o"></i>
+          
+          Reading time ~8 minutes
+        </p><!-- /.entry-reading-time -->
+        
+      </div><!-- /.header-title-wrap -->
+    </header>
+    <div class="entry-content">
+      <p>Over the coming month I will be architecting, building and testing a modular, high performance SSD-only storage solution.
+I’ll be documenting my progress / findings along the way and open sourcing all the information as a public guide.</p>
+
+<p>With recent price drops and durability improvements in solid state storage now is better time than any to ditch those old magnets.
+Modular server manufacturers such as SuperMicro have spent large on R&amp;D thanks to the ever growing requirements from cloud vendors that utilise their hardware.</p>
+
+<h2 id="the-state-of-enterprise-storage">The State Of Enterprise Storage</h2>
+
+<p>Companies often settle for off-the-shelf large name storage products from companies based on several, often misguided assumptions:</p>
+
+<ul>
+  <li>That enterprise in the product name = reliability</li>
+  <li>That the blame from product / system failure can be outsourced</li>
+  <li>That vendors provide specialist engineers to support such complicated (and expensive) products</li>
+  <li>That that time and cost of building a modular storage solution tailored to their needs would be time consuming to design and manage</li>
+</ul>
+
+<p>At the end of the day we don’t trust vendors to design our servers - why would we trust them to design our storage?</p>
+
+<p>A great quote on Wikipedia under ‘enterprise storage’:</p>
+
+<p><em>“You might think that the hardware inside a <a href="http://en.m.wikipedia.org/wiki/Storage_area_network" title="Storage area network">SAN</a> is vastly superior to what can be found in your average server, but that is not the case. EMC (the market leader) and others have disclosed more than once that “the goal has always to been to use as much standard, commercial, off-the-shelf hardware as we can”. So your SAN array is probably nothing more than a typical Xeon server built by Quanta with a shiny bezel. A decent professional 1 <a href="http://en.m.wikipedia.org/wiki/Terabyte" title="Terabyte">TB</a> drive costs a few hundred dollars. Place that same drive inside a SAN appliance and suddenly the price per terabyte is multiplied by at least three, sometimes even 10! When it comes to pricing and <a href="http://en.m.wikipedia.org/wiki/Vendor_lock-in" title="Vendor lock-in">vendor lock-in</a> you can say that storage systems are still stuck in the “mainframe era” despite the use of cheap off-the-shelf hardware.”</em></p>
+
+<p>It’s the same old story, if you’ve got lots of money and you don’t care about how you spend it or translating those savings onto your customers - sure <em>buy the ticket, take the ride</em> - get a unit that comes with a flash logo, a 500 page brochure, licensing requirements and a greasy sales pitch.</p>
+
+<!--more-->
+
+<h2 id="our-needs">Our Needs</h2>
+
+<p>Storage performance always seems to be our bottleneck at Infoxchange, we run several high-performance high-concurrency applications with large databases and complex reporting.</p>
+
+<p>We’re grown (very) fast and with that spending too much on off-the-shelf storage solutions, we have a requirement to self-host most of our products securely within our own control, on our hardware and need to be flexible to meet current and emerging security requirements.</p>
+
+<p>I have been working on various proof-of-concepts which have lead to our decision to proceed with our own modular storage system tailored to our requirements.</p>
+
+<h2 id="requirements">Requirements</h2>
+
+<ul>
+  <li>Reliability above all else
+    <ul>
+      <li>SSD units must be durable</li>
+      <li>Network and iSCSI failover must be on-par with commercial products (if not better)</li>
+    </ul>
+  </li>
+  <li>Multiple levels of provable redundancy
+    <ul>
+      <li>RAID</li>
+      <li>Cross hardware-replication</li>
+      <li>Easy IP and iSCSI failover using standard tools</li>
+    </ul>
+  </li>
+  <li>1RU rack hight per unit</li>
+  <li>100% SSD only - no spindles will be hurt in the making of this journey!</li>
+  <li>Each unit to provide up to 450,000 IOP/s read performance on tier 1 storage</li>
+  <li>Provide up to 2.5GB/s read performance and 1.5GB/s write performance on tier 1 storage</li>
+  <li>Each unit to provide up to 400,000 IOP/s read performance on tier 2 storage</li>
+  <li>Provide up to 1.2GB/s read performance and 1.2GB/s write performance on tier 2 storage</li>
+  <li>20Gbit of redundant network connectivity per unit</li>
+  <li>Two tiers of SSD storage performance (PCIe &amp; SATA)</li>
+  <li>Easily monitorable with standard tools</li>
+  <li>Use no proprietary RAID hardware</li>
+  <li>Come with 3 years of hardware warranty cover</li>
+  <li>Outperform all proprietary storage solutions costing twice the price or more</li>
+  <li>Deployable and manageable by any sysadmin and require no specialised storage administrators</li>
+  <li>Easily updatable for the latest security patches, features etc…</li>
+  <li>Highly customisable and easily upgradable to larger / faster storage in the future</li>
+  <li>Require significantly less energy and cooling over traditional storage units</li>
+  <li>Offer at-rest encryption if required</li>
+  <li><em><strong>Cost less than $9.5K USD per node</strong></em></li>
+</ul>
+
+<h2 id="software">Software</h2>
+
+<table>
+  <tbody>
+    <tr>
+      <td>Operating System</td>
+      <td>Debian</td>
+      <td>Debian is our OS of choice, it has newer packages than RedHat variants and is incredibly stable</td>
+    </tr>
+    <tr>
+      <td>RAID</td>
+      <td>MDADM</td>
+      <td>For SSDs hardware RAID cards can often be their undoing - they simply can’t keep up and quickly become the bottleneck in the system. MDADM is mature and very flexible</td>
+    </tr>
+    <tr>
+      <td>Node-to-Node Replication</td>
+      <td>DRBD</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>NIC Bonding</td>
+      <td>LACP</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>IP Failover</td>
+      <td>Pacemaker</td>
+      <td>We’ll probably also use a standard VM somewhere on our storage network for quorum</td>
+    </tr>
+    <tr>
+      <td>Monitoring</td>
+      <td>Nagios</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>Storage Presentation</td>
+      <td>Open-iSCSI</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>Kernel</td>
+      <td>Latest Stable (Currently 3.18.7)</td>
+      <td>Debian Backports currently has Kernel 3.16, however we do daily CI builds of the latest kernel stable source for certain servers and this may be a good use case for them due the SCSI bus bypass for NVMe introduced in 3.18+</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>We’re going to start with a two node cluster, we want to keep rack usage to a minimum so I’m going to go with a high density 1RU build.</p>
+
+<p>The servers themselves don’t need to be particularly powerful which will help us keep the costs down. Easily the most expensive components are the 1.2TB PCIe SSDs - but the performance and durability of these units can’t be overlooked, we’re going to have a second performance tier constructed of high end SATA SSDs in RAID10. Of course if you wanted to reduce price further the PCIe SSDs could be left out or purchased at a later date.</p>
+
+<h2 id="hardware">Hardware</h2>
+
+<table>
+  <tbody>
+    <tr>
+      <td><strong>Base Server</strong></td>
+      <td>SuperMicro SuperServer 1028R-WTNRT</td>
+      <td>2x 10GbE, NVMe Support, Dual PSU, Dual SATA DOM Support, 3x PCIe, 10x SAS/SATA HDD Bays</td>
+    </tr>
+    <tr>
+      <td><strong>CPU</strong></td>
+      <td>2x Intel Xeon E5-2609 v3</td>
+      <td>We shouldn’t need a very high clock speed for our SAN, but it’s worth getting the newer v3 processor range for the sake of future proofing.</td>
+    </tr>
+    <tr>
+      <td><strong>RAM</strong></td>
+      <td>32GB DDR4 2133Mhz</td>
+      <td>Again, we don’t need that much RAM, however it will be used for disk caching but 32GB should be more than enough and can be easily upgraded at a later date.</td>
+    </tr>
+    <tr>
+      <td><strong>PCIe SSD</strong></td>
+      <td>2x 1.2TB Intel SSD DC P3600 Series (With NVMe)</td>
+      <td>This is where the real money goes - the Intel DC P3600 and P3700 series really are top of the range, the critical thing to note is that they support NVMe which will greatly increase performance, they’re backed by a 5 year warranty, these will be configured in RAID-1 for redundancy.</td>
+    </tr>
+    <tr>
+      <td><strong>SATA SSD</strong></td>
+      <td>8x SanDisk Extreme Pro SSD 480GB</td>
+      <td>The SanDisk Extreme Pro line is arguably the most reliable and highest performing SATA SSD on the market - backed by a 10 year warranty, these will be configured in RAID-10 for redundancy and performance.</td>
+    </tr>
+    <tr>
+      <td><strong>OS SSD</strong></td>
+      <td>2x 16GB MLC DOM</td>
+      <td>We don’t need much space for the OS, just enough to keep vital logs and package updates, these will be configured in RAID-1 for redundancy.</td>
+    </tr>
+  </tbody>
+</table>
+
+<p><img src="images/san/sm.jpg" alt="SuperMicro SuperServer 1028R-WTNRT" />
+<img src="images/san/mobo.jpg" alt="SuperMicro SuperServer 1028R-WTNRT - mobo" />
+<img src="images/san/intel.jpg" alt="1.2TB Intel SSD DC P3600 Series" />
+<img src="images/san/dom.jpg" alt="SuperMicro DOM" />
+<img src="images/san/ssd.jpg" alt="SanDisk Extreme Pro SSD 480GB" /></p>
+
+<h2 id="ahci-vs-nvme">AHCI vs NVMe</h2>
+
+<p>NVMe is a relatively new technology which I’m very interested in making use of for these storage units.</p>
+
+<p>From <a href="http://en.wikipedia.org/wiki/NVM_Express">Wikipedia</a>:</p>
+
+<p><em>“NVM Express has been designed from the ground up, capitalizing on the low latency and parallelism of PCI Express SSDs, and mirroring the parallelism of contemporary CPUs, platforms and applications. By allowing parallelism levels offered by SSDs to be fully utilized by host’s hardware and software, NVM Express brings various performance improvements.”</em></p>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: left">-</th>
+      <th style="text-align: left">AHCI</th>
+      <th style="text-align: left">NVMe</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: left">Maximum queue depth</td>
+      <td style="text-align: left">1 command queue; 32 commands per queue</td>
+      <td style="text-align: left">65536 queues; 65536 commands per queue</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">Uncacheable register accesses (2000 cycles each)</td>
+      <td style="text-align: left">6 per non-queued command; 9 per queued command</td>
+      <td style="text-align: left">2 per command</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">MSI-X and interrupt steering</td>
+      <td style="text-align: left">single interrupt; no steering</td>
+      <td style="text-align: left">2048 MSI-X interrupts</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">Parallelism and multiple threads</td>
+      <td style="text-align: left">requires synchronization lock to issue a command</td>
+      <td style="text-align: left">no locking</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">Efficiency for 4 KB commands</td>
+      <td style="text-align: left">command parameters require two serialized host DRAM fetches</td>
+      <td style="text-align: left">gets command parameters in one 64 Bytes fetch</td>
+    </tr>
+  </tbody>
+</table>
+
+<h2 id="nvme-and-the-linux-kernel">NVMe and the Linux Kernel</h2>
+
+<p><em>Intel published an NVM Express driver for Linux, It was merged into the Linux Kernel mainline on 19 March 2012, with the release of version 3.3 of the Linux kernel.</em></p>
+
+<p><em>A scalable block layer for high-performance SSD storage, developed primarily by_ <a href="http://en.wikipedia.org/wiki/Fusion-io">_Fusion-io</a>_ _engineers, was merged into the Linux kernel mainline in kernel version 3.13, released on 19 January 2014. This leverages the performance offered by SSDs and NVM Express, by allowing much higher I/O submission rates. With this new design of the Linux kernel block layer, internal queues are split into two levels (per-CPU and hardware-submission queues), thus removing bottlenecks and allowing much higher levels of I/O parallelisation.</em></p>
+
+<p>Note the following: <em>As of version 3.18 of the Linux kernel, released on 7 December 2014,</em> [<em>VirtIO]<a href="http://en.wikipedia.org/wiki/VirtIO">6</a></em> <em>block driver and the</em> [<em>SCSI]<a href="http://en.wikipedia.org/wiki/SCSI">7</a>__layer (which is used by Serial ATA drivers) have been modified to actually use this new interface; other drivers will be ported in the following releases.</em></p>
+
+<p>Debian - our operating system of choice currently has kernel 3.16 available (using the official backports mirrors), however we do generate CI builds of the latest stable kernel for specific platforms - if you’re interested on how we’re doing that I have some information <a href="http://smcleod.net/continuous-integration-for-the-linux-kernel-built-within-docker">here</a>.</p>
+
+<p>That’s where I’m upto for now, the hardware will hopefully arrive in two weeks and I’ll begin the setup and testing.</p>
+
+<h3 id="coming-soon">Coming soon</h3>
+
+<ul>
+  <li>Build experience / guide</li>
+  <li>Monitoring</li>
+  <li>Benchmarks</li>
+  <li>Failover configuration and testing</li>
+  <li>Software configurations (Including a Puppet module)</li>
+  <li>Ongoing experiences and application</li>
+</ul>
+
+<p>Stay tuned!</p>
+
+<p>[<em>6/2/2015 - Sam McLeod]</em></p>
+
+
+      <footer class="entry-meta">
+        <span class="entry-tags"><a href="/tags/#storage" title="Pages tagged storage" class="tag"><span class="term">storage</span></a><a href="/tags/#ssd" title="Pages tagged ssd" class="tag"><span class="term">ssd</span></a><a href="/tags/#ops" title="Pages tagged ops" class="tag"><span class="term">ops</span></a></span>
+        
+        <div class="social-share">
+  <ul class="socialcount socialcount-small inline-list">
+    <li class="facebook"><a href="https://www.facebook.com/sharer/sharer.php?u=/building-a-high-performance-ssd-san/" title="Share on Facebook"><span class="count"><i class="fa fa-facebook-square"></i> Like</span></a></li>
+    <li class="twitter"><a href="https://twitter.com/intent/tweet?text=/building-a-high-performance-ssd-san/" title="Share on Twitter"><span class="count"><i class="fa fa-twitter-square"></i> Tweet</span></a></li>
+    <li class="googleplus"><a href="https://plus.google.com/share?url=/building-a-high-performance-ssd-san/" title="Share on Google Plus"><span class="count"><i class="fa fa-google-plus-square"></i> +1</span></a></li>
+  </ul>
+</div><!-- /.social-share -->
+      </footer>
+    </div><!-- /.entry-content -->
+    <section id="disqus_thread"></section><!-- /#disqus_thread -->
+    <div class="read-more">
+  
+    <div class="read-more-header">
+      <a href="" class="read-more-btn">Read More</a>
+    </div><!-- /.read-more-header -->
+    <div class="read-more-content">
+      <h3><a href="/xenserver-ssds--vm-storage-performance/" title="XenServer, SSDs & VM Storage Performance">XenServer, SSDs & VM Storage Performance</a></h3>
+      <p>## IntroAt Infoxchange we use XenServer as our Virtualisation of choice.There are many reasons for this including:* Open Source.* Offers ...&hellip; <a href="/xenserver-ssds--vm-storage-performance/">Continue reading</a></p>
+    </div><!-- /.read-more-content -->
+  
+  <div class="read-more-list">
+    
+      <div class="list-item">
+        <h4><a href="/the-best-of--2014-edition/" title="The Best Of - 2014 Edition">The Best Of - 2014 Edition</a></h4>
+        <span>Published on February 15, 2015</span>
+      </div><!-- /.list-item -->
+    
+      <div class="list-item">
+        <h4><a href="/talk-24-months/" title="Talk - 24 Months">Talk - 24 Months</a></h4>
+        <span>Published on February 15, 2015</span>
+      </div><!-- /.list-item -->
+    
+  </div><!-- /.read-more-list -->
+</div><!-- /.read-more -->
+  </article>
+</div><!-- /#main -->
+
+<div class="footer-wrapper">
+  <footer role="contentinfo">
+    <span>&copy; 2015 Sam McLeod. Powered by <a href="http://jekyllrb.com" rel="nofollow">Jekyll</a> using the <a href="http://mademistakes.com/hpstr/" rel="notfollow">HPSTR Theme</a>.</span>
+  </footer>
+</div><!-- /.footer-wrapper -->
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<script>window.jQuery || document.write('<script src="/assets/js/vendor/jquery-1.9.1.min.js"><\/script>')</script>
+<script src="/assets/js/scripts.min.js"></script>
+
+
+<!-- Asynchronous Google Analytics snippet -->
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-59178670-1', 'auto');  
+  ga('require', 'linkid', 'linkid.js');
+  ga('send', 'pageview');
+</script>
+
+
+
+    <script type="text/javascript">
+        /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+        var disqus_shortname = 'hpstrtheme'; // required: replace example with your forum shortname
+
+        /* * * DON'T EDIT BELOW THIS LINE * * */
+        (function() {
+            var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+
+        /* * * DON'T EDIT BELOW THIS LINE * * */
+        (function () {
+            var s = document.createElement('script'); s.async = true;
+            s.type = 'text/javascript';
+            s.src = '//' + disqus_shortname + '.disqus.com/count.js';
+            (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
+        }());
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+	        
+
+</body>
+</html>

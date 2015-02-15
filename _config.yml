@@ -1,0 +1,62 @@
+title:            smcleod.net
+description:      Brian Dump Of Sam McLeod, Melbourne
+disqus_shortname: hpstrtheme
+reading_time:     true
+words_per_minute: 200
+# Your site's domain goes here (eg: //mmistakes.github.io, http://mademistakes.com, etc)
+# When testing locally leave blank or use http://localhost:4000
+url:
+
+# Owner/author information
+owner:
+  name:           Sam McLeod
+  avatar:         avatar.jpg
+  bio:            "Ops Lead @Infoxchange"
+  email:          smj(at)fastmail(dot)com
+  # Social networking links used in footer. Update and remove as you like.
+  twitter: s_mcleod
+  github: sammcj
+  linkedin: au.linkedin.com/in/sammcj/en
+
+# Background image to be tiled on all pages
+background: black_lozenge.png
+
+# Analytics and webmaster tools stuff goes here
+google_analytics: UA-59178670-1
+google_verify:      
+# https://ssl.bing.com/webmaster/configure/verify/ownership Option 2 content= goes here
+bing_verify:         
+
+# http://en.wikipedia.org/wiki/List_of_tz_database_time_zones
+timezone:    Australia/Melbourne
+future:      true
+highlighter: pygments
+markdown:    kramdown
+gems:
+  - jekyll-sitemap
+sass:
+  sass_dir: _sass
+  style: compressed
+
+# https://github.com/mojombo/jekyll/wiki/Permalinks
+permalink:   /:categories/:title/
+
+# Amount of post to show on home page
+paginate: 15
+
+kramdown:
+  auto_ids: true
+  footnote_nr: 1
+  entity_output: as_char
+  toc_levels: 1..6
+  enable_coderay: true
+
+  coderay:
+    coderay_line_numbers: nil
+    coderay_line_numbers_start: 1
+    coderay_tab_width: 2
+    coderay_bold_every: 10
+    coderay_css: class
+
+include: [".htaccess"]
+exclude: ["lib", "config.rb", "Capfile", "config", "Gemfile", "Gemfile.lock", "README.md", "LICENSE", "log", "Rakefile", "Rakefile.rb", "tmp", "less", "*.sublime-project", "*.sublime-workspace", "test", "spec", "Gruntfile.js", "package.json", "node_modules"]

@@ -1,0 +1,266 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en">
+<title type="text">smcleod.net</title>
+<generator uri="https://github.com/mojombo/jekyll">Jekyll</generator>
+<link rel="self" type="application/atom+xml" href="/feed.xml" />
+<link rel="alternate" type="text/html" href="" />
+<updated>2015-02-15T19:47:50+11:00</updated>
+<id>/</id>
+<author>
+  <name>Sam McLeod</name>
+  <uri>/</uri>
+  <email>smj(at)fastmail(dot)com</email>
+</author>
+
+
+<entry>
+  <title type="html"><![CDATA[Building a high performance SSD SAN - Part 1]]></title>
+ <link rel="alternate" type="text/html" href="/2015-02-15-building-a-high-performance-ssd-san/" />
+  <id>/2015-02-15-building-a-high-performance-ssd-san</id>
+  <published>2015-02-15T19:47:50+11:00</published>
+  <updated>2015-02-15T19:47:50+11:00</updated>
+  <author>
+    <name>Sam McLeod</name>
+    <uri></uri>
+    <email>smj(at)fastmail(dot)com</email>
+  </author>
+  <content type="html">
+    &lt;p&gt;Over the coming month I will be architecting, building and testing a modular, high performance SSD-only storage solution.
+I’ll be documenting my progress / findings along the way and open sourcing all the information as a public guide.&lt;/p&gt;
+
+&lt;p&gt;With recent price drops and durability improvements in solid state storage now is better time than any to ditch those old magnets.
+Modular server manufacturers such as SuperMicro have spent large on R&amp;amp;D thanks to the ever growing requirements from cloud vendors that utilise their hardware.&lt;/p&gt;
+
+&lt;h2 id=&quot;the-state-of-enterprise-storage&quot;&gt;The State Of Enterprise Storage&lt;/h2&gt;
+
+&lt;p&gt;Companies often settle for off-the-shelf large name storage products from companies based on several, often misguided assumptions:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;That enterprise in the product name = reliability&lt;/li&gt;
+  &lt;li&gt;That the blame from product / system failure can be outsourced&lt;/li&gt;
+  &lt;li&gt;That vendors provide specialist engineers to support such complicated (and expensive) products&lt;/li&gt;
+  &lt;li&gt;That that time and cost of building a modular storage solution tailored to their needs would be time consuming to design and manage&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;At the end of the day we don’t trust vendors to design our servers - why would we trust them to design our storage?&lt;/p&gt;
+
+&lt;p&gt;A great quote on Wikipedia under ‘enterprise storage’:&lt;/p&gt;
+
+&lt;p&gt;&lt;em&gt;“You might think that the hardware inside a &lt;a href=&quot;http://en.m.wikipedia.org/wiki/Storage_area_network&quot; title=&quot;Storage area network&quot;&gt;SAN&lt;/a&gt; is vastly superior to what can be found in your average server, but that is not the case. EMC (the market leader) and others have disclosed more than once that “the goal has always to been to use as much standard, commercial, off-the-shelf hardware as we can”. So your SAN array is probably nothing more than a typical Xeon server built by Quanta with a shiny bezel. A decent professional 1 &lt;a href=&quot;http://en.m.wikipedia.org/wiki/Terabyte&quot; title=&quot;Terabyte&quot;&gt;TB&lt;/a&gt; drive costs a few hundred dollars. Place that same drive inside a SAN appliance and suddenly the price per terabyte is multiplied by at least three, sometimes even 10! When it comes to pricing and &lt;a href=&quot;http://en.m.wikipedia.org/wiki/Vendor_lock-in&quot; title=&quot;Vendor lock-in&quot;&gt;vendor lock-in&lt;/a&gt; you can say that storage systems are still stuck in the “mainframe era” despite the use of cheap off-the-shelf hardware.”&lt;/em&gt;&lt;/p&gt;
+
+&lt;p&gt;It’s the same old story, if you’ve got lots of money and you don’t care about how you spend it or translating those savings onto your customers - sure &lt;em&gt;buy the ticket, take the ride&lt;/em&gt; - get a unit that comes with a flash logo, a 500 page brochure, licensing requirements and a greasy sales pitch.&lt;/p&gt;
+
+&lt;!--more--&gt;
+
+&lt;h2 id=&quot;our-needs&quot;&gt;Our Needs&lt;/h2&gt;
+
+&lt;p&gt;Storage performance always seems to be our bottleneck at Infoxchange, we run several high-performance high-concurrency applications with large databases and complex reporting.&lt;/p&gt;
+
+&lt;p&gt;We’re grown (very) fast and with that spending too much on off-the-shelf storage solutions, we have a requirement to self-host most of our products securely within our own control, on our hardware and need to be flexible to meet current and emerging security requirements.&lt;/p&gt;
+
+&lt;p&gt;I have been working on various proof-of-concepts which have lead to our decision to proceed with our own modular storage system tailored to our requirements.&lt;/p&gt;
+
+&lt;h2 id=&quot;requirements&quot;&gt;Requirements&lt;/h2&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Reliability above all else
+    &lt;ul&gt;
+      &lt;li&gt;SSD units must be durable&lt;/li&gt;
+      &lt;li&gt;Network and iSCSI failover must be on-par with commercial products (if not better)&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;Multiple levels of provable redundancy
+    &lt;ul&gt;
+      &lt;li&gt;RAID&lt;/li&gt;
+      &lt;li&gt;Cross hardware-replication&lt;/li&gt;
+      &lt;li&gt;Easy IP and iSCSI failover using standard tools&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;1RU rack hight per unit&lt;/li&gt;
+  &lt;li&gt;100% SSD only - no spindles will be hurt in the making of this journey!&lt;/li&gt;
+  &lt;li&gt;Each unit to provide up to 450,000 IOP/s read performance on tier 1 storage&lt;/li&gt;
+  &lt;li&gt;Provide up to 2.5GB/s read performance and 1.5GB/s write performance on tier 1 storage&lt;/li&gt;
+  &lt;li&gt;Each unit to provide up to 400,000 IOP/s read performance on tier 2 storage&lt;/li&gt;
+  &lt;li&gt;Provide up to 1.2GB/s read performance and 1.2GB/s write performance on tier 2 storage&lt;/li&gt;
+  &lt;li&gt;20Gbit of redundant network connectivity per unit&lt;/li&gt;
+  &lt;li&gt;Two tiers of SSD storage performance (PCIe &amp;amp; SATA)&lt;/li&gt;
+  &lt;li&gt;Easily monitorable with standard tools&lt;/li&gt;
+  &lt;li&gt;Use no proprietary RAID hardware&lt;/li&gt;
+  &lt;li&gt;Come with 3 years of hardware warranty cover&lt;/li&gt;
+  &lt;li&gt;Outperform all proprietary storage solutions costing twice the price or more&lt;/li&gt;
+  &lt;li&gt;Deployable and manageable by any sysadmin and require no specialised storage administrators&lt;/li&gt;
+  &lt;li&gt;Easily updatable for the latest security patches, features etc…&lt;/li&gt;
+  &lt;li&gt;Highly customisable and easily upgradable to larger / faster storage in the future&lt;/li&gt;
+  &lt;li&gt;Require significantly less energy and cooling over traditional storage units&lt;/li&gt;
+  &lt;li&gt;Offer at-rest encryption if required&lt;/li&gt;
+  &lt;li&gt;&lt;em&gt;&lt;strong&gt;Cost less than $9.5K USD per node&lt;/strong&gt;&lt;/em&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;software&quot;&gt;Software&lt;/h2&gt;
+
+&lt;table&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Operating System&lt;/td&gt;
+      &lt;td&gt;Debian&lt;/td&gt;
+      &lt;td&gt;Debian is our OS of choice, it has newer packages than RedHat variants and is incredibly stable&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;RAID&lt;/td&gt;
+      &lt;td&gt;MDADM&lt;/td&gt;
+      &lt;td&gt;For SSDs hardware RAID cards can often be their undoing - they simply can’t keep up and quickly become the bottleneck in the system. MDADM is mature and very flexible&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Node-to-Node Replication&lt;/td&gt;
+      &lt;td&gt;DRBD&lt;/td&gt;
+      &lt;td&gt; &lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;NIC Bonding&lt;/td&gt;
+      &lt;td&gt;LACP&lt;/td&gt;
+      &lt;td&gt; &lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;IP Failover&lt;/td&gt;
+      &lt;td&gt;Pacemaker&lt;/td&gt;
+      &lt;td&gt;We’ll probably also use a standard VM somewhere on our storage network for quorum&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Monitoring&lt;/td&gt;
+      &lt;td&gt;Nagios&lt;/td&gt;
+      &lt;td&gt; &lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Storage Presentation&lt;/td&gt;
+      &lt;td&gt;Open-iSCSI&lt;/td&gt;
+      &lt;td&gt; &lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Kernel&lt;/td&gt;
+      &lt;td&gt;Latest Stable (Currently 3.18.7)&lt;/td&gt;
+      &lt;td&gt;Debian Backports currently has Kernel 3.16, however we do daily CI builds of the latest kernel stable source for certain servers and this may be a good use case for them due the SCSI bus bypass for NVMe introduced in 3.18+&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;p&gt;We’re going to start with a two node cluster, we want to keep rack usage to a minimum so I’m going to go with a high density 1RU build.&lt;/p&gt;
+
+&lt;p&gt;The servers themselves don’t need to be particularly powerful which will help us keep the costs down. Easily the most expensive components are the 1.2TB PCIe SSDs - but the performance and durability of these units can’t be overlooked, we’re going to have a second performance tier constructed of high end SATA SSDs in RAID10. Of course if you wanted to reduce price further the PCIe SSDs could be left out or purchased at a later date.&lt;/p&gt;
+
+&lt;h2 id=&quot;hardware&quot;&gt;Hardware&lt;/h2&gt;
+
+&lt;table&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td&gt;&lt;strong&gt;Base Server&lt;/strong&gt;&lt;/td&gt;
+      &lt;td&gt;SuperMicro SuperServer 1028R-WTNRT&lt;/td&gt;
+      &lt;td&gt;2x 10GbE, NVMe Support, Dual PSU, Dual SATA DOM Support, 3x PCIe, 10x SAS/SATA HDD Bays&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;&lt;strong&gt;CPU&lt;/strong&gt;&lt;/td&gt;
+      &lt;td&gt;2x Intel Xeon E5-2609 v3&lt;/td&gt;
+      &lt;td&gt;We shouldn’t need a very high clock speed for our SAN, but it’s worth getting the newer v3 processor range for the sake of future proofing.&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;&lt;strong&gt;RAM&lt;/strong&gt;&lt;/td&gt;
+      &lt;td&gt;32GB DDR4 2133Mhz&lt;/td&gt;
+      &lt;td&gt;Again, we don’t need that much RAM, however it will be used for disk caching but 32GB should be more than enough and can be easily upgraded at a later date.&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;&lt;strong&gt;PCIe SSD&lt;/strong&gt;&lt;/td&gt;
+      &lt;td&gt;2x 1.2TB Intel SSD DC P3600 Series (With NVMe)&lt;/td&gt;
+      &lt;td&gt;This is where the real money goes - the Intel DC P3600 and P3700 series really are top of the range, the critical thing to note is that they support NVMe which will greatly increase performance, they’re backed by a 5 year warranty, these will be configured in RAID-1 for redundancy.&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;&lt;strong&gt;SATA SSD&lt;/strong&gt;&lt;/td&gt;
+      &lt;td&gt;8x SanDisk Extreme Pro SSD 480GB&lt;/td&gt;
+      &lt;td&gt;The SanDisk Extreme Pro line is arguably the most reliable and highest performing SATA SSD on the market - backed by a 10 year warranty, these will be configured in RAID-10 for redundancy and performance.&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;&lt;strong&gt;OS SSD&lt;/strong&gt;&lt;/td&gt;
+      &lt;td&gt;2x 16GB MLC DOM&lt;/td&gt;
+      &lt;td&gt;We don’t need much space for the OS, just enough to keep vital logs and package updates, these will be configured in RAID-1 for redundancy.&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;p&gt;&lt;img src=&quot;images/mobo.jpg&quot; alt=&quot;SuperMicro SuperServer 1028R-WTNRT - mobo&quot; /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;ahci-vs-nvme&quot;&gt;AHCI vs NVMe&lt;/h2&gt;
+
+&lt;p&gt;NVMe is a relatively new technology which I’m very interested in making use of for these storage units.&lt;/p&gt;
+
+&lt;p&gt;From &lt;a href=&quot;http://en.wikipedia.org/wiki/NVM_Express&quot;&gt;Wikipedia&lt;/a&gt;:&lt;/p&gt;
+
+&lt;p&gt;&lt;em&gt;“NVM Express has been designed from the ground up, capitalizing on the low latency and parallelism of PCI Express SSDs, and mirroring the parallelism of contemporary CPUs, platforms and applications. By allowing parallelism levels offered by SSDs to be fully utilized by host’s hardware and software, NVM Express brings various performance improvements.”&lt;/em&gt;&lt;/p&gt;
+
+&lt;table&gt;
+  &lt;thead&gt;
+    &lt;tr&gt;
+      &lt;th style=&quot;text-align: left&quot;&gt;-&lt;/th&gt;
+      &lt;th style=&quot;text-align: left&quot;&gt;AHCI&lt;/th&gt;
+      &lt;th style=&quot;text-align: left&quot;&gt;NVMe&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;Maximum queue depth&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;1 command queue; 32 commands per queue&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;65536 queues; 65536 commands per queue&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;Uncacheable register accesses (2000 cycles each)&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;6 per non-queued command; 9 per queued command&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;2 per command&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;MSI-X and interrupt steering&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;single interrupt; no steering&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;2048 MSI-X interrupts&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;Parallelism and multiple threads&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;requires synchronization lock to issue a command&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;no locking&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;Efficiency for 4 KB commands&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;command parameters require two serialized host DRAM fetches&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;gets command parameters in one 64 Bytes fetch&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;h2 id=&quot;nvme-and-the-linux-kernel&quot;&gt;NVMe and the Linux Kernel&lt;/h2&gt;
+
+&lt;p&gt;&lt;em&gt;Intel published an NVM Express driver for Linux, It was merged into the Linux Kernel mainline on 19 March 2012, with the release of version 3.3 of the Linux kernel.&lt;/em&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;em&gt;A scalable block layer for high-performance SSD storage, developed primarily by_ &lt;a href=&quot;http://en.wikipedia.org/wiki/Fusion-io&quot;&gt;_Fusion-io&lt;/a&gt;_ _engineers, was merged into the Linux kernel mainline in kernel version 3.13, released on 19 January 2014. This leverages the performance offered by SSDs and NVM Express, by allowing much higher I/O submission rates. With this new design of the Linux kernel block layer, internal queues are split into two levels (per-CPU and hardware-submission queues), thus removing bottlenecks and allowing much higher levels of I/O parallelisation.&lt;/em&gt;&lt;/p&gt;
+
+&lt;p&gt;Note the following: &lt;em&gt;As of version 3.18 of the Linux kernel, released on 7 December 2014,&lt;/em&gt; [&lt;em&gt;VirtIO]&lt;a href=&quot;http://en.wikipedia.org/wiki/VirtIO&quot;&gt;6&lt;/a&gt;&lt;/em&gt; &lt;em&gt;block driver and the&lt;/em&gt; [&lt;em&gt;SCSI]&lt;a href=&quot;http://en.wikipedia.org/wiki/SCSI&quot;&gt;7&lt;/a&gt;__layer (which is used by Serial ATA drivers) have been modified to actually use this new interface; other drivers will be ported in the following releases.&lt;/em&gt;&lt;/p&gt;
+
+&lt;p&gt;Debian - our operating system of choice currently has kernel 3.16 available (using the official backports mirrors), however we do generate CI builds of the latest stable kernel for specific platforms - if you’re interested on how we’re doing that I have some information &lt;a href=&quot;http://smcleod.net/continuous-integration-for-the-linux-kernel-built-within-docker&quot;&gt;here&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;That’s where I’m upto for now, the hardware will hopefully arrive in two weeks and I’ll begin the setup and testing.&lt;/p&gt;
+
+&lt;h3 id=&quot;coming-soon&quot;&gt;Coming soon&lt;/h3&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Build experience / guide&lt;/li&gt;
+  &lt;li&gt;Monitoring&lt;/li&gt;
+  &lt;li&gt;Benchmarks&lt;/li&gt;
+  &lt;li&gt;Failover configuration and testing&lt;/li&gt;
+  &lt;li&gt;Software configurations (Including a Puppet module)&lt;/li&gt;
+  &lt;li&gt;Ongoing experiences and application&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Stay tuned!&lt;/p&gt;
+
+&lt;p&gt;[&lt;em&gt;6/2/2015 - Sam McLeod]&lt;/em&gt;&lt;/p&gt;
+
+
+    &lt;p&gt;&lt;a href=&quot;/2015-02-15-building-a-high-performance-ssd-san/&quot;&gt;Building a high performance SSD SAN - Part 1&lt;/a&gt; was originally published by Sam McLeod at &lt;a href=&quot;&quot;&gt;smcleod.net&lt;/a&gt; on February 15, 2015.&lt;/p&gt;
+  </content>
+</entry>
+
+</feed>
