@@ -23,9 +23,7 @@ background: /black_lozenge.png
 
 # Analytics and webmaster tools stuff goes here
 google_analytics: UA-59178670-1
-google_verify:      
-# https://ssl.bing.com/webmaster/configure/verify/ownership Option 2 content= goes here
-bing_verify:         
+google_verify: nV3mQhSg4qnV69-hIGRP0i-KCo6Q4cOKlFcsNQ_pDqM
 
 # http://en.wikipedia.org/wiki/List_of_tz_database_time_zones
 timezone:    Australia/Melbourne
