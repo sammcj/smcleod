@@ -153,6 +153,7 @@ Stay tuned!
 ### Further reading:
 
 * [1-2 year SSD wear on build boxes has been minimal](https://news.ycombinator.com/item?id=9052925)
+* [Velocity 2011: Artur Bergman, "Artur on SSD's" ](https://www.youtube.com/watch?v=H7PJ1oeEyGg)
 
 [1]: http://en.m.wikipedia.org/wiki/Storage_area_network "Storage area network"
 [2]: http://en.m.wikipedia.org/wiki/Terabyte "Terabyte"
