@@ -4,6 +4,7 @@ title: Recent Posts
 description: "Brain Dump of Sam McLeod"
 tags: [sam mcleod,devops,infracoders]
 comments: false
+share: True
 image:
   feature: melbourne.jpg
 ---
@@ -57,8 +58,7 @@ image:
         <a href="{{ site.url }}">1</a>
       {% endif %}
     </li>
-    <li>..</li>
-    {% for count in (1..paginator.total_pages) limit:5 offset:paginator.page  %}
+    {% for count in (2..paginator.total_pages) %}
       <li>
         {% if count == paginator.page %}
           <span class="current-page">{{ count }}</span>
@@ -67,14 +67,6 @@ image:
         {% endif %}
       </li>
     {% endfor %}
-    <li>..</li>
-    <li>
-      {% if paginator.page == paginator.total_pages %}
-        <span class="current-page">{{paginator.total_pages}}</span>
-      {% else %}
-        <a href="{{ site.url }}/page{{ paginator.total_pages }}">{{paginator.total_pages}}</a>
-      {% endif %}
-    </li>
   </ul>
   {% if paginator.next_page %}
     <a href="{{ site.url }}/page{{ paginator.next_page }}" class="btn">Next</a>

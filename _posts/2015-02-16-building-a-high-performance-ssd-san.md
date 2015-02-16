@@ -4,6 +4,7 @@ title: Building a high performance SSD SAN - Part 1
 categories: []
 tags: [storage,ssd,ops]
 published: True
+share: True
 excerpt_separator: <!--more-->
 image:
   feature: san/graphs.png
