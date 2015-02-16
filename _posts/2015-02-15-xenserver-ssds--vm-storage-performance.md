@@ -3,6 +3,7 @@ layout: post
 title: 'XenServer, SSDs & VM Storage Performance'
 categories: []
 tags: [ops, storage, ssd]
+excerpt_separator: <!--more-->
 published: True
 ---
 
@@ -25,6 +26,8 @@ Unfortunately the downside to XenServer is that it’s underlying OS is quite ol
 The latest version (6.5) about to be released is still based on Centos 5 and still lacks any form of EXT4 and BTRFS support, direct disk access is not available… without some tweaking and has no real support for TRIM unless you have direct disk access and are happy with EXT3.
 
 Despite this, XenServer still manages to easily outperform VMware in both storage and CPU performance while costing… nothing unless you purchase support!
+
+<!--more-->
 
 ##Direct disk access
 

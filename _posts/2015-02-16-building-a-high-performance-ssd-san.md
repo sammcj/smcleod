@@ -73,6 +73,7 @@ I have been working on various proof-of-concepts which have lead to our decision
 * Offer at-rest encryption if required
 * _**Cost less than $9.5K USD per node**_
 
+<!--more-->
 
 ## Software
 

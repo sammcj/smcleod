@@ -4,6 +4,7 @@ title: {{ title }}
 modified:
 categories: {{ dir }}
 description:
+excerpt_separator: <!--more-->
 tags: []
 image:
   feature:
