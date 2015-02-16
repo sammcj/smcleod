@@ -6,7 +6,7 @@ tags: [storage,ssd,ops]
 published: True
 excerpt_separator: <!--more-->
 image:
-  feature:
+  feature: san/graphs.png
   credit:
   creditlink:
 ---
