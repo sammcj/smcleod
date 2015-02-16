@@ -6,13 +6,11 @@ tags: [devops,dev,ops,elasticsearch]
 published: True
 excerpt_separator: <!--more-->
 image:
-  feature:
+  feature: es/es.png
   credit:
   creditlink:
 ---
 
 Presented a Melbourne Search – July 2014 – ‘Search – A Journey of Delivery on a Budget’.
 
-[![View Slides](images/misc/search.jpg)](https://ixa.io/slides/search/index.html)
-
-<!--more-->
+[![View Slides]({{ site.url }}/images/misc/search.jpg)](https://ixa.io/slides/search/index.html)

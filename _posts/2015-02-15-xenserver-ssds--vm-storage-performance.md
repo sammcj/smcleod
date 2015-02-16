@@ -95,11 +95,11 @@ We have some 1GB cache cards arriving in the following weeks which we will upgra
 
 EXT4 Bonnie++ Results w/ 2x SSD in RAID1, XenServer 6.5 RC1, LVM:
 
-![](images/xenserver/dl360-lvm.jpg)
+![]({{ site.url }}/images/xenserver/dl360-lvm.jpg)
 
 EXT4 Bonnie++ Results w/ 2x SSD in RAID1, XenServer 6.5 RC1, Direct Disk:
 
-![](images/xenserver/dl360-dd.jpg)
+![]({{ site.url }}/images/xenserver/dl360-dd.jpg)
 
 EXT4 dd Results w/ 2x SSD in RAID0, XenServer 6.5 RC1, LVM:
 
