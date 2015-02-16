@@ -18,5 +18,5 @@ While the P420i RAID controller in the DS2220sb is clearly saturated and unable 
 
 Click the image below for the results:
 
-[![Click to Start Slides](/images/san/bladedirectattach.png)](https://ixa.io/wp-content/uploads/2015/01/SSDvsSAN.pdf)
+[![Click to Start Slides](images/san/bladedirectattach.png)](https://ixa.io/wp-content/uploads/2015/01/SSDvsSAN.pdf)
 

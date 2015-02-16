@@ -13,6 +13,6 @@ image:
 
 Presented a Melbourne Search – July 2014 – ‘Search – A Journey of Delivery on a Budget’.
 
-[![Click to Start Slides](/images/misc/search.jpg)](https://ixa.io/slides/search/index.html)
+[![Click to Start Slides](images/misc/search.jpg)](https://ixa.io/slides/search/index.html)
 
 <!--more-->

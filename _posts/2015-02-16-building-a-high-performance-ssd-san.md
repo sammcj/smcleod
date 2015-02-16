@@ -103,11 +103,11 @@ The servers themselves don't need to be particularly powerful which will help us
 | **SATA SSD** | 8x SanDisk Extreme Pro SSD 480GB | The SanDisk Extreme Pro line is arguably the most reliable and highest performing SATA SSD on the market - backed by a 10 year warranty, these will be configured in RAID-10 for redundancy and performance. |
 | **OS SSD** | 2x 16GB MLC DOM | We don't need much space for the OS, just enough to keep vital logs and package updates, these will be configured in RAID-1 for redundancy.
 
-![SuperMicro SuperServer 1028R-WTNRT](/images/san/sm.jpg)
-![SuperMicro SuperServer 1028R-WTNRT - mobo](/images/san/mobo.jpg)
-![1.2TB Intel SSD DC P3600 Series](/images/san/intel.jpg)
-![SuperMicro DOM](/images/san/dom.jpg)
-![SanDisk Extreme Pro SSD 480GB](/images/san/ssd.jpg)
+![SuperMicro SuperServer 1028R-WTNRT](images/san/sm.jpg)
+![SuperMicro SuperServer 1028R-WTNRT - mobo](images/san/mobo.jpg)
+![1.2TB Intel SSD DC P3600 Series](images/san/intel.jpg)
+![SuperMicro DOM](images/san/dom.jpg)
+![SanDisk Extreme Pro SSD 480GB](images/san/ssd.jpg)
 
 
 ## AHCI vs NVMe
