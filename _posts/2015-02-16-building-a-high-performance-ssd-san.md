@@ -148,8 +148,11 @@ That's where I'm upto for now, the hardware will hopefully arrive in two weeks a
 
 Stay tuned!
 
-
 [_6/2/2015 - Sam McLeod]_
+
+### Further reading:
+
+* [1-2 year SSD wear on build boxes has been minimal](https://news.ycombinator.com/item?id=9052925)
 
 [1]: http://en.m.wikipedia.org/wiki/Storage_area_network "Storage area network"
 [2]: http://en.m.wikipedia.org/wiki/Terabyte "Terabyte"
