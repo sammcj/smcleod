@@ -4,7 +4,7 @@ title: Delete Known Government-Linked Certificate Authorities in OS X
 categories: []
 tags: [security,osx]
 published: True
-
+excerpt_separator: <!--more-->
 ---
 
 ### Delete Known Government-Linked Certificate Authorities in OS X
@@ -27,6 +27,8 @@ chmod +x delete_gov_roots.sh
 ```
 
 You'll be prompted for your password as root access is required to delete system-wide root certs.
+
+<!--more-->
 
 #### Contributing
 
