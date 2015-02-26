@@ -5,13 +5,13 @@ categories: []
 tags: [xenserver,docker,github]
 published: True
 excerpt_separator: <!--more-->
+image:
+  feature: xenserver/xo.png
 ---
 
 ### Docker config to setup XO which is a web interface to visualize and administrate your XenServer (or XAPI enabled) hosts
 
 [Github: sammcj/docker-xen-orchestra](https://github.com/sammcj/docker-xen-orchestra)
-
-![main_view](https://cloud.githubusercontent.com/assets/862951/6341155/b4d5b9da-bc1b-11e4-8352-a1688c571e5b.png)
 
 ## Running the app
 
