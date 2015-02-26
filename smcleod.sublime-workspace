@@ -15,39 +15,47 @@
 	},
 	"buffers":
 	[
-		{
-			"file": "_config.yml",
-			"settings":
-			{
-				"buffer_size": 1848,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "index.html",
-			"settings":
-			{
-				"buffer_size": 3175,
-				"line_ending": "Unix"
-			}
-		}
 	],
 	"build_system": "Packages/Docker Based Build Systems/Dockerfile.sublime-build",
 	"command_palette":
 	{
-		"height": 287.0,
+		"height": 207.0,
 		"selected_items":
 		[
+			[
+				"git push",
+				"Git: Push"
+			],
+			[
+				"git com",
+				"Git: Commit"
+			],
+			[
+				"git ad",
+				"Git: Add Current File"
+			],
+			[
+				"jek se",
+				"Jekyll: Open post..."
+			],
+			[
+				"inst",
+				"Package Control: Install Package"
+			],
+			[
+				"new po",
+				"Jekyll: New post"
+			],
+			[
+				"git st",
+				"Git: Status"
+			],
 			[
 				"jek",
 				"Jekyll: New post"
 			],
 			[
 				"in",
-				"Package Control: Install Package"
-			],
-			[
-				"inst",
 				"Package Control: Install Package"
 			],
 			[
@@ -73,18 +81,6 @@
 			[
 				"open",
 				"File: Open In Browser - Production Server"
-			],
-			[
-				"git push",
-				"Git: Push"
-			],
-			[
-				"git com",
-				"Git: Commit"
-			],
-			[
-				"git ad",
-				"Git: Add Current File"
 			],
 			[
 				"git pu",
@@ -295,7 +291,7 @@
 				"Package Control: Install Package"
 			]
 		],
-		"width": 602.0
+		"width": 610.0
 	},
 	"console":
 	{
@@ -317,10 +313,21 @@
 	},
 	"expanded_folders":
 	[
-		"/Users/sammcj/git/smcleod.net"
+		"/Users/sammcj/git/smcleod",
+		"/Users/sammcj/git/smcleod/_drafts",
+		"/Users/sammcj/git/smcleod/_posts"
 	],
 	"file_history":
 	[
+		"/Users/sammcj/git/smcleod/_config.yml",
+		"/Users/sammcj/git/smcleod/_drafts/2015-02-18-how-to-benchmark-disk-io--properly.md",
+		"/Users/sammcj/AeroFS/Sublime/User/Package Control.cache/01524fae79697630d0454ba3fabd9414",
+		"/Users/sammcj/Desktop/fastmail_slow_send.json",
+		"/Users/sammcj/Desktop/profile.json",
+		"/Users/sammcj/git/smcleod/smcleod.sublime-project",
+		"/Users/sammcj/git/smcleod/assets/fonts/fontawesome-webfont.svg",
+		"/Users/sammcj/git/smcleod/index.html",
+		"/Users/sammcj/git/smcleod/_data/navigation.yml",
 		"/Users/sammcj/Desktop/html/wp-config.php",
 		"/Users/sammcj/Downloads/turnkey-wordpress-13.0-wheezy-amd64/README.txt",
 		"/Users/sammcj/Downloads/wp_posts.csv",
@@ -439,16 +446,7 @@
 		"/Users/sammcj/git/puppet/files/redmine/etc/logrotate.d/redmine",
 		"/Users/sammcj/git/puppet/files/int-redmine/redmineenv.sh",
 		"/Users/sammcj/git/puppet/modules/ixacommon/manifests/xenserver.pp",
-		"/Users/sammcj/Library/Application Support/Sublime Text 3/Packages/User/Preferences.sublime-settings",
-		"/Users/sammcj/git/puppet/modules/ixacommon/files/xenserver-backup.sh",
-		"/Users/sammcj/git/puppet/modules/ixacommon/files/xenserver-bash-profile",
-		"/Users/sammcj/git/puppet/modules/ixantp/manifests/xen.pp",
-		"/Applications/Sublime Text.app/Contents/MacOS/changelog.txt",
-		"/Users/sammcj/Downloads/powa-master/README.md",
-		"/Users/sammcj/Desktop/message.txt",
-		"/Users/sammcj/Desktop/links.txt",
-		"/Users/sammcj/Desktop/agp.pgp",
-		"/Users/sammcj/Desktop/gpg/vfe.asc"
+		"/Users/sammcj/Library/Application Support/Sublime Text 3/Packages/User/Preferences.sublime-settings"
 	],
 	"find":
 	{
@@ -468,6 +466,8 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"code",
+			".net",
 			",,,,,,,,,",
 			"httpv",
 			"10059",
@@ -593,9 +593,7 @@
 			"ausda",
 			"\"",
 			"-j",
-			"\"",
-			"RELEASE-2013-05-29-01",
-			",RELEASE-2013-05-29-01"
+			"\""
 		],
 		"highlight": true,
 		"in_selection": false,
@@ -617,189 +615,8 @@
 	"groups":
 	[
 		{
-			"selected": 0,
 			"sheets":
 			[
-				{
-					"buffer": 0,
-					"file": "_config.yml",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 1848,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								350,
-								350
-							]
-						],
-						"settings":
-						{
-							"BracketHighlighterBusy": false,
-							"apply_syntax_touched": true,
-							"bh_regions":
-							[
-								"bh_curly",
-								"bh_curly_center",
-								"bh_curly_open",
-								"bh_curly_close",
-								"bh_curly_content",
-								"bh_single_quote",
-								"bh_single_quote_center",
-								"bh_single_quote_open",
-								"bh_single_quote_close",
-								"bh_single_quote_content",
-								"bh_regex",
-								"bh_regex_center",
-								"bh_regex_open",
-								"bh_regex_close",
-								"bh_regex_content",
-								"bh_c_define",
-								"bh_c_define_center",
-								"bh_c_define_open",
-								"bh_c_define_close",
-								"bh_c_define_content",
-								"bh_round",
-								"bh_round_center",
-								"bh_round_open",
-								"bh_round_close",
-								"bh_round_content",
-								"bh_double_quote",
-								"bh_double_quote_center",
-								"bh_double_quote_open",
-								"bh_double_quote_close",
-								"bh_double_quote_content",
-								"bh_unmatched",
-								"bh_unmatched_center",
-								"bh_unmatched_open",
-								"bh_unmatched_close",
-								"bh_unmatched_content",
-								"bh_angle",
-								"bh_angle_center",
-								"bh_angle_open",
-								"bh_angle_close",
-								"bh_angle_content",
-								"bh_square",
-								"bh_square_center",
-								"bh_square_open",
-								"bh_square_close",
-								"bh_square_content",
-								"bh_default",
-								"bh_default_center",
-								"bh_default_open",
-								"bh_default_close",
-								"bh_default_content",
-								"bh_tag",
-								"bh_tag_center",
-								"bh_tag_open",
-								"bh_tag_close",
-								"bh_tag_content"
-							],
-							"syntax": "Packages/YAML/YAML.tmLanguage",
-							"tab_size": 2,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 0,
-					"type": "text"
-				},
-				{
-					"buffer": 1,
-					"file": "index.html",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 3175,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								155,
-								155
-							]
-						],
-						"settings":
-						{
-							"BracketHighlighterBusy": false,
-							"apply_syntax_touched": true,
-							"bh_regions":
-							[
-								"bh_curly",
-								"bh_curly_center",
-								"bh_curly_open",
-								"bh_curly_close",
-								"bh_curly_content",
-								"bh_single_quote",
-								"bh_single_quote_center",
-								"bh_single_quote_open",
-								"bh_single_quote_close",
-								"bh_single_quote_content",
-								"bh_regex",
-								"bh_regex_center",
-								"bh_regex_open",
-								"bh_regex_close",
-								"bh_regex_content",
-								"bh_c_define",
-								"bh_c_define_center",
-								"bh_c_define_open",
-								"bh_c_define_close",
-								"bh_c_define_content",
-								"bh_round",
-								"bh_round_center",
-								"bh_round_open",
-								"bh_round_close",
-								"bh_round_content",
-								"bh_double_quote",
-								"bh_double_quote_center",
-								"bh_double_quote_open",
-								"bh_double_quote_close",
-								"bh_double_quote_content",
-								"bh_unmatched",
-								"bh_unmatched_center",
-								"bh_unmatched_open",
-								"bh_unmatched_close",
-								"bh_unmatched_content",
-								"bh_angle",
-								"bh_angle_center",
-								"bh_angle_open",
-								"bh_angle_close",
-								"bh_angle_content",
-								"bh_square",
-								"bh_square_center",
-								"bh_square_open",
-								"bh_square_close",
-								"bh_square_content",
-								"bh_default",
-								"bh_default_center",
-								"bh_default_open",
-								"bh_default_close",
-								"bh_default_content",
-								"bh_tag",
-								"bh_tag_center",
-								"bh_tag_open",
-								"bh_tag_close",
-								"bh_tag_content"
-							],
-							"syntax": "Packages/Jekyll/Syntaxes/HTML (Jekyll).tmLanguage",
-							"tab_size": 2,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 1,
-					"type": "text"
-				}
 			]
 		}
 	],
