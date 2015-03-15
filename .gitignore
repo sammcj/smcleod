@@ -2,3 +2,4 @@
 .swp
 .jekyll-metadata
 _site
+.DS_Store
