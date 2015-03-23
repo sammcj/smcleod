@@ -8,15 +8,17 @@ share: True
 excerpt_separator: <!--more-->
 image:
   feature: san/graphs.png
-  credit:
-  creditlink:
 ---
 
 Over the coming month I will be architecting, building and testing a modular, high performance SSD-only storage solution.
+
 I'll be documenting my progress / findings along the way and open sourcing all the information as a public guide.
 
 With recent price drops and durability improvements in solid state storage now is better time than any to ditch those old magnets.
+
 Modular server manufacturers such as SuperMicro have spent large on R&D thanks to the ever growing requirements from cloud vendors that utilise their hardware.
+
+<!--more-->
 
 ## The State Of Enterprise Storage
 
@@ -34,8 +36,6 @@ A great quote on Wikipedia under 'enterprise storage':
 *"You might think that the hardware inside a [SAN][1] is vastly superior to what can be found in your average server, but that is not the case. EMC (the market leader) and others have disclosed more than once that "the goal has always to been to use as much standard, commercial, off-the-shelf hardware as we can". So your SAN array is probably nothing more than a typical Xeon server built by Quanta with a shiny bezel. A decent professional 1 [TB][2] drive costs a few hundred dollars. Place that same drive inside a SAN appliance and suddenly the price per terabyte is multiplied by at least three, sometimes even 10! When it comes to pricing and [vendor lock-in][3] you can say that storage systems are still stuck in the "mainframe era" despite the use of cheap off-the-shelf hardware."*
 
 It's the same old story, if you've got lots of money and you don't care about how you spend it or translating those savings onto your customers - sure _buy the ticket, take the ride_ \- get a unit that comes with a flash logo, a 500 page brochure, licensing requirements and a greasy sales pitch.
-
-<!--more-->
 
 ## Our Needs
 

@@ -7,19 +7,17 @@ published: True
 excerpt_separator: <!--more-->
 ---
 
-### Delete Known Government-Linked Certificate Authorities in OS X
-
 [Inspired by http://zitseng.com/archives/7489](http://zitseng.com/archives/7489)
 
-### [Source (Github)](https://github.com/sammcj/delete-unknown-root-ca)
+* [Source (Github)](https://github.com/sammcj/delete-unknown-root-ca)
 
-##### WARNINGS
+## WARNINGS
 
 * Do not run unless you understand what this is doing
 * The CA system is broken by design - This is not a fix for that
 * This is merely a band-aid for those interested or concerned about these root CAs
 
-#### Usage
+## Usage
 
 ```
 chmod +x delete_gov_roots.sh
@@ -30,13 +28,9 @@ You'll be prompted for your password as root access is required to delete system
 
 <!--more-->
 
-#### Contributing
-
-Either submit a pull request or provide me with the SHA1 of the root-ca you've found:
-
 ![sha1](https://cloud.githubusercontent.com/assets/862951/6326428/a261ae24-bba5-11e4-9f69-5aeb36257077.png)
 
-#### See Also
+## See Also
 
 * http://convergence.io
 * https://addons.mozilla.org/en-US/firefox/addon/certificate-patrol/
