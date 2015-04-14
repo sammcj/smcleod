@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 
-gem 'jekyll', '3.0.0.pre.beta2'
+gem 'jekyll', '3.0.0.pre.beta1'
 gem 'coderay'
 gem 'sass'
 #gem 'octopress', '~> 3.0.0.rc.33'
