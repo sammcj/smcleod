@@ -1,6 +1,6 @@
 ---
 layout: page
-title: Talk: High Performance Software Defined Storage
+title: Talk - High Performance Software Defined Storage
 categories: []
 tags: [ops,storage]
 published: True
