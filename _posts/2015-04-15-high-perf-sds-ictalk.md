@@ -13,7 +13,10 @@ A high level talk I gave at Infracoders Melbourne on 12/04/2015.
 
 [![Click to Start Slides]({{ site.url }}/images/san/ic-slides-image.png)](https://www.dropbox.com/s/rdojhb399639e4k/lightning_san.pdf?dl=0)
 
-There's also a low quality recording available here: https://youtu.be/VAdqurA2zQ4?t=198
+There's also a low quality recording available here:
+
+[![Click to Start Video]({{ site.url }}/images/san/ic-sds-yt-thumb.png)](https://youtu.be/VAdqurA2zQ4?t=198)
+
 
 
 
