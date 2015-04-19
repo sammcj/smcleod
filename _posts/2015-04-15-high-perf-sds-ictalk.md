@@ -20,5 +20,6 @@ There's also a low quality recording available here:
 [![Click to Start Video]({{ site.url }}/images/san/ic-sds-yt-thumb.png)](https://youtu.be/VAdqurA2zQ4?t=198)
 
 
+Related posts:
 
-
+[Building a high performance SSD SAN - Part 1](https://smcleod.net/building-a-high-performance-ssd-san/)
