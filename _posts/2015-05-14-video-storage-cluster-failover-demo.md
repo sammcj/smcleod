@@ -13,4 +13,4 @@ image:
 
 Just whipped up a brief demonstration of the failover and recovery process on the storage clusters I've built:
 
-[![Click to Start Video]({{ site.url }}/images/san/cluster-demo-thumb.jpg)](https://youtu.be/VAdqurA2zQ4?t=198)
+[![Click to Start Video]({{ site.url }}/images/san/cluster-demo-thumb.jpg)](https://youtu.be/_fRMtXWM3FU)
