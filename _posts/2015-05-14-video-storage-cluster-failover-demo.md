@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Video: Storage Cluster Failover Demo
+title: Video - Storage Cluster Failover Demo
 categories: []
 tags: [tools,devops,ops]
 published: True
