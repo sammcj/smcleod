@@ -1,14 +1,7 @@
 ---
-layout: page
 title: Limited Pagination in Jekyll with Liquid
 categories: []
-tags: [dev]
-published: True
-excerpt_separator: <!--more-->
-image:
-  feature:
-  credit:
-  creditlink:
+date:   2015-02-15 10:37:00
 ---
 
 I have another blog mondotunes.org which is a brain dump of whatever music I'm listening to and enjoying - I've recently (over night) switched from Wordpress to Jekyll.

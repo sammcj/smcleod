@@ -1,10 +1,7 @@
 ---
-layout: post
 title: Delete Known Government-Linked Certificate Authorities in OS X
 categories: []
-tags: [security,osx]
-published: True
-excerpt_separator: <!--more-->
+date:   2015-02-23 22:37:00
 ---
 
 [Inspired by http://zitseng.com/archives/7489](http://zitseng.com/archives/7489)
@@ -16,19 +13,18 @@ excerpt_separator: <!--more-->
 * Do not run unless you understand what this is doing
 * The CA system is broken by design - This is not a fix for that
 * This is merely a band-aid for those interested or concerned about these root CAs
+<!--more-->
 
 ## Usage
 
-```
+{% highlight bash %}
 chmod +x delete_gov_roots.sh
 ./delete_gov_roots.sh
-```
+{% endhighlight %}
 
 You'll be prompted for your password as root access is required to delete system-wide root certs.
 
-<!--more-->
-
-![sha1](https://cloud.githubusercontent.com/assets/862951/6326428/a261ae24-bba5-11e4-9f69-5aeb36257077.png)
+![sha1](https://cloud.githubusercontent.com/assets/862951/6326428/a261ae24-bba5-11e4-9f69-5aeb36257077.png){: .center-image }
 
 ## See Also
 

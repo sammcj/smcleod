@@ -1,14 +1,7 @@
 ---
-layout: page
 title: The Best Of - 2014 Edition
 categories: []
-tags: [tools,devops,ops]
-published: True
-excerpt_separator: <!--more-->
-image:
-  feature:
-  credit:
-  creditlink:
+date:   2014-12-25 22:37:00
 ---
 
 At the end of every year I note down a summary of the best applications, hardware & websites I've enjoyed & depended on throughout the year (and often for some time before).

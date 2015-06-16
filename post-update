@@ -1,4 +1,0 @@
-#!/bin/bash --login
-cd /opt/sites/smcleod/ || exit
-unset GIT_DIR
-git pull origin master && /usr/local/rvm/bin/rvm-shell 2.2.0 && jekyll clean && jekyll build && chown -R www-data:www-data .

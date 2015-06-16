@@ -1,24 +1,18 @@
 ---
-layout: page
 title: Talk - High Performance Software Defined Storage
 categories: []
-tags: [ops,storage]
-published: True
-excerpt_separator: <!--more-->
-image:
-  feature: san/supermicrox2.jpg
+date:   2015-04-15 22:37:00
 ---
 
-A high level talk I gave at Infracoders Melbourne on 12/04/2015.
+A high level talk from Infracoders Melbourne on 12/04/2015.
 
-Slides:
+[![Click to Start Slides]({{ site.url }}/images/san/supermicrox2.jpg){: .center-image }](https://www.dropbox.com/s/rdojhb399639e4k/lightning_san.pdf?dl=0)
 
-[![Click to Start Slides]({{ site.url }}/images/san/ic-slides-image.png)](https://www.dropbox.com/s/rdojhb399639e4k/lightning_san.pdf?dl=0)
+[![Click to Start Slides]({{ site.url }}/images/san/ic-slides-image.png){: .center-image }](https://www.dropbox.com/s/rdojhb399639e4k/lightning_san.pdf?dl=0)
 
 There's also a low quality recording available here:
 
-[![Click to Start Video]({{ site.url }}/images/san/ic-sds-yt-thumb.png)](https://youtu.be/VAdqurA2zQ4?t=198)
-
+[![Click to Start Video]({{ site.url }}/images/san/ic-sds-yt-thumb.png){: .center-image }](https://youtu.be/VAdqurA2zQ4?t=198)
 
 Related posts:
 

@@ -1,14 +1,7 @@
 ---
-layout: page
 title: Direct-Attach SSD Storage – Performance & Comparisons
 categories: []
-tags: [ops,storage]
-published: True
-excerpt_separator: <!--more-->
-image:
-  feature:
-  credit:
-  creditlink:
+date:   2015-02-15 22:37:00
 ---
 
 Further to my earlier post on XenServer storage performance with regards to directly attaching storage from the host, I have been analysing the performance of various SSD storage options.
@@ -19,4 +12,3 @@ While the P420i RAID controller in the DS2220sb is clearly saturated and unable 
 Click the image below for the results:
 
 [![Click to Start Slides]({{ site.url }}/images/san/bladedirectattach.png)](https://ixa.io/wp-content/uploads/2015/01/SSDvsSAN.pdf)
-

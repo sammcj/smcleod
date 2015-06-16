@@ -1,58 +1,43 @@
 title:            "smcleod dot net"
+author: "Sam McLeod"
 description:      'smcleod.net'
-disqus_shortname: smcleodnet
-reading_time:     true
-words_per_minute: 200
-url: //smcleod.net
+#subheading: "Really cool blog about ... something"
+more: "read more"
+url: "https://smcleod.net"
+#baseurl: "/contrast" # comment out if in root directory
 
-# Owner/author information
-owner:
-  name:           Sam McLeod
-  avatar:         avatar.jpg
-  bio:            "Ops Lead @Infoxchange"
-  email:          smj(at)fastmail(dot)com
-  twitter: s_mcleod
-  github: sammcj
-  linkedin: au.linkedin.com/in/sammcj/en
+comments:
+    disqus: "smcleodnet"
 
-# Background image to be tiled on all pages
-#background: black_lozenge.png
+style:
+#    body: "whitesmoke"
+    padding: 25%
+    anchor: "#46f"
+    serif-heading: false
+    nav: "#181818"
+#    headline: "#06f"
+    description: "white"
+    article:
+        odd: "#ffffff"
+        even: "#222222"
 
-# Analytics and webmaster tools stuff goes here
-google_analytics: UA-59178670-1
-google_verify: nV3mQhSg4qnV69-hIGRP0i-KCo6Q4cOKlFcsNQ_pDqM
+links:
+  - github: "https://github.com/sammcj/"
+  - twitter: "https://twitter.com/s_mcleod/"
+  - linkedin: "http://au.linkedin.com/in/sammcj/en"
 
-# http://en.wikipedia.org/wiki/List_of_tz_database_time_zones
+gems:
+  - jekyll-paginate
+
+paginate: 6
+permalink:   /:categories/:title/
 timezone:    Australia/Melbourne
 future:      true
 highlighter: pygments
-markdown:    kramdown
-gems:
-  - jekyll-sitemap
-  - jekyll-paginate
-sass:
-  sass_dir: _sass
-  style: compressed
+google_analytics: UA-59178670-1
+google_verify: nV3mQhSg4qnV69-hIGRP0i-KCo6Q4cOKlFcsNQ_pDqM
+excerpt_separator: "<!--more-->"
+#excerpt_separator: "\n\n\n"
 
-# https://github.com/mojombo/jekyll/wiki/Permalinks
-permalink:   /:categories/:title/
+defaults: [{scope: {path: ""}, values: {layout: "default"}}, {scope: {path: "", type: "posts"}, values: {comments: true}}]
 
-# Amount of post to show on home page
-paginate: 5
-
-kramdown:
-  auto_ids: true
-  footnote_nr: 1
-  entity_output: as_char
-  toc_levels: 1..6
-  enable_coderay: true
-
-  coderay:
-    coderay_line_numbers: nil
-    coderay_line_numbers_start: 1
-    coderay_tab_width: 2
-    coderay_bold_every: 10
-    coderay_css: class
-
-include: [".htaccess"]
-exclude: ["lib", "config.rb", "Capfile", "config", "Gemfile", "Gemfile.lock", "README.md", "LICENSE", "log", "Rakefile", "Rakefile.rb", "tmp", "less", "*.sublime-project", "*.sublime-workspace", "test", "spec", "Gruntfile.js", "package.json", "node_modules"]

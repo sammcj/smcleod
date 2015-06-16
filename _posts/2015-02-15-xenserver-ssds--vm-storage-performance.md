@@ -1,10 +1,7 @@
 ---
-layout: post
 title: 'XenServer, SSDs & VM Storage Performance'
 categories: []
-tags: [ops, storage, ssd]
-excerpt_separator: <!--more-->
-published: True
+date:   2015-02-17 22:37:00
 ---
 
 ##Intro
@@ -22,12 +19,12 @@ There are many reasons for this including:
 * OpenStack while interesting, is not yet reliable or streamlined enough for our small team of 4 to implement and manage.
 * XenServer Storage & Filesystems
 
+<!--more-->
+
 Unfortunately the downside to XenServer is that it’s underlying OS is quite old.
 The latest version (6.5) about to be released is still based on Centos 5 and still lacks any form of EXT4 and BTRFS support, direct disk access is not available… without some tweaking and has no real support for TRIM unless you have direct disk access and are happy with EXT3.
 
 Despite this, XenServer still manages to easily outperform VMware in both storage and CPU performance while costing… nothing unless you purchase support!
-
-<!--more-->
 
 ##Direct disk access
 
@@ -111,7 +108,6 @@ samm@serv-dhcp-13:/var/tmp# dd if=/dev/zero of=tempfile bs=1M count=8000 conv=fd
 {% endhighlight %}
 
 EXT4 dd Results w/ 2x SSD in RAID0, XenServer 6.5 RC1, Direct Disk:
-
 
 {% highlight bash %}
 samm@serv-dhcp-13:/var/tmp# dd if=/dev/zero of=tempfile bs=1M count=8000 conv=fdatasync,notrunc

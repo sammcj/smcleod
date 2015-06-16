@@ -1,14 +1,10 @@
 ---
-layout: post
 title: Building a high performance SSD SAN - Part 1
 categories: []
-tags: [storage,ssd,ops]
-published: True
-share: True
-excerpt_separator: <!--more-->
-image:
-  feature: san/graphs.png
+date:   2015-02-18 22:37:00
 ---
+
+![]({{ site.url }}/images/san/graphs.png){: .center-image }
 
 Over the coming month I will be architecting, building and testing a modular, high performance SSD-only storage solution.
 
@@ -17,7 +13,6 @@ I'll be documenting my progress / findings along the way and open sourcing all t
 With recent price drops and durability improvements in solid state storage now is better time than any to ditch those old magnets.
 
 Modular server manufacturers such as SuperMicro have spent large on R&D thanks to the ever growing requirements from cloud vendors that utilise their hardware.
-
 <!--more-->
 
 ## The State Of Enterprise Storage
@@ -73,7 +68,6 @@ I have been working on various proof-of-concepts which have lead to our decision
 * Require significantly less energy and cooling over traditional storage units
 * Offer at-rest encryption if required
 * _**Cost less than $9.5K USD per node**_
-
 <!--more-->
 
 ## Software

@@ -1,14 +1,7 @@
 ---
-layout: post
 title: Video - Storage Cluster Failover Demo
 categories: []
-tags: [tools,devops,ops]
-published: True
-excerpt_separator: <!--more-->
-image:
-  feature:
-  credit:
-  creditlink:
+date:   2015-05-14 22:37:00
 ---
 
 Just whipped up a brief demonstration of the failover and recovery process on the storage clusters I've built:
