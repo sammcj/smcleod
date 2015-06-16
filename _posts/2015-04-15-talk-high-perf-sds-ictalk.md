@@ -7,6 +7,7 @@ date:   2015-04-15 22:37:00
 A high level talk from Infracoders Melbourne on 12/04/2015.
 
 [![Click to Start Slides]({{ site.url }}/images/san/supermicrox2.jpg){: .center-image }](https://www.dropbox.com/s/rdojhb399639e4k/lightning_san.pdf?dl=0)
+<!--more-->
 
 [![Click to Start Slides]({{ site.url }}/images/san/ic-slides-image.png){: .center-image }](https://www.dropbox.com/s/rdojhb399639e4k/lightning_san.pdf?dl=0)
 
