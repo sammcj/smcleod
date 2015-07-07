@@ -52,11 +52,11 @@ Obviously the best solution however have a feeling that it will take some time f
 
 ### Host required packages
 
-I have logged a feature request with the kind folks at ElRepo requesting that they add the missing packages into ElRepo.
+I have been logging requests to various third party RHEL repos asking if they would the missing packages.
+- [RPMFusion](http://rpmfusion.org/Wishlist?action=diff&rev1=401&rev2=402)
+- [ELRepo](http://elrepo.org/bugs/view.php?id=579)
+
 If they don't feel they have the resources or want to add them in for whatever reason, I will continue to host the packages myself on [Packagecloud](https://packagecloud.io/mrmondo/pacemaker) and likely somewhere else as a fall-back.
-
-- [Link to the ElRepo request](http://elrepo.org/bugs/view.php?id=579)
-
 
 {% highlight bash %}
 Last updated: Tue Jul  7 11:59:25 2015
