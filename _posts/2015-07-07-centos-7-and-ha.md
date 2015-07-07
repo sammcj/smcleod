@@ -6,11 +6,14 @@ published: True
 
 First some background...
 
-One of the many lessons I've learnt from my Linux HA / Storage clustering project is that the Debian HA ecosystem is essentially broken, We reached the point where packages were too old, too buggy or in Debian 8s case - outright missing.
-I was very disappointed with RHEL/CentOS 5 / 6 and until now was quite satisfied with Debian as a stable, yet more modern server distribution.
+One of the many lessons I've learnt from my Linux HA / Storage clustering project is that the Debian HA ecosystem is essentially broken, We reached the point where packages were too old, too buggy or in Debian 8's case - outright missing.
 
-I feel that CentOS 7 however is light years ahead of it's predecessor and after thorough testing I have decided to employ it as the base OS for the storage cluster.
-I'm planning on writing a post explaining my experiences with Debian vs CentOS in the HA space in the very near future.
+In the past I was very disappointed with RHEL/CentOS 5 / 6 and (until now) have been quite satisfied with Debian as a stable server distribution with historicly more modern packages and kernels.
+
+**_I feel that CentOS / RHEL 7 has changed the game.*_**
+
+######*(When combined with ElRepo or EPEL that provide wide array of modern packages)
+It is simply light years ahead of it's predecessor, resolves a lot of the issues we've had with Debian Jessie and after thorough testing of Debian 7,8 Centos 6,7 I have decided to employ CentOS 7 as the base OS for the storage cluster.
 
 CentOS / RHEL 7 are missing a few critical packages in the cluster HA space.
 
