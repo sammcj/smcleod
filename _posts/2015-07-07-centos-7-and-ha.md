@@ -56,8 +56,9 @@ Obviously the best solution however have a feeling that it will take some time f
 
 ### Host required packages
 
-
 I have been logging requests to various third party RHEL repos asking if they would the missing packages.
+
+- [GhettoForge](http://ghettoforge.org/index.php/Usage) are currently considering hosting `pacemaker` built `--with stonithd` in their gf-plus repo.
 - [RPMFusion](http://rpmfusion.org/Wishlist?action=diff&rev1=401&rev2=402)
 - [ELRepo](http://elrepo.org/bugs/view.php?id=579)
 
