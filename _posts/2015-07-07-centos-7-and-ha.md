@@ -35,12 +35,12 @@ I have recompiled CentOS 7's pacemaker package changing only one thing - I added
 - This is available from my [packagecloud repo](https://packagecloud.io/mrmondo/pacemaker).
 
 ### Cluster-Glue
-OpenSUSE provides the cluster-glue and cluster-glue-libs [packages](ftp://rpmfind.net/linux/opensuse/factory/repo/oss/suse/x86_64/cluster-glue-1.0.12-19.2.x86_64.rpm)
+OpenSUSE provides the `cluster-glue` and `cluster-glue-libs` from their [CentOS 7 repository](http://download.opensuse.org/repositories/network:/ha-clustering:/Stable/CentOS_CentOS-7/)
 
 - This is also available from my [packagecloud repo](https://packagecloud.io/mrmondo/pacemaker).
 
 ### CRMSH
-OpenSUSE factory provides the crmsh [package](ftp://195.220.108.108/linux/opensuse/factory/repo/oss/suse/noarch/crmsh-2.2.0~rc3+git.1435265407.2865580-1.1.noarch.rpm)
+OpenSUSE also provides `crmsh` from their [CentOS 7 repository]((http://download.opensuse.org/repositories/network:/ha-clustering:/Stable/CentOS_CentOS-7/)
 
 - This is also available from my [packagecloud repo](https://packagecloud.io/mrmondo/pacemaker).
 
@@ -55,6 +55,7 @@ Obviously the best solution however have a feeling that it will take some time f
 - [RedHat BugZilla](https://bugzilla.redhat.com/show_bug.cgi?id=1240868)
 
 ### Host required packages
+
 
 I have been logging requests to various third party RHEL repos asking if they would the missing packages.
 - [RPMFusion](http://rpmfusion.org/Wishlist?action=diff&rev1=401&rev2=402)
