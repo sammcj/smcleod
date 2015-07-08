@@ -50,6 +50,10 @@ OpenSUSE factory provides the crmsh [package](ftp://195.220.108.108/linux/opensu
 
 Obviously the best solution however have a feeling that it will take some time for all the maintainers of the existing STONITH / fencing agent developers to port their code to the new framework.
 
+### Request package to be built --with stonithd
+
+- [RedHat BugZilla](https://bugzilla.redhat.com/show_bug.cgi?id=1240868)
+
 ### Host required packages
 
 I have been logging requests to various third party RHEL repos asking if they would the missing packages.
