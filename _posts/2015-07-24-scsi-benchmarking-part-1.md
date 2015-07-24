@@ -1,5 +1,5 @@
 ---
-title: SCSI Benchmarking Part 1
+title: iSCSI Benchmarking Part 1
 tags: []
 published: True
 ---
