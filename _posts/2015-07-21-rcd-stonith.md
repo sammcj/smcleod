@@ -4,9 +4,11 @@ tags: []
 published: True
 ---
 
-A modified version of [John Sutton's](http://www.scl.co.uk/rcd_serial/README.rcd_serial) rcd_serial cable and STONITH [Plugin](hg.linux-ha.org/glue/file/9da0680bc9c0/lib/plugins/stonith/rcd_serial.c) device coupled with our Supermicro reset switch hijacker:
+A modified version of [John Sutton's](http://www.scl.co.uk/rcd_serial/README.rcd_serial) rcd_serial cable coupled with our Supermicro reset switch hijacker:
 
 ![]({{ site.url }}/images/san/rcd_serial.jpg){: .center-image }
+
+This works with the rcd_serial fence agent [plugin](https://github.com/ClusterLabs/fence-agents/blob/master/fence/agents/rcd_serial/fence_rcd_serial.py).
 
 Reasons rcd_serial makes for a very good STONITH mechanism:
 
