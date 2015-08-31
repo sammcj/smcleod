@@ -4,3 +4,6 @@
 _site
 .DS_Store
 .tmp
+.rvmrc
+Gemfile
+Gemfile.lock
