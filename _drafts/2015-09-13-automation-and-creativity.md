@@ -4,8 +4,22 @@ published: false
 
 ## Automation and Creativity
 
+If the work you’re doing does not require you to be _uniquely creative_ - you can, and _will_ be automated.
 
+Work that is not _uniqely creative_ is often work that:
 
+- Can be easily described.
+- Is process driven.
+
+What do I mean by work that 'can be easily described'?
+
+If I look at a piece of work and I can easily describe what takes place to complete, it then by nature must be somewhat easy to describe.
+
+Let me give you a non-technical example:
+
+> John listens to what people in a team are working on this week and how long they've been working these things so far and how long they think it will take to complete, he then updates this information in a project spreadsheet that contains an overview of the progress of all the project for the organisation.
+
+Surely what people are working on and time / effort related information could easily be obtained from the systems / tools they're working with, perhaps when people are committing code for the project their [time is recorded in the commit message](http://www.redmine.org/projects/redmine/wiki/RedmineTimeTracking#Logging-time-via-commit-messages "Logging time via commit messages in Redmine")?
 
 ### Terminology:
 
