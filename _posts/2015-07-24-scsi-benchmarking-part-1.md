@@ -2,6 +2,8 @@
 title: iSCSI Benchmarking Part 1
 tags: []
 published: True
+tags:
+- storage
 ---
 
 # 67,300 read IOP/s on a VM on iSCSI

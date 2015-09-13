@@ -2,6 +2,8 @@
 title: Building a high performance SSD SAN - Part 1
 categories: []
 date:   2015-02-18 22:37:00
+tags:
+- storage
 ---
 
 ![]({{ site.url }}/images/san/graphs.png){: .center-image }

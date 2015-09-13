@@ -2,6 +2,8 @@
 title: CentOS 7 and HA
 categories: []
 published: True
+tags:
+- storage
 ---
 
 First some background...
