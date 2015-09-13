@@ -1,9 +1,11 @@
 ---
-published: false
-tags: 
+title: SSD Storage - Two Months In Production
+published: true
+categories: []
+date:   2015-09-13 12:45:00
+tags:
   - storage
 ---
-
 
 ## SSD Storage - Two Months In Production
 
@@ -27,38 +29,38 @@ We have performed a great deal of live cluster failovers without any noticable i
 
 #### Significately higher disk and CPU throughput when required
 
-![pm-docker-pg-01 pgsql query time.jpg]({{site.baseurl}}/_drafts/pm-docker-pg-01 pgsql query time.jpg)
-![pm-docker-pg-01 iops.jpg]({{site.baseurl}}/_drafts/pm-docker-pg-01 iops.jpg)
+![]({{ site.url }}/images/san/pm-docker-pg-01_pgsql_query_time.jpg){: .center-image }
+![]({{ site.url }}/images/san/pm-docker-pg-01_iops.jpg){: .center-image }
 
 
 #### IOWait on VMs greatly reduced
 
-![iowait - gitlab.jpg]({{site.baseurl}}/_drafts/iowait - gitlab.jpg)
-![int-redmine iowait.jpg]({{site.baseurl}}/_drafts/int-redmine iowait.jpg)
-![puppetmaster - disk load.jpg]({{site.baseurl}}/_drafts/puppetmaster - disk load.jpg)
+![]({{ site.url }}/images/san/iowait_gitlab.jpg){: .center-image }
+![]({{ site.url }}/images/san/int-redmine_iowait.jpg){: .center-image }
+![]({{ site.url }}/images/san/puppetmaster_disk_load.jpg){: .center-image }
 
 
 #### VM IO latency has been reduced 300-500%
 
 Before:
-```bash
+{% highlight bash %}
 4096 bytes from . (ext4 /dev/mapper/debian-root): request=1 time=1.6 ms
 4096 bytes from . (ext4 /dev/mapper/debian-root): request=2 time=4.7 ms
 4096 bytes from . (ext4 /dev/mapper/debian-root): request=3 time=3.7 ms
 4096 bytes from . (ext4 /dev/mapper/debian-root): request=4 time=4.7 ms
 4096 bytes from . (ext4 /dev/mapper/debian-root): request=5 time=4.8 ms
-```
+{% endhighlight %}
 
 After:
-```bash
+{% highlight bash %}
 4096 bytes from . (ext4 /dev/mapper/debian-root): request=1 time=0.5 ms
 4096 bytes from . (ext4 /dev/mapper/debian-root): request=2 time=0.7 ms
 4096 bytes from . (ext4 /dev/mapper/debian-root): request=3 time=0.9 ms
 4096 bytes from . (ext4 /dev/mapper/debian-root): request=4 time=0.7 ms
 4096 bytes from . (ext4 /dev/mapper/debian-root): request=5 time=0.6 ms
-```
+{% endhighlight %}
 
-![gitlab - disk latency.jpg]({{site.baseurl}}/_drafts/gitlab - disk latency.jpg)
+![]({{ site.url }}/images/san/gitlab_disk_latency.jpg){: .center-image }
 
 
 #### Increased reliability of performance data
