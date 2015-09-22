@@ -2,6 +2,8 @@
 layout: post
 title: Replacing Junos Pulse with OpenConnect
 published: True
+tags: []
+published: True
 ---
 
 In an attempt to avoid using the Juniper Pulse (Now Pulse Secure) VPN client we tried OpenConnect but found that DNS did not work correctly when connected to the VPN.
