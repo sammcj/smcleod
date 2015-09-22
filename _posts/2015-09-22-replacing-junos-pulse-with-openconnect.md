@@ -45,3 +45,9 @@ make install
 {% highlight bash %}
 sudo openconnect --juniper -s /etc/vpnc/vpnc-script -u myusername www.myserver.com
 {% endhighlight %}
+
+If you're comfortable with allowing admin users to run openconnect without entering a sudo password, add the following using `sudo visudo`:
+
+{% highlight bash %}
+%admin  ALL=(ALL) NOPASSWD: /usr/local/sbin/openconnect
+{% endhighlight %}
