@@ -15,15 +15,7 @@ Luckily the OpenConnect was not too difficult to build from source.
 
 {% highlight bash %}
 brew remove openconnect
-brew install libxml2 lzlib openssl libtool
-{% endhighlight %}
-
-### Install the vpnc script
-
-{% highlight bash %}
-sudo mkdir /etc/vpnc
-sudo curl http://git.infradead.org/users/dwmw2/vpnc-scripts.git/blob_plain/HEAD:/vpnc-script -o /etc/vpnc/vpnc-script
-sudo chmod +x /etc/vpnc/vpnc-script
+brew install libxml2 lzlib openssl libtool libevent
 {% endhighlight %}
 
 ### Build openconnect
@@ -35,7 +27,7 @@ cd openconnect-0f1ec30
 
 LIBTOOLIZE=glibtoolize ./autogen.sh
 PATH=/usr/local/opt/gettext/bin:$PATH
-./configure --with-vpnc-script=/etc/vpnc/vpnc-script
+./configure
 make
 make install
 {% endhighlight %}
@@ -43,7 +35,7 @@ make install
 ### To connect
 
 {% highlight bash %}
-sudo openconnect --juniper -s /etc/vpnc/vpnc-script -u myusername www.myserver.com
+sudo openconnect --juniper -u myusername www.myserver.com
 {% endhighlight %}
 
 If you're comfortable with allowing admin users to run openconnect without entering a sudo password, add the following using `sudo visudo`:
