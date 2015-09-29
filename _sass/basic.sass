@@ -1,8 +1,11 @@
 body
+    display: flex
+    min-height: 100%
     font-family: "Source Sans Pro", "Calibri", "Helvetica", sans-serif
     font-weight: 300
     font-size: 1.4em
     font-size: calc(.6vw + .8em)
+    flex-direction: column
     line-height: 1.6
     margin: 0
 
@@ -53,6 +56,7 @@ nav
         margin-right: 10%
 
 article
+    flex-grow: 1
     border-top: 1px solid
     overflow-x: auto
     header
@@ -72,3 +76,6 @@ body > header h1
 body > footer
     display: flex
     justify-content: space-between
+
+#paginate
+    padding-bottom: 1.5em

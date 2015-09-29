@@ -28,6 +28,7 @@ links:
 
 gems:
   - jekyll-paginate
+  - jekyll-feed
 
 paginate: 6
 permalink:   /:categories/:title/

@@ -52,8 +52,10 @@ article:nth-of-type(even)
 article:nth-of-type(odd)
     +article_background($odd, $anchor)
 
-@import vendor
+#paginate:nth-child(even)
+    +contrast($even)
 
-.center-image
-    margin: 0 auto
-    display: block
+#paginate:nth-child(odd)
+    +contrast($odd)
+
+@import vendor

@@ -5,7 +5,7 @@ layout: blank
     <article>
       <header>
         <h2><a href="{{ page.url | prepend: site.baseurl }}">{{ page.title }}</a></h2>
-        <p>{% if page.author %}{{ page.author }} • {% endif %}{% if page.date %}<time datetime="{{ page.date | date_to_xmlschema }}">{{ page.date | date: "%b %-d, %Y" }}</time>{% endif %}{% if page.categories %} {{ page.categories | array_to_sentence_string }}{% endif %}</p>
+        <p>{% if page.author %}{{ page.author }} • {% endif %}{% if page.date %}<time datetime="{{ page.date | date_to_xmlschema }}">{{ page.date | date: "%b %-d, %Y" }}</time>{% endif %}{% if page.categories %} • {{ page.categories | array_to_sentence_string }}{% endif %}</p>
       </header>
       <div>
 {{ page.excerpt }}
@@ -15,21 +15,10 @@ layout: blank
       </footer>
     </article>
     {% endfor %}
-
-
-<!-- Pagination links -->
-<div class="pagination">
-  <center>
-  {% if paginator.previous_page %}
-    <a href="{{ paginator.previous_page_path }}" class="previous"><b>Previous </b></a>
-  {% else %}
-    <span class="previous"><b>Previous </b></span>
-  {% endif %}
-  <span class="page_number ">Page: {{ paginator.page }} of {{ paginator.total_pages }}</span>
-  {% if paginator.next_page %}
-    <a href="{{ paginator.next_page_path }}" class="next"><b> Next</b></a>
-  {% else %}
-    <span class="next "><b> Next</b></span>
-  {% endif %}
-  </center>
-</div>
+    {% if paginator.total_pages > 1 %}
+    <footer id="paginate">
+        {% if paginator.previous_page %}<a href="{{ paginator.previous_page_path | prepend: site.baseurl }}">« newer posts</a>{% else %}<span>« newer posts</span>{% endif %}
+        <span>page {{ paginator.page }} of {{ paginator.total_pages }}</span>
+        {% if paginator.next_page %}<a href="{{ paginator.next_page_path | prepend: site.baseurl }}">older posts »</a>{% else %}<span>older posts »</span>{% endif %}
+    </footer>
+    {% endif %}
