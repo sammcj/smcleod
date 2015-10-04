@@ -2,8 +2,7 @@
 title: 'XenServer, SSDs & VM Storage Performance'
 categories: []
 date:   2015-02-17 22:37:00
-tags:
-- storage
+tags: Storage
 ---
 
 ##Intro

@@ -2,8 +2,7 @@
 title: Video - Storage Cluster Failover Demo
 categories: []
 date:   2015-05-14 22:37:00
-tags:
-- storage
+tags: Storage
 ---
 
 Just whipped up a brief demonstration of the failover and recovery process on the storage clusters I've built:

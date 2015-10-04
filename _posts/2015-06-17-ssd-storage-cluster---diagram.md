@@ -2,8 +2,7 @@
 title: SSD Storage Cluster - Update and Diagram
 categories: []
 date: 2015-06-17
-tags:
-- storage
+tags: Storage
 ---
 
 Due to several recent events beyond my control I'm a bit behind on the project - hence the lack of updates which I appologise for.

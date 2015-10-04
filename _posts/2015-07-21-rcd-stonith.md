@@ -2,8 +2,7 @@
 title: Delayed Serial STONITH
 tags: []
 published: True
-tags:
-- storage
+tags: Storage
 ---
 
 A modified version of [John Sutton's](http://www.scl.co.uk/rcd_serial/README.rcd_serial) rcd_serial cable coupled with our Supermicro reset switch hijacker:

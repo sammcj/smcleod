@@ -38,7 +38,6 @@ highlighter: rouge
 google_analytics: UA-59178670-1
 google_verify: nV3mQhSg4qnV69-hIGRP0i-KCo6Q4cOKlFcsNQ_pDqM
 excerpt_separator: "<!--more-->"
-#excerpt_separator: "\n\n\n"
 
 defaults: [{scope: {path: ""}, values: {layout: "default"}}, {scope: {path: "", type: "posts"}, values: {comments: true}}]
 

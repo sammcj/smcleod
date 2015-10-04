@@ -3,8 +3,7 @@ title: SSD Storage - Two Months In Production
 published: true
 categories: []
 date:   2015-09-13 12:45:00
-tags:
-  - storage
+tags: Storage
 ---
 
 ## SSD Storage - Two Months In Production

@@ -2,8 +2,7 @@
 title: Talk - High Performance Software Defined Storage
 categories: []
 date:   2015-04-15 22:37:00
-tags:
-- storage
+tags: Storage
 ---
 
 A high level talk from Infracoders Melbourne on 12/04/2015.
