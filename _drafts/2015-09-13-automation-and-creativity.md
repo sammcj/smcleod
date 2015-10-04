@@ -1,5 +1,7 @@
 ---
 published: false
+date:   2015-10-10 22:37:00
+tags: DevOps
 ---
 
 ## Automation and Creativity
