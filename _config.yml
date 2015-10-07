@@ -29,6 +29,7 @@ links:
 gems:
   - jekyll-paginate
   - jekyll-feed
+  - jekyll-press
 
 paginate: 6
 permalink:   /:categories/:title/
@@ -41,3 +42,8 @@ excerpt_separator: "<!--more-->"
 
 defaults: [{scope: {path: ""}, values: {layout: "default"}}, {scope: {path: "", type: "posts"}, values: {comments: true}}]
 
+jekyll-press:
+  exclude: 'atom.xml' # Exclude files from processing - file name, glob pattern or array of file names and glob patterns
+  js_options: {}      # js minifier options
+  css_options: {}     # css minifier options
+  html_options: {}    # html minifier options
