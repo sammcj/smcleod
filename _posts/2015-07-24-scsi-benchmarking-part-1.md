@@ -30,6 +30,7 @@ Starting 1 process
 bs: 1 (f=1): [w] [26.3% done] [0K/150.2M /s] [0 /38.5K iops] [eta 00m:14s]
 {% endhighlight %}
 
+<!--more-->
 
 # Raw device latency on storage units
 - Intel DC3600 1.2T PCIe NVMe

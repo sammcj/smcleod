@@ -9,6 +9,8 @@ This bug has now been resolved recently but has not made it's way into a new bui
 
 Luckily the OpenConnect was not too difficult to build from source.
 
+<!--more-->
+
 # Build OpenConnect on OSX
 
 ### Remove old openconnect and install deps

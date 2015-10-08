@@ -16,6 +16,8 @@ Over the last two months I've been runing selected IO intensive servers off the 
 - Nagios servers
 - Several Docker database host servers
 
+<!--more-->
+
 ### Reliability
 
 We haven't had any software or hardware failures since commissioning the storage units.
