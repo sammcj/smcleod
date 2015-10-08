@@ -15,6 +15,8 @@ We're looking for someone that is forward-thinking, passionate and reliable, who
 
 Our Systems (ops) team are hard working, respected promoters of positive change and continuous improvement within the organisation and are each highly technically skilled.
 
+The roll is a full time, permanent position.
+
 ## The position will involve working with technologies such as:
 - [Puppet](https://puppetlabs.com/)
 - [Docker](https://www.docker.com/) and related orchestration frameworks
