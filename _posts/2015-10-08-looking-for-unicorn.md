@@ -47,13 +47,13 @@ You can often find the team presenting at meetups such as Infrastructure Coders,
 - Basic understanding or experience with version control systems such as git or mercurial.
 - Previous experience working in operations, development or automation teams.
 - A minimum of 3 years experience in relevant systems engineering or develop work.
-- Proof of either public code or social contributions to [operations or development communities](http://infrastructurecoders.com) on or offline.
 
 ### Desired
 - [CI / Build pipeline](https://about.gitlab.com/gitlab-ci/) experience.
 - Puppet, Git, Docker, Samba experience.
 - Intrusion detection / security automation system experience.
 - Microservice or container orchestration experience such as Consul, Kubernetes, Mesos, Fleet etc...
+- Public code or social contributions to [operations or development communities](http://infrastructurecoders.com) on or offline.
 - Experience with attending DevOps community events such as meetups, workshops and conferences.
 
 ## Our vision at Infoxchange is 'Technology for Social Justice'
