@@ -40,11 +40,11 @@ You can often find the team presenting at meetups such as Infrastructure Coders,
 ### Required
 - Experience in at least one modern automation framework such as Puppet or Chef.
 - Confidence in at least one relevant scripting or programming language such as Shell, [Ruby](http://rubyforadmins.com/) or Python.
-- General knowledge of hosting or using relevant web application frameworks and languages such as Python, Ruby, Perl or PHP.
+- General knowledge of hosting or using relevant web application frameworks / languages such as those based on Python, Ruby, Perl or PHP.
 - Expert Linux or Unix engineering / administration and logical problem solving skills.
 - Understanding of general network concepts, components and troubleshooting.
 - Basic database skills, preferably in PostgreSQL.
-- Basic understanding and experience with version controlling code such as git or mercurial.
+- Basic understanding or experience with version control systems such as git or mercurial.
 - Previous experience working in operations, development or automation teams.
 - A minimum of 3 years experience in relevant systems engineering or develop work.
 - Proof of either public code or social contributions to [operations or development communities](http://infrastructurecoders.com) on or offline.
