@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 gem 'jekyll-feed'
 gem 'jekyll-paginate'
-gem 'jekyll', '>= 3.0.0.pre.beta9'
+gem 'jekyll', '>= 3.0.0'
 gem 'rouge'
 gem 'jekyll-press'
