@@ -40,9 +40,3 @@ google_verify: nV3mQhSg4qnV69-hIGRP0i-KCo6Q4cOKlFcsNQ_pDqM
 excerpt_separator: "<!--more-->"
 
 defaults: [{scope: {path: ""}, values: {layout: "default"}}, {scope: {path: "", type: "posts"}, values: {comments: true}}]
-
-jekyll-press:
-  exclude: 'atom.xml' # Exclude files from processing - file name, glob pattern or array of file names and glob patterns
-  js_options: {}      # js minifier options
-  css_options: {}     # css minifier options
-  html_options: {}    # html minifier options
