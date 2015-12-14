@@ -1,7 +1,7 @@
 ---
 title: iSCSI SCSI-ID / Serial Persistence
 tags: Storage
-published: False
+published: True
 ---
 
 
@@ -13,6 +13,9 @@ _...and after the amount of time I've wasted getting XenServer to play nicely wi
 ---
 
 ## The Problem
+
+![]({{ site.url }}/images/sr_fail.jpg)
+
 
 One oddity of Xen / XenServer's storage subsystem is that it identifies iSCSI storage repositories via a calculated SCSI ID rather than the iSCSI Serial - which would be the sane thing to do.
 
