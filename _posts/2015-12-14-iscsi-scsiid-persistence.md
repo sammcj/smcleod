@@ -77,3 +77,40 @@ Resource: iscsi_conf_r2 (class=ocf provider=heartbeat type=anything)
 Attributes: binfile=/usr/sbin/iscsi_iscsi_conf_r2.sh stop_timeout=3
 {% endhighlight %}
 
+If you happen to be using Puppet for your Pacemaker configuration it might look a bit like this:
+
+{% highlight puppet %}
+  cs_primitive { "$iscsi_target_primitive":
+    primitive_class => 'ocf',
+    primitive_type  => 'iSCSITarget',
+    provided_by     => 'heartbeat',
+    parameters      => {  'iqn'                   => "$iscsi_iqn",
+                          'portals'               => "${iscsi_vip}:3260",
+                          'implementation'        => 'lio-t',
+                          'additional_parameters' => 'MaxConnections=100 AuthMethod=None InitialR2T=No MaxOutstandingR2T=64',
+                        },
+    operations      =>  {  'monitor'              => { 'timeout' => '20s', 'interval' => '30s','on-fail' => "restart"},
+                           'start'                => { 'timeout' => '20s', 'interval' => '0','on-fail'   => "restart"},
+                           'stop'                 => { 'timeout' => '20s', 'interval' => '0','on-fail'   => "restart"},
+                        },
+    require         => [Cs_primitive["$ip_primitive"],Package['targetcli'],Service['pacemaker']],
+  }
+
+  cs_primitive { "$iscsi_lun_primitive":
+    primitive_class => 'ocf',
+    primitive_type  => 'iSCSILogicalUnit',
+    provided_by     => 'heartbeat',
+    parameters      => {  'target_iqn'            => $iscsi_iqn,
+                          'scsi_sn'               => $scsi_sn,
+                          'lun'                   => '1',
+                          'lio_iblock'            => $lio_iblock,
+                          'path'                  => $drbd_path,
+                          'allowed_initiators'    => $allowed_initiators,
+                          'implementation'        => 'lio-t'},
+    operations      => {  'monitor'               => { 'timeout' => '10s', 'interval' => '30s','on-fail' => "restart" },
+                          'start'                 => { 'timeout' => '20s', 'interval' => '0'  ,'on-fail' => "restart" },
+                          'stop'                  => { 'timeout' => '20s', 'interval' => '0'  ,'on-fail' => "restart" },
+                        },
+    require         => [Cs_primitive["$iscsi_target_primitive"],Service['pacemaker']],
+  }
+{% endhighlight %}
