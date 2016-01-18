@@ -18,25 +18,22 @@ Error parameters: , Error in Metadata volume operation for SR. [opterr=VDI delet
 
 To fix this, you need to remove those VDIs from the SR after first deleting the logical volume:
 
-1. Get the LV ID (last number shown above) and find it's location in /dev:
+* Get the LV ID (last number shown above) and find it's location in /dev:
 
 {% highlight bash %}
 [root@xenserver-host ~]# lvdisplay | grep 6c2cd848-ac0e-441c-9cd6-9865fca7fe8b
-  LV Name                /dev/VG_XenStorage-3ae1df17-06ee-7202-eb92-72c266134e16/VHD-6c2cd848-ac0e-441c-9cd6-9865fca7fe8b
+LV Name                /dev/VG_XenStorage-3ae1df17-06ee-7202-eb92-72c266134e16/VHD-6c2cd848-ac0e-441c-9cd6-9865fca7fe8b
 {% endhighlight %}
 
-
-2. Remove the logical volume:
+*  Remove the logical volume:
 
 {% highlight bash %}
 [root@xenserver-host ~]# lvremove /dev/VG_XenStorage-3ae1df17-06ee-7202-eb92-72c266134e16/VHD-6c2cd848-ac0e-441c-9cd6-9865fca7fe8b
-  Logical volume "VHD-6c2cd848-ac0e-441c-9cd6-9865fca7fe8b" successfully removed
+Logical volume "VHD-6c2cd848-ac0e-441c-9cd6-9865fca7fe8b" successfully removed
 {% endhighlight %}
 
-
-3. Destroy the VDI:
+*  Destroy the VDI:
 
 {% highlight bash %}
 [root@xenserver-host ~]# xe vdi-destroy uuid=6c2cd848-ac0e-441c-9cd6-9865fca7fe8b
 {% endhighlight %}
-
