@@ -1,5 +1,6 @@
 ---
 title: Direct-Attach SSD Storage – Performance & Comparisons
+layout: post
 categories: []
 date:   2015-02-15 22:37:00
 tags: Storage

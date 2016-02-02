@@ -1,5 +1,6 @@
 ---
 title: Xen Orchestra Docker Image
+layout: post
 categories: []
 date:   2015-02-26 22:37:00
 ---

@@ -1,5 +1,6 @@
 ---
 title: CentOS 7 and HA
+layout: post
 categories: []
 published: True
 tags: Storage

@@ -1,5 +1,8 @@
 source 'https://rubygems.org'
-gem 'jekyll-feed'
+
+gem 'execjs'
+gem 'therubyracer'
+#gem 'github-pages'
+gem 'jekyll', '~> 3.1', '>= 3.1.1'
 gem 'jekyll-paginate'
-gem 'jekyll', '>= 3.1.0'
-gem 'rouge'
+gem 'pygments.rb', '~> 0.6.3'

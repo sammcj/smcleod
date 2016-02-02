@@ -1,9 +1,9 @@
-.sass-cache/
-.swp
-.jekyll-metadata
-.sass-cache
+# project
 _site
+.sass-cache
+.vagrant
+
+# general
 .DS_Store
-.tmp
-.rvmrc
-Gemfile.lock
+Thumbs.db
+ehthumbs.db

@@ -1,5 +1,6 @@
 ---
 title: OS X Software Update Channels For Betas
+layout: post
 categories: []
 date:   2015-09-01 08:37:00
 published: True

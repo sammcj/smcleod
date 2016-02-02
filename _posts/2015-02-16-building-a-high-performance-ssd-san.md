@@ -1,11 +1,12 @@
 ---
 title: Building a high performance SSD SAN - Part 1
+layout: post
 categories: []
 date:   2015-02-18 22:37:00
 tags: Storage
 ---
 
-![]({{ site.url }}/images/san/graphs.png){: .center-image }
+![]({{ site.url }}/images/san/graphs.png)
 
 Over the coming month I will be architecting, building and testing a modular, high performance SSD-only storage solution.
 

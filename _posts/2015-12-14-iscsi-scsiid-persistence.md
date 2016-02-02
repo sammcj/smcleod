@@ -1,5 +1,6 @@
 ---
 title: iSCSI SCSI-ID / Serial Persistence
+layout: post
 tags: Storage
 published: True
 ---

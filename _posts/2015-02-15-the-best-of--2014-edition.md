@@ -1,5 +1,6 @@
 ---
 title: The Best Of - 2014 Edition
+layout: post
 categories: []
 date:   2014-12-25 22:37:00
 ---

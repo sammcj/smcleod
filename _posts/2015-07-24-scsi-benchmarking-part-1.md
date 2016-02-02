@@ -1,5 +1,6 @@
 ---
 title: iSCSI Benchmarking Part 1
+layout: post
 tags: []
 published: True
 tags: Storage
@@ -96,7 +97,7 @@ root@dev-samm:/mnt  # ioping pmt3/
 {% endhighlight %}
 
 
-![](https://smcleod.net/images/san/lcmcpcmk.png){: .center-image }
+![](https://smcleod.net/images/san/lcmcpcmk.png)
 
 
-![](https://smcleod.net/images/san/supermicrox2.jpg){: .center-image }
+![](https://smcleod.net/images/san/supermicrox2.jpg)

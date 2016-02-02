@@ -1,5 +1,6 @@
 ---
 title: Join us on our mission of 'Technology for Social Justice'
+layout: post
 categories: []
 tags: []
 published: True
@@ -64,4 +65,4 @@ Infoxchange is a not-for-profit organisation that delivers technology for social
 ## Contact Information:
 If you're interested in this role or want to find out more, please send your CV, LinkedIn or similar to: [recruitment@infoxchange.org](mailto:recruitment@infoxchange.org?subject=Systems Position) with 'Systems Position' in the subject line.
 
-![]({{ site.url }}/images/Infoxchange_2014_CMYK.png){: .center-image }
+![]({{ site.url }}/images/Infoxchange_2014_CMYK.png)

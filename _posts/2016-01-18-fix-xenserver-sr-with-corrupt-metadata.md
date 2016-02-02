@@ -1,5 +1,6 @@
 ---
 title: Fix XenServer SR with corrupt or invalid metadata
+layout: post
 categories: []
 
 ---

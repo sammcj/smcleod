@@ -1,5 +1,6 @@
 ---
 title: Limited Pagination in Jekyll with Liquid
+layout: post
 categories: []
 date:   2015-02-15 10:37:00
 ---

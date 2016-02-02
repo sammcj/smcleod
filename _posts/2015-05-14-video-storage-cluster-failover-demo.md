@@ -1,5 +1,6 @@
 ---
 title: Video - Storage Cluster Failover Demo
+layout: post
 categories: []
 date:   2015-05-14 22:37:00
 tags: Storage

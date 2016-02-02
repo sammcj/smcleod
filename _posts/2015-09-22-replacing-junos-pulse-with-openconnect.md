@@ -1,5 +1,6 @@
 ---
 title: Replacing Junos Pulse with OpenConnect
+layout: post
 published: True
 tags: []
 ---
