@@ -24,3 +24,6 @@ s3cmd sync --acl-public --exclude '.DS_Store' --exclude 'assets/'  _site/ s3://s
 
 # Sync: remaining files & delete removed
 s3cmd sync --acl-public --delete-removed  _site/ s3://smcleod.net/
+
+# Clean local directory
+jekyl clean
