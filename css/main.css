@@ -51,7 +51,7 @@ hr.small {
 
 .main-explain-area {
   font-family: 'Open Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;
-  padding: 15px inherit;
+  padding: 14px inherit;
 }
 
 .hideme {
@@ -215,10 +215,10 @@ footer .theme-by {
     padding: 50px 0;
   }
   footer .footer-links {
-    font-size: 18px;
+    font-size: 14px;
   }
   footer .copyright {
-    font-size: 16px;
+    font-size: 14px;
   }
 }
  
@@ -251,7 +251,7 @@ footer .theme-by {
 }
 
 .post-preview .post-title {
-  font-size: 30px;
+  font-size: 26px;
   margin-top: 0;
 }
 .post-preview .post-subtitle {
@@ -262,7 +262,7 @@ footer .theme-by {
 .post-preview .post-meta,
 .post-heading .post-meta {
   color: #808080;
-  font-size: 18px;
+  font-size: 14px;
   font-style: italic;
   margin: 0 0 10px;
 }
@@ -275,7 +275,7 @@ footer .theme-by {
 
 @media only screen and (min-width: 768px) {
   .post-preview .post-title {
-    font-size: 36px;
+    font-size: 34px;
   }
 }
 
@@ -290,18 +290,18 @@ header.header-page .page-heading {
 }
 
 header.header-post .post-heading h1 {
-  font-size: 35px;
+  font-size: 33px;
   margin-top: 0;
 }
 
 header.header-page .page-heading h1 {
-  font-size: 50px;
+  font-size: 44px;
   margin-top: 0;
 }
 
 header.header-post .post-heading .post-subheading,
 header.header-page .page-heading .page-subheading {
-  font-size: 24px;
+  font-size: 22px;
   line-height: 1.1;
   display: block;
   font-family: 'Open Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;
@@ -315,19 +315,19 @@ header.header-post .post-heading .post-subheading {
 
 @media only screen and (min-width: 768px) {
   header.header-post .post-heading h1 {
-    font-size: 50px;
+    font-size: 46px;
   }
 }
 
 @media only screen and (min-width: 768px) {
   header.header-page .page-heading h1 {
-    font-size: 80px;
+    font-size: 78px;
   }
 }
 
 .caption {
   text-align: center;
-  font-size: 14px;
+  font-size: 12px;
   padding: 10px;
   font-style: italic;
   margin: 0;
