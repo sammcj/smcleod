@@ -31,7 +31,7 @@ avatar: "/images/samm.png"
 navbar-links:
   Home: ""
   #About Me: "aboutme"
-  Archive: "https://smcleod.net/archive.html"
+  #Archive: "https://smcleod.net/archive.html"
 
 # --- Footer options --- #
 
