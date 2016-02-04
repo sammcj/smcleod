@@ -20,7 +20,9 @@ Assuming you're running Gitlab as the default user of `git` and that your reposi
 2. Add a post-recieve hook to the Gitlab project
 
         mkdir /mnt/repositories/developers/ask-izzy.git/custom_hooks/
-        echo "exec git push --quiet github &" > /mnt/repositories/developers/ask-izzy.git/custom_hooks/post-receive
+        echo "exec git push --quiet github &" > \
+            /mnt/repositories/developers/ask-izzy.git/custom_hooks/post-receive
+          
         chown -R git:git /mnt/repositories/developers/ask-izzy.git/custom_hooks
         chmod +x /mnt/repositories/developers/ask-izzy.git/custom_hooks/post-receive
 
