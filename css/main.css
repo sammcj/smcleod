@@ -251,7 +251,7 @@ footer .theme-by {
 }
 
 .post-preview .post-title {
-  font-size: 26px;
+  font-size: 22px;
   margin-top: 0;
 }
 .post-preview .post-subtitle {
@@ -275,7 +275,7 @@ footer .theme-by {
 
 @media only screen and (min-width: 768px) {
   .post-preview .post-title {
-    font-size: 34px;
+    font-size: 26px;
   }
 }
 
@@ -290,18 +290,18 @@ header.header-page .page-heading {
 }
 
 header.header-post .post-heading h1 {
-  font-size: 33px;
+  font-size: 20px;
   margin-top: 0;
 }
 
 header.header-page .page-heading h1 {
-  font-size: 44px;
+  font-size: 20px;
   margin-top: 0;
 }
 
 header.header-post .post-heading .post-subheading,
 header.header-page .page-heading .page-subheading {
-  font-size: 22px;
+  font-size: 21px;
   line-height: 1.1;
   display: block;
   font-family: 'Open Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;
@@ -315,13 +315,13 @@ header.header-post .post-heading .post-subheading {
 
 @media only screen and (min-width: 768px) {
   header.header-post .post-heading h1 {
-    font-size: 46px;
+    font-size: 34px;
   }
 }
 
 @media only screen and (min-width: 768px) {
   header.header-page .page-heading h1 {
-    font-size: 78px;
+    font-size: 44px;
   }
 }
 
