@@ -75,7 +75,7 @@ timezone: "Australia/Melbourne"
 markdown: kramdown
 highlighter: pygments
 permalink: /:categories/:title/
-paginate: 8
+paginate: 10
 
 # Default YAML values (more information on Jekyll's site)
 defaults:
