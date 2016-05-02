@@ -1,3 +1,5 @@
+#!/usr/bin/env bash
+
 # Run Jekyll
 echo "-> Running Jekyll"
 jekyll clean
