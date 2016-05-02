@@ -5,6 +5,9 @@ echo "-> Running Jekyll"
 jekyll clean
 jekyll build
 
+# Run lint tests (but don't fail on them)
+mdl _posts/*.md
+
 # Upload to S3!
 echo "\n\n-> Uploading to S3"
 
