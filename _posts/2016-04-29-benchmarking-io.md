@@ -49,7 +49,7 @@ The block size is very dependant on your workload.
 #### Random write test for IOP/s, i.e. lots of small files
 
 ```bash
-fsync;fio --randrepeat=1 --ioengine=libaio --direct=1 --gtod_reduce=1 --name=test --filename=test --bs=4k --iodepth=256 --size=4G --readwrite=randwrite --prio=1 --ramp_time=4
+sync;fio --randrepeat=1 --ioengine=libaio --direct=1 --gtod_reduce=1 --name=test --filename=test --bs=4k --iodepth=256 --size=4G --readwrite=randwrite --prio=1 --ramp_time=4
 ```
 
 #### Random Read test for IOP/s, i.e. lots of small files
