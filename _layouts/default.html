@@ -1,34 +1,14 @@
----
-common-css:
-  - "/css/bootstrap.min.css"
-  - "/css/main.css"
-common-ext-css:
-  - "/css/font-awesome.min.css"
-#common-googlefonts:
-#  - "Lora:400,700,400italic,700italic"
-#  - "Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800"
-common-js:
-  - "/js/jquery-1.11.2.min.js"
-  - "/js/bootstrap.min.js"
-  - "/js/main.js"
----
-
 <!DOCTYPE html>
-<html lang="en">
-  
-  {% include head.html %}
+<html lang="{% if page.language %}{{ page.language | downcase }}{% else %}{{ site.language | downcase }}{% endif %}">
+{% include head.html %}
 
-  <body>
-  
-    {% include nav.html %}
-
-    <div role="main" class="container main-content">
-      {{ content }}
+<body class="home-template">
+    <div class="site-wrapper">
+        {% include header.html %}
+        {{ content }}        
+        {% include footer.html %}
     </div>
+</body>
 
-    {% include footer.html %}
-  
-    {% include footer-scripts.html %}
-  
-  </body>
+<script src="{{ site.github.url | prepend: site.baseurl}}/js/global.js"></script>
 </html>

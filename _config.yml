@@ -1,103 +1,44 @@
-# --- Serving options --- #
+# Welcome to Jekyll!
+#
+# This config file is meant for settings that affect your whole blog, values
+# which you are expected to set up once and rarely need to edit after that.
+# For technical reasons, this file is *NOT* reloaded automatically when you use
+# 'jekyll serve'. If you change this file, please restart the server process.
 
-# url is the full website URL
-# baseurl is the website's URL without the hostname
+# Site settings
+title:        "smcleod.net"
+subtitle:     "chicken scratchings with Sam McLeod"
+description:  "To flinch, or twitch uncontrollably falling to sleep, or while semi-conscious..."
+keywords:     "devops,systems,engineer,linux,puppet,xen,xenserver,opensource,oss,infoxchange,melbourne,infracoders,postgresql"
+language:     "en" 
 
-# If you are building a simple GitHub user page (username.github.io) then use these settings:
-url: "https://smcleod.net"
-baseurl: ""
+baseurl:      ""
+url:          "https://smcleod.net" # the base hostname & protocol for your site. Have a look at robots.txt as well!
+permalink:    /blog/:categories/:title
+#cover:        /assets/mountain-cover.jpg
+cover:        /images/banner.jpg
 
-# If you are building a GitHub project page then use these settings:
-#url: "http://username.github.io/projectname"
-#baseurl: "/projectname"
-
-# Of course don't forget to change the username and projectname to YOUR username and project
-
-# Name of website
-title: "smcleod.net"
-
-# Short description of your site
-description: "smcleod.net - chicken scratchings - To flinch, or twitch uncontrollably falling to sleep, or while semi-conscious..."
-
-keywords: "devops,systems,engineer,linux,puppet,xen,xenserver,opensource,oss,infoxchange,melbourne,infracoders,postgresql"
-
-# --- Navigation bar options --- #
-
-# Image to show in the navigation bar - image must be a square (width = height)
-# Remove this parameter if you don't want an image in the navbar
-avatar: "/images/samm.png"
-
-  # List of links in the navigation bar
-navbar-links:
-  Home: ""
-  MondoTunes: "https://mondotunes.org"
-  #Archive: "https://smcleod.net/archive.html"
-
-# --- Footer options --- #
-
-# Change all these values or delete the ones you don't want.
-# Important: you must keep the "name" parameter, everything else you can remove
 author:
   name: Sam McLeod
-  #email: "youremail@domain.com"
   github: sammcj
   twitter: s_mcleod
-  #linkedin: yourlink  # eg. "pub/dean-attali/8/946/143"
 
-# Select which links to show in the footer
-footer-links-active:
-  rss: false
-  facebook: false
-  email: false
-  twitter: true
-  github: true
-  linkedin: false
-  stackoverflow: false
-
-# How to display the link to the website in the footer
-# Remove this if you don't want a link in the footer
-url-pretty: "smcleod.net"  # eg. "deanattali.com/beautiful-jekyll"
-
-# --- Misc --- #
-
-# Fill in your Disqus shortname (NOT the userid) if you want to support Disqus comments
 disqus: "smcleodnet"
-
-# Fill in your Google Analytics ID to track your website using GA
 google_analytics: "UA-59178670-1"
-
 excerpt_separator: "<!--more-->"
-
-# --- Don't need to touch anything below here (but you can if you want) --- #
-
-# Output options (more information on Jekyll's site)
 timezone: "Australia/Melbourne"
+paginate: 20
+
+# Build settings
 markdown: kramdown
-highlighter: pygments
-permalink: /:categories/:title/
-paginate: 10
-
-# Default YAML values (more information on Jekyll's site)
-defaults:
-  -
-    scope:
-      path: ""
-      type: "posts"
-    values:
-      comments: true  # add comments to all blog posts
-  -
-    scope:
-      path: "" # all files
-    values:
-      layout: "default"
-
-# Exclude these files from production site
-exclude:
-  - Gemfile
-  - Gemfile.lock
-  - LICENSE
-  - README.md
-  - CNAME
-  - Vagrantfile
-
-gems: [jekyll-paginate]
+kramdown:
+  syntax_highlighter_opts:
+    disable: true
+include: ['_pages','images','_files']
+exclude: [vendor]
+gems:
+  - jekyll-mentions
+  - jekyll-feed
+  - jekyll-sitemap
+  - jekyll-redirect-from
+  - jekyll-paginate
