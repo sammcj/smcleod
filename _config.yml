@@ -1,0 +1,41 @@
+# Welcome to Jekyll!
+#
+# This config file is meant for settings that affect your whole blog, values
+# which you are expected to set up once and rarely need to edit after that.
+# For technical reasons, this file is *NOT* reloaded automatically when you use
+# 'jekyll serve'. If you change this file, please restart the server process.
+
+# Site settings
+title:        "smcleod.net"
+subtitle:     "chicken scratchings with Sam McLeod"
+description:  "To flinch, or twitch uncontrollably falling to sleep, or while semi-conscious..."
+keywords:     "devops,systems,engineer,linux,puppet,xen,xenserver,opensource,oss,infoxchange,melbourne,infracoders,postgresql"
+language:     "en" 
+
+baseurl:      ""
+url:          "https://smcleod.net" # the base hostname & protocol for your site. Have a look at robots.txt as well!
+permalink:    /:categories/:title/
+cover:        /images/banner.jpg
+
+author:
+  name: Sam McLeod
+  github: sammcj
+  twitter: s_mcleod
+
+disqus: "smcleodnet"
+google_analytics: "UA-59178670-1"
+excerpt_separator: "<!--more-->"
+timezone: "Australia/Melbourne"
+
+# Build settings
+markdown: kramdown
+kramdown:
+  syntax_highlighter_opts:
+    disable: true
+include: ['_pages','images','_files']
+exclude: [vendor]
+gems:
+  - jekyll-mentions
+  - jekyll-feed
+  - jekyll-sitemap
+  - jekyll-redirect-from
