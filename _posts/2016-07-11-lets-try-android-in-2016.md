@@ -5,11 +5,11 @@ published: True
 tags: []
 ---
 
-I wanted to try Android for a couple of weeks, I like staying on top of technology, gadgets and making sure I never become a blind 'zelot' for any platform or brand.
+I wanted to try Android for a couple of weeks, I like staying on top of technology, gadgets and making sure I never become a blind 'zealot' for any platform or brand.
 
 ## The OnePlus 3
 
-I did a lot of research and decided to try the "Oneplus 3" as it was good bang-for-buck, ran the latest software had plenty of grunt wiyh the latest 8 core, high clock speed Qualcomm processor coupled with 6GB of DDR4 - the specs really are very impressive, especially for a $400USD phone.
+I did a lot of research and decided to try the "Oneplus 3" as it was good bang-for-buck, ran the latest software had plenty of grunt with the latest 8 core, high clock speed Qualcomm processor coupled with 6GB of DDR4 - the specs really are very impressive, especially for a $400USD phone.
 
 Hardware wise the unit is lovely, not as high build quality as my iPhone 6s+ but not nearly as bad as the Samsung Galaxy S3 or other Samsung devices I had tried in the past.
 
@@ -20,7 +20,7 @@ Hardware wise the unit is lovely, not as high build quality as my iPhone 6s+ but
 ### The Good
 
 - Hardware wise the OP3 felt like it was design with more care than any other Android phone I'd spent any fair amount of time.
-- USB-C conectivity is great to see on a phone, it feels right at home on the device and opens a world of oppertunities for accessories assuming the OS supports them.
+- USB-C connectivity is great to see on a phone, it feels right at home on the device and opens a world of opportunities for accessories assuming the OS supports them.
 
 ### The Bad
 
@@ -55,12 +55,12 @@ Hardware wise the unit is lovely, not as high build quality as my iPhone 6s+ but
 - The platform was ridding with Google specific apps, and it tries really hard to make you use them whenever possible.
 - Many apps required root access to the phone which is not something I wanted to do, similar applications on iOS did not require 'jailbreaking' which I have not done in many years, nor felt the need to.
 
-I had a go at disconnecting my from the clutches of google first by trying not to sign into any of their applications and disabling all the information reporting in settings, I felt like I was a bit like how iOS was back in the iPhone 3G days when you had to root the phone to do half the things you wanted.
+I had a go at disconnecting my from the clutches of Google first by trying not to sign into any of their applications and disabling all the information reporting in settings, I felt like I was a bit like how iOS was back in the iPhone 3G days when you had to root the phone to do half the things you wanted.
 
-I then ended up flashing a custom rom that was pretty much stock, but without the good stock apps, I had to install the google App Store and create an account which I think is fair enough because I couldn't be bothered dropping custom downloaded apks and using that dreadful android transfer tool from my laptop which seems to work 4/5 times you plug your phone in, but like a lot of the apps in the ecosystem - felt very 'javaish' (pun slightly intended).
+I then ended up flashing a custom rom that was pretty much stock, but without the good stock apps, I had to install the Google App Store and create an account which I think is fair enough because I couldn't be bothered dropping custom downloaded apks and using that dreadful android transfer tool from my laptop which seems to work 4/5 times you plug your phone in, but like a lot of the apps in the ecosystem - felt very 'javaish' (pun slightly intended).
 
 ## Final Words
 
-The OP3 is a _very_ impressive piece of hardware for $400 USD but I'm left with the feeling that Google's platform is fragmented and lacking workflow and I was left with the over all feeling that Google was watching my every move, I don't know if it's true or not but I certainly felt like I was Google's product, not the OS.
+The OP3 is a _very_ impressive piece of hardware for $400 USD but I'm left with the feeling that Google's platform is fragmented and lacking work-flow and I was left with the over all feeling that Google was watching my every move, I don't know if it's true or not but I certainly felt like I was Google's product, not the OS.
 
-I look forward to a usable, non-Android Linux OS image becoming available hopefully in the near future, then it'd be a handy device for teathering with and for mobile security analysis.
+I look forward to a usable, non-Android Linux OS image becoming available hopefully in the near future, then it'd be a handy device for tethering with and for mobile security analysis.
