@@ -1,8 +1,8 @@
 ---
-title: Photos From Castle Hill Winter Trip 2016
+title: Castle Hill Winter Trip 2016 Photos
 layout: post
 published: True
-tags: ['photos']
+tags: ['photos','nontech']
 ---
 
 ![](https://github.com/sammcj/smcleod_files/blob/master/images/castle_hill_2016/blue.jpg?raw=true)
