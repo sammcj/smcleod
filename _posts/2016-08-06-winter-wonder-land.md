@@ -5,6 +5,8 @@ published: True
 tags: ['photos','nontech']
 ---
 
+_note: open images in a new tab to display in full resolution_
+
 ![](https://github.com/sammcj/smcleod_files/blob/master/images/castle_hill_2016/blue.jpg?raw=true)
 
 ![](https://github.com/sammcj/smcleod_files/blob/master/images/castle_hill_2016/overandout.jpg?raw=true)
