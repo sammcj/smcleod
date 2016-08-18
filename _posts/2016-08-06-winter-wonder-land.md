@@ -21,7 +21,7 @@ _note: open images in a new tab to display in full resolution_
 
 ![](https://github.com/sammcj/smcleod_files/blob/master/images/castle_hill_2016/getyawideon.jpg?raw=true)
 
-![](https://github.com/sammcj/smcleod_files/blob/master/images/castle_hill_2016/getyawideonagain.jpg?raw=true)
+![https://www.dropbox.com/s/dhjt0g3cjakeo0y/Down%20The%20Pass%20-%20Sam%20McLeod%20-%20New%20Zealand%20-%202016.jpg?dl=1](https://github.com/sammcj/smcleod_files/blob/master/images/castle_hill_2016/getyawideonagain.jpg?raw=true)
 
 ---
 
