@@ -39,3 +39,4 @@ gems:
   - jekyll-feed
   - jekyll-sitemap
   - jekyll-redirect-from
+  - jekyll-admin
