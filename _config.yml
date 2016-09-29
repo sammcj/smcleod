@@ -40,3 +40,4 @@ gems:
   - jekyll-sitemap
   - jekyll-redirect-from
   - jekyll-admin
+  - jekyll-seo-tag
