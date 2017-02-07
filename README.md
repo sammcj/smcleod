@@ -53,7 +53,6 @@ Browse to [http://localhost:4000/admin](http://localhost:4000/admin)
 
 - Based off https://github.com/daattali/beautiful-jekyll
   - Converted to Jekyll 3
-  - Updated bootstrap
   - Moved external font and bootstrap deps to local repo
 - Currently hosted off s3, might move to GH pages now that they support Jekyll 3
 - Sits behind Cloudflare
