@@ -1,26 +1,54 @@
-## source for smcleod.net website
+Source for [https://smcleod.net](https://smcleod.net)
 
-Sam's personal blog of ramblings
+<!-- MarkdownTOC -->
+
+- [Building](#building)
+  - [Building for s3 deployment](#building-for-s3-deployment)
+- [Releasing](#releasing)
+- [Jekyl Admin CMS Editor](#jekyl-admin-cms-editor)
+- [Points of note](#points-of-note)
+
+<!-- /MarkdownTOC -->
 
 If I've added you as a contributor to this private repo it's probably because I suck at css/js and such things, feel free to log issues, enhancements, or submit PRs.
 
-## Previewing / Testing
+<a name="building"></a>
+## Building
 
-```
-git clone git@github.com:sammcj/smcleod.git
-cd smcleod
+Tested against ruby 2.3.3
+
+```bash
+gem install bundler
 bundle install
-jekyll serve
+jekyll clean
+jekyll build
 ```
 
+<a name="building-for-s3-deployment"></a>
+#### Building for s3 deployment
+
+```bash
+pip install s3cmd
+s3cmd --configure
+```
+
+<a name="releasing"></a>
 ## Releasing
 
-Requires s3 API keys etc...
-
-```
+```bash
 ./deploy_s3.sh
 ```
 
+<a name="jekyl-admin-cms-editor"></a>
+## Jekyl Admin CMS Editor
+
+```bash
+jekyll serve
+```
+
+Browse to [http://localhost:4000/admin](http://localhost:4000/admin)
+
+<a name="points-of-note"></a>
 ## Points of note
 
 - Based off https://github.com/daattali/beautiful-jekyll
