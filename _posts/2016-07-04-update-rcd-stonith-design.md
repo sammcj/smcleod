@@ -21,9 +21,9 @@ This has since been accepted and merged into Fedora's code base and as such will
 
 Many thanks to:
 
-- George Hansper (Electrical Design).
-- OurPCB (Board Production).
-- Clusterlabs, Redhat and Fedora Teams.
+- George Hansper (Assistance and peer review of electrical design).
+- OurPCB (Board fabrication).
+- Clusterlabs, Redhat and Fedora Teams, feedback and peer review.
 - John Sutton for his [original design](http://www.init.hr/dev/cluster/glue/lib/plugins/stonith/rcd_serial.c) that served as inspiration.
 
 ![]({{ site.url }}/images/v3_cable.jpg)
