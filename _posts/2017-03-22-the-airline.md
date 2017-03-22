@@ -71,7 +71,7 @@ The pilots were informed and made the decision to re-route the flight from the s
 
 Not far from the new destinations the co-pilot notices that due to the reduced fuel load, there was a warning light showing low fuel pressure, this was an issue as turning back to the original destination would result in a potential fatal situation for those on board but they'd be stretching their fuel to make the new destination safely.
 
-_Good news_, they made it to the new destination and the sick customers were treated immediately upon arrival.
+The good news is they made it to the new destination and the sick customers were treated immediately upon arrival, _this time._
 
 ---
 
