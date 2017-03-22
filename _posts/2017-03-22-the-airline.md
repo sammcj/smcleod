@@ -86,7 +86,7 @@ Sometimes helping our customers requires us to slow down and reflect to first he
 
 At times our own needs must outweigh the immediate needs of others and this may mean doing one of the hardest things in the tech industry - _saying no to new work or features_ so that you so that in the near future - you can safely say yes to not only new work, but work of greater scale and complexity.
 
-_Sidenote: Perhaps my alternative title could have been 'or how to not Smash The Pumpkins'._
+_Sidenote: Perhaps my alternative title could have been 'or how not to Smash The Pumpkins'._
 
 ---
 
