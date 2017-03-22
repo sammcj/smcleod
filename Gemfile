@@ -4,6 +4,7 @@ gem 'jekyll-feed'
 gem 'jekyll-sitemap'
 gem 'jekyll-redirect-from'
 gem 'jsonlint'
+gem 'mdl'
 gem 'jekyll-admin', group: :jekyll_plugins
 gem 'scout_apm'
 gem 'jekyll-seo-tag'

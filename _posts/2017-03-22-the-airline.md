@@ -80,9 +80,13 @@ The Airline now must make a call, does it risk its financial safety and carry mo
 
 __Or does the Airline ensure that problems can be noticed _faster_, perhaps during _the boarding process_, perhaps by by having _additional air staff positioned throughout the plane_, not just covering for sick customers but also for _detecting and maintaining any other potential problems that could occur or improvements that could be made_ throughout the plane.__
 
-What happens next time?
+## What happens next time?
 
-_Sometimes helping ourselves or the needs of the few at least in the short to midterm outweigh the needs of the many._
+Sometimes helping our customers requires us to slow down and reflect to first help ourselves before we're able to safely accept new work and challenges to help our customers.
+
+At times our own needs must outweigh the immediate needs of others and this may mean doing one of the hardest things in the tech industry - _saying no to new work or features_ so that you so that in the near future - you can safely say yes to not only new work, but work of greater scale and complexity.
+
+_Sidenote: Perhaps my alternative title could have been 'or how to not Smash The Pumpkins'._
 
 ---
 
