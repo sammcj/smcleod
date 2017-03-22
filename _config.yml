@@ -41,3 +41,5 @@ gems:
   - jekyll-redirect-from
   - jekyll-admin
   - jekyll-seo-tag
+
+theme: jekyll-theme-cayman
