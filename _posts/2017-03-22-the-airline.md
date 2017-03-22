@@ -79,7 +79,7 @@ _Good news_, they made it to the new destination and the sick customers were tre
 
 The Airline now must make a call, does it risk its financial safety and carry more fuel in the chance that a similar or equally dangerous situation might require re-routing a plane to this Airport again?
 
-__Or does the Airline ensure that problems can be noticed _faster_, perhaps during _the boarding process_, perhaps by by having _additional air staff positioned throughout the plane_, not just covering for sick customers but also for detecting and maintaining any other potential problems that could occur or improvements that could be made throughout the plane.__
+__Or does the Airline ensure that problems can be noticed _faster_, perhaps during _the boarding process_, perhaps by by having _additional air staff positioned throughout the plane_, not just covering for sick customers but also for _detecting and maintaining any other potential problems that could occur or improvements that could be made_ throughout the plane.__
 
 What happens next time?
 
