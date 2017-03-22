@@ -2,7 +2,6 @@
 title: The Aeroplane Flies High, Turns Left, Looks Right and Might Reach Its Destination
 layout: post
 published: True
-tags: ['devops','writing']
 ---
 
 _A hypothetical scenario in the form of a metaphor_
