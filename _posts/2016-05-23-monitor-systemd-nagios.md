@@ -15,7 +15,7 @@ _Want to know if a service or process fails without explicitly monitoring every 
 Requirements:
 
 - Python3 (For RHEL/CentOS 7 `yum install python34`)
-- python-nagiosplugin [My pre-built RPMs](https://packagecloud.io/app/mrmondo/centos7/search?q=python-nagiosplugin) or `pip3 install nagiosplugin`
+- python-nagiosplugin [My pre-built RPMs](https://packagecloud.io/app/s_mcleod/centos7/search?q=python-nagiosplugin) or `pip3 install nagiosplugin`
 - [PyNagSystemD](https://github.com/kbytesys/pynagsystemd/blob/master/bin/pynagsystemd.py)
 
 Screenshot:

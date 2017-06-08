@@ -39,7 +39,7 @@ Example of where our Supermicro reset hijack connects on the target node:
 
 ### Availability
 
-At present the rcd_serial STONITH agent is available as part of the [`cluster-glue`](https://packagecloud.io/mrmondo/pacemaker/packages/el/7/cluster-glue-1.0.12-1.16.1.x86_64.rpm) package, `cluster-glue` is not available in RHEL/CentOS but can be obtained from [OpenSUSE's CentOS7 Repo](ftp://rpmfind.net/linux/opensuse/factory/repo/oss/suse/x86_64/cluster-glue-1.0.12-19.2.x86_64.rpm) or [my own mirror](https://packagecloud.io/mrmondo/pacemaker). (Tested with CentOS 7).
+At present the rcd_serial STONITH agent is available as part of the [`cluster-glue`](https://packagecloud.io/s_mcleod/pacemaker/packages/el/7/cluster-glue-1.0.12-1.16.1.x86_64.rpm) package, `cluster-glue` is not available in RHEL/CentOS but can be obtained from [OpenSUSE's CentOS7 Repo](ftp://rpmfind.net/linux/opensuse/factory/repo/oss/suse/x86_64/cluster-glue-1.0.12-19.2.x86_64.rpm) or [my own mirror](https://packagecloud.io/s_mcleod/pacemaker). (Tested with CentOS 7).
 
 I have an open ticket with [RedHat](https://bugzilla.redhat.com/show_bug.cgi?id=1240868) regarding the fact that their pacemaker rpm is built without the `--with stonithd` flag which allows this to work without with their version of Pacemaker.
 

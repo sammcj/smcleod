@@ -34,17 +34,17 @@ pcs is great, but lots of very useful tools still use crmsh including the [puppe
 ### Pacemaker
 I have recompiled CentOS 7's pacemaker package changing only one thing - I added `--with-stonith` to the rpmbuild command.
 
-- This is available from my [packagecloud repo](https://packagecloud.io/mrmondo/pacemaker).
+- This is available from my [packagecloud repo](https://packagecloud.io/s_mcleod/pacemaker).
 
 ### Cluster-Glue
 OpenSUSE provides the `cluster-glue` and `cluster-glue-libs` from their [CentOS 7 repository](http://download.opensuse.org/repositories/network:/ha-clustering:/Stable/CentOS_CentOS-7/)
 
-- This is also available from my [packagecloud repo](https://packagecloud.io/mrmondo/pacemaker).
+- This is also available from my [packagecloud repo](https://packagecloud.io/s_mcleod/pacemaker).
 
 ### CRMSH
 OpenSUSE also provides `crmsh` from their [CentOS 7 repository]((http://download.opensuse.org/repositories/network:/ha-clustering:/Stable/CentOS_CentOS-7/)
 
-- This is also available from my [packagecloud repo](https://packagecloud.io/mrmondo/pacemaker).
+- This is also available from my [packagecloud repo](https://packagecloud.io/s_mcleod/pacemaker).
 
 ## Long term solution:
 
@@ -64,7 +64,7 @@ I have been logging requests to various third party RHEL repos asking if they wo
 - [RPMFusion](http://rpmfusion.org/Wishlist?action=diff&rev1=401&rev2=402)
 - [ELRepo](http://elrepo.org/bugs/view.php?id=579)
 
-If they don't feel they have the resources or want to add them in for whatever reason, I will continue to host the packages myself on [Packagecloud](https://packagecloud.io/mrmondo/pacemaker) and likely somewhere else as a fall-back.
+If they don't feel they have the resources or want to add them in for whatever reason, I will continue to host the packages myself on [Packagecloud](https://packagecloud.io/s_mcleod/pacemaker) and likely somewhere else as a fall-back.
 
 {% highlight bash %}
 Last updated: Tue Jul  7 11:59:25 2015
