@@ -34,7 +34,7 @@ kramdown:
     disable: true
 include: ['_pages','images','_files']
 exclude: [vendor]
-gems:
+plugins:
   - jekyll-mentions
   - jekyll-feed
   - jekyll-sitemap

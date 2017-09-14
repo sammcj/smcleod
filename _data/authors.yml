@@ -1,21 +1,21 @@
-default:                                                      # Fallback if nothing is specified
-  initial:      smcleod                                       # used for author lookup in posts and for first two characters in the about page back button
-  name:         "Sam McLeod"                                 # used to display author name
-  cover:        /assets/mountain-alternative-cover.jpg        # OPTIONAL: defines location of cover image in about page
-  picture:      /images/samm.png                              # OPTIONAL: author picture
-  bio:          "DevOps Guy"                                  # OPTIONAL: text below author name in posts
-  location:     Australia                                     # OPTIONAL: used to display location of the author
-  website:      "https://smcleod.net"                         # OPTIONAL: link to the author of a post
-  email:                                                      # OPTIONAL: used in the about page
-  twitter:      s_mcleod                                      # OPTIONAL: used in the about page
-  linkedin:                                                   # OPTIONAL: used in the about page
-  xing:                                                       # OPTIONAL: used in the about page
-  github:       sammcj                                        # OPTIONAL: used in the about page
-  stackoverflow:                                              # OPTIONAL: used in the about page
-  facebook:                                                   # OPTIONAL: used in the about page
-  gplus:                                                      # OPTIONAL: used in the about page
-  soundcloud:                                                 # OPTIONAL: used in the about page
-  youtube:                                                    # OPTIONAL: used in the about page
-  pinterest:                                                  # OPTIONAL: used in the about page
-  dribble:                                                    # OPTIONAL: used in the about page
-  behance:                                                    # OPTIONAL: used in the about page
+default:
+  initial: smcleod
+  name: Sam McLeod
+  cover: /assets/mountain-alternative-cover.jpg
+  picture: /images/samm.png
+  bio: DevOps Guy
+  location: Australia
+  website: 'https://smcleod.net'
+  email: null
+  twitter: s_mcleod
+  linkedin: 'https://www.linkedin.com/in/sammcj/'
+  xing: null
+  github: sammcj
+  stackoverflow: null
+  facebook: null
+  gplus: null
+  soundcloud: null
+  youtube: null
+  pinterest: null
+  dribble: null
+  behance: null
