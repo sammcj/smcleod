@@ -1,22 +1,26 @@
 # Site settings
 title: smcleod.net
-email: blog@auto.smcleod.net
-description: The personal blog of Sam McLeod
+email: blog(at)auto.smcleod.net
+description: The blog of Sam McLeod
 baseurl: ""
 url: ""
 enable_retina: true
 permalink: /:categories/:title/
 nav_list:
   Home : ['Home', '/', 'fa-home']
-  Home_Alt : ['Home Alt', '/home-alt', 'fa-home']
-  Home_Alt_2 : ['Home Alt 2', '/home-alt-2/', 'fa-home']
   About : ['About', '/about', 'fa-anchor']
-  Contact : ['Contact', '/contact', 'fa-plane']
-  Author : ['Author', '/author/michelle', 'fa-user']
-single_footer: '<p>&copy;</p>'
+  Twitter : ['Twitter', 'https://twitter.com/s_mcleod']
+  Github : ['Github', 'https://github.com/sammcj']
+  LinkedIn : ['LinkedIn', 'https://linkedin.com/sammcj']
+  # Contact : ['Contact', '/contact', 'fa-plane']
+  # Author : ['Author', '/author/michelle', 'fa-user']
+single_footer: '<p>Copyright Sam McLeod and Respective Authors</p>'
 footer_links:
     About: ['About', '/about']
-    Writer: ['Writer 2016', '/about']
+    Twitter : ['Twitter', 'https://twitter.com/s_mcleod']
+    Github : ['Github', 'https://github.com/sammcj']
+    LinkedIn : ['LinkedIn', 'https://linkedin.com/sammcj']
+    # Contact : ['Contact', '/contact', 'fa-plane']
 
 # Added by Sam
 author:

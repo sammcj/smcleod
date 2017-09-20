@@ -2,9 +2,9 @@
 layout: post
 date: 2015-02-11 08:50:28
 categories: coding js
-author_name : Dan Robberts
-author_url : /author/dan
-author_avatar: dan
+author_name : Sam McLeod
+author_url : /author/sam
+author_avatar: sam
 show_avatar : true
 read_time : 34
 feature_image: feature-laptop

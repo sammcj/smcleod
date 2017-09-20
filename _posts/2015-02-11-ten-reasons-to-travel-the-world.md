@@ -3,9 +3,9 @@ layout: post
 title:  "10 Reasons to travel the world"
 date: 2015-02-11 08:50:28
 categories: travel storytime
-author_name : Michelle Jones
-author_url : /author/michelle
-author_avatar: michelle
+author_name : Sam McLeod
+author_url : /author/sam
+author_avatar: sam
 show_avatar : true
 read_time : 34
 feature_image: feature-wolf

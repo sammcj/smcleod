@@ -2,9 +2,9 @@
 layout: post-sidebar
 date: 2015-02-10
 categories: motivation storytime
-author_name : Fred Smith
-author_url : /author/fred
-author_avatar: fred
+author_name : Sam McLeod
+author_url : /author/sam
+author_avatar: sam
 show_avatar : true
 read_time : 09
 feature_image: feature-water
