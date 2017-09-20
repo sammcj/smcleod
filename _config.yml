@@ -1,22 +1,24 @@
-# Welcome to Jekyll!
-#
-# This config file is meant for settings that affect your whole blog, values
-# which you are expected to set up once and rarely need to edit after that.
-# For technical reasons, this file is *NOT* reloaded automatically when you use
-# 'jekyll serve'. If you change this file, please restart the server process.
-
 # Site settings
-title:        "smcleod.net"
-subtitle:     "chicken scratchings with Sam McLeod"
-description:  "To flinch, or twitch uncontrollably falling to sleep, or while semi-conscious..."
-keywords:     "devops,systems,engineer,linux,puppet,xen,xenserver,opensource,oss,infoxchange,melbourne,infracoders,postgresql"
-language:     "en" 
+title: smcleod.net
+email: blog@auto.smcleod.net
+description: The personal blog of Sam McLeod
+baseurl: ""
+url: ""
+enable_retina: true
+permalink: /:categories/:title/
+nav_list:
+  Home : ['Home', '/', 'fa-home']
+  Home_Alt : ['Home Alt', '/home-alt', 'fa-home']
+  Home_Alt_2 : ['Home Alt 2', '/home-alt-2/', 'fa-home']
+  About : ['About', '/about', 'fa-anchor']
+  Contact : ['Contact', '/contact', 'fa-plane']
+  Author : ['Author', '/author/michelle', 'fa-user']
+single_footer: '<p>&copy;</p>'
+footer_links:
+    About: ['About', '/about']
+    Writer: ['Writer 2016', '/about']
 
-baseurl:      ""
-url:          "https://smcleod.net" # the base hostname & protocol for your site. Have a look at robots.txt as well!
-permalink:    /:categories/:title/
-cover:        /images/banner.jpg
-
+# Added by Sam
 author:
   name: Sam McLeod
   github: sammcj
@@ -28,19 +30,4 @@ excerpt_separator: "<!--more-->"
 timezone: "Australia/Melbourne"
 
 # Build settings
-markdown: kramdown
-kramdown:
-  syntax_highlighter_opts:
-    disable: true
-include: ['_pages','images','_files']
-exclude: [vendor]
-plugins:
-  - jekyll-mentions
-  - jekyll-feed
-  - jekyll-sitemap
-  - jekyll-redirect-from
-  - jekyll-admin
-  - jekyll-seo-tag
-
-
-theme: jekyll-theme-cayman
+# markdown: kramdown
