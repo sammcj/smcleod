@@ -1,17 +1,24 @@
 ---
 title: Speeding Up Rsync
-layout: post
-published: True
-tags: []
+date: 2016-05-03
+categories: code tech
+layout: post-sidebar
+author_name : Sam McLeod
+author_url : /author/sam
+author_avatar: sam
+show_avatar : true
+read_time : 22
+feature_image: backdrop-insidebuilding
+show_related_posts: true
 ---
 
 ## Speeding up Rsync on local (secure) networks
 
 The most common way to use Rsync is probably as such:
 
-```bash
+{% highlight bash %}
 rsync -avr user@<source>:<source_dir> <dest_dir>
-```
+{% endhighlight %}
 
 Resulting in 30-35MB/s depending on file sizes
 
@@ -20,15 +27,15 @@ and telling the SSH client to disable some unneeded features that slow things do
 
 With the settings below I have achieved 100MB/s (at work between VMs) and over 300MB/s at home between SSD drives.
 
-```bash
+{% highlight bash %}
 rsync -arv --numeric-ids --progress -e "ssh -T -c aes256-gcm@openssh.com -o Compression=no -x" user@<source>:<source_dir> <dest_dir>
-```
+{% endhighlight %}
 
 If you want to delete files at the DST that have been deleted at the SRC (obviously use with caution:
 
-```bash
+{% highlight bash %}
 rsync -arv --numeric-ids --progress -e "ssh -T -c aes256-gcm@openssh.com -o Compression=no -x" user@<source>:<source_dir> <dest_dir> --delete
-```
+{% endhighlight %}
 
 #### Points of note:
 

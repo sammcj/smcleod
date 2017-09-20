@@ -1,8 +1,15 @@
 ---
 title: The State of Android in 2016 & The OnePlus 3 Phone
-layout: post
-published: True
-tags: []
+date: 2016-07-11
+categories: tech
+layout: post-sidebar
+author_name : Sam McLeod
+author_url : /author/sam
+author_avatar: sam
+show_avatar : true
+read_time : 22
+feature_image: backdrop-bridge
+show_related_posts: true
 ---
 
 I wanted to try Android for a couple of weeks, I like staying on top of technology, gadgets and making sure I never become a blind 'zealot' for any platform or brand.

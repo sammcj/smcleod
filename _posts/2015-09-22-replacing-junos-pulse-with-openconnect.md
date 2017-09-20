@@ -1,8 +1,15 @@
 ---
 title: Replacing Junos Pulse with OpenConnect
-layout: post
-published: True
-tags: []
+date: 2015-09-22
+categories: tech security
+layout: post-sidebar
+author_name : Sam McLeod
+author_url : /author/sam
+author_avatar: sam
+show_avatar : true
+read_time : 22
+feature_image: feature-san-fran
+show_related_posts: true
 ---
 
 In an attempt to avoid using the Juniper Pulse (Now Pulse Secure) VPN client we tried OpenConnect but found that DNS did not work correctly when connected to the VPN.
@@ -12,7 +19,7 @@ Luckily the OpenConnect was not too difficult to build from source.
 
 <!--more-->
 
-# Build OpenConnect on OSX
+## Build OpenConnect on OSX
 
 ### Remove old openconnect and install deps
 

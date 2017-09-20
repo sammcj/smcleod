@@ -1,13 +1,16 @@
 ---
 title: SSD Storage - Two Months In Production
-layout: post
-published: true
-categories: []
-date:   2015-09-13 12:45:00
-tags: Storage
+date: 2015-09-13
+categories: storage tech
+layout: post-sidebar
+author_name : Sam McLeod
+author_url : /author/sam
+author_avatar: sam
+show_avatar : true
+read_time : 22
+feature_image: feature-san-fran
+show_related_posts: true
 ---
-
-## SSD Storage - Two Months In Production
 
 Over the last two months I've been runing selected IO intensive servers off the the SSD storage cluster, these hosts include (among others) our:
 
@@ -31,15 +34,15 @@ We have performed a great deal of live cluster failovers without any noticable i
 
 #### Significately higher disk and CPU throughput when required
 
-![]({{ site.url }}/images/san/pm-docker-pg-01_pgsql_query_time.jpg)
-![]({{ site.url }}/images/san/pm-docker-pg-01_iops.jpg)
+![]({{ site.url }}/img/san/pm-docker-pg-01_pgsql_query_time.jpg)
+![]({{ site.url }}/img/san/pm-docker-pg-01_iops.jpg)
 
 
 #### IOWait on VMs greatly reduced
 
-![]({{ site.url }}/images/san/iowait_gitlab.jpg)
-![]({{ site.url }}/images/san/int-redmine_iowait.jpg)
-![]({{ site.url }}/images/san/puppetmaster_disk_load.jpg)
+![]({{ site.url }}/img/san/iowait_gitlab.jpg)
+![]({{ site.url }}/img/san/int-redmine_iowait.jpg)
+![]({{ site.url }}/img/san/puppetmaster_disk_load.jpg)
 
 
 #### VM IO latency has been reduced 300-500%
@@ -62,7 +65,7 @@ After:
 4096 bytes from . (ext4 /dev/mapper/debian-root): request=5 time=0.6 ms
 {% endhighlight %}
 
-![]({{ site.url }}/images/san/gitlab_disk_latency.jpg)
+![]({{ site.url }}/img/san/gitlab_disk_latency.jpg)
 
 
 #### Increased reliability of performance data

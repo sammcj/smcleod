@@ -1,12 +1,18 @@
 ---
 title: Building a high performance SSD SAN - Part 1
-layout: post
-categories: []
-date:   2015-02-18 22:37:00
-tags: Storage
+date: 2015-02-16
+categories: storage tech
+layout: post-sidebar
+author_name : Sam McLeod
+author_url : /author/sam
+author_avatar: sam
+show_avatar : true
+read_time : 22
+feature_image: melbourne
+show_related_posts: true
 ---
 
-![]({{ site.url }}/images/san/graphs.png)
+![]({{ site.url }}/img/san/graphs.png)
 
 Over the coming month I will be architecting, building and testing a modular, high performance SSD-only storage solution.
 
@@ -100,11 +106,11 @@ The servers themselves don't need to be particularly powerful which will help us
 | **SATA SSD** | 8x SanDisk Extreme Pro SSD 480GB | The SanDisk Extreme Pro line is arguably the most reliable and highest performing SATA SSD on the market - backed by a 10 year warranty, these will be configured in RAID-10 for redundancy and performance. |
 | **OS SSD** | 2x 16GB MLC DOM | We don't need much space for the OS, just enough to keep vital logs and package updates, these will be configured in RAID-1 for redundancy.
 
-![SuperMicro SuperServer 1028R-WTNRT]({{ site.url }}/images/san/sm.jpg)
-![SuperMicro SuperServer 1028R-WTNRT - mobo]({{ site.url }}/images/san/mobo.jpg)
-![1.2TB Intel SSD DC P3600 Series]({{ site.url }}/images/san/intel.jpg)
-![SuperMicro DOM]({{ site.url }}/images/san/dom.jpg)
-![SanDisk Extreme Pro SSD 480GB]({{ site.url }}/images/san/ssd.jpg)
+![SuperMicro SuperServer 1028R-WTNRT]({{ site.url }}/img/san/sm.jpg)
+![SuperMicro SuperServer 1028R-WTNRT - mobo]({{ site.url }}/img/san/mobo.jpg)
+![1.2TB Intel SSD DC P3600 Series]({{ site.url }}/img/san/intel.jpg)
+![SuperMicro DOM]({{ site.url }}/img/san/dom.jpg)
+![SanDisk Extreme Pro SSD 480GB]({{ site.url }}/img/san/ssd.jpg)
 
 
 ## AHCI vs NVMe

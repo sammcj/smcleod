@@ -1,13 +1,19 @@
 ---
 title: Join us on our mission of 'Technology for Social Justice'
-layout: post
-categories: []
-tags: []
-published: True
-
+date: 2015-10-08
+categories: tech
+layout: post-sidebar
+author_name : Sam McLeod
+author_url : /author/sam
+author_avatar: sam
+show_avatar : true
+read_time : 22
+feature_image: feature-san-fran
+show_related_posts: true
 ---
 
 ## Seeking a Linux Systems Engineer to join our Ops team in a fast moving DevOps environment.
+
 Infoxchange is a not-for-profit organisation that delivers _technology for social justice_, we work to strengthen communities and organisations, using information technology as the primary tool to create positive social change.
 
 In this position you will be working with team members and developers to design and support continuous application delivery, performance, scale and automation.
@@ -65,4 +71,4 @@ Infoxchange is a not-for-profit organisation that delivers technology for social
 ## Contact Information:
 If you're interested in this role or want to find out more, please send your CV, LinkedIn or similar to: [recruitment@infoxchange.org](mailto:recruitment@infoxchange.org?subject=Systems Position) with 'Systems Position' in the subject line.
 
-![]({{ site.url }}/images/Infoxchange_2014_CMYK.png)
+![]({{ site.url }}/img/Infoxchange_2014_CMYK.png)

@@ -1,15 +1,22 @@
 ---
 title: Delete Government-Linked Certificate Authorities in OSX
-layout: post
-categories: []
-date:   2015-02-23 22:37:00
+date: 2015-02-23
+categories: tech macos security
+layout: post-sidebar
+author_name : Sam McLeod
+author_url : /author/sam
+author_avatar: sam
+show_avatar : true
+read_time : 22
+feature_image: backdrop-italian-steps
+show_related_posts: true
 ---
 
 [Inspired by http://zitseng.com/archives/7489](http://zitseng.com/archives/7489)
 
 * [Source (Github)](https://github.com/sammcj/delete-unknown-root-ca)
 
-## WARNINGS
+**WARNINGS**
 
 * Do not run unless you understand what this is doing
 * The CA system is broken by design - This is not a fix for that

@@ -1,8 +1,15 @@
 ---
 title: Online Conversion from SQL_ASCII to UTF8 in PostgreSQL
-layout: post
-published: True
-tags: []
+date: 2016-05-23
+categories: code tech
+layout: post-sidebar
+author_name : Sam McLeod
+author_url : /author/sam
+author_avatar: sam
+show_avatar : true
+read_time : 22
+feature_image: backdrop-feetsky
+show_related_posts: true
 ---
 
 Credits: George Hansper, Ricardo Vassellini, Evgeny Shebanin, Sam McLeod
@@ -10,13 +17,12 @@ Credits: George Hansper, Ricardo Vassellini, Evgeny Shebanin, Sam McLeod
 Scripts and source available here: [sql_ascii_to_utf8](https://github.com/sammcj/sql_ascii_to_utf8)
 
 
-The Goal
---------
+## The Goal
 
 To be able to take a Postgres Database which is in SQL_ASCII encoding, and import it into a UTF8 encoded database.
 
-The Problem
------------
+## The Problem
+
 Postresql will generate errors like this if it encounters any non-UTF8 byte-sequences during a database restore:
 
 {% highlight bash %}
@@ -65,15 +71,15 @@ where NN is the hexadecimal value of the byte.
 Not all values from `80-FF` are covered by this script. Please add your own translations as required.
 Any byte without a specific translation will be replaced with an underscore.
 
-The Triggers Problem
---------------------
+## The Triggers Problem
+
 The functions `process_non_utf8_at_column()` and `process_non_utf8_at_schema()` work just fine, BUT if there are any 'triggers' on the rows being updated, these triggers are also invoked.
 Such triggers may expect a specific set of fields to be updated together, or increment sequence numbers.
 
 Running these triggers would be an undesirable side-effect of what should be a simple text-update.
 
-The Locking Problem
--------------------
+## The Locking Problem
+
 The original solution was designed to minimise downtime, and these scripts would be ineffective if they were to lock table for anything more than a couple of seconds.
 
 Unfortunately, this is exactly what happens if triggers are diabled per-table while updating the text like this:
@@ -86,8 +92,7 @@ ALTER TABLE _some_table_ ENABLE TRIGGER ALL;
 
 Postgres wraps it all in a transaction, and locks the table until the update is complete (which can be minutes on a large table).
 
-The Non-Locking, Non-Triggering Solution
-----------------------------------------
+## The Non-Locking, Non-Triggering Solution
 
 a) Don't use `ALTER TABLE _some_table_ DISABLE TRIGGER ALL;`
    Instead, use a session-based setting:
@@ -105,8 +110,8 @@ The following script does a search for offending table,column combinations, and 
 - [run_process_non_utf8.sh](https://github.com/sammcj/sql_ascii_to_utf8/blob/master/run_process_non_utf8.sh)
 
 
-Sample DB and Outputs
----------------------
+## Sample DB and Outputs
+
 A test database can be created using the script:
 - [create_test_sql_ascii.sh](https://github.com/sammcj/sql_ascii_to_utf8/blob/master/create_test_sql_ascii.sh)
 

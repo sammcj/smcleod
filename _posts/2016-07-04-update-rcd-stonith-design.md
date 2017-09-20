@@ -1,9 +1,15 @@
 ---
 title: Update Delayed Serial STONITH Design
-layout: post
-tags: []
-published: True
-tags: Storage
+date: 2016-07-04
+categories: storage tech
+layout: post-sidebar
+author_name : Sam McLeod
+author_url : /author/sam
+author_avatar: sam
+show_avatar : true
+read_time : 22
+feature_image: backdrop-buildingsharlm
+show_related_posts: true
 ---
 
 _note: This is a follow up post from [2015-07-21-rcd-stonith]({% post_url 2015-07-21-rcd-stonith %})_
@@ -26,5 +32,5 @@ Many thanks to:
 - Clusterlabs, Redhat and Fedora Teams, feedback and peer review.
 - John Sutton for his [original design](http://www.init.hr/dev/cluster/glue/lib/plugins/stonith/rcd_serial.c) that served as inspiration.
 
-![]({{ site.url }}/images/v3_cable.jpg)
-![]({{ site.url }}/images/rcd_serial_v3_diagram.png)
+![]({{ site.url }}/img/v3_cable.jpg)
+![]({{ site.url }}/img/rcd_serial_v3_diagram.png)

@@ -1,24 +1,32 @@
 ---
 title: The Aeroplane Flies High, Turns Left, Looks Right and Might Reach Its Destination
-layout: post
-published: True
+date: 2017-03-22
+categories: thoughts
+layout: post-sidebar
+author_name : Sam McLeod
+author_url : /author/sam
+author_avatar: sam
+show_avatar : true
+read_time : 22
+feature_image: backdrop-feetsky
+show_related_posts: true
 ---
 
 _A hypothetical scenario in the form of a metaphor_
 
-# The Airline
+## The Airline
 
 There is a Airline with good morals and prides itself on it's ability to provide services to it's customers.
 
-##### The Why
+#### The Why
 
 The Airline exists for its strong moral values and believes everyone should have affordable, safe and reliable flights, no matter their income or situation.
 
-##### The How
+#### The How
 
 The Airline doesn't want to over-charge their customers or any potential new customers, they care about their customers as much as they do the quality of their services and their ability to provide them.
 
-##### The What
+#### The What
 
 An Airline wants to expand and needs to make more turnover in order to have a better reach to those in need of their affordable and services.
 
@@ -26,11 +34,11 @@ An Airline wants to expand and needs to make more turnover in order to have a be
 
 ### Finding a Solution - Part 1
 
-##### The Why
+#### The Why
 
 In order to help more customers while keeping in line with the company’s good morals, the Airline can't increase costs to their much cared about customers, but they need to reach more of those in need because there are many Airports that aren't on their routes and more people are wanting to use their fantastic service every day.
 
-##### The How
+#### The How
 
 The airline decides that it can carry more customers on its flights by either decreasing leg room slightly to add additional seating rows to each flight.
 
@@ -38,7 +46,7 @@ It also realises that it doesn't truly need 8 air staff to do the pre-flight boo
 
 The airline also decides to carry slightly less fuel to reduce weight as well as saving on petrol emissions per passenger.
 
-##### The What
+#### The What
 
 The Airline cuts back to the 6 air staff and slightly reduces their fuel load but still well within safe operating limits to their destinations.
 
@@ -48,15 +56,15 @@ The Airline is now able to afford to operate several additional flights and can 
 
 ### Finding a Solution - Part 2
 
-##### The Why
+#### The Why
 
 The Airline is now able to take more people happily each day, but there’s still a lot of destinations they don't land in and people are asking for their services at those locations.
 
-##### The How
+#### The How
 
 After careful research the Airline needs additional means to carry more people and reach their destinations and perhaps they can add several additional planes to their fleet.
 
-##### The What
+#### The What
 
 The Airline invests in larger, more modern planes that are a lot faster, greener and have a much lower failure rate all while offering a wider verity of services to their customers and they're visiting more airports than previously.
 
@@ -74,13 +82,13 @@ The good news is they made it to the new destination and the sick customers were
 
 ---
 
-# The Future
+## The Future
 
 The Airline now must make a call, does it risk its financial safety and carry more fuel in the chance that a similar or equally dangerous situation might require re-routing a plane to this Airport again?
 
 __Or does the Airline ensure that problems can be noticed _faster_, perhaps during _the boarding process_, perhaps by by having _additional air staff positioned throughout the plane_, not just covering for sick customers but also for _detecting and maintaining any other potential problems that could occur or improvements that could be made_ throughout the plane.__
 
-## What happens next time?
+### What happens next time?
 
 Sometimes helping our customers requires us to slow down and reflect to first help ourselves before we're able to safely accept new work and challenges to help our customers.
 

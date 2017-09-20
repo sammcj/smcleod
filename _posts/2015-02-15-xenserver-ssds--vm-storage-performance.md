@@ -1,12 +1,18 @@
 ---
 title: 'XenServer, SSDs & VM Storage Performance'
-layout: post
-categories: []
-date:   2015-02-17 22:37:00
-tags: Storage
+date: 2015-02-14
+categories: storage tech talks
+layout: post-sidebar
+author_name : Sam McLeod
+author_url : /author/sam
+author_avatar: sam
+show_avatar : true
+read_time : 22
+feature_image: backdrop-feetsky
+show_related_posts: true
 ---
 
-##Intro
+## Intro
 
 At Infoxchange we use XenServer as our Virtualisation of choice.
 There are many reasons for this including:
@@ -28,7 +34,7 @@ The latest version (6.5) about to be released is still based on Centos 5 and sti
 
 Despite this, XenServer still manages to easily outperform VMware in both storage and CPU performance while costing… nothing unless you purchase support!
 
-##Direct disk access
+## Direct disk access
 
 It turns out, that you can add custom udev rules to pass through devices directly to VMs.
 
@@ -63,9 +69,9 @@ I’ve then:
 * Mounted /home as an EXT4 – This is used by Gitlab-CI to checkout the pre-reqs for each build.
 
 
-##Performance (benchmarks)
+## Performance (benchmarks)
 
-###Observations
+### Observations
 
 The HP P410i RAID card on the old G6 DL360’s I am using for this is far underpowered and is unable to perform anywhere near the SSD’s rated speeds.
 Direct disk access is 2-6 times ‘faster’ than XenServer’s standard LVM or EXT3 storage.
@@ -78,7 +84,7 @@ This is an old server, we’re not talking your latest and greatest hardware her
 With TRIM being unavailable when using RAID, it is expected that the write performance will decrease somewhat overtime as the disks fill up as the disks will have to perform a ‘READ, ERASE, WRITE’ rather than a simple WRITE, To aid the lack of TRIM, I have left more than 25% of the disks unused as we simply don’t need 1TB of SSD storage on each of the hosts.
 We have some 1GB cache cards arriving in the following weeks which we will upgrade to from the 512MB cards presently installed – I expect this to significantly further improve performance.
 
-##Hardware:
+## Hardware:
 
 * Refurbished HP DL360 G6 (2010 model).
 * 2x 8 Core Xeon x5550 w/ hyperthreading, 8 cores presented to domU.
@@ -94,11 +100,11 @@ We have some 1GB cache cards arriving in the following weeks which we will upgra
 
 EXT4 Bonnie++ Results w/ 2x SSD in RAID1, XenServer 6.5 RC1, LVM:
 
-![]({{ site.url }}/images/xenserver/dl360-lvm.jpg)
+![]({{ site.url }}/img/xenserver/dl360-lvm.jpg)
 
 EXT4 Bonnie++ Results w/ 2x SSD in RAID1, XenServer 6.5 RC1, Direct Disk:
 
-![]({{ site.url }}/images/xenserver/dl360-dd.jpg)
+![]({{ site.url }}/img/xenserver/dl360-dd.jpg)
 
 EXT4 dd Results w/ 2x SSD in RAID0, XenServer 6.5 RC1, LVM:
 
@@ -125,7 +131,7 @@ Future Benchmarking Steps
 * Try with our new Gen8 BL460c blade servers, with locally attached P420i RAID controllers and 2GB cache.
 * Try linux software RAID with direct disks.
 
-##XenServer’s Future
+## XenServer’s Future
 
 Filesystems
 

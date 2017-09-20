@@ -1,10 +1,15 @@
 ---
 title: OS X Software Update Channels For Betas
-layout: post
-categories: []
-date:   2015-09-01 08:37:00
-published: True
-
+date: 2015-09-01
+categories: tech macos
+layout: post-sidebar
+author_name : Sam McLeod
+author_url : /author/sam
+author_avatar: sam
+show_avatar : true
+read_time : 22
+feature_image: backdrop-austria
+show_related_posts: true
 ---
 
 ### Set update channel to receive developer beta update

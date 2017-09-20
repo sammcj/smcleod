@@ -1,23 +1,24 @@
 ---
 title: Benchmarking IO with FIO
-layout: post
-published: True
-tags: []
+date: 2016-04-29
+categories: code tech storage
+layout: post-sidebar
+author_name : Sam McLeod
+author_url : /author/sam
+author_avatar: sam
+show_avatar : true
+read_time : 22
+feature_image: backdrop-italian-steps
+show_related_posts: true
 ---
 
 ## This is a quick tldr; there are _many_ other situations and options you could consider.
-
-
 
 * [FIO man page](http://linux.die.net/man/1/fio)
 * IOP/s = Input or Output operations per second
 * Throughput = How many MB/s can you read/write continuously
 
-
-
 ### Variables worth tuning based on your situation:
-
-
 
 ##### `--iodepth`
 
@@ -48,66 +49,66 @@ The block size is very dependant on your workload.
 
 #### Random write test for IOP/s, i.e. lots of small files
 
-```bash
+{% highlight bash %}
 sync;fio --randrepeat=1 --ioengine=libaio --direct=1 --gtod_reduce=1 --name=test --filename=test --bs=4k --iodepth=256 --size=4G --readwrite=randwrite --ramp_time=4
-```
+{% endhighlight %}
 
 #### Random Read test for IOP/s, i.e. lots of small files
 
-```bash
+{% highlight bash %}
 sync;fio --randrepeat=1 --ioengine=libaio --direct=1 --gtod_reduce=1 --name=test --filename=test --bs=4k --iodepth=256 --size=4G --readwrite=randread --ramp_time=4
-```
+{% endhighlight %}
 
 #### Sequential write test for IOP/s, i.e. one large file
 
-```bash
+{% highlight bash %}
 sync;fio --randrepeat=1 --ioengine=libaio --direct=1 --gtod_reduce=1 --name=test --filename=test --bs=4k --iodepth=256 --size=4G --readwrite=write --ramp_time=4
-```
+{% endhighlight %}
 
 #### Sequential Read test for IOP/s, i.e. one large file
 
-```bash
+{% highlight bash %}
 sync;fio --randrepeat=1 --ioengine=libaio --direct=1 --gtod_reduce=1 --name=test --filename=test --bs=4k --iodepth=256 --size=4G --readwrite=read --ramp_time=4
-```
+{% endhighlight %}
 
 #### Random write test for throughput, i.e. lots of small files
 
-```bash
+{% highlight bash %}
 sync;fio --randrepeat=1 --ioengine=libaio --direct=1 --gtod_reduce=1 --name=test --filename=test --bs=4M --iodepth=256 --size=10G --readwrite=randwrite --ramp_time=4
-```
+{% endhighlight %}
 
 #### Random Read test for throughput
 
-```bash
+{% highlight bash %}
 sync;fio --randrepeat=1 --ioengine=libaio --direct=1 --gtod_reduce=1 --name=test --filename=test --bs=4M --iodepth=256 --size=10G --readwrite=randread --ramp_time=4
-```
+{% endhighlight %}
 
 #### Sequential write test for throughput, i.e. one large file
 
-```bash
+{% highlight bash %}
 sync;fio --randrepeat=1 --ioengine=libaio --direct=1 --gtod_reduce=1 --name=test --filename=test --bs=4M --iodepth=256 --size=10G --readwrite=write --ramp_time=4
-```
+{% endhighlight %}
 
 #### Sequential Read test for throughput, i.e. one large file
 
-```bash
+{% highlight bash %}
 sync;fio --randrepeat=1 --ioengine=libaio --direct=1 --gtod_reduce=1 --name=test --filename=test --bs=4M --iodepth=256 --size=10G --readwrite=read --ramp_time=4
-```
+{% endhighlight %}
 
 #### Testing IO latency without fio
 
-```bash
+{% highlight bash %}
 samm@int-backup-01:/mnt/store1  # ioping . # old backup server
 4096 bytes from . (ext4 /dev/mapper/store1-36TB): request=1 time=0.2 ms
 4096 bytes from . (ext4 /dev/mapper/store1-36TB): request=2 time=0.1 ms
 4096 bytes from . (ext4 /dev/mapper/store1-36TB): request=3 time=0.9 ms
-```
+{% endhighlight %}
 
 vs
 
-```
+{% highlight bash %}
 samm@int-backup-02:/mnt/store1  # ioping . # new backup server
 4 KiB from . (ext4 /dev/md10): request=1 time=88 us
 4 KiB from . (ext4 /dev/md10): request=2 time=103 us
 4 KiB from . (ext4 /dev/md10): request=3 time=102 us
-```
+{% endhighlight %}

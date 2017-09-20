@@ -1,13 +1,20 @@
 ---
 title: The Best Of - 2014 Edition
-layout: post
-categories: []
-date:   2014-12-25 22:37:00
+date: 2015-01-01
+categories: tech macos
+layout: post-sidebar
+author_name : Sam McLeod
+author_url : /author/sam
+author_avatar: sam
+show_avatar : true
+read_time : 22
+feature_image: melbourne
+show_related_posts: true
 ---
 
 At the end of every year I note down a summary of the best applications, hardware & websites I've enjoyed & depended on throughout the year (and often for some time before).
 
-##Software / General Use:
+## Software / General Use:
 
 * Fastmail - https://www.fastmail.com
 * Evernote - https://evernote.com
@@ -18,7 +25,7 @@ At the end of every year I note down a summary of the best applications, hardwar
 * Calibre - http://calibre-ebook.com
 <!--more-->
 
-##Software / Geek Use:
+## Software / Geek Use:
 
 * Sublime Text - http://www.sublimetext.com/3
 * Homebrew - http://brew.sh
@@ -30,7 +37,7 @@ At the end of every year I note down a summary of the best applications, hardwar
 * Exercism.io - http://exercism.io
 * Sickbeard + Headphones + Couchpotato + Sabnzbd - http://www.totalhtpc.com/ultimate-usenet-guide.html
 
-##Software / Mobile:
+## Software / Mobile:
 
 * Tweetbot - http://tapbots.com/software/tweetbot
 * Pushover - http://pushover.net
@@ -50,7 +57,7 @@ At the end of every year I note down a summary of the best applications, hardwar
 * Nuzzel (Only got onto this today) - https://itunes.apple.com/au/app/nuzzel-news-from-your-friends/id692285770?mt=8
 * Alien Blue - http://www.reddit.com/r/alienblue
 
-##Software / SysAdmin or DevOps Specific:
+## Software / SysAdmin or DevOps Specific:
 
 * Gitlab - http://gitlab.org
 * Gitlab-CI - https://about.gitlab.com/gitlab-ci
@@ -78,7 +85,7 @@ At the end of every year I note down a summary of the best applications, hardwar
 * PWSafe - https://itunes.apple.com/au/app/pwsafe-password-safe-compatible/id520993579?mt=12
 * Supervisord - http://supervisord.org
 
-##Websites:
+## Websites:
 
 * Last.fm - http://www.last.fm/user/sammcj2000
 * Feedly - https://feedly.com
@@ -86,7 +93,7 @@ At the end of every year I note down a summary of the best applications, hardwar
 * Lucidchart - http://lucidchart.com/
 * MondoTunes (Might be a little biased here!) - http://mondotunes.org
 
-##Hardware:
+## Hardware:
 
 * Das Ultimate 4- http://www.daskeyboard.com
 * Logitech Performance MX - http://www.logitech.com/en-au/product/performance-mouse-mx
@@ -96,7 +103,7 @@ At the end of every year I note down a summary of the best applications, hardwar
 * Parani SD1000 Bluetooth Serial Adapter - http://www.senaindustrial.com/products/industrial_bluetooth/sd1000.php
 * SanDisk Extreme Pro 480GB SSD - http://www.newegg.com/Product/Product.aspx?Item=N82E16820171999
 
-##Other / Non-tech:
+## Other / Non-tech:
 
 * All Day Socks - http://alldaysocks.com
 * Sennheiser Amperior On-Ear Headphones - http://www.head-fi.org/products/sennheiser-amperior-on-ear-headphones
@@ -107,7 +114,7 @@ At the end of every year I note down a summary of the best applications, hardwar
 * Kindle Paperwhite - http://www.amazon.com.au/gp/feature.html?docId=3077740006
 * Nerf Jolt - http://nerf.wikia.com/wiki/Jolt_EX-1
 
-##Books:
+## Books:
 
 * The Phoenix Project (Reread this year for the 3rd time) - http://itrevolution.com/books/phoenix-project-devops-book
 * Surely You're Joking Mr Feynman! - https://www.goodreads.com/book/show/5544.Surely_You_re_Joking_Mr_Feynman_

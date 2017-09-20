@@ -1,9 +1,15 @@
 ---
 title: CentOS 7 and HA
-layout: post
-categories: []
-published: True
-tags: Storage
+date: 2015-07-07
+categories: storage tech
+layout: post-sidebar
+author_name : Sam McLeod
+author_url : /author/sam
+author_avatar: sam
+show_avatar : true
+read_time : 22
+feature_image: backdrop-colosseum-rome
+show_related_posts: true
 ---
 
 First some background...
@@ -14,10 +20,10 @@ In the past I was very disappointed with RHEL/CentOS 5 / 6 and (until now) have 
 
 **_I feel that CentOS / RHEL 7 has changed the game.*_**
 
-######*(When combined with ElRepo or EPEL that provide wide array of modern packages)
-It is simply light years ahead of it's predecessor, resolves a lot of the issues we've had with Debian Jessie and after thorough testing of Debian 7,8 Centos 6,7 I have decided to employ CentOS 7 as the base OS for the storage cluster.
+(When combined with ElRepo or EPEL that provide wide array of modern packages)
 
-CentOS / RHEL 7 are missing a few critical packages in the cluster HA space.
+It is simply light years ahead of it's predecessor, resolves a lot of the issues we've had with Debian Jessie and after thorough testing of Debian 7,8 Centos 6,7 I have decided to employ CentOS 7 as the base OS for the storage cluster.
+CentOS / RHEL 7 are missing a few critical packages in the cluster HA space
 
 1. The available pacemaker package was built without `--with-stonith`.
 This means there is no support for legacy STONITH plugins, many of these are heavily relied upon and do not have replacements in the new plugin system.

@@ -1,14 +1,20 @@
 ---
 title: Delayed Serial STONITH
-layout: post
-tags: []
-published: True
-tags: Storage
+date: 2015-07-21
+categories: storage tech
+layout: post-sidebar
+author_name : Sam McLeod
+author_url : /author/sam
+author_avatar: sam
+show_avatar : true
+read_time : 22
+feature_image: feature-san-fran
+show_related_posts: true
 ---
 
 A modified version of [John Sutton's](http://www.scl.co.uk/rcd_serial/README.rcd_serial) rcd_serial cable coupled with our Supermicro reset switch hijacker:
 
-![]({{ site.url }}/images/san/rcd_serial.jpg)
+![]({{ site.url }}/img/san/rcd_serial.jpg)
 
 This works with the rcd_serial fence agent [plugin](https://github.com/ClusterLabs/fence-agents/blob/master/fence/agents/rcd_serial/fence_rcd_serial.py).
 
@@ -31,11 +37,11 @@ Essentially the most common STONITH agent type in use is probably those that con
 
 [Adam Coy's](https://www.linkedin.com/pub/adam-coy/5/989/888) slightly modified version of the circuit that includes an indicator LED and an [optocoupler](https://en.wikipedia.org/wiki/Opto-isolator):
 
-![]({{ site.url }}/images/san/optoCircuit.jpg)
+![]({{ site.url }}/img/san/optoCircuit.jpg)
 
 Example of where our Supermicro reset hijack connects on the target node:
 
-![]({{ site.url }}/images/san/reboot_jumper.jpg)
+![]({{ site.url }}/img/san/reboot_jumper.jpg)
 
 ### Availability
 

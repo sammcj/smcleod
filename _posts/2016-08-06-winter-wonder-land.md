@@ -1,8 +1,16 @@
 ---
 title: Castle Hill Winter Trip 2016 Photos
 layout: post
-published: True
-tags: ['photos','nontech']
+categories: thoughts photos
+date: 2016-08-06
+layout: post-sidebar
+author_name : Sam McLeod
+author_url : /author/sam
+author_avatar: sam
+show_avatar : true
+read_time : 22
+feature_image: backdrop-austria
+show_related_posts: true
 ---
 
 _note: open images in a new tab to display in full resolution_

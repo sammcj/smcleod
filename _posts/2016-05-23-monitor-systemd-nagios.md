@@ -1,8 +1,15 @@
 ---
 title: Monitoring SystemD Units With Nagios
-layout: post
-published: True
-tags: []
+date: 2016-05-23
+categories: tech
+layout: post-sidebar
+author_name : Sam McLeod
+author_url : /author/sam
+author_avatar: sam
+show_avatar : true
+read_time : 22
+feature_image: backdrop-colosseum-rome
+show_related_posts: true
 ---
 
 _Ever forgotten to add a critical service to monitoring?_

@@ -1,8 +1,15 @@
 ---
 title: Xen Orchestra Docker Image
-layout: post
-categories: []
-date:   2015-02-26 22:37:00
+date: 2015-05-26
+categories: tech
+layout: post-sidebar
+author_name : Sam McLeod
+author_url : /author/sam
+author_avatar: sam
+show_avatar : true
+read_time : 22
+feature_image: backdrop-insidebuilding
+show_related_posts: true
 ---
 
 Docker config to setup XO which is a web interface to visualize and administrate your XenServer (or XAPI enabled) hosts
