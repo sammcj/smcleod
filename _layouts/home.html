@@ -11,7 +11,7 @@ layout: with-sidebar
     {% for post in site.posts %}
 
     <article class="post">
-        <div class="post-preview col-xs-10  no-gutter">
+        <div class="post-preview col-xs-40  no-gutter">
             <h2><a href="{{ post.url | prepend: site.baseurl }}">{{ post.title }}</a></h2>
 
             {{ post.excerpt | truncatewords: 28 }}

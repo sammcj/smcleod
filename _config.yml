@@ -12,15 +12,12 @@ nav_list:
   Twitter : ['Twitter', 'https://twitter.com/s_mcleod']
   Github : ['Github', 'https://github.com/sammcj']
   LinkedIn : ['LinkedIn', 'https://linkedin.com/sammcj']
-  # Contact : ['Contact', '/contact', 'fa-plane']
-  # Author : ['Author', '/author/michelle', 'fa-user']
 single_footer: '<p>Copyright Sam McLeod and Respective Authors</p>'
 footer_links:
     About: ['About', '/about']
     Twitter : ['Twitter', 'https://twitter.com/s_mcleod']
     Github : ['Github', 'https://github.com/sammcj']
     LinkedIn : ['LinkedIn', 'https://linkedin.com/sammcj']
-    # Contact : ['Contact', '/contact', 'fa-plane']
 
 # Added by Sam
 author:
