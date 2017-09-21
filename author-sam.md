@@ -12,6 +12,8 @@ title: Sam McLeod
 
 # Sam McLeod
 
-Lorem ipsum dolor sit amet, consectetur adipisicing elit. Perferendis necessitatibus repellat et similique, assumenda dolor possimus sunt repellendus ratione quas nihil expedita maiores, ex id odio molestiae ipsam officiis magni!
+- [Twitter](https://twitter.com/s_mcleod)
+- [Github](https://github.com/sammcj)
+- [LinkedIn](https://linkedin.com/sammcj)
 
-Lorem ipsum dolor sit amet, consectetur adipisicing elit. Perferendis necessitatibus repellat et similique, assumenda dolor possimus sunt repellendus ratione quas nihil expedita maiores, ex id odio molestiae ipsam officiis magni!
+TODO - About page

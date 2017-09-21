@@ -8,8 +8,7 @@ author_url : /author/sam
 author_avatar: sam
 author_avatar: sam
 # show_related_posts: true
-show_avatar : true
-
+show_avatar : false
 feature_image: backdrop-bridge
 
 ---

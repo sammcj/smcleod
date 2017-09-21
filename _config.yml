@@ -8,13 +8,10 @@ enable_retina: true
 permalink: /:categories/:title/
 nav_list:
   Home : ['Home', '/', 'fa-home']
-  About : ['About', '/about', 'fa-anchor']
-  Twitter : ['Twitter', 'https://twitter.com/s_mcleod']
-  Github : ['Github', 'https://github.com/sammcj']
-  LinkedIn : ['LinkedIn', 'https://linkedin.com/sammcj']
+  About : ['About / Contact', '/author/sam/', 'fa-anchor']
 single_footer: '<p>Copyright Sam McLeod and Respective Authors</p>'
 footer_links:
-    About: ['About', '/about']
+    About: ['About', '/author/sam/']
     Twitter : ['Twitter', 'https://twitter.com/s_mcleod']
     Github : ['Github', 'https://github.com/sammcj']
     LinkedIn : ['LinkedIn', 'https://linkedin.com/sammcj']

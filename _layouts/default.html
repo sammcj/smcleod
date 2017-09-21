@@ -2,9 +2,9 @@
 <html class="no-js">
 
   {% include head.html %}
-
+  <!-- {% include nav-no-js.html %} -->
   <body class="{% if page.bodyclass %}{{ page.bodyclass }}{% endif %}">
-    {% include nav-no-js.html %}
+
     {{ content }}
 
     <script src='{{ "/js/vendor/modernizr.custom.32229-2.8-respondjs-1-4-2.js" | prepend: site.baseurl }}'></script>
