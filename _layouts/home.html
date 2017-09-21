@@ -6,7 +6,7 @@ layout: with-sidebar
     <!-- <a href="#" class="select-categories">Categories</a> -->
 </div>
 
-<div class="home-page-posts animated fadeIn ">
+<div class="home-page-posts">
     {% for post in paginator.posts %}
 
     <article class="post">
@@ -31,7 +31,7 @@ layout: with-sidebar
 
 </div><!-- Home page posts -->
 
-<div class="home-page-categories hide animated fadeIn ">
+<div class="home-page-categories hide">
     <div class="category row">
         <section>
             {% for category in site.categories %}
