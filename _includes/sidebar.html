@@ -1,4 +1,4 @@
-<section class="sidebar col-md-5 col-sm-5" style='background-image: url({{"/img/" | append: page.feature_image | prepend: site.baseurl }}.jpg);'>
+<!-- <section class="sidebar col-md-5 col-sm-5" style='background-image: url({{"/img/" | append: page.feature_image | prepend: site.baseurl }}.jpg);'>
 
     <span class="menu-trigger animated fadeInDown">
         <span class="bar"></span>
@@ -21,4 +21,12 @@
         </div>
         {% endif %}
     </div>
-</section><!-- end sidebar -->
+</section>-->
+
+<div class="no-js-menu clearfix">
+    <ul>
+        {% for page in site.nav_list %}
+            <li><i class="fa {{ page[1][2] }}"></i><a href="{{ page[1][1] | prepend: site.baseurl }}">{{ page[1][0] }}</a></li>
+        {% endfor %}
+    </ul>
+</div>

@@ -3,13 +3,20 @@ layout: default
 ---
 
 <header>
-    <span class="menu-trigger animated fadeInDown">
+<!--     <span class="menu-trigger animated fadeInDown">
         <span class="bar"></span>
         <span class="bar"></span>
         <span class="bar"></span>
     </span>
 
-    {% include nav.html %}
+    {% include nav.html %} -->
+    <div class="no-js-menu clearfix">
+        <ul>
+            {% for page in site.nav_list %}
+                <li><i class="fa {{ page[1][2] }}"></i><a href="{{ page[1][1] | prepend: site.baseurl }}">{{ page[1][0] }}</a></li>
+            {% endfor %}
+        </ul>
+    </div>
 </header>
 
 <main class="container">
