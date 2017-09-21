@@ -1,3 +1,17 @@
+---
+title: Return Of The RSS
+date: 2017-09-22
+categories: thoughts
+layout: post-sidebar
+author_name : Sam McLeod
+author_url : /author/sam
+author_avatar: sam
+author_avatar: sam
+# show_related_posts: true
+show_avatar : false
+feature_image: melbourne
+---
+
 ### How do you keep track of news, blogs and software releases?
 
 http://feedly.com/smcleod/blogs
