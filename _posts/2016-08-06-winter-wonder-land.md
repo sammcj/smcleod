@@ -1,7 +1,7 @@
 ---
 title: Castle Hill Winter Trip 2016 Photos
 layout: post
-categories: thoughts photos
+categories: photos
 date: 2016-08-06
 layout: post-sidebar
 author_name : Sam McLeod
