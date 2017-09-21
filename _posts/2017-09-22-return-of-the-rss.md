@@ -14,7 +14,7 @@ feature_image: melbourne
 
 ### How do you keep track of news, blogs and software releases?
 
-http://feedly.com/smcleod/blogs
+[My Feedly RSS Feed](http://feedly.com/smcleod/blogs)
 
 That's a link to the various sites, blogs, updates that I subscribe to, Phronix and Ars are both a bit noisey but other than them the rest I take good care to keep up with.
 
