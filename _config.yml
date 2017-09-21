@@ -17,6 +17,9 @@ footer_links:
     LinkedIn : ['LinkedIn', 'https://linkedin.com/sammcj']
 
 # Added by Sam
+paginate: 8
+plugins: [jekyll-paginate]
+paginate_path: "/page:num"
 author:
   name: Sam McLeod
   github: sammcj
