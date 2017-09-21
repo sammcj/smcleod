@@ -9,7 +9,7 @@
                 <p><a href="{{ page.author_url  | prepend: site.baseurl }}">{{ page.author_name | capitalize }}</a> in <a href='{{ "/category/" | append: page.categories.first | prepend: site.baseurl }}'>{{ page.categories.first | capitalize }}</a></p>
 
                 <div class="other-catergories">
-                    <h3>Also found in</h3>
+<!--                     <h3>Also found in</h3>
 
                     <ul>
                         {% for category in page.categories %}
@@ -18,7 +18,7 @@
                             {% if forloop.last %}{% else %},{% endif %}
                         </li>
                         {% endfor %}
-                    </ul>
+                    </ul> -->
                 </div>
 
             </div>

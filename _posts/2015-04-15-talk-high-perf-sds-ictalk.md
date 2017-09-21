@@ -1,15 +1,17 @@
 ---
 title: Talk - High Performance Software Defined Storage
 date: 2015-04-15
-categories: storage tech talks
+categories: tech
 layout: post-sidebar
 author_name : Sam McLeod
 author_url : /author/sam
 author_avatar: sam
+author_avatar: sam
+# show_related_posts: true
 show_avatar : true
-read_time : 22
+
 feature_image: backdrop-old-bicycle
-show_related_posts: true
+
 ---
 
 A high level talk from Infracoders Melbourne on 12/04/2015.

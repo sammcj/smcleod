@@ -1,15 +1,17 @@
 ---
 title: Benchmarking IO with FIO
 date: 2016-04-29
-categories: code tech storage
+categories: tech
 layout: post-sidebar
 author_name : Sam McLeod
 author_url : /author/sam
 author_avatar: sam
+author_avatar: sam
+# show_related_posts: true
 show_avatar : true
-read_time : 22
+
 feature_image: backdrop-italian-steps
-show_related_posts: true
+
 ---
 
 ## This is a quick tldr; there are _many_ other situations and options you could consider.

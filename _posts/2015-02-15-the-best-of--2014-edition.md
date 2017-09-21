@@ -1,15 +1,17 @@
 ---
 title: The Best Of - 2014 Edition
 date: 2015-01-01
-categories: tech macos
+categories: tech
 layout: post-sidebar
 author_name : Sam McLeod
 author_url : /author/sam
 author_avatar: sam
+author_avatar: sam
+# show_related_posts: true
 show_avatar : true
-read_time : 22
+
 feature_image: melbourne
-show_related_posts: true
+
 ---
 
 At the end of every year I note down a summary of the best applications, hardware & websites I've enjoyed & depended on throughout the year (and often for some time before).

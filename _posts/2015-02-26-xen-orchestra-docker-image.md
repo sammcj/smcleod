@@ -6,10 +6,12 @@ layout: post-sidebar
 author_name : Sam McLeod
 author_url : /author/sam
 author_avatar: sam
+author_avatar: sam
+# show_related_posts: true
 show_avatar : true
-read_time : 22
+
 feature_image: backdrop-insidebuilding
-show_related_posts: true
+
 ---
 
 Docker config to setup XO which is a web interface to visualize and administrate your XenServer (or XAPI enabled) hosts

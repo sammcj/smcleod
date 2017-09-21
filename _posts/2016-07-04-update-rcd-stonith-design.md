@@ -1,15 +1,17 @@
 ---
 title: Update Delayed Serial STONITH Design
 date: 2016-07-04
-categories: storage tech
+categories: tech
 layout: post-sidebar
 author_name : Sam McLeod
 author_url : /author/sam
 author_avatar: sam
+author_avatar: sam
+# show_related_posts: true
 show_avatar : true
-read_time : 22
+
 feature_image: backdrop-buildingsharlm
-show_related_posts: true
+
 ---
 
 _note: This is a follow up post from [2015-07-21-rcd-stonith]({% post_url 2015-07-21-rcd-stonith %})_

@@ -1,15 +1,17 @@
 ---
 title: Video - Storage Cluster Failover Demo
 date: 2015-05-15
-categories: storage tech talks
+categories: tech
 layout: post-sidebar
 author_name : Sam McLeod
 author_url : /author/sam
 author_avatar: sam
+author_avatar: sam
+# show_related_posts: true
 show_avatar : true
-read_time : 22
-feature_image: feature-san-fran
-show_related_posts: true
+
+feature_image: containers-1
+
 ---
 
 Just whipped up a brief demonstration of the failover and recovery process on the storage clusters I've built:

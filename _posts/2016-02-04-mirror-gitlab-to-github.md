@@ -6,10 +6,12 @@ layout: post-sidebar
 author_name : Sam McLeod
 author_url : /author/sam
 author_avatar: sam
+author_avatar: sam
+# show_related_posts: true
 show_avatar : true
-read_time : 22
-feature_image: backdrop-love-hurts
-show_related_posts: true
+
+feature_image: backdrop-austria
+
 ---
 
 Let's pretend you have a project on Gitlab called `ask-izzy` and you want to mirror it up to Gitlab which is located at https://github.com/ask-izzy/ask-izzy

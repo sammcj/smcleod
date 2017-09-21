@@ -1,15 +1,17 @@
 ---
 title: Online Conversion from SQL_ASCII to UTF8 in PostgreSQL
 date: 2016-05-23
-categories: code tech
+categories: tech
 layout: post-sidebar
 author_name : Sam McLeod
 author_url : /author/sam
 author_avatar: sam
+author_avatar: sam
+# show_related_posts: true
 show_avatar : true
-read_time : 22
+
 feature_image: backdrop-feetsky
-show_related_posts: true
+
 ---
 
 Credits: George Hansper, Ricardo Vassellini, Evgeny Shebanin, Sam McLeod

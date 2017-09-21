@@ -1,15 +1,17 @@
 ---
 title: How to cluster and failover (almost) anything - An intro to Pacemaker and Corosync
 date: 2015-11-09
-categories: storage tech talks
+categories: tech
 layout: post-sidebar
 author_name : Sam McLeod
 author_url : /author/sam
 author_avatar: sam
+author_avatar: sam
+# show_related_posts: true
 show_avatar : true
-read_time : 22
+
 feature_image: feature-san-fran
-show_related_posts: true
+
 ---
 
 ## Slides:

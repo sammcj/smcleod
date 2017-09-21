@@ -1,15 +1,17 @@
 ---
 title: 'XenServer, SSDs & VM Storage Performance'
 date: 2015-02-14
-categories: storage tech talks
+categories: tech
 layout: post-sidebar
 author_name : Sam McLeod
 author_url : /author/sam
 author_avatar: sam
+author_avatar: sam
+# show_related_posts: true
 show_avatar : true
-read_time : 22
+
 feature_image: backdrop-feetsky
-show_related_posts: true
+
 ---
 
 ## Intro

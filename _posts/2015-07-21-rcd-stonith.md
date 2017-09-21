@@ -1,15 +1,17 @@
 ---
 title: Delayed Serial STONITH
 date: 2015-07-21
-categories: storage tech
+categories: tech
 layout: post-sidebar
 author_name : Sam McLeod
 author_url : /author/sam
 author_avatar: sam
+author_avatar: sam
+# show_related_posts: true
 show_avatar : true
-read_time : 22
-feature_image: feature-san-fran
-show_related_posts: true
+
+feature_image: padlock
+
 ---
 
 A modified version of [John Sutton's](http://www.scl.co.uk/rcd_serial/README.rcd_serial) rcd_serial cable coupled with our Supermicro reset switch hijacker:

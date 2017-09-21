@@ -1,15 +1,17 @@
 ---
 title: iSCSI Benchmarking
 date: 2015-07-24
-categories: storage talks code
+categories: tech
 layout: post-sidebar
 author_name : Sam McLeod
 author_url : /author/sam
 author_avatar: sam
+author_avatar: sam
+# show_related_posts: true
 show_avatar : true
-read_time : 22
-feature_image: feature-san-fran
-show_related_posts: true
+
+feature_image: datacentre-1
+
 ---
 
 ### 67,300 read IOP/s on a VM on iSCSI
@@ -31,7 +33,6 @@ bs: 1 (f=1): [R] [55.6% done] [262.1M/0K /s] [67.3K/0  iops] [eta 00m:04s]
 - Per VM and scales to 700,000 IOP/s total
 
 {% highlight bash %}
-
 root@dev-samm:/mnt/pmt1 # fio --randrepeat=1 --ioengine=libaio --direct=1 --gtod_reduce=1 --name=test --filename=test --bs=4k --iodepth=128 --size=2G --readwrite=randwrite
 test: (g=0): rw=randwrite, bs=4K-4K/4K-4K, ioengine=libaio, iodepth=128
 2.0.8

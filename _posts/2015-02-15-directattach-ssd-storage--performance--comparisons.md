@@ -1,15 +1,17 @@
 ---
 title: Direct-Attach SSD Storage – Performance & Comparisons
 date: 2014-10-15
-categories: storage tech talks
+categories: tech
 layout: post-sidebar
 author_name : Sam McLeod
 author_url : /author/sam
 author_avatar: sam
+author_avatar: sam
+# show_related_posts: true
 show_avatar : true
-read_time : 22
+
 feature_image: banner
-show_related_posts: true
+
 ---
 
 Further to my earlier post on XenServer storage performance with regards to directly attaching storage from the host, I have been analysing the performance of various SSD storage options.
