@@ -12,25 +12,11 @@ show_avatar : false
 feature_image: melbourne
 ---
 
-### How do you keep track of news, blogs and software releases?
+Of all the tools for reading news and subscribing to software releases, I still find RSS the most useful.
 
-#### - [Link: My Feedly RSS Feed](http://feedly.com/smcleod/blogs)
+I use Feedly to manage my rss subscriptions and keep all my devices in sync, but instead of using the Feedly's own client, I use an app called Reeder as the client / reader itself.
 
-That's a link to the various sites, blogs, updates that I subscribe to, Phronix and Ars are both a bit noisey but other than them the rest I take good care to keep up with.
-
-I personally think it's fantastic that RSS has made such a come back (some would say it never actually went away), it' such a simple, useful tool that's easy to integrate with just about anything.
-
-----
-
-Another interesting discussion I enjoy having is finding out how people read / digest / discover feeds:
-
-tldr; I use Feedly to manage my rss subscriptions and keep all my devices in sync, but instead of using the Feedly's own client, I use an app called Reeder as the client / reader itself.
-
-I can see myself dropping back to a single app / service, which would likely be Feedly but for me Reeder is just a lot cleaner and faster, having said that I could be a bit stuck in my comfort zone with it so I'm open to change if it ever causes me an issue (which it hasn't).
-
-----
-
-I use a combo of two tools:
+- [Link: My Feedly RSS Feed](http://feedly.com/smcleod/blogs)
 
 ### [Feedly](https://feedly.com)
 
