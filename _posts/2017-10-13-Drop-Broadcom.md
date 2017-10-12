@@ -52,9 +52,9 @@ We suspect that the issue is indeed a bug in the Broadcom firmware loaded into t
 
 ## XenServer
 
-Obviously XenServer needs to update it's kernel or at least it's bnx2x driver module, I'll be logging a ticket for this over at bugs.xenserver.org
+Obviously XenServer needs to update it's kernel or at least it's bnx2x driver module, I've logging a ticket for this over at [bugs.xenserver.org](https://bugs.xenserver.org/browse/XSO-808)
 
-Additionally, XenServer didn’t notice (or monitor) the packet loss / network interruptions and do anything to warn of the problem or even stop the rolling pool upgrade, I plan on reporting this concern and suggesting that XenServer adds pool wide checks for connectivity issues between hosts, at _least_ during a pool upgrade, I'll also be suggesting they issue an advisory regarding the Broadcom chipsets.
+Additionally, XenServer didn’t notice (or monitor) the packet loss / network interruptions and do anything to warn of the problem or even stop the rolling pool upgrade, I have reported this concern and have suggested that XenServer adds pool wide checks for connectivity issues between hosts, at _least_ during a pool upgrade, I'll also be suggesting they issue an advisory regarding the Broadcom chipsets.
 
 ## BNX2X Driver
 
