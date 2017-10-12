@@ -16,17 +16,17 @@ feature_image: backdrop-feetsky
 
 Earlier this week we started the process to upgrade one of our hypervisor compute clusters and encountered a rather odd and painful bug with what turned out to be the Broadcom chipsets in the HP BL460c (Gen8) blades.
 
-We first noticed problems after we were partially through a routine, rolling upgrade of our hypervisor (XenServer) cluster (pool) when we observed unexpected and intermittent loss of connectivity to several of the VMs, then hosts.
+We first noticed problems after we were working on a routine, rolling upgrade of our hypervisor (XenServer) cluster (pool) when we observed unexpected and intermittent loss of connectivity between several VMs, then whole XenServer hosts.
 
 ![](/img/office-space-broadcom.jpg)
 
-What was a little odd (at first) was that the problems seemed to effect hosts that hadn’t yet been upgraded to XenServer 7.2 - we now attribute this to a symptom of extreme packet loss between the hosts in the pool and thanks to buggy firmware from Broadcom and HP.
+What was a little odd (at first) was that the problems seemed to impact hosts that hadn’t yet been upgraded to XenServer 7.2 - we now attribute this to a symptom of extreme packet loss between the hosts in the pool and thanks to buggy firmware from Broadcom and HP.
 
 We were aware of the [recently published issues](http://www.thevirtualist.org/bricked-qlogic-broadcom-bcm57840-driver-update/) with several Broadcom/HP NICs used in VMware clusters where NICs would be [bricked by a firmware upgrade](https://h20566.www2.hpe.com/hpsc/doc/public/display?docId=a00027033en_us). This issue is however slightly different from ours as it seemed to completely brick the NICs and it was suggested the problem was specific to VMware.
 
-As mentioned above we ended up finding that there was extreme packet loss between hosts in the cluster, what made the problem worse is that as the master in a XenServer pool must be upgraded first - it meant that the communication problems with pool connectivity over the management network to the pool master impacted nodes that hadn’t yet been upgraded and the problems didn't manifest until many hours after the first host was upgraded and we were happy with it's stability - as such first appeared as if it was a problem caused by the pool being partially through an upgrade.
+As mentioned above we ended up finding that there was extreme packet loss between hosts in the cluster, what made the problem worse is that as the master in a XenServer pool must be upgraded first. This meant that the communication problems with pool connectivity over the management network to the pool master impacted nodes that hadn’t yet been upgraded. The connectivity problems didn't become apparent until many hours after the first host was upgraded and we were happy with its stability. As such first appeared as if it was a problem caused by the pool being partially through an upgrade.
 
-Appearing that the issue was stemming from having the pool partially upgraded, we felt like we had perhaps made a poor decision to run the upgrade on a single node for a few hours to observe it's performance and made the call to upgrade another host and then analyse our findings.
+Appearing that the issue was stemming from having the pool partially upgraded, we felt like we had perhaps made a poor decision to run the upgrade on a single node for a few hours to observe its performance and made the call to upgrade another host and then analyse our findings.
 
 After upgrading the second host, it too appeared stable (in fact - this host wasn't impacted by the bug so it wasn't dropping packets and was healthy), with that we made the call to upgrade another two nodes and continue to monitor in the expectation that the problems with VM stability would recover as we continued the upgrade.
 
@@ -34,9 +34,9 @@ _That wasn't the case._
 
 Shortly after upgrading approximately half the pool, things got far worse - hosts started completely dropping out of the pool, losing the state of VMs that it thought were powered on but in fact were offline and so forth.
 
-While inspecting the hosts, we found that the master and one of the other hosts was indeed experiencing major packet loss on the network cards that connected to the internal management network, of course we immediately suspected faulty NICs (it wouldn't be the first time a Broadcom had dropped dead on us)
+While inspecting the hosts, we found that the master and one of the other hosts were indeed experiencing major packet loss on the network cards that connected to the internal management network, of course, we immediately suspected faulty NICs (it wouldn't be the first time a Broadcom had dropped dead on us)
 
-Broadcom has had it's fair share of bad press stemming from many botched firmware updates and issues with their proprietary drivers over the years and now I'm recommending people to stay clear form using network cards based on their chipsets.
+Broadcom has had its fair share of bad press stemming from many botched firmware updates and issues with their proprietary drivers over the years and now I'm recommending people to stay clear from using network cards based on their chipsets.
 
 ## Downgrading The Firmware
 
@@ -44,17 +44,17 @@ As soon as we spotted the packet loss on the Broadcom NICs we downgraded the fir
 
 No firmware downgrades (or upgrades) have fixed this issue.
 
-The problem (major packet loss) manifests itself immediately after rebooting or power cycling - but not every time, that's the odd thing - approximately half the time after booting the host is fine - there are no problems until the next boot.
+The problem (major packet loss) manifests itself immediately after rebooting or power cycling - but not every time, that's the odd thing - approximately half the time after booting the host is fine - and the problems don't manifest until the next boot.
 
 We've compared the `dmesg`, `lspci` and `modinfo` output between boot cycles where the problem exists and doesn't and we can't find anything that stands out so the bug seems to be triggered by the updated (but still old) version of the bnx2x driver present in XenServer 7.2's Kernel - HP recommends that you use bnx2x driver 7.14.29-2 or later and as XenServer still uses the old Kernel version of 4.4.0 - that's not an option.
 
-We suspect that the issue is indeed a bug in the Broadcom firmware loaded into the NIC upon boot and there may be some sort of race condition or similar that causes this behaviour in combination with modern versions of the bnx2x drivers, perhaps related to the devices interupt handling.
+We suspect that the issue is indeed a bug in the Broadcom firmware loaded into the NIC upon boot and there may be some sort of race condition or similar that causes this behaviour in combination with modern versions of the bnx2x drivers, perhaps related to the devices interrupt handling.
 
 ## XenServer
 
-Obviously XenServer needs to update it's kernel or at least it's bnx2x driver module, I've logging a ticket for this over at [bugs.xenserver.org](https://bugs.xenserver.org/browse/XSO-808)
+Obviously, XenServer needs to update its kernel or at least the bnx2x driver module, I've logged a ticket for this over at [bugs.xenserver.org](https://bugs.xenserver.org/browse/XSO-808)
 
-Additionally, XenServer didn’t notice (or monitor) the packet loss / network interruptions and do anything to warn of the problem or even stop the rolling pool upgrade, I have reported this concern and have suggested that XenServer adds pool wide checks for connectivity issues between hosts, at _least_ during a pool upgrade, I'll also be suggesting they issue an advisory regarding the Broadcom chipsets.
+Additionally, XenServer didn’t notice (or monitor) the packet loss/network interruptions and do anything to warn of the problem or even stop the rolling pool upgrade, I have reported this concern and have suggested that XenServer adds pool wide checks for connectivity issues between hosts, at _least_ during a pool upgrade, I'll also be suggesting they issue an advisory regarding the Broadcom chipsets.
 
 Our current workaround is to check for packet loss on the management network NIC immediately after boot and if the problem exists - reboot the host and check again, far from ideal - but until the bug is resolved there isn't any other fix that we can find short of compiling a custom module for XenServer 7.2.
 
@@ -111,7 +111,7 @@ parm:           eee:set EEE Tx LPI timer with this value; 0: HW default; -1: For
 parm:           tx_switching: Enable tx-switching (uint)
 {% endhighlight %}
 
-Where as XenServer 7.0 has driver version `1.713.04` which seems not to trigger the issue:
+Whereas XenServer 7.0 has driver version `1.713.04` which seems not to trigger the issue:
 
 {% highlight shell %}
 filename:       /lib/modules/3.10.0+10/extra/bnx2x.ko
