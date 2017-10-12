@@ -48,9 +48,9 @@ The problem (major packet loss) manifests itself immediately after rebooting or 
 
 We've compared the `dmesg`, `lspci` and `modinfo` output between boot cycles where the problem exists and doesn't and we can't find anything that stands out so the bug seems to be triggered by the updated (but still old) version of the bnx2x driver present in XenServer 7.2's Kernel - HP recommends that you use bnx2x driver 7.14.29-2 or later and as XenServer still uses the old Kernel version of 4.4.0 - that's not an option.
 
-We suspect that the issue is indeed a bug in the Broadcom firmware loaded into the NIC upon boot and there may be some sort of race condition or similar that causes this behaviour in combination with modern versions of the bnx2x drivers.
+We suspect that the issue is indeed a bug in the Broadcom firmware loaded into the NIC upon boot and there may be some sort of race condition or similar that causes this behaviour in combination with modern versions of the bnx2x drivers, perhaps related to the devices interupt handling.
 
-## Xenserver
+## XenServer
 
 Obviously XenServer needs to update it's kernel or at least it's bnx2x driver module, I'll be logging a ticket for this over at bugs.xenserver.org
 
