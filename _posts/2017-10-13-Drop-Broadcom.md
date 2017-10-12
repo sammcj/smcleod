@@ -56,6 +56,8 @@ Obviously XenServer needs to update it's kernel or at least it's bnx2x driver mo
 
 Additionally, XenServer didn’t notice (or monitor) the packet loss / network interruptions and do anything to warn of the problem or even stop the rolling pool upgrade, I have reported this concern and have suggested that XenServer adds pool wide checks for connectivity issues between hosts, at _least_ during a pool upgrade, I'll also be suggesting they issue an advisory regarding the Broadcom chipsets.
 
+Our current workaround is to check for packet loss on the management network NIC immediately after boot and if the problem exists - reboot the host and check again, far from ideal - but until the bug is resolved there isn't any other fix that we can find short of compiling a custom module for XenServer 7.2.
+
 ## BNX2X Driver
 
 The driver included with XenServer 7.2 that triggers the problem is `1.714.1`:
