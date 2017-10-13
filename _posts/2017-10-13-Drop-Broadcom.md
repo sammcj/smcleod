@@ -67,6 +67,8 @@ We don't have (a good) one.
 
 Currently we're simply testing for packet loss after boot on the management NIC. If detected we reboot the host and check again. This far from ideal - but until the bug is resolved there isn't any other fix that we can find short of compiling a custom module for XenServer 7.2.
 
+Given the widespread problems with Broadcom, we've ordered HP 560M, Intel based NICs to replace them.
+
 ## BNX2X Driver
 
 The driver included with XenServer 7.2 that triggers the problem is `1.714.1`:
