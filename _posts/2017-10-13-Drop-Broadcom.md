@@ -32,7 +32,7 @@ We wondered if we had perhaps made a poor decision to run the upgrade on a singl
 
 The next upgraded hosts appeared stable. In fact we later found this host wasn't impacted by the bug. We then made the call to upgrade several more nodes and continue to track their stability.
 
-After upgrading half the pool, we suddenly hit problems. VMs failed, Hosts started dropping out of the pool and losing track of the power state of their VMs.
+After upgrading half the pool, we suddenly hit problems. VMs failed, Hosts started dropping out of the pool and losing track of the power state of running/stopped VMs.
 
 We found that the master along with one of the other hosts were experiencing major packet loss on their management network cards. We suspected faulty NICs as it wouldn't be the first time a Broadcom had failed us and there is no physical network cabling.
 
