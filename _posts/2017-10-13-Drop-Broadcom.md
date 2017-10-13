@@ -24,11 +24,11 @@ The problems appeared to impact hosts that hadn’t yet upgraded to XenServer 7.
 
 We were aware of the [recently published issues](http://www.thevirtualist.org/bricked-qlogic-broadcom-bcm57840-driver-update/) with Broadcom/HP NICs used in VMware clusters where NICs would be [bricked by a firmware upgrade](https://h20566.www2.hpe.com/hpsc/doc/public/display?docId=a00027033en_us). This issue is different from what we experienced.
 
-We expereienced extreme packet loss between hosts in the cluster. With XenServer, the pool master must be upgraded first. The result was that XAPI pool management suffered a communication breakdown across the management network and complecated diagnosis. In fact, the connectivity problems went unnoticed until many hours after the master was upgraded. 
+We experienced extreme packet loss between hosts in the cluster. With XenServer, the pool master must be upgraded first. The result was that XAPI pool management suffered a communication breakdown across the management network and complicated diagnosis. In fact, the connectivity problems went unnoticed until many hours after the master was upgraded.
 
 At first appeared as if it was a problem caused by the pool being partially upgraded.
 
-We wondered ift we had perhaps made a poor decision to run the upgrade on a single node for a few hours to observe its performance. We made the call to upgrade another host and analyse our findings.
+We wondered if we had perhaps made a poor decision to run the upgrade on a single node for a few hours to observe its performance. We made the call to upgrade another host and analyse our findings.
 
 The next upgraded hosts appeared stable. In fact we later found this host wasn't impacted by the bug. We then made the call to upgrade several more nodes and continue to track their stability.
 
@@ -52,7 +52,7 @@ We've compared the `dmesg`, `lspci` and `modinfo` output between boot cycles, we
 
 The bug seems to be caused by the version of the `bnx2x` driver present in XenServer 7.2's Kernel. Upon further reading HP recommends that you use bnx2x driver 7.14.29-2 or later, XenServer still uses the old Kernel version of 4.4.0 - that's not currently an option.
 
-I suspect that it's a bug in the Broadcom firmware loaded into the NIC upon boot. 
+I suspect that it's a bug in the Broadcom firmware loaded into the NIC upon boot.
 I suspect a race condition related to the devices interrupt handling (MSI/MSI-X).
 
 ## XenServer
@@ -65,7 +65,7 @@ Additionally, XenServer didn’t notice the packet loss/network interruptions du
 
 We don't have (a good) one.
 
-Currently we're simply testing for packet loss after boot on the management NIC. If deteceted we reboot the host and check again. This far from ideal - but until the bug is resolved there isn't any other fix that we can find short of compiling a custom module for XenServer 7.2.
+Currently we're simply testing for packet loss after boot on the management NIC. If detected we reboot the host and check again. This far from ideal - but until the bug is resolved there isn't any other fix that we can find short of compiling a custom module for XenServer 7.2.
 
 ## BNX2X Driver
 
