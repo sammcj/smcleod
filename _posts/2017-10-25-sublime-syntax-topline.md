@@ -15,9 +15,9 @@ feature_image: backdrop-code
 
 In vim, you can add a comment at the top of files to set the syntax, e.g.:
 
-{% highlight shell %}
+``` shell
 # vim: syntax=ruby
-{% endhighlight %}
+```
 
 In SublimeText there are _many_ ways to detect syntax, one interesting approach I've recently found useful is to match on the top line in the file.
 For example, with Puppet there is a file called `Puppetfile`, it has no extension but it's really Ruby syntax, so it's useful to add linting incase you
@@ -41,11 +41,3 @@ I use a plugin called [ApplySyntax](https://facelessuser.github.io/ApplySyntax/)
 ...
 }
 ```
-
-At the top of your `Puppetfile`, simple add the standard vim syntax first line:
-
-{% highlight ruby%}
-# vim: syntax=ruby
-{% endhighlight %}
-
-And your `Puppetfile` will get the correct highlighting (and linting) in both vim and SublimeText.
