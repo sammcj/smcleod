@@ -13,8 +13,6 @@ feature_image: backdrop-insidebuilding
 
 ---
 
-## Speeding up Rsync on local (secure) networks
-
 The most common way to use Rsync is probably as such:
 
 {% highlight bash %}
