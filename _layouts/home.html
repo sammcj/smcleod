@@ -13,7 +13,7 @@ layout: with-sidebar
         <div class="post-preview col-xs-40  no-gutter">
             <h2><a href="{{ post.url | prepend: site.baseurl }}">{{ post.title }}</a></h2>
 
-            {{ post.excerpt | truncatewords: 28 }}
+            {{ post.excerpt | truncatewords: 48 }}
 
             <p class="meta">
                 <a href="{{ post.author_url | prepend: site.baseurl }}">{{ post.author_name}}</a> in <a href='{{ "/category/" | append: post.categories.first | prepend: site.baseurl }}'>{{ post.categories.first | capitalize }}</a> <i class="link-spacer"></i></i>
