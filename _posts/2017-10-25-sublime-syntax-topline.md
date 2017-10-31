@@ -23,29 +23,25 @@ In SublimeText there are _many_ ways to detect syntax, one interesting approach 
 For example, with Puppet there is a file called `Puppetfile`, it has no extension but it's really Ruby syntax, so it's useful to add linting incase you
 miss something simple like a `,` and break deployments.
 
-I use a plugin called [syntaxmgr](https://github.com/randy3k/SyntaxManager) which extends syntax management, I believe you can do this in the languages syntax without the plugin but YMMV:
+I use a plugin called [ApplySyntax](https://facelessuser.github.io/ApplySyntax/) making it easy to apply syntax options to files, I believe you can do this in the languages syntax without the plugin but YMMV:
 
 {% highlight json %}
 {
-    "syntaxmgr_settings":[
+...
+    // Put your custom syntax rules here:
+    "syntaxes": [
         {
-            // apply this setting when first line matches
-            "first_line_match": ["/.*syntax=ruby/sh"],
-            "settings": {
-                // the syntax can be identified by running
-                //
-                //     view.settings().get("syntax")
-                //
-                // at sublime console (ctrl + ` )
-                //
-                "syntax" : "Packages/Ruby/Ruby.sublime-syntax"
-            }
-        },
+        "syntax": [ "Ruby/Ruby" ],
+        "rules": [
+                {   "first_line": ".*syntax=ruby.*" }
+            ]
+        }
     ]
+...
 }
 {% endhighlight %}
 
-At the top of your `Puppetfile`, simple add:
+At the top of your `Puppetfile`, simple add the standard vim syntax first line:
 
 {% highlight ruby%}
 # vim: syntax=ruby
