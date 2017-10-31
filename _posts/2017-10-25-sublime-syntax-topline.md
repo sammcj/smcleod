@@ -34,7 +34,7 @@ I use a plugin called [ApplySyntax](https://facelessuser.github.io/ApplySyntax/)
         "syntax": [ "Ruby/Ruby" ],
         "rules": [
                 { "first_line": ".*syntax=ruby.*" }, # To match on the first line in the file
-                { "file_path": "^Puppetfile$"} # Or you can match on a regex of the file name or path itself
+                { "file_path": "^Puppetfile$"} # Or match on the file name or path itself
             ]
         }
     ]
