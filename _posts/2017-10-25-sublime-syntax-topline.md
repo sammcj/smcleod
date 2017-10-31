@@ -25,7 +25,7 @@ miss something simple like a `,` and break deployments.
 
 I use a plugin called [ApplySyntax](https://facelessuser.github.io/ApplySyntax/) making it easy to apply syntax options to files, I believe you can do this in the languages syntax without the plugin but YMMV:
 
-{% highlight yaml %}
+```yaml
 {
 ...
     // Put your custom syntax rules here:
@@ -40,7 +40,7 @@ I use a plugin called [ApplySyntax](https://facelessuser.github.io/ApplySyntax/)
     ]
 ...
 }
-{% endhighlight %}
+```
 
 At the top of your `Puppetfile`, simple add the standard vim syntax first line:
 

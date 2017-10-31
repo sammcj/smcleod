@@ -1,7 +1,7 @@
 # Site settings
-title: smcleod.net
-email: blog(at)auto.smcleod.net
-description: The blog of Sam McLeod
+title: "smcleod.net"
+email: "blog(at)auto.smcleod.net"
+description: "The blog of Sam McLeod"
 baseurl: ""
 url: ""
 enable_retina: true
@@ -17,7 +17,7 @@ footer_links:
     LinkedIn : ['LinkedIn', 'https://linkedin.com/sammcj']
 
 # Added by Sam
-paginate: 8
+paginate: 10
 plugins: [jekyll-paginate]
 paginate_path: "/page:num"
 author:
@@ -31,4 +31,5 @@ excerpt_separator: "<!--more-->"
 timezone: "Australia/Melbourne"
 
 # Build settings
-# markdown: kramdown
+markdown: kramdown
+highlighter: rouge
