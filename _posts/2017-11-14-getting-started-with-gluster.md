@@ -20,4 +20,4 @@ This talk was given at [Infracoders](https://www.meetup.com/Infrastructure-Coder
 Click to view slides:
 [![Click to view slides]({{ site.url }}/img/gluster-first-slide.jpg)](https://www.dropbox.com/s/beix0238fe3ra8w/GlusterFS Keynote.pdf?dl=0)
 
-[Direct download link](https://www.dropbox.com/s/beix0238fe3ra8w/GlusterFS Keynote.pdf?dl=1)
+- [*Direct download link*](https://www.dropbox.com/s/beix0238fe3ra8w/GlusterFS Keynote.pdf?dl=1)
