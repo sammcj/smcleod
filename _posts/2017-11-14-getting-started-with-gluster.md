@@ -17,6 +17,7 @@ Using GlusterFS to provide volume storage to Kubernetes as a replacement for our
 
 This talk was given at [Infracoders](https://www.meetup.com/Infrastructure-Coders/events/244535588/) on Tuesday 14th Novemember 2017.
 
+Click to view slides:
 [![Click to view slides]({{ site.url }}/img/gluster-first-slide.jpg)](https://www.dropbox.com/s/beix0238fe3ra8w/GlusterFS Keynote.pdf?dl=0)
 
 or
