@@ -26,25 +26,25 @@ To be able to take a Postgres Database which is in SQL_ASCII encoding, and impor
 
 Postresql will generate errors like this if it encounters any non-UTF8 byte-sequences during a database restore:
 
-{% highlight bash %}
+```shell
 # pg_dump -Fc test_badchar | pg_restore -d test_badchar_utf8
 pg_restore: [archiver (db)] Error while PROCESSING TOC:
 pg_restore: [archiver (db)] Error from TOC entry 2839; 0 26852 TABLE DATA table101 postgres
 pg_restore: [archiver (db)] COPY failed for table "table101": ERROR:  invalid byte sequence for encoding "UTF8": 0x91
 CONTEXT:  COPY table101, line 1
 WARNING: errors ignored on restore: 1
-{% endhighlight %}
+```
 
 <!--more-->
 
 And the corresponding data will be omitted from the database (in this case, the whole table, even the rows which did not have a problem):
 
-{% highlight sql %}
+```sql
 # echo "select * from table101;" | psql test_badchar_utf8
  chardecimal | description | column6_text
 -------------+-------------+--------------
 (0 rows)
-{% endhighlight %}
+```
 
 The Solution
 ------------
@@ -85,11 +85,11 @@ The original solution was designed to minimise downtime, and these scripts would
 
 Unfortunately, this is exactly what happens if triggers are diabled per-table while updating the text like this:
 
-{% highlight sql %}
+```sql
 ALTER TABLE _some_table_ DISABLE TRIGGER ALL;
 process_non_utf8_at_column(...);
 ALTER TABLE _some_table_ ENABLE TRIGGER ALL;
-{% endhighlight %}
+```
 
 Postgres wraps it all in a transaction, and locks the table until the update is complete (which can be minutes on a large table).
 
@@ -98,9 +98,9 @@ Postgres wraps it all in a transaction, and locks the table until the update is 
 a) Don't use `ALTER TABLE _some_table_ DISABLE TRIGGER ALL;`
    Instead, use a session-based setting:
 
-{% highlight sql %}
+```sql
      SET session_replication_role = replica;
-{% endhighlight %}
+```
 
 This has the effect of disabling triggers, but does not lock the whole table while the function is running.
 
@@ -118,22 +118,22 @@ A test database can be created using the script:
 
 This should be run as follows:
 
-{% highlight sql %}
+```sql
   createdb -e --template=template0 -E SQL_ASCII test_badchar
   ./create_test_sql_ascii.sh test_badchar
-{% endhighlight %}
+```
 
 When we run the script, we should see the following output:
 
-{% highlight bash %}
+```shell
 # psql test_badchar < Replace_non_UTF8.html_equiv.sql
 CREATE FUNCTION
 CREATE FUNCTION
 CREATE FUNCTION
 CREATE FUNCTION
-{% endhighlight %}
+```
 
-{% highlight bash %}
+```shell
 # ./run_process_non_utf8.sh test_badchar
 ========================================
 Start: Tue Apr 19 09:16:30 AEST 2016
@@ -206,12 +206,12 @@ Update run time 1 seconds
 Finish: Tue Apr 19 09:16:32 AEST 2016
 Total run time 2 seconds
 ========================================
-{% endhighlight %}
+```
 
-{% highlight bash %}
+```sql
 # psql test_badchar < Replace_non_UTF8.cleanup.sql
 DROP FUNCTION
 DROP FUNCTION
 DROP FUNCTION
 DROP FUNCTION
-{% endhighlight %}
+```
