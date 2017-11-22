@@ -73,7 +73,7 @@ I have been logging requests to various third party RHEL repos asking if they wo
 
 If they don't feel they have the resources or want to add them in for whatever reason, I will continue to host the packages myself on [Packagecloud](https://packagecloud.io/s_mcleod/pacemaker) and likely somewhere else as a fall-back.
 
-{% highlight bash %}
+```
 Last updated: Tue Jul  7 11:59:25 2015
 Last change: Tue Jul  7 10:57:16 2015
 Stack: corosync
@@ -103,4 +103,4 @@ Online: [ s1-san5 s1-san6 ]
  iscsi_lun_r1 (ocf::heartbeat:iSCSILogicalUnit):  Started s1-san5
  iscsi_conf_r1  (ocf::heartbeat:anything):  Started s1-san5
  iscsi_conf_r0  (ocf::heartbeat:anything):  Started s1-san5
-{% endhighlight %}
+```

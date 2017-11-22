@@ -52,17 +52,17 @@ A big thank you to Nicholas A. Bellinger from the Kernel SCSI mailing list who h
 
 In addition to the `vpd_unit_serial` we found that the `iblock` number must also remain the same between failovers.
 
-{% highlight bash %}
+```
 /sys/kernel/config/target/core/iblock_0/lun_name/wwn/vpd_unit_serial
-{% endhighlight %}
+```
 
-{% highlight bash %}
+```
 /sys/kernel/config/target/core # tree
 ├── iblock_0                            # Must be consistent between failovers
 │   └── iscsi_lun_r2
 │      └── wwn
 │         └── vpd_unit_serial           # Must be consistent between failovers
-{% endhighlight %}
+```
 
 If you're using Corosync / Pacemaker for your target failover the `vpd_unit_serial` and `iblock` number must both be set in the `iSCSILogicalUnit` OCF provider:
 
@@ -71,7 +71,7 @@ If you're using Corosync / Pacemaker for your target failover the `vpd_unit_seri
 
 Here is an example of a target and lun configured with `pcs`:
 
-{% highlight bash %}
+```
 Resource: iscsi_target_r2 (class=ocf provider=heartbeat type=iSCSITarget)
 Attributes: iqn=iqn.2003-01.org.linux-iscsi.pm-san.x8664:sn.ca7d7b33c731 portals=10.50.42.75:3260 implementation=lio-t additional_parameters="MaxConnections=100 AuthMethod=None InitialR2T=No MaxOutstandingR2T=64"
 Operations: monitor on-fail=restart interval=30s timeout=20s (iscsi_target_r2-monitor-30s)
@@ -85,11 +85,11 @@ Operations: monitor on-fail=restart interval=30s timeout=10s (iscsi_lun_r2-monit
             stop on-fail=restart interval=0 timeout=20s (iscsi_lun_r2-stop-0)
 Resource: iscsi_conf_r2 (class=ocf provider=heartbeat type=anything)
 Attributes: binfile=/usr/sbin/iscsi_iscsi_conf_r2.sh stop_timeout=3
-{% endhighlight %}
+```
 
 If you happen to be using Puppet for your Pacemaker configuration it might look a bit like this:
 
-{% highlight puppet %}
+```
   cs_primitive { "$iscsi_target_primitive":
     primitive_class => 'ocf',
     primitive_type  => 'iSCSITarget',
@@ -123,4 +123,4 @@ If you happen to be using Puppet for your Pacemaker configuration it might look 
                         },
     require         => [Cs_primitive["$iscsi_target_primitive"],Service['pacemaker']],
   }
-{% endhighlight %}
+```

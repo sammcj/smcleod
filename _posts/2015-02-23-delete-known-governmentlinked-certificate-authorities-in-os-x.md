@@ -26,10 +26,10 @@ feature_image: backdrop-italian-steps
 
 ## Usage
 
-{% highlight bash %}
+```
 chmod +x delete_gov_roots.sh
 ./delete_gov_roots.sh
-{% endhighlight %}
+```
 
 You'll be prompted for your password as root access is required to delete system-wide root certs.
 

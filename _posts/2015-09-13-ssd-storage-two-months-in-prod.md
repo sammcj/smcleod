@@ -49,22 +49,22 @@ We have performed a great deal of live cluster failovers without any noticable i
 #### VM IO latency has been reduced 300-500%
 
 Before:
-{% highlight bash %}
+```
 4096 bytes from . (ext4 /dev/mapper/debian-root): request=1 time=1.6 ms
 4096 bytes from . (ext4 /dev/mapper/debian-root): request=2 time=4.7 ms
 4096 bytes from . (ext4 /dev/mapper/debian-root): request=3 time=3.7 ms
 4096 bytes from . (ext4 /dev/mapper/debian-root): request=4 time=4.7 ms
 4096 bytes from . (ext4 /dev/mapper/debian-root): request=5 time=4.8 ms
-{% endhighlight %}
+```
 
 After:
-{% highlight bash %}
+```
 4096 bytes from . (ext4 /dev/mapper/debian-root): request=1 time=0.5 ms
 4096 bytes from . (ext4 /dev/mapper/debian-root): request=2 time=0.7 ms
 4096 bytes from . (ext4 /dev/mapper/debian-root): request=3 time=0.9 ms
 4096 bytes from . (ext4 /dev/mapper/debian-root): request=4 time=0.7 ms
 4096 bytes from . (ext4 /dev/mapper/debian-root): request=5 time=0.6 ms
-{% endhighlight %}
+```
 
 ![]({{ site.url }}/img/san/gitlab_disk_latency.jpg)
 

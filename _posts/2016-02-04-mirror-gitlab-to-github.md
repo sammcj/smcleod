@@ -21,36 +21,36 @@ Assuming you're running Gitlab as the default user of `git` and that your reposi
 
 Get your Gitlab install's pubkey from the git user
 
-{% highlight bash %}
+```
 cat /home/git/.ssh/id_rsa.pub
-{% endhighlight %}
+```
 
 On Github add this pubkey as deploy key on the repo, make sure you tick the option to allow write access.
 
 2. Add a post-recieve hook to the Gitlab project
 
-{% highlight bash %}
+```
 mkdir /mnt/repositories/developers/ask-izzy.git/custom_hooks/
 echo "exec git push --quiet github &" > \
     /mnt/repositories/developers/ask-izzy.git/custom_hooks/post-receive
 chown -R git:git /mnt/repositories/developers/ask-izzy.git/custom_hooks
 chmod +x /mnt/repositories/developers/ask-izzy.git/custom_hooks/post-receive
-{% endhighlight %}
+```
 
 3. Add Github as a remote to the Gitlab project
 
-{% highlight bash %}
+```
 cd /mnt/repositories/developers/ask-izzy.git
 vi config
-{% endhighlight %}
+```
 
 and add in the Github remote:
 
-{% highlight bash %}
+```
 [remote "github"]
   url = git@github.com:ask-izzy/ask-izzy.git
   fetch = +refs/*:refs/*
   mirror = true
-{% endhighlight %}
+```
 
 

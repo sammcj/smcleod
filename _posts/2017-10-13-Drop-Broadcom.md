@@ -73,7 +73,7 @@ Given the widespread problems with Broadcom, we've ordered HP 560M, Intel based 
 
 The driver included with XenServer 7.2 that triggers the problem is `1.714.1`:
 
-{% highlight shell %}
+```
 filename:       /lib/modules/4.4.0+10/updates/bnx2x.ko
 version:        1.714.1
 license:        GPL
@@ -120,11 +120,11 @@ parm:           autogreeen: Set autoGrEEEn (0:HW default; 1:force on; 2:force of
 parm:           native_eee:int
 parm:           eee:set EEE Tx LPI timer with this value; 0: HW default; -1: Force disable EEE.
 parm:           tx_switching: Enable tx-switching (uint)
-{% endhighlight %}
+```
 
 Whereas XenServer 7.0 has driver version `1.713.04` which seems not to trigger the issue:
 
-{% highlight shell %}
+```
 filename:       /lib/modules/3.10.0+10/extra/bnx2x.ko
 version:        1.713.04
 license:        GPL
@@ -171,7 +171,7 @@ parm:           autogreeen: Set autoGrEEEn (0:HW default; 1:force on; 2:force of
 parm:           native_eee:int
 parm:           eee:set EEE Tx LPI timer with this value; 0: HW default; -1: Force disable EEE.
 parm:           tx_switching: Enable tx-switching (uint)
-{% endhighlight %}
+```
 
 ## Affected Components
 

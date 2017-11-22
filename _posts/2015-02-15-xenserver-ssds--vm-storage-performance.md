@@ -41,10 +41,10 @@ It turns out, that you can add custom udev rules to pass through devices directl
 
 For example, assuming `/dev/sdb` is the disk you wish to make available to guests, you can edit `/etc/udev/rules.d/50-udev.rules` like so:
 
-{% highlight bash %}
+```
 ACTION=="add", KERNEL=="sdb", SYMLINK+="xapi/block/%k", RUN+="/bin/sh -c '/opt/xensource/libexec/local-device-change %k 2>&1 >/dev/null&'"
 ACTION=="remove", KERNEL=="sdb", RUN+="/bin/sh -c '/opt/xensource/libexec/local-device-change %k 2>&1 >/dev/null&'"
-{% endhighlight %}
+```
 
 There are some limitations with this:
 
@@ -54,12 +54,12 @@ You cannot (to my knowledge) boot from directly attached storage devices.
 What I’ve actually done is partitioned the SSD RAID array into 4 paritions on the XenServer host, this allows me to carve up the SSD RAID array and present adiquit storage to several VMs on the host.
 i.e.
 
-{% highlight bash %}
+```
 ACTION=="add", KERNEL=="sdb1", SYMLINK+="xapi/block/%k", RUN+="/bin/sh -c '/opt/xensource/libexec/local-device-change %k 2>&1 >/dev/null&'"
 ACTION=="remove", KERNEL=="sdb1", RUN+="/bin/sh -c '/opt/xensource/libexec/local-device-change %k 2>&1 >/dev/null&'"
 ACTION=="add", KERNEL=="sdb2", SYMLINK+="xapi/block/%k", RUN+="/bin/sh -c '/opt/xensource/libexec/local-device-change %k 2>&1 >/dev/null&'"
 ACTION=="remove", KERNEL=="sdb2", RUN+="/bin/sh -c '/opt/xensource/libexec/local-device-change %k 2>&1 >/dev/null&'"
-{% endhighlight %}
+```
 etc…
 
 I’ve then:
@@ -109,21 +109,21 @@ EXT4 Bonnie++ Results w/ 2x SSD in RAID1, XenServer 6.5 RC1, Direct Disk:
 
 EXT4 dd Results w/ 2x SSD in RAID0, XenServer 6.5 RC1, LVM:
 
-{% highlight bash %}
+```
 samm@serv-dhcp-13:/var/tmp# dd if=/dev/zero of=tempfile bs=1M count=8000 conv=fdatasync,notrunc
  8000+0 records in
  8000+0 records out
  8388608000 bytes (8.4 GB) copied, 118.11 s, 71.0 MB/s
-{% endhighlight %}
+```
 
 EXT4 dd Results w/ 2x SSD in RAID0, XenServer 6.5 RC1, Direct Disk:
 
-{% highlight bash %}
+```
 samm@serv-dhcp-13:/var/tmp# dd if=/dev/zero of=tempfile bs=1M count=8000 conv=fdatasync,notrunc
  8000+0 records in
  8000+0 records out
  8388608000 bytes (8.4 GB) copied, 19.21 s, 437 MB/s
-{% endhighlight %}
+```
 
 Future Benchmarking Steps
 
