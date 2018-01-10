@@ -13,7 +13,7 @@ feature_image: feature-san-fran
 
 ---
 
-### Seeking a Linux Systems Engineer to join our Ops team in a fast moving DevOps environment.
+# Seeking a Linux Systems Engineer to join our Ops team in a fast moving DevOps environment.
 
 Infoxchange is a not-for-profit organisation that delivers _technology for social justice_, we work to strengthen communities and organisations, using information technology as the primary tool to create positive social change.
 
