@@ -16,7 +16,7 @@ feature_image: feature-san-fran
 
 _**"Having a SCSI ID is a f*cking idiotic thing to do."**_
 
-[_- Linus Torvalds_](http://yarchive.net/comp/linux/scsi_ids.html)
+- [Linus Torvalds](http://yarchive.net/comp/linux/scsi_ids.html)
 
 _...and after the amount of time I've wasted getting XenServer to play nicely with LIO iSCSI failover I tend to agree._
 
