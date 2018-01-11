@@ -14,6 +14,7 @@ feature_image: backdrop-austria
 ---
 
 If a disk / VDI is orphaned or only partially deleted you'll notice that under the SR it's not assigned to any VM.
+
 This can cause issues that look like metadata corruption resulting in the inability to migrate VMs or edit storage.
 
 For example:
