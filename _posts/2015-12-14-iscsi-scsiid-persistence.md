@@ -14,7 +14,7 @@ feature_image: feature-san-fran
 ---
 
 
-_"Having a SCSI ID is a f*cking idiotic thing to do."_
+_**"Having a SCSI ID is a f*cking idiotic thing to do."**_
 
 [_- Linus Torvalds_](http://yarchive.net/comp/linux/scsi_ids.html)
 
