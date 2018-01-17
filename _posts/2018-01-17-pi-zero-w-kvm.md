@@ -49,7 +49,9 @@ So, I followed most of the steps in the README.md and [Fmstrat](https://github.c
 ### Software
 
 - Raspbian Minimal Install
-- The code (not design) from [Fmstrat's DIY-IPMI project](https://github.com/Fmstrat/diy-ipmi)
+- The HTML5 IPMI KVM code from [Fmstrat's DIY-IPMI project](https://github.com/Fmstrat/diy-ipmi)
+
+### Additional Links
 
 - [How to enable SSH via the Pi Zero's USB interface](https://www.thepolyglotdeveloper.com/2016/06/connect-raspberry-pi-zero-usb-cable-ssh/)
 - [How to enable SSH via network interfaces](https://hackernoon.com/raspberry-pi-headless-install-462ccabd75d0)
