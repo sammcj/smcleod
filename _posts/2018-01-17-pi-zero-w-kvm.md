@@ -26,7 +26,7 @@ I found [this project on Github](https://github.com/Fmstrat/diy-ipmi) that looke
 - I don't really like that it requires PHP (but haven't fixed that yet)
 - I don't like that it uses rc.local
 
-So, I followed most of the steps in the README.md and [Fmstat](https://github.com/Fmstrat)'s PHP (for now), but not the install script itself.
+So, I followed most of the steps in the README.md and [Fmstrat](https://github.com/Fmstrat)'s PHP (for now), but not the install script itself.
 
 ### TODO:
 
@@ -54,4 +54,4 @@ So, I followed most of the steps in the README.md and [Fmstat](https://github.co
 - [How to enable SSH via the Pi Zero's USB interface](https://www.thepolyglotdeveloper.com/2016/06/connect-raspberry-pi-zero-usb-cable-ssh/)
 - [How to enable SSH via network interfaces](https://hackernoon.com/raspberry-pi-headless-install-462ccabd75d0)
 
-_Credit and shout out to [Fmstat](https://github.com/Fmstrat) for the groundwork and it's his browser screenshot I've linked to in this post_
+_Credit and shout out to [Fmstrat](https://github.com/Fmstrat) for the groundwork and it's his browser screenshot I've linked to in this post_
