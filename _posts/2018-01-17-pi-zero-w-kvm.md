@@ -15,7 +15,7 @@ feature_image: backdrop-raspberry
 
 Building a Raspberry Pi Zero W as a DIY HTML5 IP KVM/IPMI with (optional) wireless access.
 
-![](https://i.imgur.com/UuUpOFT.jpg)
+![](https://github.com/sammcj/smcleod_files/blob/master/images/pi_kvm/pikvm.jpg?raw=true)
 
 ![](https://raw.githubusercontent.com/Fmstrat/diy-ipmi/master/Resources/Screenshot.png)
 
