@@ -53,6 +53,8 @@ So, I followed most of the steps in the README.md and [Fmstrat](https://github.c
 
 ### Additional Links
 
+
+- [Raspberry Pi OTG mode to emulate keyboard, mass storage and other input](https://gist.github.com/gbaman/50b6cca61dd1c3f88f41)
 - [How to enable SSH via the Pi Zero's USB interface](https://www.thepolyglotdeveloper.com/2016/06/connect-raspberry-pi-zero-usb-cable-ssh/)
 - [How to enable SSH via network interfaces](https://hackernoon.com/raspberry-pi-headless-install-462ccabd75d0)
 
