@@ -15,6 +15,8 @@ feature_image: containers-3
 
 Presented a Melbourne Search – July 2014 – ‘Search – A Journey of Delivery on a Budget’.
 
-[![]({{ site.url }}/img/es/es.png)](https://smcleod.net/files/Search---A-Journey-of-Delivery-on-a-Budget/)
+[![]({{ site.url }}/img/es/es.png)](https://github.com/sammcj/smcleod_files/blob/master/slides/search/Search-A_Journey_of_Delivery_on_a_Budget.pdf?raw=true)
 
-[![View Slides]({{ site.url }}/img/misc/search.jpg)](https://smcleod.net/files/Search---A-Journey-of-Delivery-on-a-Budget/)
+[![View Slides]({{ site.url }}/img/misc/search.jpg)](https://github.com/sammcj/smcleod_files/blob/master/slides/search/Search-A_Journey_of_Delivery_on_a_Budget.pdf?raw=true)
+
+[Video here](https://www.youtube.com/watch?v=RcXstZ4FzyE)
