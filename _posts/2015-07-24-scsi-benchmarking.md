@@ -2,14 +2,9 @@
 title: iSCSI Benchmarking
 date: 2015-07-24
 categories: tech
-layout: post-sidebar
-author_name : Sam McLeod
+layout: post
 author_url : /author/sam
-author_avatar: sam
-author_avatar: sam
-# show_related_posts: true
-show_avatar : false
-feature_image: datacentre-1
+image: img/datacentre-1.jpg
 
 ---
 

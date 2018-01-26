@@ -2,14 +2,9 @@
 title: Search – A Journey of Delivery on a Budget
 date: 2014-11-04
 categories: tech
-layout: post-sidebar
-author_name : Sam McLeod
+layout: post
 author_url : /author/sam
-author_avatar: sam
-author_avatar: sam
-# show_related_posts: true
-show_avatar : false
-feature_image: containers-3
+image: img/containers-3.jpg
 
 ---
 

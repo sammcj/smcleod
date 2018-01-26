@@ -1,16 +1,10 @@
 ---
 title: Raspberry Pi Zero W IP-KVM
-published: true
 date: 2018-01-17
 categories: tech
-layout: post-sidebar
-author_name : Sam McLeod
+layout: post
 author_url : /author/sam
-author_avatar: sam
-author_avatar: sam
-# show_related_posts: true
-show_avatar : false
-feature_image: backdrop-raspberry
+image: img/backdrop-raspberry.jpg
 ---
 
 Building a Raspberry Pi Zero W as a DIY HTML5 IP KVM/IPMI with (optional) wireless access.

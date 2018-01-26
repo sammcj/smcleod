@@ -2,14 +2,9 @@
 title: Xen Orchestra Docker Image
 date: 2015-05-26
 categories: tech
-layout: post-sidebar
-author_name : Sam McLeod
+layout: post
 author_url : /author/sam
-author_avatar: sam
-author_avatar: sam
-# show_related_posts: true
-show_avatar : false
-feature_image: backdrop-insidebuilding
+image: img/backdrop-insidebuilding.jpg
 
 ---
 

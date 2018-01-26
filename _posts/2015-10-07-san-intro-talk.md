@@ -2,14 +2,9 @@
 title: SAN Intro (Talk)
 date: 2015-10-07
 categories: tech
-layout: post-sidebar
-author_name : Sam McLeod
+layout: post
 author_url : /author/sam
-author_avatar: sam
-author_avatar: sam
-# show_related_posts: true
-show_avatar : false
-feature_image: feature-laptop
+image: img/feature-laptop.jpg
 
 ---
 

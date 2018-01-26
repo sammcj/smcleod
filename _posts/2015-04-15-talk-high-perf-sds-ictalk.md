@@ -2,14 +2,9 @@
 title: Talk - High Performance Software Defined Storage
 date: 2015-04-15
 categories: tech
-layout: post-sidebar
-author_name : Sam McLeod
+layout: post
 author_url : /author/sam
-author_avatar: sam
-author_avatar: sam
-# show_related_posts: true
-show_avatar : false
-feature_image: backdrop-old-bicycle
+image: img/backdrop-old-bicycle.jpg
 
 ---
 

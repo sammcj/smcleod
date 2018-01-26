@@ -2,14 +2,9 @@
 title: Building a high performance SSD SAN - Part 1
 date: 2015-02-16
 categories: tech
-layout: post-sidebar
-author_name : Sam McLeod
+layout: post
 author_url : /author/sam
-author_avatar: sam
-author_avatar: sam
-# show_related_posts: true
-show_avatar : false
-feature_image: melbourne
+image: img/melbourne.jpg
 
 ---
 

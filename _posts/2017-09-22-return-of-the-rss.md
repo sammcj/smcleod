@@ -2,14 +2,9 @@
 title: Return Of The RSS
 date: 2017-09-22
 categories: thoughts
-layout: post-sidebar
-author_name : Sam McLeod
+layout: post
 author_url : /author/sam
-author_avatar: sam
-author_avatar: sam
-# show_related_posts: true
-show_avatar : false
-feature_image: melbourne
+image: img/melbourne.jpg
 ---
 
 Of all the tools for reading news and subscribing to software releases, I still find RSS the most useful.

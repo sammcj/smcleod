@@ -1,16 +1,10 @@
 ---
 title: Applying syntax in Sublime based on the first file line
-published: true
 date: 2017-10-25
 categories: tech
-layout: post-sidebar
-author_name : Sam McLeod
+layout: post
 author_url : /author/sam
-author_avatar: sam
-author_avatar: sam
-# show_related_posts: true
-show_avatar : false
-feature_image: backdrop-code
+image: img/backdrop-code.jpg
 ---
 
 In vim, you can add a comment at the top of files to set the syntax, e.g.:

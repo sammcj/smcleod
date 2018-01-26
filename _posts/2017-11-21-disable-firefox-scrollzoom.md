@@ -1,16 +1,10 @@
 ---
 title: Disable Firefox's zoom on mouse scroll
-published: true
 date: 2017-11-21
 categories: tech
-layout: post-sidebar
-author_name : Sam McLeod
+layout: post
 author_url : /author/sam
-author_avatar: sam
-author_avatar: sam
-# show_related_posts: true
-show_avatar : false
-feature_image: backdrop-code
+image: img/backdrop-code.jpg
 ---
 
 This annoys me endlessly, so in `about:config`:

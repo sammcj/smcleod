@@ -2,14 +2,9 @@
 title: iSCSI SCSI-ID / Serial Persistence
 date: 2015-12-14
 categories: tech
-layout: post-sidebar
-author_name : Sam McLeod
+layout: post
 author_url : /author/sam
-author_avatar: sam
-author_avatar: sam
-# show_related_posts: true
-show_avatar : false
-feature_image: feature-san-fran
+image: img/feature-san-fran.jpg
 
 ---
 

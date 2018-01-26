@@ -2,14 +2,9 @@
 title: The Aeroplane Flies High, Turns Left, Looks Right and Might Reach Its Destination
 date: 2017-03-22
 categories: thoughts
-layout: post-sidebar
-author_name : Sam McLeod
+layout: post
 author_url : /author/sam
-author_avatar: sam
-author_avatar: sam
-# show_related_posts: true
-show_avatar : false
-feature_image: backdrop-feetsky
+image: img/backdrop-feetsky.jpg
 
 ---
 

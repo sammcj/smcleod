@@ -1,16 +1,10 @@
 ---
 title: Broadcom, Or How I Learned To Start Worrying And Drop The Packet
-published: true
 date: 2017-10-13
 categories: tech
-layout: post-sidebar
-author_name : Sam McLeod
+layout: post
 author_url : /author/sam
-author_avatar: sam
-author_avatar: sam
-# show_related_posts: true
-show_avatar : false
-feature_image: backdrop-feetsky
+image: img/backdrop-feetsky.jpg
 ---
 
 

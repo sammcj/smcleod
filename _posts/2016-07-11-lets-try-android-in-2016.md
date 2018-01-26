@@ -2,14 +2,9 @@
 title: The State of Android in 2016 & The OnePlus 3 Phone
 date: 2016-07-11
 categories: tech
-layout: post-sidebar
-author_name : Sam McLeod
+layout: post
 author_url : /author/sam
-author_avatar: sam
-author_avatar: sam
-# show_related_posts: true
-show_avatar : false
-feature_image: backdrop-bridge
+image: img/backdrop-bridge.jpg
 
 ---
 

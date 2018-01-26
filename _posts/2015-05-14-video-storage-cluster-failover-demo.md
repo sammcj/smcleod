@@ -2,14 +2,9 @@
 title: Video - Storage Cluster Failover Demo
 date: 2015-05-15
 categories: tech
-layout: post-sidebar
-author_name : Sam McLeod
+layout: post
 author_url : /author/sam
-author_avatar: sam
-author_avatar: sam
-# show_related_posts: true
-show_avatar : false
-feature_image: containers-1
+image: img/containers-1.jpg
 
 ---
 

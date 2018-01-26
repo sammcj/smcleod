@@ -1,10 +1,56 @@
 ---
-layout: home
-feature_image: feature-san-fran
-title: The blog of Sam McLeod
-desc: The blog of Sam McLeod
-include_cta_btn: false
-cta_text: Newsletter
-cta_link: /about/
-cta_icon: fa-user-plus
+layout: default
+title: Home
 ---
+
+<!-- Featured
+================================================== -->
+<section class="featured-posts">
+    <div class="section-title">
+        <h2><span>Featured</span></h2>
+    </div>
+    <div class="row listfeaturedtag">
+        
+    {% for post in site.posts %}
+
+        {% if post.featured == true %}
+
+            {% include featuredbox.html %}
+
+        {% endif %}
+
+    {% endfor %}
+        
+    </div>
+</section>
+
+<!-- Posts Index
+================================================== -->
+<section class="recent-posts">
+    <div class="section-title">
+        <h2><span>All Stories</span></h2>
+    </div>
+    <div class="masonrygrid row listrecent">
+        
+    {% for post in paginator.posts %}
+
+        {% unless post.featured == true %}
+
+            {% include postbox.html %}
+
+        {% endunless %}
+
+    {% endfor %}
+
+    </div>
+</section>
+
+<!-- Pagination
+================================================== -->
+<div class="bottompagination">
+<div class="pointerup"><i class="fa fa-caret-up"></i></div>
+<span class="navigation" role="navigation">
+    {% include pagination.html %}
+</span>
+</div>
+
