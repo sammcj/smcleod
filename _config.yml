@@ -27,6 +27,7 @@ authors:
 plugins:
   - jekyll-paginate
   - jekyll-archives
+  - jekyll-admin
 
 # Archives
 jekyll-archives:
