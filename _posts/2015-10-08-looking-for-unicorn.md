@@ -4,7 +4,7 @@ date: 2015-10-08
 categories: tech
 layout: post
 author_url : /author/sam
-image: img/feature-san-fran.jpg
+image: img/mac-1.jpg
 
 ---
 
