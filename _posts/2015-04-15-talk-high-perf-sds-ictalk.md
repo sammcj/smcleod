@@ -4,7 +4,7 @@ date: 2015-04-15
 categories: tech
 layout: post
 author_url : /author/sam
-image: img/backdrop-old-bicycle.jpg
+image: img/robin-pierre-323861.jpg
 
 ---
 

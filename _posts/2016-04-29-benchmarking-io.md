@@ -4,7 +4,7 @@ date: 2016-04-29
 categories: tech
 layout: post
 author_url : /author/sam
-image: img/backdrop-italian-steps.jpg
+image: img/daniel-mayovskiy-303666.jpg
 
 ---
 

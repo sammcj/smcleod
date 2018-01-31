@@ -4,7 +4,7 @@ date: 2015-09-01
 categories: tech
 layout: post
 author_url : /author/sam
-image: img/backdrop-austria.jpg
+image: img/rishi-deep-424424.jpg
 
 ---
 

@@ -4,7 +4,7 @@ date: 2016-07-11
 categories: tech
 layout: post
 author_url : /author/sam
-image: img/backdrop-bridge.jpg
+image: img/adrien-296945.jpg
 
 ---
 

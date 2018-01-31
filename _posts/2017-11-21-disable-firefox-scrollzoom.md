@@ -4,7 +4,7 @@ date: 2017-11-21
 categories: tech
 layout: post
 author_url : /author/sam
-image: img/backdrop-code.jpg
+image: img/francisco-moreno-278146.jpg
 ---
 
 This annoys me endlessly, so in `about:config`:

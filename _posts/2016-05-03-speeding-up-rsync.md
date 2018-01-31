@@ -4,7 +4,7 @@ date: 2016-05-03
 categories: tech
 layout: post
 author_url : /author/sam
-image: img/backdrop-insidebuilding.jpg
+image: img/robin-pierre-323861.jpg
 
 ---
 

@@ -4,7 +4,7 @@ date: 2015-10-07
 categories: tech
 layout: post
 author_url : /author/sam
-image: img/feature-laptop.jpg
+image: img/elliot-sloman-199291.jpg
 
 ---
 

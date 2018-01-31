@@ -4,7 +4,7 @@ date: 2016-01-18
 categories: tech
 layout: post
 author_url : /author/sam
-image: img/backdrop-austria.jpg
+image: img/samuel-zeller-358865.jpg
 
 ---
 

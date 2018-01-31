@@ -4,7 +4,7 @@ date: 2016-05-23
 categories: tech
 layout: post
 author_url : /author/sam
-image: img/backdrop-colosseum-rome.jpg
+image: img/hector-martinez-96481.jpg
 
 ---
 

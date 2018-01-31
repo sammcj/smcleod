@@ -4,7 +4,7 @@ date: 2015-02-14
 categories: tech
 layout: post
 author_url : /author/sam
-image: img/backdrop-feetsky.jpg
+image: img/noah-kuhn-27481.jpg
 
 ---
 

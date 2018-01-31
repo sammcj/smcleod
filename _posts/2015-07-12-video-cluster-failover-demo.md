@@ -4,7 +4,7 @@ date: 2015-07-12
 categories: tech
 layout: post
 author_url : /author/sam
-image: img/backdrop-buildingsharlm.jpg
+image: img/tim-napier-181584.jpg
 
 ---
 

@@ -4,7 +4,7 @@ date: 2015-01-01
 categories: tech
 layout: post
 author_url : /author/sam
-image: img/melbourne.jpg
+image: img/patrick-tomasso-71909.jpg
 
 ---
 

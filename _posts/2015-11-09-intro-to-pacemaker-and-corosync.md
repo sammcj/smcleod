@@ -4,7 +4,7 @@ date: 2015-11-09
 categories: tech
 layout: post
 author_url : /author/sam
-image: img/feature-san-fran.jpg
+image: img/tim-napier-181584.jpg
 
 ---
 

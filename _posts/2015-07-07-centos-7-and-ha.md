@@ -4,7 +4,7 @@ date: 2015-07-07
 categories: tech
 layout: post
 author_url : /author/sam
-image: img/backdrop-colosseum-rome.jpg
+image: img/billy-huynh-278252.jpg
 
 ---
 

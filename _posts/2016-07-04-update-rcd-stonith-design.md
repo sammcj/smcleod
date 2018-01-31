@@ -4,7 +4,7 @@ date: 2016-07-04
 categories: tech
 layout: post
 author_url : /author/sam
-image: img/backdrop-buildingsharlm.jpg
+image: img/noah-kuhn-27481.jpg
 featured: true
 ---
 
