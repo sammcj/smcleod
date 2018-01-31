@@ -4,7 +4,7 @@ date: 2017-03-22
 categories: thoughts
 layout: post
 author_url : /author/sam
-image: img/backdrop-feetsky.jpg
+image: img/samuel-zeller-358865.jpg
 
 ---
 
