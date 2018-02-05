@@ -16,14 +16,10 @@ image: img/samuel-zeller-237359.jpg
 - Any improvement made before the bottleneck merely results in more ‘work’ piling up at the bottleneck.
 
 
-1. Identify the system's constraint(s) (that which prevents the organisation from obtaining more of the goal in a unit of time)
-
-2. Decide how to exploit the system's constraint(s) (how to get the most out of the constraint)
-
-3. Subordinate everything else to the above decision (align the whole system or organization to support the decision made above)
-
-4. Elevate the system's constraint(s) (make other major changes needed to increase the constraint's capacity)
-
+1. _Identify_ the system's constraint(s) (that which prevents the organisation from obtaining more of the goal in a unit of time)
+2. Decide how to _exploit_ the system's constraint(s) (how to get the most out of the constraint)
+3. Subordinate everything else to the above decision (_align_ the whole system or organization to support the decision made above)
+4. _Elevate_ the system's constraint(s) (make other major changes needed to increase the constraint's capacity)
 5. Warning! If in the previous steps a constraint has been broken, go back to step 1, but do not allow inertia to cause a system's constraint.
 
 ---
