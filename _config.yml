@@ -4,7 +4,7 @@ description: "The blog of Sam McLeod"
 meta_description: "The blog of Sam McLeod"
 logo: 'assets/images/logo.png'
 favicon: 'assets/images/logo.png'
-paginate: 15
+paginate: 20
 baseurl: ""
 disqus: "smcleodnet"
 google_analytics: "UA-59178670-1"
