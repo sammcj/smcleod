@@ -27,5 +27,5 @@ image: img/samuel-zeller-237359.jpg
 
 ### References:
 
-- http://www.amazon.com/The-Phoenix-Project-Helping-Business/dp/0988262592
-- http://en.wikipedia.org/wiki/Theory_of_constraints
+- [The Phoenix Project](http://www.amazon.com/The-Phoenix-Project-Helping-Business/dp/0988262592)
+- [Wikipedia - Theory of Constraints](http://en.wikipedia.org/wiki/Theory_of_constraints)
