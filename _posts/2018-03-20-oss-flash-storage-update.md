@@ -23,7 +23,7 @@ TLDR; Mid-range SSDs from reputable brands (SanDisk, Crucial / Micron and Intel)
 
 We found that the [Supermicro DOM](https://www.supermicro.com/products/nfo/SATADOM.cfm) disks have been quite unreliable, Supermicro acknowledged the problem and issued an updated hardware revision.
 
-![](img/san/dom.jpg)
+![](/img/san/dom.jpg)
 
 We haven't yet had a single updated v1.1 revision DOM fail on us, but they do have one downside: they're slightly smaller in size, likely due to additional under provisioning on the NAND flash.
 
@@ -44,4 +44,4 @@ We haven't had many SATA SSDs fail at all to date out of the total 208 SATA SSDs
 
 We've had no NVMe SSDs fail out of the 8x Intel DC3600 series we have deployed.
 
-![](img/san/sans.jpg)
+![](/img/san/sans.jpg)
