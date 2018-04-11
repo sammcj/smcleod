@@ -8,7 +8,7 @@ image: img/v8.jpg
 featured: true
 ---
 
-Last weekend I headed over to New Zealand and marshalled at the [Highlands Festival of Speed](https://www.highlands.co.nz/events/highlands-festival-of-speed-2018/).
+Last weekend I headed to New Zealand and marshalled at the [Highlands Festival of Speed](https://www.highlands.co.nz/events/highlands-festival-of-speed-2018/).
 
 > The Highlands Festival of Speed is a weekend packed with some of the best modern classic racing you will see in New Zealand. Featuring the Pre 65 Racing, Mainland Muscle, Formula Libre, South Island Porsche, OSCA, Highlands Modern Classics/Nostalgic Classics and the Highlands Sprint Series. This is a weekend of true blue Kiwi racing starring some of New Zealand's most well known racing legends.
 
@@ -126,7 +126,7 @@ The cars
 
 <div id="listings"></div>
 
-## Cars
+## Car Numbers and Engine Sizes
 
 [![](https://raw.githubusercontent.com/sammcj/highlands-festival-of-speed/master/photos/IMG_2120.jpg)](https://raw.githubusercontent.com/sammcj/highlands-festival-of-speed/master/photos/IMG_2120.jpg){:target="_blank"}
 [![](https://raw.githubusercontent.com/sammcj/highlands-festival-of-speed/master/photos/IMG_2121.jpg)](https://raw.githubusercontent.com/sammcj/highlands-festival-of-speed/master/photos/IMG_2121.jpg){:target="_blank"}
