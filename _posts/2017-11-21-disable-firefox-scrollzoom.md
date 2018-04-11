@@ -7,7 +7,9 @@ author_url : /author/sam
 image: img/francisco-moreno-278146.jpg
 ---
 
-This annoys me endlessly, so in `about:config`:
+This annoys me endlessly as I seem to often have my hand on control / cmd from working in the terminal.
+
+Turns out it's an easy fix in Firefox's `about:config`:
 
 ```
 mousewheel.with_control.action 0
