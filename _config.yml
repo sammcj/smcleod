@@ -7,7 +7,7 @@ favicon: 'assets/images/logo.png'
 paginate: 20
 baseurl: ""
 # disqus: "smcleodnet"
-google_analytics: "UA-59178670-1"
+# google_analytics: "UA-59178670-1"
 excerpt_separator: "<!--more-->"
 timezone: "Australia/Melbourne"
 # mailchimp-list: 'https://wowthemes.us11.list-manage.com/subscribe/post?u=8aeb20a530e124561927d3bd8&amp;id=8c3d2d214b'
