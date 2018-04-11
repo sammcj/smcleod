@@ -21,6 +21,8 @@ _Be sure to select `1080p` video quality in YouTube's player._
 
 ## Photos
 
+_Note: I have higher quality photos, just email or send me a [DM on Twitter](https://twitter.com/s_mcleod) if you want them._
+
 Our marshalling site for the day
 [![](https://raw.githubusercontent.com/sammcj/highlands-festival-of-speed/master/photos/IMG_2075.jpg)](https://raw.githubusercontent.com/sammcj/highlands-festival-of-speed/master/photos/IMG_2075.jpg){:target="_blank"}
 
