@@ -1,5 +1,5 @@
 source 'https://rubygems.org'
 gem 'jekyll'
-gem 'jekyll-admin'
 gem 'jekyll-paginate'
 gem 'jekyll-archives'
+gem 'jekyll-admin', group: :jekyll_plugins
