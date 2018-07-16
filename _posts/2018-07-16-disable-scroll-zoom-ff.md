@@ -10,7 +10,7 @@ layout: post
 This feature annoys me endlessly, I end up zoomed in and out of websites all over the internet.
 ... But the fix is easy and there's no addons required.
 
-1. Navigate to about:config (in Firefox's URL bar)
+1. Navigate to `about:config` (in Firefox's URL bar)
 2. Change the value of the following two properties to `0`:
 
 ```
