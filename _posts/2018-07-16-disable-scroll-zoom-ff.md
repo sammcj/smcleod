@@ -20,7 +20,7 @@ mousewheel.with_meta.action
 
 If you use Firefox sync and want these settings to sync between your machines, also add the following properties:
 
-4. Create two *new* properties both of type `boolean` and set them to `true`:
+Create two *new* properties both of type `boolean` and set them to `true`:
 
 ```
 services.sync.prefs.sync.mousewheel.with_meta.action
