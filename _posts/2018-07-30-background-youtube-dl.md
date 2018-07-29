@@ -19,9 +19,11 @@ Here's a simple function I whipped up that seems to 'just works'™:
 ```bash
 function yt
 {
-  nohup youtube-dl "$1" 2>&1 > youtube-dl-"$(date +%Y%m%d-%H%M%S)".log &
+  nohup youtube-dl "$1" --no-progress 2>&1 > youtube-dl-"$(date +%Y%m%d-%H%M%S)".log &
 }
 ```
+
+Or if you don't want log files to be generated, swap `youtube-dl-"$(date +%Y%m%d-%H%M%S)".log` for `/dev/null`
 
 Example:
 
