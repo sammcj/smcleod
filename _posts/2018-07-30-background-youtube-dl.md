@@ -23,7 +23,14 @@ function yt
 }
 ```
 
-Or if you don't want log files to be generated, swap `youtube-dl-"$(date +%Y%m%d-%H%M%S)".log` for `/dev/null`
+And if you don't want logs, simply send the output to `/dev/null`:
+
+```bash
+function yt
+{
+  nohup youtube-dl "$1" --no-progress 2>&1 > /dev/null &
+}
+```
 
 Example:
 
