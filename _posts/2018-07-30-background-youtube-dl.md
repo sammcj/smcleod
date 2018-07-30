@@ -51,7 +51,7 @@ youtube-dl-20180730-085025.log
 The log file contains the usual [`youtube-dl`](https://rg3.github.io/youtube-dl/) information:
 
 ```shell
-~cat youtube-dl-20180730-085025.log
+~ cat youtube-dl-20180730-085025.log
 
 [youtube] fK0qwngdNgw: Downloading webpage
 [youtube] fK0qwngdNgw: Downloading video info webpage
