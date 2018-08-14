@@ -5,7 +5,7 @@ categories: tech
 layout: post
 author_url : /author/sam
 image: img/noah-kuhn-27481.jpg
-featured: true
+featured: false
 ---
 
 _note: This is a follow up post from [2015-07-21-rcd-stonith]({% post_url 2015-07-21-rcd-stonith %})_

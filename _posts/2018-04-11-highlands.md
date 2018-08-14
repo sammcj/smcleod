@@ -5,7 +5,7 @@ categories: photos
 layout: post
 author_url: /author/sam
 image: img/v8.jpg
-featured: true
+featured: false
 ---
 
 Last weekend I headed to New Zealand and marshalled at the [Highlands Festival of Speed](https://www.highlands.co.nz/events/highlands-festival-of-speed-2018/).
