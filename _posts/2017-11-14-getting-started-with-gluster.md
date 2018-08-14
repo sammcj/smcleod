@@ -5,7 +5,7 @@ categories: tech
 layout: post
 author_url : /author/sam
 image: img/backdrop-plastic-containers.jpg
-featured: true
+featured: false
 ---
 
 Using GlusterFS to provide volume storage to Kubernetes as a replacement for our existing file and static content hosting.
