@@ -161,7 +161,7 @@ I do expect this to improve in the future, the community is very active and the 
 
 
 <a id="proxmox"></a>
-### [Proxmox](https://www.proxmox.com/en/)
+## [Proxmox](https://www.proxmox.com/en/)
 
 _Note: While Proxmox might be OK for a small deployment or home lab, I'd probably rather just run something like CentOS/Fedora with KVM and [Kimchi](https://github.com/kimchi-project/kimchi) for management._
 
