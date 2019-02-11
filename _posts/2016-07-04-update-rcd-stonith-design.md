@@ -21,12 +21,22 @@ This has since been accepted and merged into Fedora's code base and as such will
 [CAD Design and Schematics](CAD/STONTH_CAD_DESIGN_V3)
 - Related RedHat Bug: https://bugzilla.redhat.com/show_bug.cgi?id=1240868
 
+#### v1 vs v2/v3 `rcd_serial` STONITH cables
+
+The v2/v3 cables include the following improvements:
+
+- Have a connector on the outside of the server (that's female side runs from the reset pin 'hijacker') so that cables can be easily disconnected.
+- Have a slightly improved circuit design.
+- Have long thumb-screws on the RS232 serial connector that not longer accidentally unscrew the female RS232 connector in the server (whoops!).
+
+
+![]({{ site.url }}/img/v3_cable.jpg)
+![]({{ site.url }}/img/rcd_serial_v3_diagram.png)
+
+
 Many thanks to:
 
 - George Hansper (Assistance and peer review of electrical design).
 - OurPCB (Board fabrication).
 - Clusterlabs, Redhat and Fedora Teams, feedback and peer review.
 - John Sutton for his [original design](http://www.init.hr/dev/cluster/glue/lib/plugins/stonith/rcd_serial.c) that served as inspiration.
-
-![]({{ site.url }}/img/v3_cable.jpg)
-![]({{ site.url }}/img/rcd_serial_v3_diagram.png)
