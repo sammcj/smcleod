@@ -113,6 +113,8 @@ XCP-ng is a relatively recent fork from XenServer after it was open sourced, tra
 - Prioritising replacing old technologies built into XenServer, such as [moving from EXT3 to EXT4](https://xcp-ng.org/forum/topic/839/new-ext4-driver-please-test-it) and working on a more modern kernel build pipeline.
 - TRIM/DISCARD for iSCSI LUNs is [in the works](https://github.com/xcp-ng/xcp/issues/123)
 - [And lots of other enhancements being worked on and in the backlog](https://github.com/xcp-ng/xcp/issues?q=is%3Aopen+is%3Aissue+label%3A%22enhancement+%3Anew%3A%22)
+- Efficient ZSTD import/export compression
+- The start of an exciting [Roadmap](https://github.com/xcp-ng/xcp/wiki/Roadmap)
 
 <a id="against-1"></a>
 ### Against:
@@ -247,6 +249,7 @@ and some traditional hypervisor clusters (perhaps XCP-ng!) for traditional VM su
 
 - [XCP-ng Website](https://xcp-ng.org/)
 - [XCP-ng Blog](https://xcp-ng.org/blog/)
+- [XCP-ng Roadmap](https://github.com/xcp-ng/xcp/wiki/Roadmap)
 - [XCP-ng Download](https://xcp-ng.org/#easy-to-install)
 - [XCP-ng Centre Downloads](https://github.com/xcp-ng/xenadmin/releases)
 - [XCP-ng Twitter](https://twitter.com/xcpng)
