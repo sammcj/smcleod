@@ -20,6 +20,6 @@ Ops Leader, Platform Delivery Engineer, Enabler & Ponderer of Complex Systems
 
 I try to keep my blog as lightweight and fast as possible by not using external resources (JS, CSS, Fonts, Analytics etc...), minimal JavaScript and by using a CDN (Cloudflare).
 
-Likewise, I don't want to track you, so again I avoid loading external fonts and libraries, the only analytics I have is the information from Cloudflare acting as a CDN.
+Likewise, I don't want to track you, so I avoid loading external fonts and libraries, the only analytics I have is the information from Cloudflare acting as a CDN.
 
-If you spot an error (even a typo!) please contact me and let me know (Twitter is best if you don't have my email).
+If you spot an error or broken link please contact me and let me know (Twitter is best if you don't have my email).
