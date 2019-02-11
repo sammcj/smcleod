@@ -119,7 +119,7 @@ XCP-ng is a relatively recent fork from XenServer after it was open sourced, tra
 - (Near future) enhancements for a new storage stack (SMAPIv3).
 - (Near future) enhancement to include VXLAN support.
 - Significant [initiative into research and development](https://xcp-ng.org/blog/2018/12/19/xcp-ng-research-initiative/), partnering with several educational and scientific institutions.
-- [And lots of other enhancements being worked on and in the backlog](https://github.com/xcp-ng/xcp/issues?q=is%3Aopen+is%3Aissue+label%3A%22enhancement+%3Anew%3A%22)
+- [And lots of other enhancements being worked on and in the backlog](https://github.com/xcp-ng/xcp/issues?q=is%3Aopen+is%3Aissue+label%3A%22enhancement+%3Anew%3A%22).
 
 <a id="against-1"></a>
 ### Against:
