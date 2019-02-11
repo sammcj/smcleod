@@ -30,6 +30,7 @@ Essentially the most common STONITH agent type in use is probably those that con
 - There are almost always two PDUs / UPSs to manage, until very recently the PDU STONITH agents only supported sending an action to a single unit, while they now support sending them to two units in modern packages there a number of situations that are complex to manage and predict - i.e. what if one unit responds, cuts the power and the other doesn't? Who's in charge? Do we fail over? etc... that's a LOT of logic for a STONITH action.
 - I've seen several PDUs fail, it's not pretty and often the management interface is the first thing to go.
 
+**_Note: This is v1 of the design, a post on the update v2/v3 design can be found [here](https://smcleod.net/tech/2016/07/04/update-rcd-stonith-design.html)_**
 
 [Adam Coy's](https://www.linkedin.com/pub/adam-coy/5/989/888) slightly modified version of the circuit that includes an indicator LED and an [optocoupler](https://en.wikipedia.org/wiki/Opto-isolator):
 
