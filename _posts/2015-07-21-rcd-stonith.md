@@ -14,7 +14,7 @@ A modified version of [John Sutton's](http://www.scl.co.uk/rcd_serial/README.rcd
 
 This works with the rcd_serial fence agent [plugin](https://github.com/ClusterLabs/fence-agents/tree/master/agents/rcd_serial).
 
-Reasons rcd_serial makes for a very good STONITH mechanism:
+Reasons `rcd_serial` makes for a very good STONITH mechanism:
 
 - It has no dependency on power state.
 - It has no dependency on network state.
