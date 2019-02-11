@@ -7,8 +7,6 @@ image: img/xcpng_rocket_logo.png
 layout: post
 ---
 
-# Goodbye XenServer, Hello XCP-ng
-
 In 2018 I set out to replace our XenSever 7.2 based virtualisation after [Citrix essentially screwed over free / open source users](https://xenserver.org/blog/entry/xenserver-7-3-changes-to-the-free-edition.html).
 
 This project was to directly replace XenServer 7.2 with something supported and manageable for our traditional virtualisation needs.
