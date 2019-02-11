@@ -18,7 +18,7 @@ Ops Leader, Platform Delivery Engineer, Enabler & Ponderer of Complex Systems
 
 ---
 
-Any words are my own or someone else's and may or may not represent the views of my employer(s).
+_Any words are my own or someone else's and may or may not represent the views of my employer(s)._
 
 ---
 
