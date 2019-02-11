@@ -1,5 +1,5 @@
 ---
-title: Goodbye XenSever - Helo XCP-ng
+title: Goodbye XenSever - Hello XCP-ng
 date: '2019-02-05 09:00:00'
 categories: tech
 author_url: "/author/sam"
