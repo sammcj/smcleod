@@ -18,6 +18,10 @@ Ops Leader, Platform Delivery Engineer, Enabler & Ponderer of Complex Systems
 
 ---
 
+Any words are my own or someone else's and may or may not represent the views of my employer(s).
+
+---
+
 I try to keep my blog as lightweight and fast as possible by not using external resources (JS, CSS, Fonts, Analytics etc...), minimal JavaScript and by using a CDN (Cloudflare).
 
 Likewise, I don't want to track you, so I avoid loading external fonts and libraries, the only analytics I have is the information from Cloudflare acting as a CDN.
