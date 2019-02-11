@@ -15,7 +15,7 @@ _note: This is a follow up post from [2015-07-21-rcd-stonith]({% post_url 2015-0
 This has since been accepted and merged into Fedora's code base and as such will make it's way to RHEL.
 
 - Source Code: [Github](https://github.com/sammcj/fence_rcd_serial)
-- [Diptrace] CAD Design: [Github](https://github.com/sammcj/fence_rcd_serial/tree/master/CAD/STONTH_CAD_DESIGN_V3)
+- [Diptrace](https://diptrace.com/download/download-diptrace/) CAD Design: [Github](https://github.com/sammcj/fence_rcd_serial/tree/master/CAD/STONTH_CAD_DESIGN_V3)
 - Device: https://smcleod.net/rcd-stonith/ (Warning: Contains somewhat outaged images / diagrams now)
 - I have open sourced the CAD circuit design and made this available within this repo under
 [CAD Design and Schematics](CAD/STONTH_CAD_DESIGN_V3)
