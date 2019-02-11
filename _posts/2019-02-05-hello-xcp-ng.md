@@ -196,7 +196,7 @@ Of course there is a lot we manage with automation (Puppet), so I had to make so
 
 We only hit two _minor_ problems during the upgrade, thankfully I was warned about one and the other was an easy fix:
 
-1. An bug in the upstream XenServer which meant I had to ensure the vm parameter `platform:device_id` was set to `0001` on all VMs,
+1. A [bug in the upstream XenServer](https://bugs.xenserver.org/browse/XSO-924) which meant I had to ensure the vm parameter `platform:device_id` was set to `0001` on all VMs,
 otherwise they'd fail to live migrate during a pool upgrade, I did this simply ensuring it was set across all VMs before the upgrade:
 ```
 xe vm-param-set platform:device_id=0001 uuid=b56f95fb-cb8f-86ce-5c7d-8efc2239f1db
