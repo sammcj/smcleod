@@ -1,6 +1,6 @@
 ---
 title: Goodbye XenSever - Hello XCP-ng
-date: '2019-02-05 09:00:00'
+date: '2019-02-11 13:00:00'
 categories: tech
 author_url: "/author/sam"
 image: img/xcpng_rocket_logo.png
