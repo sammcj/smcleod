@@ -57,9 +57,10 @@ Key criteria (at a high level) I was evaluating:
 - Networking design and complexity.
 - Community (size, engagement, acceptance of suggestions / MRs).
 - Reliable live VM migrations.
-- Stability above all else.
+- Ease of management from a small team (Part of a low TCO).
 - Risk of vendor and technology lock-in.
 - Risk of survival (will it still be well maintained over the next 1-3 years).
+- Stability and reliability above practically all else.
 
 <a id="xenserver-76-w-paid-license"></a>
 ## [XenServer 7.6 (w/ Paid License)](https://xenserver.org/)
