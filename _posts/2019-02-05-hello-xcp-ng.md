@@ -94,6 +94,8 @@ Key criteria (at a high level) I was evaluating:
 
 XCP-ng is a relatively recent fork from XenServer after it was open sourced, tracking upstream but clearly prioritising modernisation and community.
 
+- [XCP-ng: Building an Open Source and Turnkey virtualisation platform - Talk/Video FOSDEM](https://www.youtube.com/watch?v=VpGC5zuLjSs)
+
 <a id="for-1"></a>
 ### For:
 
