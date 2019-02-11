@@ -25,7 +25,7 @@ This project was to directly replace XenServer 7.2 with something supported and 
 - [oVirt](#ovirt)
   - [For:](#for-2)
   - [Against:](#against-2)
-  - [Proxmox](#proxmox)
+- [Proxmox](#proxmox)
   - [For:](#for-3)
   - [Against:](#against-3)
 - [Decision time](#decision-time)
