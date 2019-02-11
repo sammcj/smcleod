@@ -12,7 +12,7 @@ A modified version of [John Sutton's](http://www.scl.co.uk/rcd_serial/README.rcd
 
 ![]({{ site.url }}/img/san/rcd_serial.jpg)
 
-This works with the rcd_serial fence agent [plugin](https://github.com/ClusterLabs/fence-agents/blob/master/fence/agents/rcd_serial/fence_rcd_serial.py).
+This works with the rcd_serial fence agent [plugin](https://github.com/ClusterLabs/fence-agents/tree/master/agents/rcd_serial).
 
 Reasons rcd_serial makes for a very good STONITH mechanism:
 
@@ -40,6 +40,8 @@ Example of where our Supermicro reset hijack connects on the target node:
 ![]({{ site.url }}/img/san/reboot_jumper.jpg)
 
 ### Availability
+
+**UPDATE: This has since been added to RHEL/CentOS and the official Clusterlabs resource agents**
 
 At present the rcd_serial STONITH agent is available as part of the [`cluster-glue`](https://packagecloud.io/s_mcleod/pacemaker/packages/el/7/cluster-glue-1.0.12-1.16.1.x86_64.rpm) package, `cluster-glue` is not available in RHEL/CentOS but can be obtained from [OpenSUSE's CentOS7 Repo](ftp://rpmfind.net/linux/opensuse/factory/repo/oss/suse/x86_64/cluster-glue-1.0.12-19.2.x86_64.rpm) or [my own mirror](https://packagecloud.io/s_mcleod/pacemaker). (Tested with CentOS 7).
 
