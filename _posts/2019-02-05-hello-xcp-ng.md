@@ -28,11 +28,11 @@ This project was to directly replace XenServer 7.2 with something supported and 
   - [Proxmox](#proxmox)
   - [For:](#for-3)
   - [Against:](#against-3)
-- [Decision Time](#decision-time)
-  - [Upgrade Experience](#upgrade-experience)
-    - [Upgrade Bugs](#upgrade-bugs)
+- [Decision time](#decision-time)
+  - [Upgrade experience](#upgrade-experience)
+    - [Upgrade bugs](#upgrade-bugs)
 - [Three weeks with XCP-ng](#three-weeks-with-xcp-ng)
-- [The Future \(For Us\)](#the-future-for-us)
+- [The Future \(For us\)](#the-future-for-us)
 - [XCP-ng Links](#xcp-ng-links)
 
 <!-- /MarkdownTOC -->
@@ -171,7 +171,7 @@ _Note: While Proxmox might be OK for a small deployment or home lab, I'd probabl
 ---
 
 <a id="decision-time"></a>
-## Decision Time
+## Decision time
 
 As much as I would have liked to shift to a KVM based solution, I just didn't feel that oVirt was a safe move for a small team.
 
@@ -180,7 +180,7 @@ Staying and paying for XenServer seemed insane and I do not believe that the Cit
 Given that we wanted a simple upgrade process to something that was maintained and had a good community XCP-ng ended up being the (almost) obvious choice.
 
 <a id="upgrade-experience"></a>
-### Upgrade Experience
+### Upgrade experience
 
 The upgrade from XenServer 7.2 to XCP-ng 7.6 couldn't have been more easy.
 
@@ -192,7 +192,7 @@ The upgrade from XenServer 7.2 to XCP-ng 7.6 couldn't have been more easy.
 Of course there is a lot we manage with automation (Puppet), so I had to make some minor updates to our Puppet manifests but that happened as XenServer major releases came out regardless.
 
 <a id="upgrade-bugs"></a>
-#### Upgrade Bugs
+#### Upgrade bugs
 
 We only hit two _minor_ problems during the upgrade, thankfully I was warned about one and the other was an easy fix:
 
@@ -223,7 +223,7 @@ We have encountered no problems at all and both the product shows real progress 
 
 
 <a id="the-future-for-us"></a>
-# The Future (For Us)
+# The Future (For us)
 
 This project was to directly replace XenServer 7.2 with something supported and manageable for our traditional virtualisation needs.
 
