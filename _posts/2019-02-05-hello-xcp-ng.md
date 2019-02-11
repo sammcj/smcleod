@@ -114,6 +114,8 @@ XCP-ng is a relatively recent fork from XenServer after it was open sourced, tra
 - TRIM/DISCARD for iSCSI LUNs is [in the works](https://github.com/xcp-ng/xcp/issues/123).
 - Efficient ZSTD import/export compression
 - The start of an exciting [Roadmap](https://github.com/xcp-ng/xcp/wiki/Roadmap).
+- Near future enhancements for a new storage stack (SMAPIv3).
+- Near future enhancement to include VXLAN support.
 - [And lots of other enhancements being worked on and in the backlog](https://github.com/xcp-ng/xcp/issues?q=is%3Aopen+is%3Aissue+label%3A%22enhancement+%3Anew%3A%22)
 
 <a id="against-1"></a>
