@@ -57,7 +57,7 @@ Key criteria (at a high level) I was evaluating:
 - Networking design and complexity.
 - Community (size, engagement, acceptance of suggestions / MRs).
 - Reliable live VM migrations.
-- Ease of management from a small team (Part of a low TCO).
+- Ease of management for a small team (Part of a low TCO).
 - Risk of vendor and technology lock-in.
 - Risk of survival (will it still be well maintained over the next 1-3 years).
 - Stability and reliability above practically all else.
