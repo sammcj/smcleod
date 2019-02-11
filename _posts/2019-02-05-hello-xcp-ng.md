@@ -220,6 +220,8 @@ and set it in XCP-ng centre for each host after they were upgraded.
 
 Over the past 2-4 weeks I've upgraded two clusters with a total of 32 physical hosts and 240~ VMs from XenServer 7.2 to XCP-ng 7.6.
 
+Obviously while the XCP-ng upgrade itself is an easy process there was a _lot_ of prior testing, peer review and then the hundreds of VMs to live migrate and juggle for clustered systems, but - it went well with no impact to our internal business services or customers.
+
 So far, compared to XenServer, XCP-ng has been painless and the transition was easy for both myself and the team that uses it daily.
 
 We have encountered no problems at all and both the product shows real progress and promise while the community has been active and supportive.
