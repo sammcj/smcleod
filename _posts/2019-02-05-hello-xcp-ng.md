@@ -101,13 +101,16 @@ XCP-ng is a relatively recent fork from XenServer after it was open sourced, tra
 - Updates are very easy and all provided via yum.
 - Rapidly growing and inclusive community.
 - Open source and without licensing to worry about or restrictions on features.
-- Promising support for OpenZFS.
 - Live VM migrations are not only faster, but I am yet to have a VM fail to migrate.
-- Prioritising replacing old technologies built into XenServer, such as moving from EXT3 to EXT4 and working on a more modern kernel build pipeline.
 - CentOS 7 based, and while still has many old packages (from XenServer) the developers and community are working hard to modernise these.
 - Much easier to submit bugs and MRs via their public repos than XenServer.
 - A fantastic level of transparency of direction and challenges.
 - You have the option of using [Xen Orchestra](https://xen-orchestra.com) has a web interface to manage XCP-ng.
+- mdadm, kernel (some say 'software') RAID support.
+- Promising support for OpenZFS.
+- Prioritising replacing old technologies built into XenServer, such as [moving from EXT3 to EXT4](https://xcp-ng.org/forum/topic/839/new-ext4-driver-please-test-it) and working on a more modern kernel build pipeline.
+- TRIM/DISCARD for iSCSI LUNs is [in the works](https://github.com/xcp-ng/xcp/issues/123)
+- [And lots of other enhancements being worked on and in the backlog](https://github.com/xcp-ng/xcp/issues?q=is%3Aopen+is%3Aissue+label%3A%22enhancement+%3Anew%3A%22)
 
 <a id="against-1"></a>
 ### Against:
