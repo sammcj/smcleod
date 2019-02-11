@@ -100,6 +100,7 @@ XCP-ng is a relatively recent fork from XenServer after it was open sourced, tra
 - Fresh installs and upgrades are simple, painless and easy to pxeboot.
 - Updates are very easy and all provided via yum.
 - Rapidly growing and inclusive community.
+- Much more modern and easy to use [forums](https://xcp-ng.org/forum/).
 - Open source and without licensing to worry about or restrictions on features.
 - Live VM migrations are not only faster, but I am yet to have a VM fail to migrate.
 - CentOS 7 based, and while still has many old packages (from XenServer) the developers and community are working hard to modernise these.
