@@ -46,7 +46,7 @@ Example of where our Supermicro reset hijack connects on the target node:
 
 Image of the rear of a two node cluster with networking and rcd_serial STONITH (v1) connectors attached:
 
-![]({{ site.url }}/img/san/storage_with_stonith_rear.jpeg)
+![]({{ site.url }}/img/san/storage_with_stonith_rear.jpg)
 
 ---
 
