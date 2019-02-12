@@ -33,6 +33,16 @@ The v2/v3 cables include the following improvements:
 ![]({{ site.url }}/img/v3_cable.jpg)
 ![]({{ site.url }}/img/rcd_serial_v3_diagram.png)
 
+#### 'Hijack' cable
+
+All the 'Hijack' cable is, is essentially a small M-F extension cable for the motherboard front-panel (buttons/LED) PINs with one change:
+
+- The two reset pins are 'hijacked' so you can add a connector to run out the back of the server a connection to the adjacent storage server's rcd_serial connector.
+
+![]({{ site.url }}/img/hijack.jpg)
+
+![]({{ site.url }}/img/clip_correct.jpeg)
+
 ---
 
 Many thanks to:
