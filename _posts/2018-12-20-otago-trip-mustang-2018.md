@@ -15,7 +15,8 @@ I'm not usually an American Muscle enthusiast, but the new 2019 GT really is qui
 with a new specially developed [10 speed gearbox](https://www.caranddriver.com/reviews/a24847025/2018-ford-mustang-automatic-transmission-performance/)
 (yes, _10_ gears - because more is better right?), tuned up suspension and so seemed like it would make for a pretty fun trip.
 
-I _might_ do a review of the car at some point, needless to say it was a lot of fun, very quick - but did have a poorly designed console controls.
+I _might_ do a review of the car at some point, needless to say it was a lot of fun, very quick, handled surprisingly well for a big America v8,
+it did however suffer from very poorly designed console controls.
 
 And so I took the pony for a gallop from Christchurch, drove down South to Central Otago where my father owns
 [the pub](https://www.tripadvisor.com.au/Restaurant_Review-g3136888-d3370364-Reviews-Oturehua_Railway_Hotel-Oturehua_Central_Otago_Otago_Region_South_Island.html)
