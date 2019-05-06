@@ -9,18 +9,18 @@ image: img/clyde_mustang_2080.jpg
 featured: true
 ---
 
-In late November of 2018 I was lucky enough to get my hands on the upcoming 2019 Sport spec Mustang GT v8 to be it's first driver.
+In late November of 2018 I was lucky enough to get my hands on the upcoming 2019 Sport spec Mustang GT v8 to be its first driver.
 
 I'm not usually an American Muscle enthusiast, but the new 2019 GT really is quite different from it's slightly older counterparts,
 with a new specially developed [10 speed gearbox](https://www.caranddriver.com/reviews/a24847025/2018-ford-mustang-automatic-transmission-performance/)
 (yes, _10_ gears - because more is better right?), tuned up suspension and so seemed like it would make for a pretty fun trip.
 
-I _might_ do a review of the car at some point, needless to say it was a lot of fun, very quick - but had a lot of poorly design UI interfaces.
+I _might_ do a review of the car at some point, needless to say it was a lot of fun, very quick - but did have a poorly designed console controls.
 
 And so I took the pony for a gallop from Christchurch, drove down South to Central Otago where my father owns
 [the pub](https://www.tripadvisor.com.au/Restaurant_Review-g3136888-d3370364-Reviews-Oturehua_Railway_Hotel-Oturehua_Central_Otago_Otago_Region_South_Island.html)
 in [Oturehua](https://www.google.com/maps/@-45.4192795,169.9300073,63966a,35y,35.19t/data=!3m1!1e3)
-(Ida Valley, CHeart of the South Island, Middle of Nowhere).
+(Ida Valley, Heart of the South Island, Middle of Nowhere).
 
 After a few nights, I drove up through [Clyde](https://www.google.com/maps/search/Clyde+dam/@-45.2746719,169.3109118,18430a,35y,37.35t/data=!3m1!1e3),
 [Cromwell](https://www.google.com/maps/@-45.1926831,169.2105724,29206a,35y,36.61t/data=!3m1!1e3)
