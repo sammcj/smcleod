@@ -11,7 +11,7 @@ featured: true
 
 In late November of 2018 I was lucky enough to get my hands on the upcoming 2019 Sport spec Mustang GT v8 to be its first driver.
 
-I'm not usually an American Muscle enthusiast, but the new 2019 GT really is quite different from it's slightly older counterparts,
+I'm not usually an American Muscle enthusiast, but the new 2019 GT really is quite different from its slightly older counterparts,
 with a new specially developed [10 speed gearbox](https://www.caranddriver.com/reviews/a24847025/2018-ford-mustang-automatic-transmission-performance/)
 (yes, _10_ gears - because more is better right?), tuned up suspension and so seemed like it would make for a pretty fun trip.
 
