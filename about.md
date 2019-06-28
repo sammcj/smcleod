@@ -4,13 +4,16 @@ title: Sam McLeod
 comments: false
 ---
 
-Ops Leader, Platform Delivery Engineer, Enabler & Ponderer of Complex Systems
+Platform, Site & Delivery Engineer, Ops Lead, Complex Systems Designer, DevOps Proponent & Music Geek.
+
+Words are my own or somebody else's 🖖🏼
 
 ![]({{ site.url }}/assets/images/logo.png)
 
 - [Twitter](https://twitter.com/s_mcleod)
 - [Github](https://github.com/sammcj)
 - [LinkedIn](https://www.linkedin.com/in/sammcj/)
+- [Goodreads](https://www.goodreads.com/review/list/5836466-sam?order=d&shelf=to-read&sort=date_added)
 
 > "Easy things should be easy, and hard things should be possible." - Larry Wall
 
@@ -18,7 +21,7 @@ Ops Leader, Platform Delivery Engineer, Enabler & Ponderer of Complex Systems
 
 ---
 
-_Words are my own or someone else's. Views expressed may or may not represent those of my employer(s)._
+_Words are my own or someone else's, views expressed may or may not represent those of my employer(s)._
 
 ---
 
