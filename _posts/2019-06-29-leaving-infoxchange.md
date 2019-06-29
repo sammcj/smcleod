@@ -17,7 +17,7 @@ In 2012 I was hired to work with [Infoxchange](https://www.infoxchange.org) to _
 As Team Lead of Systems Operations I was tasked with melding the team and then for us to work to provide a stable, robust, modern and scalable platform
 for Infoxchange developed application hosting and product delivery and in a short time, with a small budget - we did just that.
 
-This 7~ year journey was exiting, rewarding and of course at times very stressful.
+This 7~ year journey was exciting, rewarding and of course at times very stressful.
 
 ---
 
