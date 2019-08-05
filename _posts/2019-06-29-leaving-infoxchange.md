@@ -33,7 +33,7 @@ I would like to give a particularly special thanks to:
 
 ## What next?
 
-- A holiday, one where I plan to spend 70% or more of the time studying, learning and dipping my toes in any relevant technologies
+- A holiday, one where I plan to spend part of my time studying, learning and dipping my toes in any relevant technologies
 I haven't been required to work with.
 - A _lot_ of reading ([see the tech and personal growth items within my Goodreads 'Want to Read' shelf for a taste](https://www.goodreads.com/review/list/5836466-sam?order=d&shelf=to-read&sort=date_added)).
 - AWS or GCP Operations guides / courses. I've always designed and run cloud platforms - but not really used other 'out of the box' options.
@@ -49,7 +49,8 @@ I haven't been required to work with.
 - Will I have a reasonable amount of _creative freedom_ in my work?
 - How much _bureaucracy_ will surround the role I'm in?
 - What might I _learn_ while working?
-- What _technologies_ will I be working with?
+- What is the _team structure_ I'd be joining (if any)?
+- What _technologies_ will I likely be working with?
 - What _tooling_ will I be required to use?
 - Am I likely to make _friends_ in the position?
 

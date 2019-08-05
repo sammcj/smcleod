@@ -47,7 +47,6 @@ All the 'Hijack' cable is, is essentially a small M-F extension cable for the mo
 
 Many thanks to:
 
-- George Hansper (Assistance and peer review of electrical design).
 - OurPCB (Board fabrication).
 - Clusterlabs, Redhat and Fedora Teams, feedback and peer review.
 - John Sutton for his [original design](http://www.init.hr/dev/cluster/glue/lib/plugins/stonith/rcd_serial.c) that served as inspiration.
