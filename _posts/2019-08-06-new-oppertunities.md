@@ -67,6 +67,6 @@ These days I'm generally using [my LinkedIn](https://www.linkedin.com/in/sammcj/
 
 ![](https://github.com/sammcj/smcleod_files/blob/master/images/fiji_2019/fiji_aws_prac_training_1.jpg?raw=true)
 
-![](https://github.com/sammcj/smcleod_files/blob/master/images/fiji_2019/other/fiji_selfie_1.jpg?raw=true)
+![](https://github.com/sammcj/smcleod_files/blob/master/images/fiji_2019/fiji_selfie_1.jpg?raw=true)
 
-![](https://github.com/sammcj/smcleod_files/blob/master/images/fiji_2019/other/fiji_sunset_1.jpg?raw=true)
+![](https://github.com/sammcj/smcleod_files/blob/master/images/fiji_2019/fiji_sunset_1.jpg?raw=true)
