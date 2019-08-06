@@ -18,7 +18,7 @@ This is exactly what I've done.
 
 # I'm now open to new opportunities
 
-I'd rather find a workplace I can add value and be happy than rush into a new role quickly, obviously if something great turns up right away - I'll pursue it.
+I'd rather find a workplace that I can add great value too and be happy to work with than rush into a new role quickly, obviously if something great turns up right away - I'll pursue it.
 
 ## Considerations
 
