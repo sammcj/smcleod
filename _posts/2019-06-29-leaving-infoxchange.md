@@ -58,6 +58,8 @@ I haven't been required to work with.
 
 ## A message to recruiters
 
+**Note: I am now [looking for new opportunities](https://smcleod.net/tech/2019/08/06/new-opportunities.html)**
+
 You play an important part in both leading people to new positions while helping organisations find the right people to help them stabilise or grow.
 
 However, until I either post that I'm actively seeking a new role or set my LinkedIn to being open to new positions -
