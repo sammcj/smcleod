@@ -58,6 +58,28 @@ It would be greatly helpful (for both of us) if you could please send through so
 
 If you can't answer some of those, no problem - I'm just working on this as an initial template to get a handle on the offers coming through.
 
+### Clarification on some common role titles and experience terms
+
+- On 'DevOps' in a title:
+
+Often when I see this, the organisation is really wanting / asking for a Senior Developer with some minor Operations experience - if so - that's not me.
+
+I've worked very closely with Developers and Testers over the years, but I am skilled in platform and pipeline engineering, automation, highly-available
+service engineering, distributed systems engineering, platform and service performance engineering and operations team leadership.
+
+- On term 'Cloud Experience':
+
+Cloud, for me at least - means outsourced Infrastructure and Service / Service Endpoints.
+
+I've spent many years building private clouds, (mostly based on Xen Cloud Platform, XenServer Cloud, XCP-ng and KVM systems)
+and building out reliable, scalable and highly redundant services that are presented and endpoints to developers, testers or businesses directly -
+essentially I've been 'building private Clouds' more than I have been using 'off-the-shelf' solutions like AWS or GCP.
+
+However, I have dipped my toes in each and completed some AWS training, at the end of the day I found that it's just a change of tooling and for me -
+that's not a problem.
+
+However if you're looking for someone that's only worked on AWS and knows all the AWS offerings inside-and-out already -
+that's not me, I can or will be that person - but haven't had the need to pivot as of yet.
 
 ---
 
