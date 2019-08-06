@@ -72,7 +72,7 @@ service engineering, distributed systems engineering, platform and service perfo
 Cloud, for me at least - means outsourced Infrastructure and Service / Service Endpoints.
 
 I've spent many years building private clouds, (mostly based on Xen Cloud Platform, XenServer Cloud, XCP-ng and KVM systems)
-and building out reliable, scalable and highly redundant services that are presented and endpoints to developers, testers or businesses directly -
+and building out reliable, cloud-native, scalable and highly redundant services that are presented and endpoints to developers, testers or businesses directly -
 essentially I've been 'building private Clouds' more than I have been using 'off-the-shelf' solutions like AWS or GCP.
 
 However, I have dipped my toes in each and completed some AWS training, at the end of the day I found that it's just a change of tooling and for me -
