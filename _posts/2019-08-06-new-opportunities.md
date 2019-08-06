@@ -66,7 +66,7 @@ If you can't answer some of those, no problem - I'm just working on this as an i
 
 - Took a 10 day holiday in Fiji, lying on the beaches, reading, decompressing and enjoying the sunshine and chatting with the locals.
 - A lot of reading and research (Pitch Anything, Getting to Yes, Astrophysics for People in a Hurry, The Skeptics' Guide to the Universe, The Code of the Extraordinary Mind).
-- Skimmed through several AWS Practitioner and Best Practise Architecture guides. (As mentioned, I've always designed and run cloud platforms - but not made heavy use other 'off the shelf' options.
+- Skimmed through several AWS Practitioner and Best Practise Architecture guides (As mentioned, I've always designed and run cloud platforms - but not made heavy use other 'off the shelf' options).
 - Completed the Amazon AWS Practitioner Essentials training.
 - Caught up with fellow platform, automation engineers as well as people I see as mentors.
 - Visited a few meetups.
