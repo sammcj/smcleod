@@ -38,6 +38,27 @@ These days I'm generally using [my LinkedIn](https://www.linkedin.com/in/sammcj/
 [My LinkedIn](https://www.linkedin.com/in/sammcj/) is also the best place to contact me regarding potential positions.
 
 
+## A message to recruiters
+
+If you have a potential role for me, I've come up with a basic list of things I'd like to know before having a formal chat.
+
+As soon as I changed my status to 'Open to new job opportunities.' I've been swamped with messages on LinkedIn and email.
+
+It would be greatly helpful (for both of us) you please send through some information about the position including:
+
+- Role(s) and Responsibilities.
+- Team size.
+- _Internal_ team and company values.
+- Example of what a day / week or month might look like in the position (might be hard I know).
+- Must have experience.
+- Highly desired experience.
+- Nice to have experience.
+- Salary range.
+- Office location and parking (e.g. CBD - no parking but close to major train station, Inner-suburb - Company car parking, Outer-suburb - on street parking).
+
+If you can't answer some of those, no problem - I'm just working on this as an initial template to get a handle on the offers coming through.
+
+
 ---
 
 
