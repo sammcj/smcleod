@@ -50,9 +50,9 @@ It would be greatly helpful (for both of us) if you could please send through so
 - Team size.
 - _Internal_ team and company values.
 - Example of what a day / week or month might look like in the position (might be hard I know).
-- Must have experience.
-- Highly desired experience.
-- Nice to have experience.
+- 'Must have' experience.
+- 'Highly desired' experience.
+- 'Nice to have' experience.
 - Salary range.
 - Office location and parking (e.g. CBD - no parking but close to major train station, Inner-suburb - Company car parking, Outer-suburb - on street parking).
 
