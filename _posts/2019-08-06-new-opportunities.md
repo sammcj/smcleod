@@ -10,7 +10,7 @@ featured: true
 
 As stated in [my announcement post](https://smcleod.net/tech/2019/06/29/leaving-infoxchange.html) - after 7~ years, I resigned from Infoxchange several months ago.
 
-I planned on taking a holiday, relaxing, decompressing, dipping my toes in some off-the-shelf tech I haven't spent a lot of time with and performing some personal growth through reading a number of books that have been sitting on my 'too read' shelf.
+I planned on taking a holiday, relaxing, decompressing, dipping my toes in some off-the-shelf tech I haven't spent a lot of time with and performing some personal growth through reading a number of books that have been sitting on my 'to read' shelf.
 
 This is exactly what I've done.
 
