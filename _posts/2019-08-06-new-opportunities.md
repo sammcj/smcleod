@@ -40,11 +40,11 @@ These days I'm generally using [my LinkedIn](https://www.linkedin.com/in/sammcj/
 
 ## A message to recruiters
 
-If you have a potential role for me, I've come up with a basic list of things I'd like to know before having a formal chat.
-
 As soon as I changed my status to 'Open to new job opportunities.' I've been swamped with messages on LinkedIn and email.
 
-It would be greatly helpful (for both of us) you please send through some information about the position including:
+If you have a potential role for me, I've come up with a basic list of things I'd like to know before having a formal chat.
+
+It would be greatly helpful (for both of us) if you could please send through some information about the position including:
 
 - Role(s) and Responsibilities.
 - Team size.
