@@ -1,5 +1,5 @@
 ---
-title: Looking For New Oppertunties
+title: Looking For New Opportunities
 date: '2019-08-06 10:30:00'
 categories: tech
 author_url: "/author/sam"
