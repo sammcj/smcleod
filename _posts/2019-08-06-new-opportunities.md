@@ -62,6 +62,8 @@ If you can't answer some of those, no problem - I'm just working on this as an i
 
 ### Clarification on some common role titles and experience terms
 
+Please see my blog post - ['Stop trying to hire with titles like ‘DevOps Engineer’ or Cloud Engineer'](https://smcleod.net/tech/2019/08/08/camels-and-unicorns.html)
+
 - On 'DevOps' in a title:
 
 Often when I see this, the organisation is really wanting / asking for a Senior Developer with some minor Operations experience - if so - that's not me.
