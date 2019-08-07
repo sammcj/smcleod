@@ -23,4 +23,8 @@ I’m almost certain they’re trying to appeal to the hype (in a genuine effort
 Likely the most important thing to succeed at product and systems delivery - but it’s not a job title.
 
 
-#DevOps #Engineering #Development #Testing #Operations #ProductDelivery #CI #CD #Cloud #Jobs #SystemsThinking #BusinessValue #CloudNativeDesign #TooManyHashtags
+If you need Developers to work in a DevOps culture and environment - say so.
+
+If you need Operations or Platform Engineers to work in a DevOps culture and environment - say so.
+
+Staying either of those this does not mutually exclude ones abilities to know 'a bit of the other side', e.g. a Developer that has worked closely with a CI/CD system's backend or Kubernetes Operations, or an Operations Engineer that has worked closely with Developers and Testers and can work with API: or whip up some integration scripts when needed
