@@ -10,6 +10,10 @@ featured: false
 
 ## Stop trying to hire with titles like ‘DevOps Engineer’ or Cloud Engineer’
 
+"DevOps is ... not a job title"
+
+"It's more of a cultural practice, like innovation, and it makes just as little sense hiring "innovation engineers" and expecting your organisation to be innovative, without also creating the culture to foster innovation." (Joel Shea when responding to this posted on [LinkedIn](https://www.linkedin.com/posts/activity-6564991913110368256-WxFP))
+
 In most cases it’s clear the organisation doesn't truly know what they want or need and likely don't understand the nuances of the aspects of engineering.
 
 The problem is - they’re going to end up with a ‘Camel Dressed As A Unicorn’ rather than someone with deep or natural engineering understanding in the areas they most need to help see, discuss, solve problems and deliver effective and lasting solutions.
