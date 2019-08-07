@@ -3,7 +3,7 @@ title: Camels Dressed As Unicorns
 date: '2019-08-08 08:10:00'
 categories: tech
 author_url: "/author/sam"
-image: img/CamelCorn.jpeg
+image: img/camel_corn.jpeg
 layout: post
 featured: false
 ---
