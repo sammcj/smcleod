@@ -6,12 +6,13 @@ author_url: "/author/sam"
 image: img/CamelCorn.jpeg
 layout: post
 featured: false
-draft: true
 ---
 
-# Stop trying to hire with titles like ‘DevOps Engineer’ or Cloud Engineer’
+## Stop trying to hire with titles like ‘DevOps Engineer’ or Cloud Engineer’
 
-In most cases it’s clear they don’t know what they want (need) and they’re going to end up with a ‘Camel Dressed As A Unicorn’ rather than someone with deep or natural engineering understanding in the areas they most need to help see, discuss, solve problems and deliver effective and lasting solutions.
+In most cases it’s clear the organisation doesn't truly know what they want or need and likely don't understand the nuances of the aspects of engineering.
+
+The problem is - they’re going to end up with a ‘Camel Dressed As A Unicorn’ rather than someone with deep or natural engineering understanding in the areas they most need to help see, discuss, solve problems and deliver effective and lasting solutions.
 
 From the what I’ve seen recently, the organisation (thinks they) want / need a Developer with a little bit of Operations experience - but not a true understanding of Operations or platform engineering.
 
