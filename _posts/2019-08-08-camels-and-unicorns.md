@@ -18,7 +18,7 @@ In most cases it’s clear the organisation doesn't truly know what they want or
 
 The problem is - they’re going to end up with a ‘Camel Dressed As A Unicorn’ rather than someone with deep or natural engineering understanding in the areas they most need to help see, discuss, solve problems and deliver effective and lasting solutions.
 
-From the what I’ve seen recently, the organisation (thinks they) want / need a Developer with a little bit of Operations experience - but not a true understanding of Operations or platform engineering.
+From the what I’ve seen recently companies hiring with 'DevOps Engineer' titles - the organisation (thinks they) want / need a Developer with a little bit of Operations experience - but not a true understanding of Operations or platform engineering.
 
 I’m almost certain they’re trying to appeal to the hype (in a genuine effort to find someone highly skilled) but as they’re missing the point of where people’s skills lay and what those skills mean - they’re confusing engineers, recruiters and likely themselves further.
 
