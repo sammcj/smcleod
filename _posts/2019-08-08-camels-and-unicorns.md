@@ -8,7 +8,7 @@ layout: post
 featured: false
 ---
 
-## Stop trying to hire with titles like ‘DevOps Engineer’ or Cloud Engineer’
+## Stop trying to hire with titles like ‘DevOps Engineer’ or 'Cloud Engineer’
 
 "DevOps is ... not a job title"
 
