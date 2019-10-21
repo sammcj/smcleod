@@ -15,7 +15,7 @@ This talk was given at [Infracoders](https://www.meetup.com/Infrastructure-Coder
 NOTE: Below link to slides currently broken - will fix soon! (03/08/2019)
 
 Click below to view slides (PDF version):
-[![Click to view slides]({{ site.url }}/img/gluster-first-slide.jpg)](https://www.dropbox.com/s/beix0238fe3ra8w/GlusterFS Keynote.pdf?dl=0)
+[![Click to view slides]({{ site.url }}/img/gluster-first-slide.jpg)](https://www.dropbox.com/s/rdojhb399639e4k/lightning_san.pdf?dl=0)
 
 - [*Direct download link*](https://www.dropbox.com/s/beix0238fe3ra8w/GlusterFS Keynote.pdf?dl=1)
 
