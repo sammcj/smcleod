@@ -5,7 +5,7 @@ categories: tech
 author_url: "/author/sam"
 image: img/road-no-car-2048.jpg
 layout: post
-featured: true
+featured: false
 ---
 
 After 7~ years, I have resigned from Infoxchange.
