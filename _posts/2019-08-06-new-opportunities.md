@@ -5,7 +5,7 @@ categories: tech
 author_url: "/author/sam"
 image: img/fiji_aws_prac_training_1.jpg
 layout: post
-featured: true
+featured: false
 ---
 
 As stated in [my announcement post](https://smcleod.net/tech/2019/06/29/leaving-infoxchange.html) - after 7~ years, I resigned from Infoxchange several months ago.
