@@ -1,5 +1,6 @@
 ---
 title: Broadcom, Or How I Learned To Start Worrying And Drop The Packet
+excerpt: Broadcom, Or How I Learned To Start Worrying And Drop The Packet
 date: 2017-10-13
 categories: tech
 author_url : /author/sam

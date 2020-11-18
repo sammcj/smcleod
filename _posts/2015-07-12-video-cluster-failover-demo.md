@@ -1,5 +1,6 @@
 ---
 title: Video - Cluster Failover Performance Demo
+excerpt: Video - Cluster Failover Performance Demo
 date: 2015-07-12
 categories: tech
 author_url : /author/sam

@@ -1,5 +1,6 @@
 ---
 title: Disabling scroll-wheel zoom in Firefox
+excerpt: Disabling scroll-wheel zoom in Firefox
 date: '2018-07-16 10:57:14'
 categories: tech
 author_url: "/author/sam"

@@ -1,5 +1,6 @@
 ---
 title: Update Delayed Serial STONITH Design
+excerpt: Update Delayed Serial STONITH Design
 date: 2016-07-04
 categories: tech
 author_url : /author/sam

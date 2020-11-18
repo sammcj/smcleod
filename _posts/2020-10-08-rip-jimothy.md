@@ -1,5 +1,6 @@
 ---
 title: Rest in Peace Jimothy
+excerpt: Rest in Peace Jimothy
 date: '2020-10-08 15:20:00'
 categories: jimothy
 author_url: "/author/sam"

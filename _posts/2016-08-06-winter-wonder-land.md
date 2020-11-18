@@ -1,5 +1,6 @@
 ---
 title: Castle Hill Winter Trip 2016 Photos
+excerpt: Castle Hill Winter Trip 2016 Photos
 categories: photos
 date: 2016-08-06
 author_url : /author/sam

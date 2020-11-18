@@ -1,5 +1,6 @@
 ---
 title: The Best Of - 2014 Edition
+excerpt: The Best Of - 2014 Edition
 date: 2015-01-01
 categories: tech
 author_url : /author/sam

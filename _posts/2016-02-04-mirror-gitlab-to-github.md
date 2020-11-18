@@ -1,5 +1,6 @@
 ---
 title: Mirroring a Gitlab project to Github
+excerpt: Mirroring a Gitlab project to Github
 date: 2016-02-04
 categories: tech
 author_url : /author/sam

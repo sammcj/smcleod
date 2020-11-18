@@ -1,5 +1,6 @@
 ---
 title: Xen Orchestra Docker Image
+excerpt: Xen Orchestra Docker Image
 date: 2015-05-26
 categories: tech
 author_url : /author/sam

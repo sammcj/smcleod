@@ -1,5 +1,6 @@
 ---
 title: The Aeroplane Flies High, Turns Left, Looks Right and Might Reach Its Destination
+excerpt: The Aeroplane Flies High, Turns Left, Looks Right and Might Reach Its Destination
 date: 2017-03-22
 categories: thoughts
 author_url : /author/sam

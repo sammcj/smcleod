@@ -1,5 +1,6 @@
 ---
 title: Disable Firefox's zoom on mouse scroll
+excerpt: Disable Firefox's zoom on mouse scroll
 date: 2017-11-21
 categories: tech
 author_url : /author/sam

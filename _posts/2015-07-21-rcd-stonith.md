@@ -1,5 +1,6 @@
 ---
 title: Delayed Serial STONITH
+excerpt: Delayed Serial STONITH
 date: 2015-07-21
 categories: tech
 author_url : /author/sam

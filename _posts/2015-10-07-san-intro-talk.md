@@ -1,5 +1,6 @@
 ---
 title: SAN Intro (Talk)
+excerpt: Talk - SAN Intro
 date: 2015-10-07
 categories: tech
 author_url : /author/sam

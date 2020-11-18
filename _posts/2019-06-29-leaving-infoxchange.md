@@ -1,5 +1,6 @@
 ---
 title: Leaving Infoxchange
+excerpt: Leaving Infoxchange
 date: '2019-06-29 09:00:00'
 categories: tech
 author_url: "/author/sam"

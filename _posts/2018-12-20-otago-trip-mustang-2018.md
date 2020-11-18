@@ -1,5 +1,6 @@
 ---
 title: New Zealand Otago Trip in a 2019 Mustang GT
+excerpt: New Zealand Otago Trip in a 2019 Mustang GT
 categories: photos
 date: 2018-12-20
 author_url : /author/sam

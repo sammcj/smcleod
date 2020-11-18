@@ -1,5 +1,6 @@
 ---
 title: Run youtube-dl (or similar) in the background
+excerpt: Run youtube-dl (or similar) in the background
 date: '2018-07-30 08:52:00'
 categories: tech
 author_url: "/author/sam"

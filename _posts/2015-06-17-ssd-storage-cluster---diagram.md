@@ -1,5 +1,6 @@
 ---
 title: SSD Storage Cluster - Update and Diagram
+excerpt: SSD Storage Cluster - Update and Diagram
 date: 2015-06-17
 categories: tech
 author_url : /author/sam

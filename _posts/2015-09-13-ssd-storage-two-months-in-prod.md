@@ -1,5 +1,6 @@
 ---
 title: SSD Storage - Two Months In Production
+excerpt: SSD Storage - Two Months In Production
 date: 2015-09-13
 categories: tech
 author_url : /author/sam

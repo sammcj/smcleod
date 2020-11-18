@@ -1,5 +1,6 @@
 ---
 title: The State of Android in 2016 & The OnePlus 3 Phone
+excerpt: The State of Android in 2016 & The OnePlus 3 Phone
 date: 2016-07-11
 categories: tech
 author_url : /author/sam

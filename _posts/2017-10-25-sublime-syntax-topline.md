@@ -1,5 +1,6 @@
 ---
 title: Applying syntax in Sublime based on the first file line
+excerpt: Applying syntax in Sublime based on the first file line
 date: 2017-10-25
 categories: tech
 author_url : /author/sam

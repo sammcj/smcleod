@@ -1,5 +1,6 @@
 ---
 title: iSCSI Benchmarking
+excerpt: iSCSI Benchmarking
 date: 2015-07-24
 categories: tech
 author_url : /author/sam

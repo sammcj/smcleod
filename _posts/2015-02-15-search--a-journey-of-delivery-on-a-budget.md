@@ -1,5 +1,6 @@
 ---
 title: Search – A Journey of Delivery on a Budget
+excerpt: Talk - Search – A Journey of Delivery on a Budget
 date: 2014-11-04
 categories: tech
 author_url : /author/sam

@@ -1,5 +1,6 @@
 ---
 title: 'XenServer, SSDs & VM Storage Performance'
+excerpt: 'XenServer, SSDs & VM Storage Performance'
 date: 2015-02-14
 categories: tech
 author_url : /author/sam

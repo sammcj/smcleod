@@ -1,5 +1,6 @@
 ---
 title: Replacing Junos Pulse with OpenConnect
+excerpt: Replacing Junos Pulse with OpenConnect
 date: 2015-09-22
 categories: tech
 author_url : /author/sam

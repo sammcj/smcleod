@@ -1,5 +1,6 @@
 ---
 title: How to cluster and failover (almost) anything - An intro to Pacemaker and Corosync
+excerpt: Talk - How to cluster and failover (almost) anything - An intro to Pacemaker and Corosync
 date: 2015-11-09
 categories: tech
 author_url : /author/sam

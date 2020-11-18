@@ -1,5 +1,6 @@
 ---
 title: Benchmarking IO with FIO
+excerpt: Benchmarking IO with FIO
 date: 2016-04-29
 categories: tech
 author_url : /author/sam

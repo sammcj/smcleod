@@ -1,5 +1,6 @@
 ---
 title: Camels Dressed As Unicorns
+excerpt: Camels Dressed As Unicorns
 date: '2019-08-08 08:10:00'
 categories: tech
 author_url: "/author/sam"

@@ -1,5 +1,6 @@
 ---
 title: Monitoring SystemD Units With Nagios
+excerpt: Monitoring SystemD Units With Nagios
 date: 2016-05-23
 categories: tech
 author_url : /author/sam

@@ -1,5 +1,6 @@
 ---
 title: Fix XenServer SR with corrupt or invalid metadata
+excerpt: Fix XenServer SR with corrupt or invalid metadata
 date: 2016-01-18
 categories: tech
 author_url : /author/sam

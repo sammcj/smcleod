@@ -1,5 +1,6 @@
 ---
 title: OS X Software Update Channels For Betas
+excerpt: OS X Software Update Channels For Betas
 date: 2015-09-01
 categories: tech
 author_url : /author/sam

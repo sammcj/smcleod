@@ -1,5 +1,6 @@
 ---
 title: Highlands Festival of Speed 2018
+excerpt: Highlands Festival of Speed 2018
 date: 2018-03-20
 categories: photos
 author_url: /author/sam

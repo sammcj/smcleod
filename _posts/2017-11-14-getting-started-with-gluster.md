@@ -1,5 +1,6 @@
 ---
 title: Talk - Clustered, Distributed File and Volume Storage with GlusterFS
+excerpt: Talk - Clustered, Distributed File and Volume Storage with GlusterFS
 date: 2017-11-14
 categories: tech
 author_url : /author/sam

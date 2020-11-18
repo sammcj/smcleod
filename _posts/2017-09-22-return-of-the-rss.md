@@ -1,5 +1,6 @@
 ---
 title: Return Of The RSS
+excerpt: Return Of The RSS
 date: 2017-09-22
 categories: thoughts
 author_url : /author/sam

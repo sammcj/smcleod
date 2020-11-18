@@ -1,5 +1,6 @@
 ---
 title: Theory of constraints
+excerpt: Theory of constraints
 date: 2018-02-05
 categories: tech
 author_url : /author/sam

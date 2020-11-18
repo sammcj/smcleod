@@ -1,5 +1,6 @@
 ---
 title: Talk - High Performance Software Defined Storage
+excerpt: Talk - High Performance Software Defined Storage
 date: 2015-04-15
 categories: tech
 author_url : /author/sam

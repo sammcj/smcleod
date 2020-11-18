@@ -1,5 +1,6 @@
 ---
 title: DevOps Team Charter
+excerpt: DevOps Team Charter
 date: '2020-11-18 14:00:00'
 categories: tech
 author_url: "/author/sam"

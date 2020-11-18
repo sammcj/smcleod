@@ -1,5 +1,6 @@
 ---
 title: Video - Storage Cluster Failover Demo
+excerpt: Video - Storage Cluster Failover Demo
 date: 2015-05-15
 categories: tech
 author_url : /author/sam

@@ -1,5 +1,6 @@
 ---
 title: Flash Storage and SSD Failure Rate Update (March 2018)
+excerpt: Flash Storage and SSD Failure Rate Update (March 2018)
 date: 2018-03-20
 categories: tech
 author_url : /author/sam

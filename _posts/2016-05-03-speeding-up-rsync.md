@@ -1,5 +1,6 @@
 ---
 title: Speeding Up rsync
+excerpt: Speeding up rsync
 date: 2016-05-03
 categories: tech
 author_url : /author/sam

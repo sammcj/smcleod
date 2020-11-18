@@ -1,5 +1,6 @@
 ---
 title: iSCSI SCSI-ID / Serial Persistence
+excerpt: iSCSI SCSI-ID / Serial Persistence
 date: 2015-12-14
 categories: tech
 author_url : /author/sam

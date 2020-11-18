@@ -1,5 +1,6 @@
 ---
 title: Building a high performance SSD SAN - Part 1
+excerpt: Building a high performance SSD SAN - Part 1
 date: 2015-02-16
 categories: tech
 author_url : /author/sam
