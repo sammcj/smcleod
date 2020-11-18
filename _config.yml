@@ -8,6 +8,7 @@ paginate: 100
 baseurl: ""
 excerpt_separator: "<!--more-->"
 timezone: "Australia/Melbourne"
+url: "https://smcleod.net"
 
 # Authors
 authors:
