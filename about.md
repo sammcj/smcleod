@@ -4,7 +4,7 @@ title: Sam McLeod
 comments: false
 ---
 
-Platform, Site & Delivery Engineer, Ops Lead, Complex Systems Designer, DevOps Proponent & Music Geek.
+Platform, Site & Delivery Engineer, Ops Lead, DevOps Proponent, Consultant & Music Geek.
 
 Words are my own or somebody else's 🖖🏼
 

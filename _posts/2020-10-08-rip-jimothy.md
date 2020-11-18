@@ -5,7 +5,7 @@ categories: jimothy
 author_url: "/author/sam"
 image: img/jimothy.jpg
 layout: post
-featured: true
+featured: false
 ---
 
 You magnificent girl, you brought me 14 years of love and happiness
