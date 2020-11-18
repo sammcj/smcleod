@@ -6,11 +6,8 @@ logo: 'assets/images/logo.png'
 favicon: 'assets/images/logo.png'
 paginate: 100
 baseurl: ""
-# disqus: "smcleodnet"
-# google_analytics: "UA-59178670-1"
 excerpt_separator: "<!--more-->"
 timezone: "Australia/Melbourne"
-# mailchimp-list: 'https://wowthemes.us11.list-manage.com/subscribe/post?u=8aeb20a530e124561927d3bd8&amp;id=8c3d2d214b'
 
 # Authors
 authors:
@@ -23,11 +20,17 @@ authors:
     twitter: https://twitter.com/s_mcleod
     description: "I should write something here..."
 
+# Social
+twitter:
+  username: s_mcleod
+  card: summary
+
 # Plugins
 plugins:
   - jekyll-paginate
   - jekyll-archives
   - jekyll-admin
+  - jekyll-seo-tag
 
 # Archives
 jekyll-archives:

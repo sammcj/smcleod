@@ -3,3 +3,4 @@ gem 'jekyll'
 gem 'jekyll-paginate'
 gem 'jekyll-archives'
 gem 'jekyll-admin', group: :jekyll_plugins
+gem 'jekyll-seo-tag'
