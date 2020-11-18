@@ -25,6 +25,8 @@ github_username: sammcj
 minimal_mistakes_skin: default # "air", "aqua", "contrast", "dark", "dirt", "neon", "mint", "plum" "sunrise
 search: true
 og_image: "/assets/images/logo.png"
+baseurl: ""
+#siteurl: "https://smcleod.net"
 
 # Build settings
 markdown: kramdown
