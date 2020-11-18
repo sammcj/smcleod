@@ -2,11 +2,12 @@
 title: Join us on our mission of 'Technology for Social Justice'
 date: 2015-10-08
 categories: tech
-layout: post
 author_url : /author/sam
-image: img/mac-1.jpg
-
+header:
+  teaser: img/mac-1.jpg
 ---
+
+![](/img/mac-1.jpg)
 
 # Seeking a Linux Systems Engineer to join our Ops team in a fast moving DevOps environment.
 

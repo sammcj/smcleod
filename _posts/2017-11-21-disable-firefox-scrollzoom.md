@@ -2,10 +2,12 @@
 title: Disable Firefox's zoom on mouse scroll
 date: 2017-11-21
 categories: tech
-layout: post
 author_url : /author/sam
-image: img/francisco-moreno-278146.jpg
+header:
+  teaser: img/francisco-moreno-278146.jpg
 ---
+
+![](/img/francisco-moreno-278146.jpg)
 
 This annoys me endlessly as I seem to often have my hand on control / cmd from working in the terminal.
 

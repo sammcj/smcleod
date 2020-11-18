@@ -3,10 +3,12 @@ title: Rest in Peace Jimothy
 date: '2020-10-08 15:20:00'
 categories: jimothy
 author_url: "/author/sam"
-image: img/jimothy.jpg
-layout: post
+header:
+  teaser: img/jimothy.jpg
 featured: false
 ---
+
+![](/img/jimothy.jpg)
 
 You magnificent girl, you brought me 14 years of love and happiness
 

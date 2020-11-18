@@ -2,11 +2,12 @@
 title: The Best Of - 2014 Edition
 date: 2015-01-01
 categories: tech
-layout: post
 author_url : /author/sam
-image: img/patrick-tomasso-71909.jpg
-
+header:
+  teaser: img/patrick-tomasso-71909.jpg
 ---
+
+![](/img/patrick-tomasso-71909.jpg)
 
 At the end of every year I note down a summary of the best applications, hardware & websites I've enjoyed & depended on throughout the year (and often for some time before).
 

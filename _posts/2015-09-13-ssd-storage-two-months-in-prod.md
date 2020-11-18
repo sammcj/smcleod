@@ -2,11 +2,12 @@
 title: SSD Storage - Two Months In Production
 date: 2015-09-13
 categories: tech
-layout: post
 author_url : /author/sam
-image: img/containers-1.jpg
-
+header:
+  teaser: img/containers-1.jpg
 ---
+
+![](/img/containers-1.jpg)
 
 Over the last two months I've been runing selected IO intensive servers off the the SSD storage cluster, these hosts include (among others) our:
 

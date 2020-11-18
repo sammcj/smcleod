@@ -2,11 +2,12 @@
 title: Delete Government-Linked Certificate Authorities in OSX
 date: 2015-02-23
 categories: tech
-layout: post
 author_url : /author/sam
-image: img/backdrop-italian-steps.jpg
-
+header:
+  teaser: img/backdrop-italian-steps.jpg
 ---
+
+![](/img/backdrop-italian-steps.jpg)
 
 [Inspired by http://zitseng.com/archives/7489](http://zitseng.com/archives/7489)
 

@@ -2,10 +2,12 @@
 title: Highlands Festival of Speed 2018
 date: 2018-03-20
 categories: photos
-layout: post
 author_url: /author/sam
-image: img/v8.jpg
+header:
+  teaser: img/v8.jpg
 ---
+
+![](/img/v8.jpg)
 
 Last weekend I headed to New Zealand and marshalled at the [Highlands Festival of Speed](https://www.highlands.co.nz/events/highlands-festival-of-speed-2018/).
 

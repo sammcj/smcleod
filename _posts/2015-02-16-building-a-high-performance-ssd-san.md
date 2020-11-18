@@ -2,11 +2,12 @@
 title: Building a high performance SSD SAN - Part 1
 date: 2015-02-16
 categories: tech
-layout: post
 author_url : /author/sam
-image: img/melbourne.jpg
-
+header:
+  teaser: img/melbourne.jpg
 ---
+
+![](/img/melbourne.jpg)
 
 ![]({{ site.url }}/img/san/graphs.png)
 

@@ -2,11 +2,13 @@
 title: Talk - Clustered, Distributed File and Volume Storage with GlusterFS
 date: 2017-11-14
 categories: tech
-layout: post
 author_url : /author/sam
-image: img/backdrop-plastic-containers.jpg
+header:
+  teaser: img/backdrop-plastic-containers.jpg
 featured: false
 ---
+
+![](/img/backdrop-plastic-containers.jpg)
 
 Using GlusterFS to provide volume storage to Kubernetes as a replacement for our existing file and static content hosting.
 

@@ -2,11 +2,12 @@
 title: CentOS 7 and HA
 date: 2015-07-07
 categories: tech
-layout: post
 author_url : /author/sam
-image: img/billy-huynh-278252.jpg
-
+header:
+  teaser: img/billy-huynh-278252.jpg
 ---
+
+![](/img/billy-huynh-278252.jpg)
 
 First some background...
 

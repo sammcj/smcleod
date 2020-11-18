@@ -2,11 +2,12 @@
 title: Speeding Up rsync
 date: 2016-05-03
 categories: tech
-layout: post
 author_url : /author/sam
-image: img/robin-pierre-323861.jpg
-
+header:
+  teaser: img/robin-pierre-323861.jpg
 ---
+
+![](/img/robin-pierre-323861.jpg)
 
 The most common way to use rsync is probably as such:
 

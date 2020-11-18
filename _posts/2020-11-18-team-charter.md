@@ -2,12 +2,13 @@
 title: DevOps Team Charter
 date: '2020-11-18 14:00:00'
 categories: tech
-layout: post
 author_url: "/author/sam"
-image: img/pexels-denniz-futalan-2306897.jpg
-layout: post
+header:
+  teaser: img/pexels-denniz-futalan-2306897.jpg
 featured: true
 ---
+
+![](/img/pexels-denniz-futalan-2306897.jpg)
 
 This is a living document - a draft (or template) Team Charter that I've created to use when working in teams, while generally centered around Platform Engineering (Operations, DevOps, SRE) it is applicable to many areas of engineering and product delivery.
 

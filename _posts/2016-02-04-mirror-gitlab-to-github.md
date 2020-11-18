@@ -2,11 +2,12 @@
 title: Mirroring a Gitlab project to Github
 date: 2016-02-04
 categories: tech
-layout: post
 author_url : /author/sam
-image: img/backdrop-austria.jpg
-
+header:
+  teaser: img/backdrop-austria.jpg
 ---
+
+![](/img/backdrop-austria.jpg)
 
 Let's pretend you have a project on Gitlab called `ask-izzy` and you want to mirror it up to Gitlab which is located at https://github.com/ask-izzy/ask-izzy
 

@@ -2,11 +2,12 @@
 title: Benchmarking IO with FIO
 date: 2016-04-29
 categories: tech
-layout: post
 author_url : /author/sam
-image: img/daniel-mayovskiy-303666.jpg
-
+header:
+  teaser: img/daniel-mayovskiy-303666.jpg
 ---
+
+![](/img/daniel-mayovskiy-303666.jpg)
 
 ## This is a quick tldr there are _many_ other situations and options you could consider.
 

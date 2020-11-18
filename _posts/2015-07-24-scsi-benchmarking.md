@@ -2,11 +2,12 @@
 title: iSCSI Benchmarking
 date: 2015-07-24
 categories: tech
-layout: post
 author_url : /author/sam
-image: img/datacentre-1.jpg
-
+header:
+  teaser: img/datacentre-1.jpg
 ---
+
+![](/img/datacentre-1.jpg)
 
 ### 67,300 read IOP/s on a VM on iSCSI
 

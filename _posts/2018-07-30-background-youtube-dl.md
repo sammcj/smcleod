@@ -3,9 +3,11 @@ title: Run youtube-dl (or similar) in the background
 date: '2018-07-30 08:52:00'
 categories: tech
 author_url: "/author/sam"
-image: img/camera-background.jpg
-layout: post
+header:
+  teaser: img/camera-background.jpg
 ---
+
+![](/img/camera-background.jpg)
 
 I wanted an alias or function to use [`youtube-dl`](https://rg3.github.io/youtube-dl/) in the background.
 Looking around the web lots of people seemed to want this and most of them were banging their heads against a wall due to:
