@@ -15,6 +15,8 @@ tags:
 
 You magnificent girl, you brought me 14 years of love and happiness
 
+## Photos
+
 ![](https://github.com/sammcj/smcleod_files/blob/master/images/rip_jimothy/1.jpeg?raw=true)
 ![](https://github.com/sammcj/smcleod_files/blob/master/images/rip_jimothy/2.jpeg?raw=true)
 ![](https://github.com/sammcj/smcleod_files/blob/master/images/rip_jimothy/3.jpeg?raw=true)

@@ -16,10 +16,6 @@ tags:
 
 A collection of quotes and musings collected over time that are important to me.
 
-- [Quotes](#quotes)
-  - [Tech Specific](#tech-specific)
-- [Musings](#musings)
-
 ## Quotes
 
 > "There is no 'us' and 'them'; it's an illusion.  We are all human beings, and we all have a responsibility to support one another and to discover ways of wresting the power from the very, very few people who control all the cash and all the property."

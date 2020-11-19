@@ -1,9 +1,9 @@
 main:
-  - title: "Posts"
+  - title: "Posts by Year"
     url: /posts/
   # - title: "Categories"
   #   url: /categories/
-  - title: "Tags"
+  - title: "Posts by Tags"
     url: /tags/
   - title: "Quotes and Musings"
     url: /quotes-musings/
