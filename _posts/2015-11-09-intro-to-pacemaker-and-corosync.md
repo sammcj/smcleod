@@ -6,6 +6,10 @@ categories: tech
 author_url : /author/sam
 header:
   teaser: img/tim-napier-181584.jpg
+tags:
+  - tech
+  - storage
+  - clustering
 ---
 
 ![](/img/tim-napier-181584.jpg)

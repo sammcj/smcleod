@@ -7,6 +7,10 @@ author_url : /author/sam
 header:
   teaser: img/sam-standing-at-rack.jpg
 featured: false
+tags:
+  - tech
+  - storage
+  - hardware
 ---
 
 ![](/img/sam-standing-at-rack.jpg)

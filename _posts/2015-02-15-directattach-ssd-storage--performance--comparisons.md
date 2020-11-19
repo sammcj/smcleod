@@ -6,6 +6,10 @@ categories: tech
 author_url : /author/sam
 header:
   teaser: img/banner.jpg
+tags:
+  - tech
+  - storage
+  - hardware
 ---
 
 ![](/img/banner.jpg)

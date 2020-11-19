@@ -6,6 +6,9 @@ categories: tech
 author_url : /author/sam
 header:
   teaser: img/backdrop-bridge.jpg
+tags:
+  - tech
+  - storage
 ---
 
 ![](/img/backdrop-bridge.jpg)

@@ -6,6 +6,11 @@ categories: tech
 author_url : /author/sam
 header:
   teaser: img/elliot-sloman-199291.jpg
+tags:
+  - tech
+  - storage
+  - hardware
+  - slides
 ---
 
 ![](/img/elliot-sloman-199291.jpg)

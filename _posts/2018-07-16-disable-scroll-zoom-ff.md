@@ -6,6 +6,9 @@ categories: tech
 author_url: "/author/sam"
 header:
   teaser: img/zoom.jpg
+tags:
+  - tech
+  - software
 ---
 
 ![](/img/zoom.jpg)

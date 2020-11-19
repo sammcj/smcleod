@@ -1,12 +1,14 @@
 ---
 title: Rest in Peace Jimothy
-excerpt: Rest in Peace Jimothy
+excerpt: "Rest in Peace Jimothy, You magnificent girl [Photos]"
 date: '2020-10-08 15:20:00'
 categories: jimothy
 author_url: "/author/sam"
 header:
   teaser: img/jimothy.jpg
 featured: false
+tags:
+  - photos
 ---
 
 ![](/img/jimothy.jpg)

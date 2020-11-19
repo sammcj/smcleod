@@ -7,6 +7,10 @@ author_url: "/author/sam"
 header:
   teaser: img/fiji_aws_prac_training_1.jpg
 featured: false
+tags:
+  - tech
+  - devops
+  - career
 ---
 
 ![](/img/fiji_aws_prac_training_1.jpg)

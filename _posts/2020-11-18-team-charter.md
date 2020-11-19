@@ -1,12 +1,15 @@
 ---
 title: DevOps Team Charter
-excerpt: DevOps Team Charter
+excerpt: "A Team Charter I've created to use when working in DevOps teams."
 date: '2020-11-18 14:00:00'
 categories: tech
 author_url: "/author/sam"
 header:
   teaser: img/pexels-denniz-futalan-2306897.jpg
 featured: true
+tags:
+  - devops
+  - career
 ---
 
 ![](/img/pexels-denniz-futalan-2306897.jpg)

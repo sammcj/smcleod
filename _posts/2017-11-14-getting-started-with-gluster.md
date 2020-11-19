@@ -7,6 +7,11 @@ author_url : /author/sam
 header:
   teaser: img/backdrop-plastic-containers.jpg
 featured: false
+tags:
+  - tech
+  - storage
+  - talk
+  - slides
 ---
 
 ![](/img/backdrop-plastic-containers.jpg)

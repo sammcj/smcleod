@@ -6,6 +6,9 @@ categories: tech
 author_url : /author/sam
 header:
   teaser: img/adrien-296945.jpg
+tags:
+  - tech
+  - hardware
 ---
 
 ![](/img/adrien-296945.jpg)

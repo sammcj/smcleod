@@ -6,6 +6,9 @@ categories: tech
 author_url : /author/sam
 header:
   teaser: img/backdrop-zbuildings.jpg
+tags:
+  - tech
+  - networking
 ---
 
 ![](/img/backdrop-zbuildings.jpg)

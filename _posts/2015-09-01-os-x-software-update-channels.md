@@ -6,6 +6,8 @@ categories: tech
 author_url : /author/sam
 header:
   teaser: img/rishi-deep-424424.jpg
+tags:
+  - tech
 ---
 
 ![](/img/rishi-deep-424424.jpg)

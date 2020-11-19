@@ -6,6 +6,10 @@ categories: tech
 author_url : /author/sam
 header:
   teaser: img/padlock.jpg
+tags:
+  - tech
+  - storage
+  - hardware
 ---
 
 ![](/img/padlock.jpg)

@@ -6,6 +6,10 @@ categories: tech
 author_url : /author/sam
 header:
   teaser: img/datacentre-1.jpg
+tags:
+  - tech
+  - storage
+  - hardware
 ---
 
 ![](/img/datacentre-1.jpg)

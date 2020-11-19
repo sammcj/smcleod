@@ -7,6 +7,10 @@ author_url: "/author/sam"
 header:
   teaser: img/camel_corn.jpeg
 featured: false
+tags:
+  - tech
+  - devops
+  - career
 ---
 
 ![](/img/camel_corn.jpeg)

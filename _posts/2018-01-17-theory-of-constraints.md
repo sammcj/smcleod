@@ -6,6 +6,8 @@ categories: tech
 author_url : /author/sam
 header:
   teaser: img/samuel-zeller-237359.jpg
+tags:
+  - devops
 ---
 
 ![](/img/samuel-zeller-237359.jpg)

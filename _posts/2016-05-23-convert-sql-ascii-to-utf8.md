@@ -6,6 +6,10 @@ categories: tech
 author_url : /author/sam
 header:
   teaser: img/patrick-tomasso-71909.jpg
+tags:
+  - tech
+  - software
+  - data
 ---
 
 ![](/img/patrick-tomasso-71909.jpg)

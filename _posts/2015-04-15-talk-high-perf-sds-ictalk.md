@@ -6,6 +6,12 @@ categories: tech
 author_url : /author/sam
 header:
   teaser: img/robin-pierre-323861.jpg
+tags:
+  - tech
+  - storage
+  - talk
+  - hardware
+  - slides
 ---
 
 ![](/img/robin-pierre-323861.jpg)

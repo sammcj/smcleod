@@ -6,6 +6,11 @@ categories: tech
 author_url : /author/sam
 header:
   teaser: img/containers-3.jpg
+tags:
+  - tech
+  - clustering
+  - devops
+  - career
 ---
 
 ![](/img/containers-3.jpg)

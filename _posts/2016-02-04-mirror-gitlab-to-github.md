@@ -6,6 +6,9 @@ categories: tech
 author_url : /author/sam
 header:
   teaser: img/backdrop-austria.jpg
+tags:
+  - tech
+  - software
 ---
 
 ![](/img/backdrop-austria.jpg)

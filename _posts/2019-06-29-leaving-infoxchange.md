@@ -7,6 +7,10 @@ author_url: "/author/sam"
 header:
   teaser: img/road-no-car-2048.jpg
 featured: false
+tags:
+  - tech
+  - devops
+  - career
 ---
 
 ![](/img/road-no-car-2048.jpg)

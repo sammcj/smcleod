@@ -6,6 +6,9 @@ categories: thoughts
 author_url : /author/sam
 header:
   teaser: img/samuel-zeller-358865.jpg
+tags:
+  - devops
+  - musings
 ---
 
 ![](/img/samuel-zeller-358865.jpg)

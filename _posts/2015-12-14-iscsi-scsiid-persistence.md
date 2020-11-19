@@ -6,6 +6,9 @@ categories: tech
 author_url : /author/sam
 header:
   teaser: img/feature-san-fran.jpg
+tags:
+  - tech
+  - storage
 ---
 
 ![](/img/feature-san-fran.jpg)

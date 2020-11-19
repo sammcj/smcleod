@@ -1,11 +1,14 @@
 ---
 title: Highlands Festival of Speed 2018
-excerpt: Highlands Festival of Speed 2018
+excerpt: "Marshalling at the Highlands Festival of Speed 2018 [Photos]"
 date: 2018-03-20
 categories: photos
 author_url: /author/sam
 header:
   teaser: img/v8.jpg
+tags:
+  - cars
+  - photos
 ---
 
 ![](/img/v8.jpg)

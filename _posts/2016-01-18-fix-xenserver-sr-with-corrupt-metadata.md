@@ -6,6 +6,9 @@ categories: tech
 author_url : /author/sam
 header:
   teaser: img/samuel-zeller-358865.jpg
+tags:
+  - tech
+  - storage
 ---
 
 ![](/img/samuel-zeller-358865.jpg)

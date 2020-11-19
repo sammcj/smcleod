@@ -6,6 +6,10 @@ categories: tech
 author_url : /author/sam
 header:
   teaser: img/billy-huynh-278252.jpg
+tags:
+  - tech
+  - storage
+  - clustering
 ---
 
 ![](/img/billy-huynh-278252.jpg)

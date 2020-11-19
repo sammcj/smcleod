@@ -6,6 +6,8 @@ categories: tech
 author_url : /author/sam
 header:
   teaser: img/francisco-moreno-278146.jpg
+tags:
+  - tech
 ---
 
 ![](/img/francisco-moreno-278146.jpg)

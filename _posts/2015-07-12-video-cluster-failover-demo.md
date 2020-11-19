@@ -6,6 +6,11 @@ categories: tech
 author_url : /author/sam
 header:
   teaser: img/tim-napier-181584.jpg
+tags:
+  - tech
+  - storage
+  - hardware
+  - slides
 ---
 
 ![](/img/tim-napier-181584.jpg)

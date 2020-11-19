@@ -6,6 +6,9 @@ categories: thoughts
 author_url : /author/sam
 header:
   teaser: img/melbourne.jpg
+tags:
+  - tech
+  - software
 ---
 
 ![](/img/melbourne.jpg)

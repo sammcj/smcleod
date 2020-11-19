@@ -1,11 +1,18 @@
 ---
 title: SAN Intro (Talk)
-excerpt: Talk - SAN Intro
+excerpt: "SAN Intro [Talk]"
 date: 2015-10-07
 categories: tech
 author_url : /author/sam
 header:
   teaser: img/elliot-sloman-199291.jpg
+tags:
+  - tech
+  - storage
+  - clustering
+  - talk
+  - slides
+  - hardware
 ---
 
 ![](/img/elliot-sloman-199291.jpg)

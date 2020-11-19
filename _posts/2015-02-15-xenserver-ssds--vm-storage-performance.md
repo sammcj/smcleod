@@ -6,6 +6,10 @@ categories: tech
 author_url : /author/sam
 header:
   teaser: img/noah-kuhn-27481.jpg
+tags:
+  - tech
+  - storage
+  - hardware
 ---
 
 ![](/img/noah-kuhn-27481.jpg)

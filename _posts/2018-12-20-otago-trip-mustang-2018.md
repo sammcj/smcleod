@@ -1,12 +1,15 @@
 ---
 title: New Zealand Otago Trip in a 2019 Mustang GT
-excerpt: New Zealand Otago Trip in a 2019 Mustang GT
+excerpt: "New Zealand Otago Trip in a 2019 Mustang GT [Photos]"
 categories: photos
 date: 2018-12-20
 author_url : /author/sam
 header:
   teaser: img/clyde_mustang_2080.jpg
 featured: false
+tags:
+  - cars
+  - photos
 ---
 
 ![](/img/clyde_mustang_2080.jpg)

@@ -6,6 +6,9 @@ categories: tech
 author_url : /author/sam
 header:
   teaser: img/feature-laptop.jpg
+tags:
+  - tech
+  - software
 ---
 
 ![](/img/feature-laptop.jpg)

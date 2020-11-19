@@ -6,6 +6,8 @@ categories: tech
 author_url : /author/sam
 header:
   teaser: img/backdrop-insidebuilding.jpg
+tags:
+  - tech
 ---
 
 ![](/img/backdrop-insidebuilding.jpg)

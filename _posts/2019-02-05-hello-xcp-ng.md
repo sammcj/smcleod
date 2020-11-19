@@ -6,6 +6,9 @@ categories: tech
 author_url: "/author/sam"
 header:
   teaser: img/xcpng_rocket_logo.png
+tags:
+  - tech
+  - software
 ---
 
 ![](/img/xcpng_rocket_logo.png)

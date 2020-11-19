@@ -6,6 +6,10 @@ categories: tech
 author_url : /author/sam
 header:
   teaser: img/backdrop-italian-steps.jpg
+tags:
+  - tech
+  - security
+  - privacy
 ---
 
 ![](/img/backdrop-italian-steps.jpg)

@@ -6,6 +6,10 @@ categories: tech
 author_url : /author/sam
 header:
   teaser: img/backdrop-feetsky.jpg
+tags:
+  - tech
+  - storage
+  - hardware
 ---
 
 ![](/img/backdrop-feetsky.jpg)

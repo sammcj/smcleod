@@ -6,6 +6,9 @@ categories: tech
 author_url : /author/sam
 header:
   teaser: img/daniel-mayovskiy-303666.jpg
+tags:
+  - tech
+  - storage
 ---
 
 ![](/img/daniel-mayovskiy-303666.jpg)
