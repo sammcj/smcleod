@@ -9,14 +9,18 @@ header:
 featured: true
 tags:
   - devops
-  - career
 ---
 
 ![](/img/pexels-denniz-futalan-2306897.jpg)
 
 This is a living document - a draft (or template) Team Charter that I've created to use when working in teams, while generally centered around Platform Engineering (Operations, DevOps, SRE) it is applicable to many areas of engineering and product delivery.
 
-Note: One size doesn't fit all, depending on your (teams) mission, cultural background and values items may be added or removed as needed.
+Note:
+
+- One size doesn't fit all.
+- Consider your (teams) mission, cultural background and values.
+- While not exhaustive - this is on the longer side, you may wish to distill as is practical, but I implore you not to only pick the easier items - that's missing the point.
+- These can give you talking points when performing post-mortems, retros and during times of conflict.
 
 ## Platform Engineering - Team Charter
 
@@ -83,6 +87,8 @@ This team charter is an introductory document that sets the vision, mission, val
 - We avoid holding meetings too early or late in the day.
 - We value asynchronous communication when appropriate (e.g. the message is not urgent, should be viewed by multiple people when suits them etc…).
 
-Optionally a list of educational and source references (research, studies, books and journey stories) may be added.
+---
 
-Items that need to be formalised (such as core working / meeting hours) should be documented in a company-wide knowledge base / wiki and become part of the team member onboarding process.
+Optionally consider adding a list of educational and source references (research, studies, books and journey stories) may be added.
+
+Items that need to be formalised (such as core working / meeting hours) must be documented in a company-wide knowledge base / wiki and become part of the team member onboarding process.
