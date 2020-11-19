@@ -1,6 +1,8 @@
 main:
   - title: "Posts"
     url: /posts/
+  - title: "Quotes and Musings"
+    url: /quotes-musings/
   - title: "Categories"
     url: /categories/
   - title: "About"
