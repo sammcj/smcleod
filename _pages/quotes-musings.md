@@ -2,6 +2,7 @@
 permalink: /quotes-musings/
 title: "Quotes and Musings"
 excerpt: "A collection of quotes and thoughts that are important to me"
+classes: wide
 categories:
   - musings
   - quotes

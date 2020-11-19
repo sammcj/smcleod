@@ -7,5 +7,7 @@ main:
     url: /tags/
   - title: "Quotes and Musings"
     url: /quotes-musings/
+  - title: "Links"
+    url: /links/
   - title: "About"
     url: /about/
