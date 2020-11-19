@@ -110,7 +110,8 @@ defaults:
       comments: false
       share: true
       related: true
-      
+      sidebar:
+        nav: "sidebar"
   # _pages
   - scope:
       path: "_pages"
@@ -119,6 +120,8 @@ defaults:
       layout: single
       toc: true
       author_profile: true
+      sidebar:
+        nav: "sidebar"
 
 category_archive:
   type: liquid
