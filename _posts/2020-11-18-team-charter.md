@@ -72,7 +72,6 @@ This team charter is an introductory document that sets the vision, mission, val
 - When making major architectural decisions, we document the decisions made.
 - When delegation is required, we agree to clearly communicate and make the delegation visible.
 
-
 ### Team Communication
 
 - We try to listen rather than to hear.
