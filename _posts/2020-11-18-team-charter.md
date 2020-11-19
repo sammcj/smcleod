@@ -109,7 +109,7 @@ Items that need to be formalised (such as core working / meeting hours) must be 
 
 ### Real World Example
 
-To quote [Grant Sutton](https://www.linkedin.com/in/grant-d-sutton/?originalSubdomain=au) from [DigIO](https://digio.com.au)
+To quote [Grant Sutton](https://www.linkedin.com/in/grant-d-sutton/?originalSubdomain=au) from [DigIO](https://digio.com.au):
 
 > Back when I was on a team we used **"Rework is better than No Work"** as one of our core principles.
 >
