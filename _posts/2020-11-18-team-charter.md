@@ -119,4 +119,4 @@ To quote [Grant Sutton](https://www.linkedin.com/in/grant-d-sutton/?originalSubd
 >
 > There were many occasions where the early development that we did either identified problems, or drove changes to the API that wouldn't have happened if we had waited.
 
-_See also: Grant's post on [Dev Mantras — A Team Charter Anti-Pattern](https://medium.com/digio-australia/dev-mantras-a-team-charter-anti-pattern-7a2b6f8369fa)_
+_See also: Grant's post on '[Dev Mantras — A Team Charter Anti-Pattern](https://medium.com/digio-australia/dev-mantras-a-team-charter-anti-pattern-7a2b6f8369fa)'_
