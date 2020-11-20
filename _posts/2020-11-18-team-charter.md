@@ -33,7 +33,7 @@ Keep in mind:
 
 - One size doesn't fit all.
 - Consider your (teams) mission, cultural background and values.
-- While not exhaustive - this is on the longer side, you may wish to distill as is practical, but I implore you not to only pick the easier items - that's missing the point.
+- While not exhaustive - this is on the longer side, you may wish to distil as is practical, but I implore you not to only pick the easier items - that's missing the point.
 - These can give you talking points when performing post-mortems, retros and during times of conflict.
 
 ### Platform Engineering - Team Charter
