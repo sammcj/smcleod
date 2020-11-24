@@ -21,7 +21,7 @@ tags:
 
 ### Variables worth tuning based on your situation:
 
-##### `--iodepth`
+- `--iodepth`
 
 The iodepth is very dependant on your hardware.
 
@@ -29,7 +29,7 @@ The iodepth is very dependant on your hardware.
 * High speed, lower latency SSDs (especially NVMe devices) can utilise a much higher iodepth, Values between 256 to 4096 could be sensible.
 
 
-##### `--bs`
+- `--bs`
 
 The block size is very dependant on your workload.
 
@@ -39,7 +39,7 @@ The block size is very dependant on your workload.
 
 
 
-### Before running any of these tests:
+### Before running these tests
 
 1. Check you're in a directory with enough free disk space.
 1. Check / pause any other workloads that may interfere with the results.
@@ -48,26 +48,34 @@ The block size is very dependant on your workload.
 
 
 
-#### Random write test for IOP/s, i.e. lots of small files
+#### Random write test for IOP/s
+
+i.e. lots of small files
 
 ```shell
 sync;fio --randrepeat=1 --ioengine=libaio --direct=1 --gtod_reduce=1 --name=test --filename=test --bs=4k --iodepth=64 --size=4G --readwrite=randwrite --ramp_time=4
 ```
 
-#### Random Read test for IOP/s, i.e. lots of small files
+#### Random Read test for IOP/s
+
+i.e. lots of small files
 
 ```shell
 sync;fio --randrepeat=1 --ioengine=libaio --direct=1 --gtod_reduce=1 --name=test --filename=test --bs=4k --iodepth=64 --size=4G --readwrite=randread --ramp_time=4
 ```
 
 
-#### Sequential write test for throughput, i.e. one large file
+#### Sequential write test for throughput
+
+i.e. one large file
 
 ```shell
 sync;fio --randrepeat=1 --ioengine=libaio --direct=1 --gtod_reduce=1 --name=test --filename=test --bs=4M --iodepth=64 --size=4G --readwrite=write --ramp_time=4
 ```
 
-#### Sequential Read test for throughput, i.e. one large file
+#### Sequential Read test for throughput
+
+i.e. one large file
 
 ```shell
 sync;fio --randrepeat=1 --ioengine=libaio --direct=1 --gtod_reduce=1 --name=test --filename=test --bs=4M --iodepth=64 --size=4G --readwrite=read --ramp_time=4
