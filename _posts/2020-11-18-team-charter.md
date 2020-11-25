@@ -33,8 +33,8 @@ Keep in mind:
 
 - One size doesn't fit all.
 - Consider your (teams) mission, cultural background and values.
-- While not exhaustive - this is on the longer side, you may wish to distil as is practical, but I implore you not to only pick the easier items - that's missing the point.
-- These can give you talking points when performing post-mortems, retros and during times of conflict.
+- While not exhaustive - this is on the longer side, you may wish to distill as is practical, but I implore you not to only pick the easier items - that's missing the point.
+- These can give you talking points when performing postmortems, retros and during times of conflict.
 
 ### Platform Engineering - Team Charter
 
@@ -79,6 +79,7 @@ This team charter is an introductory document that sets the vision, mission, val
 - We ask for help when we need it.
 - We support team members when they ask for help.
 - We operate as peers.
+- We assume that the intentions of our coworkers are good.
 - We expect that feedback should be constructive with the objective of uplifting and empowering those around us.
 - We recognise and celebrate all individual and team accomplishments.
 - We respect that people need to maintain a work / life balance in order to be healthy, happy and effective.
@@ -111,7 +112,7 @@ Items that need to be formalised (such as core working / meeting hours) must be 
 
 To quote [Grant Sutton](https://www.linkedin.com/in/grant-d-sutton/?originalSubdomain=au) from [DigIO](https://digio.com.au):
 
-> Back when I was on a team we used **"Rework is better than No Work"** as one of our core principles.
+> Back when I was on a team we used **"Rework is better than no work"** as one of our core principles.
 >
 > There were several times on the project where we could have been effectively stuck waiting of API specifications to be finalised.
 >
