@@ -50,7 +50,8 @@ This team charter is an introductory document that sets the vision, mission, val
 - We value working on a trust, but verify model, utilising guard rails to help protect our systems while empowering our colleagues.
 - We value small, easy to review, incremental changes over large, slow moving changes.
 - We value that perfect is often the enemy of good.
-- We value that rework is better than no work
+- We value that rework is better than no work.
+- We value finishing work over starting work.
 - We value having empathy and respect for our peers.
 - We value automation over manual tasks or changes.
 - We value solutions that add business value over technical value.
