@@ -192,6 +192,12 @@ A collection of quotes and musings collected over time that are important to me.
 
 ---
 
+> "None are more hopelessly enslaved than those who falsely believe they are free."
+
+\- Johann Wolfgang Von Goethe, Elective Affinities
+
+---
+
 > "When I'm working on a problem, I never think about beauty. I think only how to solve the problem. But when I have finished, if the solution is not beautiful, I know it is wrong."
 
 \- R. Buckminster Fuller
