@@ -98,6 +98,10 @@ A collection of quotes and musings collected over time that are important to me.
 
 > "Some may never live, but the crazy never die."
 
+> "We are all alone, born alone, die alone, and—in spite of True Romance magazines—we shall all someday look back on our lives and see that, in spite of our company, 
+we were alone the whole way. I do not say lonely—at least, not all the time—but essentially, and finally, alone. This is what makes your self-respect so important, 
+and I don't see how you can respect yourself if you must look in the hearts and minds of others for your happiness."
+
 \- Hunter S. Thompson
 
 ---
