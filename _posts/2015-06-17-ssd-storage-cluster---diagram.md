@@ -1,12 +1,18 @@
 ---
 title: SSD Storage Cluster - Update and Diagram
+excerpt: SSD Storage Cluster - Update and Diagram
 date: 2015-06-17
 categories: tech
-layout: post
 author_url : /author/sam
-image: img/backdrop-feetsky.jpg
-
+header:
+  teaser: img/backdrop-feetsky.jpg
+tags:
+  - tech
+  - storage
+  - hardware
 ---
+
+![](/img/backdrop-feetsky.jpg)
 
 Due to several recent events beyond my control I'm a bit behind on the project - hence the lack of updates which I appologise for.
 The goods news is that I'm back working to finish off the clusters and I'm happy to report that all is going to plan.

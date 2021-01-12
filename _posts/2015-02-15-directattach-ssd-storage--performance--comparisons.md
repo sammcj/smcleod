@@ -1,12 +1,18 @@
 ---
 title: Direct-Attach SSD Storage – Performance & Comparisons
+excerpt: Direct-Attach SSD Storage – Performance & Comparisons
 date: 2014-10-15
 categories: tech
-layout: post
 author_url : /author/sam
-image: img/banner.jpg
-
+header:
+  teaser: img/banner.jpg
+tags:
+  - tech
+  - storage
+  - hardware
 ---
+
+![](/img/banner.jpg)
 
 Further to my earlier post on XenServer storage performance with regards to directly attaching storage from the host, I have been analysing the performance of various SSD storage options.
 I have attached a HP DS2220sb storage blade to an existing server blade and compared performance with 4 and 6 SSD RAID-10 to our existing iSCSI SANs.

@@ -1,50 +1,148 @@
-# Site
-name: "smcleod.net"
-description: "The blog of Sam McLeod"
-meta_description: "The blog of Sam McLeod"
-logo: 'assets/images/logo.png'
-favicon: 'assets/images/logo.png'
-paginate: 100
+# For technical reasons, this file is *NOT* reloaded automatically when you use
+# 'bundle exec jekyll serve'. If you change this file, please restart the server process.
+
+# Theme docs:
+# https://mmistakes.github.io/minimal-mistakes/docs/configuration/
+
+# Site settings
+# These are used to personalize your new site. If you look in the HTML files,
+# you will see them accessed via {{ site.title }}, {{ site.email }}, and so on.
+# You can create any custom variable you would like, and they will be accessible
+# in the templates via {{ site.myvariable }}.
+title: "smcleod.net"
+email:
+description: >- # this means to ignore newlines until "baseurl:"
+  The blog of Sam McLeod
+twitter_username: s_mcleod
+github_username: sammcj
+minimal_mistakes_skin: default # "air", "aqua", "contrast", "dark", "dirt", "neon", "mint", "plum" "sunrise
+search: true
+og_image: "/assets/images/logo.png"
 baseurl: ""
-excerpt_separator: "<!--more-->"
-timezone: "Australia/Melbourne"
 url: "https://smcleod.net"
 
-# Authors
-authors:
-  sam:
-    name: Sam
-    display_name: Sam
-    gravatar: e56154546cf4be74e393c62d1ae9f9d4
-    email: "blog(at)auto.smcleod.net"
-    web: https://smcleod.net
-    twitter: https://twitter.com/s_mcleod
-    description: "I should write something here..."
+# Build settingsn
+markdown: kramdown
+remote_theme: mmistakes/minimal-mistakes
+# Outputting
+permalink: /:categories/:year/:month/:day/:title/
+paginate: 100 # amount of posts to show
+paginate_path: /page:num/
+timezone: Australia/Melbourne
+excerpt_separator: "<!--more-->"
+highlighter: rouge
+breadcrumbs: true  # disabled by default
 
-# Social
-twitter:
-  username: s_mcleod
-  card: summary
+include:
+  - _pages
 
-# Plugins
+# Exclude from processing.
+# The following items will not be processed, by default. Create a custom list
+# to override the default setting.
+# exclude:
+#   - Gemfile
+#   - Gemfile.lock
+#   - node_modules
+#   - vendor/bundle/
+#   - vendor/cache/
+#   - vendor/gems/
+#   - vendor/ruby/
+
+# Plugins (previously gems:)
 plugins:
   - jekyll-paginate
-  - jekyll-archives
-  - jekyll-admin
-  - jekyll-seo-tag
+  - jekyll-sitemap
+  - jekyll-gist
+  - jekyll-feed
+  - jemoji
+  - jekyll-include-cache
 
-# Archives
+author:
+  name    : "Sam McLeod"
+  avatar  : "/assets/images/logo.png"
+  gravatar: e56154546cf4be74e393c62d1ae9f9d4
+  bio     : "Platform, Site & Delivery Engineer, Ops Lead, DevOps Proponent, Consultant & Music Geek - On a never ending journey to improve myself and all that I can be to the world"
+  links:
+    - label: "Website"
+      icon: "fas fa-fw fa-link"
+      url: "https://smcleod.net"
+    - label: "Twitter"
+      icon: "fab fa-fw fa-twitter-square"
+      url: "https://twitter.com/s_mcleod"
+    - label: "GitHub"
+      icon: "fab fa-fw fa-github"
+      url: "https://github.com/sammcj"
+    - label: "LinkedIn"
+      icon: "fab fa-fw fa-linkedin"
+      url: "https://www.linkedin.com/in/sammcj"
+    - label: "Goodreads"
+      icon: "fab fa-fw fa-goodreads"
+      url: "https://www.goodreads.com/review/list/5836466-sam?order=d&shelf=to-read&sort=date_added"
+
+footer:
+  links:
+    - label: "Website"
+      icon: "fas fa-fw fa-link"
+      url: "https://smcleod.net"
+    - label: "Twitter"
+      icon: "fab fa-fw fa-twitter-square"
+      url: "https://twitter.com/s_mcleod"
+    - label: "GitHub"
+      icon: "fab fa-fw fa-github"
+      url: "https://github.com/sammcj"
+    - label: "LinkedIn"
+      icon: "fab fa-fw fa-linkedin"
+      url: "https://www.linkedin.com/in/sammcj"
+    - label: "Goodreads"
+      icon: "fab fa-fw fa-goodreads"
+      url: "https://www.goodreads.com/review/list/5836466-sam?order=d&shelf=to-read&sort=date_added"
+
+defaults:
+  # _posts
+  - scope:
+      path: ""
+      type: posts
+    values:
+      layout: single
+      toc: true
+      author_profile: true
+      read_time: true
+      comments: false
+      share: true
+      related: true
+      sidebar:
+        nav: "sidebar"
+  # _pages
+  - scope:
+      path: "_pages"
+      type: pages
+    values:
+      layout: single
+      toc: true
+      author_profile: true
+      sidebar:
+        nav: "sidebar"
+
+category_archive:
+  type: liquid
+  path: /categories/
+tag_archive:
+  type: liquid
+  path: /tags/
+quotes_musings_archive:
+  type: liquid
+  path: /quotes-musings/
 jekyll-archives:
   enabled:
     - categories
-  layout: archive
+    - tags
+    - musings
+  layouts:
+    category: archive-taxonomy
+    tag: archive-taxonomy
   permalinks:
-    category: '/:categories/:title/'
-
-# Build settings
-markdown: kramdown
-highlighter: rouge
-
-kramdown:
-  input: GFM
-  syntax_highlighter: rouge
+    year: '/:year/'
+    month: '/:year/:month/'
+    day: '/:year/:month/:day/'
+    tag: '/tag/:name/'
+    category: '/category/:name/'

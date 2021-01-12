@@ -1,12 +1,17 @@
 ---
 title: The Aeroplane Flies High, Turns Left, Looks Right and Might Reach Its Destination
+excerpt: The Aeroplane Flies High, Turns Left, Looks Right and Might Reach Its Destination
 date: 2017-03-22
 categories: thoughts
-layout: post
 author_url : /author/sam
-image: img/samuel-zeller-358865.jpg
-
+header:
+  teaser: img/samuel-zeller-358865.jpg
+tags:
+  - devops
+  - musings
 ---
+
+![](/img/samuel-zeller-358865.jpg)
 
 _A hypothetical scenario in the form of a metaphor_
 

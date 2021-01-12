@@ -1,11 +1,17 @@
 ---
 title: Disabling scroll-wheel zoom in Firefox
+excerpt: Disabling scroll-wheel zoom in Firefox
 date: '2018-07-16 10:57:14'
 categories: tech
 author_url: "/author/sam"
-image: img/zoom.jpg
-layout: post
+header:
+  teaser: img/zoom.jpg
+tags:
+  - tech
+  - software
 ---
+
+![](/img/zoom.jpg)
 
 This feature annoys me endlessly, I end up zoomed in and out of websites all over the internet.
 ... But the fix is easy and there's no addons required.

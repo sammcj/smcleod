@@ -1,14 +1,18 @@
 ---
 title: Online Conversion from SQL_ASCII to UTF8 in PostgreSQL
+excerpt: Online Conversion from SQL_ASCII to UTF8 in PostgreSQL
 date: 2016-05-23
 categories: tech
-layout: post
 author_url : /author/sam
-image: img/patrick-tomasso-71909.jpg
-
+header:
+  teaser: img/patrick-tomasso-71909.jpg
+tags:
+  - tech
+  - software
+  - data
 ---
 
-Credits: George Hansper, Ricardo Vassellini, Evgeny Shebanin, Sam McLeod
+![](/img/patrick-tomasso-71909.jpg)
 
 Scripts and source available here: [sql_ascii_to_utf8](https://github.com/sammcj/sql_ascii_to_utf8)
 

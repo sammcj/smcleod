@@ -1,12 +1,18 @@
 ---
 title: 'XenServer, SSDs & VM Storage Performance'
+excerpt: 'XenServer, SSDs & VM Storage Performance'
 date: 2015-02-14
 categories: tech
-layout: post
 author_url : /author/sam
-image: img/noah-kuhn-27481.jpg
-
+header:
+  teaser: img/noah-kuhn-27481.jpg
+tags:
+  - tech
+  - storage
+  - hardware
 ---
+
+![](/img/noah-kuhn-27481.jpg)
 
 ## Intro
 

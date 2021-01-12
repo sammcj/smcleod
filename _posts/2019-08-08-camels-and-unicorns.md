@@ -1,12 +1,19 @@
 ---
 title: Camels Dressed As Unicorns
+excerpt: Camels Dressed As Unicorns
 date: '2019-08-08 08:10:00'
 categories: tech
 author_url: "/author/sam"
-image: img/camel_corn.jpeg
-layout: post
+header:
+  teaser: img/camel_corn.jpeg
 featured: false
+tags:
+  - tech
+  - devops
+  - career
 ---
+
+![](/img/camel_corn.jpeg)
 
 ## Stop trying to hire with titles like ‘DevOps Engineer’ or 'Cloud Engineer’
 

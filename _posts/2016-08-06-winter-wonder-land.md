@@ -1,13 +1,17 @@
 ---
 title: Castle Hill Winter Trip 2016 Photos
-layout: post
+excerpt: "Castle Hill Winter Trip 2016 [Photos]"
 categories: photos
 date: 2016-08-06
-layout: post
 author_url : /author/sam
-image: img/backdrop-austria.jpg
-
+header:
+  teaser: img/backdrop-austria.jpg
+tags:
+  - photos
+  - cars
 ---
+
+![](/img/backdrop-austria.jpg)
 
 _note: open images in a new tab to display in full resolution_
 

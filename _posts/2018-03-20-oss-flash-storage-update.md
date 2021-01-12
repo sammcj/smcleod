@@ -1,12 +1,19 @@
 ---
 title: Flash Storage and SSD Failure Rate Update (March 2018)
+excerpt: Flash Storage and SSD Failure Rate Update (March 2018)
 date: 2018-03-20
 categories: tech
-layout: post
 author_url : /author/sam
-image: img/sam-standing-at-rack.jpg
+header:
+  teaser: img/sam-standing-at-rack.jpg
 featured: false
+tags:
+  - tech
+  - storage
+  - hardware
 ---
+
+![](/img/sam-standing-at-rack.jpg)
 
 It was almost 3 years ago that my open source storage project went into production. In that time it's been running 24/7 serving as highly available solid state storage for hundreds of VMs and several virtualisation clusters across our two main sites.
 

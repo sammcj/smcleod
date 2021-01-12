@@ -1,11 +1,17 @@
 ---
 title: Return Of The RSS
+excerpt: Return Of The RSS
 date: 2017-09-22
 categories: thoughts
-layout: post
 author_url : /author/sam
-image: img/melbourne.jpg
+header:
+  teaser: img/melbourne.jpg
+tags:
+  - tech
+  - software
 ---
+
+![](/img/melbourne.jpg)
 
 Of all the tools for reading news and subscribing to software releases, I still find RSS the most useful.
 

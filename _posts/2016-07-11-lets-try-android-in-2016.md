@@ -1,12 +1,17 @@
 ---
 title: The State of Android in 2016 & The OnePlus 3 Phone
+excerpt: The State of Android in 2016 & The OnePlus 3 Phone
 date: 2016-07-11
 categories: tech
-layout: post
 author_url : /author/sam
-image: img/adrien-296945.jpg
-
+header:
+  teaser: img/adrien-296945.jpg
+tags:
+  - tech
+  - hardware
 ---
+
+![](/img/adrien-296945.jpg)
 
 I wanted to try Android for a couple of weeks, I like staying on top of technology, gadgets and making sure I never become a blind 'zealot' for any platform or brand.
 

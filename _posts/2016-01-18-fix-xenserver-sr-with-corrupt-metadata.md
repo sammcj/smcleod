@@ -1,12 +1,17 @@
 ---
 title: Fix XenServer SR with corrupt or invalid metadata
+excerpt: Fix XenServer SR with corrupt or invalid metadata
 date: 2016-01-18
 categories: tech
-layout: post
 author_url : /author/sam
-image: img/samuel-zeller-358865.jpg
-
+header:
+  teaser: img/samuel-zeller-358865.jpg
+tags:
+  - tech
+  - storage
 ---
+
+![](/img/samuel-zeller-358865.jpg)
 
 If a disk / VDI is orphaned or only partially deleted you'll notice that under the SR it's not assigned to any VM.
 

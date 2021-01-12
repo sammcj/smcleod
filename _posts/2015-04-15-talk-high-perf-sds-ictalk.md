@@ -1,12 +1,20 @@
 ---
 title: Talk - High Performance Software Defined Storage
+excerpt: Talk - High Performance Software Defined Storage
 date: 2015-04-15
 categories: tech
-layout: post
 author_url : /author/sam
-image: img/robin-pierre-323861.jpg
-
+header:
+  teaser: img/robin-pierre-323861.jpg
+tags:
+  - tech
+  - storage
+  - talk
+  - hardware
+  - slides
 ---
+
+![](/img/robin-pierre-323861.jpg)
 
 A high level talk from Infracoders Melbourne on 12/04/2015.
 

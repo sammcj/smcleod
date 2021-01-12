@@ -1,12 +1,19 @@
 ---
 title: Looking For New Opportunities
+excerpt: Looking For New Opportunities
 date: '2019-08-06 10:30:00'
 categories: tech
 author_url: "/author/sam"
-image: img/fiji_aws_prac_training_1.jpg
-layout: post
+header:
+  teaser: img/fiji_aws_prac_training_1.jpg
 featured: false
+tags:
+  - tech
+  - devops
+  - career
 ---
+
+![](/img/fiji_aws_prac_training_1.jpg)
 
 As stated in [my announcement post](https://smcleod.net/tech/2019/06/29/leaving-infoxchange.html) - after 7~ years, I resigned from Infoxchange several months ago.
 

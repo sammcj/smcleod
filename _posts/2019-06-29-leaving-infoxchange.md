@@ -1,12 +1,19 @@
 ---
 title: Leaving Infoxchange
+excerpt: Leaving Infoxchange
 date: '2019-06-29 09:00:00'
 categories: tech
 author_url: "/author/sam"
-image: img/road-no-car-2048.jpg
-layout: post
+header:
+  teaser: img/road-no-car-2048.jpg
 featured: false
+tags:
+  - tech
+  - devops
+  - career
 ---
+
+![](/img/road-no-car-2048.jpg)
 
 After 7~ years, I have resigned from Infoxchange.
 

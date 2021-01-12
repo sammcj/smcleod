@@ -1,13 +1,18 @@
 ---
 title: New Zealand Otago Trip in a 2019 Mustang GT
-layout: post
+excerpt: "New Zealand Otago Trip in a 2019 Mustang GT [Photos]"
 categories: photos
 date: 2018-12-20
-layout: post
 author_url : /author/sam
-image: img/clyde_mustang_2080.jpg
+header:
+  teaser: img/clyde_mustang_2080.jpg
 featured: false
+tags:
+  - cars
+  - photos
 ---
+
+![](/img/clyde_mustang_2080.jpg)
 
 In late November of 2018 I was lucky enough to get my hands on the upcoming 2019 Sport spec Mustang GT v8 to be its first driver.
 

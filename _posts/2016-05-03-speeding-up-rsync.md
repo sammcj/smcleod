@@ -1,12 +1,18 @@
 ---
 title: Speeding Up rsync
+excerpt: Speeding up rsync
 date: 2016-05-03
 categories: tech
-layout: post
 author_url : /author/sam
-image: img/robin-pierre-323861.jpg
-
+header:
+  teaser: img/robin-pierre-323861.jpg
+tags:
+  - tech
+  - software
+  - networking
 ---
+
+![](/img/robin-pierre-323861.jpg)
 
 The most common way to use rsync is probably as such:
 
@@ -34,7 +40,7 @@ rsync -arv --numeric-ids --progress -e "ssh -T -c aes256-gcm@openssh.com -o Comp
 Points of note:
 
 1. Because of the weak encryption used, it is not recommended for transferring files across hostile networks (such as the internet).
-1. There are scenarios where enabling compression _can_ improve performance, i.e. if your network link is very slow and your files compress well.
-1. Don't forget to forward your SSH keys to the host you're going to run it on! (`ssh-agent && ssh-add` ((if it's not already running)) `ssh -A user@host`)
-1. If `aes256-gcm@openssh.com` isn't available for you due to using an old operating system, you can use `aes128-ctr`
+2. There are scenarios where enabling compression _can_ improve performance, i.e. if your network link is very slow and your files compress well.
+3. Don't forget to forward your SSH keys to the host you're going to run it on! (`ssh-agent && ssh-add` ((if it's not already running)) `ssh -A user@host`)
+4. If `aes256-gcm@openssh.com` isn't available for you due to using an old operating system, you can use `aes128-ctr`
 

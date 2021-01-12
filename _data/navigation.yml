@@ -1,0 +1,19 @@
+main:
+  - title: "Posts"
+    url: /posts/
+  # - title: "Categories"
+  #   url: /categories/
+  - title: "Quotes and Musings"
+    url: /quotes-musings/
+  - title: "Links"
+    url: /links/
+  - title: "About"
+    url: /about/
+
+sidebar:
+  - title:
+    children:
+  - title: "Posts by Year"
+    url: /posts/
+  - title: "Posts by Tags"
+    url: /tags/

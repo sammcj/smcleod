@@ -1,14 +1,21 @@
 ---
 title: Rest in Peace Jimothy
+excerpt: "Rest in Peace Jimothy, You magnificent girl [Photos]"
 date: '2020-10-08 15:20:00'
 categories: jimothy
 author_url: "/author/sam"
-image: img/jimothy.jpg
-layout: post
+header:
+  teaser: img/jimothy.jpg
 featured: false
+tags:
+  - photos
 ---
 
+![](/img/jimothy.jpg)
+
 You magnificent girl, you brought me 14 years of love and happiness
+
+## Photos
 
 ![](https://github.com/sammcj/smcleod_files/blob/master/images/rip_jimothy/1.jpeg?raw=true)
 ![](https://github.com/sammcj/smcleod_files/blob/master/images/rip_jimothy/2.jpeg?raw=true)

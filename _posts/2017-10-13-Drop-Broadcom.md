@@ -1,11 +1,18 @@
 ---
 title: Broadcom, Or How I Learned To Start Worrying And Drop The Packet
+excerpt: Broadcom, Or How I Learned To Start Worrying And Drop The Packet
 date: 2017-10-13
 categories: tech
-layout: post
 author_url : /author/sam
-image: img/backdrop-feetsky.jpg
+header:
+  teaser: img/backdrop-feetsky.jpg
+tags:
+  - tech
+  - networking
+  - hardware
 ---
+
+![](/img/backdrop-feetsky.jpg)
 
 
 Earlier this week we started the process to upgrade one of our hypervisor compute clusters when we encountered a rather painful bug with HP's Broadcom NIC chipsets.

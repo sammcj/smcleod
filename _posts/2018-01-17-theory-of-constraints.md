@@ -1,11 +1,16 @@
 ---
 title: Theory of constraints
+excerpt: Theory of constraints
 date: 2018-02-05
 categories: tech
-layout: post
 author_url : /author/sam
-image: img/samuel-zeller-237359.jpg
+header:
+  teaser: img/samuel-zeller-237359.jpg
+tags:
+  - devops
 ---
+
+![](/img/samuel-zeller-237359.jpg)
 
 ### "A chain is no stronger than its weakest link"
 

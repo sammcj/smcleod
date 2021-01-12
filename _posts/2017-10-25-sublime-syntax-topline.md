@@ -1,11 +1,16 @@
 ---
 title: Applying syntax in Sublime based on the first file line
+excerpt: Applying syntax in Sublime based on the first file line
 date: 2017-10-25
 categories: tech
-layout: post
 author_url : /author/sam
-image: img/backdrop-code.jpg
+header:
+  teaser: img/backdrop-code.jpg
+tags:
+  - tech
 ---
+
+![](/img/backdrop-code.jpg)
 
 In vim, you can add a comment at the top of files to set the syntax, e.g.:
 

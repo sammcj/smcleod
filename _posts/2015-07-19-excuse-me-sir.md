@@ -1,11 +1,16 @@
 ---
 title: Excuse me sir...
+excerpt: Excuse me sir...
 date: 2015-07-19
 categories: tech
-layout: post
 author_url : /author/sam
-image: img/backdrop-bridge.jpg
-
+header:
+  teaser: img/backdrop-bridge.jpg
+tags:
+  - tech
+  - storage
 ---
+
+![](/img/backdrop-bridge.jpg)
 
 ![]({{ site.url }}/img/san/saviour.jpg)

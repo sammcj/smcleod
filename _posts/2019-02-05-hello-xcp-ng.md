@@ -1,11 +1,17 @@
 ---
 title: Goodbye XenSever - Hello XCP-ng
+excerpt: Goodbye XenSever - Hello XCP-ng
 date: '2019-02-11 13:00:00'
 categories: tech
 author_url: "/author/sam"
-image: img/xcpng_rocket_logo.png
-layout: post
+header:
+  teaser: img/xcpng_rocket_logo.png
+tags:
+  - tech
+  - software
 ---
+
+![](/img/xcpng_rocket_logo.png)
 
 In 2018 I set out to replace our XenSever 7.2 based virtualisation after [Citrix essentially screwed over free / open source users](https://xenserver.org/blog/entry/xenserver-7-3-changes-to-the-free-edition.html).
 

@@ -1,12 +1,17 @@
 ---
 title: iSCSI SCSI-ID / Serial Persistence
+excerpt: iSCSI SCSI-ID / Serial Persistence
 date: 2015-12-14
 categories: tech
-layout: post
 author_url : /author/sam
-image: img/feature-san-fran.jpg
-
+header:
+  teaser: img/feature-san-fran.jpg
+tags:
+  - tech
+  - storage
 ---
+
+![](/img/feature-san-fran.jpg)
 
 
 _**"Having a SCSI ID is a f*cking idiotic thing to do."**_
