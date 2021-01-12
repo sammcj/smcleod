@@ -304,8 +304,6 @@ and I don't see how you can respect yourself if you must look in the hearts and 
 
 > "It’s like we have all the time in the world for people who let the organisation down, but none of the time for the people let down by the organisation."
 
-\- SM
-
 > "I hate Jira."
 
 \- SM
