@@ -312,16 +312,8 @@ and I don't see how you can respect yourself if you must look in the hearts and 
 
 > "Aiming to move from engineering to management is odd, think of it like a comedian - when you get good, or great even - you don't become a teacher of comedy, you tell jokes in the good or great way, you don't 'upgrade to comedian management'."
 
-> "You call engineers resources and I'll call you overhead. What's yet - they can prove it if they work together."
-
-> "Art isn't without its faults, some of them grave. To disregard art because of the errors of its creator or content - no matter how flawed, unjust or solipsistic, is at least - to rob the world of context. The choice to make better the future is within the power of those that experience and choose to learn and grow from it"
-
-> "An ass, regardless how smart, still speaks through wind and vibrations."
+> "You call engineers resources and I'll call you overhead."
 
 > "A manager once said to me _"I don't come to work to make friends"_ - from point time onwards, I knew I wanted to do the exact opposite - I come to work to make friends, because the connections we make are what makes us human, they create and shape societies and give us meaning, direction and value to life."
 
-> "It’s like we have all the time in the world for people who let the organisation down, but none of the time for the people let down by the organisation."
-
-> "I hate Jira."
-
-\- SM
+> "We have all the time in the world for people who let the organisation down, but none of the time for the people let down by the organisation."
