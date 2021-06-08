@@ -40,6 +40,7 @@ A collection of quotes and musings collected over time that are important to me.
 \- Richard P. Feynman
 
 ---
+
 > "Every gun that is made, every warship launched, every rocket fired signifies, in the final sense, a theft from those who hunger and are not fed, those who are cold and are not clothed."
 
 \- Dwight D. Eisenhower
@@ -49,6 +50,11 @@ A collection of quotes and musings collected over time that are important to me.
 > "Most rules lie, yet lies are less shocking, less corrosive than the chosen, cultivated ignorance that Chevallier addresses here.  This ignorance denies the reality of anything which provokes pity.  It is an error to think of such war leaders or, today, economic strategists, as pitiless.  They are abject.  This is what we have to learn and to act upon.  They are abject."
 
 \- Gabriel Chevallier, Fear; A Novel of World War I (Quote from Roger Waters The Wall, 2015)
+
+---
+
+> "If a society is tolerant without limit, its ability to be tolerant is eventually seized or destroyed by the intolerant."
+\- Karl Popper
 
 ---
 
@@ -289,6 +295,18 @@ and I don't see how you can respect yourself if you must look in the hearts and 
 > "A complex system that works is invariably found to have evolved from a simple system that worked. A complex system designed from scratch never works and cannot be patched up to make it work. You have to start over, beginning with a working simple system."
 
 \- John Gall
+
+---
+
+> "Everyone wants to get the right people, but it's not the people - it's the leadership, if we create the right environment - we will get the right people."
+
+> "You can easily judge the character of a man by how he treats those who can do nothing for him."
+
+> "Stress and anxiety at work have less to do with the work we do and more to do with weak management and leadership."
+
+> "You don’t hire for skills, you hire for attitude. You can always teach skills."
+
+\- Simon Sinek
 
 ## Musings
 
