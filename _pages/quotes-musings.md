@@ -310,6 +310,8 @@ and I don't see how you can respect yourself if you must look in the hearts and 
 
 ## Musings
 
+> "A great manager is at the service of their team, the team is not at the service of the manager."
+
 > "Aiming to move from engineering to management is odd, think of it like a comedian - when you get good, or great even - you don't become a teacher of comedy, you tell jokes in the good or great way, you don't 'upgrade to comedian management'."
 
 > "You call engineers resources and I'll call you overhead."
