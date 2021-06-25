@@ -29,6 +29,11 @@ A collection of quotes and musings collected over time that are important to me.
 
 \- Roger Waters
 
+---
+
+> "It is the struggle itself that is most important. We must strive to be more than we are. It does not matter that we will never reach our own ultimate Goal. The effort yields its own rewards."
+
+\- Data
 
 ---
 
