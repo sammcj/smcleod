@@ -1,7 +1,7 @@
 ---
 title: Rancilio Silvia Upgrade
 excerpt: "Upgrading a Ranchilio Silvia v4 espresso machine..."
-date: '2020-11-18 14:00:00'
+date: '2021-07-11 14:00:00'
 categories: hardware
 author_url: "/author/sam"
 header:
