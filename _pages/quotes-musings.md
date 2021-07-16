@@ -41,7 +41,6 @@ A collection of quotes and musings collected over time that are important to me.
 
 > "What I cannot create - I do not understand."
 
-
 \- Richard P. Feynman
 
 ---
@@ -59,6 +58,7 @@ A collection of quotes and musings collected over time that are important to me.
 ---
 
 > "If a society is tolerant without limit, its ability to be tolerant is eventually seized or destroyed by the intolerant."
+
 \- Karl Popper
 
 ---
