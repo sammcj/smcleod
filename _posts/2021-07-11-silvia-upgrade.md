@@ -17,7 +17,7 @@ Weekend upgrades to my Ranchilio Silvia v4 espresso machine.
 - Added a digital [PID](https://www.seattlecoffeegear.com/blog/2018/10/01/whats-a-pid/) [kit](https://www.jetblackespresso.com.au/shop/p/rancilio-silvia-pid-preinfusion/) for improved temperature control
 - Replaced the boiler element
 - Thermal insulation
-- Basic "smart" power control with Siri integration
+- Basic ["smart" power control](https://www.cygnett.com/products/smart-wi-fi-plug-with-power-monitoring) with Siri integration
 
 ![](https://github.com/sammcj/smcleod_files/blob/master/images/silvia_upgrades_2021/assembled.jpeg?raw=true)
 
