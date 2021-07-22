@@ -4,71 +4,60 @@ excerpt: "Moving on from Evernote after 14 years..."
 date: '2021-07-22 19:00:00'
 categories: software
 author_url: "/author/sam"
-published: false
-draft: true
 header:
-  teaser: img/silvia/assembled_preview.jpeg
+  teaser: img/bear_header-mac-screenshot.png
 featured: true
 tags:
   - software
 ---
 
-I was a 14 year long Evernote subscriber, it served me well for the most part but in recent years Evernote went downhill to the point I now consider it hostile to it's users.
+![](https://github.com/sammcj/smcleod_files/blob/master/images/evernote_bear_2021/bear.png?raw=true)
 
-The native macOS app has been replaced with an Electron Javascript webframe, and like almost all Electron apps I've tried it was a pig of a thing - poor performance, memory and CPU hungry and that lacked low latency feeling native applications have.
+Until recently I used Evernote for my notes, web clippings and document drafts, I was a subscriber going on 14 years and had over 3000 notes.
 
-The company also recently stopped people from being able to sync their notes offline - tough luck if you're travelling or don't have reliable internet access.
+However in recent years Evernote has gone downhill to the point it could be considered hostile to it's users.
 
-so I spent quite some time (weeks) testing out various alternatives including but not limited to Bear, Notion, Simplenote, ia writer, and a few other things.
+The native macOS app was replaced with an Electron Javascript webframe and like almost all Electron apps I've tried it was plagued by poor performance, memory leaks and aggressive idle CPU utilisation and above all else it now lacks the low latency feeling the native application had.
 
-## Requirements
+With the release of the updated client, Evernote has removed offline note functionality - tough luck if you're travelling or don't have reliable internet access.
 
-My main requirements were:
+This year I finally decided I had enough and have spent several months testing out alternatives including Bear, Notion, Ulysses, Simplenote, IA Writer and several others.
 
-- Web clipper for clipping the content of blog/forum posts, comments etc...
-- Offline usage
-- Cross device sync (multiple macOS based machines and my iPhone)
-- Code block support
-- Native application (strongly desired)
-- Markdown support (strongly desired)
+## Selection Criteria
 
-## Contenders
+I assessed the options based on the following criteria:
 
-### Bear
+- Web clipper for clipping the content of blogs, forum posts, comments etc...
+- Offline note usage
+- Cross device sync
+- Markdown support
+  - Code block support
+    - Syntax highlighting would be a bonus
+- Attachment support
+- Native application performance
+  - Low latency interface
+  - Doesn't leak memory or churn CPU when idle
+  - Doesn't excessively drain battery
+- Performant, full text internal search
 
-For:
+## Bear
 
-- Clean interface.
-- Native application.
-- Affordable ($22 AUD per year).
-- Markdown support.
+I finally settled on [Bear](https://bear.app) which I'm having a great experience with and would happily recommend.
 
-Against:
-
-- Markdown only (At the time I thought it would be nice to have rich text with an option to have a note in markdown mode).
-- On my first try importing my 3000~ notes and web clippings from Evernote caused the application to lag up and syncing to be slow, after some trial and error I narrowed it down to several web clippings with invalid HTML that were causing the application to lock up, after deleting these importing was not a problem.
-
-### Notion
-
-For:
-
-- Advanced editor.
-- Database like functionality.
-
-Against:
-
-- Lots of problems importing notes.
-- Another Electron application.
+It provides clean interface that really is a pleasure to spend time working in, is a native application and performs excellently and is relatively affordable at $15USD a year.
 
 ## Screenshots
 
-![](https://github.com/sammcj/smcleod_files/blob/master/images/evernote_bear/bear_header-mac-screenshot.jpeg?raw=true)
-_image courtesy of [Bear](bear.io)_
+![](https://github.com/sammcj/smcleod_files/blob/master/images/evernote_bear_2021/bear_header-mac-screenshot.png?raw=true)
+<sup>_Image courtesy of [Bear](https://bear.app)_</sup>
 
-![](https://github.com/sammcj/smcleod_files/blob/master/images/evernote_bear/bear_feature-themes.jpeg?raw=true)
-_image courtesy of [Bear](bear.io)_
+![](https://github.com/sammcj/smcleod_files/blob/master/images/evernote_bear_2021/bear_feature-themes.jpg?raw=true)
+<sup>_Image courtesy of [Bear](https://bear.app)_</sup>
 
-Web clipper
+Example of a note clipped from [this](https://itnext.io/kubernetes-essential-tools-2021-def12e84c572) webpage:
 
-![](https://github.com/sammcj/smcleod_files/blob/master/images/evernote_bear/bear_web_clipper.jpeg?raw=true)
-_image courtesy of [Bear](bear.io)_
+![](https://github.com/sammcj/smcleod_files/blob/master/images/evernote_bear_2021/bear_web_clipper.jpg?raw=true)
+
+Example of a PDF stored inline:
+
+![](https://github.com/sammcj/smcleod_files/blob/master/images/evernote_bear_2021/bear_pdf_attachment.jpg?raw=true)

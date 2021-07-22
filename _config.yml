@@ -36,6 +36,10 @@ breadcrumbs: true  # disabled by default
 include:
   - _pages
 
+exclude:
+  - .dccache
+  - .vscode
+
 # Exclude from processing.
 # The following items will not be processed, by default. Create a custom list
 # to override the default setting.
