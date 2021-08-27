@@ -18,10 +18,13 @@ Weekend upgrades to my Ranchilio Silvia v4 espresso machine.
 - Replaced the boiler element
 - Thermal insulation
 - Basic ["smart" power control](https://www.cygnett.com/products/smart-wi-fi-plug-with-power-monitoring) with Siri integration
+- Upgrade the standard Ranchilio basket to a [VST 18g Ridged](https://www.dukescoffee.com.au/shop/vst-precision-basket-ridged/)
 
 ![](https://github.com/sammcj/smcleod_files/blob/master/images/silvia_upgrades_2021/assembled.jpeg?raw=true)
 
 ![](https://github.com/sammcj/smcleod_files/blob/master/images/silvia_upgrades_2021/siri.jpeg?raw=true)
+
+![](https://github.com/sammcj/smcleod_files/blob/master/images/silvia_upgrades_2021/vst_18g_r.jpeg?raw=true)
 
 ---
 
@@ -49,6 +52,10 @@ Adding insulation to the boiler
 
 ---
 
-Before adding the PID for reference
+## Before
 
 ![](https://github.com/sammcj/smcleod_files/blob/master/images/silvia_upgrades_2021/before.jpeg?raw=true)
+
+## After
+
+![](https://github.com/sammcj/smcleod_files/blob/master/images/silvia_upgrades_2021/assembled.jpeg?raw=true)
