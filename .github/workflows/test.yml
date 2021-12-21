@@ -1,0 +1,15 @@
+on: push
+
+jobs:
+  ### Trufflehog
+  # Currently using default ruleset for testing https://github.com/edplato/trufflehog-actions-scan/blob/master/regexes.json
+  TruffleHog:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+      with:
+        fetch-depth: 0
+    - name: Trufflehog-Scan
+      uses: edplato/trufflehog-actions-scan@master
+      with:
+        scanArguments: "--regex --entropy=false --max_depth=100 --rules /regexes.json" # Add any other custom options here, note adding anything overrides defaults
