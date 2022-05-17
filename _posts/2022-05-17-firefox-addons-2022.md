@@ -55,7 +55,6 @@ Probably the single most important addon.
 
 ### about:config
 
-- `privacy.resistFingerprinting: true` - [Fingerprinting Protection](https://support.mozilla.org/en-US/kb/firefox-protection-against-fingerprinting)
 - `mousewheel.with_meta.action: 0` - Disable scroll zooming
 - `extensions.pocket.enabled: false`- Disable Pocket
 - `dom.event.clipboardevents.enabled: false` - Don't allow websites to prevent copy and paste, stop webpage knowing which part of the page had been selected.
