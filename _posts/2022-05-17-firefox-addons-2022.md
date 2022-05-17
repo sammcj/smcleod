@@ -39,7 +39,7 @@ Probably the single most important addon.
 
 - [Bypass Paywalls Clean](https://addons.mozilla.org/en-GB/firefox/addon/bypass-paywalls-clean)
 - [SponsorBlock - Skip Sponsorships on YouTube](https://addons.mozilla.org/en-GB/firefox/addon/sponsorblock)
-- [Universal Bypass](https://addons.mozilla.org/en-GB/firefox/addon/universal-bypass)
+- [FastForward](https://addons.mozilla.org/en-GB/firefox/addon/fastforwardteam/)
 - [Copy PlainText](https://addons.mozilla.org/en-GB/firefox/addon/copy-plaintext)
 - [Awesome RSS](https://addons.mozilla.org/en-GB/firefox/addon/awesome-rss)
 - [Night Mode - Hacker News](https://addons.mozilla.org/en-GB/firefox/addon/night-mode-hacker-news)
