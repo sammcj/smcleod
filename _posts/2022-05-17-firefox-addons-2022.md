@@ -87,10 +87,10 @@ Add the following to "My Filters"
 *$removeparam=ICID
 *$removeparam=rb_clickid
 
-! block .pinterest google results
+! block .pinterest rubbish on google
 google.*##.g:has(a[href*=".pinterest.*"])
 google.*##a[href*=".pinterest."]:upward(1)
 
-! ddg pinterest fakes
+! ddg pinterest rubbish on ddg
 duckduckgo.*##.results > div:has(a[href*=".pinterest.com"])
 ```
