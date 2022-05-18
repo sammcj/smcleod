@@ -22,7 +22,10 @@ My list of must-have Firefox addons - 2022 edition
 - [Multi-Account Containers](https://addons.mozilla.org/en-GB/firefox/addon/multi-account-containers)
   - Setting sites such as Amazon, eBay, Twitter, LinkedIn, Banking etc... each to always open in their own container
 - [Don't Track Me Google](https://addons.mozilla.org/en-GB/firefox/addon/dont-track-me-google1)
+- [LocalCDN](https://addons.mozilla.org/en-GB/firefox/addon/localcdn-fork-of-decentraleyes/)
+  - Note: LocalCDN like DecentralEyes may no longer be useful if using [Firefox's Strict Tracking Protection](https://support.mozilla.org/en-US/kb/enhanced-tracking-protection-firefox-desktop)
 - [UTM Tracking Token Stripper](https://addons.mozilla.org/en-GB/firefox/addon/utm-tracking-token-stripper)
+  - Note: You can accomplish some of what this does with the `removeparam` uBlock origin rules listed below
 - The official addon for whatever Password Manager you use ([1Password](https://addons.mozilla.org/en-GB/firefox/addon/1password-x-password-manager/), [Bitwarden](https://addons.mozilla.org/en-GB/firefox/addon/bitwarden-password-manager/) etc...) 
 
 ### uBlock Origin
@@ -51,7 +54,7 @@ Probably the single most important addon.
 
 ## Other Configuration
 
-- Settings -> Privacy & Security -> Strict Tracking Protection (more information [here](https://blog.privacyguides.org/2021/12/01/firefox-privacy-2021-update))
+- Settings -> Privacy & Security -> [Strict Tracking Protection](https://support.mozilla.org/en-US/kb/enhanced-tracking-protection-firefox-desktop) (more information [here](https://blog.privacyguides.org/2021/12/01/firefox-privacy-2021-update))
 
 ### about:config
 
