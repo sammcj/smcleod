@@ -92,7 +92,7 @@ Practice vibrato on 2D and 4D (and blows) - (Try coughing lightly!)
 
 ### Tone
 
-Lee Sankey - Improve your tone - Thin vs Thick sounds - http://www.youtube.com/watch?v=HUmwmEWQvps
+[Lee Sankey - Improve your tone - Thin vs Thick sounds](http://www.youtube.com/watch?v=HUmwmEWQvps)
 
 Think about the kind of air you're using, for example - the difference between blowing fog on a window and trying to blow a feather along a desk and don’t use your hands.
 
@@ -114,7 +114,7 @@ Work on going from thin to thick on (2), then try other holes.
 (2), (2), (2), (2)
 ```
 
-Lee Sankey - Harder exercises for high low transitions - http://www.youtube.com/watch?v=T5qDjl6Xuv0
+[Lee Sankey - Harder exercises for high low transitions](http://www.youtube.com/watch?v=T5qDjl6Xuv0)
 
 ```plaintext
 4 (4) 5 (5) 6 (6) (7) 7 (7) (6) 6 (5) 5 (4) 4
@@ -183,12 +183,12 @@ Other bending practise, Start slow - as you get cleaner start trying it faster (
 2D" 2B 2D" 2D 3D" 2D 2D" 3D" 2D
 ```
 
-Peter Gunn Bass Line - http://www.harptab.com/blues/gunn.shtml
+[Peter Gunn Bass Line](http://www.harptab.com/blues/gunn.shtml)
 
 > “This is the hardest bend practising riff that there is.”
 This uses the 3 hole bends, Play it (if you can) until you can do it very fast.
- 
-More bending practice - http://www.youtube.com/watch?v=jF2iATfES8c
+
+[More bending practice](http://www.youtube.com/watch?v=jF2iATfES8c)
 
 ```plaintext
 -1 -1d 1
@@ -199,13 +199,13 @@ More bending practice - http://www.youtube.com/watch?v=jF2iATfES8c
 -6 -6d 6
 ```
 
-Then do it in reverse, for example 1 -1d -1 etc etc
+Then do it in reverse, for example `1 -1d -1` etc.
 
 ```plaintext 
 -2 -3b 4 -4b -4 5 6
 ```
 
-Then try the following (go crazy-insert bends/extra notes/chords - wherever desired) http://www.harptabs.com/song.php?ID=334
+Then try the [following](http://www.harptabs.com/song.php?ID=334).
 
 ```plaintext
 -2 -3 4 -4 -5 6   6 -5 -4 -3 -2
@@ -259,7 +259,7 @@ G-Harp - Make a really forward 'tuk tuk' sound with the draw chords
 (1234) (1234), (1234) (1234)
 ```
 
-Fun simple riff to fiddle around with - http://www.youtube.com/watch?v=adV4eG8Kqd4
+Fun [simple riff](http://www.youtube.com/watch?v=adV4eG8Kqd4) to fiddle around with.
 
 ```plaintext
 (1234) (1234)
@@ -339,7 +339,7 @@ Easy Blues Riff from PlayHarmonicaEasily on YouTube
 (12) (12) 34 34 (34) (34) 34 34 (12) (12) 34 (12)
 ```
 
-Lee Sankey Backing+Riff Building - http://www.youtube.com/watch?v=ByZEWqdL93Q
+[Lee Sankey Backing+Riff Building](http://www.youtube.com/watch?v=ByZEWqdL93Q)
 
 Brilliant video and teacher - Really try to feel the bend, you can use 4b-3b or whatever - timing is key.
 
@@ -349,14 +349,16 @@ or
 (123) (123) 123 123 (123) , (3) (2) (3b) (2)
 ```
 
-Ronnie Shellist Blues Riff - http://www.youtube.com/watch?v=z5SODHdjZZA
+[Ronnie Shellist Blues Riff](http://www.youtube.com/watch?v=z5SODHdjZZA)
 
 ```plaintext
 (1-slide-3") (3) (2) 2 (1) 2 (2) 2 (2)
 (1-slide-3") (3) (2) 2 (1) 2 (2) 2 (123)
 ```
 
-Gussow - Best played slow on _A _ harp - (release lips and let air out the top of the harp through lips on the 234 blow) http://www.youtube.com/watch?v=d-OxIr1mk3I
+[Gussow - Best played slow on _A _ harp](http://www.youtube.com/watch?v=d-OxIr1mk3I).
+
+Release lips and let air out the top of the harp through lips on the 234 blow.
 
 ```plaintext
 (1) (2b) (1) (2) (123) 234 (3b) (2)
@@ -375,19 +377,23 @@ Boogie Riff (Something like this, you really have to ‘feel the groove’ of th
 (2) (2), (2) (2), (2) (2), (2) (2), (2) (3) 4 (3) (2)
 ```
 
-Little Walter Lick - Play slurred to sound best- http://www.youtube.com/watch?v=XSmGcg643IM 
+[Little Walter Lick](http://www.youtube.com/watch?v=XSmGcg643IM)
+
+Play slurred to sound best.
 
 ```plaintext
 (2) (3) (4) 5 (5) (4) 5 (4)
 ```
 
-Isaacullah riff of the day http://www.youtube.com/watch?v=J9vM9RuKyoY 
+[Isaacullah riff of the day](http://www.youtube.com/watch?v=J9vM9RuKyoY)
 
 ```plaintext
 (4) (5) (4) 4 (3b) (2) (2) (1) (2b)-(2)
 ```
 
-Catfish Blues Lick - (Played quite quick when you can) http://www.youtube.com/watch?v=KRvHEeIu-wA
+[Catfish Blues Lick](http://www.youtube.com/watch?v=KRvHEeIu-wA)
+
+Played quite quick when you can.
 
 ```plaintext
 (5) (4) (4b) (3) (2) (2b) (2) (2) (2) (123)
@@ -440,32 +446,35 @@ Saw waw-waw on the 6's and the second 6 is played for half the length of the fir
 
 ### Harder Riffs / Licks
 
-Adam Gussow - boogie blues lick http://www.youtube.com/watch?v=lj8qXFxf2vo - Hit the bent 4’s hard!
+[Adam Gussow - boogie blues lick](http://www.youtube.com/watch?v=lj8qXFxf2vo).
+
+Hit the bent 4’s hard!
 
 ```plaintext
 (4b) (4) (5) (4b) - (3) - (2) (123) (2) ,  (3) (234) 345 (2)
 ```
 
-What A Woman -  http://www.youtube.com/watch?v=2Q418k3rAAc 
+[What A Woman](http://www.youtube.com/watch?v=2Q418k3rAAc)
 
 ```plaintext
 4 (3+4b) 4 (3+4b) (2) 4 (3+4b) (2) (3+4b) (2)
 ```
 
-Charlie McCoy Harmonica lick - http://www.youtube.com/watch?v=KlRPPDSg80E 
+[Charlie McCoy Harmonica lick](http://www.youtube.com/watch?v=KlRPPDSg80E)
 
 ```plaintext
 (9)
- (8) (8) 9 9 (8) (7) (6)
+(8) (8) 9 9 (8) (7) (6)
 ```
-Juke Intro Riff - http://www.youtube.com/watch?v=6YtMG8ehiaQ 
+
+[Juke Intro Riff](http://www.youtube.com/watch?v=6YtMG8ehiaQ)
 
 ```plaintext
 3B, 3Dbb-3D-4D, 5B, 6B, 6B (or 6-3B or 6-9B)
 2D, 3Db, 3D, 4D, 5B, 6B, 6B (or 6-3B or 6-9B) - alt version
 ```
 
-Dan Gage - Box Shuffle (harder bends) - http://www.youtube.com/watch?v=7815Z-VpQSI
+[Dan Gage - Box Shuffle (harder bends)](http://www.youtube.com/watch?v=7815Z-VpQSI)
 
 ```plaintext
 I Chord: (2), (2), (4), (4), (5), (5), 6, 6
@@ -477,7 +486,7 @@ V Chord: (1), (1), (3bb), (3bb), 4, 4, (4), (4)
 
 Other advice / things to keep in mind.
 
-1. The 10 Principles Of Blues Improv (Gussow) - http://www.youtube.com/watch?v=6TjC7qXHHfE
+1. [The 10 Principles Of Blues Improv (Gussow)](http://www.youtube.com/watch?v=6TjC7qXHHfE)
 
 2. Know 12 bar changes.
 
@@ -515,7 +524,7 @@ For example:
 
 The following are unfinished ideas, riffs, exercises.
 
-http://www.harptabs.com/song.php?ID=2527
+[Diatonic practice exercises](http://www.harptabs.com/song.php?ID=2527)
 
 This is a collection of assorted exercises that will help one get
 comfortable with the whole range of notes on a diatonic harmonica.
