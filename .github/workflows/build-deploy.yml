@@ -26,3 +26,9 @@ jobs:
       with:
         token: ${{ secrets.GITHUB_TOKEN }}
         target_branch: 'gh-pages'
+
+  check-github:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Check GitHub Status
+      uses: crazy-max/ghaction-github-status@v3
