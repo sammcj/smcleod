@@ -11,7 +11,7 @@ tags:
   - music
 ---
 
-![](/img/hohner-marine-band.jpg)
+![](/img/hohner-marine-band.jpg){:class="lazyload"}
 
 # Beginner Harmonica Practice Exercises
 

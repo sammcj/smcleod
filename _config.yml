@@ -61,6 +61,16 @@ plugins:
   - jemoji
   - jekyll-include-cache
 
+lazy_load_image:
+  src_attr_name: data-src # [required] You need to specify the attributes to be saved for lazy loading
+  class_attr_values:
+    - lazyload
+  ignore_selectors:
+    - ".ignore-lazy-image-load"
+    - "/*[@class='ignore-lazy-image-load']"
+  additional_attrs:
+    "data-size": auto
+
 author:
   name    : "Sam McLeod"
   avatar  : "/assets/images/logo.png"
