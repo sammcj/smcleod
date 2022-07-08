@@ -33,6 +33,9 @@ excerpt_separator: "<!--more-->"
 highlighter: rouge
 breadcrumbs: true  # disabled by default
 
+# kramdown:
+#   gfm_emojis: true
+
 include:
   - _pages
 

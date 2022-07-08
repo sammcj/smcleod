@@ -15,7 +15,7 @@ tags:
 
 ![](/img/noah-kuhn-27481.jpg)
 
-_note: This is a follow up post from [2015-07-21-rcd-stonith]({% post_url 2015-07-21-rcd-stonith %})_
+_note: This is a follow up post from [2015-07-21-rcd-stonith](https://smcleod.net/tech/2015/07/21/rcd-stonith/)_
 
 ### A Linux Cluster Base STONITH provider for use with modern Pacemaker clusters.
 
