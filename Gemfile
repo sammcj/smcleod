@@ -14,5 +14,7 @@ group :jekyll_plugins do
   gem "jemoji"
   gem "jekyll-include-cache"
   gem "jekyll-algolia"
+  gem "kramdown-parser-gfm"
+  gem "webrick"
   gem 'jekyll-lazy-load-image', require: 'jekyll-lazy-load-image/auto-execution'
 end
