@@ -18,3 +18,9 @@ group :jekyll_plugins do
   gem "webrick"
   gem 'jekyll-lazy-load-image', require: 'jekyll-lazy-load-image/auto-execution'
 end
+
+group :otlp do
+  gem 'opentelemetry-sdk'
+  gem 'opentelemetry-exporter-otlp'
+  gem 'opentelemetry-instrumentation-all'
+end
