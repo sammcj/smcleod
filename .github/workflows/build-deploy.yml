@@ -27,8 +27,22 @@ jobs:
         token: ${{ secrets.GITHUB_TOKEN }}
         target_branch: 'gh-pages'
 
-  check-github:
+  otel-export-trace:
+    if: always()
+    name: OpenTelemetry Export Trace
     runs-on: ubuntu-latest
+    needs: [jekyll] # must run when all jobs are complete
     steps:
-    - name: Check GitHub Status
-      uses: crazy-max/ghaction-github-status@v3
+      - name: Export Workflow Trace
+        uses: inception-health/otel-export-trace-action@latest
+        with:
+          otlpEndpoint: grpc://api.honeycomb.io:443/
+          otlpHeaders: ${{ secrets.OTLP_HEADERS }}
+          githubToken: ${{ secrets.GITHUB_TOKEN }}
+
+  # check-github:
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #   - name: Check GitHub Status
+  #     uses: crazy-max/ghaction-github-status@v3
+
