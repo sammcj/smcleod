@@ -39,6 +39,7 @@ jobs:
           otlpEndpoint: grpc://api.honeycomb.io:443/
           otlpHeaders: ${{ secrets.OTLP_HEADERS }}
           githubToken: ${{ secrets.GITHUB_TOKEN }}
+          otelServiceName: "smcleod-net"
 
   # check-github:
   #   runs-on: ubuntu-latest
