@@ -6,7 +6,7 @@ categories: devops
 author_url: '/author/sam'
 header:
   teaser: 'img/nick-abrams-FTKfX3xZIcc-unsplash.jpg'
-featured: true
+featured: false
 tags:
   - devops
   - software development
@@ -16,7 +16,6 @@ tags:
 ---
 
 ![](/img/nick-abrams-FTKfX3xZIcc-unsplash.jpg)
-
 
 ## We're (still) not deploying frequently enough
 
