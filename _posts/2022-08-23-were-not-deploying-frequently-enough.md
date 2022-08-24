@@ -17,6 +17,8 @@ tags:
 
 ![](/img/nick-abrams-FTKfX3xZIcc-unsplash.jpg)
 
+*I "wrote" this article using GPT3 - can you tell?*
+
 ## We're (still) not deploying frequently enough
 
 It's 2022 and not deploying frequently enough is *still* one of the most common causes of software failure.
