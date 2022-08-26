@@ -6,7 +6,7 @@ categories: devops
 author_url: '/author/sam'
 header:
   teaser: 'img/nick-abrams-FTKfX3xZIcc-unsplash.jpg'
-featured: true
+featured: false
 tags:
   - devops
   - software development
@@ -15,11 +15,17 @@ tags:
   - machinelearning
 ---
 
+![](/img/nick-abrams-FTKfX3xZIcc-unsplash.jpg)
+
+*I "wrote" this article using GPT3 - can you tell?*
+
 ## We're (still) not deploying frequently enough
 
 It's 2022 and not deploying frequently enough is *still* one of the most common causes of software failure.
 
-I couldn't tell you how often I work with clients that have deployment problems and it turns out they haven't deploy the code in production for weeks, sometimes months, or in a few cases years. Sometimes it's because they're afraid of change, sometimes it's due to a lack of resources, but more often than not it's due to fear of the unknown. But you know what? **If you're not deploying your code, then you have no idea if it works or not**.
+I couldn't tell you how often I work with clients that have deployment problems and it turns out they haven't deploy the code in production for weeks, sometimes months, or in a few cases years.
+
+Sometimes it's because they're afraid of change, sometimes it's due to a lack of resources, but more often than not it's due to fear of the unknown. But you know what? **If you're not deploying your code, then you have no idea if it works or not**.
 
 Do you want to know if your code works? Deploy it in production! The more you deploy, the better you'll get at it. And what happens when you get good at something? You get really good at it. You'll be able to deploy code faster, more often and with less bugs than ever before.
 
@@ -36,21 +42,23 @@ People have been talking about the importance of MTTC for decades. I'm a big fan
 - [The 4 key DevOps metrics for organisational performance](https://cloud.google.com/blog/products/devops-sre/using-the-four-keys-to-measure-your-devops-performance).
 - [MTTC - Wikipedia](https://en.wikipedia.org/wiki/Mean_time_to_change).
 
-### The best way to reduce your MTTC is to deploy frequently
-
-Deploying frequently means that you have the same level of risk for every part of your application, and it's also the most cost-effective way of building software. If you can't go all in on frequent deployments, then at least make sure that your deployment pipeline is efficient enough that you can keep up with demand without having to wait too long before new code gets deployed or old code gets retired (either due to technical reasons or because it's no longer needed).
-
 ## Why some companies (usually large enterprises) are afraid of deploying daily - and why they're wrong
 
 The first group that I want to address are the large, more traditional enterprises. These companies have a lot of reasons for not deploying frequently enough: fear of change, lack of resources and time amongst them. They're wrong in thinking deploying less means less problems.
 
-Research from Accelerate and The State of DevOps shows that enterprises deploy more frequently correlate highly with their software having far less bugs, teams having improved productivity and as a result a more competitive product offering. Daily deployments help you catch problems early on when they're easier to fix than later down the line when it's harder to fix—and if you can't fix them then there's no way you can prevent bugs from happening again!
+Research from Accelerate and The State of DevOps shows that enterprises deploy more frequently correlate highly with their software having far less bugs, teams having improved productivity and as a result a more competitive product offering.
+
+Daily deployments help you catch problems early on when they're easier to fix than later down the line when it's harder to fix—and if you can't fix them then there's no way you can prevent bugs from happening again!
 
 That's why it's so important for all developers not just those at startups who are used to working this way but also those at large enterprises and even their managers! Daily deployments, when done right and with the proper tools, can help everyone get better at what they do.
 
 ## Convincing your team - and the business
 
-This can sometimes be a challenge, especially at slow moving, traditional enterprises. But like anything it's hard to convince someone that they should do something if they've never done it before (and have no idea how to do it). But this is where you come in: You can show them what it's like when you're deploying your code frequently, and the benefits that come from doing so. The first thing to do is make them understand that there are benefits to deploying code frequently. It's not just good for developers, it's also good for business. Why? Because faster deployments means less bugs, lower support costs and happier customers! Once they understand this, then they can start thinking about how they might do it themselves.
+This can sometimes be a challenge, especially at slow moving, traditional enterprises. But like anything it's hard to convince someone that they should do something if they've never done it before (and have no idea how to do it).
+
+This is where you come in: You can show them what it's like when you're deploying your code frequently, and the benefits that come from doing so. The first thing to do is make them understand that there are benefits to deploying code frequently.
+
+It's not just good for developers, it's also good for business. Why? Because faster deployments means less bugs, lower support costs and happier customers! Once they understand this, then they can start thinking about how they might do it themselves.
 
 There are two common ways to approach this.
 
@@ -60,7 +68,15 @@ Start small, pick a modern or at least recently developed application, and show 
 
 ### Approach B - Get everyone on board with the idea of deploying code frequently
 
-It's hard for developers to adopt this mindset if they aren't encouraged by their managers or business owners. So, talk to your management about it and let them know how important it is that you get buy-in from them. The next step is to figure out how you're going to do it. How are you going to deploy your code frequently? What tools do you need? Do you have a staging environment already in place? If not, then now is the time to set one up! Once you have your staging environment set up, then start thinking about how you're going to commit and push changes to your repository. This approach can work if there is a lot of trust between management and developers, but can take a significant time if there is little trust, motivation or engagement.
+It's hard for developers to adopt this mindset if they aren't encouraged by their managers or business owners. So, talk to your management about it and let them know how important it is that you get buy-in from them.
+
+The next step is to figure out how you're going to do it.
+
+- How are you going to deploy your code frequently?
+- What tools do you need?
+- Do you have a staging environment already in place? If not, then now is the time to set one up!
+
+This approach can work if there is a lot of trust between management and developers, but can take a significant time if there is little trust, motivation or engagement.
 
 ### What does bad look like
 
@@ -77,7 +93,9 @@ You may be surprised by what you find!
 
 ## Conclusion
 
-It's critical to do your due diligence and make sure that you’re deploying frequently enough. You want to be confident that your app is ready when it’s needed, so that customers don’t have to wait for you or suffer from any problems. If you find yourself struggling with this issue, consider hiring a consultant or coach who can help guide you through the process of continuously improving your development practices, making it easier for them to work together effectively on current and future projects as well!
+It's critical to do your due diligence and make sure that you’re deploying frequently enough. You want to be confident that your app is ready when it’s needed, so that customers don’t have to wait for you or suffer from any problems.
+
+If you find yourself struggling with this issue, consider hiring a consultant or coach who can help guide you through the process of continuously improving your development practices, making it easier for them to work together effectively on current and future projects as well!
 
 ### References
 
