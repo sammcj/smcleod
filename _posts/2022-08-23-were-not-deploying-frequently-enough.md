@@ -17,7 +17,7 @@ tags:
 
 ![](/img/nick-abrams-FTKfX3xZIcc-unsplash.jpg)
 
-*I "wrote" this article using GPT3 - can you tell?*
+This blog post is an experiment written using Machine Learning (GPT3).
 
 ## We're (still) not deploying frequently enough
 
