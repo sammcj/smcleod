@@ -27,7 +27,7 @@ Hardware wise the unit is lovely, not as high build quality as my iPhone 6s+ but
 
 ### The Good
 
-- Hardware wise the OP3 felt like it was design with more care than any other Android phone I'd spent any fair amount of time.
+- Hardware wise the OP3 felt like it was designed with more care than any other Android phone I'd spent any fair amount of time.
 - USB-C connectivity is great to see on a phone, it feels right at home on the device and opens a world of opportunities for accessories assuming the OS supports them.
 
 ### The Bad
