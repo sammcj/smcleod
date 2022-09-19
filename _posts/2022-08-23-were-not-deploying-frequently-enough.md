@@ -7,6 +7,7 @@ author_url: '/author/sam'
 header:
   teaser: 'img/nick-abrams-FTKfX3xZIcc-unsplash.jpg'
 featured: false
+draft: true
 tags:
   - devops
   - software development
@@ -17,7 +18,7 @@ tags:
 
 ![](/img/nick-abrams-FTKfX3xZIcc-unsplash.jpg)
 
-This blog post is an experiment written using Machine Learning (GPT3).
+This blog post is an experiment - it was written using Machine Learning (GPT3) with minimal intervention from me.
 
 ## We're (still) not deploying frequently enough
 
