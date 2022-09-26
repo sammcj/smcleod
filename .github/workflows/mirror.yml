@@ -1,6 +1,15 @@
+#### THIS FILE IS MANAGED BY AN AUTOMATED WORKFLOW ####
+
 name: Mirror repo to GitLab
 
-on: [push, delete, workflow_dispatch]
+on:
+  push:
+  delete:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  actions: read
 
 jobs:
   to_gitlab:
@@ -11,7 +20,5 @@ jobs:
           fetch-depth: 0
       - uses: pixta-dev/repository-mirroring-action@v1
         with:
-          target_repo_url:
-            git@gitlab.com:sammcj/smcleod_mirror.git
-          ssh_private_key:
-            ${{ secrets.GITLAB_SSH_PRIVATE_KEY }}
+          target_repo_url: git@gitlab.com:${{ github.repository }}-mirror.git
+          ssh_private_key: ${{ secrets.GITLAB_SSH_PRIVATE_KEY }}
