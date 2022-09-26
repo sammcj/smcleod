@@ -1,3 +1,5 @@
+#### THIS FILE IS MANAGED BY AN AUTOMATED WORKFLOW ####
+
 name: "Check for TODOs and create or update issues"
 
 on: ["push"]
@@ -5,6 +7,11 @@ on: ["push"]
 permissions:
   issues: write
   contents: read
+
+# One build per branch, cancel out of date builds
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
 
 jobs:
   todo-issues:
