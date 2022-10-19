@@ -1,105 +1,24 @@
-<!doctype html>
-<html lang="en">
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>Search: A Journey of Delivery on a Budget</title>
 
-	<head>
-		<meta charset="utf-8">
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
 
-		<title>Search: A Journey of Delivery on a Budget</title>
+    <title>reveal.js</title>
 
-		<meta name="description" content="Infoxchange's story of delivering a search product on a tight budget">
-		<meta name="author" content="Sam McLeod">
-		<meta name="author" content="Ricky Cook">
+    <link rel="stylesheet" href="dist/reset.css" />
+    <link rel="stylesheet" href="dist/reveal.css" />
+    <link rel="stylesheet" href="dist/theme/black.css" />
 
-		<meta name="apple-mobile-web-app-capable" content="yes" />
-		<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <!-- Theme used for syntax highlighted code -->
+    <link rel="stylesheet" href="plugin/highlight/monokai.css" />
 
-		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-
-		<link rel="stylesheet" href="reveal.js/css/reveal.min.css">
-		<link rel="stylesheet" href="reveal.js/css/theme/default.css" id="theme">
-
-		<!-- For syntax highlighting -->
-		<link rel="stylesheet" href="reveal.js/lib/css/zenburn.css">
-
-		<!-- If the query includes 'print-pdf', include the PDF print sheet -->
-		<script>
-			if( window.location.search.match( /print-pdf/gi ) ) {
-				var link = document.createElement( 'link' );
-				link.rel = 'stylesheet';
-				link.type = 'text/css';
-				link.href = 'reveal.js/css/print/pdf.css';
-				document.getElementsByTagName( 'head' )[0].appendChild( link );
-			}
-		</script>
-
-		<!--[if lt IE 9]>
-		<script src="lib/js/html5shiv.js"></script>
-		<![endif]-->
-
-		<style>
-			.reveal section img {
-				background: none;
-				border: none;
-				box-shadow: none;
-			}
-			.reveal section ul {
-				list-style-type: none;
-				margin: none;
-				margin-left: -0.25em;
-			}
-			.reveal section ul li {
-				text-align: center;
-			}
-			.reveal section ul.pad li {
-				padding-top: 0.5em;
-			}
-			.reveal section ul.pad li:last-of-type {
-				padding-bottom: 0.5em;
-			}
-
-			.semi-black-2 {
-				padding: 1em !important;
-				background-color: rgba(0,0,0,0.4);
-			}
-			.semi-white-2 {
-				padding: 1em !important;
-				color: black;
-				background-color: rgba(255,255,255,0.4);
-			}
-			.semi-white-2 * { color: black !important; }
-			.semi-black-3 {
-				padding: 1em !important;
-				background-color: rgba(0,0,0,0.8);
-			}
-			.semi-black-4 {
-				padding: 1em !important;
-				background-color: rgba(0,0,0,0.9);
-			}
-
-			.full-white {
-				color: black !important;
-				background-color: white;
-			}
-
-			.pad-1 { margin-top: 1em !important; }
-			.pad-2 { margin-top: 2em !important; }
-			.pad-7 { margin-top: 7em !important; }
-
-			code {
-				font-size: 0.8em;
-			}
-			.small, .small li {
-				font-size: 0.6em;
-			}
-
-			.slides-link {
-				position: absolute;
-				left: 0.5em;
-				bottom: 0px;
-				z-index: 1000;
-			}
-		</style>
-	</head>
+  </head>
 	<body>
 		<div class="reveal">
 			<aside class="slides-link"><h3>
@@ -135,7 +54,7 @@
 						<aside class="notes">
 							<ul>
 								<li>RICKY: Non-profit that delivers technology for social justice</li>
-								<li>RICKY: Work to increase technical competance and solve social and community issues with tech</li>
+								<li>RICKY: Work to increase technical competence and solve social and community issues with tech</li>
 								<li>We work on the technical side to DELIVER &amp; HOST a number of web applications to aid other organisations</li>
 							</ul>
 						</aside>
@@ -906,58 +825,54 @@ recovery.concurrent_stream                       = 5</code></pre>
 			</div>
 		</div>
 
-		<script>
-			var SLConfig = {"deck": {"id":160907,"slug":"search-a-journey-of-delivery-on-a-budget","title":"Search: A Journey of Delivery on a Budget","description":"","visibility":"self","published_at":null,"sanitize_messages":null,"thumbnail_url":"img/search-a-journey-of-delivery-on-a-budget.png","view_count":36,"user":{"id":135849,"notify_on_receipt":true,},}};
-		</script>
+    <script>
+      var SLConfig = {
+        deck: {
+          id: 160907,
+          slug: "search-a-journey-of-delivery-on-a-budget",
+          title: "Search: A Journey of Delivery on a Budget",
+          description: "",
+          visibility: "self",
+          published_at: null,
+          sanitize_messages: null,
+          thumbnail_url: "img/search-a-journey-of-delivery-on-a-budget.png",
+          view_count: 36,
+          user: { id: 135849, notify_on_receipt: true },
+        },
+      };
+    </script>
 
-		<script>
-			SLConfig.current_user = {
-				name: "Sam McLeod",
-				username: "sammcleod",
-				pro: true
-			};
-		</script>
+    <script>
+      SLConfig.current_user = {
+        name: "Sam McLeod",
+        username: "sammcleod",
+        pro: true,
+      };
+    </script>
 
-		<script src="reveal.js/lib/js/head.min.js"></script>
-		<script src="reveal.js/js/reveal.min.js"></script>
-		<script>
-			Reveal.initialize({
-				controls: true,
-				progress: true,
-				history: true,
-				mouseWheel: false,
-				hideAddressBar: true,
+    <script src="dist/reveal.js"></script>
+    <script src="plugin/notes/notes.js"></script>
+    <script src="plugin/markdown/markdown.js"></script>
+    <script src="plugin/highlight/highlight.js"></script>
+    dependencies: [ { src: 'reveal.js/plugin/markdown/marked.js', condition:
+    function() { return !!document.querySelector( '[data-markdown]' ); } }, {
+    src: 'reveal.js/plugin/markdown/markdown.js', condition: function() { return
+    !!document.querySelector( '[data-markdown]' ); } }, { src:
+    'reveal.js/plugin/highlight/highlight.js', async: true, callback: function()
+    { hljs.initHighlightingOnLoad(); } }, { src:
+    'reveal.js/plugin/notes/notes.js', async: true, condition: function() {
+    return !!document.body.classList; } }, { src:
+    'reveal.js/plugin/math/math.js', async: true }
+    <script>
+      // More info about initialization & config:
+      // - https://revealjs.com/initialization/
+      // - https://revealjs.com/config/
+      Reveal.initialize({
+        hash: true,
 
-				autoSlide: SLConfig.deck.auto_slide_interval || 0,
-				autoSlideStoppable: true,
-
-				rolling_links: SLConfig.deck.rolling_links || true,
-				center: SLConfig.deck.center || false,
-				loop: SLConfig.deck.should_loop || false,
-				rtl: SLConfig.deck.rtl || false,
-
-				transition: 'fade',
-				backgroundTransition: 'slide',
-
-				dependencies: [
-					{ src: 'reveal.js/plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
-					{ src: 'reveal.js/plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
-					{ src: 'reveal.js/plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
-					{ src: 'reveal.js/plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } },
-					{ src: 'reveal.js/plugin/math/math.js', async: true }
-				]
-			});
-
-			if( SLConfig.deck.notes ) {
-				[].forEach.call( document.querySelectorAll( '.reveal .slides section' ), function( slide ) {
-
-					var value = SLConfig.deck.notes[ slide.getAttribute( 'data-id' ) ];
-					if( value && typeof value === 'string' ) {
-						slide.setAttribute( 'data-notes', value );
-					}
-
-				} );
-			}
-		</script>
-	</body>
+        // Learn about plugins: https://revealjs.com/plugins/
+        plugins: [RevealMarkdown, RevealHighlight, RevealNotes],
+      });
+    </script>
+  </body>
 </html>
