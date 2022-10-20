@@ -32,23 +32,23 @@ Part of this is achieved by us making an effort to ensure we're asking for suppo
 
 This helps with:
 
-* Sharing knowledge amongst the team.
-* Identifying common problems that others might be having or aware of.
-* Balances support to prevent any individual getting overloaded.
-* Helps ensure a timely response.
-* Allowing others to keep up to date with ongoing issues.
-* Eases cognitive load by:
-  * Reducing the number of notifications people receive
-  * Reducing context switching.
-* Allows people to search for previously occurring questions and answers.
-* Highlighting documentation gaps.
-* Making work visible.
+- Sharing knowledge amongst the team.
+- Identifying common problems that others might be having or aware of.
+- Balances support to prevent any individual getting overloaded.
+- Helps ensure a timely response.
+- Allowing others to keep up to date with ongoing issues.
+- Eases cognitive load by:
+  - Reducing the number of notifications people receive
+  - Reducing context switching.
+- Allows people to search for previously occurring questions and answers.
+- Highlighting documentation gaps.
+- Making work visible.
 
 For more information see:
 
-* [Slack collaboration etiquette tips](https://slack.com/intl/en-au/blog/collaboration/etiquette-tips-in-slack)
-* [Beware of private conversations](https://archive.ph/Yke1M)
-* [GitLab's Communication Handbook - Don't Send Direct Messages](https://about.gitlab.com/handbook/communication/#avoid-direct-messages)
+- [Slack collaboration etiquette tips](https://slack.com/intl/en-au/blog/collaboration/etiquette-tips-in-slack)
+- [Beware of private conversations](https://archive.ph/Yke1M)
+- [GitLab's Communication Handbook - Don't Send Direct Messages](https://about.gitlab.com/handbook/communication/#avoid-direct-messages)
 
 Thank you,
 😊
