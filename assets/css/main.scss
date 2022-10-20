@@ -5,12 +5,14 @@
 @charset "utf-8";
 
 @import "minimal-mistakes/skins/{{ site.minimal_mistakes_skin | default: 'default' }}"; // skin
-@import "minimal-mistakes"; // main partials
+@import 'minimal-mistakes'; // main partials
 
 /* Override theme defaults */
 
-.page__content p, .page__content li, .page__content dl {
-	font-size: .75em !important;
+.page__content p,
+.page__content li,
+.page__content dl {
+  font-size: 0.75em !important;
 }
 
 /* Put any custom CSS here */
@@ -24,3 +26,7 @@
 // $type-size-6 : 0.75em;   // ~12px
 // $type-size-7 : 0.6875em; // ~11px
 // $type-size-8 : 0.625em;  // ~10px
+
+element {
+  font-size: 0.9em !important;
+}
