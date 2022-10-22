@@ -25,13 +25,13 @@ url: "https://smcleod.net"
 markdown: kramdown
 remote_theme: mmistakes/minimal-mistakes
 # Outputting
-permalink: /:categories/:year/:month/:day/:title/
+permalink: /:categories/:year/:month/:day/:title
 paginate: 100 # amount of posts to show
 paginate_path: /page:num/
 timezone: Australia/Melbourne
 excerpt_separator: "<!--more-->"
 highlighter: rouge
-breadcrumbs: true  # disabled by default
+breadcrumbs: true # disabled by default
 
 # kramdown:
 #   gfm_emojis: true
@@ -75,10 +75,10 @@ lazy_load_image:
     "data-size": auto
 
 author:
-  name    : "Sam McLeod"
-  avatar  : "/assets/images/logo.png"
+  name: "Sam McLeod"
+  avatar: "/assets/images/logo.png"
   gravatar: e56154546cf4be74e393c62d1ae9f9d4
-  bio     : "Platform & DevOps Engineer & Music Geek"
+  bio: "Platform & DevOps Engineer & Music Geek"
   links:
     - label: "Website"
       icon: "fas fa-fw fa-link"
@@ -158,8 +158,8 @@ jekyll-archives:
     category: archive-taxonomy
     tag: archive-taxonomy
   permalinks:
-    year: '/:year/'
-    month: '/:year/:month/'
-    day: '/:year/:month/:day/'
-    tag: '/tag/:name/'
-    category: '/category/:name/'
+    year: "/:year/"
+    month: "/:year/:month/"
+    day: "/:year/:month/:day/"
+    tag: "/tag/:name/"
+    category: "/category/:name/"
