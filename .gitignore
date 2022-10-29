@@ -134,6 +134,7 @@ lib-cov
 
 # Build directories
 **/_build/
+**/dist
 build/
 out/
 target/
