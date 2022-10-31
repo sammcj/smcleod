@@ -23,8 +23,8 @@ teams and processes into modern product focused platform engineering teams with 
 
 *"Easy things should be easy, and hard things should be possible."*
 
-- [LinkedIn](linkedin.com/in/sammcj)
-- [Github](github.com/sammcj)
+- [LinkedIn](https://www.linkedin.com/in/sammcj)
+- [Github](https://www.github.com/sammcj)
 
 ---
 

@@ -17,7 +17,7 @@ title: The Best Of - 2014 Edition
 At the end of every year I note down a summary of the best applications, hardware & websites I've enjoyed & depended on throughout the year (and often for some time before).
 
 {{< admonition info >}}
-This post has long since been superseded. You can find the latest version of this post [here](/posts/2022-10-19-apps-of-2022/).
+This post has long since been superseded. You can find the latest version of this post [here](/2022-10-19-apps-of-2022/).
 {{< /admonition >}}
 
 ## Software / General Use

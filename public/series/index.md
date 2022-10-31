@@ -1,6 +1,0 @@
-# Series
-
----
-title: Series
----
-

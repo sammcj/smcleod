@@ -4,7 +4,8 @@ readingTime: true
 categories: [ Tech ]
 date: "2019-08-06T10:30:00Z"
 aliases:
-  - /tech/2019/08/06/new-opportunities
+  - /tech/2019/08/06/new-opportunities/
+  - /tech/2019/08/06/new-opportunities.html
 image: fiji_aws_prac_training_1.jpg
 featuredImagePreview: fiji_aws_prac_training_1.jpg
 tags:

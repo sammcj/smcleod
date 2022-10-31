@@ -296,7 +296,7 @@ titleFontFamily = "Atkinson Hyperlegible"
   [params.social]
     GitHub = "sammcj"
     Twitter = "s_mcleod"
-    Linkedin = "sammcj"
+    Linkedin = "sammcj/"
     Goodreads = "5836466-sam"
     Lastfm = "sammcj2000"
     Hackernews = "smcleod"
@@ -331,7 +331,7 @@ titleFontFamily = "Atkinson Hyperlegible"
   # Table Of Contents settings
   [markup.tableOfContents]
     startLevel = 2
-    endLevel = 4
+    endLevel = 3
 
 # Author config
 [author]

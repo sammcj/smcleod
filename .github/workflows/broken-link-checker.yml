@@ -1,4 +1,4 @@
-name: Deploy Hugo site to Pages
+name: Check for broken links
 
 on:
   push:
@@ -13,7 +13,7 @@ permissions:
 
 # Allow one concurrent deployment
 concurrency:
-  group: "pages"
+  group: "links"
   cancel-in-progress: true
 
 defaults:
@@ -24,7 +24,7 @@ env:
   baseURL: "https://smcleod.net"
 
 jobs:
-  build:
+  check-links:
     strategy:
       matrix:
         environment: ['production']
@@ -34,10 +34,6 @@ jobs:
         uses: actions/checkout@v3
         with:
           submodules: recursive
-
-      - name: Setup Pages
-        id: pages
-        uses: actions/configure-pages@v2
 
       - name: Setup Hugo
         uses: peaceiris/actions-hugo@v2
@@ -54,28 +50,6 @@ jobs:
           HUGO_ENVIRONMENT: ${{ matrix.environment }}
           HUGO_ENV: ${{ matrix.environment }}
 
-      - name: Prepare tag
-        id: prepare_tag
-        if: startsWith(github.ref, 'refs/tags/')
-        run: |
-          TAG_NAME="${GITHUB_REF##refs/tags/}"
-          echo "tag_name=${TAG_NAME}" >> $GITHUB_OUTPUT
-          echo "deploy_tag_name=deploy-${TAG_NAME}" >> $GITHUB_OUTPUT
-
-      - name: Upload artifact
-        uses: actions/upload-pages-artifact@v1
-        with:
-          path: ./public
-
-  # Deploy job
-  deploy:
-    needs: build
-    if: github.ref == 'refs/heads/main'
-    runs-on: ubuntu-22.04
-    environment:
-      name: github-pages
-      url: ${{ env.baseURL }}
-    steps:
-      - name: Deploy to GitHub Pages
-        id: deployment
-        uses: actions/deploy-pages@v1
+      - name: Check links
+        id: check-links
+        uses: marccampbell/hugo-linkcheck-action@v0.1.3"
