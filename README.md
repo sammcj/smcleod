@@ -1,7 +1,9 @@
-# smcleod.net
+# Template
 
-Public repo for smcleod.net website
+Template repository
 
-| URL | Status | History | Response Time | Uptime |
-| --- | ------ | ------- | ------------- | ------ |
-| <img alt="" src="https://favicons.githubusercontent.com/smcleod.net" height="13"> [smcleod](https://smcleod.net) | 🟩 Up | [smcleod.yml](https://github.com/sammcj/upptime/commits/HEAD/history/smcleod.yml) | <details><summary><img alt="Response time graph" src="./graphs/smcleod/response-time-week.png" height="20"> 105ms</summary><br><a href="https://sammcj.github.io/upptime/history/smcleod"><img alt="Response time 105" src="https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/sammcj/upptime/HEAD/api/smcleod/response-time.json"></a><br><a href="https://sammcj.github.io/upptime/history/smcleod"><img alt="24-hour response time 105" src="https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/sammcj/upptime/HEAD/api/smcleod/response-time-day.json"></a><br><a href="https://sammcj.github.io/upptime/history/smcleod"><img alt="7-day response time 105" src="https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/sammcj/upptime/HEAD/api/smcleod/response-time-week.json"></a><br><a href="https://sammcj.github.io/upptime/history/smcleod"><img alt="30-day response time 105" src="https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/sammcj/upptime/HEAD/api/smcleod/response-time-month.json"></a><br><a href="https://sammcj.github.io/upptime/history/smcleod"><img alt="1-year response time 105" src="https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/sammcj/upptime/HEAD/api/smcleod/response-time-year.json"></a></details> | <details><summary><a href="https://sammcj.github.io/upptime/history/smcleod">100.00%</a></summary><a href="https://sammcj.github.io/upptime/history/smcleod"><img alt="All-time uptime 100.00%" src="https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/sammcj/upptime/HEAD/api/smcleod/uptime.json"></a><br><a href="https://sammcj.github.io/upptime/history/smcleod"><img alt="24-hour uptime 100.00%" src="https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/sammcj/upptime/HEAD/api/smcleod/uptime-day.json"></a><br><a href="https://sammcj.github.io/upptime/history/smcleod"><img alt="7-day uptime 100.00%" src="https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/sammcj/upptime/HEAD/api/smcleod/uptime-week.json"></a><br><a href="https://sammcj.github.io/upptime/history/smcleod"><img alt="30-day uptime 100.00%" src="https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/sammcj/upptime/HEAD/api/smcleod/uptime-month.json"></a><br><a href="https://sammcj.github.io/upptime/history/smcleod"><img alt="1-year uptime 100.00%" src="https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/sammcj/upptime/HEAD/api/smcleod/uptime-year.json"></a></details>
+## Usage
+
+## Contributing
+
+## References
