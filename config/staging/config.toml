@@ -1,0 +1,13 @@
+baseURL = "https://beta.smcleod.net"
+
+[params]
+	subtitle = "!!Beta / Staging Site!!"
+
+  # Header config
+  [params.header]
+    # DoIt NEW | 0.2.0 Header title config
+    [params.header.title]
+      # URL of the LOGO
+      logo = "/logo.svg"
+      # title name
+      name = "smcleod.net - ! Beta / Staging Site !"

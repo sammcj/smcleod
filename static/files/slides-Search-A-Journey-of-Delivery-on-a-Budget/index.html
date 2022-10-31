@@ -1,0 +1,878 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>Search: A Journey of Delivery on a Budget</title>
+
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
+
+    <title>reveal.js</title>
+
+    <link rel="stylesheet" href="dist/reset.css" />
+    <link rel="stylesheet" href="dist/reveal.css" />
+    <link rel="stylesheet" href="dist/theme/black.css" />
+
+    <!-- Theme used for syntax highlighted code -->
+    <link rel="stylesheet" href="plugin/highlight/monokai.css" />
+
+  </head>
+	<body>
+		<div class="reveal">
+			<aside class="slides-link"><h3>
+				<a href="https://smcleod.net">https://smcleod.net</a>
+			</h3></aside>
+			<div class="slides">
+
+				<section>
+					<section>
+						<aside class="notes">SAM: This is about our Journey with implementing a modern search product - on a tight budget</aside>
+						<h1><img src="img/375992-Infoxchange_2014_Rev_Mono.png"></h1>
+						<div style="position: absolute; width: 373px; height: 39px; z-index: 4; left: 304px; top: 190px;">
+							<span style="font-size: 30px;"><em>Technology for social justice.</em></span>
+						</div>
+
+						<div class="pad-2"><span style="font-size: 42px; font-weight: bold">
+							<span style="color: #dc2b2b">Search:</span> A Journey of Delivery on a Budget
+						</span></div>
+
+						<div class="pad-2">
+							<div>Sam McLeod [ Operations ]</div>
+							<div>Ricky Cook [ Web Development ]</div>
+						</div>
+
+						<div class="pad-2">
+							<span style="font-size: 18px;">
+								<a href="https://smcleod.net">smcleod.net</a> | <a href="http://infoxchange.org">infoxchange.org</a>
+							</span>
+						</div>
+					</section>
+
+					<section>
+						<aside class="notes">
+							<ul>
+								<li>RICKY: Non-profit that delivers technology for social justice</li>
+								<li>RICKY: Work to increase technical competence and solve social and community issues with tech</li>
+								<li>We work on the technical side to DELIVER &amp; HOST a number of web applications to aid other organisations</li>
+							</ul>
+						</aside>
+						<h2>Who is <a href="https://twitter.com/infoxchange">@infoxchange</a>?</h2>
+						<div>
+							<div><i>
+								Info<span style="font-color: #cc0000">x</span>change is a not-for-profit
+								community organisation that delivers technology for social justice.
+							</i></div>
+
+							<div><br></div>
+
+							<div>We work to strengthen communities and organisations, using information
+							technology as the primary tool to create positive social change.</div>
+
+							<div><br></div>
+
+							<ul>
+								<li>Web Applications</li>
+								<li>IT Efficiency Consulting</li>
+								<li>Community Empowerment</li>
+							</ul>
+						</div>
+					</section>
+
+					<section>
+						<aside class="notes">
+							<ul>
+								<li>SAM: Diverse environment mix of languages and platforms</li>
+								<li>We run at approximately 4000 - 8000 requests per minute across our apps</li>
+							</ul>
+						</aside>
+						<h2>Our Products</h3>
+						<div>
+							<img src="img/379172-5dollrglass.png" style="width: 377px; height: 223; margin-right:150px; margin-bottom:-30px ">
+						</div>
+						<div>
+							<ul>
+								<li>20 Web Applications (Django, Perl &amp; PHP)</li>
+								<li>300+ hosted CMS websites</li>
+								<li>Application RPM = 4000 - 8000</li>
+							</ul>
+						</div>
+						<br>
+						<div><span style="font-size: 3em;">
+							Budget: <span style="color: #cc0000; text-shadow: 5px 5px rgba(0, 0, 0, 0.9);"><em>Tight</em></span>
+						</span></div>
+					</section>
+
+					<section data-background-image="img/496456-SubBrand_logo_Map5_FA.png">
+						<aside class="notes"><ul>
+							<li>RICKY: Brief runover of our offerings</li>
+							<li>eRef: specialist referrals, eg go to GP, referral to hospital radiology</li>
+							<li>eWait: aged care queues</li>
+							<li>Service coord: care plans/how to coordinate care between specialists</li>
+							<li>QIPPS: project pre-planning, what do you want to achieve? target?, slip slop slap</li>
+							<li>Patient management: Make sure that patient information is readily, easily accessible</li>
+							<li>Drupal: Give small community orgs web presence</li>
+						</ul></aside>
+						<div class="semi-black-2">
+							<div style="text-align: center;">
+								<h2>Web Applications</h2>
+								<div>Electronic Referral</div>
+								<div>Electronic Waitlist</div>
+								<div>Service Coordination</div>
+								<div>Health Project Management</div>
+								<div>Patient Management</div>
+								<div>Content Management</div>
+							</div>
+							<div class="pad-1">
+								<h3>Specialising In</h3>
+								<div>Homelessness</div>
+								<div>Mental Health</div>
+								<div>Eldercare</div>
+								<div>Welfare</div>
+							</div>
+						</div>
+					</section>
+
+					<section data-background-image="img/496529-Screen_Shot_2014-06-30_at_13.09.15.png">
+						<aside class="notes">
+							<ul>
+								<li>SAM: We've been in digital search since 1991</li>
+								<li>Think about what finding services was like in 1990...</li>
+							</ul>
+						</aside>
+						<div class="semi-black-4">
+							<h2>Rich Search History</h2>
+							<div>
+								Infoxchange established the first searchable electronic
+								directory of community services in Australia in
+								<em><u>1990</u></em>
+							</div>
+							<div class="pad-1">
+							<div>Since the 90's Service Seeker has included:</div>
+							<div class="pad-1">
+							<ul class="pad">
+								<li>Name search</li>
+								<li>Keyword search</li>
+								<li>Regional maps</li>
+								<li>Vacancy search</li>
+							</ul>
+							</div>
+						</div>
+					</section>
+
+					<section>
+						<aside class="notes"><ul>
+							<li>RICKY: 1990: Archie, the worlds first search engine aka 'query form' was launched</li>
+							<li>Index FTP filenames</li>
+							<li>McGill University, Montreal</li>
+						</ul></aside>
+						<h2>1990 - Archie</h2>
+						<div><img src="img/439836-Search_in_Archie.png"></div>
+					</section>
+
+					<section>
+						<aside class="notes">RICKY: 1991: Service Seeker was launched by Infoxchange</aside>
+						<h2>1991 - ServiceSeeker</h2>
+						<div>
+							<img src="img/444021-7.png" style="width: 736.7955390334573px; height: 546px;">
+						</div>
+					</section>
+
+					<section>
+						<aside class="notes">RICKY: 1995: For perspective was when google first appeared</aside>
+						<h2>1995 - Google</h2>
+						<div>
+							<img src="img/439837-early-google.png" style="width: 918.9285714285714px; height: 527px;">
+						</div>
+					</section>
+
+					<section>
+						<aside class="notes">
+							<ul>
+								<li>RICKY: 1996: Service Seeker 2 was released (and it's still running now)</li>
+								<li>Only minor cosmetic changes (mostly looks the same)</li>
+								<li>Powers lifeline call centre</li>
+							</ul>
+						</aside>
+						<h2>1996 - ServiceSeeker 2</h2>
+						<div>
+							<img src="img/444024-Screen_Shot_2014-06-02_at_10.17.49.png" style="width: 945.9574468085107px; height: 494px;">
+						</div>
+					</section>
+
+					<section>
+						<aside class="notes">RICKY: 2014: This year we have announced Service Seeker 3, in the form of an API</aside>
+						<h2>2014 - ServiceSeeker 3 (API)</h2>
+						<div>
+							<img src="img/449232-Screen_Shot_2014-06-04_at_14.43.29.png" style="width: 913.3828996282529px; height: 546px;">
+						</div>
+					</section>
+				</section>
+
+
+<!-- END INTRO SLIDES -->
+
+
+				<section class="stack">
+					<section data-background-size="cover" data-background-image="img/453208-team.jpeg">
+						<aside class="notes">
+							<ul>
+								<li>I'm going to talk about the OPs journey</li>
+								<li>Our Environment</li>
+								<li>Performance</li>
+								<li>Monitoring</li>
+								<li>Lessons Learnt</li>
+								<li>and then I'll hand you over to Ricky - talk through the dev side of things</li>
+							</ul>
+						</aside>
+						<div class="semi-white-2">
+							<h2>The Ops Journey</h2>
+							<div>
+								<img src="img/377468-debian.png" style="width: 302px; height: 114.17073170731707px;">
+								<img src="img/376115-puppet.png" style="width: 278px; height: 116.05825242718446px;">
+								<img src="img/376114-docker.png" style="width: 173.04081632653063px; height: 139px;">
+								<img src="img/377417-nginx_logo.png" style="width: 249px; height: 47.64259927797834px;">
+								<img src="img/377439-kibana1.png" style="width: 201px; height: 86.50632911392405px;">
+								<img src="img/377455-xenserver1.png">
+							</div>
+							<div>
+								<img src="img/377413-postgres_text.png" style="width: 306px; height: 102.89473684210526px;">
+								<img src="img/377752-gitlab.png" style="width: 304px; height: 97.554802259887px;">
+								<img src="img/377553-btrfs.png" style="width: 182px; height: 136.26666666666668px;">
+							</div>
+						</div>
+					</section>
+
+					<section data-background-image="img/cpu.jpg">
+						<aside class="notes">
+							<h2>Environmental Constraints</h2>
+							<ul>
+								<li>Small Ops team, 4 people working across all our products</li>
+								<li>We're a non-profit so we have to be careful with our money</li>
+								<li>Relatively low-end hardware</li>
+								<li>No search / java experience</li>
+								<li>When we started out on the journey we had LOTS of technical debt that needed to be paid down</li>
+								<li>and an elderly network</li>
+							</ul>
+						</aside>
+						<div class="semi-black-3">
+							<h2>Environmental Constraints</h2>
+							<ul class="pad">
+								<li>Small Operations Team</li>
+								<li class="fragment">Slow SAN Performance</li>
+								<li class="fragment">Limited Hardware Resources</li>
+								<li class="fragment">No Search experience &amp; limited Java experience</li>
+								<li class="fragment"><strike>LOTS of Technical Debt</strike></li>
+								<li class="fragment"><strike>Elderly Network</strike></li>
+							</ul>
+						</div>
+					</section>
+
+					<section data-background-image="img/sparta.jpg" data-background-size="cover">
+						<aside class="notes">
+							<ul>
+								<li>But we've learnt to leverage our stengths...</li>
+								<li>We run modern platforms</li>
+								<li>Our Dev and Ops teams work together</li>
+								<li>We don't really have much internal bureaucracy getting in the way</li>
+								<li>We're an open source shop</li>
+								<li>We just rolled a sexy new network</li>
+								<li>and most of all, our people</li>
+							</ul>
+						</aside>
+						<div class="semi-black-3">
+							<h2>Environmental Strengths</h2>
+							<ul class="pad">
+								<li>Modern Tech: BTRFS, Docker, ZRAM &amp; Kernel 3.14</li>
+								<li class="fragment">Strong DevOps and Agile Practises</li>
+								<li class="fragment">No Bureaucracy == Agility</li>
+								<li class="fragment">Open Source Architecture</li>
+								<li class="fragment">Newly Deployed Network</li>
+								<li class="fragment">Hardworking, <i>Passionate</i> People</li>
+							</ul>
+						</div>
+					</section>
+
+					<section data-background-image="img/466836-Screen_Shot_2014-06-13_at_15.03.16.png" data-background-size="cover">
+						<div class="semi-black-3">
+							<h2>Highly Diverse Environment</h2>
+							<aside class="notes">
+								<ul class="pad">
+									<li>I mentioned we have a highly diverse environment</li>
+									<li>I love this graphic...</li>
+									<li>It's what <i>exactly</i> we need to be careful to avoid</li>
+									<li>I didn't want ElasticSearch to appear here</li>
+									<li>It's deployment must be agile and managable</li>
+								</ul>
+							</aside>
+							<div><img src="img/466834-webscale.png"></div>
+						</div>
+					</section>
+
+					<section data-background-image="img/496554-2014-bmw-m5-engine.jpg">
+						<aside class="notes">
+							<ul>
+								<li>3 node clusters</li>
+								<li>Debian shop</li>
+								<li>24 Core, 30GB clusters</li>
+								<li>XenServer for virtalisation works very well for us</li>
+							</ul>
+						</aside>
+						<div class="semi-black-3">
+							<h2>ES Hosts</h2>
+							<ul class="pad">
+								<li>3 Node Clusters</li>
+								<li>OS = <em>Debian 7 (Wheezy)</em></li>
+								<li>CPU = <em>8x E5-2660 0 @ 2.20GHz (24 Core Cluster)</em></li>
+								<li>RAM = <em>10GB (30GB Cluster)</em></li>
+								<li>Virt = <em>XenServer 6.2</em></li>
+								<li>Kernel = <em>linux-3.14-amd64</em></li>
+							</ul>
+						</div>
+					</section>
+
+					<section data-background-image="img/496469-4349372615_1b4a6ebc8d_o.jpg">
+						<aside class="notes">
+							<ul>
+								<li>Some general Elasticsearch deployment tweaks</li>
+								<li>Make sure your heap size is set to half your RAM</li>
+								<li>As we're not running fancy physical hardware</li>
+								<li>We dont have SSDs etc - we try to get blood from a stone</li>
+								<li>We did some tuning to allow for FASTER SHARD RECOVERY after upgrading / failing a node</li>
+								<li>Don't let your hosts SWAP</li>
+								<li>RICKY: ulimit: better to die than be killed</li>
+								<li>Don't let people delete all your nice things</li>
+								<li>Keep-alives were a pain</li>
+							</ul>
+						</aside>
+						<div class="semi-black-3">
+							<h2>ES Performance &amp; Tweaks</h2>
+
+							<div><span style="font-size: 24px;">Heap size = half the available RAM:</span></div>
+							<pre><code>ES_HEAP_SIZE = 5g</code></pre>
+
+							<div><span style="font-size: 24px;">Faster shard recovery:</span></div>
+							<pre><code style="font-size: 24px;">routing.allocation.node_initial_primaries_recoveries = 4,
+routing.allocation.node_concurrent_recoveries    = 15
+recovery.max_bytes_per_sec                       = 100mb,
+recovery.concurrent_stream                       = 5</code></pre>
+
+							<div><span style="font-size: 24px;">Attempt to lock the process address space so it won't be swapped:</span></div>
+							<pre><code>mlockall                    = true,  </code></pre>
+
+							<div><span style="font-size: 24px;">Stop people from deleting all your nice things:</span></div>
+							<pre><code>disable_delete_all_indices  = true, </code></pre>
+							<div><span style="font-size: 24px;">Ensure kernel keep-alive timeouts &lt; routers timeouts!</span></div>
+						</div>
+					</section>
+
+					<section data-background-image="img/449167-GPS-tracking-city-dump.jpg">
+						<aside class="notes">
+							<ul>
+								<li>We had BIG problems with Javas GC, lag up ES and queries would time out ...</li>
+								<li><i>"Stop-the-world garbage collection and blocking for disk IO can
+								cause runtime latencies on the order of seconds to minutes."</i></li>
+								<li>I'm certainly no expert with java but after some reasearch our solution is to garbage collect more often, which has a far lesser impact on blocking performance</li>
+							</ul>
+						</aside>
+						<div class="semi-black-3">
+							<h2>Taking out the garbage</h2>
+
+							<blockquote cite="http://aphyr.com/posts/288-the-network-is-reliable"><span style="font-size: 34px;">
+								"Stop-the-world garbage collection and blocking for disk IO can
+								cause runtime latencies on the order of seconds to minutes."
+							</span></blockquote>
+							<br>
+							<div>Garbage collecting more often</div>
+							<div>=</div>
+							<div>less 'hit' to performance when it occurs</div>
+							<br>
+							<pre><span style="font-size: 18px;">s/CMSInitiatingOccupancyFraction=[0-9]* /CMSInitiatingOccupancyFraction=35/g</span></pre>
+							<aside class="notes">
+								/usr/share/elasticsearch/bin/elasticsearch.in.sh
+							</aside>
+							<div><span style="font-size: 18px;">
+								<a href="http://aphyr.com/posts/288-the-network-is-reliable">http://aphyr.com/posts/288-the-network-is-reliable</a>
+							</span></div>
+						</div>
+					</section>
+
+					<section>
+						<h2>Monitoring</h2>
+						<aside class="notes">
+							<ul>
+								<li>At Infoxchange we LOVE monitoring, I think it's something we do quite well </li>
+								<li>I have a few slides on this I'll go quickly but I think it's really important</li>
+								<li>ElasticHQ has been helpful for spotting obvious performance bottlenecks</li>
+							</ul>
+						</aside>
+						<div>Royrusso/ElasticHQ</div>
+						<div><img src="img/377549-elastichq2.png" style="width: 1000px; height: 700px;"></div>
+					</section>
+
+					<section data-background-image="img/444079-Screen_Shot_2014-06-02_at_10.58.18.png">
+					<aside class="notes">Marvel is GREAT... BUT it is heavy and it's no longer free</aside>
+						<div class="semi-black-3">
+							<h2>Monitoring</h2>
+							<div>Elasticsearch/Marvel</div>
+							<ul class="pad">
+								<li>Powerful Cluster Insights</li>
+								<li class="fragment">Easily Visualise Cluster Performance</li>
+								<li class="fragment">Puts Metrics In Context</li>
+								<li class="fragment">Creates <i>Very</i> Large Indexes</li>
+								<li class="fragment">Doesn't Clean Up After Itself</li>
+								<li class="fragment">No Longer Free</li>
+							</ul>
+						</div>
+					</section>
+
+					<section>
+						<aside class="notes">
+							<ul>
+								<li>If you're already monitoring that everything is alive &amp; well...</li>
+								<li>And you're returning that Information to Nagios...</li>
+								<li>Why not use &amp; graph the returned performance metrics from the checks for trending</li>
+							</ul>
+						</aside>
+						<h2>Monitoring</h2>
+						<div>Nagios - PNP4Nagios</div>
+						<div><span style="font-size: 22px;">Aggregates Nagios Performance Information</span></div>
+						<div>
+							<img src="img/377510-Screen_Shot_2014-05-02_at_9.36.32.png" style="width: 350px; height: 550px;">
+							<img src="img/377515-es2.png" style="width: 600px; height: 550px;">
+						</div>
+					</section>
+
+					<section>
+						<aside class="notes">We monitor the state of our elasticsearch clusters with Nagios and dashboard any state changes</aside>
+						<h2>Monitoring</h2>
+						<div>Nagios + check_mk multisite</div>
+						<div><span style="font-size: 22px;">Cross-Site Elasticsearch Cluster Information</span></div>
+						<div><img src="img/377504-Elasticfail.png"></div>
+					</section>
+
+					<section>
+						<aside class="notes">We even XMPP or jabber alerts to our chat rooms for certain events</aside>
+						<h2>Monitoring</h2>
+						<div>Nagios + XMPP (Jabber)</div>
+						<div><span style="font-size: 22px;">Realtime Cluster Notifications</span></div>
+						<div><img src="img/377525-xmppnagios.png"></div>
+					</section>
+
+					<section data-background-image="img/449246-Screen_Shot_2014-06-04_at_14.55.30.png">
+						<aside class="notes">
+							<ul>
+								<li>Let's talk briefly about logs</li>
+								<li>We pass all our app logs to Logstash</li>
+								<li>Logstash does some magic then stores them in elasticsearch</li>
+								<li>Our devs can see those logs using Kibana (web interface to ES)</li>
+								<li>It's not as good as splunk, but it's pretty decent</li>
+						</ul>
+						</aside>
+						<div class="semi-black-3">
+							<h2>ES + Logstash = Splunk4Free</h2>
+							<div><span style="font-size: 32px;">(Almost)</span></div>
+							<div><img src="img/file-logstash-es-kibana.png"></div>
+						</div>
+					</section>
+
+					<section data-background-image="img/rows_as_groups.png">
+						<aside class="notes">
+							<ul>
+								<li>Just like Elasticsearch itself we deploy &amp; control logstash using puppet</li>
+								<li>Both Elasticsearch &amp; Logstash have excellent (official) puppet modules</li>
+								<li>Logstash deployment looks a bit like this ...</li>
+							</ul>
+						</aside>
+						<div class="semi-black-3">
+							<h2>Logstash</h2>
+							<div>Puppet Managed Logstash Config</div>
+<pre><code>  ixalogstash::input { 'syslog-docker':
+    input_type     =&gt; 'syslog',
+    type_tag       =&gt; 'docker',
+    input_port     =&gt; 5550,
+  }
+  ixalogstash::input { 'syslog-nginx':
+    input_type     =&gt; 'syslog',
+    type_tag       =&gt; 'nginx',
+    input_port     =&gt; 5551,
+  }
+</code></pre>
+<pre><code>  ixalogstash::filter { 'syslog-nginx':
+    type_tag       =&gt; 'nginx',
+    filter_match   =&gt; '%{COMBINEDAPACHELOG} %{QS:vhost}',
+  }
+</code></pre>
+<pre><code>  ixalogstash::output { "${elastic_host}":
+    output_type    =&gt; 'elastichttp',
+  }</code></pre>
+							<a href="https://github.com/elasticsearch/puppet-logstash">https://github.com/elasticsearch/puppet-logstash</a>
+						</div>
+					</section>
+
+					<section data-background-image="img/444074-es.png">
+						<aside class="notes">The short of it is that we've learnt some lessons...</aside>
+						<div class="semi-black-3">
+							<h2>Lessons Learnt</h2>
+							<ul class="pad">
+								<li>Small Budget = Creative Solutions</li>
+								<li class="fragment">Puppet is great for managing Elasticsearch &amp; Logstash</li>
+								<li class="fragment">Bulk indexing can be slow (more from ricky soon...)</li>
+								<li class="fragment">Test for split-brain (before it happens)</li>
+								<li class="fragment">Modern OS &amp; kernel helps</li>
+								<li class="fragment">Java GC is painful</li>
+							</ul>
+							<div class="pad-2"></div>
+						</div>
+					</section>
+
+					<section data-background-transition="zoom"; data-background-image="img/RAM.jpeg">
+						<div class="semi-black-3">
+							<h2>Lessons Learnt</h2>
+							<ul class="pad">
+								<li>Puppet is great for managing Elasticsearch</li>
+								<li>Small budget = creative solutions</li>
+								<li>Bulk indexing can be slow</li>
+								<li>Test for split-brain (before it happens)</li>
+								<li>Modern OS &amp; kernel helps</li>
+								<li>Java GC is painful</li>
+								<li>Kernel keep-alive timeouts &lt; routers timeouts</li>
+								<li style="font-size: 52px"><b>RAM is cheap, buy <i>lots</i> of it</b></li>
+							</ul>
+						</div>
+					</section>
+
+					<section data-background-image="img/496570-Rubber_bands_-_Colors_-_Studio_photo_2011.jpg">
+						<div class="semi-black-3">
+							<h2>Links &amp; References</h2>
+							<ul style="list-style-type: none; font-size: 18px">
+								<li><a href="http://asquera.de/opensource/2012/11/25/elasticsearch-pre-flight-checklist/">Elasticsearch Pre-Flight Checklist</a></li>
+								<li><a href="http://jprante.github.io/2012/11/28/Elasticsearch-Java-Virtual-Machine-settings-explained.html">Elasticsearch JVM Settings Explained</a></li>
+								<li><a href="http://blog.liip.ch/archive/2013/07/19/on-elasticsearch-performance.html">On Elasticsearch Performance</a></li>
+								<li><a href="http://gibrown.wordpress.com/2013/12/05/managing-elasticsearch-cluster-restart-time/">Managing Elasticsearch Cluster Restart Time</a></li>
+								<li><a href="http://elasticsearch-users.115913.n3.nabble.com/Very-slow-cluster-restart-td4029039.html">Slow Cluster Restarts</a></li>
+								<li><a href="https://github.com/anchor/nagios-plugin-elasticsearch">Nagios Elasticsearch Plugin</a></li>
+								<li><a href="https://github.com/elasticsearch/puppet-elasticsearch">Puppet Elasticsearch Module</a></li>
+								<li><a href="https://github.com/elasticsearch/puppet-logstash">Puppet Logstash Module</a></li>
+								<li><a href="http://grokdebug.herokuapp.com">Grok Debugger</a></li>
+								<li><a href="http://www.lognormal.com/blog/2012/09/27/linux-tcpip-tuning/">Linux TCP/IP Tuning</a></li>
+								<li><a href="http://aphyr.com/posts/288-the-network-is-reliable">The Network Is Reliable</a></li>
+							</ul>
+						</div>
+					</section>
+
+				</section>
+
+
+<!-- END SAMS SLIDES -->
+
+
+				<section class="stack">
+					<section data-background-image="img/439792-Aerogallo-5.jpg">
+						<h2>The Dev Journey</h2>
+						<div>It "worked" in dev :/</div>
+					</section>
+					<section data-background-image="img/476613-ss-2014-06-18.19-32-10.png" data-background-size="contain">
+						<div class="semi-white-2">
+							<h2>ISS2</h2>
+							<ul class="pad">
+								<li class="fragment">Custom indexing (not just full text search!)</li>
+								<li class="fragment">Stemming (sort of)</li>
+								<li class="fragment">Keywords/Synonyms</li>
+								<li class="fragment">Area search (not quite GIS)</li>
+							</ul>
+						</div>
+					</section>
+					<section>
+						<aside class="notes">
+							<ul>
+								<li>Gunicorn/nginx, no Apache</li>
+								<li>TastyPie is a RESTful framework</li>
+								<li>ElasticUtils is like an ORM for ES</li>
+							</ul>
+						</aside>
+						<h2>ISS3</h2>
+						<div>
+							<img src="img/439905-django-logo-negative1.png" style="width: 165.82949905305173px; height: 165.82949905305173px;">
+							<img src="img/439904-687474703a2f2f636c6f75642e6769746875622e636f6d2f646f776e6c6f6164732f63656c6572792f63656c6572792f63656c6572795f3132382e706e67.png" style="width: 171.21244898539274px; height: 172.55809806191476px;">
+							<img src="img/439990-icon_512.png" style="width: 165.70184907560474px; height: 167.0145042872541px;">
+							<img src="img/440007-PostGIS_logo.png" style="width: 159.3829496619827px; height: 159.3829496619827px;">
+						</div>
+
+						<div>
+							<img src="img/440000-mozilla.png" style="font-size: 30.446550369262695px; font-style: normal; font-variant: normal; width: 309.0861521879187px; height: 78.67116365645913px; max-height: none; max-width: none;">
+							<div>(ElasticUtils)</div>
+						</div>
+
+						<div>... and Tasty Pie (which has no logo)</div>
+					</section>
+					<section data-background-image="img/499133-super_meat_boy_by_gan187-d5yg418.png">
+						<aside class="notes"><ul>
+							<li>GIS</li>
+							<li>Private</li>
+							<li>Query strings</li>
+							<li>Keywords</li>
+							<li>Cascaded data</li>
+						</ul></aside>
+						<div class="semi-black-3">
+							<h2>The Hard Parts</h2>
+							<ul class="pad">
+								<li class="fragment">GIS searches</li>
+								<li class="fragment">Private data</li>
+								<li class="fragment">Query strings</li>
+								<li class="fragment">Keywords (I KNOW RIGHT?!)</li>
+								<li class="fragment">Suggestions</li>
+								<li class="fragment">Cascaded data (slow indexing)</li>
+							</ul>
+						</div>
+					</section>
+					<section data-background-image="img/498785-61MQz0YxhaL._SL1500_.jpg">
+						<aside class="notes">
+							Mashup of ElasticUtils and TastyPie
+						</aside>
+						<div class="semi-black-3"><h2>ElasticPie</h2></div>
+						<div class="semi-black-3 pad-7">... for consuming, not eating</div>
+					</section>
+					<section>
+						<aside class="notes"><ul>
+							<li>Cover this quickly</li>
+							<li>Django routes to TastyPie</li>
+							<li>TastyPie handles RESTful</li>
+							<li>obj_get_list builds query</li>
+							<li>Query string parser returns query chunks</li>
+							<li>Queries ES and we get JSON doc source</li>
+							<li>Dehyrate adds dynamic fields, remove _id etc</li>
+							<li>TastyPie adds meta, returns 200/etc</li>
+						</ul></aside>
+						<img src="img/499100-ISS_4_Dummies_-_ISS_Structure.png">
+					</section>
+					<section data-background-image="img/440030-Screen_Shot_2014-05-30_at_10.01.53_pm.png">
+						<aside class="notes">
+							<ul>
+								<li>Must match in area perfectly</li>
+								<li>Must fall back to matching by distance</li>
+								<li>Country vs city is tricky, because you have to normalize distance vs search</li>
+								<li>In the country, 100km is acceptable</li>
+								<li>In the city, 10km is acceptable</li>
+							</ul>
+						</aside>
+						<div class="semi-black-3">
+							<h2>Geospatial Search</h2>
+						</div>
+					</section>
+					<section data-background-image="img/blackboard-backgrounds-wallpapers.jpg">
+						<aside class="notes"><ul>
+							<li>inverse document frequency</li>
+							<li>boosts terms that appear less often</li>
+							<li>GIS is not boosted</li>
+							<li>Funcscore query combines queries on a given function</li>
+							<li>Decay functions like gauss, etc</li>
+							<li>Set scoremode to whatever suits you (add or max; we use add)</li>
+							<li>Set boostmode to multiply (default)</li>
+							<li>Can match on things like price, etc</li>
+						</ul></aside>
+						<h2>GIS and IDF</h2>
+						<h3>Like oil and water</h3>
+						<div class="pad-2">$$idf(t) = 1 + \log(\frac{numDocs}{docFreq + 1})$$</div>
+						<div class="fragment pad-2">Use funcion score! Ignores IDF and query normalization completely</div>
+					</section>
+					<section>
+						<aside class="notes"><ul>
+							<li>key words to pick out</li>
+							<li>or not....</li>
+							<li>multiple suburbs, same name</li>
+							<li>multi word states</li>
+							<li>landmarks</li>
+							<li>multiple different keywords to parse</li>
+							<li>sometimes no keywords</li>
+						</ul></aside>
+						<h2>Intelligent Query Strings</h2>
+						<ul class="pad">
+							<li class="fragment">doctor in richmond</li>
+							<li class="fragment">doctor near richmond</li>
+							<li class="fragment">doctor richmond</li>
+							<li class="fragment">doctor near richmond nsw</li>
+							<li class="fragment">doctor near richmond new south wales</li>
+							<li class="fragment">doctor near richmond town hall</li>
+							<li class="fragment">doctor around richmond town hall that speaks chinese</li>
+							<li class="fragment">female doctor around richmond qld that speaks chinese</li>
+						</ul>
+					</section>
+					<section>
+						<img src="img/ISS 4 Dummies - ISS 4 Dummies.png">
+					</section>
+					<section data-background-image="img/499223-Screen_Shot_2014-07-01_at_10.50.09_pm.png">
+						<aside class="notes"><ul>
+							<li>Any family in Banks before I insult it?</li>
+							<li>blood banks</li>
+							<li>blood in banks</li>
+							<li>top search is needles exchange, because many local councils static link to this search</li>
+							<li>needles exchange -> needles, TAS</li>
+							<li>the rocks/the rock</li>
+						</ul></aside>
+						<div class="semi-white-2">
+							<h2>Banks, ACT</h2>
+							<ul class="pad">
+								<li class="fragment">blood banks</li>
+								<li class="fragment">blood banks in banks</li>
+								<li class="fragment">needles exchange<span class="fragment"> (thank you Needles, TAS)</span></li>
+								<li class="fragment">The Rocks, NSW... also The Rock, NSW</li>
+							</ul>
+						</div>
+					</section>
+					<section>
+						<h2>Keywords</h2>
+						<div class="fragment">
+							<div>How is this even a problem?</div>
+							<img src="img/499208-dze7uc.jpg">
+						</div>
+					</section>
+					<section>
+						<aside class="notes">
+							<li>new south wales is not 3 tokens</li>
+							<li>some things should match better when in order</li>
+							<li>allied health services</li>
+							<li>primary school</li>
+							<li>alternative therapy</li>
+						</aside>
+						<h2>Keywords</h2>
+						<ul class="pad">
+							<li class="fragment">New South Wales</li>
+							<li class="fragment">Allied Health Services</li>
+							<li class="fragment">Primary school</li>
+							<li class="fragment">Alternative therapy</li>
+						</ul>
+						<div class="fragment">
+							<div>(Ab)use Synonym filters</div>
+<pre><code>  "type": "synonym",
+  "synonyms": [
+    "new south wales => new___south___wales,nsw",
+    "primari school => primari school,primary___school",
+    "altern therapi => altern therapi,alternative___therapy"
+  ]
+</code></pre>
+						</div>
+					</section>
+					<section data-background-image="img/485636-Untitled.jpg">
+						<aside class="notes"><ul>
+							<li>comp: ONLY a prefix suggester</li>
+							<li>comp: More like a completer for a list of tags</li>
+							<li>term: Only does "fuzzy" spell correction</li>
+							<li>term: Type "doct", more likely to suggest a 4 letter word with 3 letters changed that "doctor"</li>
+							<li>comp/term: Only for single words; "new s" wont come up as new south wales</li>
+							<li>phra: Multiple words/whole phrase (in place replacement)</li>
+							<li>phra: Fuzzy corrections</li>
+							<li>phra: Completion</li>
+							<li>phra: Replaces anywhere in the string; more like a "did you mean"</li>
+						</ul></aside>
+						<div class="semi-white-2" style="margin-top: -50px;">
+							<h2>Suggestions</h2>
+							<ul class="pad">
+								<li class="fragment">Completion suggester</li>
+								<li class="fragment"><span style="color: #ff0000 !important">✘ NOPE</span></li>
+								<li class="fragment">Term suggester</li>
+								<li class="fragment"><span style="color: #ff0000 !important">✘ NOPE</span></li>
+								<li class="fragment">Phrase suggester</li>
+								<li class="fragment"><span style="color: #00aa00 !important">✔ YES</span></li>
+								<li class="fragment">Just kidding, <span style="color: #ff0000 !important">✘ NOPE</span></li>
+							</ul>
+						</div>
+					</section>
+					<section style="position: relative;">
+						<h2>Fun With "Markov Chains"</h2>
+						<div style="position: absolute; top: 100px; left: 120px;"><img src="img/499155-swiftkey.png"></div>
+						<div class="fragment" style="position: absolute; top: 100px; height: 330px; width: 800px; left: 70px; background-color: black; z-index:9999">You can read it later...</div>
+					</section>
+					<section data-background-image="img/500420-meals_on_wheelchairs.png" data-background-size="contain"></section>
+					<section data-background-image="img/alcoholics.png" data-background-size="contain"></section>
+					<section data-background-image="img/440042-celery.jpeg">
+						<aside class="notes"><ul>
+							<li>celery is like a message queue, for tasks</li>
+							<li>to index, we get all the doc ids that need refresh</li>
+							<li>we split into chunks of 500</li>
+							<li>we send a job for each chunk of 500</li>
+							<li>each chunk may spawn other jobs (org -> site -> service)</li>
+						</ul></aside>
+						<div class="semi-black-3"><h2>Celery: Distributed Tasks</h2></div>
+						<div class="semi-black-3">aka how we "fixed"<br/>our indexer</div>
+						<div class="fragment semi-black-3">(and addressed fault-tolerance)</div>
+					</section>
+				</section>
+
+				<section class="stack">
+					<section>
+						<h2>Thank you</h2>
+						<div class="pad-2"></div>
+						<div>Sam McLeod - <a href="https://twitter.com/s_mcleod">@s_mcleod</a></div>
+						<div>Ricky Cook - <a href="https://twitter.com/thatpandadev">@ThatPandaDev</a></div>
+						<div class="pad-2"></div>
+						<div>smcleod.net: <a href="smcleod.net">smcleod.net</a></div>
+						<div>Infoxchange website: <a href="infoxchange.org">infoxchange.org</a></div>
+					</section>
+
+					<section data-background-image="img/496570-Rubber_bands_-_Colors_-_Studio_photo_2011.jpg">
+						<div class="semi-black-3">
+							<h2>Links &amp; References</h2>
+							<div>Dev Links</a></div>
+							<ul style="list-style-type: none; font-size: 18px">
+								<li><a href="http://lmgtfy.com">something</a></li>
+							</ul>
+						</div>
+					</section>
+
+				</section>
+			</div>
+		</div>
+
+    <script>
+      var SLConfig = {
+        deck: {
+          id: 160907,
+          slug: "search-a-journey-of-delivery-on-a-budget",
+          title: "Search: A Journey of Delivery on a Budget",
+          description: "",
+          visibility: "self",
+          published_at: null,
+          sanitize_messages: null,
+          thumbnail_url: "img/search-a-journey-of-delivery-on-a-budget.png",
+          view_count: 36,
+          user: { id: 135849, notify_on_receipt: true },
+        },
+      };
+    </script>
+
+    <script>
+      SLConfig.current_user = {
+        name: "Sam McLeod",
+        username: "sammcleod",
+        pro: true,
+      };
+    </script>
+
+    <script src="dist/reveal.js"></script>
+    <script src="plugin/notes/notes.js"></script>
+    <script src="plugin/markdown/markdown.js"></script>
+    <script src="plugin/highlight/highlight.js"></script>
+    dependencies: [ { src: 'reveal.js/plugin/markdown/marked.js', condition:
+    function() { return !!document.querySelector( '[data-markdown]' ); } }, {
+    src: 'reveal.js/plugin/markdown/markdown.js', condition: function() { return
+    !!document.querySelector( '[data-markdown]' ); } }, { src:
+    'reveal.js/plugin/highlight/highlight.js', async: true, callback: function()
+    { hljs.initHighlightingOnLoad(); } }, { src:
+    'reveal.js/plugin/notes/notes.js', async: true, condition: function() {
+    return !!document.body.classList; } }, { src:
+    'reveal.js/plugin/math/math.js', async: true }
+    <script>
+      // More info about initialization & config:
+      // - https://revealjs.com/initialization/
+      // - https://revealjs.com/config/
+      Reveal.initialize({
+        hash: true,
+
+        // Learn about plugins: https://revealjs.com/plugins/
+        plugins: [RevealMarkdown, RevealHighlight, RevealNotes],
+      });
+    </script>
+  </body>
+</html>

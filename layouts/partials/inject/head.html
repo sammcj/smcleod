@@ -1,0 +1,6 @@
+{{/*  Add custom fonts (located in assets/)  */}}
+
+{{/*  Regular Font  */}}
+{{ $font := resources.Get "atkinson-hyperlegible/atkinson-hyperlegible.css" | resources.Minify | resources.Fingerprint "sha512" }}
+
+<link rel="preload" as="style" type="text/css" rel="stylesheet" href={{ $font.Permalink }} integrity={{ $font.Data.Integrity }} />

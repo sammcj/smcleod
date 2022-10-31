@@ -1,0 +1,8 @@
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title>hardware - Category - smcleod.net</title><link>https://beta.smcleod.net/categories/hardware/</link><description>hardware - Category - smcleod.net</description><generator>Hugo -- gohugo.io</generator><language>en</language><copyright>Sam McLeod</copyright><lastBuildDate>Sun, 11 Jul 2021 14:00:00 +0000</lastBuildDate><atom:link href="https://beta.smcleod.net/categories/hardware/" rel="self" type="application/rss+xml"/><item><title>Rancilio Silvia Upgrade</title><link>https://beta.smcleod.net/2021/07/rancilio-silvia-upgrade/</link><pubDate>Sun, 11 Jul 2021 14:00:00 +0000</pubDate><author><name>Sam McLeod</name></author><guid>https://beta.smcleod.net/2021/07/rancilio-silvia-upgrade/</guid><description><![CDATA[<div class="featured-image">
+                <img src="/2021/07/rancilio-silvia-upgrade/assembled_preview.jpeg" referrerpolicy="no-referrer">
+            </div>Weekend upgrades to my Ranchilio Silvia v4 espresso machine.
+Added a digital PID kit for improved temperature control Replaced the boiler element Thermal insulation Basic &ldquo;smart&rdquo; power control with Siri integration Upgrade the standard Ranchilio basket to a VST 18g Ridged Rebuild PhotosNote the damage to the boiler elements terminals, this was shorting and causing the houses RCD to trip
+Wiring the PID controller
+Replacing the boiler thermostat with one connected to the PID controller
+Adding insulation to the boiler
+Before After ]]></description></item></channel></rss>
