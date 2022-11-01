@@ -1,4 +1,4 @@
-default: dark # dark
+default: light # dark
 auto_switch: true # set to true to respect the user preference
 dark:
   bg: "#242629" # main site background

@@ -88,7 +88,7 @@ titleFontFamily = "Atkinson Hyperlegible"
   defaultTheme = "auto"
   version = "0.2.X"
   fingerprint = "" # sha512
-  gitRepo = "https://github.com/sammcj/smcleod-hugo"
+  gitRepo = "https://github.com/sammcj/smcleod"
   keywords = ["Sam McLeod", "sammcj", "smcleod", "s_mcleod", "devops", "tech", "engineering"]
   images = ["/apple-touch-icon.png", "/profilephoto/apple-touch-icon.png"]
 
@@ -331,7 +331,7 @@ titleFontFamily = "Atkinson Hyperlegible"
   # Table Of Contents settings
   [markup.tableOfContents]
     startLevel = 2
-    endLevel = 3
+    endLevel = 4
 
 # Author config
 [author]
