@@ -52,4 +52,4 @@ jobs:
 
       - name: Check links
         id: check-links
-        uses: marccampbell/hugo-linkcheck-action@v0.1.3"
+        uses: marccampbell/hugo-linkcheck-action@v0.1.3
