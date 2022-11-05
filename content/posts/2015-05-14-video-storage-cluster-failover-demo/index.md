@@ -7,7 +7,7 @@ aliases:
   - /tech/2015/05/15/video-storage-cluster-failover-demo/
 image: elliot-sloman-199291.jpg
 featuredImagePreview: elliot-sloman-199291.jpg
-series: [ ssd-san ]
+series: [ Storage ]
 tags:
 - tech
 - storage

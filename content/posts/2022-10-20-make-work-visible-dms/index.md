@@ -13,7 +13,7 @@ tags:
 - work
 - communication
 title: Making Work Visible - Avoid DMs
-showFullContent: true
+showFullContent: false
 keywords: "work, communication, culture, tech, dms, direct messages"
 toc: true
 ---

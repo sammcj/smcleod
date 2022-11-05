@@ -5,7 +5,7 @@ categories: [ ml, DevOps ]
 date: "2022-08-23T07:00:00Z"
 aliases:
   - /DevOps/2022/08/23/were-not-deploying-frequently-enough/
-draft: true
+: false
 image: nick-abrams-FTKfX3xZIcc-unsplash.jpg
 featuredImagePreview: nick-abrams-FTKfX3xZIcc-unsplash.jpg
 tags:
@@ -14,12 +14,14 @@ tags:
 - agile
 - enterprise
 - machinelearning
-title: It's 2022 and we're still not deploying frequently enough
+title: It's 2022 and we're (still) not deploying enough
 ---
 
-This blog post is an experiment - it was written using Machine Learning (GPT3) with minimal intervention from me.
+{{< admonition "This blog post is an experiment" >}}
+This post was written using Machine Learning (GPT3) with minimal intervention from me beyond providing prompts and sources.
+{{< /admonition >}}
 
-## We're (still) not deploying frequently enough
+## We're (still) not deploying enough
 
 It's 2022 and not deploying frequently enough is *still* one of the most common causes of software failure.
 

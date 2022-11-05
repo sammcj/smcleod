@@ -9,7 +9,7 @@ aliases:
   - /building-a-high-performance-ssd-san/
 image: melbourne.jpg
 featuredImagePreview: melbourne.jpg
-series: [ ssd-san ]
+series: [ Storage ]
 tags:
 - tech
 - storage

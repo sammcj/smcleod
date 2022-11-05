@@ -11,13 +11,13 @@ tags:
 - work
 title: Encourage Your Peers To Contribute To Open Source
 hideComments: false
-showFullContent: true
+showFullContent: false
 keywords: "culture, opensource, git, leadership"
-toc: false
+toc: true
 draft: false
 ---
 
-Contributing to Open Source is important to the quality and maintainability of the software and engineering communities we rely on every day.
+Contributing to Open Source is important to the quality and maintainability of the software and engineering communities we rely on every day - so why is it that so many developers/engineers never participate?
 
 ---
 

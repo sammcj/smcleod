@@ -3,7 +3,7 @@ author: "Sam McLeod"
 readingTime: true
 categories: [ Tech ]
 date: "2015-06-17T00:00:00Z"
-series: [ ssd-san ]
+series: [ Storage ]
 aliases:
   - /tech/2015/06/17/ssd-storage-cluster-diagram/
   - /tech/ssd-storage-cluster-diagram/

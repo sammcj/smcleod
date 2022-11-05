@@ -7,7 +7,7 @@ aliases:
   - /tech/2015/04/15/talk-high-perf-sds-ictalk/
 image: robin-pierre-323861.jpg
 featuredImagePreview: robin-pierre-323861.jpg
-series: [ ssd-san ]
+series: [ Storage ]
 tags:
 - tech
 - storage
