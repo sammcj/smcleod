@@ -1,9 +1,9 @@
 name: Check for broken links
 
 on:
-  push:
-    branches: ["main"]
   workflow_dispatch:
+
+# TODO: fix error 'Error: open /github/workspace/.github/main.workflow: no such file or directory'
 
 # Sets permissions of the GITHUB_TOKEN to allow deployment to GitHub Pages
 permissions:

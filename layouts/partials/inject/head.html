@@ -4,3 +4,7 @@
 {{ $font := resources.Get "atkinson-hyperlegible/atkinson-hyperlegible.css" | resources.Minify | resources.Fingerprint "sha512" }}
 
 <link rel="preload" as="style" type="text/css" rel="stylesheet" href={{ $font.Permalink }} integrity={{ $font.Data.Integrity }} />
+
+{{ if .Params.asciinema }}
+<link rel="stylesheet" type="text/css" href="{{ .Site.BaseURL }}css/asciinema-player.css" />
+{{ end }}

@@ -5,7 +5,7 @@ date: {{ .Date }}
 lastmod: {{ .Date }}
 author: Sam McLeod
 description: ""
-keywords: ""
+keywords: []
 
 tags: []
 categories: []
@@ -19,6 +19,7 @@ hiddenFromHomePage: false
 hiddenFromSearch: false
 
 toc: true
+asciinema: false
 math: false
 lightgallery: false
 readingTime: true
