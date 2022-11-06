@@ -1,4 +1,4 @@
-name: Deploy Hugo site to Pages
+name: Deploy Hugo BETA site to Pages
 
 on:
   push:
@@ -21,14 +21,14 @@ defaults:
     shell: bash
 
 env:
-  baseURL: "https://smcleod.net"
+  baseURL: "https://beta.smcleod.net"
 
 jobs:
-  build:
-    if: github.repository == 'sammcj/smcleod'
+  build-beta:
+    if: github.repository == 'sammcj/smcleod-hugo'
     strategy:
       matrix:
-        environment: ['production']
+        environment: ['staging']
     runs-on: ubuntu-22.04
     steps:
       - name: Checkout
@@ -50,7 +50,8 @@ jobs:
         run: |
           hugo \
             --minify \
-            --baseURL "${{ env.baseURL }}"
+            --baseURL "${{ env.baseURL }}" \
+            --config config.beta.toml # Beta / Staging config
         env:
           HUGO_ENVIRONMENT: ${{ matrix.environment }}
           HUGO_ENV: ${{ matrix.environment }}
@@ -69,21 +70,8 @@ jobs:
           path: ./public
 
   # Deploy job
-  deploy:
-    needs: build
-    if: github.ref == 'refs/heads/main' && github.repository == 'sammcj/smcleod'
-    runs-on: ubuntu-22.04
-    environment:
-      name: github-pages
-      url: ${{ env.baseURL }}
-    steps:
-      - name: Deploy to GitHub Pages
-        id: deployment
-        uses: actions/deploy-pages@v1
-
-  # Deploy job
-  deploy-staging:
-    needs: build
+  deploy-beta:
+    needs: build-beta
     if: github.ref == 'refs/heads/main' && github.repository == 'sammcj/smcleod-hugo'
     runs-on: ubuntu-22.04
     environment:

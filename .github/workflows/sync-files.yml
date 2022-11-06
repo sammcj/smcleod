@@ -1,0 +1,52 @@
+name: "Sync Common Files"
+
+on:
+  push:
+    branches: ["main"]
+  workflow_dispatch:
+  schedule:
+    - cron: "0 15 * * 6" # 15:00 UTC on Saturday = 01:00 AEST on Sunday
+
+permissions:
+  contents: read
+  pull-requests: write
+  checks: write
+  actions: write
+
+# One build per branch, cancel out of date builds
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  NODE_OPTIONS: "--max-old-space-size=4096"
+
+jobs:
+  sync-files-to-beta:
+    runs-on: ubuntu-22.04
+    timeout-minutes: 15
+    steps:
+      - id: authenticator # Generates short lives PAT (token) using the IF Authenticator Github App
+        uses: sammcj/github-app-installation-token@main
+        with:
+          application_private_key: ${{ secrets.AUTHENTICATOR_APP_PRIVATE_KEY }}
+          application_id: ${{ secrets.AUTHENTICATOR_APP_ID }}
+      - name: Get current date
+        id: date
+        run: echo "::set-output name=date::$(date +'%Y/%m/%d')"
+      - uses: actions/checkout@93ea575cb5d8a053eaa0ac8fa3b40d7e05a33cc8 # tag=v3
+      - name: Sync files to beta repo - sammcj/smcleod-hugo
+        id: sync-files
+        uses: BetaHuhn/repo-file-sync-action@f5e582fc37ec370dd4d9aee5fcd4b499f71fe571 # tag=v1.17.22
+        with:
+          GH_INSTALLATION_TOKEN: ${{ steps.authenticator.outputs.token }}
+          GIT_EMAIL: sammcj@users.noreply.github.com
+          GIT_USERNAME: git
+          # ASSIGNEES: sammcj
+          # REVIEWERS: sammcj
+          CONFIG_PATH: .github/config/sync-files.yml
+          COMMIT_AS_PR_TITLE: true
+          OVERWRITE_EXISTING_PR: true
+          DRY_RUN: false
+          SKIP_PR: true # We don't need PRs to the beta repo
+          COMMIT_PREFIX: "chore: Sync Files - ${{ steps.date.outputs.date }} -- [bot]"
