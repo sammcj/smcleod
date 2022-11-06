@@ -10,6 +10,7 @@ featuredImagePreview: backdrop-linn.jpg
 tags:
 - music
 title: Top album picks for 2017
+series: [ BestOf ]
 ---
 
 Here are my top album pics for 2017 (in no particular order)

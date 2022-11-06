@@ -11,6 +11,7 @@ tags:
 - tech
 - software
 - bestof
+series: [ BestOf ]
 title: The Best Of - 2014 Edition
 ---
 

@@ -9,6 +9,7 @@ image: firefox-logo-collage-1.png
 featuredImagePreview: firefox-logo-collage-1.png
 tags:
 - software
+series: [ BestOf ]
 title: Firefox Addons for 2022
 ---
 

@@ -4,7 +4,7 @@ excerpt: "Links to things I enjoy and use."
 type: links
 comments: false
 showDate: false
-series: [ best-of ]
+series: [ BestOf ]
 toc: true
 ---
 

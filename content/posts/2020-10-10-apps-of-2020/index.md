@@ -11,7 +11,7 @@ tags:
 - bestof
 - software
 title: The Best Of - 2020 Edition
-slug: lolcat
+series: [ BestOf ]
 ---
 
 Near the end of every year I note down a summary of the best apps, hardware & podcasts I've enjoyed throughout the year (and often for some time before).

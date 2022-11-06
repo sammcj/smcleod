@@ -10,6 +10,7 @@ featuredImagePreview: tools.jpg
 tags:
 - bestof
 - software
+series: [ BestOf ]
 title: The Best Of - 2022 Edition
 ---
 
