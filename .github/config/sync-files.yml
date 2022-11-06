@@ -5,8 +5,8 @@
 
 group:
   - files:
-      - source: .
-        dest: .
+      - source: ./
+        dest: ./
         replace: true
         deleteOrphaned: true
         exclude: |
