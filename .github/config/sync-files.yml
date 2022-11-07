@@ -3,40 +3,22 @@
 
 # Syncs from sammcj/smcleod to sammcj/smcleod-hugo which creates https://beta.smcleod.net
 
-group:
-  repos: |
-    sammcj/smcleod-hugo@main
-  files:
-    - source: content
-      dest: content
-    - source: assets
-      dest: assets
-    - source: layouts
-      dest: layouts
-    - source: archetypes
-      dest: archetypes
-    - source: static
-      dest: static
-    - source: data
-      dest: data
-    - source: config.toml
-      dest: config.toml
-    - source: config-beta.toml
-      dest: config-beta.toml
-    - source: .github
-      dest: .github
-    - source: CNAME-beta
-      dest: CNAME
-      replace: true
-      deleteOrphaned: true
-exclude: |
-  CNAME
-  .github/workflows/label-sync.yml
-  .github/workflows/sync-files.yml
-  .github/workflows/lint-codeowners.yml
-  .github/workflows/lint-pr-actions-skip.yml
-  .github/workflows/lint-pr-actions.yml
-  .github/workflows/pr-labeller.yml
-  .github/workflows/lint-shell.yml
-  .github/workflows/pre-commit.yml
-  .github/workflows/pre-commit-update.yml
+sammcj/smcleod-hugo:
+  - source: content/
+    deleteOrphaned: true
+  - source: assets/
+    deleteOrphaned: true
+  - source: layouts/
+    deleteOrphaned: true
+  - source: archetypes/
+    deleteOrphaned: true
+  - source: static/
+    deleteOrphaned: true
+  - source: data/
+    deleteOrphaned: true
+  - source: config.toml
+  - source: config-beta.toml
+  - source: .github
+    deleteOrphaned: true
+  - source: CNAME-beta
+    dest: CNAME
