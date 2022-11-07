@@ -7,7 +7,7 @@ date: "2015-02-16T00:00:00Z"
 aliases:
   - /tech/2015/02/16/building-a-high-performance-ssd-san/
   - /building-a-high-performance-ssd-san/
-image: melbourne.jpg
+images: ["melbourne.jpg"]
 featuredImagePreview: melbourne.jpg
 series: [ Storage ]
 tags:

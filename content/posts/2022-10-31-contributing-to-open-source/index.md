@@ -3,7 +3,7 @@ author: "Sam McLeod"
 readingTime: true
 categories: [ Culture, Tech, Leadership ]
 date: "2022-10-30T07:00:00Z"
-image: help.jpg
+images: ["help.jpg"]
 featuredImagePreview: help.jpg
 tags:
 - culture

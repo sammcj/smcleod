@@ -11,9 +11,11 @@ tags: []
 categories: []
 series: []
 
-featuredImage: ""
-featuredImagePreview: ""
-image: ""
+image: &image ""
+
+featuredimage: *image
+featuredImagePreview: *image
+images: [*image]
 
 hiddenFromHomePage: false
 hiddenFromSearch: false
@@ -25,6 +27,7 @@ lightgallery: false
 readingTime: true
 showFullContent: false
 draft: true
+type: posts
 ---
 
 <!--more-->

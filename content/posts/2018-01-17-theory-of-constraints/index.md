@@ -5,7 +5,7 @@ categories: [ Tech ]
 date: "2018-01-17T00:00:00Z"
 aliases:
   - /tech/2018/02/05/theory-of-constraints
-image: samuel-zeller-237359.jpg
+images: ["samuel-zeller-237359.jpg"]
 featuredImagePreview: samuel-zeller-237359.jpg
 tags:
 - DevOps

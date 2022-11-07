@@ -5,7 +5,7 @@ categories: [ Cars ]
 date: "2010-06-10T00:00:00Z"
 aliases:
   - /cars/2010/06/22/e36-bmw-manual-conversion/
-image: ivan-angelov-ITEOjp8utXc-unsplash.jpg
+images: ["ivan-angelov-ITEOjp8utXc-unsplash.jpg"]
 featuredImagePreview: ivan-angelov-ITEOjp8utXc-unsplash.jpg
 tags:
 - cars

@@ -3,9 +3,10 @@ author: "Sam McLeod"
 readingTime: true
 categories: [ software ]
 date: "2022-05-17T08:00:00Z"
+updated: "2022-11-07T16:52:27+11:00"
 aliases:
   - /software/2022/05/16/firefox-addons-2022/
-image: firefox-logo-collage-1.png
+images: ["firefox-logo-collage-1.png"]
 featuredImagePreview: firefox-logo-collage-1.png
 tags:
 - software
@@ -18,7 +19,7 @@ title: Firefox Addons for 2022
 
 My list of must-have Firefox addons - 2022 edition
 
-Updated: 2022-10-09
+Updated: 2022-11-07
 
 ### Privacy and Security
 
@@ -51,8 +52,9 @@ Probably the single most important addon.
 - [Copy PlainText](https://addons.mozilla.org/en-GB/firefox/addon/copy-plaintext)
 - [Awesome RSS](https://addons.mozilla.org/en-GB/firefox/addon/awesome-rss)
 - [Night Mode - Hacker News](https://addons.mozilla.org/en-GB/firefox/addon/night-mode-hacker-news)
-- [Upvote Anywhere](https://addons.mozilla.org/en-CA/firefox/addon/upvote-anywhere/)
+- [Upvote Anywhere](https://addons.mozilla.org/en-GB/firefox/addon/upvote-anywhere/)
 - [Refined Github](https://github.com/refined-github/refined-github)
+- [MarkDownload](https://addons.mozilla.org/en-GB/firefox/addon/markdownload/)
 
 ### For AWS Users
 
@@ -65,8 +67,8 @@ Probably the single most important addon.
 
 ### about:config
 
-- `mousewheel.with_meta.action: 0` - Disable scroll zooming
-- `extensions.pocket.enabled: false`- Disable Pocket
+- `mousewheel.with_meta.action: 0` - Disable scroll zooming.
+- `extensions.pocket.enabled: false`- Disable Pocket.
 - `dom.event.clipboardevents.enabled: false` - Don't allow websites to prevent copy and paste, stop webpage knowing which part of the page had been selected.
 
 ### uBlock Origin Rules
@@ -118,8 +120,8 @@ Since raising more capital 1Password has been chasing quick development of new f
 
 So - what are the alternatives?
 
-For a desktop and mobile application [Strongbox](https://strongboxsafe.com) is by far the leading contender.
+For a desktop and mobile application [Strongbox](https://strongboxsafe.com) is a leading contender, but lacks good browser integration.
 
-They are actively working on an [official Firefox addon which in beta](https://addons.mozilla.org/en-GB/firefox/addon/strongbox-autofill/) which is currently in beta - so watch this space!
+They are actively working on an [official Firefox addon which in beta](https://addons.mozilla.org/en-GB/firefox/addon/strongbox-autofill/) which is currently in beta.
 
 In the mean time as Strongbox uses the standard KeyPassX format you can use the [KeePassXC-Browser](https://addons.mozilla.org/en-GB/firefox/addon/keepassxc-browser/) addon to access your Strongbox database within Firefox.

@@ -5,7 +5,7 @@ categories: [ DevOps ]
 date: "2020-11-18T14:00:00Z"
 aliases:
   - /tech/2020/11/18/team-charter/
-image: pexels-denniz-futalan-2306897.jpg
+images: ["pexels-denniz-futalan-2306897.jpg"]
 featuredImagePreview: pexels-denniz-futalan-2306897.jpg
 tags:
 - DevOps

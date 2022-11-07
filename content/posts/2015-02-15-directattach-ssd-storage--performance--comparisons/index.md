@@ -5,7 +5,7 @@ categories: [ Tech ]
 date: "2015-02-15T00:00:00Z"
 aliases:
   - /tech/2014/10/15/directattach-ssd-storage-performance-comparisons/
-image: banner.jpg
+images: ["banner.jpg"]
 featuredImagePreview: banner.jpg
 tags:
 - tech

@@ -6,7 +6,7 @@ date: "2015-03-15T00:00:00Z"
 aliases:
   - /tech/2015/03/15/kernel-ci/
   - /continuous-integration-for-the-linux-kernel-built-within-docker
-image: backdrop-zbuildings.jpg
+images: ["backdrop-zbuildings.jpg"]
 featuredImagePreview: backdrop-zbuildings.jpg
 tags:
 - tech

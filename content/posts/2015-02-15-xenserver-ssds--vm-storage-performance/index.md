@@ -5,7 +5,7 @@ categories: [ Tech ]
 date: "2015-02-15T00:00:00Z"
 aliases:
   - /tech/2015/02/14/xenserver-ssds-vm-storage-performance
-image: noah-kuhn-27481.jpg
+images: ["noah-kuhn-27481.jpg"]
 featuredImagePreview: noah-kuhn-27481.jpg
 tags:
 - tech

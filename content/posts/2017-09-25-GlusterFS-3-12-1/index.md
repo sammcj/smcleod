@@ -5,7 +5,7 @@ categories: [ Tech ]
 date: "2017-09-25T00:00:00Z"
 aliases:
   - /tech/2017/09/25/GlusterFS-3-12-1
-image: backdrop-insidebuilding.jpg
+images: ["backdrop-insidebuilding.jpg"]
 featuredImagePreview: backdrop-insidebuilding.jpg
 tags:
 - tech

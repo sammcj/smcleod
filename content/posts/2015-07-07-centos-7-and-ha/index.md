@@ -5,7 +5,7 @@ categories: [ Tech ]
 date: "2015-07-07T00:00:00Z"
 aliases:
   - /tech/2015/07/07/centos-7-and-ha/
-image: billy-huynh-278252.jpg
+images: ["billy-huynh-278252.jpg"]
 featuredImagePreview: billy-huynh-278252.jpg
 tags:
 - tech

@@ -5,7 +5,7 @@ categories: [ music ]
 date: "2017-12-28T00:00:00Z"
 aliases:
   - /music/2017/12/28/album-picks-2017/
-image: backdrop-linn.jpg
+images: ["backdrop-linn.jpg"]
 featuredImagePreview: backdrop-linn.jpg
 tags:
 - music

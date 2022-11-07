@@ -5,7 +5,7 @@ categories: [ Tech, BestOf, Software ]
 date: "2022-10-19T19:00:00Z"
 aliases:
   - /tech/2022/10/18/apps-of-2022/
-image: tools.jpg
+images: ["tools.jpg"]
 featuredImagePreview: tools.jpg
 tags:
 - bestof

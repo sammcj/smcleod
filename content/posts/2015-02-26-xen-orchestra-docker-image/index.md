@@ -5,7 +5,7 @@ categories: [ Tech ]
 date: "2015-02-26T00:00:00Z"
 aliases:
   - /tech/2015/05/26/xen-orchestra-docker-image/
-image: backdrop-insidebuilding.jpg
+images: ["backdrop-insidebuilding.jpg"]
 featuredImagePreview: backdrop-insidebuilding.jpg
 tags:
 - tech

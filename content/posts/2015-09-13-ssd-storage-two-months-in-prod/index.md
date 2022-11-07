@@ -5,7 +5,7 @@ categories: [ Tech ]
 date: "2015-09-13T00:00:00Z"
 aliases:
   - /tech/2015/09/13/ssd-storage-two-months-in-prod/
-image: containers-1.jpg
+images: ["containers-1.jpg"]
 featuredImagePreview: containers-1.jpg
 tags:
 - tech

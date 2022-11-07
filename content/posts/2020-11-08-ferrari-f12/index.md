@@ -5,7 +5,7 @@ categories: [ Cars ]
 date: "2020-11-08T16:00:00Z"
 aliases:
   - /cars/2020/11/08/ferrari-f12/
-image: f12b_compressed.jpg
+images: ["f12b_compressed.jpg"]
 featuredImagePreview: f12b_compressed.jpg
 lightgallery: true
 tags: [photos, cars]

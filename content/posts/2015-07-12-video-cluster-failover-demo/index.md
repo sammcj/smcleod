@@ -5,7 +5,7 @@ categories: [ Tech, Talks ]
 date: "2015-07-12T00:00:00Z"
 aliases:
   - /tech/2015/07/12/video-cluster-failover-demo/
-image: tim-napier-181584.jpg
+images: ["tim-napier-181584.jpg"]
 featuredImagePreview: tim-napier-181584.jpg
 tags:
 - tech

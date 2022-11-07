@@ -5,7 +5,7 @@ categories: [ Tech ]
 date: "2019-02-05T13:00:00Z"
 aliases:
   - /tech/2019/02/11/hello-xcp-ng
-image: xcpng_rocket_logo.png
+images: ["xcpng_rocket_logo.png"]
 featuredImagePreview: xcpng_rocket_logo.png
 tags:
 - tech

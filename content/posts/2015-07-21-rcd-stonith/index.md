@@ -5,7 +5,7 @@ categories: [ Tech ]
 date: "2015-07-21T00:00:00Z"
 aliases:
   - /tech/2015/07/21/rcd-stonith/
-image: padlock.jpg
+images: ["padlock.jpg"]
 featuredImagePreview: padlock.jpg
 tags:
 - tech

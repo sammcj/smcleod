@@ -6,7 +6,7 @@ date: "2018-07-16T10:57:14Z"
 aliases:
   - /tech/2017/11/21/disable-firefox-scrollzoom
   - /tech/2018/07/16/disable-scroll-zoom-ff
-image: zoom.jpg
+images: ["zoom.jpg"]
 featuredImagePreview: zoom.jpg
 tags:
 - tech

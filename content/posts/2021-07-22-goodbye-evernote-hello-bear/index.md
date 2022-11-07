@@ -5,7 +5,7 @@ categories: [ software ]
 date: "2021-07-22T19:00:00Z"
 aliases:
   - /software/2021/07/22/goodbye-evernote-hello-bear/
-image: bear_header-mac-screenshot.png
+images: ["bear_header-mac-screenshot.png"]
 featuredImagePreview: bear_header-mac-screenshot.png
 tags:
 - software

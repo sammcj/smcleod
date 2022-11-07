@@ -5,7 +5,7 @@ categories: [ Tech ]
 date: "2016-07-11T00:00:00Z"
 aliases:
   - /tech/2016/07/11/lets-try-android-in-2016
-image: adrien-296945.jpg
+images: ["adrien-296945.jpg"]
 featuredImagePreview: adrien-296945.jpg
 tags:
 - tech

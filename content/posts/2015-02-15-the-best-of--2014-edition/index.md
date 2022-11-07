@@ -5,7 +5,7 @@ categories: [ Tech, BestOf, Software ]
 date: "2015-02-15T00:00:00Z"
 aliases:
   - /tech/2015/01/01/the-best-of-2014-edition
-image: patrick-tomasso-71909.jpg
+images: ["patrick-tomasso-71909.jpg"]
 featuredImagePreview: patrick-tomasso-71909.jpg
 tags:
 - tech

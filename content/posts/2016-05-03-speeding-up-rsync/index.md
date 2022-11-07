@@ -5,7 +5,7 @@ categories: [ Tech ]
 date: "2016-05-03T00:00:00Z"
 aliases:
   - /tech/2016/05/03/speeding-up-rsync
-image: robin-pierre-323861.jpg
+images: ["robin-pierre-323861.jpg"]
 featuredImagePreview: robin-pierre-323861.jpg
 tags:
 - tech

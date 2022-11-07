@@ -5,7 +5,7 @@ categories: [ machine-learning ]
 date: "2022-07-08T07:00:00Z"
 aliases:
   - /machine-learning/2022/07/08/dalle-2/
-image: dalle2spaceorange.jpeg
+images: ["dalle2spaceorange.jpeg"]
 featuredImagePreview: dalle2spaceorange.jpeg
 tags:
 - art

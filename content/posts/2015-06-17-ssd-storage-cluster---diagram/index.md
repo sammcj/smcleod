@@ -8,7 +8,7 @@ aliases:
   - /tech/2015/06/17/ssd-storage-cluster-diagram/
   - /tech/ssd-storage-cluster-diagram/
   - /tech/2015/06/17/ssd-storage-cluster-diagram.html
-image: backdrop-feetsky.jpg
+images: ["backdrop-feetsky.jpg"]
 featuredImagePreview: backdrop-feetsky.jpg
 tags:
 - tech

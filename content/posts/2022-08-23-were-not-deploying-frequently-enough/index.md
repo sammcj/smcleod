@@ -5,7 +5,7 @@ categories: [ ml, DevOps ]
 date: "2022-08-23T07:00:00Z"
 aliases:
   - /DevOps/2022/08/23/were-not-deploying-frequently-enough/
-image: nick-abrams-FTKfX3xZIcc-unsplash.jpg
+images: ["nick-abrams-FTKfX3xZIcc-unsplash.jpg"]
 featuredImagePreview: nick-abrams-FTKfX3xZIcc-unsplash.jpg
 tags:
 - DevOps

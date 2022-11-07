@@ -5,7 +5,7 @@ categories: [ Tech ]
 date: "2016-05-23T00:00:00Z"
 aliases:
   - /tech/2016/05/23/convert-sql-ascii-to-utf8
-image: patrick-tomasso-71909.jpg
+images: ["patrick-tomasso-71909.jpg"]
 featuredImagePreview: patrick-tomasso-71909.jpg
 tags:
 - tech

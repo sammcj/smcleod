@@ -6,7 +6,7 @@ date: "2019-08-08T08:10:00Z"
 aliases:
   - /tech/2019/08/08/camels-and-unicorns/
   - /tech/2019/08/08/camels-and-unicorns.html
-image: camel_corn.jpeg
+images: ["camel_corn.jpeg"]
 featuredImagePreview: camel_corn.jpeg
 tags:
 - tech

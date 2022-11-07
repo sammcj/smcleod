@@ -5,7 +5,7 @@ categories: [ Photos ]
 date: "2018-12-20T00:00:00Z"
 aliases:
   - /photos/2018/12/20/otago-trip-mustang-2018/
-image: clyde_mustang_2080.jpg
+images: ["clyde_mustang_2080.jpg"]
 featuredImagePreview: clyde_mustang_2080.jpg
 lightgallery: true
 tags:

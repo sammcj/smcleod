@@ -5,7 +5,7 @@ categories: [ Tech ]
 date: "2016-04-29T00:00:00Z"
 aliases:
   - /tech/2016/04/29/benchmarking-io
-image: daniel-mayovskiy-303666.jpg
+images: ["daniel-mayovskiy-303666.jpg"]
 featuredImagePreview: daniel-mayovskiy-303666.jpg
 tags:
 - tech

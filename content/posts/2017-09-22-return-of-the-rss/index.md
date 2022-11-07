@@ -4,7 +4,7 @@ readingTime: true
 date: "2017-09-22T00:00:00Z"
 aliases:
   - /thoughts/2017/09/22/return-of-the-rss
-image: melbourne.jpg
+images: ["melbourne.jpg"]
 featuredImagePreview: melbourne.jpg
 tags:
 - tech

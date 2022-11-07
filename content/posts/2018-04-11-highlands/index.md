@@ -5,7 +5,7 @@ categories: [ Photos ]
 date: "2018-04-11T00:00:00Z"
 aliases:
   - /photos/2018/03/20/highlands
-image: v8.jpg
+images: ["v8.jpg"]
 featuredImagePreview: v8.jpg
 lightgallery: true
 tags:

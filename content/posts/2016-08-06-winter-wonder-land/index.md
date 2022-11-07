@@ -6,7 +6,7 @@ date: "2016-08-06T00:00:00Z"
 aliases:
   - /photos/2016/08/06/winter-wonder-land/
 description: Castle Hill Winter Trip 2016 [Photos]
-image: backdrop-austria.jpg
+images: ["backdrop-austria.jpg"]
 featuredImagePreview: backdrop-austria.jpg
 lightgallery: true
 tags:

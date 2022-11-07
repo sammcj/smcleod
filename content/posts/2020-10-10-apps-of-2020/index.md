@@ -5,7 +5,7 @@ categories: [ Tech, BestOf, Software ]
 date: "2020-10-10T16:00:00Z"
 aliases:
   - /tech/2020/10/10/apps-of-2020/
-image: william-hook-unsplash.jpg
+images: ["william-hook-unsplash.jpg"]
 featuredImagePreview: william-hook-unsplash.jpg
 tags:
 - bestof

@@ -5,7 +5,7 @@ categories: [ Tech ]
 date: "2016-02-04T00:00:00Z"
 aliases:
   - /tech/2016/02/04/mirror-gitlab-to-github/
-image: backdrop-austria.jpg
+images: ["backdrop-austria.jpg"]
 featuredImagePreview: backdrop-austria.jpg
 tags:
 - tech

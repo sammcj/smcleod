@@ -5,7 +5,7 @@ categories: [ Tech ]
 date: "2016-01-18T00:00:00Z"
 aliases:
   - /tech/2016/01/18/fix-xenserver-sr-with-corrupt-metadata/
-image: samuel-zeller-358865.jpg
+images: ["samuel-zeller-358865.jpg"]
 featuredImagePreview: samuel-zeller-358865.jpg
 tags:
 - tech

@@ -5,7 +5,7 @@ categories: [ Tech ]
 date: "2018-03-20T00:00:00Z"
 aliases:
   - /tech/2018/03/20/oss-flash-storage-update
-image: sam-standing-at-rack.jpg
+images: ["sam-standing-at-rack.jpg"]
 featuredImagePreview: sam-standing-at-rack.jpg
 tags:
 - tech

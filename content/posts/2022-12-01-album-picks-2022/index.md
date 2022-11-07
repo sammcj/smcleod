@@ -4,9 +4,9 @@ readingTime: true
 categories: [ Music ]
 series: [ BestOf ]
 date: "2022-10-30T07:00:00Z"
-image: backdrop-linn.jpg #TODO:
+images: ["backdrop-linn.jpg"]
 featuredImagePreview: backdrop-linn.jpg
-featuredImage: "backdrop-linn.jpg" #TODO:
+featuredimage: backdrop-linn.jpg"
 tags:
 - music
 - bestof

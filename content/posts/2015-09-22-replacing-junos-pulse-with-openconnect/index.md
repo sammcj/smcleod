@@ -5,7 +5,7 @@ categories: [ Tech ]
 date: "2015-09-22T00:00:00Z"
 aliases:
   - /tech/2015/09/22/replacing-junos-pulse-with-openconnect/
-image: backdrop-zbuildings.jpg
+images: ["backdrop-zbuildings.jpg"]
 featuredImagePreview: backdrop-zbuildings.jpg
 tags:
 - tech

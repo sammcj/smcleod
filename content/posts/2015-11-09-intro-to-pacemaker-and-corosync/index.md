@@ -5,7 +5,7 @@ categories: [ Tech ]
 date: "2015-11-09T00:00:00Z"
 aliases:
   - /tech/2015/11/09/intro-to-pacemaker-and-corosync/
-image: tim-napier-181584.jpg
+images: ["tim-napier-181584.jpg"]
 featuredImagePreview: tim-napier-181584.jpg
 tags:
 - tech

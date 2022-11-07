@@ -5,7 +5,7 @@ categories: [ Tech ]
 date: "2015-07-24T00:00:00Z"
 aliases:
   - /tech/2015/07/24/scsi-benchmarking/
-image: datacentre-1.jpg
+images: ["datacentre-1.jpg"]
 featuredImagePreview: datacentre-1.jpg
 tags:
 - tech

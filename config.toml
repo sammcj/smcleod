@@ -16,7 +16,7 @@ pygmentscodefencesguesssyntax = true
 paginate=10
 summaryLength = 100
 enableRobotsTXT = true
-relativeURLs = true
+# relativeURLs = true
 
 enableGitInfo = true
 enableEmoji = true
@@ -100,6 +100,7 @@ titleFontFamily = "Atkinson Hyperlegible"
     # gravatarEmail = ""
     # URL of avatar shown in home page
     avatarURL = "/profilephoto/logo.svg"
+    images = ["/apple-touch-icon.png", "/profilephoto/apple-touch-icon.png"]
     # title = "smcleod.net"
     subtitle = "The personal blog of Sam McLeod"
     # subtitle shown in home page
@@ -164,7 +165,7 @@ titleFontFamily = "Atkinson Hyperlegible"
     [params.search.fuse]
       # DoIt NEW | 0.2.12 https://fusejs.io/api/options.html
       isCaseSensitive = false
-      minMatchCharLength = 3
+      minMatchCharLength = 2
       findAllMatches = true
       location = 0
       threshold = 0.3
@@ -198,7 +199,6 @@ titleFontFamily = "Atkinson Hyperlegible"
 
     [params.page.header]
       # whether to enable auto header numbering
-      # 是否开启标题自动编号
       [params.page.header.number]
         enable = false
         [params.page.header.number.format]
@@ -301,8 +301,15 @@ titleFontFamily = "Atkinson Hyperlegible"
     Lastfm = "sammcj2000"
     Hackernews = "smcleod"
     Gitlab = "sammcj"
-    # Mastodon = ""
-    RSS = true
+  [params.social.Mastodon]
+    # weight when arranging icons (the greater the weight, the later the icon is positioned)
+    weight = 0
+    # your social ID
+    id = "@s_mcleod"
+    # prefix of your social link
+    prefix = "https://aus.social/"
+    # content hovering on the icon
+    title = "Mastodon"
 
 [markup]
   # Syntax Highlighting (https://gohugo.io/content-management/syntax-highlighting)
@@ -336,7 +343,7 @@ titleFontFamily = "Atkinson Hyperlegible"
 # Author config
 [author]
   name = "Sam McLeod"
-  link = "https://github.com/sammcj"
+  link = "https://www.linkedin.com/in/sammcj/"
   avatar = "/apple-touch-icon.png"
   gravatarEmail = ""
 

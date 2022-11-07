@@ -5,7 +5,7 @@ categories: [ cats ]
 date: "2020-10-08T15:20:00Z"
 aliases:
   - /jimothy/2020/10/08/rip-jimothy/
-image: jimothy.jpg
+images: ["jimothy.jpg"]
 featuredImagePreview: jimothy.jpg
 lightgallery: true
 tags:

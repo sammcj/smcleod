@@ -5,7 +5,7 @@ categories: [ Tech ]
 date: "2018-07-30T08:52:00Z"
 aliases:
   - /tech/2018/07/30/background-youtube-dl
-image: camera-background.jpg
+images: ["camera-background.jpg"]
 featuredImagePreview: camera-background.jpg
 tags:
 - tech

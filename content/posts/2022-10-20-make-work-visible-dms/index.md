@@ -5,7 +5,7 @@ categories: [ Tech, leadership ]
 date: "2022-10-20T07:00:00Z"
 aliases:
   - /tech/2022/10/20/make-work-visible-dms/
-image: silos.jpg
+images: ["silos.jpg"]
 featuredImagePreview: silos.jpg
 tags:
 - culture

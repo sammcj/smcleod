@@ -3,11 +3,28 @@
 
 # Syncs from sammcj/smcleod to sammcj/smcleod-hugo which creates https://beta.smcleod.net
 
-sammcj/smcleod-hugo:
-  replace: true
-  deleteOrphaned: true
+group:
+  repos: |
+    sammcj/smcleod-hugo@main
   files:
-    - .
+    - source: content
+      dest: content
+    - source: assets
+      dest: assets
+    - source: layouts
+      dest: layouts
+    - source: archetypes
+      dest: archetypes
+    - source: static
+      dest: static
+    - source: data
+      dest: data
+    - source: config.toml
+      dest: config.toml
+    - source: config-beta.toml
+      dest: config-beta.toml
+    - source: .github
+      dest: .github
     - source: CNAME-beta
       dest: CNAME
       replace: true

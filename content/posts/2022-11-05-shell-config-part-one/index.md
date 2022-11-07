@@ -10,10 +10,9 @@ keywords: ["zsh", "bash", "scripting", "linux", "macOS"]
 tags: ["zsh", "bash", "scripting", "linux", "macOS"]
 categories: ["zsh", "scripting", "linux", "macOS"]
 series: ["ZSH", "Code"]
-
-featuredImage: "colour_vertical_icon_wbg_wide.png"
+featuredimage: "colour_vertical_icon_wbg_wide.png"
 # featuredImagePreview: "colour_vertical_icon_wbg_wide.png"
-image: "colour_vertical_icon_wbg_wide.png"
+images: ["colour_vertical_icon_wbg_wide.png"]
 
 hiddenFromHomePage: false
 hiddenFromSearch: false

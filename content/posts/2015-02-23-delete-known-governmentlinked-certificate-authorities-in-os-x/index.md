@@ -5,7 +5,7 @@ categories: [ Tech, security-privacy ]
 date: "2015-02-23T00:00:00Z"
 aliases:
   - /tech/2015/02/23/delete-known-governmentlinked-certificate-authorities-in-os-x/
-image: backdrop-italian-steps.jpg
+images: ["backdrop-italian-steps.jpg"]
 featuredImagePreview: backdrop-italian-steps.jpg
 tags:
 - tech

@@ -5,7 +5,7 @@ categories: [ Tech ]
 date: "2017-10-25T00:00:00Z"
 aliases:
   - /tech/2017/10/25/sublime-syntax-topline
-image: backdrop-code.jpg
+images: ["backdrop-code.jpg"]
 featuredImagePreview: backdrop-code.jpg
 tags:
 - tech

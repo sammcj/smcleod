@@ -5,7 +5,7 @@ categories: [ Tech ]
 date: "2015-12-14T00:00:00Z"
 aliases:
   - /tech/2015/12/14/iscsi-scsiid-persistence/
-image: feature-san-fran.jpg
+images: ["feature-san-fran.jpg"]
 featuredImagePreview: feature-san-fran.jpg
 tags:
 - tech

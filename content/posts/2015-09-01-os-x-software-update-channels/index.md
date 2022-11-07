@@ -5,7 +5,7 @@ categories: [ Tech ]
 date: "2015-09-01T00:00:00Z"
 aliases:
   - /tech/2015/09/01/os-x-software-update-channels/
-image: rishi-deep-424424.jpg
+images: ["rishi-deep-424424.jpg"]
 featuredImagePreview: rishi-deep-424424.jpg
 tags:
 - tech

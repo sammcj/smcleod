@@ -5,7 +5,7 @@ categories: [ Tech ]
 date: "2017-10-13T00:00:00Z"
 aliases:
   - /tech/2017/10/13/Drop-Broadcom
-image: office-space-broadcom.jpg
+images: ["office-space-broadcom.jpg"]
 featuredImagePreview: office-space-broadcom.jpg
 tags:
 - tech

@@ -5,7 +5,7 @@ categories: [ Tech, DevOps, Talks ]
 date: "2015-02-15T00:00:00Z"
 aliases:
   - /tech/2014/10/15/talk-24-months/
-image: melbourne.jpg
+images: ["melbourne.jpg"]
 featuredImagePreview: melbourne.jpg
 tags:
 - talk

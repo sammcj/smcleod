@@ -5,7 +5,7 @@ categories: [ Tech ]
 date: "2017-11-14T00:00:00Z"
 aliases:
   - /tech/2017/11/14/getting-started-with-gluster
-image: backdrop-plastic-containers.jpg
+images: ["backdrop-plastic-containers.jpg"]
 featuredImagePreview: backdrop-plastic-containers.jpg
 tags:
 - tech

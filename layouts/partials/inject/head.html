@@ -8,3 +8,8 @@
 {{ if .Params.asciinema }}
 <link rel="stylesheet" type="text/css" href="{{ .Site.BaseURL }}css/asciinema-player.css" />
 {{ end }}
+
+{{ template "_internal/twitter_cards.html" . }}
+
+{{ template "_internal/opengraph.html" . }}
+

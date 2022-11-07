@@ -5,7 +5,7 @@ categories: [ music ]
 date: "2022-06-13T13:00:00Z"
 aliases:
   - /music/2022/06/13/beginner-harp-practice/
-image: hohner-marine-band.jpg
+images: ["hohner-marine-band.jpg"]
 featuredImagePreview: hohner-marine-band.jpg
 tags:
 - music

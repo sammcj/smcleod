@@ -7,7 +7,7 @@ date: "2019-06-29T09:00:00Z"
 aliases:
   - /tech/2019/06/29/leaving-infoxchange/
   - /tech/2019/06/29/leaving-infoxchange.html
-image: road-no-car-2048.jpg
+images: ["road-no-car-2048.jpg"]
 featuredImagePreview: road-no-car-2048.jpg
 
 tags:

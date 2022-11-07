@@ -5,7 +5,7 @@ categories: [ Tech ]
 date: "2017-12-27T00:00:00Z"
 aliases:
   - /tech/2017/12/27/hp-4951
-image: backdrop-hp4951.jpg
+images: ["backdrop-hp4951.jpg"]
 featuredImagePreview: backdrop-hp4951.jpg
 tags:
 - tech

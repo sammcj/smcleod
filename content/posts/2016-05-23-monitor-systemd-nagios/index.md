@@ -5,7 +5,7 @@ categories: [ Tech ]
 date: "2016-05-23T00:00:00Z"
 aliases:
   - /tech/2016/05/23/monitor-systemd-nagios
-image: feature-laptop.jpg
+images: ["feature-laptop.jpg"]
 featuredImagePreview: feature-laptop.jpg
 tags:
 - tech

@@ -5,7 +5,7 @@ categories: [ Tech ]
 date: "2016-07-04T00:00:00Z"
 aliases:
   - /tech/2016/07/04/update-rcd-stonith-design
-image: noah-kuhn-27481.jpg
+images: ["noah-kuhn-27481.jpg"]
 featuredImagePreview: noah-kuhn-27481.jpg
 tags:
 - tech

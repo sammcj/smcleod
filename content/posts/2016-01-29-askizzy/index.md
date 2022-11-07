@@ -5,7 +5,7 @@ categories: [ Tech ]
 date: "2016-01-29T00:00:00Z"
 aliases:
   - /tech/2016/01/29/askizzy/
-image: melbourne.jpg
+images: ["melbourne.jpg"]
 featuredImagePreview: melbourne.jpg
 tags:
 - tech
