@@ -10,7 +10,7 @@ group:
     deleteOrphaned: true
     files:
       - .
-      - src: CNAME-beta
+      - source: CNAME-beta
         dest: CNAME
         replace: true
         deleteOrphaned: true
