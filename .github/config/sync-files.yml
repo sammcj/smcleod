@@ -4,27 +4,24 @@
 # Syncs from sammcj/smcleod to sammcj/smcleod-hugo which creates https://beta.smcleod.net
 
 group:
-  - files:
-      - source: ./
-        dest: ./
-        replace: true
-        deleteOrphaned: true
-        exclude: |
-          CNAME
-          .github/workflows/label-sync.yml
-          .github/workflows/sync-files.yml
-          .github/workflows/lint-codeowners.yml
-          .github/workflows/lint-pr-actions-skip.yml
-          .github/workflows/lint-pr-actions.yml
-          .github/workflows/pr-labeller.yml
-          .github/workflows/lint-shell.yml
-          .github/workflows/pre-commit.yml
-          .github/workflows/pre-commit-update.yml
 
-      - source: CNAME-beta
+  sammcj/smcleod-hugo:
+    replace: true
+    deleteOrphaned: true
+    files:
+      - .
+      - src: CNAME-beta
         dest: CNAME
         replace: true
         deleteOrphaned: true
-
-    repos: |
-      sammcj/smcleod-hugo
+  exclude: |
+    CNAME
+    .github/workflows/label-sync.yml
+    .github/workflows/sync-files.yml
+    .github/workflows/lint-codeowners.yml
+    .github/workflows/lint-pr-actions-skip.yml
+    .github/workflows/lint-pr-actions.yml
+    .github/workflows/pr-labeller.yml
+    .github/workflows/lint-shell.yml
+    .github/workflows/pre-commit.yml
+    .github/workflows/pre-commit-update.yml
