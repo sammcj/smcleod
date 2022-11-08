@@ -21,7 +21,9 @@ _Note: This is by no means an exhaustive list, it's just the top albums that rea
 
 ![](https://github.com/sammcj/smcleod_files/blob/master/images/albums_2017/FJM_PureComedy_Covers.gif?raw=true)
 
-As a bonus, a short film was released with the album, [available here](https://www.youtube.com/watch?v=cejjqC1oyQM).
+As a bonus, a short film was released with the album:
+
+{{< youtube "cejjqC1oyQM" >}}
 
 From [Wikipedia](https://en.wikipedia.org/wiki/Pure_Comedy):
 

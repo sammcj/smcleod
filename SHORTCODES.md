@@ -1,5 +1,10 @@
 # Sam's Hugo ShortCodes
 
+See also
+
+- [layouts/shortcodes](layouts/shortcodes)
+- [head.html](layouts/partials/inject/head.html) for adding the css and js required some of these shortcodes.
+
 ## github.html
 
 Embeds a file from github within a code block.
@@ -95,4 +100,30 @@ Highlights words.
 
 ```hugo
 Highlight {{< highlighter color="lime" >}}absolutely **any** words {{</ highlighter >}} you want.
+```
+
+## tootstatic.html
+
+Embeds a static Toot from a Mastodon instance.
+
+```hugo
+{{< tootstatic "aus.social" "108739791879133672" >}}
+```
+
+## tootonline.html
+
+Embeds a live Toot from a Mastodon instance.
+
+```hugo
+---
+> {{<tootonline "https://aus.social/@s_mcleod/108739791879133672">}}
+---
+```
+
+## youtubelite.html
+
+Embeds a youtube video.
+
+```hugo
+{{<youtubelite videoId="RcXstZ4FzyE">}}
 ```

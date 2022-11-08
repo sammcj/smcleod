@@ -45,7 +45,7 @@ There's no one way to reuse workflows - you can't simply include / inherit FROM 
 
 Composite actions are a way to combine multiple steps into a single step. They are a way to reuse [steps](https://docs.github.com/en/actions/using-workflows/workflow-syntax-for-github-actions#jobsjob_idsteps), but not [workflows](https://docs.github.com/en/actions/using-workflows/about-workflows).
 
-- Booleans in composite actions are actually Strings - even if you set their type to Boolean[^5]. 🤦
+- Booleans in composite actions are actually Strings - even if you set their type to Boolean[^2]. 🤦
 - Composite Actions requires setting the shell in each step (`shell: bash`).
 - Composite Actions requires setting run.using as composite in each workflow (`runs.using: "composite"`).
 - Composite Actions can be called as part of one of the steps in a job.
@@ -156,14 +156,14 @@ As a side note - the YAML Spec defined a simple way to reuse values in YAML docu
 
 If you haven't used them before (and don't worry - you can't on Github) - I have an example [here](../yaml-anchors-and-aliases)
 
-Unfortunately despite requests[^1] to[^2] do[^3] so[^4] - Github Actions does not support YAML anchors or aliases.
+Unfortunately despite requests[^1] to[^3] do[^4] so[^5] - Github Actions does not support YAML anchors or aliases.
 
 While obviously not a solution for reusable workflows - these would make large workflows a lot simpler and easier to maintain and as such reduce reliance on the band aid solutions that are _Reusable Workflows_ and _Composite Actions_.
 
 ---
 
 [^1]: [GitHub Actions: Support YAML anchors](https://github.com/actions/runner/issues/1182)
-[^2]: [Support YAML anchors](https://github.com/community/community/discussions/4501)
-[^3]: [Support YAML anchors](https://github.com/actions/starter-workflows/issues/162)
-[^4]: [Support YAML anchors](https://github.com/actions/runner/issues/438#issuecomment-722778085)
-[^5]: [Github Booleans are only sometimes Booleans](https://github.com/actions/runner/issues/1483)
+[^2]: [Github Booleans are only _sometimes_ Booleans](https://github.com/actions/runner/issues/1483)
+[^3]: [Support YAML anchors](https://github.com/community/community/discussions/4501)
+[^4]: [Support YAML anchors](https://github.com/actions/starter-workflows/issues/162)
+[^5]: [Support YAML anchors](https://github.com/actions/runner/issues/438#issuecomment-722778085)

@@ -17,3 +17,9 @@
 <script async defer src="{{ .Site.BaseURL }}js/buttons.js"></script>
 {{ end }}
 
+{{ if .HasShortcode "youtubelite" }}
+<script async defer src="{{ .Site.BaseURL }}js/lite-yt-embed.js"></script>
+
+<link rel="stylesheet" type="text/css" href="{{ .Site.BaseURL }}css/lite-yt-embed.css" />
+{{ end }}
+

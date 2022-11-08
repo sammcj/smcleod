@@ -226,6 +226,7 @@ titleFontFamily = "Atkinson Hyperlegible"
     [params.page.share]
       enable = true
       Twitter = true
+      Mastodon = true
       Facebook = false
       Linkedin = true
       Whatsapp = false
