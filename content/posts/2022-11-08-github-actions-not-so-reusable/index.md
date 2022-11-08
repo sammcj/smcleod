@@ -3,7 +3,7 @@ title: "Github Not-So-Reusable Actions"
 description: "Github Actions Reusable Workflows vs Composite Actions"
 subtitle: ""
 date: 2022-11-06T15:52:27+11:00
-lastmod: 2022-11-07T08:52:27+11:00
+lastmod: 2022-11-08T08:52:27+11:00
 author: Sam McLeod
 description: ""
 keywords: ["github", "ci", "yaml"]
@@ -45,12 +45,13 @@ There's no one way to reuse workflows - you can't simply include / inherit FROM 
 
 Composite actions are a way to combine multiple steps into a single step. They are a way to reuse [steps](https://docs.github.com/en/actions/using-workflows/workflow-syntax-for-github-actions#jobsjob_idsteps), but not [workflows](https://docs.github.com/en/actions/using-workflows/about-workflows).
 
-- Composite actions requires setting the shell in each step (`shell: bash`).
-- Composite actions requires setting run.using as composite in each workflow (`runs.using: "composite"`).
-- Composite actions can be called as part of one of the steps in a job.
+- Booleans in composite actions are actually Strings - even if you set their type to Boolean[^5]. 🤦
+- Composite Actions requires setting the shell in each step (`shell: bash`).
+- Composite Actions requires setting run.using as composite in each workflow (`runs.using: "composite"`).
+- Composite Actions can be called as part of one of the steps in a job.
 - Composite Actions can include multiple files, so it's possible to use files from the Action or from the user's repository.
 - Composite Actions can include multiple steps, but not multiple jobs.
-- Composite Actions do not support `${{ secrets.mysecret }}`, a workaround is to pass the secrets as input parameters from calling workflow.
+- Composite Actions do not support `${{ secrets.mysecret }}`, a workaround is to pass the secrets as input parameters from calling workflow. 🤦
 
 ### Example {#composite-action-example}
 
@@ -111,8 +112,9 @@ A reusable workflow is similar to normal GitHub Actions workflow, however:
 - Reusable workflows can include multiple jobs, and multiple steps in each job.
 - Reusable workflows are defined through the `workflow_call` event type.
   - "Regular" (non-reusable) Workflow can be triggered through a `workflow_dispatch` event.
-  - Both event types support `input` - however with dispatchable Workflows `input` object is `${{ github.event.inputs }}` where as callable workflows receive `${{ inputs }}` 🤯.
+  - Both event types support `input` - however with dispatchable Workflows `input` object is `${{ github.event.inputs }}` where as callable workflows receive `${{ inputs }}` 🤦.
   - As a result, in order to make a reusable workflow dispatchable, a wrapper workflow may be required.
+- Unlike Composite Actions, Booleans in Reusable Workflows _are_ Booleans.
 
 ### Example {#reusable-workflow-example}
 
@@ -158,7 +160,10 @@ Unfortunately despite requests[^1] to[^2] do[^3] so[^4] - Github Actions does no
 
 While obviously not a solution for reusable workflows - these would make large workflows a lot simpler and easier to maintain and as such reduce reliance on the band aid solutions that are _Reusable Workflows_ and _Composite Actions_.
 
+---
+
 [^1]: [GitHub Actions: Support YAML anchors](https://github.com/actions/runner/issues/1182)
 [^2]: [Support YAML anchors](https://github.com/community/community/discussions/4501)
 [^3]: [Support YAML anchors](https://github.com/actions/starter-workflows/issues/162)
 [^4]: [Support YAML anchors](https://github.com/actions/runner/issues/438#issuecomment-722778085)
+[^5]: [Github Booleans are only sometimes Booleans](https://github.com/actions/runner/issues/1483)
