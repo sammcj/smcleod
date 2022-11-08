@@ -215,6 +215,14 @@ titleFontFamily = "Atkinson Hyperlegible"
           src = "atkinson-hyperlegible/atkinson-hyperlegible.css"
           defer = true
 
+      [params.page.library.js]
+        # someJavaScript = "some.js"
+        [params.page.library.js.buttons]
+          src = "js/buttons.js"
+          defer = true
+          async = true
+          attr = "github_buttons"
+
     [params.page.share]
       enable = true
       Twitter = true
@@ -252,6 +260,10 @@ titleFontFamily = "Atkinson Hyperlegible"
     copyright = true
     author = true
     since = 2010
+
+  [params.HugoShortcodes.Github]
+    User = 'sammcj'
+    Repository = 'smcleod'
 
   [params.seo]
     image = "/apple-touch-icon.png"

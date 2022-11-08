@@ -13,3 +13,7 @@
 
 {{ template "_internal/opengraph.html" . }}
 
+{{ if .HasShortcode "github_button" }}
+<script async defer src="{{ .Site.BaseURL }}js/buttons.js"></script>
+{{ end }}
+

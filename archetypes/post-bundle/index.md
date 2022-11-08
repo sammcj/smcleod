@@ -30,6 +30,4 @@ draft: true
 type: posts
 ---
 
-<!--more-->
-
-TODO
+<!-- markdownlint-disable MD025 -->

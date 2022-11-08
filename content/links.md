@@ -1,55 +1,79 @@
 ---
 title: "Links"
-excerpt: "Links to things I enjoy and use."
-type: links
+excerpt: "Links to things I use."
+subtitle: "Links to things I use."
+type: pages
 comments: false
 showDate: false
 series: [ BestOf ]
 toc: true
+norss: true
 ---
 
 ## Software
 
-- [Alien Blue](http://www.reddit.com/r/alienblue) - Reddit Client
-- [Amphetamine](https://apps.apple.com/us/app/amphetamine/id937984704?mt=12) - Keep Your Mac Awake
-- [Backblaze](https://www.backblaze.com) - Cloud Backups
 - [Bear](https://bear.app) - Markdown / Notes / Web Clipping
+- [MusicHarbor](https://apps.apple.com/au/app/musicharbor-track-new-music/id1440405750) - Track new and upcoming music releases
+- [Plex](https://plex.tv) - Home Media Streaming
+- [Reeder](http://reederapp.com) - RSS Client
+- [Stay](https://cordlessdog.com/stay/) - Keep App Windows Where You Want Them
+- [Things](https://culturedcode.com/things/) - Lists / GTD
+- [PFsense](https://www.pfsense.org) - Routing, Firewall, VPN and Network Management
+
+### macOS Apps
+
+- [Amphetamine](https://apps.apple.com/us/app/amphetamine/id937984704?mt=12) - Keep Your Mac Awake
 - [BetterTouchTool](https://folivora.ai/) - macOS automation and customisation
 - [Brew](https://brew.sh/) - Package manager
   - [mas](https://github.com/mas-cli/mas) - Mac App Store CLI integrated with brew
-- [Bumpr](https://www.getbumpr.com) - Customise Browser By App or Link
-- [Calibre](http://calibre-ebook.com) - Ebook Management
-- [DaisyDisk](https://daisydiskapp.com/) - Disk usage inspector
-- [Fastmail](https://www.fastmail.com) - Email
-- [Handbrake](https://handbrake.fr) - Video Encoding
-- [ImageOptim Beta](https://imageoptim.com/ImageOptim1.8.9a1.tar.bz2) - Image compression)
-  - *Note: This is a beta version, but it's the only version that supports Apple Silicon natively, the author is working on [ImageOptim 2 - A complete rewrite](https://github.com/ImageOptim/ImageOptim/issues/354)*.
-- [Kagi](https://kagi.com) - Premium Search Engine
 - [Keka](https://www.keka.io/) - Archive Manager
-- [LaunchControl](https://www.soma-zone.com/LaunchControl/) - Manage launchd
-- [Little Snitch](https://www.obdev.at/products/littlesnitch/index.html) - Firewall
-- [MeetingBar](https://apps.apple.com/au/app/meetingbar/id1532419400?mt=12) - Calendar Integration
 - [Micro Snitch](https://obdev.at/products/microsnitch/index.html) - Notifications for active mic/webcam
-- [MiniHack](https://itunes.apple.com/au/app/minihack-for-hacker-news/id631108846?mt=8) - Hacker News Client
 - [mu-repo](https://fabioz.github.io/mu-repo/) - Manage Multiple Git Repositories
-- [MusicHarbor](https://apps.apple.com/au/app/musicharbor-track-new-music/id1440405750) - Track new and upcoming music releases
+- [Calibre](http://calibre-ebook.com) - Ebook Management
+- [LaunchControl](https://www.soma-zone.com/LaunchControl/) - Manage launchd
+
+- [MeetingBar](https://apps.apple.com/au/app/meetingbar/id1532419400?mt=12) - Calendar Integration
+- [Bumpr](https://www.getbumpr.com) - Customise Browser By App or Link
+- [DaisyDisk](https://daisydiskapp.com/) - Disk usage inspector
+- [Handbrake](https://handbrake.fr) - Video Encoding
+- [ImageOptim Beta](https://imageoptim.com/ImageOptim1.9.0.tar.xz) - Image compression)
+  - *Note: This is a beta version, but it supports Apple Silicon natively, the author is working on [ImageOptim 2](https://github.com/ImageOptim/ImageOptim/issues/354)*.
 - [OnyX](https://titanium-software.fr/en/onyx.html) - macOS customisation
+- [Shottr](https://shottr.cc/) - Better screenshots
+- Firewall
+  - [Little Snitch](https://www.obdev.at/products/littlesnitch/index.html) - Firewall
+  - [RadioSilence](https://radiosilenceapp.com) - Firewall
+- [Pixelmator Pro](https://www.pixelmator.com/pro/) - Image Editing
+
+### iOS Apps
+
+- [Alien Blue](http://www.reddit.com/r/alienblue) - Reddit Client
 - [Overcast](https://overcast.fm) - Podcast Client
+
+## Services
+
+- [Kagi](https://kagi.com) - Premium Search Engine
+- [Backblaze](https://www.backblaze.com) - Cloud Backups
+- [Fastmail](https://www.fastmail.com) - Email
 - [Parcel](https://apps.apple.com/au/app/parcel/id375589283) - Track parcels
 - [Peek](https://apps.apple.com/au/app/peek-a-quick-look-extension/id1554235898?mt=12) - Quicklook plugins
-- [PFsense](https://www.pfsense.org) - Routing, Firewall, VPN and Network Management
-- [Pixelmator Pro](https://www.pixelmator.com/pro/) - Image Editing
-- [Plex](https://plex.tv) - Home Media Streaming
 - [Prompt](https://panic.com/prompt/) - Mobile SSH Client
-- [RadioSilence](https://radiosilenceapp.com) - Firewall
-- [Reeder](http://reederapp.com) - RSS Client
-- [Shottr](https://shottr.cc/) - Better screenshots
-- [Signal](https://signal.org) - Secure Messaging
-- [Stay](https://cordlessdog.com/stay/) - Keep App Windows Where You Want Them
-- [Things](https://culturedcode.com/things/) - Lists / GTD
+
+## Browser Extensions
+
 - [uBlock Origin](https://addons.mozilla.org/en-US/firefox/addon/ublock-origin/) - Browser Ad Blocking and Privacy
-- [StrongBox](https://strongboxsafe.com/) - Password / Secrets Manager
-  - *Note: I will likely eventually replace 1Password with Strongbox, it's a native app (not Electron!), currently waiting on official browser extensions*.
+- [Bypass Paywalls Clean](https://addons.mozilla.org/en-GB/firefox/addon/bypass-paywalls-clean)
+- [SponsorBlock - Skip Sponsorships on YouTube](https://addons.mozilla.org/en-GB/firefox/addon/sponsorblock)
+- [FastForward](https://addons.mozilla.org/en-GB/firefox/addon/fastforwardteam/)
+- [Copy PlainText](https://addons.mozilla.org/en-GB/firefox/addon/copy-plaintext)
+- [Awesome RSS](https://addons.mozilla.org/en-GB/firefox/addon/awesome-rss)
+- [Night Mode - Hacker News](https://addons.mozilla.org/en-GB/firefox/addon/night-mode-hacker-news)
+- [Upvote Anywhere](https://addons.mozilla.org/en-GB/firefox/addon/upvote-anywhere/)
+- [Refined Github](https://github.com/refined-github/refined-github)
+- [MarkDownload](https://addons.mozilla.org/en-GB/firefox/addon/markdownload/)
+- [LocalCDN](https://addons.mozilla.org/en-GB/firefox/addon/localcdn-fork-of-decentraleyes/)
+
+----
 
 ## Media
 
@@ -66,6 +90,8 @@ toc: true
 - [The Skeptics Guide To The Universe (SGU)](https://www.theskepticsguide.org/)
 - [You Are Not So Smart](https://youarenotsosmart.com/)
 
+----
+
 ### YouTube Channels
 
 - [DTM Racing](https://www.youtube.com/channel/UCwKq447rYMVI5dAQWMmFnfg)
@@ -76,7 +102,26 @@ toc: true
 - [Techmoan](https://www.youtube.com/playlist?list=PLN2yCnHTG_6qxmv_pdBxWxCPsbA1Cl2RI)
 - [Warped Perception](https://www.youtube.com/channel/UCFH4dWqQQOYkyJZUGT4q5pg)
 
-### Misc
+----
+
+## Hardware
+
+### For Your Hands
+
+- [Das Keyboard](http://daskeyboard.com) - Mechanical Keyboard
+- [Keychron](https://www.keychron.com) - Low Profile Mechanical Keyboards
+- [Logitech MX Master 3](https://www.logitech.com/en-au/products/mice/mx-master-3s.html) - Mouse
+
+### For Your Ears
+
+- [Ultrasone Signature Pro](https://www.ultrasone.com/en/products/headphones/signature-pro) - Headphones
+- [Sony WH-1000XM5](https://www.sony.com.au/electronics/headband-headphones/wh-1000xm5) - Portable Headphones
+- [Benchmark DAC](https://benchmarkmedia.com/collections/digital-to-analog-audio-converter) - DAC & Preamp
+
+### For Your Feet
 
 - [All Day Socks](http://alldaysocks.com) - For Your Feet
+
+### For Your Pocket
+
 - [Bellroy Wallets](http://bellroy.com) - For Your Pocket

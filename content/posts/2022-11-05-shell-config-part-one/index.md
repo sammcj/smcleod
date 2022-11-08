@@ -29,7 +29,7 @@ As of 2022, I've been using zsh as my primary shell for 14 years.
 
 Over that time I've experimented with and accumulated a lot of configuration, scripts, hacks, plugins and themes. I've settled on a configuration that I'm mostly happy with, over this series I'm going to share my current setup.
 
-I store all of my configuration in a git repository available here: [zsh-bootstrap](https://github.com/sammcj/zsh-bootstrap).
+I store all of my configuration in a git repository available here: [zsh-bootstrap](https://github.com/sammcj/zsh-bootstrap) {{< github-button button="star"     user="sammcj" repo="zsh-bootstrap" count="true" >}} {{< github-button button="fork"     user="sammcj" repo="zsh-bootstrap" count="true" >}}
 
 ## File Structure
 

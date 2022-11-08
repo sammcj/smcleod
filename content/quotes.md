@@ -1,17 +1,14 @@
 ---
 author: "Sam McLeod"
-date: "2010-01-01T01:00:00Z"
-#description:"A collection of quotes and thoughts I've enjoyed"
+description: "A collection of quotes"
 tags:
 - quotes
-- thoughts
-- musings
-- art
-- life
 title: "Quotes and Musings"
 categories: [ quotes ]
 hideComments: true
 keywords: "quotes"
+showdate: false
+hiddenFromHomePage: true
 readingTime: true
 toc: true
 aliases:
@@ -19,7 +16,7 @@ aliases:
   - /{{:section}}/{{ dateFormat "2006" .Date }}/{{ dateFormat "01" .Date }}/{{ replace .Name "-" " " | title }}
 ---
 
-A collection of quotes and musings collected over time that are important to me.
+A collection of quotes and musings
 
 ## Quotes
 
