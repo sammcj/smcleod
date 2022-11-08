@@ -88,3 +88,11 @@ Embeds a colour swatch.
 ```hugo
 {{<colour name="red" hex="#ff0000">}}
 ```
+
+## highlight.html
+
+Highlights words.
+
+```hugo
+Highlight {{< highlighter color="lime" >}}absolutely **any** words {{</ highlighter >}} you want.
+```
