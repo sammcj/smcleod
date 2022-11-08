@@ -176,7 +176,7 @@ titleFontFamily = "Atkinson Hyperlegible"
 
   [params.page]
     linkToMarkdown = true
-    linkToEdit = "https://github.com/sammcj/smcleod-hugo/edit/main/content/{path}"
+    linkToEdit = "https://github.com/sammcj/smcleod/edit/main/content/{path}"
 
     [params.page.code]
       copy = true
