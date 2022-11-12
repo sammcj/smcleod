@@ -1,8 +1,8 @@
 ---
 title: "Zsh Configuration and Plugins - Part Two"
 subtitle: "The second post in the series on ZSH / shell configuration and customisation"
-date: 2022-13-13T10:32:43+11:00
-lastmod: 2022-11-13T10:32:43+11:00
+date: 2024-13-13T10:32:43+11:00 #TODO:
+lastmod: 2024-11-13T10:32:43+11:00
 author: Sam McLeod
 description: "My Z-Shell configuration, scripts and hacks"
 keywords: ["zsh", "bash", "scripting", "linux", "macOS"]
@@ -11,12 +11,12 @@ tags: ["zsh", "bash", "scripting", "linux", "macOS"]
 categories: ["zsh", "scripting", "linux", "macOS"]
 series: ["ZSH", "Code"]
 
-images: ["colour_vertical_icon_wbg_wide.png"] #TODO:
-featuredimage: "colour_vertical_icon_wbg_wide.png"
-# featuredImagePreview: "colour_vertical_icon_wbg_wide.png"
+images: ["zsh-part-two.gif"]
+featuredimage: "zsh-part-two.gif"
+featuredImagePreview: "zsh-part-two.gif"
 
-hiddenFromHomePage: false
-hiddenFromSearch: false
+hiddenFromHomePage: true #TODO:
+hiddenFromSearch: true
 
 toc: true
 math: false
@@ -25,7 +25,7 @@ readingTime: true
 showFullContent: false
 asciinema: false
 
-draft: true
+draft: true #TODO:
 ---
 
 TODO: Part two
