@@ -127,3 +127,11 @@ Embeds a youtube video.
 ```hugo
 {{<youtubelite videoId="RcXstZ4FzyE">}}
 ```
+
+## image-gallery.html
+
+Embeds a gallery of images with thumbnails.
+
+```hugo
+{{< image-gallery gallery_dir="dir-with-images" >}}
+```
