@@ -10,6 +10,11 @@ toc: true
 norss: true
 ---
 
+- 🐘 [Mastodon](https://aus.social/@s_mcleod)
+- 🧑‍💻 [Github](https://www.github.com/sammcj)
+- 🦃 [Twitter](https://www.twitter.com/sammcj)
+- 👔 [LinkedIn](https://www.linkedin.com/in/sammcj)
+
 ## Software
 
 - [Bear](https://bear.app) - Markdown / Notes / Web Clipping
