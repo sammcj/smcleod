@@ -20,6 +20,9 @@ images: [*image]
 hiddenFromHomePage: false
 hiddenFromSearch: false
 
+toc:
+  enable: true
+  auto: false
 asciinema: false
 math: false
 lightgallery: false
@@ -32,7 +35,8 @@ toc:
   auto: false # collapse all sections by default
 
 code:
-    maxShownLines: 200
+    maxShownLines: 20
+    copy: true
 ---
 
 <!-- markdownlint-disable MD025 -->

@@ -128,6 +128,30 @@ Embeds a youtube video.
 {{<youtubelite videoId="RcXstZ4FzyE">}}
 ```
 
+## tabs.html
+
+Code with tabs, good for showing different languages.
+
+```hugo
+{{< tabs groupId="config" >}}
+{{% tab name="json" %}}
+\```json
+{
+  "Hello": "World"
+}
+\```
+{{% /tab %}}
+{{% tab name="XML" %}}
+\```xml
+<Hello>World</Hello>
+\```
+{{% /tab %}}
+{{% tab name="properties" %}}
+\```properties
+Hello = World
+\```
+{{% /tab %}}
+{{< /tabs >}}
 ## image-gallery.html
 
 Embeds a gallery of images with thumbnails.

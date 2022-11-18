@@ -14,6 +14,17 @@ showShare:
 norss:
 nosearch:
 toc:
+  enable: true
+  auto: false
+asciinema: false
+math: false
+lightgallery: false
+readingTime: true
+showFullContent: false
+draft: true
+type: posts
+code:
+  copy: true
 showDate:
 draft: true
 aliases:
