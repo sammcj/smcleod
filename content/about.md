@@ -48,9 +48,10 @@ Check out the [Links](/links/) page for some of my favourite services, tools and
 
 ## Contact
 
-- [LinkedIn](https://www.linkedin.com/in/sammcj)
-- [Github](https://www.github.com/sammcj)
-- [Twitter](https://www.twitter.com/sammcj)
+- 🐘 [Mastodon](https://aus.social/@s_mcleod)
+- 🧑‍💻 [Github](https://www.github.com/sammcj)
+- 🦃 [Twitter](https://www.twitter.com/sammcj)
+- 👔 [LinkedIn](https://www.linkedin.com/in/sammcj)
 
 ---
 
@@ -62,6 +63,6 @@ Please log an issue!
 
 Or click "Edit this page" at the bottom of a post to submit a PR.
 
-----
+---
 
 Words are my own or somebody else's 🖖🏼

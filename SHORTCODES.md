@@ -152,4 +152,10 @@ Hello = World
 \```
 {{% /tab %}}
 {{< /tabs >}}
+## image-gallery.html
+
+Embeds a gallery of images with thumbnails.
+
+```hugo
+{{< image-gallery gallery_dir="dir-with-images" >}}
 ```

@@ -30,9 +30,13 @@ readingTime: true
 showFullContent: false
 draft: true
 type: posts
+toc:
+  enable: true
+  auto: false # collapse all sections by default
 
 code:
-  copy: true
+    maxShownLines: 20
+    copy: true
 ---
 
 <!-- markdownlint-disable MD025 -->
