@@ -46,7 +46,7 @@ Outside of work my interests include:
 - 🎮 Gaming (not too frequently though!), mostly multiplayer strategic FPS such as [Hell Let Loose](https://www.hellletloose.com/) with friends.
 - 📺 Film and Television, especially Sci-Fi and British Comedy.
 - 🧑🏼‍💻 Technology, both hardware and software engineering, IoT, and automation gadgets.
-- 🐈 Cats, especially [Piper](piper.jpg).
+- 🐈 Cats, especially [Piper](/piper.jpg).
 - 💡 IoT / home automation.
 - 🚗 Road trips.
 
