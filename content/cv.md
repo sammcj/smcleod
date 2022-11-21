@@ -1,7 +1,7 @@
 ---
 title: "Digital CV"
 description: "Sam McLeod"
-aliases: ["contact", "cv", "resume", "linkedin"]
+aliases: ["cv", "resume", "experience", "jobs"]
 author: "Sam McLeod"
 norss: true
 comments: false
