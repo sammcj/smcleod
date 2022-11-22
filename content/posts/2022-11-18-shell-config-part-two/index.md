@@ -284,21 +284,16 @@ Checks out a branch when provided a branch name, or will prompt to select a bran
 ```bash
 function gco(){
   if [[ -n $1 ]]; then
+    if [[ $1 == "-b" ]]; then
+      # shift to remove -b from args
+      shift 1
+    fi
     # check to see if the branch exists, if it doesn't offer to create it and check it out otherwise just check it out
-    if [[ -n $(git branch -a | grep -q "$@") ]]; then
-      git checkout "$@"
+    if git branch -a | grep -q "remotes/origin/$1"; then
+      git checkout "$1"
     else
-      echo "Branch $1 does not exist, would you like to create it? (y/n)"
-      read -r response
-      if [[ $1 == "-b" ]]; then
-        if [[ $response == "y" ]]; then
-          git checkout "$@"
-        fi
-      else
-        if [[ $response == "y" ]]; then
-          git checkout -b "$@"
-        fi
-      fi
+      echo "Creating branch $1"
+      git checkout -b "$1"
     fi
   else
     git branch --sort=-committerdate | fzf --header 'Checkout Recent Branch' --preview 'git diff --color=always {1}' --pointer='>' | xargs git checkout
