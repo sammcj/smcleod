@@ -318,7 +318,7 @@ titleFontFamily = "Atkinson Hyperlegible"
     Twitter = "s_mcleod"
     Linkedin = "sammcj/"
     Goodreads = "5836466-sam"
-    Lastfm = "sammcj2000"
+    # Lastfm = "sammcj2000"
     Hackernews = "smcleod"
     Gitlab = "sammcj"
   [params.social.Mastodon]
