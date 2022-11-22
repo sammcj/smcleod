@@ -37,6 +37,9 @@ toc:
 code:
     maxShownLines: 20
     copy: true
+
+comment:
+  enable: false
 ---
 
 <!-- markdownlint-disable MD025 -->

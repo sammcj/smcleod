@@ -190,7 +190,14 @@ titleFontFamily = "Atkinson Hyperlegible"
       maxShownLines = 100
 
     [params.page.comment]
-      enable = false
+      enable = true
+      [params.page.comment.utterances]
+        enable = true
+        repo = "https://github.com/sammcj/smcleod"
+        issueTerm = "blog-comments"
+        label = "comments"
+        lightTheme = "github-light"
+        darkTheme = "github-dark"
 
     [params.page.toc]
       # whether to enable the table of the contents
@@ -411,3 +418,4 @@ titleFontFamily = "Atkinson Hyperlegible"
   category = "categories"
   tag = "tags"
   series = "series"
+
