@@ -1,7 +1,7 @@
 ---
 author: "Sam McLeod"
 readingTime: true
-categories: [ Culture, Tech, Leadership ]
+categories: [ "Culture", "Tech", "Leadership", "Values" ]
 date: "2022-10-30T07:00:00Z"
 images: ["help.jpg"]
 featuredImagePreview: help.jpg
@@ -12,7 +12,8 @@ tags:
 title: Encourage Your Peers To Contribute To Open Source
 hideComments: false
 showFullContent: false
-keywords: "culture, opensource, git, leadership"
+keywords: ["culture", "opensource", "git", "leadership", "values"]
+tags: ["culture", "opensource", "git", "leadership", "values"]
 toc: true
 draft: false
 ---

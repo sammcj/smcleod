@@ -20,7 +20,9 @@ images: [*image]
 hiddenFromHomePage: false
 hiddenFromSearch: false
 
-toc: true
+toc:
+  enable: true
+  auto: false
 asciinema: false
 math: false
 lightgallery: false
@@ -28,6 +30,13 @@ readingTime: true
 showFullContent: false
 draft: true
 type: posts
+toc:
+  enable: true
+  auto: false # collapse all sections by default
+
+code:
+    maxShownLines: 20
+    copy: true
 ---
 
 <!-- markdownlint-disable MD025 -->

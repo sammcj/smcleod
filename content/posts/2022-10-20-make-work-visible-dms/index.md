@@ -1,20 +1,16 @@
 ---
 author: "Sam McLeod"
 readingTime: true
-categories: [ Tech, leadership ]
+categories: [ "Tech", "Leadership", "Values" ]
 date: "2022-10-20T07:00:00Z"
 aliases:
   - /tech/2022/10/20/make-work-visible-dms/
 images: ["silos.jpg"]
 featuredImagePreview: silos.jpg
-tags:
-- culture
-- tech
-- work
-- communication
 title: Making Work Visible - Avoid DMs
 showFullContent: false
-keywords: "work, communication, culture, tech, dms, direct messages"
+keywords: ["work", "communication", "culture", "tech", "direct messages"]
+tags: ["work", "communication", "culture", "tech", "direct messages"]
 toc: true
 ---
 
@@ -45,6 +41,7 @@ This is a blurb I add to the teams wiki page.
 > For more information see:
 >
 > - [Making Work Visible](https://smcleod.net/2022/10/making-work-visible-avoid-dms/)
+> - [NoHello](https://nohello.net)
 >
 > Thank you,
 > 😊
@@ -169,5 +166,6 @@ Remember: *We create more value by having conversations in public instead of beh
 
 - [Slack collaboration etiquette tips](https://slack.com/intl/en-au/blog/collaboration/etiquette-tips-in-slack)
 - [GitLab's Communication Handbook - Don't Send Direct Messages](https://about.gitlab.com/handbook/communication/#avoid-direct-messages)
+- [NoHello](https://nohello.net)
 
 [^1]: Thanks to Ville Saarinen from FlowDock's (now defunct) blog for the inspiration and some of the content for this post.

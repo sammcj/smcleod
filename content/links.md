@@ -10,6 +10,13 @@ toc: true
 norss: true
 ---
 
+## Mine
+
+- 🐘 [Mastodon](https://aus.social/@s_mcleod)
+- 🧑‍💻 [Github](https://www.github.com/sammcj)
+- 🦃 [Twitter](https://www.twitter.com/sammcj)
+- 👔 [LinkedIn](https://www.linkedin.com/in/sammcj)
+
 ## Software
 
 - [Bear](https://bear.app) - Markdown / Notes / Web Clipping
@@ -44,20 +51,21 @@ norss: true
   - [Little Snitch](https://www.obdev.at/products/littlesnitch/index.html) - Firewall
   - [RadioSilence](https://radiosilenceapp.com) - Firewall
 - [Pixelmator Pro](https://www.pixelmator.com/pro/) - Image Editing
+- [Peek](https://apps.apple.com/au/app/peek-a-quick-look-extension/id1554235898?mt=12) - Quicklook plugins
 
 ### iOS Apps
 
 - [Alien Blue](http://www.reddit.com/r/alienblue) - Reddit Client
 - [Overcast](https://overcast.fm) - Podcast Client
+- [Prompt](https://panic.com/prompt/) - Mobile SSH Client
+- [Parcel](https://apps.apple.com/au/app/parcel/id375589283) - Track parcels (also for macOS)
 
 ## Services
 
 - [Kagi](https://kagi.com) - Premium Search Engine
 - [Backblaze](https://www.backblaze.com) - Cloud Backups
 - [Fastmail](https://www.fastmail.com) - Email
-- [Parcel](https://apps.apple.com/au/app/parcel/id375589283) - Track parcels
-- [Peek](https://apps.apple.com/au/app/peek-a-quick-look-extension/id1554235898?mt=12) - Quicklook plugins
-- [Prompt](https://panic.com/prompt/) - Mobile SSH Client
+- [Kill The Newsletter!](https://kill-the-newsletter.com/) - Email to RSS
 
 ## Browser Extensions
 
@@ -110,11 +118,11 @@ norss: true
 
 - [Das Keyboard](http://daskeyboard.com) - Mechanical Keyboard
 - [Keychron](https://www.keychron.com) - Low Profile Mechanical Keyboards
-- [Logitech MX Master 3](https://www.logitech.com/en-au/products/mice/mx-master-3s.html) - Mouse
+- [Logitech MX Master 3](https://www.logitech.com/en-au/products/mice/mx-master-3s.910-006561.html) - Mouse
 
 ### For Your Ears
 
-- [Ultrasone Signature Pro](https://www.ultrasone.com/en/products/headphones/signature-pro) - Headphones
+- [Ultrasone Signature Pro](https://www.ultrasone.com/en/products/headphones/signature-pro) - HiFi Headphones
 - [Sony WH-1000XM5](https://www.sony.com.au/electronics/headband-headphones/wh-1000xm5) - Portable Headphones
 - [Benchmark DAC](https://benchmarkmedia.com/collections/digital-to-analog-audio-converter) - DAC & Preamp
 

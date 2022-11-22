@@ -25,6 +25,13 @@ enableInlineShortcodes = true
 fontFamily = "Atkinson Hyperlegible"
 titleFontFamily = "Atkinson Hyperlegible"
 
+[imaging]
+  anchor = 'Smart'
+  bgColor = '#ffffff'
+  hint = 'photo'
+  quality = 75
+  resampleFilter = 'Box'
+
 [[menu.main]]
   identifier = "posts"
   # you can add extra information before the name (HTML format is supported), such as icons
@@ -226,6 +233,7 @@ titleFontFamily = "Atkinson Hyperlegible"
     [params.page.share]
       enable = true
       Twitter = true
+      Mastodon = true
       Facebook = false
       Linkedin = true
       Whatsapp = false
