@@ -259,6 +259,19 @@ function mv() {
 }
 ```
 
+### `clean_string`
+
+```shell
+clean_string() {
+    # Escape special characters in a string such as $, ", ', `, \, and newline.
+    # Usage: escape_string "string to escape"
+    local string="${1}"
+    local escaped_string
+    escaped_string=$(printf '%q' "${string}")
+    echo "${escaped_string}"
+}
+```
+
 ---
 
 ## Git Functions
