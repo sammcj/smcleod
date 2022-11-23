@@ -28,6 +28,8 @@ lightgallery: false
 readingTime: true
 showFullContent: false
 draft: false
+comment:
+  enable: true
 ---
 
 
