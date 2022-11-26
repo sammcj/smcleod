@@ -13,3 +13,5 @@ Feel free to raise a PR or [create an issue](https://github.com/sammcj/smcleod/i
 ## Hugo Shortcodes
 
 See [SHORTCODES.md](SHORTCODES.md).
+
+<a rel="me" href="https://aus.social/@s_mcleod">Mastodon</a>
