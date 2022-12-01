@@ -51,7 +51,7 @@ Repository: [sammcj/CO2-Logger](https://github.com/sammcj/CO2-Logger)
 
 ## Usage
 
-*Note this post is from 2016, in 2021 I replace my custom Co2 loggers with a [Aranet4](https://aranet.com/products/aranet4/) which while very expensive, is and excellent off-the-shelf solution, with many features.*
+*Note this post is from 2016, in 2021 I replaced my custom Co2 loggers with an [Aranet4](https://aranet.com/products/aranet4/). While very expensive, is and excellent off-the-shelf solution, with many features.*
 
 ### Connection
 
