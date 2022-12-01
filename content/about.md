@@ -21,7 +21,7 @@ toc:
 
 > Hi I'm Sam 👋🏻
 
-I'm an Engineer in the Platform/Automation/DevOps space.
+I'm a [1x Engineer](https://1x.engineer/) in the Platform/Automation/DevOps space.
 
 Currently working as a [Platform Engineering Lead](/cv/) at [DigIO](htttps://digio.com.au) in Melbourne, Australia.
 
@@ -32,7 +32,7 @@ Currently working as a [Platform Engineering Lead](/cv/) at [DigIO](htttps://dig
 - 🦃 [Twitter](https://www.twitter.com/sammcj)
 - 👔 [LinkedIn](https://www.linkedin.com/in/sammcj)
 
----
+--
 
 ## Interests
 
