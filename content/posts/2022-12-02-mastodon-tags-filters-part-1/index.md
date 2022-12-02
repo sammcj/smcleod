@@ -25,7 +25,7 @@ toc:
 
 code:
   copy: true
-  maxShownLines: 500
+  maxShownLines: 2000
 math: false
 lightgallery: false
 readingTime: false
