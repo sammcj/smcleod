@@ -159,3 +159,18 @@ Embeds a gallery of images with thumbnails.
 ```hugo
 {{< image-gallery gallery_dir="dir-with-images" >}}
 ```
+
+## custom-codeblock.html
+
+This shortcode allows you to set the font size and the programming language for syntax highlighting of a code block in a Hugo post.
+
+To use it, simply wrap your code block in the shortcode like this:
+
+```
+{{< code-block font-size="12pt" language="go" >}}
+Your code goes here
+{{< /code-block >}}
+```
+
+The font-size and language attributes are optional and default to "10pt" and "text" respectively if not provided.
+
