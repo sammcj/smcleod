@@ -46,11 +46,9 @@ Todo - actually describe what I'm upto here 😅.
 This post is a bit of a place holder - I'll update it in the next for days with more information.
 
 
-
 # Golang
 
-
-```golang
+{{< code-block font-size="12pt" language="go" >}}
 package main
 
 // Used for importing and exporting Mastodon Filters and Tags
@@ -886,5 +884,4 @@ case 6:
 fmt.Printf("Action completed successfully.\n")
 
 }
-
-```
+{{< /code-block >}}

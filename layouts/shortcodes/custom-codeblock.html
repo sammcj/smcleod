@@ -1,0 +1,29 @@
+{{/*
+This shortcode allows you to set the font size and the programming language for syntax highlighting of a code block in a Hugo post.
+To use it, simply wrap your code block in the shortcode like this:
+
+{{< code-block font-size="12pt" language="go" >}}
+Your code goes here
+{{< /code-block >}}
+
+The font-size and language attributes are optional and default to "10pt" and "text" respectively if not provided.
+*/}}
+
+{{/* Define the shortcode */}}
+{{< code-block font-size="10pt" language="text" >}}
+{{/* Get the font-size and language attributes from the shortcode */}}
+{{ $fontSize := .Get "font-size" }}
+{{ $language := .Get "language" }}
+
+{{/* Create a stylesheet that sets the font size for the code block */}}
+<style>
+pre {
+  font-size: {{ $fontSize }};
+}
+</style>
+
+{{/* Print the content of the shortcode, using the specified language for syntax highlighting */}}
+{{< highlight $language >}}
+{{ .Inner }}
+{{< /highlight >}}
+{{< /code-block >}}
