@@ -17,7 +17,7 @@ featuredImagePreview: ""
 
 hiddenFromHomePage: true
 hiddenFromSearch: false
-norss:true
+norss: true
 
 toc:
   enable: true
