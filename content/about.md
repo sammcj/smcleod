@@ -25,6 +25,8 @@ I'm a [1x Engineer](https://1x.engineer/) in the Platform/Automation/DevOps spac
 
 Currently working as a [Platform Engineering Lead](/cv/) at [DigIO](htttps://digio.com.au) in Melbourne, Australia.
 
+This site is my tech blog, a place to share my thoughts and ideas (mainly relating to engineering), and a place to keep track of things I've learned.
+
 ## Contact
 
 - 🐘 [Mastodon](https://aus.social/@s_mcleod)
