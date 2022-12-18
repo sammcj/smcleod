@@ -80,6 +80,7 @@ norss: true
 - [Refined Github](https://github.com/refined-github/refined-github)
 - [MarkDownload](https://addons.mozilla.org/en-GB/firefox/addon/markdownload/)
 - [LocalCDN](https://addons.mozilla.org/en-GB/firefox/addon/localcdn-fork-of-decentraleyes/)
+- [FediAct for Mastodon](https://github.com/lartsch/FediAct)
 
 ----
 

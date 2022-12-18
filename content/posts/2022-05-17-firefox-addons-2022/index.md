@@ -55,6 +55,7 @@ Probably the single most important addon.
 - [Upvote Anywhere](https://addons.mozilla.org/en-GB/firefox/addon/upvote-anywhere/)
 - [Refined Github](https://github.com/refined-github/refined-github)
 - [MarkDownload](https://addons.mozilla.org/en-GB/firefox/addon/markdownload/)
+- [FediAct](https://github.com/lartsch/FediAct)
 
 ### For AWS Users
 
