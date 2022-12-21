@@ -190,9 +190,9 @@ titleFontFamily = "Atkinson Hyperlegible"
       maxShownLines = 100
 
     [params.page.comment]
-      enable = true
+      enable = false
       [params.page.comment.utterances]
-        enable = true
+        enable = false
         repo = "https://github.com/sammcj/smcleod"
         issueTerm = "blog-comments"
         label = "comments"

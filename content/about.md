@@ -31,6 +31,7 @@ This site is my tech blog, a place to share my thoughts and ideas (mainly relati
 
 - 🐘 [Mastodon](https://aus.social/@s_mcleod)
 - 🧑‍💻 [Github](https://www.github.com/sammcj)
+- 🦤 [Twitter Archive](https://sammcj.github.io/twitter-archive/)
 - 🦃 [Twitter](https://www.twitter.com/sammcj)
 - 👔 [LinkedIn](https://www.linkedin.com/in/sammcj)
 
