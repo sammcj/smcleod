@@ -36,3 +36,4 @@ jobs:
           labelPullRequestsWhenApproved: "true"
           labelPullRequestsWhenReviewNeeded: "true"
           failJobsWhenReviewNeeded: "false"
+          testingActionLint: "true" # Testing Actionlint PRs (invalid value)

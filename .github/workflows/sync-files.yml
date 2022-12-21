@@ -21,6 +21,9 @@ concurrency:
 env:
   NODE_OPTIONS: "--max-old-space-size=4096"
 
+env: # Testing Actionlint PRs (duplicate value)
+  NODE_OPTIONS: "--max-old-space-size=4096"
+
 jobs:
   sync-files-to-beta:
     runs-on: ubuntu-22.04

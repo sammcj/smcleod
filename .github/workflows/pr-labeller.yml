@@ -25,6 +25,7 @@ permissions:
   checks: write
   contents: read
   security-events: read
+  donkeys: read # Testing Actionlint PRs (invalid permission)
 
 jobs:
   pr-labeller:
