@@ -18,6 +18,10 @@ TOKEN ?= $(shell echo $$GITHUB_TOKEN)
 
 # Tasks
 
+lint-docker: ## Lint the Dockerfile
+	@echo 'linting Dockerfile'
+	docker run --rm -i hadolint/hadolint < Dockerfile
+
 build: ## Build the container
 	@echo 'building $(DOCKER_REPO)'
 	docker build -t $(DOCKER_REPO) .
