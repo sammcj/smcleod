@@ -18,6 +18,10 @@ TOKEN ?= $(shell echo $$GITHUB_TOKEN)
 
 # Tasks
 
+hugo: ## Run hugo
+	@echo 'running hugo'
+	hugo serve --disableFastRender --buildDrafts
+
 lint-docker: ## Lint the Dockerfile
 	@echo 'linting Dockerfile'
 	docker run --rm -i hadolint/hadolint < Dockerfile
@@ -64,3 +68,5 @@ build-tag-publish-latest: build tag-latest publish-latest
 tag-version-latest: tag-version tag-latest
 publish: publish-latest publish-version
 ci: login build-nc publish
+run: hugo
+push: publish
