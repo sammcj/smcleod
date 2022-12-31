@@ -9,7 +9,7 @@ description: "Guide to emoji usage in Hugo and DoIt."
 featuredImage: "featured-image.webp"
 
 tags: ["emoji"]
-categories: ["documentation"]
+categories: ["Documentation"]
 
 lightgallery: true
 ---

@@ -9,7 +9,7 @@ description: "这篇文章展示了基本的 Markdown 语法和格式."
 featuredImage: "featured-image.webp"
 
 tags: ["Markdown", "HTML"]
-categories: ["documentation"]
+categories: ["Documentation"]
 
 lightgallery: true
 ---

@@ -9,7 +9,7 @@ description: "Discover what the Hugo - DoIt theme is all about and the core-conc
 featuredImage: "featured-image.webp"
 
 tags: ["installation", "configuration"]
-categories: ["documentation"]
+categories: ["Documentation"]
 series: ["getting-start"]
 series_weight: 1
 lightgallery: true

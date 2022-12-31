@@ -9,7 +9,7 @@ description: "This article shows the basic Markdown syntax and format."
 featuredImage: "featured-image.webp"
 
 tags: ["Markdown", "HTML"]
-categories: ["documentation"]
+categories: ["Documentation"]
 
 lightgallery: true
 ---

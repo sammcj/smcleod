@@ -9,7 +9,7 @@ description: "Hugo provides multiple built-in shortcodes for author convenience 
 featuredImage: "featured-image.webp"
 
 tags: ["shortcodes"]
-categories: ["documentation"]
+categories: ["Documentation"]
 series: ["getting-start"]
 series_weight: 3
 lightgallery: true

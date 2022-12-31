@@ -1,7 +1,7 @@
 ---
 author: "Sam McLeod"
 readingTime: true
-categories: [ Tech, security-privacy ]
+categories: [ Tech, Security-Privacy ]
 date: "2015-02-23T00:00:00Z"
 aliases:
   - /tech/2015/02/23/delete-known-governmentlinked-certificate-authorities-in-os-x/

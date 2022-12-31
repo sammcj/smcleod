@@ -7,7 +7,7 @@ author: Sam McLeod
 description: ""
 keywords: ["health","iot","co2"]
 tags: ["health","iot","co2"]
-categories: ["iot","health"]
+categories: ["IoT","Health"]
 series: []
 image: &image "https://user-images.githubusercontent.com/862951/52827251-21597e00-3118-11e9-9ebc-ddbbc9fb02a8.jpg"
 
