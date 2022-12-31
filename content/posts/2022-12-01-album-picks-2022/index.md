@@ -13,7 +13,8 @@ tags:
 title: Top album picks for 2022
 
 hiddenFromHomePage: true #TODO:
-hiddenFromSearch: true
+hiddenFromSearch: true #TODO:
+norss: true #TODO:
 
 showFullContent: false
 keywords: ["music", "bestof"]
@@ -22,7 +23,7 @@ math: false
 lightgallery: false
 asciinema: false
 
-draft: true
+draft: true #TODO:
 ---
 
 Here are my top album pics for 2022 (in no particular order)
