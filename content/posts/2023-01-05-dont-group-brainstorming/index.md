@@ -49,4 +49,4 @@ The group dynamic of brainstorming is a "social trap" - where the group is incen
 
 > Research finds that the same individuals that tend to dominate conversations and over-value their own ideas commonly hold positions of power such as roles within management.
 
-To me, this mirrors my observations on the managers that still insist on forcing others to work from company offices on the grounds of it being better for "collaboration".
+To me, this mirrors my observations on the managers that (still) insist on forcing others to work from company offices on the grounds of it being better for "collaboration".
