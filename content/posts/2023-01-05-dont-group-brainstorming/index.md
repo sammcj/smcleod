@@ -10,9 +10,9 @@ tags: ["brainstorming", "remotework", "leadership", "management", "productivity"
 categories: ["remotework", "leadership"]
 series: []
 
-images: []
-featuredimage: ""
-featuredImagePreview: ""
+images: ["group-brainstorming.jpg"]
+featuredimage: "group-brainstorming.jpg"
+featuredImagePreview: "group-brainstorming.jpg"
 
 hiddenFromHomePage: false
 hiddenFromSearch: false
