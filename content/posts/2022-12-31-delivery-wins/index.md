@@ -11,7 +11,7 @@ tags: [ "delivery", "health", "wins", "devops", "agile", "leadership", "manageme
 categories: [ "DevOps", "Leadership", "Health" ]
 series: []
 
-image: &image ""
+image: &image "wins.jpg"
 
 featuredimage: *image
 featuredImagePreview: *image
