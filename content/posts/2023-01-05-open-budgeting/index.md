@@ -30,12 +30,15 @@ readingTime: false
 showFullContent: false
 asciinema: false
 
-draft: false
+draft: true #TODO:
 ---
 
 # Budgeting for Subscriptions & Licenses
 
 TODO: Write an intro here explaining the purpose and intent of this post.
+
+This is a series of articles following my ongoing financial expenses on subscriptions and licenses.
+I'm doing this to be more transparent about subscription fatigue and to help others who are interested in doing the same.
 
 ## Recurring Expenses
 
@@ -58,6 +61,7 @@ TODO: Write an intro here explaining the purpose and intent of this post.
 | Amazon Prime    | Membership | Utilities              |     QoL      |          Yes           |    High    |             Medium             |  Yearly   |               |
 | Kayo Sport      |    SaaS    | Entertainment          |     QoL      |         Maybe          |   Medium   |             Medium             |  Monthly  |               |
 | OpenAI API      |    SaaS    | Coding/Writing Tool    |     QoL      |           No           |    High    |              High              |           |               |
+| Mobile/Data     |  Service   | Utilities              |   Required   |           No           |  Critical  |              High              |           |               |
 |                 |            |                        |              |                        |            |                                |           |               |
 
 Total (Yearly): $360
@@ -66,13 +70,30 @@ Total (Yearly): $360
 
 Products or services that are paid for on a one-time basis or when a major upgrade is released. Includes paid software I use on a regular basis.
 
-| Expense        |  Type   | Category    | Required/QoL | Want To Cancel/Replace | Usefulness | Satisfaction | Frequency | Cost |
-| :------------- | :-----: | :---------- | :----------: | :--------------------: | :--------: | :----------: | :-------: | :--: |
-| Pixelmator Pro | License | Photography |     QoL      |           No           |    High    |     High     | Once-Off  |      |
-| Things         | License | PKM         |     QoL      |         Maybe          |    High    |    Medium    | Once-Off  |      |
-| Parcel         | License | Utilities   |     QoL      |           No           |   Medium   |     High     |           |      |
-| Reeder         |         |             |              |                        |            |              |           |      |
-|                |         |             |              |                        |            |              |           |      |
+| Expense        |   Type   | Category    | Required/QoL | Want To Cancel/Replace | Usefulness | Satisfaction | Frequency | Cost |
+| :------------- | :------: | :---------- | :----------: | :--------------------: | :--------: | :----------: | :-------: | :--: |
+| Pixelmator Pro | License  | Photography |     QoL      |           No           |    High    |     High     | Once-Off  |      |
+| Things         | License  | PKM         |     QoL      |         Maybe          |    High    |    Medium    | Once-Off  |      |
+| Parcel         | License  | Utilities   |     QoL      |           No           |   Medium   |     High     |           |      |
+| Reeder         | License  | News        |     QoL      |           No           |    High    |     High     | Once-Off  |      |
+| iPhone         | Hardware |             |              |                        |            |              | Once-Off  |      |
+| MacBook Air    | Hardware |             |              |                        |            |              | Once-Off  |      |
+|                |          |             |              |                        |            |              |           |      |
+
+---
+
+## Other Expenses
+
+Other non-technical expenses that I pay for on a regular basis.
+
+| Expense            | Type | Category | Required/QoL | Want To Cancel/Replace | Usefulness | Satisfaction | Frequency | Cost |
+| :----------------- | :--: | :------- | :----------: | :--------------------: | :--------: | :----------: | :-------: | :--: |
+| Car Insurance      |      |          |              |                        |            |              |           |      |
+| Car Registration   |      |          |              |                        |            |              |           |      |
+| Contents Insurance |      |          |              |                        |            |              |           |      |
+| Drivers License    |      |          |              |                        |            |              |           |      |
+| Electricity        |      |          |              |                        |            |              |           |      |
+| Gas                |      |          |              |                        |            |              |           |      |
 
 ---
 
