@@ -104,7 +104,7 @@ titleFontFamily = "Atkinson Hyperlegible"
   [params.home.profile]
     enable = true
     # Gravatar Email for preferred avatar in home page
-    gravatarEmail = "gravatar@auto.smcleod.net"
+    # gravatarEmail = "gravatar@auto.smcleod.net"
     # URL of avatar shown in home page
     avatarURL = "/profilephoto/logo.svg"
     images = ["/apple-touch-icon.png", "/profilephoto/apple-touch-icon.png"]
