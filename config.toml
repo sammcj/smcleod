@@ -158,13 +158,13 @@ titleFontFamily = "Atkinson Hyperlegible"
     # type of search engine ("lunr", "algolia", "fuse")
     type = "fuse"
     # max index length of the chunked content
-    contentLength = 4000
+    contentLength = 5000
     # placeholder of the search bar
     placeholder = ""
     # DoIt NEW | 0.2.1 max number of results length
     maxResultLength = 10
     # DoIt NEW | 0.2.3 snippet length of the result
-    snippetLength = 30
+    snippetLength = 40
     # DoIt NEW | 0.2.1 HTML tag name of the highlight part in results
     highlightTag = "em"
     # DoIt NEW | 0.2.4 whether to use the absolute URL based on the baseURL in search index
@@ -172,11 +172,11 @@ titleFontFamily = "Atkinson Hyperlegible"
     [params.search.fuse]
       # DoIt NEW | 0.2.12 https://fusejs.io/api/options.html
       isCaseSensitive = false
-      minMatchCharLength = 2
+      minMatchCharLength = 3
       findAllMatches = true
-      location = 0
+      location = 20
       threshold = 0.3
-      distance = 100
+      distance = 40
       ignoreLocation = false
       useExtendedSearch = true
       ignoreFieldNorm = false
@@ -187,7 +187,7 @@ titleFontFamily = "Atkinson Hyperlegible"
 
     [params.page.code]
       copy = true
-      maxShownLines = 100
+      maxShownLines = 80
 
     [params.page.comment]
       enable = false
@@ -287,7 +287,7 @@ titleFontFamily = "Atkinson Hyperlegible"
   # Header config
   [params.header]
     # desktop header mode ("fixed", "normal", "auto")
-    desktopMode = "fixed"
+    desktopMode = "normal"
     # mobile header mode ("fixed", "normal", "auto")
     mobileMode = "auto"
     # theme change mode ("switch", "select")
@@ -303,7 +303,7 @@ titleFontFamily = "Atkinson Hyperlegible"
       # # you can add extra information after the name (HTML format is supported), such as icons
       # post = ""
       # DoIt NEW | 0.2.5 whether to use typeit animation for title name
-      typeit = false
+      typeit = true
 
   # TypeIt config
   [params.typeit]
