@@ -104,7 +104,7 @@ titleFontFamily = "Atkinson Hyperlegible"
   [params.home.profile]
     enable = true
     # Gravatar Email for preferred avatar in home page
-    # gravatarEmail = ""
+    gravatarEmail = "gravatar@auto.smcleod.net"
     # URL of avatar shown in home page
     avatarURL = "/profilephoto/logo.svg"
     images = ["/apple-touch-icon.png", "/profilephoto/apple-touch-icon.png"]
@@ -113,7 +113,7 @@ titleFontFamily = "Atkinson Hyperlegible"
     # subtitle shown in home page
     # subtitle = "This is My New Hugo Site"
     # whether to use typeit animation for subtitle
-    typeit = true
+    typeit = false
     # whether to show social links
     social = true
     # disclaimer = "Words are my own or somebody else's 🖖🏼"
