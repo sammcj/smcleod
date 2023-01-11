@@ -37,7 +37,7 @@ jobs:
       - uses: actions/checkout@ac593985615ec2ede58e132d2e21d2b1cbd6127c # v3
       - name: Sync files to beta repo - sammcj/smcleod-hugo
         id: sync-files
-        uses: BetaHuhn/repo-file-sync-action@5b81d5ff6e263af02fcaff026163620b15576e48 # v1.20.2
+        uses: BetaHuhn/repo-file-sync-action@3023dac7ce66c18b119e2012348437eadeaea116 # v1.21.0
         with:
           GH_INSTALLATION_TOKEN: ${{ steps.authenticator.outputs.token }}
           GIT_EMAIL: sammcj@users.noreply.github.com
