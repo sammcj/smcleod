@@ -1,7 +1,6 @@
 ---
 title: "About"
 description: "Sam McLeod"
-aliases: ["contact", "linkedin"]
 author: "Sam McLeod"
 norss: true
 comments: false
@@ -21,7 +20,7 @@ toc:
 
 > Hi I'm Sam 👋🏻
 
-I'm a [1x Engineer](https://1x.engineer/) in the Platform/Automation/DevOps space.
+I'm a [1x Engineer](https://1x.engineer/) in the Platform/Automation/DevOps space, Open Source advocate and community maintainer.
 
 Currently working as a [Platform Engineering Lead](/cv/) at [DigIO](htttps://digio.com.au) in Melbourne, Australia.
 
@@ -61,7 +60,7 @@ Check out the [Links](/links/) page for some of my favourite services, tools and
 
 ---
 
-### Things that give me energy
+### 🔋 Things that give me energy
 
 - 🏡 Remote work and remote first organisations.
 - 🧑‍🤝‍🧑 Building high performance platform and software delivery teams and team culture.
@@ -69,7 +68,7 @@ Check out the [Links](/links/) page for some of my favourite services, tools and
 - 🎷 Music collection and discovery.
 - 🔬 Adenosine Triphosphate.
 
-### Things that drain my energy
+### 🪫 Things that drain my energy
 
 - 💼 Needless bureaucracy.
 - 🔐 Disempowered teams.

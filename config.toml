@@ -75,6 +75,14 @@ titleFontFamily = "Atkinson Hyperlegible"
   url = "/about/"
   title = "Sam McLeod"
   weight = 6
+[[menu.main]]
+  identifier = "contact"
+  pre = ""
+  post = ""
+  name = "💬 Contact"
+  url = "/contact/"
+  title = "Contact me"
+  weight = 7
 
 [permalinks]
   posts = "/:year/:month/:slug/"
@@ -120,7 +128,7 @@ titleFontFamily = "Atkinson Hyperlegible"
   # Home page posts
   [params.home.posts]
     enable = true
-    paginate = 10
+    paginate = 12
 
   [params.app]
     # optional site title override for the app when added to an iOS home screen or Android launcher
@@ -133,7 +141,6 @@ titleFontFamily = "Atkinson Hyperlegible"
     iconColor = "#5bbad5"
     # Windows v8-10 tile color
     tileColor = "#da532c"
-
 
   # Section (all posts) page config
   [params.section]
