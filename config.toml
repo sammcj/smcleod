@@ -25,6 +25,15 @@ enableInlineShortcodes = true
 fontFamily = "Atkinson Hyperlegible"
 titleFontFamily = "Atkinson Hyperlegible"
 
+[module]
+  [module.hugoVersion]
+    extended = true
+  [module.imports]
+    disable = false
+    ignoreConfig = false
+    ignoreImports = false
+    debug = true
+
 [imaging]
   anchor = 'Smart'
   bgColor = '#ffffff'
