@@ -9,7 +9,7 @@ description: "Hugo 和 DoIt 中的 Emoji 的用法指南."
 featuredImage: "featured-image.webp"
 
 tags: ["emoji"]
-categories: ["Documentation"]
+categories: ["documentation"]
 
 lightgallery: true
 ---

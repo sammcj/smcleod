@@ -9,7 +9,7 @@ description: "Hugo 提供了多个内置的 Shortcodes, 以方便作者保持 Ma
 featuredImage: "featured-image.webp"
 
 tags: ["shortcodes"]
-categories: ["Documentation"]
+categories: ["documentation"]
 series: ["getting-start"]
 series_weight: 3
 lightgallery: true

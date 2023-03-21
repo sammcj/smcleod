@@ -9,7 +9,7 @@ description: "Find out how to create and organize your content quickly and intui
 featuredImage: "featured-image.webp"
 
 tags: ["content", "Markdown"]
-categories: ["Documentation"]
+categories: ["documentation"]
 series: ["getting-start"]
 series_weight: 2
 lightgallery: true

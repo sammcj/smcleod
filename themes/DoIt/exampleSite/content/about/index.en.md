@@ -18,7 +18,6 @@ math:
 ### Performance and SEO
 
 * :(fas fa-rocket fa-fw): Optimized for **performance**: [99]/[100] on mobile and [100]/[100] on desktop in [Google PageSpeed Insights](https://developers.google.com/speed/pagespeed/insights)
-* :(fas fa-space-shuttle fa-fw): **PJAX** loading supported
 * :(fab fa-searchengin fa-fw): Optimized SEO performance with a correct **SEO SCHEMA** based on JSON-LD
 * :(fab fa-google fa-fw): **[Google Analytics](https://analytics.google.com/analytics)** supported
 * :(far fa-chart-bar fa-fw): **[Fathom Analytics](https://usefathom.com/)** supported
@@ -27,7 +26,6 @@ math:
 * :(far fa-chart-bar fa-fw): **[Plausible Analytics](https://plausible.io/)** supported
 * :(fas fa-search fa-fw): Search engine **verification** supported (Google, Bind, Yandex and Baidu)
 * :(fas fa-tachometer-alt fa-fw): **CDN** for third-party libraries supported
-* :(fas fa-cloud-download-alt fa-fw): Automatically converted images with **Lazy Load** by [lazysizes](https://github.com/aFarkas/lazysizes)
 
 ### Appearance and Layout
 
@@ -60,7 +58,7 @@ math:
 
 ### Extended Features
 
-* :(fas fa-search fa-fw): **Search** supported by [Lunr.js](https://lunrjs.com/) or [algolia](https://www.algolia.com/) or [Fuse.js](https://fusejs.io/)
+* :(fas fa-search fa-fw): **Search** supported by [algolia](https://www.algolia.com/) or [Fuse.js](https://fusejs.io/)
 * :(far fa-grin-tongue-wink fa-fw): **Twemoji** supported
 * :(fas fa-code fa-fw): Automatically **highlighting** code
 * :(far fa-copy fa-fw): **Copy code** to clipboard with one click
@@ -94,10 +92,8 @@ Thanks to the authors of following resources included in the theme:
 * [Simple Icons](https://github.com/simple-icons/simple-icons)
 * [Animate.css](https://daneden.github.io/animate.css/)
 * [autocomplete.js](https://github.com/algolia/autocomplete.js)
-* [Lunr.js](https://lunrjs.com/)
 * [algoliasearch](https://github.com/algolia/algoliasearch-client-javascript)
 * [Fuse.js](https://fusejs.io/)
-* [lazysizes](https://github.com/aFarkas/lazysizes)
 * [object-fit-images](https://github.com/fregante/object-fit-images)
 * [Twemoji](https://github.com/twitter/twemoji)
 * [lightgallery.js](https://github.com/sachinchoolur/lightgallery.js)
@@ -116,6 +112,4 @@ Thanks to the authors of following resources included in the theme:
 * [Twikoo](https://twikoo.js.org/)
 * [Vssue](https://vssue.js.org/)
 * [cookieconsent](https://github.com/osano/cookieconsent)
-* [Pjax](https://github.com/PaperStrike/Pjax)
-* [Topbar](https://github.com/buunguyen/topbar)
 * [Remark42](https://remark42.com/)

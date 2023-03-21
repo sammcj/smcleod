@@ -1,7 +1,5 @@
 /* eslint-disable no-new */
 /* eslint-disable no-undef */
-import * as topbar from 'topbar'
-import lazySizes from 'lazysizes'
 // import ClipboardJS from 'clipboard'
 const Tablesort = require('tablesort')
 // const autocomplete = require('autocomplete.js')
@@ -191,6 +189,12 @@ function initSearch () {
     window._searchMobileOnce = true
     // Turn on the mask when clicking on the search button
     searchInput.addEventListener('focus', () => {
+      loadScript('autocomplete-script', '/lib/autocomplete/autocomplete.min.js')
+      if (window.config?.search?.type === 'algolia') {
+        loadScript('algolia-script', '/lib/algoliasearch/algoliasearch-lite.umd.min.js')
+      } else {
+        loadScript('fuse-script', '/lib/fuse/fuse.min.js')
+      }
       document.body.classList.add('blur')
       header.classList.add('open')
     })
@@ -209,7 +213,7 @@ function initSearch () {
       searchClear.style.display = 'none'
       window._searchMobile && window._searchMobile.autocomplete.setVal('')
     }, false)
-    // Remove the mask when click on it or pjax:send
+    // Remove the mask when click on it
     window._searchMobileOnClickMask = () => {
       header.classList.remove('open')
       searchLoading.style.display = 'none'
@@ -217,11 +221,16 @@ function initSearch () {
       window._searchMobile && window._searchMobile.autocomplete.setVal('')
     }
     window.clickMaskEventSet.add(window._searchMobileOnClickMask)
-    window.pjaxSendEventSet.add(window._searchMobileOnClickMask)
   } else {
     window._searchDesktopOnce = true
     // Turn on the mask when clicking on the search button
     searchToggle.addEventListener('click', () => {
+      loadScript('autocomplete-script', '/lib/autocomplete/autocomplete.min.js')
+      if (window.config?.search?.type === 'algolia') {
+        loadScript('algolia-script', '/lib/algoliasearch/algoliasearch-lite.umd.min.js')
+      } else {
+        loadScript('fuse-script', '/lib/fuse/fuse.min.js')
+      }
       document.body.classList.add('blur')
       header.classList.add('open')
       searchInput.focus()
@@ -238,7 +247,7 @@ function initSearch () {
         searchToggle.click()
       }
     })
-    // Remove the mask when click on it or pjax:send
+    // Remove the mask when click on it
     window._searchDesktopOnClickMask = () => {
       header.classList.remove('open')
       searchLoading.style.display = 'none'
@@ -246,10 +255,7 @@ function initSearch () {
       window._searchDesktop && window._searchDesktop.autocomplete.setVal('')
     }
     window.clickMaskEventSet.add(window._searchDesktopOnClickMask)
-    window.pjaxSendEventSet.add(window._searchDesktopOnClickMask)
   }
-  // Reset _searchDesktopOnce when pjax:send
-  window.pjaxSendEventSet.add(() => { window._searchDesktopOnce = false; window._searchMobileOnce = false })
   // Display the clear button only when the search box is not empty
   searchInput.addEventListener('input', () => {
     if (searchInput.value === '') searchClear.style.display = 'none'
@@ -274,67 +280,7 @@ function initSearch () {
           searchClear.style.display = 'inline'
           callback(results)
         }
-        if (searchConfig.type === 'lunr') {
-          const search = () => {
-            if (lunr.queryHandler) query = lunr.queryHandler(query)
-            const results = {}
-            window._index.search(query).forEach(({ ref, matchData: { metadata } }) => {
-              const matchData = window._indexData[ref]
-              let { uri, title, content: context } = matchData
-              if (results[uri]) return
-              let position = 0
-              Object.values(metadata).forEach(({ content }) => {
-                if (content) {
-                  const matchPosition = content.position[0][0]
-                  if (matchPosition < position || position === 0) position = matchPosition
-                }
-              })
-              position -= snippetLength / 5
-              if (position > 0) {
-                position += context.substr(position, 20).lastIndexOf(' ') + 1
-                context = '...' + context.substr(position, snippetLength)
-              } else {
-                context = context.substr(0, snippetLength)
-              }
-              Object.keys(metadata).forEach(key => {
-                title = title.replace(new RegExp(`(${key})`, 'gi'), `<${highlightTag}>$1</${highlightTag}>`)
-                context = context.replace(new RegExp(`(${key})`, 'gi'), `<${highlightTag}>$1</${highlightTag}>`)
-              })
-              results[uri] = {
-                uri: uri,
-                title: title,
-                date: matchData.date,
-                context: context
-              }
-            })
-            return Object.values(results).slice(0, maxResultLength)
-          }
-          if (!window._index) {
-            fetch(searchConfig.lunrIndexURL)
-              .then(response => response.json())
-              .then(data => {
-                const indexData = {}
-                window._index = lunr(function () {
-                  if (searchConfig.lunrLanguageCode) this.use(lunr[searchConfig.lunrLanguageCode])
-                  this.ref('objectID')
-                  this.field('title', { boost: 50 })
-                  this.field('tags', { boost: 20 })
-                  this.field('categories', { boost: 20 })
-                  this.field('content', { boost: 10 })
-                  this.metadataWhitelist = ['position']
-                  data.forEach((record) => {
-                    indexData[record.objectID] = record
-                    this.add(record)
-                  })
-                })
-                window._indexData = indexData
-                finish(search())
-              }).catch(err => {
-                console.error(err)
-                finish([])
-              })
-          } else finish(search())
-        } else if (searchConfig.type === 'algolia') {
+        if (searchConfig.type === 'algolia') {
           window._algoliaIndex = window._algoliaIndex || algoliasearch(searchConfig.algoliaAppID, searchConfig.algoliaSearchKey).initIndex(searchConfig.algoliaIndex)
           window._algoliaIndex
             .search(query, {
@@ -438,17 +384,11 @@ function initSearch () {
                 icon: '<i class="fab fa-algolia fa-fw"></i>',
                 href: 'https://www.algolia.com/'
               }
-            : (searchConfig.type === 'lunr'
-                ? {
-                    searchType: 'Lunr.js',
-                    icon: '',
-                    href: 'https://lunrjs.com/'
-                  }
-                : {
-                    searchType: 'Fuse.js',
-                    icon: '',
-                    href: 'https://fusejs.io/'
-                  })
+            : {
+                searchType: 'Fuse.js',
+                icon: '',
+                href: 'https://fusejs.io/'
+              }
           return `<div class="search-footer">Search by <a href="${href}" rel="noopener noreffer" target="_blank">${icon} ${searchType}</a></div>`
         }
       }
@@ -459,26 +399,17 @@ function initSearch () {
     if (isMobile) window._searchMobile = autosearch
     else window._searchDesktop = autosearch
   }
-  if (searchConfig.lunrSegmentitURL && !document.getElementById('lunr-segmentit')) {
-    const script = document.createElement('script')
-    script.id = 'lunr-segmentit'
-    script.type = 'text/javascript'
-    script.src = searchConfig.lunrSegmentitURL
-    script.async = true
-    if (script.readyState) {
-      script.onreadystatechange = () => {
-        if (script.readyState === 'loaded' || script.readyState === 'complete') {
-          script.onreadystatechange = null
-          initAutosearch()
-        }
-      }
-    } else {
-      script.onload = () => {
-        initAutosearch()
-      }
+  function loadScript(id, url) {
+    if (document.querySelector(`#${id}`) === null) {
+      const head = document.querySelector('head')
+      const autocomplete = document.createElement('script');
+      autocomplete.setAttribute('src', url)
+      autocomplete.setAttribute('id', id)
+      autocomplete.onload = () => initAutosearch()
+      head.appendChild(autocomplete)
     }
-    document.body.appendChild(script)
-  } else initAutosearch()
+  }
+  
 }
 
 function initDetails () {
@@ -656,8 +587,6 @@ function initToc () {
           parent = parent.parentElement.parentElement
         }
       }
-      // Update the broswer history
-      if (activeTocIndex !== -1) history.replaceState(history.state, null, tocLinkElements[activeTocIndex].href)
     })
     window._tocOnScroll()
     window.scrollEventSet.add(window._tocOnScroll)
@@ -820,9 +749,6 @@ function onScroll () {
     window.oldScrollTop = window.newScrollTop
   }
   window.addEventListener('scroll', handleScrollEvent, false)
-  document.addEventListener('pjax:send', function () {
-    window.removeEventListener('scroll', handleScrollEvent)
-  })
 }
 
 function onResize () {
@@ -852,7 +778,6 @@ function init () {
   window.resizeEventSet = new Set()
   window.switchThemeEventSet = new Set()
   window.clickMaskEventSet = new Set()
-  window.pjaxSendEventSet = new Set()
   if (window.objectFitImages) objectFitImages()
   initSVGIcon()
   initMenuMobile()
@@ -870,63 +795,6 @@ function init () {
   onScroll()
   onResize()
   onClickMask()
-  lazySizes.init()
 }
 
 init()
-
-new Pjax({
-  selectors: [
-    '.pjax-title',
-    'main',
-    '.menu-item',
-    '.pjax-assets',
-    '#fixed-buttons',
-    '.search-dropdown',
-    '.header-title',
-    'link[rel="canonical"]',
-    'link[rel="prev"]',
-    'link[rel="next"]',
-  ]
-})
-
-document.addEventListener('pjax:success', function () {
-  init()
-  // refresh analytics
-  if (typeof gtag === 'function') {
-    gtag('event', 'pageview', { page_location: window.location.href })
-  }
-
-  if (typeof fathom === 'function') {
-    fathom('trackPageview')
-  }
-
-  if (typeof _hmt !== 'undefined' && typeof _hmt.push === 'function') {
-    _hmt.push(['_trackPageview', window.location.pathname])
-  }
-})
-
-document.addEventListener('pjax:send', function () {
-  for (const event of window.pjaxSendEventSet) event()
-  for (const event of window.clickMaskEventSet) event()
-  document.body.classList.remove('blur')
-  delete window._tocOnScroll
-  const el = document.getElementById('content')
-  if (el) {
-    window.lgData[el?.getAttribute('lg-uid')]?.destroy(true)
-  }
-})
-
-topbar.config({
-  autoRun: true,
-  barThickness: 3,
-  barColors: {
-    0: '#55bde2'
-  },
-  shadowBlur: 0,
-  shadowColor: 'rgba(0, 0, 0, .5)',
-  className: 'topbar'
-})
-document.addEventListener('pjax:send', topbar.show)
-document.addEventListener('pjax:complete', topbar.hide)
-document.addEventListener('pjax:error', topbar.hide)

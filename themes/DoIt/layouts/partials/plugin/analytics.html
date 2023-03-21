@@ -35,7 +35,7 @@
     
     {{- /* Umami Analytics */ -}}
     {{- with $analytics.umami.data_website_id -}}
-        <script async defer data-website-id="{{ . }}" src="{{ $analytics.umami.src }}" {{ with $analytics.umami.data_domains }} data-domains="{{ . }}" {{ end }}></script>
+        <script async defer data-website-id="{{ . }}" src="{{ $analytics.umami.src }}" {{ with $analytics.umami.data_host_url }} data-host-url="{{ . }}" {{ end }} {{ with $analytics.umami.data_domains }} data-domains="{{ . }}" {{ end }}></script>
     {{- end -}}
 
     {{- /* Plausible Analytics */ -}}
@@ -46,6 +46,21 @@
     {{- /* Cloudflare Analytics */ -}}
     {{- with $analytics.cloudflare.token -}}
         <script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "{{ $analytics.cloudflare.token }}"}'></script>
+    {{- end -}}
+
+    {{- /* Splitbee Analytics */ -}}
+    {{- if $analytics.splitbee.enable -}}
+        {{- $attr := "" -}}
+        {{- if $analytics.splitbee.Do_not_track -}}
+            {{- $attr = printf `%v data-respect-dnt` $attr -}}
+        {{- end -}}
+        {{- if $analytics.splitbee.No_cookie -}}
+            {{- $attr = printf `%v data-no-cookie` $attr -}}
+        {{- end -}}
+        {{- with $analytics.splitbee.data_token -}}
+            {{- $attr = printf `%v data-token="%v"` $attr . -}}
+        {{- end -}}
+        <script defer {{ with $attr }} {{ . | safeHTMLAttr }} {{ end }} src="https://cdn.splitbee.io/sb.js"></script>
     {{- end -}}
 
 {{- end -}}
