@@ -101,7 +101,7 @@ titleFontFamily = "Atkinson Hyperlegible"
 
   # DoIt theme settings
   defaultTheme = "auto"
-  version = "0.2.X"
+  version = "0.3.X"
   fingerprint = "" # sha512
   gitRepo = "https://github.com/sammcj/smcleod"
   keywords = ["Sam McLeod", "sammcj", "smcleod", "s_mcleod", "devops", "tech", "engineering"]

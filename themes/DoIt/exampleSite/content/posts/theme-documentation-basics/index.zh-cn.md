@@ -9,7 +9,7 @@ description: "探索 Hugo - DoIt 主题的全部内容和背后的核心概念."
 featuredImage: "featured-image.webp"
 
 tags: ["installation", "configuration"]
-categories: ["Documentation"]
+categories: ["documentation"]
 series: ["getting-start"]
 series_weight: 1
 lightgallery: true
@@ -168,6 +168,7 @@ hugo serve
 ```bash
 hugo serve --disableFastRender
 ```
+
 {{< /admonition >}}
 
 ### 构建网站
@@ -196,7 +197,7 @@ hugo
 ```toml
 [params]
   # {{< version 0.2.0 changed >}} DoIt 主题版本
-  version = "0.2.X"
+  version = "0.3.X"
   # 网站名称
   title = "我的全新 Hugo 网站"
   # 网站描述
@@ -234,7 +235,7 @@ hugo
   # {{< version 0.2.0 >}} 搜索配置
   [params.search]
     enable = true
-    # 搜索引擎的类型 ("lunr", "algolia", "fuse")
+    # 搜索引擎的类型 ("algolia", "fuse")
     type = "fuse"
     # 文章内容最长索引长度
     contentLength = 4000
@@ -295,7 +296,7 @@ hugo
     hugo = true
     # {{< version 0.2.14 >}} 托管服务信息 (支持 HTML 格式)
     # <a title="Github Pages" href="https://docs.github.com/en/pages/" target="_blank" rel="noopener noreffer">GitHub Pages</a>
-    hostedOn = ''
+    hostedOn = '' 
     # {{< version 0.2.0 >}} 是否显示版权信息
     copyright = true
     # {{< version 0.2.0 >}} 是否显示作者
@@ -721,7 +722,7 @@ hugo
     enable = false
     bio = "如果你觉得这篇文章对你有所帮助，欢迎赞赏~"
     link = "https://www.buymeacoffee.com" # 你的赞赏页面的地址
-    custom = "" # 自定义 HTML
+    custom = "" # 自定义 HTML 
 
   # {{< version 0.2.5 >}} TypeIt 配置
   [params.typeit]
@@ -771,6 +772,7 @@ hugo
     [params.analytics.umami]
       data_website_id = ""
       src = ""
+      data_host_url = ""
       data_domains = ""
     # {{< version 0.2.13 >}} Plausible Analytics
     [params.analytics.plausible]
@@ -914,6 +916,7 @@ series = "series"
   # 主页显示头像的 URL
   avatarURL = "/images/avatar.webp"
 ````
+
 你可以在 [Gravatar](https://cn.gravatar.com) 注册并设置自己的头像, 网站会通过`gravatarEmail`中填写的邮箱自动获取并设置你的头像.
 
 或者可以在`/assets`或`/static`目录下放置图片文件, 并配置`avatarURL`下的地址来显示头像.引用资源的文件路径是相对于`assets`或`static`目录的.详细的本地资源引用方法请查看[这篇文档](/zh-cn/theme-documentation-content/#contents-organization).
@@ -1015,20 +1018,20 @@ $code-font-family: Fira Mono, Source Code Pro, Menlo, Consolas, Monaco, monospac
 
 {{< version 0.2.10 changed >}}
 
-| 语言 | Hugo 代码 | HTML `lang` 属性 | 主题文档 | Lunr.js 支持 |
-|:---- |:----:|:----:|:----:|:----:|
-| 英语 | `en` | `en` | :(far fa-check-square fa-fw): | :(far fa-check-square fa-fw): |
-| 简体中文 | `zh-cn` | `zh-CN` | :(far fa-check-square fa-fw): | :(far fa-check-square fa-fw): |
-| 法语 | `fr` | `fr` | :(far fa-square fa-fw): | :(far fa-check-square fa-fw): |
-| 波兰语 | `pl` | `pl` | :(far fa-square fa-fw): | :(far fa-square fa-fw): |
-| 巴西葡萄牙语 | `pt-br` | `pt-BR` | :(far fa-square fa-fw): | :(far fa-check-square fa-fw): |
-| 意大利语 | `it` | `it` | :(far fa-square fa-fw): | :(far fa-check-square fa-fw): |
-| 西班牙语 | `es` | `es` | :(far fa-square fa-fw): | :(far fa-check-square fa-fw): |
-| 德语 | `de` | `de` | :(far fa-square fa-fw): | :(far fa-check-square fa-fw): |
-| 塞尔维亚语 | `pl` | `pl` | :(far fa-square fa-fw): | :(far fa-square fa-fw): |
-| 俄语 | `ru` | `ru` | :(far fa-square fa-fw): | :(far fa-check-square fa-fw): |
-| 罗马尼亚语 | `ro` | `ro` | :(far fa-square fa-fw): | :(far fa-check-square fa-fw): |
-| 越南语 | `vi` | `vi` | :(far fa-square fa-fw): | :(far fa-check-square fa-fw): |
+| 语言         | Hugo 代码 | HTML `lang` 属性 |           主题文档            | 
+| :----------- | :-------: | :--------------: | :---------------------------: |
+| 英语         |   `en`    |       `en`       | :(far fa-check-square fa-fw): |
+| 简体中文     |  `zh-cn`  |     `zh-CN`      | :(far fa-check-square fa-fw): |
+| 法语         |   `fr`    |       `fr`       |    :(far fa-square fa-fw):    |
+| 波兰语       |   `pl`    |       `pl`       |    :(far fa-square fa-fw):    | 
+| 巴西葡萄牙语 |  `pt-br`  |     `pt-BR`      |    :(far fa-square fa-fw):    |
+| 意大利语     |   `it`    |       `it`       |    :(far fa-square fa-fw):    |
+| 西班牙语     |   `es`    |       `es`       |    :(far fa-square fa-fw):    |
+| 德语         |   `de`    |       `de`       |    :(far fa-square fa-fw):    |
+| 塞尔维亚语   |   `pl`    |       `pl`       |    :(far fa-square fa-fw):    |
+| 俄语         |   `ru`    |       `ru`       |    :(far fa-square fa-fw):    |
+| 罗马尼亚语   |   `ro`    |       `ro`       |    :(far fa-square fa-fw):    |
+| 越南语       |   `vi`    |       `vi`       |    :(far fa-square fa-fw):    |
 
 ### 基本配置
 
@@ -1153,7 +1156,7 @@ defaultContentLanguage = "zh-cn"
 ```toml
 [params.search]
   enable = true
-  # 搜索引擎的类型 ("lunr", "algolia", "fuse")
+  # 搜索引擎的类型 ("algolia", "fuse")
   type = "fuse"
   # 文章内容最长索引长度
   contentLength = 4000
@@ -1188,7 +1191,6 @@ defaultContentLanguage = "zh-cn"
 以下是两种搜索引擎的对比:
 
 * `fuse`: 简单, 无需同步 `index.json`, 没有 `contentLength` 的限制, 性能高
-* `lunr`: 简单, 无需同步 `index.json`, 没有 `contentLength` 的限制, 但占用带宽大且性能低 (特别是中文需要一个较大的分词依赖库)
 * `algolia`: 高性能并且占用带宽低, 但需要同步 `index.json` 且有 `contentLength` 的限制
 
 {{< version 0.2.3 >}} 文章内容被 `h2` 和 `h3` HTML 标签切分来提高查询效果并且基本实现全文搜索.
