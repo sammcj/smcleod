@@ -5,7 +5,12 @@ name: "Sync Available Github Labels"
 on:
   workflow_dispatch:
   schedule:
-    - cron: "30 4 * * *"
+    - cron: "30 4 * * 0"
+  push:
+    paths:
+      - .github/config/labels.yml
+      - .github/config/labeller.yml
+      - .github/workflows/label-sync.yml
 
 permissions:
   pull-requests: write
@@ -20,11 +25,11 @@ concurrency:
 jobs:
   sync-labels:
     name: Sync Github Labels
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-latest
     timeout-minutes: 10
     steps:
-      - uses: actions/checkout@2541b1294d2704b0964813337f33b291d3f8596b # tag=v3
-      - uses: EndBug/label-sync@2155ba23e047b09a88c8a2f577fa370307d171f4 # tag=v2
+      - uses: actions/checkout@8e5e7e5ab8b370d6c329ec480221332ada57f0ab # v3
+      - uses: EndBug/label-sync@da00f2c11fdb78e4fae44adac2fdd713778ea3e8 # v2
         with:
           delete-other-labels: true
           dry-run: false

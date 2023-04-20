@@ -1,0 +1,106 @@
+name: Delete Disabled and Deprecated Workflows
+
+on:
+  workflow_dispatch:
+    inputs:
+      github-token:
+        description: 'Custom GitHub Token, to not be rate limited to 1,000 requests, defaults to GITHUB_TOKEN'
+        required: false
+      purge-deprecated:
+        description: 'Delete deprecated workflows, defaults to true'
+        required: false
+        default: "true"
+      delete-disabled:
+        description: 'Delete disabled workflows, defaults to true'
+        required: false
+        default: "true"
+      wait-days:
+        description: 'Number of days to wait before deleting disabled workflows, defaults to 7'
+        required: false
+        default: 7
+        type: number
+  schedule:
+    - cron: '0 0 * * 4'  # At 00:00, only on Thursday
+
+permissions:
+  actions: write
+  contents: read
+
+jobs:
+  delete-deprecated-workflows:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    if: inputs.purge-deprecated == true
+    steps:
+        - uses: otto-de/purge-deprecated-workflow-runs@v1
+          with:
+            token: ${{ inputs.github-token || secrets.GITHUB_TOKEN }}
+
+  delete-disabled-workflows:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    if: inputs.delete-disabled == true
+    steps:
+      - uses: actions/github-script@v6
+        with:
+          github-token: ${{ inputs.github-token || secrets.GITHUB_TOKEN }}
+          script: |
+            const githubContext = {
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+            }
+
+            // filter out workflows that are not disabled
+            const allDisabledWorkflows = await github.paginate(
+              github.rest.actions.listRepoWorkflows,
+              githubContext
+            ).then(workflows => workflows.filter(workflow => workflow.state == 'disabled_manually'))
+
+            // filter out workflows that have only been disabled for less than wait-days
+            const disabledWorkflows = allDisabledWorkflows.filter(workflow => {
+              const now = new Date()
+              const disabledAt = new Date(workflow.updated_at)
+              const diff = now - disabledAt
+              const days = diff / (1000 * 60 * 60 * 24)
+              return days > ${{ inputs.wait-days }}
+            })
+
+            console.log(`::group::List of disabled workflows older than ${{ inputs.wait-days }}`)
+            console.log(disabledWorkflows)
+            console.log('::endgroup::')
+
+            // get the runs for each workflow
+            for (const workflow of disabledWorkflows) {
+              const runs = await github.paginate(
+                github.rest.actions.listWorkflowRuns,
+                {
+                  ...githubContext,
+                  workflow_id: workflow.id,
+                }
+              )
+
+              console.log(`::group::Workflow ${workflow.id} >> Title`)
+              console.log(`::group::Workflow ${workflow.id} >> Runs`)
+
+              // log the title of each run
+              for (const run of runs) {
+                console.log(`::group::Workflow ${workflow.id} >> Run ${run.id} >> Title`)
+                console.log(run.head_commit.message)
+                console.log('::endgroup::')
+              }
+              console.log('::endgroup::')
+
+              // delete each run
+              for (const run of runs) {
+                const response = await github.rest.actions.deleteWorkflowRun({
+                  ...githubContext,
+                  run_id: run.id,
+                })
+
+                console.log(`::group::Workflow ${workflow.id} >> Run ${run.id} >> Delete`)
+                console.log(response)
+                console.log('::endgroup::')
+
+              }
+
+            }
