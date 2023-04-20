@@ -6,7 +6,6 @@ author: "Sam McLeod"
 norss: true
 comments: false
 showDate: false
-pageStyle: wide
 subtitle: Message Sent
 readingTime: false
 hiddenFromHomePage: true

@@ -5,7 +5,6 @@ author: "Sam McLeod"
 norss: true
 comments: false
 showDate: false
-pageStyle: wide
 subtitle: Sam McLeod
 readingTime: false
 toc:
