@@ -14,6 +14,12 @@
     ".github/workflows/lint-tf.yml",
     ".github/workflows/mirror.yml",
     ".github/workflows/pr-labeller.yml",
-    ".github/workflows/todo.yml"
+    ".github/workflows/todo.yml",
+    ".github/workflows/workflows_disabled/*.yml",
+    ".github/workflows/delete-disabled-workflows.yml",
+    "files/**",
+    "themes/**",
+    "dist/**",
+    "node_modules/**"
   ]
 }
