@@ -28,6 +28,3 @@
 #[submodule "themes/hugo-ficurinia"]
 #	path = themes/hugo-ficurinia
 #	url = https://gitlab.com/gabmus/hugo-ficurinia.git
-[submodule "themes/DoIt"]
-	path = themes/DoIt
-	url = https://github.com/HEIGE-PCloud/DoIt.git
