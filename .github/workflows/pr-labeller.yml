@@ -29,10 +29,11 @@ permissions:
 jobs:
   pr-labeller:
     name: "Pull Request Labeller"
-    runs-on: ubuntu-22.04
-    timeout-minutes: 10
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    if: ${{ !github.event.pull_request.draft }}
     steps:
-      - uses: fuxingloh/multi-labeler@12623606c1cb561e9fff26c8f275563a3a39ba8f # tag=v2
+      - uses: fuxingloh/multi-labeler@v2 # tag=v2
         id: pr-labeller
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
