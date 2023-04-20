@@ -7,4 +7,6 @@ git rm -rf themes/DoIt
 
 git clone --depth=1 https://github.com/HEIGE-PCloud/DoIt.git themes/DoIt
 
+git rm -rf themes/DoIt/.git
+
 hugo
