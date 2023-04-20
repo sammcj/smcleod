@@ -32,7 +32,7 @@ jobs:
     timeout-minutes: 15
     if: inputs.purge-deprecated == true
     steps:
-        - uses: otto-de/purge-deprecated-workflow-runs@v1
+        - uses: otto-de/purge-deprecated-workflow-runs@0de33de0a9fe17321e4cf3c21dcbc0445e7c5b61 # v1
           with:
             token: ${{ inputs.github-token || secrets.GITHUB_TOKEN }}
 
@@ -41,7 +41,7 @@ jobs:
     timeout-minutes: 15
     if: inputs.delete-disabled == true
     steps:
-      - uses: actions/github-script@v6
+      - uses: actions/github-script@d7906e4ad0b1822421a7e6a35d5ca353c962f410 # v6
         with:
           github-token: ${{ inputs.github-token || secrets.GITHUB_TOKEN }}
           script: |
