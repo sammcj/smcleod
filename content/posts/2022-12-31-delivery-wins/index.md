@@ -5,9 +5,9 @@ date: 2022-12-31T12:03:41+11:00
 lastmod: 2022-12-31T12:03:41+11:00
 author: Sam McLeod
 description: ""
-keywords: [ "delivery", "deployment", "frequency", "energy", "wins", "devops", "agile", "leadership", "management" ]
+keywords: [ "Delivery", "deployment", "frequency", "energy", "wins", "devops", "agile", "leadership", "management" ]
 
-tags: [ "delivery", "health", "wins", "devops", "agile", "leadership", "management" ]
+tags: [ "Delivery", "health", "wins", "devops", "agile", "leadership", "management" ]
 categories: [ "DevOps", "Leadership", "Health" ]
 series: []
 
@@ -54,7 +54,7 @@ Frequency = Energy, Energy = Sustainability
 
 There's the usual benefits commonly discussed such as improved feedback, reduced risk, well understood processes, maintainable dependencies etc... however {{< highlight color="#c5ecff" >}} what's often missed entirely is how it relates to the health and sustainability of the team. {{< /highlight >}}
 
-_Note: I use the term "delivery" and "deployment" interchangeably throughout this post._
+_Note: I use the term "Delivery" and "deployment" interchangeably throughout this post._
 
 ---
 
