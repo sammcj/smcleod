@@ -31,7 +31,7 @@ draft: false
 
 # Escaping the Time Trap: Why Estimating Effort, Not Time, Leads to Greater Success
 
-Software engineering demands effective planning and understanding of the resources needed to complete a project. Many teams estimate project velocity based on time spent on tasks. However, this can cause misunderstandings and unrealistic expectations. Instead, estimating based on effort points leads to clear communication, better planning, and ultimately, more successful software delivery.
+Software engineering demands effective planning and understanding of the resources needed to complete a project. Some less mature organisations and teams make the mistake of estimating project velocity based on _time_ spent on tasks. However, this can cause misunderstandings and unrealistic expectations. Instead, estimating based on effort points leads to clear communication, better planning, and ultimately, more successful software delivery.
 
 ## The Problem with Estimating in Time
 
