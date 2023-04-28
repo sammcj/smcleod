@@ -4,7 +4,7 @@ subtitle: ""
 date: 2023-04-28T06:41:37
 lastmod: 2023-04-28T06:41:37
 author: Sam McLeod
-description: "Research shows that group \"Brainstorming\" isn't just ineffective - it has a negative correlation with quality, produces less results and reinforces biases."
+description: "Escaping the Time Trap: Why Estimating Effort, Not Time, Leads to Greater Success"
 keywords: ["Estimating", "Delivery", "Kanban", "Agile","DevOps"]
 tags: ["Estimating", "Delivery", "Kanban", "Agile","DevOps"]
 categories: ["Delivery", "Leadership", "DevOps"]
@@ -28,8 +28,6 @@ asciinema: false
 mermaid: true
 draft: false
 ---
-
-# Escaping the Time Trap: Why Estimating Effort, Not Time, Leads to Greater Success
 
 Software engineering demands effective planning and understanding of the resources needed to complete a project. Some less mature organisations and teams make the mistake of estimating project velocity based on _time_ spent on tasks. However, this can cause misunderstandings and unrealistic expectations. Instead, estimating based on effort points leads to clear communication, better planning, and ultimately, more successful software delivery.
 
@@ -242,6 +240,4 @@ By embracing Agile/Kanban methodologies and focusing on effort points instead of
 
 In summary, adopting effort-based estimation in Agile and Kanban methodologies and avoiding reverting to dated waterfall style time-based estimation offers numerous advantages, such as better task prioritisation, enhanced communication, and a deeper understanding of task complexity.
 
-By steering away from time-based estimation and embracing an effort-first mindset, teams can improve their overall software delivery process while optimising resource allocation. Connecting this approach to DORA metrics further highlights the impact of effort estimation on an organisation's performance.
-
-These practices result in delivering high-quality projects efficiently and team sustainably.
+By steering away from time-based estimation and embracing an effort-first mindset, you're optimising your delivery process and resource allocation while operating in a more human-centric way. You can take this a step further by connecting this approach to DORA metrics further highlights the impact of effort estimation on an organisation's performance.
