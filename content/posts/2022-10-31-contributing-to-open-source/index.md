@@ -12,8 +12,8 @@ tags:
 title: Encourage Your Peers To Contribute To Open Source
 hideComments: false
 showFullContent: false
-keywords: ["culture", "opensource", "git", "leadership", "values"]
-tags: ["culture", "opensource", "git", "leadership", "values"]
+keywords: ["culture", "opensource", "git", "Leadership", "values"]
+tags: ["culture", "opensource", "git", "Leadership", "values"]
 toc: true
 draft: false
 ---

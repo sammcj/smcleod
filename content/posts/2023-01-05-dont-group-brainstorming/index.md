@@ -5,9 +5,9 @@ date: 2023-01-05T09:41:37
 lastmod: 2023-01-05T09:41:37
 author: Sam McLeod
 description: "Research shows that group \"Brainstorming\" isn't just ineffective - it has a negative correlation with quality, produces less results and reinforces biases."
-keywords: ["brainstorming", "remotework", "leadership", "management", "productivity", "remote work"]
-tags: ["brainstorming", "remotework", "leadership", "management", "productivity", "remote work"]
-categories: ["remotework", "leadership"]
+keywords: ["brainstorming", "RemoteWork", "Leadership", "Management", "productivity", "remote work"]
+tags: ["brainstorming", "RemoteWork", "Leadership", "Management", "productivity", "remote work"]
+categories: ["RemoteWork", "leadership"]
 series: []
 
 images: ["group-brainstorming.jpg"]

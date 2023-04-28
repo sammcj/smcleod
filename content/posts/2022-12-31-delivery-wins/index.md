@@ -5,9 +5,9 @@ date: 2022-12-31T12:03:41+11:00
 lastmod: 2022-12-31T12:03:41+11:00
 author: Sam McLeod
 description: ""
-keywords: [ "Delivery", "deployment", "frequency", "energy", "wins", "devops", "agile", "leadership", "management" ]
+keywords: [ "Delivery", "deployment", "frequency", "energy", "wins", "DevOps", "Agile", "Leadership", "management" ]
 
-tags: [ "Delivery", "health", "wins", "devops", "agile", "leadership", "management" ]
+tags: [ "Delivery", "health", "wins", "DevOps", "Agile", "Leadership", "management" ]
 categories: [ "DevOps", "Leadership", "Health" ]
 series: []
 
