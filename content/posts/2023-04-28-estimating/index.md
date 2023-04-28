@@ -29,7 +29,7 @@ mermaid: true
 draft: false
 ---
 
-Software engineering demands effective planning and understanding of the resources needed to complete a project. Some less mature organisations and teams make the mistake of estimating project velocity based on _time_ spent on tasks. However, this can cause misunderstandings and unrealistic expectations. Instead, estimating based on effort points leads to clear communication, better planning, and ultimately, more successful software delivery.
+Software engineering demands effective planning and understanding of the people needed to complete a project. Some less mature organisations and teams make the mistake of estimating project velocity based on _time_ spent on tasks. However, this can cause misunderstandings and unrealistic expectations. Instead, estimating based on effort points leads to clear communication, better planning, and ultimately, more successful software delivery.
 
 ## The Problem with Estimating in Time
 
@@ -61,7 +61,7 @@ graph TD
     B --> D1(Difficulty to Capture Complexity)
     C --> D2(Inaccurate Expectations)
     D1 --> E1(Cascading Delays)
-    D2 --> E2(Misallocation of Resources)
+    D2 --> E2(Misallocation of People)
 ```
 
 ### Developer Inconsistencies
@@ -152,13 +152,13 @@ graph LR;
 
 ### Risk Mitigation
 
-Effort-based estimation makes it easier to identify high-risk tasks that require significant effort or have a high degree of uncertainty. By prioritising these tasks, teams can better allocate resources to mitigate potential risks and address issues proactively.
+Effort-based estimation makes it easier to identify high-risk tasks that require significant effort or have a high degree of uncertainty. By prioritising these tasks, teams can better allocate people to mitigate potential risks and address issues proactively.
 
 ```mermaid
 graph LR;
     A(Risk Mitigation)-->B4(Effort Estimation);
     B4-->C4(Identify High-Risk Tasks);
-    C4-->D4(Allocate Resources Strategically);
+    C4-->D4(Allocate People Strategically);
 ```
 
 ### Iterative Planning
