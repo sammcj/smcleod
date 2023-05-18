@@ -1,10 +1,10 @@
 ---
 title: "Escaping the Time Trap: Why Estimating Effort, Not Time, Leads to Greater Success"
-subtitle: ""
+subtitle: "Estimating is not just difficult, but often a deeply flawed process"
 date: 2023-04-28T06:41:37
-lastmod: 2023-04-28T06:41:37
+lastmod: 2023-05-17T19:41:37
 author: Sam McLeod
-description: "Escaping the Time Trap: Why Estimating Effort, Not Time, Leads to Greater Success"
+description: "Effort is non-linear and multi-dimensional. Time (with relation to delivery) is linear and one-dimensional"
 keywords: ["Estimating", "Delivery", "Kanban", "Agile","DevOps"]
 tags: ["Estimating", "Delivery", "Kanban", "Agile","DevOps"]
 categories: ["Delivery", "Leadership", "DevOps"]
@@ -29,7 +29,26 @@ mermaid: true
 draft: false
 ---
 
-Software engineering demands effective planning and understanding of the people needed to complete a project. Some less mature organisations and teams make the mistake of estimating project velocity based on _time_ spent on tasks. However, this can cause misunderstandings and unrealistic expectations. Instead, estimating based on effort points leads to clear communication, better planning, and ultimately, more successful software delivery.
+
+Many organisations - while branding themselves as "Agile" - continue to make the mistake of estimating project velocity based on _time_ than _effort_.
+
+This flawed approach equates to measuring the team's ability to estimate time, rather than focusing on the actual effort needed to complete tasks.
+
+This isn't to say that time isn't important - quite the opposite. Time is often a critical factor in delivery. However, it's important to understand that time is a _constraint_ and a _metric_ - not a _unit of work_.
+
+---
+
+Managers want to know how much time a project or deliverable will take - but often aren't interested in the complexity of the work. Engineers also want to know how long a piece of work may take - however solving complex problems requires _effort_ - not simply _time_ and the two should not be conflated through the estimation process.
+
+> Effort is non-linear and multi-dimensional. Time (with relation to delivery) is linear and one-dimensional.
+
+As humans we simplify the world around us. This helps us to make (hopefully sensible) decisions in a reasonable time and to communicate with others. However, as complexity grows our reductionist approach often breaks down. We encounter flawed assumptions, external influences and unknown unknowns and as our understanding of each element grows our simple models start to again resemble the complex systems of which we're trying to simplify.
+
+The age old mistake reductionist assumption that the time it takes to complete something is simply amount of work / capacity is alive and well in software delivery.
+
+> How many engineers does it take to deliver a feature? One engineer can deliver a feature in 10 days, so 10 engineers can deliver it in 1 day, right?...
+
+In reality the time a piece of work takes involves complexity of the task, how well practised we are the the kinds of work involved, the skills and experience of the people involved, distractions, outside influences and dependencies.
 
 ## The Problem with Estimating in Time
 
