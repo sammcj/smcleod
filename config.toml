@@ -104,7 +104,7 @@ titleFontFamily = "Atkinson Hyperlegible"
   version = "0.4.X"
   fingerprint = "" # sha512
   gitRepo = "https://github.com/sammcj/smcleod"
-  keywords = ["Sam McLeod", "sammcj", "smcleod", "s_mcleod", "DevOps", "tech", "engineering"]
+  keywords = ["Sam McLeod", "sammcj", "smcleod", "s_mcleod", "DevOps", "Tech", "Engineering"]
   images = ["/apple-touch-icon.png", "/profilephoto/apple-touch-icon.png"]
 
   # enablePWA = true
