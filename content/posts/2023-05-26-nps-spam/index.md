@@ -1,6 +1,6 @@
 ---
 title: "How likely would you be to block a company from asking you to rate everything they do?"
-subtitle: "NPS Surveys are corporate spam"
+subtitle: "Very, it turns out..."
 date: 2023-05-26T06:41:37
 lastmod: 2023-05-26T19:41:37
 author: Sam McLeod
@@ -9,9 +9,9 @@ keywords: ["NPS", "Surveys", "Marketing", "Spam", "Sales", "Customer Experience"
 tags: ["Sales", "Marketing", "Customer Experience", "Email", "Spam"]
 categories: ["Sales/Marketing", "Enterprise"]
 series: []
-images: ["time-based-estimates.png"] # TODO:
-# featuredimage: "time-based-estimates.png"
-featuredImagePreview: "time-based-estimates.png"
+images: ["i-dont-use-nps-1.jpg"] # TODO:
+# featuredimage: "i-dont-use-nps-1.jpg"
+featuredImagePreview: "i-dont-use-nps-1.jpg"
 hiddenFromHomePage: false
 hiddenFromSearch: false
 toc:
@@ -29,22 +29,56 @@ mermaid: true
 draft: false
 ---
 
+
+## I'm tired of getting emails from companies asking me to rate their products and services
+
+It feels like you can't even buy a coffee these days without being asked if you would recommend the coffee shop to a friend or colleague.
+
 - "How likely would you be to recommend us to a friend or colleague?"
 - "Rate our service from 1-10"
 - "How did we do?"
 - "How was your experience?"
 
-These questions seem to be everywhere these days, in some places you can't even buy a coffee without being asked to rate the service.
+> It's a simple question, and it's a simple score.
+>
+> It's also a simple way to annoy your customers and end up in their spam folder.
 
-NPS stands for Net Promoter Score, companies use this to measure customer satisfaction and make their customers feel like they listened to and that their opinion matters.
+---
 
-> It's a simple question, and it's a simple score. It's also a simple way to annoy your customers and get your emails all filtered to the spam folder.
+## What is NPS?
 
-Below is a gross, but effective [Sieve](http://sieve.info/) script that (rather unintelligently) filters out NPS surveys from your inbox and moves them to a folder of your choice.
+NPS stands for **N**et **P**romoter **S**core.
+
+The idea is that you ask your customers to rate your product, service or experience from 0-10, and then you subtract the percentage of detractors (0-6) from the percentage of promoters (9-10) to get your NPS score. For example, if 50% of your customers are promoters and 10% are detractors, your NPS is 40.
+
+Companies like to use _(abuse?)_ this to measure customer satisfaction and make their customers feel like they listened to and that their opinion matters.
+
+There are many problems with this highly reductive and impersonal MBE style approach but the one that annoys me the most is that it's essentially created a new form of corporate spam.
+
+---
+
+I've had a crack at writing some advanced email rules to filter these out to a folder - it's far from perfect but it's a start.
+
+The following [Sieve](http://sieve.info/) script (rather unintelligently) filters out NPS surveys from a combination of keywords in the body and headers and moves them from your inbox to a folder of your choice.
 
 This script should work with any mail service / server that supports standard Sieve scripts, I use this with [Fastmail](https://fastmail.com) _(or if you feel like it you can optionally use [my referral link](https://ref.fm/u13738357)_).
+
+Fastmail offers a [Sieve testing tool](https://app.fastmail.com/sievetester/) you can use to test your script before you apply it to your account.
 
 {{<github repo="sammcj/scripts" file="email/customer-satisfaction-spam.sieve" lang="sieve" options="linenos=table">}}
 [Click here to find the latest version](github.com/sammcj/scripts/email/customer-satisfaction-spam.sieve) of this script.
 
-Fastmail offers a [Sieve testing tool](https://app.fastmail.com/sievetester/) you can use to test your script before you apply it to your account.
+There's plenty of room for improvement here, e.g.:
+
+- Additional matching keywords / phrases.
+- Check if sender is in your address book (Not currently possible with Fastmail's Sieve extensions).
+- Use an upstream list of keywords, phrases and domains rather than hardcoding them (Not sure if this is possible with Sieve?).
+- Automate updating the ruleset.
+
+## Links
+
+- [NPS Considered Harmful](https://jmspool.medium.com/net-promoter-score-considered-harmful-and-what-ux-professionals-can-do-about-it-fe7a132f4430)
+- [Reasons to use NPS](https://www.npsistheworst.com/reasons-to-use-nps) (also credit to this site for the image used in this post)
+- [NPS is hurting you](https://uxdesign.cc/this-popular-business-metric-is-hurting-you-55ed535e9a59)
+- [Sieve testing tool](https://app.fastmail.com/sievetester/) (Fastmail)
+- [Sieve](http://sieve.info/)

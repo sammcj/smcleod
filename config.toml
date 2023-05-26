@@ -294,7 +294,7 @@ titleFontFamily = "Atkinson Hyperlegible"
   # Header config
   [params.header]
     # desktop header mode ("fixed", "normal", "auto")
-    desktopMode = "normal"
+    desktopMode = "fixed"
     # mobile header mode ("fixed", "normal", "auto")
     mobileMode = "auto"
     # theme change mode ("switch", "select")

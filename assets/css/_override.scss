@@ -4,4 +4,8 @@ $global-font-family: 'Atkinson Hyperlegible', system-ui, -apple-system, BlinkMac
 // $code-font-family: Source Code Pro, Menlo, Consolas, Monaco, monospace, $global-font-family !default;
 
 // Font size of the code
-$code-font-size: .700rem
+$code-font-size: .700rem;
+
+.chroma .table-wrapper {
+  max-height: none !important;
+}
