@@ -5,11 +5,11 @@ date: 2023-05-26T06:41:37
 lastmod: 2023-05-26T19:41:37
 author: Sam McLeod
 description: "NPS Surveys are corporate spam"
-keywords: ["NPS", "Surveys", "Marketing", "Spam", "Sales", "Customer Experience", "Email"]
-tags: ["Sales", "Marketing", "Customer Experience", "Email", "Spam"]
+keywords: ["NPS", "Surveys", "Marketing", "Spam", "Sales", "Customer Experience", "Email", "NPS"]
+tags: ["Sales", "Marketing", "Customer Experience"]
 categories: ["Sales/Marketing", "Enterprise"]
 series: []
-images: ["i-dont-use-nps-1.jpg"] # TODO:
+images: ["i-dont-use-nps-1.jpg"]
 # featuredimage: "i-dont-use-nps-1.jpg"
 featuredImagePreview: "i-dont-use-nps-1.jpg"
 hiddenFromHomePage: false
