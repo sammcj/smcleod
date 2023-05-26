@@ -66,7 +66,8 @@ This script should work with any mail service / server that supports standard Si
 Fastmail offers a [Sieve testing tool](https://app.fastmail.com/sievetester/) you can use to test your script before you apply it to your account.
 
 {{<github repo="sammcj/scripts" file="email/customer-satisfaction-spam.sieve" lang="sieve" options="linenos=table">}}
-[Click here to find the latest version](github.com/sammcj/scripts/email/customer-satisfaction-spam.sieve) of this script.
+
+[Click here to find the latest version](https://github.com/sammcj/scripts/email/customer-satisfaction-spam.sieve) of this script.
 
 There's plenty of room for improvement here, e.g.:
 
