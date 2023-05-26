@@ -67,7 +67,7 @@ Fastmail offers a [Sieve testing tool](https://app.fastmail.com/sievetester/) yo
 
 {{<github repo="sammcj/scripts" file="email/customer-satisfaction-spam.sieve" lang="sieve" options="linenos=table">}}
 
-[Click here to find the latest version](https://github.com/sammcj/scripts/email/customer-satisfaction-spam.sieve) of this script and _please_ do raise PRs to improve it!
+[Click here to find the latest version](https://github.com/sammcj/scripts/blob/master/email/customer-satisfaction-spam.sieve) of this script and _please_ do raise PRs to improve it!
 
 There's plenty of room for improvement here, e.g.:
 
