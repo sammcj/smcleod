@@ -25,6 +25,9 @@ enableInlineShortcodes = true
 fontFamily = "Atkinson Hyperlegible"
 titleFontFamily = "Atkinson Hyperlegible"
 
+newContentEditor = "code"
+removePathAccents = true
+
 [imaging]
   anchor = 'Smart'
   bgColor = '#ffffff'
