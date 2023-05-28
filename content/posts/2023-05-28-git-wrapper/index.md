@@ -5,13 +5,12 @@ date: 2023-05-29T08:53:24+10:00
 lastmod: 2023-05-29T08:53:24+10:00
 author: Sam McLeod
 description: ""
-keywords: []
-
+keywords: ["Git", "Scripting", "ZSH", "Bash", "Shell"]
 tags: ["Git", "Scripting", "ZSH", "Bash", "Shell"]
 categories: ["Scripting", "ZSH", "Git"]
 series: ["ZSH"]
 
-image: &image ""
+# image: &image ""
 
 # featuredimage: *image
 # featuredImagePreview: *image
