@@ -1,16 +1,17 @@
 ---
 author: "Sam McLeod"
 readingTime: true
-categories: [ "Tech", "Leadership", "Values" ]
+categories: [ "Tech", "Leadership", "Values", "RemoteWork" ]
 date: "2022-10-20T07:00:00Z"
+updated: "2023-05-31T07:52:26Z"
 aliases:
   - /tech/2022/10/20/make-work-visible-dms/
 images: ["silos.jpg"]
 featuredImagePreview: silos.jpg
 title: Making Work Visible - Avoid DMs
 showFullContent: false
-keywords: ["work", "communication", "culture", "tech", "direct messages"]
-tags: ["work", "communication", "culture", "tech", "direct messages"]
+keywords: ["work", "communication", "culture", "tech", "direct messages", "remotework"]
+tags: ["work", "communication", "culture", "tech", "direct messages", "remotework"]
 toc: true
 ---
 
@@ -41,6 +42,7 @@ This is a blurb I add to the teams wiki page.
 > For more information see:
 >
 > - [Making Work Visible](https://smcleod.net/2022/10/making-work-visible-avoid-dms/)
+> - [Collaborate with kindness](https://slack.com/intl/en-au/blog/collaboration/etiquette-tips-in-slack)
 > - [NoHello](https://nohello.net)
 >
 > Thank you,
