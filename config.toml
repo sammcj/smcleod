@@ -14,7 +14,7 @@ pygmentscodefences = true
 pygmentscodefencesguesssyntax = true
 
 paginate=10
-summaryLength = 100
+summaryLength = 50
 enableRobotsTXT = true
 # relativeURLs = true
 
@@ -103,7 +103,7 @@ removePathAccents = true
   icon512 = "/icon512.png"  # 512x512 png
 
   # DoIt theme settings
-  defaultTheme = "auto"
+  defaultTheme = "dark"
   version = "0.4.X"
   fingerprint = "" # sha512
   gitRepo = "https://github.com/sammcj/smcleod"
@@ -112,26 +112,27 @@ removePathAccents = true
 
   # enablePWA = true
 
-  [params.home.profile]
-    enable = true
-    # Gravatar Email for preferred avatar in home page
-    # gravatarEmail = "gravatar@auto.smcleod.net"
-    # URL of avatar shown in home page
-    avatarURL = "/profilephoto/logo.svg"
-    images = ["/apple-touch-icon.png", "/profilephoto/apple-touch-icon.png"]
-    # title = "smcleod.net"
-    subtitle = "The personal blog of Sam McLeod"
-    # subtitle shown in home page
-    # subtitle = "This is My New Hugo Site"
-    # whether to use typeit animation for subtitle
-    typeit = false
-    # whether to show social links
-    social = true
-    # disclaimer = "Words are my own or somebody else's 🖖🏼"
-  # Home page posts
-  [params.home.posts]
-    enable = true
-    paginate = 12
+  [params.home]
+    [params.home.profile]
+      enable = true
+      # Gravatar Email for preferred avatar in home page
+      # gravatarEmail = "gravatar@auto.smcleod.net"
+      # URL of avatar shown in home page
+      avatarURL = "/profilephoto/logo.svg"
+      images = ["/apple-touch-icon.png", "/profilephoto/apple-touch-icon.png"]
+      # title = "smcleod.net"
+      subtitle = "The personal blog of Sam McLeod"
+      # subtitle shown in home page
+      # subtitle = "This is My New Hugo Site"
+      # whether to use typeit animation for subtitle
+      typeit = false
+      # whether to show social links
+      social = true
+      # disclaimer = "Words are my own or somebody else's 🖖🏼"
+    # Home page posts
+    [params.home.posts]
+      enable = true
+      paginate = 12
 
   [params.app]
     # optional site title override for the app when added to an iOS home screen or Android launcher
@@ -162,7 +163,6 @@ removePathAccents = true
       days = 30
       maxCount = 5
 
-
   [params.search]
     enable = true
     # type of search engine ("lunr", "algolia", "fuse")
@@ -179,17 +179,21 @@ removePathAccents = true
     highlightTag = "em"
     # DoIt NEW | 0.2.4 whether to use the absolute URL based on the baseURL in search index
     absoluteURL = false
+
     [params.search.fuse]
       # DoIt NEW | 0.2.12 https://fusejs.io/api/options.html
       isCaseSensitive = false
       minMatchCharLength = 3
-      findAllMatches = true
-      location = 20
-      threshold = 0.3
+      findAllMatches = false
+      includeScore = true
+      location = 50
+      threshold = 0.6
       distance = 40
+      # shouldSort = true
       ignoreLocation = false
-      useExtendedSearch = true
       ignoreFieldNorm = false
+      useExtendedSearch = false
+      # keys = ["title", "content"]
 
   [params.page]
     linkToMarkdown = true
@@ -352,6 +356,7 @@ removePathAccents = true
   # Syntax Highlighting (https://gohugo.io/content-management/syntax-highlighting)
   [markup.highlight]
     style = "dracula"
+    tabWidth = 2
     codeFences = true
     guessSyntax = true
     lineNos = false

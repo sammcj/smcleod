@@ -14,8 +14,8 @@ images: ["group-brainstorming.jpg"]
 featuredimage: "group-brainstorming.jpg"
 featuredImagePreview: "group-brainstorming.jpg"
 
-hiddenFromHomePage: false
-hiddenFromSearch: false
+hiddenFromHomePage: true
+hiddenFromSearch: true
 
 toc:
   enable: false
@@ -30,7 +30,7 @@ readingTime: false
 showFullContent: false
 asciinema: false
 
-draft: false
+draft: true
 ---
 
 Numerous research shows that group "Brainstorming" isn't just ineffective - it has a negative correlation with quality, produces less results and reinforces biases.

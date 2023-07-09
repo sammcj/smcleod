@@ -12,6 +12,7 @@ tags:
 - software
 series: [ BestOf ]
 title: The Best Of - 2022 Edition
+
 ---
 
 Near the end of each year I note down a summary of the best apps I've enjoyed using throughout the year, here's 2022.
