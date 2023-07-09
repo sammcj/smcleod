@@ -1,6 +1,6 @@
 ---
-title: "Enabling the new AMD P-State Driver on Fedora"
-subtitle: "Very, it turns out..."
+title: "Fixing AMD CPU Scaling on Fedora"
+subtitle: "Setting up the new AMD P-State Driver on Fedora with Kernel 6.4"
 date: 2023-07-09T06:41:37
 lastmod: 2023-07-09T07:41:37
 author: Sam McLeod
