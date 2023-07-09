@@ -353,6 +353,8 @@ removePathAccents = true
     title = "Mastodon"
 
 [markup]
+  defaultMarkdownHandler = 'goldmark'
+
   # Syntax Highlighting (https://gohugo.io/content-management/syntax-highlighting)
   [markup.highlight]
     style = "dracula"
@@ -372,7 +374,10 @@ removePathAccents = true
       strikethrough = true
       table = true
       taskList = true
-      typographer = true
+      # typographer = true
+    [markup.goldmark.extensions.typographer]
+      disable = false
+
     [markup.goldmark.renderer]
       # whether to use HTML tags directly in the document
       unsafe = true
