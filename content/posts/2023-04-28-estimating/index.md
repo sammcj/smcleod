@@ -32,6 +32,8 @@ draft: false
 
 Many organisations - while branding themselves as "Agile" - continue to make the mistake of estimating project velocity based on _time_ than _effort_.
 
+<!--more-->
+
 This flawed approach equates to measuring the team's ability to estimate time, rather than focusing on the actual effort needed to complete tasks.
 
 This isn't to say that time isn't important - quite the opposite. Time is often a critical factor in delivery. However, it's important to understand that time is a _constraint_ and a _metric_ - not a _unit of work_.

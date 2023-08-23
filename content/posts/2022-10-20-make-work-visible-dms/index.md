@@ -16,6 +16,7 @@ toc: true
 ---
 
 We create more value by having conversations in public instead of behind closed doors.
+<!--more-->
 
 This is a blurb I add to the teams wiki page.
 

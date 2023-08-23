@@ -33,6 +33,7 @@ draft: false
 ## I'm tired of getting emails from companies asking me to rate their products and services
 
 It feels like you can't even buy a coffee these days without being asked if you would recommend the coffee shop to a friend or colleague.
+<!--more-->
 
 - "How likely would you be to recommend us to a friend or colleague?"
 - "Rate our service from 1-10"

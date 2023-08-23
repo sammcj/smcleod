@@ -48,11 +48,9 @@ comment:
 
 I often end up needing to advocate for more frequent delivery/deployments with clients.
 
-{{< admonition abstract >}}
-Frequency = Energy, Energy = Sustainability
-{{< /admonition >}}
-
 There's the usual benefits commonly discussed such as improved feedback, reduced risk, well understood processes, maintainable dependencies etc... however {{< highlight color="#c5ecff" >}} what's often missed entirely is how it relates to the health and sustainability of the team. {{< /highlight >}}
+
+<!--more-->
 
 _Note: I use the term "Delivery" and "deployment" interchangeably throughout this post._
 

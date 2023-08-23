@@ -8,11 +8,6 @@ title = "smcleod.net"
 copyright = "Sam McLeod"
 timeZone = "Australia/Melbourne"
 
-# Code Highlight
-pygmentsstyle = "dracula"
-pygmentscodefences = true
-pygmentscodefencesguesssyntax = true
-
 paginate = 10
 summaryLength = 50
 enableRobotsTXT = true
@@ -440,7 +435,6 @@ home = ["HTML", "RSS", "JSON"]
 page = ["HTML", "MarkDown"]
 section = ["HTML", "RSS"]
 taxonomy = ["HTML", "RSS"]
-taxonomyTerm = ["HTML"]
 
 # Options for taxonomies
 [taxonomies]

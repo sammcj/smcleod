@@ -44,10 +44,12 @@ comment:
 <!-- markdownlint-disable MD025 -->
 
 Before adding this to my shell config, I would manually add --depth=1 to all my git clones.
-
+<!--more-->
 I never saw the value in downloading the entire source history and (at times incorrectly) committed files to my local machine unless I was cloning the repo for the purpose of backing it up.
 
 It seems strange to me that git doesn't have a config option to set this as default behaviour.
+
+<!--more-->
 
 My hack for this is [a simple zsh/bash function](https://github.com/sammcj/zsh-bootstrap/blob/a55cae3421fe8e2144b9c1f30bf07180966a7a58/9-functions.rc#L20) that can wrap git commands - and as such add clone depth if it's not specified.
 

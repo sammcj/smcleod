@@ -26,7 +26,9 @@ asciinema: false
 draft: true #TODO:
 ---
 
-Here are my top album pics for 2022 (in no particular order)
+My top album pics for 2022 (in no particular order)
+
+<!--more-->
 
 ### Artist - [Album](https://en.wikipedia.org/wiki/link) #TODO
 

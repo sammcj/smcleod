@@ -28,9 +28,9 @@ mermaid: true
 draft: false
 ---
 
-I recently had to replace my home server, in doing so I'm now running an AMD Ryzen 7600 on an ASRock X670 Pro RS motherboard.
+Recently, after replacing my home server I noticed that the CPU (Ryzen 7600) was only scaling between 3000MHz and 3800MHz, which is the base and the first level boost clock of the CPU. I was expecting it to scale down to as low as 400Mhz when idle, and up to 5.17Ghz on boost.
 
-I'm running Fedora 38 on it, and I noticed that the CPU was only scaling between 3000MHz and 3800MHz, which is the base and the first level boost clock of the CPU. I was expecting it to scale down to as low as 400Mhz when idle, and up to 5.17Ghz on boost.
+<!--more-->
 
 ## Investigation
 

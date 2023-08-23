@@ -34,6 +34,8 @@ Github Actions is a "BYOBE" (Bring Your Own Bloody Everything) offering that pro
 
 The product as a whole is an exercise in frustration, one of the worst parts is the lack of reusability and the complexity required to achieve it. Github's concept of reusable workflows on Github Actions is clearly a cobbled together afterthought.
 
+<!--more-->
+
 There's no one way to reuse workflows - you can't simply include / inherit FROM another workflow and no support for standard YAML anchors/aliases[^1].
 
 - [Reusable Workflows](https://docs.github.com/en/actions/using-workflows/reusing-workflows)

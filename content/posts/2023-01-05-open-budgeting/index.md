@@ -32,7 +32,7 @@ asciinema: false
 
 draft: false
 ---
-
+<!--more-->
 # Budgeting for Subscriptions & Licenses
 
 Transparently tracking my financial expenses spent on subscriptions and licenses.

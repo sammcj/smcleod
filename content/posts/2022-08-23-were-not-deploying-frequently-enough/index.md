@@ -12,17 +12,13 @@ tags:
 - software development
 - agile
 - enterprise
-- machinelearning
 title: It's 2022 and we're (still) not deploying enough
 ---
-
-{{< admonition "This blog post is an experiment" >}}
-This post was written using Machine Learning (GPT3) with minimal intervention from me beyond providing prompts and sources.
-{{< /admonition >}}
 
 ## We're (still) not deploying enough
 
 It's 2022 and not deploying frequently enough is *still* one of the most common causes of software failure.
+<!--more-->
 
 I couldn't tell you how often I work with clients that have deployment problems and it turns out they haven't deploy the code in production for weeks, sometimes months, or in a few cases years.
 

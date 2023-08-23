@@ -35,6 +35,7 @@ comment:
 
 
 The YAML Spec defined a simple way to reuse values in YAML documents by means of [Anchors and Aliases](https://yaml.org/spec/1.2/spec.html#id2765878).
+<!--more-->
 
 - Anchors (`&`) are used to define a value.
 - Aliases (`*`) are used to reference a value.

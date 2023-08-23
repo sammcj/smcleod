@@ -33,7 +33,7 @@ asciinema: false
 
 draft: false
 ---
-
+<!--more-->
 Zsh Configuration and Plugins - Part two
 
 _You can find the first post in this series [here](/2022/11/zsh-configuration-and-plugins-part-one/)._

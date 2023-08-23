@@ -16,7 +16,7 @@ title: The Best Of - 2022 Edition
 ---
 
 Near the end of each year I note down a summary of the best apps I've enjoyed using throughout the year, here's 2022.
-
+<!--more-->
 {{< admonition info >}}
 *See also [Firefox Addons - 2022](https://smcleod.net/software/2022/05/16/firefox-addons-2022/)*
 {{< /admonition >}}
@@ -64,4 +64,3 @@ You can find all the applications I use, along with my shell config and plugins 
 - 💩 1Password 8 💩
 - 💩 Microsoft Teams 💩
 - 💩 Microsoft Office365 💩
-
