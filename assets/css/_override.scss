@@ -1,10 +1,11 @@
 $global-font-family: 'Forum', 'Atkinson Hyperlegible', system-ui, -apple-system, BlinkMacSystemFont, PingFang SC, Microsoft YaHei UI, Segoe UI, Roboto, Oxygen, Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, Helvetica, Arial, sans-serif !important;
-
 // Font family of the code
-$code-font-family: Source Code Pro, Menlo, Consolas, Monaco, monospace, $global-font-family  !important;
-
+$code-font-family: 'Source Code Pro', Menlo, Consolas, Monaco, monospace, $global-font-family  !important;
 // Font size of the code
-$code-font-size: .900rem;
+$code-font-size: .840rem;
+$global-font-size: 17px;
+$global-font-weight: 500;
+$global-line-height: 1.4rem;
 
 .chroma .table-wrapper {
   max-height: none !important;
@@ -12,21 +13,16 @@ $code-font-size: .900rem;
 
 // Top Nav Font
 .header-title {
-  font-family: Cartograph CF, system-ui, -apple-system, BlinkMacSystemFont, PingFang SC, Microsoft YaHei UI, Segoe UI, Roboto, Oxygen, Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, Helvetica, Arial, sans-serif !important;
+  font-family: 'Cartograph CF', system-ui, -apple-system, BlinkMacSystemFont, PingFang SC, Microsoft YaHei UI, Segoe UI, Roboto, Oxygen, Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, Helvetica, Arial, sans-serif !important;
 }
-
 // Post title font
-// .home[posts] .summary .single-title {
-//   font-family: 'Oxygen Mono', system-ui !important;
-// }
+.home[posts] .summary .single-title {
+  font-family: 'Forum', system-ui !important;
+  font-weight: 600 !important;
+  // font-size: 125% !important;
+  // padding-block-start: 2% !important;
 
-// pre {
-//   background-color: #23241f !important;
-// }
-
-// code {
-//   background-color: #23241f !important;
-// }
+}
 
 @font-face {
   font-family: 'Oxygen Mono';
@@ -34,185 +30,165 @@ $code-font-size: .900rem;
     url('/fonts/OxygenMono-Regular.woff2') format('woff2');
   font-weight: normal;
   font-style: normal;
-  font-display: swap;
+  font-display: auto;
 }
-
 @font-face {
   font-family: 'Atkinson Hyperlegible';
   src:
     url('/fonts/AtkinsonHyperlegible-Bold.woff2') format('woff2');
   font-weight: bold;
   font-style: normal;
-  font-display: swap;
+  font-display: auto;
 }
-
 @font-face {
   font-family: 'Atkinson Hyperlegible';
   src:
     url('/fonts/AtkinsonHyperlegible-Regular.woff2') format('woff2');
   font-weight: normal;
   font-style: normal;
-  font-display: swap;
+  font-display: auto;
 }
-
 @font-face {
   font-family: 'Atkinson Hyperlegible';
   src:
     url('/fonts/AtkinsonHyperlegible-BoldItalic.woff2') format('woff2');
   font-weight: bold;
   font-style: italic;
-  font-display: swap;
+  font-display: auto;
 }
-
 @font-face {
   font-family: 'Atkinson Hyperlegible';
   src:
     url('/fonts/AtkinsonHyperlegible-Italic.woff2') format('woff2');
   font-weight: normal;
   font-style: italic;
-  font-display: swap;
+  font-display: auto;
 }
-
 @font-face {
   font-family: 'Forum';
   src:
     url('/fonts/Forum.woff2') format('woff2');
   font-weight: normal;
   font-style: normal;
-  font-display: swap;
+  font-display: auto;
 }
-
 @font-face {
   font-family: 'Cartograph CF';
   src: local('Cartograph CF Light Italic'), local('CartographCF-LightItalic'),
     url('/fonts/CartographCF-LightItalic.woff2') format('woff2');
   font-weight: 300;
   font-style: italic;
-  font-display: swap;
+  font-display: auto;
 }
-
 @font-face {
   font-family: 'Cartograph CF';
   src: local('Cartograph CF Heavy Italic'), local('CartographCF-HeavyItalic'),
     url('/fonts/CartographCF-HeavyItalic.woff2') format('woff2');
   font-weight: 900;
   font-style: italic;
-  font-display: swap;
+  font-display: auto;
 }
-
 @font-face {
   font-family: 'Cartograph CF Demi';
   src: local('Cartograph CF Demi Bold Italic'), local('CartographCF-DemiBoldItalic'),
     url('/fonts/CartographCF-DemiBoldItalic.woff2') format('woff2');
   font-weight: 600;
   font-style: italic;
-  font-display: swap;
+  font-display: auto;
 }
-
 @font-face {
   font-family: 'Cartograph CF';
   src: local('Cartograph CF Bold Italic'), local('CartographCF-BoldItalic'),
     url('/fonts/CartographCF-BoldItalic.woff2') format('woff2');
   font-weight: bold;
   font-style: italic;
-  font-display: swap;
+  font-display: auto;
 }
-
 @font-face {
   font-family: 'Cartograph CF Demi';
   src: local('Cartograph CF Demi Bold'), local('CartographCF-DemiBold'),
     url('/fonts/CartographCF-DemiBold.woff2') format('woff2');
   font-weight: 600;
   font-style: normal;
-  font-display: swap;
+  font-display: auto;
 }
-
 @font-face {
   font-family: 'Cartograph CF Extra';
   src: local('Cartograph CF Extra Light Italic'), local('CartographCF-ExtraLightItalic'),
     url('/fonts/CartographCF-ExtraLightItalic.woff2') format('woff2');
   font-weight: 200;
   font-style: italic;
-  font-display: swap;
+  font-display: auto;
 }
-
 @font-face {
   font-family: 'Cartograph CF';
   src: local('Cartograph CF Thin'), local('CartographCF-Thin'),
     url('/fonts/CartographCF-Thin.woff2') format('woff2');
   font-weight: 100;
   font-style: normal;
-  font-display: swap;
+  font-display: auto;
 }
-
 @font-face {
   font-family: 'Cartograph CF';
   src: local('Cartograph CF Regular Italic'), local('CartographCF-RegularItalic'),
     url('/fonts/CartographCF-RegularItalic.woff2') format('woff2');
   font-weight: normal;
   font-style: italic;
-  font-display: swap;
+  font-display: auto;
 }
-
 @font-face {
   font-family: 'Cartograph CF';
   src: local('Cartograph CF Light'), local('CartographCF-Light'),
     url('/fonts/CartographCF-Light.woff2') format('woff2');
   font-weight: 300;
   font-style: normal;
-  font-display: swap;
+  font-display: auto;
 }
-
 @font-face {
   font-family: 'Cartograph CF Extra';
   src: local('Cartograph CF Extra Light'), local('CartographCF-ExtraLight'),
     url('/fonts/CartographCF-ExtraLight.woff2') format('woff2');
   font-weight: 200;
   font-style: normal;
-  font-display: swap;
+  font-display: auto;
 }
-
 @font-face {
   font-family: 'Cartograph CF';
   src: local('Cartograph CF Bold'), local('CartographCF-Bold'),
     url('/fonts/CartographCF-Bold.woff2') format('woff2');
   font-weight: bold;
   font-style: normal;
-  font-display: swap;
+  font-display: auto;
 }
-
 @font-face {
   font-family: 'Cartograph CF';
   src: local('Cartograph CF Thin Italic'), local('CartographCF-ThinItalic'),
     url('/fonts/CartographCF-ThinItalic.woff2') format('woff2');
   font-weight: 100;
   font-style: italic;
-  font-display: swap;
+  font-display: auto;
 }
-
 @font-face {
   font-family: 'icon_fonts';
   src: local('icon_fonts'),
     url('/fonts/icon_fonts.woff2') format('woff2');
   font-weight: normal;
   font-style: normal;
-  font-display: swap;
+  font-display: auto;
 }
-
 @font-face {
   font-family: 'Font Awesome 6 Free';
   src: local('Font Awesome 6 Free Solid'), local('FontAwesome6Free-Solid'),
     url('/fonts/FontAwesome6Free-Solid.woff2') format('woff2');
   font-weight: normal;
   font-style: normal;
-  font-display: swap;
+  font-display: auto;
 }
-
 @font-face {
   font-family: 'typicons';
   src: local('Typicons'),
     url('/fonts/Typicons.woff2') format('woff2');
   font-weight: normal;
   font-style: normal;
-  font-display: swap;
+  font-display: auto;
 }

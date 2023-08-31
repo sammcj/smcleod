@@ -17,8 +17,8 @@ enableGitInfo = true
 enableEmoji = true
 enableInlineShortcodes = true
 
-fontFamily = "Atkinson Hyperlegible"
-titleFontFamily = "Atkinson Hyperlegible"
+fontFamily = "Forum"
+titleFontFamily = "Cartograph CF"
 
 newContentEditor = "code"
 removePathAccents = true
@@ -90,6 +90,7 @@ page = "/:slug/"
 author = "Sam McLeod"
 # subtitle = "The personal blog of Sam McLeod"
 
+highlightWrap = true
 logo = "/logo-painted-350.svg"
 favicon = "/favicon-128x128.png"
 faviconIco = "/favicon.ico"
