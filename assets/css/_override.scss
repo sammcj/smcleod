@@ -1,11 +1,11 @@
-$global-font-family: 'Forum', 'Atkinson Hyperlegible', system-ui, -apple-system, BlinkMacSystemFont, PingFang SC, Microsoft YaHei UI, Segoe UI, Roboto, Oxygen, Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, Helvetica, Arial, sans-serif !important;
+$global-font-family: 'Atkinson Hyperlegible', system-ui, -apple-system, BlinkMacSystemFont, PingFang SC, Microsoft YaHei UI, Segoe UI, Roboto, Oxygen, Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, Helvetica, Arial, sans-serif !important;
 // Font family of the code
 $code-font-family: 'Oxygen Mono', 'Source Code Pro', Menlo, Consolas, Monaco, monospace, $global-font-family !important;
 // Font size of the code
 $code-font-size: .840rem;
-$global-font-size: 18px;
-$global-font-weight: 500;
-$global-line-height: 1.5rem;
+//$global-font-size: 18px;
+//$global-font-weight: 500;
+//$global-line-height: 1.5rem;
 
 .chroma .table-wrapper {
   max-height: none !important;
