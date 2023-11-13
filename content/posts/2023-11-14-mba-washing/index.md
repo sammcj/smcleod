@@ -1,7 +1,7 @@
 ---
 title: MBA Washing
 author: "Sam McLeod"
-description: '"MBA Washing" refers to the phenomenon where individuals, often with a strong theoretical or academic background but limited recent practical experience, adopt and reinterpret industry-specific terminology and cultural movements.'
+description: '"MBA Washing" refers to the phenomenon where individuals or companies, often with a strong theoretical or academic background but limited recent practical experience, adopt and reinterpret industry-specific terminology and cultural movements.'
 categories: [ Tech, Culture ]
 keywords: ["tech", "culture", "devops", "communication"]
 date: "2023-11-13T09:00:00Z"
@@ -29,7 +29,9 @@ mermaid: false
 draft: false
 ---
 
-"MBA Washing" refers to the phenomenon where individuals, often with a strong theoretical or academic background but limited recent practical experience, adopt and reinterpret industry-specific terminology and cultural movements.
+"**MBA Washing**" refers to the phenomenon where individuals, often with a strong theoretical or academic background but limited recent practical experience, adopt and reinterpret industry-specific terminology and cultural movements.
+
+--
 
 This reinterpretation is typically influenced by their academic learning, recent literature, and biases towards larger enterprise perspectives. As a result, the original intent and practical effectiveness of these concepts, such as DevOps or Platform Engineering for example, may be diluted or misrepresented.
 
