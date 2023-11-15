@@ -1,10 +1,10 @@
 ---
 title: "Fun with Makefiles - Dynamic Menu Generation"
-subtitle: "Makefiles are fun, right?"
+subtitle: "Menu Magic"
 date: 2023-11-14T00:00:00+00:00
 lastmod: 2023-11-14T00:00:00+00:00
 author: Sam McLeod
-description: "Makefiles are fun, right?"
+description: "This reusable snippet will generate a menu of targets from the Makefile. It will use `fzf` if it is installed, otherwise it will use a numbered menu."
 keywords: ["tech", "linux", "makefile", "make", "programming"]
 tags: ["Linux", "Programming"]
 categories: ["Tech", "Linux"]
@@ -27,8 +27,6 @@ asciinema: false
 mermaid: true
 draft: false
 ---
-
-Part one of a series of posts about Makefiles.
 
 <!--more-->
 
