@@ -39,6 +39,10 @@ This reusable snippet will generate a menu of targets from the Makefile. It will
 ```Makefile
 #### Dynamically Generated Interactive Menu ####
 
+# Error Handling
+SHELL := /bin/bash
+.SHELLFLAGS := -o pipefail -c
+
 # Name of this Makefile
 MAKEFILE_NAME := $(lastword $(MAKEFILE_LIST))
 
@@ -72,6 +76,22 @@ menu: ## Makefile Interactive Menu
 	else \
 		echo "Invalid choice"; \
 	fi
+
+# Default target
+all: menu
+
+help: ## This help function
+	@egrep '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | sort | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-20s\033[0m %s\n", $$1, $$2}'
+
+# Targets (example targets listed below)
+lint: ## Run lint
+	@echo "Running lint..."
+
+test: ## Run test
+	@echo "Running test..."
+
+build: ## Run build
+	@echo "Running build..."
 ```
 
 ![](makefile-menu.png)
