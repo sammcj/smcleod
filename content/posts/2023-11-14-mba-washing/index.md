@@ -37,9 +37,7 @@ This reinterpretation is typically influenced by their academic learning, recent
 
 <!--more-->
 
-{{< admonition >}}
-It should be noted that the term "MBA Washing" is somewhat of a joke and not intended to be derogatory towards those with an MBA or similar business-focused education. Instead, it is meant to highlight the impact of theoretical perspectives on cultural movements and industry practices by itself being a co-optable, theoretical term.
-{{< /admonition >}}
+> It should be noted that the term "MBA Washing" is somewhat of a joke and not intended to be derogatory towards those with an MBA or similar business-focused education. Instead, it is meant to highlight the impact of theoretical perspectives on cultural movements and industry practices by itself being a co-optable, theoretical term.
 
 ### Expanded Definition
 
@@ -59,9 +57,7 @@ Coined to describe the influence of academic or theoretical perspectives, partic
 
 ![MBA Washing: Process and Impact](mbaw-flow-1.png)
 
-{{< admonition note >}}
-This flowchart outlines how a concept, when interpreted through an MBA perspective, can lead to a theoretical emphasis, enterprise bias, and misinterpretation of concepts. These factors collectively impact industry practices, leading to the dilution of agile practices, misalignment with industry trends, and communication barriers. These outcomes can further result in reduced efficiency and innovation, a gap between theory and practice, and conflicts in team dynamics, ultimately altering industry practices.
-{{< /admonition >}}
+> This flowchart outlines how a concept, when interpreted through an MBA perspective, can lead to a theoretical emphasis, enterprise bias, and misinterpretation of concepts. These factors collectively impact industry practices, leading to the dilution of agile practices, misalignment with industry trends, and communication barriers. These outcomes can further result in reduced efficiency and innovation, a gap between theory and practice, and conflicts in team dynamics, ultimately altering industry practices.
 
 ---
 

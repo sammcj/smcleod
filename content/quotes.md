@@ -28,17 +28,15 @@ A collection of quotes and musings
 
 > "...Do you want a voice? If you do, you better bloody well go out and get it because it's not going to be handed to you on a plate."
 
-{{< typeit group=paragraph >}}
+
 \- Roger Waters
-{{</typeit>}}
 
 ---
 
 > "It is the struggle itself that is most important. We must strive to be more than we are. It does not matter that we will never reach our own ultimate Goal. The effort yields its own rewards."
 
-{{< typeit group=paragraph >}}
+
 \- Data
-{{</typeit>}}
 
 ---
 
@@ -46,49 +44,43 @@ A collection of quotes and musings
 
 > "What I cannot create - I do not understand."
 
-{{< typeit group=paragraph >}}
+
 \- Richard P. Feynman
-{{</typeit>}}
 
 ---
 
 > "Every gun that is made, every warship launched, every rocket fired signifies, in the final sense, a theft from those who hunger and are not fed, those who are cold and are not clothed."
 
-{{< typeit group=paragraph >}}
+
 \- Dwight D. Eisenhower
-{{</typeit>}}
 
 ---
 
 > "Most rules lie, yet lies are less shocking, less corrosive than the chosen, cultivated ignorance that Chevallier addresses here.  This ignorance denies the reality of anything which provokes pity.  It is an error to think of such war leaders or, today, economic strategists, as pitiless.  They are abject.  This is what we have to learn and to act upon.  They are abject."
 
-{{< typeit group=paragraph >}}
+
 \- Gabriel Chevallier, Fear; A Novel of World War I (Quote from Roger Waters The Wall, 2015)
-{{</typeit>}}
 
 ---
 
 > "If a society is tolerant without limit, its ability to be tolerant is eventually seized or destroyed by the intolerant."
 
-{{< typeit group=paragraph >}}
+
 \- Karl Popper
-{{</typeit>}}
 
 ---
 
 > "He knows the price of everything and the value of nothing."
 
-{{< typeit group=paragraph >}}
+
 \- Oscar Wilde
-{{</typeit>}}
 
 ---
 
 > "The road of excess leads to the palace of wisdom."
 
-{{< typeit group=paragraph >}}
+
 \- William Blake
-{{</typeit>}}
 
 ---
 
@@ -98,17 +90,15 @@ A collection of quotes and musings
 
 > "Sometimes you just have to pee in the sink."
 
-{{< typeit group=paragraph >}}
+
 \- Charles Bukowski
-{{</typeit>}}
 
 ---
 
 > "The most dangerous man to any government is the man who is able to think things out for himself, without regard to the prevailing superstitions and taboos."
 
-{{< typeit group=paragraph >}}
+
 \- H.L. Mencken
-{{</typeit>}}
 
 ---
 
@@ -134,145 +124,127 @@ A collection of quotes and musings
 we were alone the whole way. I do not say lonely—at least, not all the time—but essentially, and finally, alone. This is what makes your self-respect so important,
 and I don't see how you can respect yourself if you must look in the hearts and minds of others for your happiness."
 
-{{< typeit group=paragraph >}}
+
 \- Hunter S. Thompson
-{{</typeit>}}
 
 ---
 
 > "You're up against skinheads that are all like 'play faster!' and we're all like 'Listen slower!'"
 
-{{< typeit group=paragraph >}}
+
 \- Maynard James Keenan
-{{</typeit>}}
 
 ---
 
 > "The intellectual is, quite simply, a human being who has a pencil in his or her hand when reading a book."
 
-{{< typeit group=paragraph >}}
+
 \- George Steiner
-{{</typeit>}}
 
 ---
 
 > "Science is the poetry of reality."
 
-{{< typeit group=paragraph >}}
+
 \- Richard Dawkins
-{{</typeit>}}
 
 ---
 
 > "Tell him that we have fucking reprogrammed reality.  Tell him that language is a virus and that religion is an operating system and that prayers are just so much fucking spam."
 
-{{< typeit group=paragraph >}}
+
 \- Neil Gaiman
-{{</typeit>}}
 
 ---
 
 > "With the first link, the chain is forged.  The first speech censured...the first thought forbidden...the first freedom denied - chains us all, irrevocably."
 
-{{< typeit group=paragraph >}}
+
 \- Jean-Luc Picard
-{{</typeit>}}
 
 ---
 
 > "Any fool can know. The point is to understand."
 
-{{< typeit group=paragraph >}}
+
 \- Albert Einstein
-{{</typeit>}}
 
 ---
 
 > "Life can only be understood backwards; but it must be lived forwards."
 
-{{< typeit group=paragraph >}}
+
 \- Søren Kierkegaard
-{{</typeit>}}
 
 ---
 
 > "Any intelligent fool can make things bigger, more complex, and more violent. It takes a touch of genius — and a lot of courage to move in the opposite direction."
 
-{{< typeit group=paragraph >}}
+
 \- E.F. Schumacher
-{{</typeit>}}
 
 ---
 
 > "The cracks are where the light gets let in."
 
-{{< typeit group=paragraph >}}
+
 \- Leonard Cohen
-{{</typeit>}}
 
 ---
 
 > "To do a great and important work, two things are necessary — a definite plan, and not quite enough time."
 
-{{< typeit group=paragraph >}}
+
 \- Leonard Bernstein
-{{</typeit>}}
 
 ---
 
 > "Work for a cause, Not Applause."
 
-{{< typeit group=paragraph >}}
+
 \- Unknown
-{{</typeit>}}
 
 ---
 
 > "Offence is important; that's how you know you care about things. Imagine a life where you're not offended. So dull."
 
-{{< typeit group=paragraph >}}
+
 \- Marcus Brigstocke
-{{</typeit>}}
 
 ---
 
 > "The less confident you are, the more serious you have to act."
 
-{{< typeit group=paragraph >}}
+
 \- Tara Ploughman
-{{</typeit>}}
 
 ---
 
 > "In the sunset of dissolution, everything is illuminated by the aura of nostalgia."
 
-{{< typeit group=paragraph >}}
+
 \- Milan Kundera
-{{</typeit>}}
 
 ---
 
 > "Short words are best and the old words when short are best of all."
 
-{{< typeit group=paragraph >}}
+
 \- Winston Churchill
-{{</typeit>}}
 
 ---
 
 > "None are more hopelessly enslaved than those who falsely believe they are free."
 
-{{< typeit group=paragraph >}}
+
 \- Johann Wolfgang Von Goethe, Elective Affinities
-{{</typeit>}}
 
 ---
 
 > "When I'm working on a problem, I never think about beauty. I think only how to solve the problem. But when I have finished, if the solution is not beautiful, I know it is wrong."
 
-{{< typeit group=paragraph >}}
+
 \- R. Buckminster Fuller
-{{</typeit>}}
 
 ---
 
@@ -280,9 +252,8 @@ and I don't see how you can respect yourself if you must look in the hearts and 
 
 > "Religion is just mind control."
 
-{{< typeit group=paragraph >}}
+
 \- George Carlin
-{{</typeit>}}
 
 ---
 
@@ -292,33 +263,29 @@ and I don't see how you can respect yourself if you must look in the hearts and 
 
 > "Scar tissue is stronger than regular tissue. Realize the strength, move on."
 
-{{< typeit group=paragraph >}}
+
 \- Henry Rollins
-{{</typeit>}}
 
 ---
 
 > "Simplicities are enormously complex. Consider the sentence "I love you"."
 
-{{< typeit group=paragraph >}}
+
 \- Richard O. Moore
-{{</typeit>}}
 
 ---
 
 > "Truth is a matter of circumstances. It's not all things to all people at all times."
 
-{{< typeit group=paragraph >}}
+
 \- Natasha Romanoff
-{{</typeit>}}
 
 ---
 
 > "No silicon heaven? Preposterous! Where would all the calculators go?"
 
-{{< typeit group=paragraph >}}
+
 \- Kryten
-{{</typeit>}}
 
 ### Tech Specific
 
@@ -334,9 +301,8 @@ and I don't see how you can respect yourself if you must look in the hearts and 
 
 > "Left unchecked, technical debt will ensure that the only work that gets done is unplanned work."
 
-{{< typeit group=paragraph >}}
+
 \- Gene Kim
-{{</typeit>}}
 
 ---
 
@@ -344,41 +310,36 @@ and I don't see how you can respect yourself if you must look in the hearts and 
 
 > "If you plan and build for perfection, you will likely not live to see it completed."
 
-{{< typeit group=paragraph >}}
+
 \- Adrian Cockcroft
-{{</typeit>}}
 
 ---
 
 > "Design not for MTBF, but for MTTR."
 
-{{< typeit group=paragraph >}}
+
 \- John Allspaw
-{{</typeit>}}
 
 ---
 
 > "Programs must be written for people to read, and only incidentally for machines to execute."
 
-{{< typeit group=paragraph >}}
+
 \- Abelson & Sussman
-{{</typeit>}}
 
 ---
 
 > "When the train stays on the tracks you don't ask why."
 
-{{< typeit group=paragraph >}}
+
 \- Marty Rubin
-{{</typeit>}}
 
 ---
 
 > "A complex system that works is invariably found to have evolved from a simple system that worked. A complex system designed from scratch never works and cannot be patched up to make it work. You have to start over, beginning with a working simple system."
 
-{{< typeit group=paragraph >}}
+
 \- John Gall
-{{</typeit>}}
 
 ---
 
@@ -390,9 +351,8 @@ and I don't see how you can respect yourself if you must look in the hearts and 
 
 > "You don't hire for skills, you hire for attitude. You can always teach skills."
 
-{{< typeit group=paragraph >}}
+
 \- Simon Sinek
-{{</typeit>}}
 
 ## Musings
 
