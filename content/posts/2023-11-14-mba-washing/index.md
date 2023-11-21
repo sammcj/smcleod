@@ -37,9 +37,7 @@ This reinterpretation is typically influenced by their academic learning, recent
 
 <!--more-->
 
-{{< admonition >}}
-It should be noted that the term "MBA Washing" is somewhat of a joke and not intended to be derogatory towards those with an MBA or similar business-focused education. Instead, it is meant to highlight the impact of theoretical perspectives on cultural movements and industry practices by itself being a co-optable, theoretical term.
-{{< /admonition >}}
+> It should be noted that the term "MBA Washing" is somewhat of a joke and not intended to be derogatory towards those with an MBA or similar business-focused education. Instead, it is meant to highlight the impact of theoretical perspectives on cultural movements and industry practices by itself being a co-optable, theoretical term.
 
 ### Expanded Definition
 
@@ -59,15 +57,15 @@ Coined to describe the influence of academic or theoretical perspectives, partic
 
 ![MBA Washing: Process and Impact](mbaw-flow-1.png)
 
-{{< admonition note >}}
-This flowchart outlines how a concept, when interpreted through an MBA perspective, can lead to a theoretical emphasis, enterprise bias, and misinterpretation of concepts. These factors collectively impact industry practices, leading to the dilution of agile practices, misalignment with industry trends, and communication barriers. These outcomes can further result in reduced efficiency and innovation, a gap between theory and practice, and conflicts in team dynamics, ultimately altering industry practices.
-{{< /admonition >}}
+> This flowchart outlines how a concept, when interpreted through an MBA perspective, can lead to a theoretical emphasis, enterprise bias, and misinterpretation of concepts. These factors collectively impact industry practices, leading to the dilution of agile practices, misalignment with industry trends, and communication barriers. These outcomes can further result in reduced efficiency and innovation, a gap between theory and practice, and conflicts in team dynamics, ultimately altering industry practices.
 
 ---
 
 ### Examples
 
 **DevOps in Theory vs. Practice**: An MBA graduate might focus on the strategic alignment and process optimization aspects of DevOps, overlooking the importance of continuous integration and deployment practices essential in real-world scenarios.
+
+![](the-evolution-of-devops-from-philosophy-to-brand.png)
 
 **Agile Methodology**: The agile methodology might be reinterpreted to fit rigid, hierarchical corporate structures, contrary to its original intent of fostering flexibility and cross-functional collaboration.
 
@@ -76,6 +74,10 @@ This flowchart outlines how a concept, when interpreted through an MBA perspecti
 ![](state-of-pe-poor-timeline.png)
 
 This isn't to say that we should discredit any of the individuals, events or communities such a timeline (Team Typologies is a great resource for example) - but instead to highlight the biases of reports such as this. They only paint a narrow, often enterprise-focused, view of the field.
+
+If sticking to a basic high level timeline I'd create something more along the lines of the following:
+
+![](the-evolution-of-platform-engineering-and-the-rise-of-platform-as-a-product.png)
 
 ---
 
