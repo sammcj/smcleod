@@ -65,6 +65,8 @@ Coined to describe the influence of academic or theoretical perspectives, partic
 
 **DevOps in Theory vs. Practice**: An MBA graduate might focus on the strategic alignment and process optimization aspects of DevOps, overlooking the importance of continuous integration and deployment practices essential in real-world scenarios.
 
+![](the-evolution-of-devops-from-philosophy-to-brand.png)
+
 **Agile Methodology**: The agile methodology might be reinterpreted to fit rigid, hierarchical corporate structures, contrary to its original intent of fostering flexibility and cross-functional collaboration.
 
 **Platform Engineering**: As seen in "Humanitec"s [State of Platform Engineering (Vol 2)](https://humanitec.com/whitepapers/state-of-platform-engineering-report-volume-2) report - with their "_history_" of Platform Engineering (pictured below) - there is a string recency bias and a lack of understanding or value placed in the history of such a movement. This is a common theme in many "industry reports" as often published by large, privately owned companies.
@@ -72,6 +74,10 @@ Coined to describe the influence of academic or theoretical perspectives, partic
 ![](state-of-pe-poor-timeline.png)
 
 This isn't to say that we should discredit any of the individuals, events or communities such a timeline (Team Typologies is a great resource for example) - but instead to highlight the biases of reports such as this. They only paint a narrow, often enterprise-focused, view of the field.
+
+If sticking to a basic high level timeline I'd create something more along the lines of the following:
+
+![](the-evolution-of-platform-engineering-and-the-rise-of-platform-as-a-product.png)
 
 ---
 

@@ -8,7 +8,7 @@ copyright = "Sam McLeod"
 timeZone = "Australia/Melbourne"
 
 paginate = 100
-summaryLength = 50
+summaryLength = 60
 enableRobotsTXT = true
 # relativeURLs = true
 

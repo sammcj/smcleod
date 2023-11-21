@@ -11,12 +11,14 @@ tags:
 - art
 - machinelearning
 - humour
-title: DALL·E 2 - Selected works
+title: DALL·E 2
 ---
 
 Over the past month I've been playing with OpenAI's [DALL·E 2](https://openai.com/dall-e-2/), below are some of the  interesting images I've generated.
 
 "_[DALL·E 2](https://openai.com/dall-e-2/) is a new AI system that can create realistic images and art from a description in natural language._"
+
+<!-- more -->
 
 ## "A renaissance oil painting of two developers arguing over which javascript framework is the worst"
 
