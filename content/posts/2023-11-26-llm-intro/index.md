@@ -209,6 +209,14 @@ presence_penalty is a parameter that controls the penalty applied to tokens that
 
 frequency_penalty is a parameter that controls the penalty applied to tokens that appear frequently in the training data during the inference process. A higher value of frequency_penalty will result in less frequent output, while a lower value of frequency_penalty will result in more frequent output. This parameter can be used to fine-tune the LLM for specific tasks or to control the level of creativity or diversity in the generated text.
 
+For example:
+
+- -2.0 When the morning news starts playing, I noticed that my TV now now now now now now now now now now now now now now now now now now now now now now now now now now now now now now now now now now now now now now now now now now now now now now now now now now now now now now now (The most frequent word is "now" with a percentage of 44.79%)
+- -1.0 He always watches the news in the morning, watching watching watching watching watching watching watching watching watching watching watching watching watching watching watching watching watching watching watching watching watching watching watching watching watching watching watching watching watching watching watching watching watching watching watching watching watching (The most frequent word is "watching" with a percentage of 57.69%)
+- 0.0 When the morning sun shines into the small restaurant, a tired mail man appears at the door, holding a bag of mail in his hand. The owner warmly prepares breakfast for him, and he starts sorting the mail while enjoying his breakfast. (The most frequent word is "the" with a percentage of 8.45%)
+- 1.0 A deep sleep girl is awakened by a warm sunbeam. She sees the first ray of sunlight in the morning, surrounded by the sounds of birds and the fragrance of flowers, everything is full of vitality. (The most frequent word is "the" with a percentage of 5.45%)
+- 2.0 Every morning, he sits on the balcony to have breakfast. In the gentle sunset, everything looks very peaceful. However, one day, as he was about to pick up his breakfast, an optimistic little bird flew by, bringing him a good mood for the day. (The most frequent word is "the" with a percentage of 4.94%)
+
 ### repetition_penalty_range
 
 repetition_penalty_range is a parameter that controls the range of possible values for the repetition penalty during the inference process. A higher value of repetition_penalty_range will result in more diverse output, while a lower value of repetition_penalty_range will result in more consistent output. This parameter can be used to fine-tune the LLM for specific tasks or to control the level of creativity or diversity in the generated text.
