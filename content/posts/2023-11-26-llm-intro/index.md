@@ -228,3 +228,9 @@ epsilon_cutoff is a parameter that controls the threshold for early termination 
 ### eta_cutoff
 
 eta_cutoff is a parameter that controls the threshold for early termination based on the number of tokens generated during inference. A higher value of eta_cutoff will result in more complete inferences, while a lower value of eta_cutoff will result in faster but potentially incomplete inferences. This parameter can be used to balance accuracy and speed during inference.
+
+## Links
+
+Other potentially useful links:
+
+- https://learnprompting.org/docs/intro
