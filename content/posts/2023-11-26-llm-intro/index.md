@@ -229,8 +229,14 @@ epsilon_cutoff is a parameter that controls the threshold for early termination 
 
 eta_cutoff is a parameter that controls the threshold for early termination based on the number of tokens generated during inference. A higher value of eta_cutoff will result in more complete inferences, while a lower value of eta_cutoff will result in faster but potentially incomplete inferences. This parameter can be used to balance accuracy and speed during inference.
 
+## Other Concepts and Terminology
+
+- [MoE: Mixture of Experts](https://huggingface.co/blog/moe), a technique for combining multiple models into a single model. This can be used to improve the performance of an LLM by combining multiple models trained on different datasets.
+- [RAG: Retrieval-Augmented Generation](https://blogs.nvidia.com/blog/what-is-retrieval-augmented-generation/), a technique used for retrieving and parsing information from an external source.
+
 ## Links
 
 Other potentially useful links:
 
 - https://learnprompting.org/docs/intro
+- https://huggingface.co/docs
