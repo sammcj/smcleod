@@ -187,15 +187,19 @@ temperature is a parameter that controls the randomness of the LLM's output. A h
 
 ### top_p
 
-top_p is a parameter that controls the probability threshold for selecting the next token during inference. A higher value of top_p will result in more conservative output, while a lower value of top_p will result in more adventurous output. This parameter can be used to fine-tune the LLM for specific tasks or to control the level of risk or exploration in the generated text.
+To quote Carlos F. Enguix:
+
+"Let's assume you set the Top P value as P (0 ≤ P ≤ 1). Now we have a set of words from the previous step with various probabilities. How Top P works is if it finds the smallest group of words whose cumulative probability exceeds the value of P. This way, the number of words in the set can dynamically increase and decrease according to the next word probability distribution. If the value of P is 0, then “Top P” will select the word with the highest probability. This is equivalent to greedy decoding. If the value of P is 1, then “Top P” will select the entire set of words. This is equivalent to sampling from the entire distribution. Range: 0.00 - 1.00 Example: top_p 0.01 Deterministic Value: 0"
+
+### top_k
+
+To quote Carlos F. Enguix:
+
+"Fine-tune the token selection process with top_k, specifying the number of highest probability vocabulary choices considered during decoding. Balance this value for optimal results. Sample from the k most likely next tokens at each step. Lower k focuses on higher probability tokens. Range: 0 - 200 words Example: top_k 20 Deterministic Value: 0"
 
 ### min_p
 
 min_p is a parameter that controls the minimum probability required for a token to be included in the generated text during inference. A higher value of min_p will result in more conservative output, while a lower value of min_p will result in more adventurous output. This parameter can be used to fine-tune the LLM for specific tasks or to control the level of risk or exploration in the generated text.
-
-### top_k
-
-top_k is a parameter that controls the number of most probable tokens that are considered during the inference process. A higher value of top_k will result in more conservative output, while a lower value of top_k will result in more adventurous output. This parameter can be used to fine-tune the LLM for specific tasks or to control the level of creativity or diversity in the generated text.
 
 ### repetition_penalty
 
