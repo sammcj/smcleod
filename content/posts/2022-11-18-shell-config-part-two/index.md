@@ -330,6 +330,28 @@ function gbd(){
 }
 ```
 
+### `__untracked_files`
+
+Checks for any untracked files and prompts to add them
+
+```bash
+# A function that provides an untracked_files check for other functions
+function __untracked_files() {
+  # Check for any files not added - if there are any, list them and ask the user if they want to add them
+  if git status --porcelain | grep -q "^??"; then
+    echo "Untracked files detected:"
+    git status --porcelain | grep "^??"
+    local yn=""
+    echo "Do you want to add all untracked files? (y/n)"
+    vared -p "" -c yn
+    case $yn in
+    [Yy]*) git add . ;;
+    *) echo "Skipping add" ;;
+    esac
+  fi
+}
+```
+
 ### `checkout-hotfix`
 
 Checks out a hotfix branch with the current date and user.
@@ -337,9 +359,19 @@ Checks out a hotfix branch with the current date and user.
 - Alias: `coh`
 
 ```bash
-function checkout-hotfix() {
-  git checkout -b "Hotfix-$(date +%Y-%m-%d)-${USER}"
-}
+  local PREFIX="hotfix-${USER}"
+  local DATESTAMP
+  DATESTAMP=$(date +%Y-%m-%d)
+  # If the hotfix branch already exists, append a number to the branch name, if the number already exists increment it
+  if command git branch -a | grep -q "$PREFIX-$DATESTAMP"; then
+    local COUNT=1
+    while git branch -a | grep -q "$PREFIX-$DATESTAMP-$COUNT"; do
+      COUNT=$((COUNT + 1))
+    done
+    command git checkout -b "${PREFIX}-${DATESTAMP}-${COUNT}"
+  else
+    command git checkout -b "${PREFIX}-${DATESTAMP}"
+  fi
 ```
 
 ### `commit-hotfix`
@@ -349,9 +381,57 @@ Commits a hotfix branch with the current date and user.
 - Alias: `ch`
 
 ```bash
-function commit-hotfix() {
-  git add .
-  git commit -m "Hotfix-$(date +%Y/%m/%d): $*"
+commit-hotfix() {
+  local DATESTAMP
+  DATESTAMP=$(date +%Y/%m/%d)
+  local GIT_ARGS
+  GIT_ARGS=""
+  local MESSAGE
+  MESSAGE="$*" # Set the commit message to the arguments passed to the function
+
+  # Handle -n argument
+  if [[ $1 == "-n" ]]; then
+    GIT_ARGS="-n"    # Add -n as a parameter to git if it's passed as an argument to the function
+    MESSAGE="${*:2}" # Remove the first argument from the list of arguments
+  fi
+
+  # Check for any files not added - if there are any, list them and ask the user if they want to add them
+  __untracked_files
+
+  # Get the current branch name
+  local CURRENT_BRANCH
+  CURRENT_BRANCH=$(git rev-parse --abbrev-ref HEAD)
+
+  # Check if there are no changes to commit
+  if git diff --cached --exit-code --quiet; then
+    # Check if the branch exists on the remote
+    if git ls-remote --heads origin "$CURRENT_BRANCH" | grep -q "$CURRENT_BRANCH"; then
+      # Branch exists on remote, check for unpushed commits
+      if git cherry -v origin/"$CURRENT_BRANCH" | grep -q "^+"; then
+        echo "No new changes to commit, but there are commits that haven't been pushed."
+        command git push
+      else
+        echo "No changes to commit or push."
+      fi
+    else
+      # Branch does not exist on remote, prompt to push and track
+      echo "Current branch '$CURRENT_BRANCH' does not exist on the remote."
+      local yn=""
+      echo "Do you want to push and track this branch on the remote? (y/n)"
+      vared -p "" -c yn
+      case $yn in
+      [Yy]*) git push --set-upstream origin "$CURRENT_BRANCH" ;;
+      *)
+        echo "Skipping push"
+        return
+        ;;
+      esac
+    fi
+  else
+    # Changes to commit
+    command git commit "$GIT_ARGS" -m "Hotfix-${DATESTAMP} -- ${MESSAGE}"
+    command git push --set-upstream origin "$CURRENT_BRANCH"
+  fi
 }
 ```
 
@@ -362,10 +442,12 @@ Checks out a branch with the provided JIRA ticket number along with the current 
 - Alias: `coj`
 
 ```bash
-function checkout-jira() {
-  JIRA_TICKET_PREFIX="IF"
-  git checkout -b "${JIRA_TICKET_PREFIX}-${1}-${USER}-$(date +%Y-%m-%d)"
-}
+  JIRA_BRANCH="IF-${1}-${USER}-$(date +%Y-%m-%d)"
+  # If the JIRA branch already exists, append the current time to the branch name
+  if command git branch -a | grep -q "remotes/origin/${JIRA_BRANCH}"; then
+    JIRA_BRANCH="${JIRA_BRANCH}-$(date +%H-%M-%S)"
+  fi
+  command git checkout -b "${JIRA_BRANCH}"
 ```
 
 ### `commit-jira`
@@ -375,9 +457,46 @@ Takes the JIRA card number from the start of the branch name for the commit mess
 - Alias: `cj`.
 
 ```bash
-function commit-jira(){
-  git add .
-  git commit -m "$(git rev-parse --abbrev-ref HEAD | cut -d'-' -f1 -f2) -- $*"
+function commit-jira() {
+  # Assumes a branch name of the format IF-1234-<anything>
+  local GIT_ARGS=""
+  local MESSAGE="$*" # Set the commit message to the arguments passed to the function
+
+  # If arguments are provided, use them for the commit message
+  if [[ -n $* ]]; then
+    MESSAGE="${*:2}" # Remove the first argument from the list of arguments
+    shift 1
+  fi
+
+  # Check for any files not added - if there are any, list them and ask the user if they want to add them
+  __untracked_files
+
+  # Get the current branch name
+  local CURRENT_BRANCH
+  CURRENT_BRANCH=$(git rev-parse --abbrev-ref HEAD)
+
+  # Check if there are no changes to commit
+  if git diff --cached --exit-code --quiet; then
+    # Check if the branch exists on the remote
+    if git ls-remote --heads origin "$CURRENT_BRANCH" | grep -q "$CURRENT_BRANCH"; then
+      # Branch exists on remote, check for unpushed commits
+      if git cherry -v origin/"$CURRENT_BRANCH" | grep -q "^+"; then
+        echo "No new changes to commit, but there are commits that haven't been pushed."
+        command git push
+      else
+        echo "No changes to commit or push."
+      fi
+    else
+      # Branch does not exist on remote, prompt to push and track
+      echo "Current branch '$CURRENT_BRANCH' does not exist on the remote, pushing..."
+      git push --set-upstream origin "$CURRENT_BRANCH"
+    fi
+  else
+    # Changes to commit
+    BRANCH_NAME=$(git rev-parse --abbrev-ref HEAD | cut -d'-' -f1 -f2)
+    command git commit "$GIT_ARGS" -m "$BRANCH_NAME -- $MESSAGE"
+    command git push --set-upstream origin "$CURRENT_BRANCH"
+  fi
 }
 ```
 
