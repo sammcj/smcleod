@@ -126,7 +126,6 @@ norss: true
 
 - [Das Keyboard](http://daskeyboard.com) - Mechanical Keyboard
 - [Keychron](https://www.keychron.com) - Low Profile Mechanical Keyboards
-- [Logitech MX Master 3](https://www.logitech.com/en-au/products/mice/mx-master-3s.910-006561.html) - Mouse
 
 ### For Your Ears
 
