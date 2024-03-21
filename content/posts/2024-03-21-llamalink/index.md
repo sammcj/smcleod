@@ -6,7 +6,7 @@ categories: [ Tech, AI, LLM, Code ]
 keywords: ["tech", "ai", "llm", "code", "github", "ollama", "gguf", "ggml"]
 date: "2024-03-21"
 images: [""]
-featuredImagePreview:
+featuredImagePreview: "llamalink-screenshot.jpg"
 tags:
 - Tech
 - LLM
