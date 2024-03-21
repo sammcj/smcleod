@@ -18,34 +18,44 @@ norss: true
 - 🦃 [Twitter](https://www.twitter.com/sammcj)
 - 👔 [LinkedIn](https://www.linkedin.com/in/sammcj)
 
+- 🦙 [My Ollama Models](https://ollama.com/sammcj)
+- 📚 [My Open WebUI Prompts and Modelfiles](https://openwebui.com/m/samm)
+- 🖼️ [My LLM Image Models](https://civitai.com/user/mlsa/models)
+
 ## Software
 
-- [Bear](https://bear.app) - Markdown / Notes / Web Clipping
-- [MusicHarbor](https://apps.apple.com/au/app/musicharbor-track-new-music/id1440405750) - Track new and upcoming music releases
 - [Plex](https://plex.tv) - Home Media Streaming
-- [Reeder](http://reederapp.com) - RSS Client
-- [Stay](https://cordlessdog.com/stay/) - Keep App Windows Where You Want Them
-- [Things](https://culturedcode.com/things/) - Lists / GTD
 - [PFsense](https://www.pfsense.org) - Routing, Firewall, VPN and Network Management
 
-### macOS Apps
+### AI / LLM
+
+- [Ollama](https://ollama.com) - LLM Model Server with Docker-like functionality
+- [LM Studio](https://lmstudio.ai) - macOS LLM Model Manager and inference tool
+- [InvokeAI](https://invoke.ai) - AI Image Generation and Editing
+- [Kohya_SS](https://github.com/bmaltais/kohya_ss) - LLM Image Model and LoRA Training
+- [Open WebUI](https://github.com/open-webui/open-webui) - Web Interface for Ollama
+
+### macOS / iOS Apps
 
 - [Amphetamine](https://apps.apple.com/us/app/amphetamine/id937984704?mt=12) - Keep Your Mac Awake
 - [BetterTouchTool](https://folivora.ai/) - macOS automation and customisation
+- [Bear](https://bear.app) - Markdown / Notes / Web Clipping
+- [MusicHarbor](https://apps.apple.com/au/app/musicharbor-track-new-music/id1440405750) - Track new and upcoming music releases
 - [Brew](https://brew.sh/) - Package manager
   - [mas](https://github.com/mas-cli/mas) - Mac App Store CLI integrated with brew
 - [Keka](https://www.keka.io/) - Archive Manager
+- [Stay](https://cordlessdog.com/stay/) - Keep App Windows Where You Want Them
 - [Micro Snitch](https://obdev.at/products/microsnitch/index.html) - Notifications for active mic/webcam
 - [mu-repo](https://fabioz.github.io/mu-repo/) - Manage Multiple Git Repositories
 - [Calibre](http://calibre-ebook.com) - Ebook Management
 - [LaunchControl](https://www.soma-zone.com/LaunchControl/) - Manage launchd
-
+- [Things](https://culturedcode.com/things/) - Lists / GTD
+- [Reeder](http://reederapp.com) - RSS Client, although I am looking for a replacement that offers filters, deduplication and summarisation
 - [MeetingBar](https://apps.apple.com/au/app/meetingbar/id1532419400?mt=12) - Calendar Integration
 - [Bumpr](https://www.getbumpr.com) - Customise Browser By App or Link
 - [DaisyDisk](https://daisydiskapp.com/) - Disk usage inspector
 - [Handbrake](https://handbrake.fr) - Video Encoding
-- [ImageOptim Beta](https://imageoptim.com/ImageOptim1.9.0.tar.xz) - Image compression)
-  - *Note: This is a beta version, but it supports Apple Silicon natively, the author is working on [ImageOptim 2](https://github.com/ImageOptim/ImageOptim/issues/354)*.
+- [ImageOptim](https://imageoptim.com) - Image compression
 - [OnyX](https://titanium-software.fr/en/onyx.html) - macOS customisation
 - [Shottr](https://shottr.cc/) - Better screenshots
 - Firewall
@@ -53,11 +63,7 @@ norss: true
   - [RadioSilence](https://radiosilenceapp.com) - Firewall
 - [Pixelmator Pro](https://www.pixelmator.com/pro/) - Image Editing
 - [Peek](https://apps.apple.com/au/app/peek-a-quick-look-extension/id1554235898?mt=12) - Quicklook plugins
-
-### iOS Apps
-
-- [Alien Blue](http://www.reddit.com/r/alienblue) - Reddit Client
-- [Overcast](https://overcast.fm) - Podcast Client
+- [Raycast](https://raycast.com) - Spotlight replacement
 - [Prompt](https://panic.com/prompt/) - Mobile SSH Client
 - [Parcel](https://apps.apple.com/au/app/parcel/id375589283) - Track parcels (also for macOS)
 
