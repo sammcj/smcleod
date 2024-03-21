@@ -19,7 +19,7 @@ toc:
 
 > Hi I'm Sam 👋🏻
 
-I'm a [1x Engineer](https://1x.engineer/) in the Platform/Automation/DevOps space, Open Source advocate and community maintainer.
+I'm a [1x Engineer](https://1x.engineer/) in the Platform/Automation/DevOps/AI space, Open Source advocate and community maintainer.
 
 Currently working as a [Platform Engineering Lead](/cv/) at [DigIO](htttps://digio.com.au) in Melbourne, Australia.
 
@@ -30,7 +30,6 @@ This site is my tech blog, a place to share my thoughts and ideas (mainly relati
 - 🐘 [Mastodon](https://aus.social/@s_mcleod)
 - 🧑‍💻 [Github](https://www.github.com/sammcj)
 - 🦤 [Twitter Archive](https://sammcj.github.io/twitter-archive/)
-- 🦃 [Twitter](https://www.twitter.com/sammcj)
 - 👔 [LinkedIn](https://www.linkedin.com/in/sammcj)
 
 --
@@ -43,6 +42,7 @@ Outside of work my interests include:
 - 👨🏻‍🎤 Going to gigs.
 - 📻 HiFi, I'm an audio geek with lots of gear.
 - 🚶‍♂️ Walking, often while listening to new music.
+- 🦾 AI, LLMs tooling, development and performance.
 - 📚 Reading, mostly Sci-Fi, Speculative Fiction and Biographies, Audiobooks my go-to.
 - 🎮 Gaming (not too frequently though!), mostly multiplayer strategic FPS such as [Hell Let Loose](https://www.hellletloose.com/) with friends.
 - 📺 Film and Television, especially Sci-Fi and British Comedy.
