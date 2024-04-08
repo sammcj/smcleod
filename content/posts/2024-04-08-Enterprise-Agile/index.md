@@ -1,5 +1,5 @@
 ---
-title: 'The Enterprises "Agile" Software Development Manifesto'
+title: 'The Enterprise "Agile" Software Development Manifesto'
 author: "Sam McLeod"
 description: "We are pretending to uncover better ways of developing software by talking about it and making others believe we're doing it. Through this facade, we have come to value: Processes and tools over individuals and interactions, Comprehensive documentation over working software, Contract negotiation over customer collaboration, Following a plan over responding to change."
 categories: [ Agile, Culture, Humour ]
@@ -32,7 +32,7 @@ mermaid: false
 draft: false
 ---
 
-# The Enterprises "Agile" Software Development Manifesto
+# The Enterprise "Agile" Software Development Manifesto
 
 ![](enterprise-agile.jpg)
 
