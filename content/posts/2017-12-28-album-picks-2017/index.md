@@ -6,7 +6,11 @@ date: "2017-12-28T00:00:00Z"
 aliases:
   - /music/2017/12/28/album-picks-2017/
 images: ["backdrop-linn.jpg"]
-featuredImagePreview: backdrop-linn.jpg
+cover:
+  image: " backdrop-linn.jpg"
+  #alt: "<alt text>"
+  #caption: "<text>"
+  #relative: false # To use relative path for cover image, used in hugo Page-bundles
 tags:
 - music
 title: Top album picks for 2017

@@ -9,7 +9,11 @@ aliases:
   - /tech/ssd-storage-cluster-diagram/
   - /tech/2015/06/17/ssd-storage-cluster-diagram.html
 images: ["backdrop-feetsky.jpg"]
-featuredImagePreview: backdrop-feetsky.jpg
+cover:
+  image: " backdrop-feetsky.jpg"
+  #alt: "<alt text>"
+  #caption: "<text>"
+  #relative: false # To use relative path for cover image, used in hugo Page-bundles
 tags:
 - tech
 - storage

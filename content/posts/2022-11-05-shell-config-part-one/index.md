@@ -6,12 +6,14 @@ lastmod: 2022-11-06T10:32:43+11:00
 author: Sam McLeod
 description: "My Z-Shell configuration, scripts and hacks"
 keywords: ["zsh", "bash", "scripting", "linux", "macOS"]
-
 tags: ["zsh", "bash", "scripting", "linux", "macOS"]
 categories: ["zsh", "scripting", "linux", "macOS"]
 series: ["ZSH", "Code"]
-featuredimage: "colour_vertical_icon_wbg_wide.png"
-# featuredImagePreview: "colour_vertical_icon_wbg_wide.png"
+cover:
+  image: "colour_vertical_icon_wbg_wide.png"
+  #alt: "<alt text>"
+  #caption: "<text>"
+  #relative: false # To use relative path for cover image, used in hugo Page-bundles
 images: ["colour_vertical_icon_wbg_wide.png"]
 
 hiddenFromHomePage: false

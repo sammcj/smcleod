@@ -8,7 +8,11 @@ aliases:
   - /tech/2015/02/16/building-a-high-performance-ssd-san/
   - /building-a-high-performance-ssd-san/
 images: ["melbourne.jpg"]
-featuredImagePreview: melbourne.jpg
+cover:
+  image: " melbourne.jpg"
+  #alt: "<alt text>"
+  #caption: "<text>"
+  #relative: false # To use relative path for cover image, used in hugo Page-bundles
 series: [ Storage ]
 tags:
 - tech

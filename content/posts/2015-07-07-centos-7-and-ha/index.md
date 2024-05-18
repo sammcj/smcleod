@@ -6,7 +6,11 @@ date: "2015-07-07T00:00:00Z"
 aliases:
   - /tech/2015/07/07/centos-7-and-ha/
 images: ["billy-huynh-278252.jpg"]
-featuredImagePreview: billy-huynh-278252.jpg
+cover:
+  image: " billy-huynh-278252.jpg"
+  #alt: "<alt text>"
+  #caption: "<text>"
+  #relative: false # To use relative path for cover image, used in hugo Page-bundles
 tags:
 - tech
 - storage

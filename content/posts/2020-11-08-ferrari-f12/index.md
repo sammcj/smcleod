@@ -6,7 +6,11 @@ date: "2020-11-08T16:00:00Z"
 aliases:
   - /cars/2020/11/08/ferrari-f12/
 images: ["f12b_compressed.jpg"]
-featuredImagePreview: f12b_compressed.jpg
+cover:
+  image: " f12b_compressed.jpg"
+  #alt: "<alt text>"
+  #caption: "<text>"
+  #relative: false # To use relative path for cover image, used in hugo Page-bundles
 lightgallery: true
 tags: [photos, cars]
 title: Ferrari F12 Berlinetta

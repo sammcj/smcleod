@@ -6,7 +6,11 @@ date: "2015-02-26T00:00:00Z"
 aliases:
   - /tech/2015/05/26/xen-orchestra-docker-image/
 images: ["backdrop-insidebuilding.jpg"]
-featuredImagePreview: backdrop-insidebuilding.jpg
+cover:
+  image: " backdrop-insidebuilding.jpg"
+  #alt: "<alt text>"
+  #caption: "<text>"
+  #relative: false # To use relative path for cover image, used in hugo Page-bundles
 tags:
 - tech
 - xen

@@ -6,7 +6,11 @@ date: "2016-05-23T00:00:00Z"
 aliases:
   - /tech/2016/05/23/convert-sql-ascii-to-utf8
 images: ["patrick-tomasso-71909.jpg"]
-featuredImagePreview: patrick-tomasso-71909.jpg
+cover:
+  image: " patrick-tomasso-71909.jpg"
+  #alt: "<alt text>"
+  #caption: "<text>"
+  #relative: false # To use relative path for cover image, used in hugo Page-bundles
 tags:
 - tech
 - software

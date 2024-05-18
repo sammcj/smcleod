@@ -6,7 +6,11 @@ date: "2018-01-17T00:00:00Z"
 aliases:
   - /tech/2018/02/05/theory-of-constraints
 images: ["samuel-zeller-237359.jpg"]
-featuredImagePreview: samuel-zeller-237359.jpg
+cover:
+  image: " samuel-zeller-237359.jpg"
+  #alt: "<alt text>"
+  #caption: "<text>"
+  #relative: false # To use relative path for cover image, used in hugo Page-bundles
 tags:
 - DevOps
 title: Theory of constraints

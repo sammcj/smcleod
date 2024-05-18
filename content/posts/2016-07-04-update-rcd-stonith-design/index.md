@@ -6,7 +6,11 @@ date: "2016-07-04T00:00:00Z"
 aliases:
   - /tech/2016/07/04/update-rcd-stonith-design
 images: ["noah-kuhn-27481.jpg"]
-featuredImagePreview: noah-kuhn-27481.jpg
+cover:
+  image: " noah-kuhn-27481.jpg"
+  #alt: "<alt text>"
+  #caption: "<text>"
+  #relative: false # To use relative path for cover image, used in hugo Page-bundles
 tags:
 - tech
 - storage

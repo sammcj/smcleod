@@ -7,7 +7,11 @@ updated: "2023-05-31T07:52:26Z"
 aliases:
   - /tech/2022/10/20/make-work-visible-dms/
 images: ["silos.jpg"]
-featuredImagePreview: silos.jpg
+cover:
+  image: " silos.jpg"
+  #alt: "<alt text>"
+  #caption: "<text>"
+  #relative: false # To use relative path for cover image, used in hugo Page-bundles
 title: Making Work Visible - Avoid DMs
 showFullContent: false
 keywords: ["work", "communication", "culture", "tech", "direct messages", "remotework"]
@@ -69,9 +73,7 @@ For some it is a change in behaviour, for others it is a change in mindset.
 
 Many people often default 1 on 1 private conversations based on common *false* assumptions.
 
-{{< admonition warning "1. Ideas should be developed in private" >}}
-> *"I don't want to share my ideas with the team until they're fully formed"*
-{{< /admonition >}}
+_> *"I don't want to share my ideas with the team until they're fully formed"*_
 
 By sharing your ideas as they are forming you benefit from the feedback and different perspectives of others.
 
@@ -79,9 +81,7 @@ This isn't just important for the problem you're trying to solve - it is also la
 
 &nbsp;
 
-{{< admonition warning "2. Others aren't interested" >}}
->*"The others are busy with their own work, I don't want to bother them with something they don't care about"*
-{{< /admonition >}}
+_>*"The others are busy with their own work, I don't want to bother them with something they don't care about"*_
 
 As a sender of information, who are you to decide what others are interested in?
 
@@ -93,15 +93,11 @@ Getting an answer or piece of insight from someone you didn't expect is common w
 
 &nbsp;
 
-{{< admonition warning "3. I'm distracting others" >}}
-> *"I don't want to interrupt others with my questions"*
-{{< /admonition >}}
+_> *"I don't want to interrupt others with my questions"*_
 
 Communicating openly does not mean yelling your ideas over the top of everyone, it doesn't even mean they have to be notified of your conversation let alone requested to participate in it.
 
-{{< admonition tip >}}
-There is a big difference between wasting peoples time with pointless meetings/workshops and sharing your information/discussions in a open forum.
-{{< /admonition >}}
+_There is a big difference between wasting peoples time with pointless meetings/workshops and sharing your information/discussions in a open forum._
 
 Embracing and opt-in communication style, people have the option to choose to ignore the discussion if it doesn't interest them, or even to prioritise it and perhaps read through it later at their convenience.
 
@@ -117,9 +113,7 @@ Communicating effectively means using the tools properly to minimise noise and t
 
 Many of the tools we use for communication are designed to be open and transparent - but it's up to us to use them properly.
 
-{{< admonition tip >}}
-Conversation threading may seem like a small feature of modern collaboration tools - using threads yields significant rewards.
-{{< /admonition >}}
+_Conversation threading may seem like a small feature of modern collaboration tools - using threads yields significant rewards._
 
 Using threads can significantly reduce context switching, cognitive load and promotes more engaging communication.
 

@@ -6,7 +6,11 @@ date: "2017-10-13T00:00:00Z"
 aliases:
   - /tech/2017/10/13/Drop-Broadcom
 images: ["office-space-broadcom.jpg"]
-featuredImagePreview: office-space-broadcom.jpg
+cover:
+  image: " office-space-broadcom.jpg"
+  #alt: "<alt text>"
+  #caption: "<text>"
+  #relative: false # To use relative path for cover image, used in hugo Page-bundles
 tags:
 - tech
 - networking

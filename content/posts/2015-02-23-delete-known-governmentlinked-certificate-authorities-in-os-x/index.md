@@ -6,7 +6,11 @@ date: "2015-02-23T00:00:00Z"
 aliases:
   - /tech/2015/02/23/delete-known-governmentlinked-certificate-authorities-in-os-x/
 images: ["backdrop-italian-steps.jpg"]
-featuredImagePreview: backdrop-italian-steps.jpg
+cover:
+  image: " backdrop-italian-steps.jpg"
+  #alt: "<alt text>"
+  #caption: "<text>"
+  #relative: false # To use relative path for cover image, used in hugo Page-bundles
 tags:
 - tech
 - security

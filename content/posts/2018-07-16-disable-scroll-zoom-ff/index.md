@@ -7,7 +7,11 @@ aliases:
   - /tech/2017/11/21/disable-firefox-scrollzoom
   - /tech/2018/07/16/disable-scroll-zoom-ff
 images: ["zoom.jpg"]
-featuredImagePreview: zoom.jpg
+cover:
+  image: " zoom.jpg"
+  #alt: "<alt text>"
+  #caption: "<text>"
+  #relative: false # To use relative path for cover image, used in hugo Page-bundles
 tags:
 - tech
 - software

@@ -6,7 +6,11 @@ date: "2017-11-14T00:00:00Z"
 aliases:
   - /tech/2017/11/14/getting-started-with-gluster
 images: ["backdrop-plastic-containers.jpg"]
-featuredImagePreview: backdrop-plastic-containers.jpg
+cover:
+  image: " backdrop-plastic-containers.jpg"
+  #alt: "<alt text>"
+  #caption: "<text>"
+  #relative: false # To use relative path for cover image, used in hugo Page-bundles
 tags:
 - tech
 - storage

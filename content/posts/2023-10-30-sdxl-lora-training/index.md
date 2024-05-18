@@ -6,7 +6,11 @@ categories: [ Tech, Talks, AI ]
 keywords: ["tech", "talk", "slides", "ai", "ml", "art", "sdxl", "lora", "stable diffusion", "diffusion", "model", "training", "machine learning"]
 date: "2023-10-30T20:00:00Z"
 images: ["sdxl.jpeg"]
-featuredImagePreview: sdxl.jpeg
+cover:
+  image: " sdxl.jpeg"
+  #alt: "<alt text>"
+  #caption: "<text>"
+  #relative: false # To use relative path for cover image, used in hugo Page-bundles
 tags:
 - Tech
 - Talk

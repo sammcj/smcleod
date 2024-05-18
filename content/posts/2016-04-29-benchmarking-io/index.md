@@ -6,7 +6,11 @@ date: "2016-04-29T00:00:00Z"
 aliases:
   - /tech/2016/04/29/benchmarking-io
 images: ["daniel-mayovskiy-303666.jpg"]
-featuredImagePreview: daniel-mayovskiy-303666.jpg
+cover:
+  image: " daniel-mayovskiy-303666.jpg"
+  #alt: "<alt text>"
+  #caption: "<text>"
+  #relative: false # To use relative path for cover image, used in hugo Page-bundles
 tags:
 - tech
 - storage

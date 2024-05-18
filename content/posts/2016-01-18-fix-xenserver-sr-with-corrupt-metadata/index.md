@@ -6,7 +6,11 @@ date: "2016-01-18T00:00:00Z"
 aliases:
   - /tech/2016/01/18/fix-xenserver-sr-with-corrupt-metadata/
 images: ["samuel-zeller-358865.jpg"]
-featuredImagePreview: samuel-zeller-358865.jpg
+cover:
+  image: " samuel-zeller-358865.jpg"
+  #alt: "<alt text>"
+  #caption: "<text>"
+  #relative: false # To use relative path for cover image, used in hugo Page-bundles
 tags:
 - tech
 - storage

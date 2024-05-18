@@ -6,7 +6,11 @@ date: "2015-02-15T00:00:00Z"
 aliases:
   - /tech/2015/01/01/the-best-of-2014-edition
 images: ["patrick-tomasso-71909.jpg"]
-featuredImagePreview: patrick-tomasso-71909.jpg
+cover:
+  image: " patrick-tomasso-71909.jpg"
+  #alt: "<alt text>"
+  #caption: "<text>"
+  #relative: false # To use relative path for cover image, used in hugo Page-bundles
 tags:
 - tech
 - software
@@ -17,9 +21,7 @@ title: The Best Of - 2014 Edition
 
 At the end of every year I note down a summary of the best applications, hardware & websites I've enjoyed & depended on throughout the year (and often for some time before).
 
-{{< admonition info >}}
-This post has long since been superseded. You can find the latest version of this post [here](/2022-10-19-apps-of-2022/).
-{{< /admonition >}}
+_This post has long since been superseded. You can find the latest version of this post [here](/2022-10-19-apps-of-2022/)._
 
 ## Software / General Use
 

@@ -6,7 +6,11 @@ date: "2015-09-01T00:00:00Z"
 aliases:
   - /tech/2015/09/01/os-x-software-update-channels/
 images: ["rishi-deep-424424.jpg"]
-featuredImagePreview: rishi-deep-424424.jpg
+cover:
+  image: " rishi-deep-424424.jpg"
+  #alt: "<alt text>"
+  #caption: "<text>"
+  #relative: false # To use relative path for cover image, used in hugo Page-bundles
 tags:
 - tech
 title: OS X Software Update Channels For Betas

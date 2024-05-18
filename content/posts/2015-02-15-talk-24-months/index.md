@@ -6,7 +6,11 @@ date: "2015-02-15T00:00:00Z"
 aliases:
   - /tech/2014/10/15/talk-24-months/
 images: ["melbourne.jpg"]
-featuredImagePreview: melbourne.jpg
+cover:
+  image: " melbourne.jpg"
+  #alt: "<alt text>"
+  #caption: "<text>"
+  #relative: false # To use relative path for cover image, used in hugo Page-bundles
 tags:
 - talk
 - tech

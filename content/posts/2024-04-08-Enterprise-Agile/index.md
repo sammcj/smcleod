@@ -6,7 +6,11 @@ categories: [ Agile, Culture, Humour ]
 keywords: ["tech", "agile", "enterprise", "humour", "culture", "manifesto", "software development"]
 date: "2024-04-08"
 images: ["enterprise-agile.jpg"]
-featuredImagePreview: enterprise-agile.jpg
+cover:
+  image: " enterprise-agile.jpg"
+  #alt: "<alt text>"
+  #caption: "<text>"
+  #relative: false # To use relative path for cover image, used in hugo Page-bundles
 tags:
 - Agile
 - Culture

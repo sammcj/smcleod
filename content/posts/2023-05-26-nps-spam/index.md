@@ -11,7 +11,11 @@ categories: ["Sales/Marketing", "Enterprise"]
 series: []
 images: ["i-dont-use-nps-1.jpg"]
 # featuredimage: "i-dont-use-nps-1.jpg"
-featuredImagePreview: "i-dont-use-nps-1.jpg"
+cover:
+  image: "i-dont-use-nps-1.jpg"
+  #alt: "<alt text>"
+  #caption: "<text>"
+  #relative: false # To use relative path for cover image, used in hugo Page-bundles
 hiddenFromHomePage: false
 hiddenFromSearch: false
 toc:

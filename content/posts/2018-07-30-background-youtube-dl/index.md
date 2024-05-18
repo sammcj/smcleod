@@ -6,7 +6,11 @@ date: "2018-07-30T08:52:00Z"
 aliases:
   - /tech/2018/07/30/background-youtube-dl
 images: ["camera-background.jpg"]
-featuredImagePreview: camera-background.jpg
+cover:
+  image: " camera-background.jpg"
+  #alt: "<alt text>"
+  #caption: "<text>"
+  #relative: false # To use relative path for cover image, used in hugo Page-bundles
 tags:
 - tech
 - software

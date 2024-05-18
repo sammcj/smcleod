@@ -6,7 +6,11 @@ date: "2015-02-15T00:00:00Z"
 aliases:
   - /tech/2015/02/14/xenserver-ssds-vm-storage-performance
 images: ["noah-kuhn-27481.jpg"]
-featuredImagePreview: noah-kuhn-27481.jpg
+cover:
+  image: " noah-kuhn-27481.jpg"
+  #alt: "<alt text>"
+  #caption: "<text>"
+  #relative: false # To use relative path for cover image, used in hugo Page-bundles
 tags:
 - tech
 - storage

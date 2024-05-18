@@ -7,7 +7,11 @@ aliases:
   - /photos/2016/08/06/winter-wonder-land/
 description: Castle Hill Winter Trip 2016 [Photos]
 images: ["backdrop-austria.jpg"]
-featuredImagePreview: backdrop-austria.jpg
+cover:
+  image: " backdrop-austria.jpg"
+  #alt: "<alt text>"
+  #caption: "<text>"
+  #relative: false # To use relative path for cover image, used in hugo Page-bundles
 lightgallery: true
 tags:
 - photos

@@ -6,7 +6,11 @@ date: "2017-10-25T00:00:00Z"
 aliases:
   - /tech/2017/10/25/sublime-syntax-topline
 images: ["backdrop-code.jpg"]
-featuredImagePreview: backdrop-code.jpg
+cover:
+  image: " backdrop-code.jpg"
+  #alt: "<alt text>"
+  #caption: "<text>"
+  #relative: false # To use relative path for cover image, used in hugo Page-bundles
 tags:
 - tech
 title: Applying syntax in Sublime based on the first file line

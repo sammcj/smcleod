@@ -6,7 +6,11 @@ date: "2019-02-05T13:00:00Z"
 aliases:
   - /tech/2019/02/11/hello-xcp-ng
 images: ["xcpng_rocket_logo.png"]
-featuredImagePreview: xcpng_rocket_logo.png
+cover:
+  image: " xcpng_rocket_logo.png"
+  #alt: "<alt text>"
+  #caption: "<text>"
+  #relative: false # To use relative path for cover image, used in hugo Page-bundles
 tags:
 - tech
 - software

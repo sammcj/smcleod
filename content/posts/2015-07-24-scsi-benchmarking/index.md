@@ -6,7 +6,11 @@ date: "2015-07-24T00:00:00Z"
 aliases:
   - /tech/2015/07/24/scsi-benchmarking/
 images: ["datacentre-1.jpg"]
-featuredImagePreview: datacentre-1.jpg
+cover:
+  image: " datacentre-1.jpg"
+  #alt: "<alt text>"
+  #caption: "<text>"
+  #relative: false # To use relative path for cover image, used in hugo Page-bundles
 tags:
 - tech
 - storage

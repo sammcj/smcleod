@@ -6,7 +6,11 @@ date: "2020-10-10T16:00:00Z"
 aliases:
   - /tech/2020/10/10/apps-of-2020/
 images: ["william-hook-unsplash.jpg"]
-featuredImagePreview: william-hook-unsplash.jpg
+cover:
+  image: " william-hook-unsplash.jpg"
+  #alt: "<alt text>"
+  #caption: "<text>"
+  #relative: false # To use relative path for cover image, used in hugo Page-bundles
 tags:
 - bestof
 - software
@@ -16,9 +20,7 @@ series: [ BestOf ]
 
 Near the end of every year I note down a summary of the best apps, hardware & podcasts I've enjoyed throughout the year (and often for some time before).
 
-{{< admonition info >}}
-This post has been superseded. You can find the latest version of this post [here](/posts/2022-10-19-apps-of-2022/).
-{{< /admonition >}}
+_This post has been superseded. You can find the latest version of this post [here](/posts/2022-10-19-apps-of-2022/)._
 
 ## Software and Services
 

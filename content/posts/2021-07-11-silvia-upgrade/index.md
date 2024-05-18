@@ -6,7 +6,11 @@ date: "2021-07-11T14:00:00Z"
 aliases:
   - /hardware/2021/07/11/silvia-upgrade/
 images: ["assembled_preview.jpeg"]
-featuredImagePreview: assembled_preview.jpeg
+cover:
+  image: " assembled_preview.jpeg"
+  #alt: "<alt text>"
+  #caption: "<text>"
+  #relative: false # To use relative path for cover image, used in hugo Page-bundles
 lightgallery: true
 tags:
 - coffee

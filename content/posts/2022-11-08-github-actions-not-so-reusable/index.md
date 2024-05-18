@@ -15,7 +15,11 @@ series: []
 image: &image "old-man-yells-at-github-actions.png"
 
 featuredimage: *image
-featuredImagePreview: *image
+cover:
+  image: " *image"
+  #alt: "<alt text>"
+  #caption: "<text>"
+  #relative: false # To use relative path for cover image, used in hugo Page-bundles
 images: [*image]
 
 hiddenFromHomePage: false

@@ -6,7 +6,11 @@ date: "2016-01-29T00:00:00Z"
 aliases:
   - /tech/2016/01/29/askizzy/
 images: ["melbourne.jpg"]
-featuredImagePreview: melbourne.jpg
+cover:
+  image: " melbourne.jpg"
+  #alt: "<alt text>"
+  #caption: "<text>"
+  #relative: false # To use relative path for cover image, used in hugo Page-bundles
 tags:
 - tech
 title: AskIzzy

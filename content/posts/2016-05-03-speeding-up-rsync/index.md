@@ -6,7 +6,11 @@ date: "2016-05-03T00:00:00Z"
 aliases:
   - /tech/2016/05/03/speeding-up-rsync
 images: ["robin-pierre-323861.jpg"]
-featuredImagePreview: robin-pierre-323861.jpg
+cover:
+  image: " robin-pierre-323861.jpg"
+  #alt: "<alt text>"
+  #caption: "<text>"
+  #relative: false # To use relative path for cover image, used in hugo Page-bundles
 tags:
 - tech
 - software

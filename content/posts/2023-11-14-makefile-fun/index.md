@@ -10,7 +10,11 @@ tags: ["Linux", "Programming"]
 categories: ["Tech", "Linux"]
 series: ["Fun With Makefiles"]
 images: ["makefile-menu.png"]
-featuredImagePreview: "makefile-menu.png"
+cover:
+  image: "makefile-menu.png"
+  #alt: "<alt text>"
+  #caption: "<text>"
+  #relative: false # To use relative path for cover image, used in hugo Page-bundles
 hiddenFromHomePage: false
 hiddenFromSearch: false
 toc:

@@ -6,7 +6,11 @@ date: "2018-03-20T00:00:00Z"
 aliases:
   - /tech/2018/03/20/oss-flash-storage-update
 images: ["sam-standing-at-rack.jpg"]
-featuredImagePreview: sam-standing-at-rack.jpg
+cover:
+  image: " sam-standing-at-rack.jpg"
+  #alt: "<alt text>"
+  #caption: "<text>"
+  #relative: false # To use relative path for cover image, used in hugo Page-bundles
 tags:
 - tech
 - storage

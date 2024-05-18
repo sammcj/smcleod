@@ -6,7 +6,11 @@ date: "2016-07-11T00:00:00Z"
 aliases:
   - /tech/2016/07/11/lets-try-android-in-2016
 images: ["adrien-296945.jpg"]
-featuredImagePreview: adrien-296945.jpg
+cover:
+  image: " adrien-296945.jpg"
+  #alt: "<alt text>"
+  #caption: "<text>"
+  #relative: false # To use relative path for cover image, used in hugo Page-bundles
 tags:
 - tech
 - hardware

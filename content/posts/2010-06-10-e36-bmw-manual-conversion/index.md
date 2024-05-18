@@ -6,7 +6,11 @@ date: "2010-06-10T00:00:00Z"
 aliases:
   - /cars/2010/06/22/e36-bmw-manual-conversion/
 images: ["ivan-angelov-ITEOjp8utXc-unsplash.jpg"]
-featuredImagePreview: ivan-angelov-ITEOjp8utXc-unsplash.jpg
+cover:
+  image: " ivan-angelov-ITEOjp8utXc-unsplash.jpg"
+  #alt: "<alt text>"
+  #caption: "<text>"
+  #relative: false # To use relative path for cover image, used in hugo Page-bundles
 tags:
 - cars
 title: BMW E36 328i Manual Conversion Programming

@@ -6,7 +6,11 @@ date: "2020-10-08T15:20:00Z"
 aliases:
   - /jimothy/2020/10/08/rip-jimothy/
 images: ["jimothy.jpg"]
-featuredImagePreview: jimothy.jpg
+cover:
+  image: " jimothy.jpg"
+  #alt: "<alt text>"
+  #caption: "<text>"
+  #relative: false # To use relative path for cover image, used in hugo Page-bundles
 lightgallery: true
 tags:
 - photos

@@ -12,8 +12,11 @@ categories: ["zsh", "scripting", "linux", "macOS"]
 series: ["ZSH", "Code"]
 
 images: ["zsh-part-two.gif"]
-featuredimage: "zsh-part-two.gif"
-featuredImagePreview: "zsh-part-two.gif"
+cover:
+  image: "zsh-part-two.gif"
+  #alt: "<alt text>"
+  #caption: "<text>"
+  #relative: false # To use relative path for cover image, used in hugo Page-bundles
 
 hiddenFromHomePage: false
 hiddenFromSearch: false

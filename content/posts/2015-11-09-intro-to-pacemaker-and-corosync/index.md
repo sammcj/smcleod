@@ -6,7 +6,11 @@ date: "2015-11-09T00:00:00Z"
 aliases:
   - /tech/2015/11/09/intro-to-pacemaker-and-corosync/
 images: ["tim-napier-181584.jpg"]
-featuredImagePreview: tim-napier-181584.jpg
+cover:
+  image: " tim-napier-181584.jpg"
+  #alt: "<alt text>"
+  #caption: "<text>"
+  #relative: false # To use relative path for cover image, used in hugo Page-bundles
 tags:
 - tech
 - storage

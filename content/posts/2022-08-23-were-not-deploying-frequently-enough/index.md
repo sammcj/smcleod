@@ -6,7 +6,11 @@ date: "2022-08-23T07:00:00Z"
 aliases:
   - /DevOps/2022/08/23/were-not-deploying-frequently-enough/
 images: ["nick-abrams-FTKfX3xZIcc-unsplash.jpg"]
-featuredImagePreview: nick-abrams-FTKfX3xZIcc-unsplash.jpg
+cover:
+  image: " nick-abrams-FTKfX3xZIcc-unsplash.jpg"
+  #alt: "<alt text>"
+  #caption: "<text>"
+  #relative: false # To use relative path for cover image, used in hugo Page-bundles
 tags:
 - DevOps
 - software development
