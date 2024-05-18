@@ -6,7 +6,11 @@ date: "2018-04-11T00:00:00Z"
 aliases:
   - /photos/2018/03/20/highlands
 images: ["v8.jpg"]
-featuredImagePreview: v8.jpg
+cover:
+  image: " v8.jpg"
+  #alt: "<alt text>"
+  #caption: "<text>"
+  #relative: false # To use relative path for cover image, used in hugo Page-bundles
 lightgallery: true
 tags:
 - cars

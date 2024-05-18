@@ -7,7 +7,11 @@ aliases:
   - /tech/2015/03/15/kernel-ci/
   - /continuous-integration-for-the-linux-kernel-built-within-docker
 images: ["backdrop-zbuildings.jpg"]
-featuredImagePreview: backdrop-zbuildings.jpg
+cover:
+  image: " backdrop-zbuildings.jpg"
+  #alt: "<alt text>"
+  #caption: "<text>"
+  #relative: false # To use relative path for cover image, used in hugo Page-bundles
 tags:
 - tech
 - DevOps

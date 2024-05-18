@@ -7,7 +7,11 @@ aliases:
   - /tech/2019/08/08/camels-and-unicorns/
   - /tech/2019/08/08/camels-and-unicorns.html
 images: ["camel_corn.jpeg"]
-featuredImagePreview: camel_corn.jpeg
+cover:
+  image: " camel_corn.jpeg"
+  #alt: "<alt text>"
+  #caption: "<text>"
+  #relative: false # To use relative path for cover image, used in hugo Page-bundles
 tags:
 - tech
 - DevOps

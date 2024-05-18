@@ -6,7 +6,11 @@ date: "2016-02-04T00:00:00Z"
 aliases:
   - /tech/2016/02/04/mirror-gitlab-to-github/
 images: ["backdrop-austria.jpg"]
-featuredImagePreview: backdrop-austria.jpg
+cover:
+  image: " backdrop-austria.jpg"
+  #alt: "<alt text>"
+  #caption: "<text>"
+  #relative: false # To use relative path for cover image, used in hugo Page-bundles
 tags:
 - tech
 - software

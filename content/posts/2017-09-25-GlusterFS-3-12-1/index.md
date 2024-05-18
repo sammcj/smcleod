@@ -6,7 +6,11 @@ date: "2017-09-25T00:00:00Z"
 aliases:
   - /tech/2017/09/25/GlusterFS-3-12-1
 images: ["backdrop-insidebuilding.jpg"]
-featuredImagePreview: backdrop-insidebuilding.jpg
+cover:
+  image: " backdrop-insidebuilding.jpg"
+  #alt: "<alt text>"
+  #caption: "<text>"
+  #relative: false # To use relative path for cover image, used in hugo Page-bundles
 tags:
 - tech
 - storage

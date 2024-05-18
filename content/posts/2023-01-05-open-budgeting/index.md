@@ -12,7 +12,11 @@ series: ["Open Budgeting"]
 
 images: ["money-au.jpg"]
 featuredimage: "money-au.jpg"
-featuredImagePreview: "money-au.jpg"
+cover:
+  image: "money-au.jpg"
+  #alt: "<alt text>"
+  #caption: "<text>"
+  #relative: false # To use relative path for cover image, used in hugo Page-bundles
 
 hiddenFromHomePage: false
 hiddenFromSearch: false

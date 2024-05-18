@@ -4,7 +4,11 @@ readingTime: true
 categories: [ "Culture", "Tech", "Leadership", "Values" ]
 date: "2022-10-30T07:00:00Z"
 images: ["help.jpg"]
-featuredImagePreview: help.jpg
+cover:
+  image: " help.jpg"
+  #alt: "<alt text>"
+  #caption: "<text>"
+  #relative: false # To use relative path for cover image, used in hugo Page-bundles
 tags:
 - culture
 - tech
@@ -68,9 +72,7 @@ In reality, the only way to get better at contributing to open source is to cont
 - You get exposed to ideas and ways of thinking you may not be familiar with.
 - You gain meaningful experience that you can speak to throughout your career, with your clients and in job interviews (on either side of the table).
 
-{{< admonition tip "Contributing doesn't mean you have to understand the code base and submit code fixes" >}}
-It can be as simple as making sure you log bugs/issues publicly, making your work visible and updating incorrect or missing documentation.
-{{< /admonition >}}
+_It can be as simple as making sure you log bugs/issues publicly, making your work visible and updating incorrect or missing documentation._
 
 ---
 

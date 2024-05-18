@@ -6,7 +6,11 @@ date: "2022-10-19T19:00:00Z"
 aliases:
   - /tech/2022/10/18/apps-of-2022/
 images: ["tools.jpg"]
-featuredImagePreview: tools.jpg
+cover:
+  image: " tools.jpg"
+  #alt: "<alt text>"
+  #caption: "<text>"
+  #relative: false # To use relative path for cover image, used in hugo Page-bundles
 tags:
 - bestof
 - software
@@ -17,9 +21,7 @@ title: The Best Of - 2022 Edition
 
 Near the end of each year I note down a summary of the best apps I've enjoyed using throughout the year, here's 2022.
 <!--more-->
-{{< admonition info >}}
-*See also [Firefox Addons - 2022](https://smcleod.net/software/2022/05/16/firefox-addons-2022/)*
-{{< /admonition >}}
+_*See also [Firefox Addons - 2022](https://smcleod.net/software/2022/05/16/firefox-addons-2022/)*_
 
 ## The Best
 

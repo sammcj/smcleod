@@ -6,7 +6,11 @@ date: "2015-05-14T00:00:00Z"
 aliases:
   - /tech/2015/05/15/video-storage-cluster-failover-demo/
 images: ["elliot-sloman-199291.jpg"]
-featuredImagePreview: elliot-sloman-199291.jpg
+cover:
+  image: " elliot-sloman-199291.jpg"
+  #alt: "<alt text>"
+  #caption: "<text>"
+  #relative: false # To use relative path for cover image, used in hugo Page-bundles
 series: [ Storage ]
 tags:
 - tech

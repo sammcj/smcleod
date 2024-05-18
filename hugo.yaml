@@ -1,0 +1,231 @@
+baseURL: https://smcleod.net
+languageCode: en-GB
+title: smcleod.net
+theme: ["PaperMod"]
+gitRepo: "https://github.com/sammcj/smcleod"
+
+paginate: 150
+enableEmoji: true
+enableGitInfo: true
+enableRobotsTXT: true
+buildDrafts: false
+buildFuture: false
+buildExpired: false
+
+# enableInlineShortcodes: true
+
+minify:
+  disableXML: true
+  minifyOutput: true
+
+params:
+  env: production # to enable google analytics, opengraph, twitter-cards and schema.
+  title: smcleod.net
+  timeZone: Australia/Melbourne
+  copyright: Sam McLeod
+  description: "The personal blog of Sam McLeod."
+  keywords: [Blog, Portfolio, AI, DevOps, Platform Engineering, Melbourne, Sam McLeod, Tech]
+  author: Sam McLeod
+  # author: ["Me", "You"] # multiple authors
+  images: ["/logo-painted-350.svg"]
+  DateFormat: "January 2, 2006"
+  defaultTheme: auto # dark, light
+  disableThemeToggle: false
+
+  ShowReadingTime: true
+  ShowShareButtons: false
+  ShowPostNavLinks: true
+  ShowBreadCrumbs: true
+  ShowCodeCopyButtons: true
+  ShowWordCount: true
+  ShowRssButtonInSectionTermList: true
+  UseHugoToc: true
+  disableSpecial1stPost: false
+  disableScrollToTop: false
+  comments: false
+  hidemeta: false
+  hideSummary: false
+  showtoc: true
+  tocopen: true
+
+
+  assets:
+    # disableHLJS: true # to disable highlight.js
+    disableFingerprinting: true
+    favicon: "static/favicon-256x256.png"
+    favicon16x16: "static/favicon-16x16.png"
+    favicon32x32: "static/favicon-32x32.png"
+    apple_touch_icon: "static/apple-touch-icon.png"
+    safari_pinned_tab: "static/safari-pinned-tab.svg"
+
+  label:
+    text: "Home"
+    icon: /static/apple-touch-icon.png
+    iconHeight: 35
+
+  # profile-mode
+  profileMode:
+    enabled: false # needs to be explicitly set
+    title: ExampleSite
+    subtitle: "This is subtitle"
+    imageUrl: "<img location>"
+    imageWidth: 120
+    imageHeight: 120
+    imageTitle: my image
+    buttons:
+      - name: Posts
+        url: posts
+      - name: Tags
+        url: tags
+
+  # home-info mode
+  homeInfoParams:
+    Title: "smcleod.net \U0001F44B"
+    Content: "The personal blog of Sam McLeod. I write about AI, DevOps, Platform Engineering, and other geeky topics."
+
+  socialIcons:
+    - name: github
+      url: "https://github.com/sammcj/"
+      icon: github
+    - name: linkedin
+      url: "https://www.linkedin.com/in/sammcj/"
+      icon: linkedin
+    - name: mastodon
+      url: "https://aus.social/@s_mcleod"
+      icon: mastodon
+
+  cover:
+    hidden: true # hide everywhere but not in structured data
+    hiddenInList: true # hide on list pages and home
+    hiddenInSingle: true # hide on single page
+
+  editPost:
+    URL: "https://github.com/sammcj/smcleod"
+    Text: "Suggest Changes" # edit text
+    appendFilePath: true # to append file path to Edit link
+
+  # for search
+  # https://fusejs.io/api/options.html
+  fuseOpts:
+    isCaseSensitive: false
+    shouldSort: true
+    location: 0
+    distance: 1000
+    threshold: 0.4
+    minMatchCharLength: 0
+    limit: 10 # refer: https://www.fusejs.io/api/methods.html#search
+    keys: ["title", "permalink", "summary", "content"]
+menu:
+  main:
+    - identifier: "Posts"
+      pre: ""
+      post: ""
+      name: "✍🏻 Posts"
+      url: "/posts"
+      title: ""
+      weight: 1
+    - identifier: "Search"
+      pre: ""
+      post: ""
+      name: "🔎 Search"
+      url: "/search/"
+      title: ""
+      weight: 2
+    - identifier: "categories"
+      pre: ""
+      post: ""
+      name: "🍱 Categories"
+      url: "/categories/"
+      title: ""
+      weight: 3
+    # - identifier: "series"
+    #   pre: ""
+    #   post: ""
+    #   name: "📚 Series"
+    #   url: "/series/"
+    #   title: ""
+    #   weight: 4
+    - identifier: "links"
+      pre: ""
+      post: ""
+      name: "🔗 Links"
+      url: "/links/"
+      title: "Links to software and services I use"
+      weight: 5
+    - identifier: "about"
+      pre: ""
+      post: ""
+      name: "🤦🏻‍♂️ About"
+      url: "/about/"
+      title: "Sam McLeod"
+      weight: 6
+    - identifier: "contact"
+      pre: ""
+      post: ""
+      name: "💬 Contact"
+      url: "/contact/"
+      title: "Contact me"
+      weight: 7
+
+
+# Read: https://github.com/adityatelange/hugo-PaperMod/wiki/FAQs#using-hugos-syntax-highlighter-chroma
+pygmentsUseClasses: true
+markup:
+  highlight:
+    noClasses: false
+    # anchorLineNos: true
+    # codeFences: true
+    # guessSyntax: true
+    # lineNos: true
+    style: monokai
+    guessSyntax: true
+    lineNumbersInTable: true
+
+  goldmark:
+    renderer:
+      unsafe: true
+    extensions:
+      definitionList: true
+      footnote: true
+      linkify: true
+      strikethrough: true
+      table: true
+      taskList: true
+      typographer: true
+
+  tableOfContents:
+    startLevel: 2
+    endLevel: 4
+
+sitemap:
+  changefreq: weekly
+  filename: sitemap.xml
+  priority: 0.5
+
+permalinks:
+  posts: "/:year/:month/:title"
+  category: "/blog/category/:slug/"
+
+privacy:
+  twitter:
+    enableDNT: true
+  youtube:
+    privacyEnhanced: true
+
+outputFormats:
+  markdown:
+    mediaType: "text/plain"
+    isPlainText: true
+    isHTML: false
+
+outputs:
+  home: ["HTML", "RSS", "JSON"]
+  page: ["HTML"]
+  section: ["HTML", "RSS"]
+  taxonomy: ["HTML", "RSS"]
+
+taxonomies:
+  author: "authors"
+  category: "categories"
+  tag: "tags"
+  series: "series"

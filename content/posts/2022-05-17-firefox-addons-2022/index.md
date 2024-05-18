@@ -7,7 +7,11 @@ updated: "2022-11-07T16:52:27+11:00"
 aliases:
   - /software/2022/05/16/firefox-addons-2022/
 images: ["firefox-logo-collage-1.png"]
-featuredImagePreview: firefox-logo-collage-1.png
+cover:
+  image: " firefox-logo-collage-1.png"
+  #alt: "<alt text>"
+  #caption: "<text>"
+  #relative: false # To use relative path for cover image, used in hugo Page-bundles
 tags:
 - software
 series: [ BestOf ]

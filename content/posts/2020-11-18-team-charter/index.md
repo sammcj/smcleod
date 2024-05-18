@@ -6,7 +6,11 @@ date: "2020-11-18T14:00:00Z"
 aliases:
   - /tech/2020/11/18/team-charter/
 images: ["pexels-denniz-futalan-2306897.jpg"]
-featuredImagePreview: pexels-denniz-futalan-2306897.jpg
+cover:
+  image: " pexels-denniz-futalan-2306897.jpg"
+  #alt: "<alt text>"
+  #caption: "<text>"
+  #relative: false # To use relative path for cover image, used in hugo Page-bundles
 tags:
 - DevOps
 title: DevOps Team Charter
@@ -37,9 +41,7 @@ This team charter is an introductory document that sets the vision, mission, val
 
 #### Team Vision / Mission Statement
 
-{{< admonition tip >}}
-Remember to add your vision and mission statement(s) to your teams landing page on your wiki.
-{{< /admonition >}}
+_Remember to add your vision and mission statement(s) to your teams landing page on your wiki._
 
 “To enable, empower and add value to the business, coworkers and customers by building, running, maintaining and improving the (cloud) platforms and services including infrastructure, automation, platform integrations and CI/CD tooling used by engineers and applications.”
 
@@ -75,9 +77,7 @@ _Pick 5-10_
 
 #### Team Culture and Code of Conduct
 
-{{< admonition tip >}}
-Remember to add them to your teams landing page on your wiki, and to applicable software repositories.
-{{< /admonition >}}
+_Remember to add them to your teams landing page on your wiki, and to applicable software repositories._
 
 _Pick 3-5_
 
@@ -97,9 +97,7 @@ _Pick 3-5_
 
 #### Team Communication
 
-{{< admonition tip >}}
-Remember to add them to your teams landing page on your wiki.
-{{< /admonition >}}
+_Remember to add them to your teams landing page on your wiki._
 
 _Pick 3-5_
 

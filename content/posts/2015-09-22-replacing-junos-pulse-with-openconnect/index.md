@@ -6,7 +6,11 @@ date: "2015-09-22T00:00:00Z"
 aliases:
   - /tech/2015/09/22/replacing-junos-pulse-with-openconnect/
 images: ["backdrop-zbuildings.jpg"]
-featuredImagePreview: backdrop-zbuildings.jpg
+cover:
+  image: " backdrop-zbuildings.jpg"
+  #alt: "<alt text>"
+  #caption: "<text>"
+  #relative: false # To use relative path for cover image, used in hugo Page-bundles
 tags:
 - tech
 - networking

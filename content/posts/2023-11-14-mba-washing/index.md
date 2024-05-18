@@ -6,7 +6,11 @@ categories: [ Tech, Culture ]
 keywords: ["tech", "culture", "devops", "communication"]
 date: "2023-11-13T09:00:00Z"
 images: ["mbaw-flow-1.png"]
-featuredImagePreview: mbaw-flow-1.png
+cover:
+  image: " mbaw-flow-1.png"
+  #alt: "<alt text>"
+  #caption: "<text>"
+  #relative: false # To use relative path for cover image, used in hugo Page-bundles
 tags:
 - Tech
 - Culture

@@ -7,7 +7,11 @@ aliases:
   - /tech/2019/08/06/new-opportunities/
   - /tech/2019/08/06/new-opportunities.html
 images: ["fiji_aws_prac_training_1.jpg"]
-featuredImagePreview: fiji_aws_prac_training_1.jpg
+cover:
+  image: " fiji_aws_prac_training_1.jpg"
+  #alt: "<alt text>"
+  #caption: "<text>"
+  #relative: false # To use relative path for cover image, used in hugo Page-bundles
 tags:
 - tech
 - DevOps

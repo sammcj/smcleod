@@ -6,7 +6,11 @@ categories: [ Tech, AI, LLM, Code ]
 keywords: ["tech", "ai", "llm", "code", "github", "SDXL", "gguf", "ggml"]
 date: "2024-03-22"
 images: [""]
-featuredImagePreview: "superprompter-screenshot.jpg"
+cover:
+  image: "superprompter-screenshot.jpg"
+  #alt: "<alt text>"
+  #caption: "<text>"
+  #relative: false # To use relative path for cover image, used in hugo Page-bundles
 tags:
 - Tech
 - LLM

@@ -6,7 +6,11 @@ date: "2018-12-20T00:00:00Z"
 aliases:
   - /photos/2018/12/20/otago-trip-mustang-2018/
 images: ["clyde_mustang_2080.jpg"]
-featuredImagePreview: clyde_mustang_2080.jpg
+cover:
+  image: " clyde_mustang_2080.jpg"
+  #alt: "<alt text>"
+  #caption: "<text>"
+  #relative: false # To use relative path for cover image, used in hugo Page-bundles
 lightgallery: true
 tags:
 - cars

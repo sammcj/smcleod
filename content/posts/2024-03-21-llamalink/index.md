@@ -6,7 +6,11 @@ categories: [ Tech, AI, LLM, Code ]
 keywords: ["tech", "ai", "llm", "code", "github", "ollama", "gguf", "ggml"]
 date: "2024-03-21"
 images: [""]
-featuredImagePreview: "llamalink-screenshot.jpg"
+cover:
+  image: "llamalink-screenshot.jpg"
+  #alt: "<alt text>"
+  #caption: "<text>"
+  #relative: false # To use relative path for cover image, used in hugo Page-bundles
 tags:
 - Tech
 - LLM

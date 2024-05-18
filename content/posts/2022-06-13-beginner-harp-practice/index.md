@@ -6,7 +6,11 @@ date: "2022-06-13T13:00:00Z"
 aliases:
   - /music/2022/06/13/beginner-harp-practice/
 images: ["hohner-marine-band.jpg"]
-featuredImagePreview: hohner-marine-band.jpg
+cover:
+  image: " hohner-marine-band.jpg"
+  #alt: "<alt text>"
+  #caption: "<text>"
+  #relative: false # To use relative path for cover image, used in hugo Page-bundles
 tags:
 - music
 title: Beginner Harmonica Practice Exercises

@@ -6,7 +6,11 @@ date: "2015-04-15T00:00:00Z"
 aliases:
   - /tech/2015/04/15/talk-high-perf-sds-ictalk/
 images: ["robin-pierre-323861.jpg"]
-featuredImagePreview: robin-pierre-323861.jpg
+cover:
+  image: " robin-pierre-323861.jpg"
+  #alt: "<alt text>"
+  #caption: "<text>"
+  #relative: false # To use relative path for cover image, used in hugo Page-bundles
 series: [ Storage ]
 tags:
 - tech

@@ -11,7 +11,11 @@ categories: ["Delivery", "Leadership", "DevOps"]
 series: []
 images: ["time-based-estimates.png"]
 # featuredimage: "time-based-estimates.png"
-featuredImagePreview: "time-based-estimates.png"
+cover:
+  image: "time-based-estimates.png"
+  #alt: "<alt text>"
+  #caption: "<text>"
+  #relative: false # To use relative path for cover image, used in hugo Page-bundles
 hiddenFromHomePage: false
 hiddenFromSearch: false
 toc:

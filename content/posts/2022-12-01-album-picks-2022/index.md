@@ -5,7 +5,11 @@ categories: [ Music ]
 series: [ BestOf ]
 date: "2022-10-30T07:00:00Z"
 images: ["backdrop-linn.jpg"]
-featuredImagePreview: backdrop-linn.jpg
+cover:
+  image: " backdrop-linn.jpg"
+  #alt: "<alt text>"
+  #caption: "<text>"
+  #relative: false # To use relative path for cover image, used in hugo Page-bundles
 featuredimage: backdrop-linn.jpg"
 tags:
 - music

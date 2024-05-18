@@ -6,7 +6,11 @@ categories: [ Tech, AI, LLM, IoT, ESP32, Hardware ]
 keywords: [ "AI", "LLM", "Siri", "Willow", "Homeassistant", "ESP32", "hardware", "IoT" ]
 date: "2023-11-20T01:00:00Z"
 images: [""]
-featuredImagePreview:
+cover:
+  image: ""
+  #alt: "<alt text>"
+  #caption: "<text>"
+  #relative: false # To use relative path for cover image, used in hugo Page-bundles
 tags:
 - Tech
 - LLM

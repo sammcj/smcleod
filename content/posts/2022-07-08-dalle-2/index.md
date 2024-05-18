@@ -6,7 +6,11 @@ date: "2022-07-08T07:00:00Z"
 aliases:
   - /machine-learning/2022/07/08/dalle-2/
 images: ["dalle2spaceorange.jpeg"]
-featuredImagePreview: dalle2spaceorange.jpeg
+cover:
+  image: " dalle2spaceorange.jpeg"
+  #alt: "<alt text>"
+  #caption: "<text>"
+  #relative: false # To use relative path for cover image, used in hugo Page-bundles
 tags:
 - art
 - machinelearning

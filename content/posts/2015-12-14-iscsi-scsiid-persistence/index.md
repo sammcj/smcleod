@@ -6,7 +6,11 @@ date: "2015-12-14T00:00:00Z"
 aliases:
   - /tech/2015/12/14/iscsi-scsiid-persistence/
 images: ["feature-san-fran.jpg"]
-featuredImagePreview: feature-san-fran.jpg
+cover:
+  image: " feature-san-fran.jpg"
+  #alt: "<alt text>"
+  #caption: "<text>"
+  #relative: false # To use relative path for cover image, used in hugo Page-bundles
 tags:
 - tech
 - storage

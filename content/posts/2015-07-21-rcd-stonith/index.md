@@ -6,7 +6,11 @@ date: "2015-07-21T00:00:00Z"
 aliases:
   - /tech/2015/07/21/rcd-stonith/
 images: ["padlock.jpg"]
-featuredImagePreview: padlock.jpg
+cover:
+  image: " padlock.jpg"
+  #alt: "<alt text>"
+  #caption: "<text>"
+  #relative: false # To use relative path for cover image, used in hugo Page-bundles
 tags:
 - tech
 - storage
@@ -38,9 +42,7 @@ Essentially the most common STONITH agent type in use is probably those that con
 
 ---
 
-{{< admonition info >}}
-The following was v1 of the devices design, a post on the update v2/v3 design can be found [here](https://smcleod.net/tech/2016/07/04/update-rcd-stonith-design.html)
-{{< /admonition >}}
+_The following was v1 of the devices design, a post on the update v2/v3 design can be found [here](https://smcleod.net/tech/2016/07/04/update-rcd-stonith-design.html)_
 
 [Adam Coy's](https://www.linkedin.com/pub/adam-coy/5/989/888) slightly modified version of the circuit that includes an indicator LED and an [optocoupler](https://en.wikipedia.org/wiki/Opto-isolator):
 
@@ -58,9 +60,7 @@ Image of the rear of a two node cluster with networking and rcd_serial STONITH (
 
 ### Availability
 
-{{< admonition info >}}
-This has since been added to RHEL/CentOS and the official Clusterlabs resource agents
-{{< /admonition >}}
+_This has since been added to RHEL/CentOS and the official Clusterlabs resource agents_
 
 aliases:
 

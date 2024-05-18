@@ -6,7 +6,11 @@ date: "2021-07-22T19:00:00Z"
 aliases:
   - /software/2021/07/22/goodbye-evernote-hello-bear/
 images: ["bear_header-mac-screenshot.png"]
-featuredImagePreview: bear_header-mac-screenshot.png
+cover:
+  image: " bear_header-mac-screenshot.png"
+  #alt: "<alt text>"
+  #caption: "<text>"
+  #relative: false # To use relative path for cover image, used in hugo Page-bundles
 tags:
 - software
 title: Goodbye Evernote, Hello Bear

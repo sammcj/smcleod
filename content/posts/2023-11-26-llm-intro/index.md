@@ -6,7 +6,11 @@ categories: [ Tech, AI, LLM, WIP ]
 keywords: ["tech", "ai", "llm", "wip"]
 date: "2023-11-26T01:00:00Z"
 images: [""]
-featuredImagePreview:
+cover:
+  image: ""
+  #alt: "<alt text>"
+  #caption: "<text>"
+  #relative: false # To use relative path for cover image, used in hugo Page-bundles
 tags:
 - Tech
 - LLM
@@ -33,9 +37,7 @@ draft: false
 
 This is a high level intro to LLMs that I'm writing for a few friends that are new to the concept. It is far from complete, definitely contains some errors and is a work in progress.
 
-{{< admonition warning >}}
-**_This is a work in progress and a living document._**
-{{< /admonition >}}
+_**_This is a work in progress and a living document._**_
 
 Language models, or LLMs, are a type of artificial intelligence that can generate text based on a given prompt. They work by learning patterns in large amounts of text data and using those patterns to generate new text. LLMs can be used for a variety of tasks, such as generating chatbots, answering questions, and creating art.
 

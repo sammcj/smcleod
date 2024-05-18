@@ -6,7 +6,11 @@ date: "2015-09-13T00:00:00Z"
 aliases:
   - /tech/2015/09/13/ssd-storage-two-months-in-prod/
 images: ["containers-1.jpg"]
-featuredImagePreview: containers-1.jpg
+cover:
+  image: " containers-1.jpg"
+  #alt: "<alt text>"
+  #caption: "<text>"
+  #relative: false # To use relative path for cover image, used in hugo Page-bundles
 tags:
 - tech
 - storage

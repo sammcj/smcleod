@@ -6,7 +6,11 @@ date: "2017-12-27T00:00:00Z"
 aliases:
   - /tech/2017/12/27/hp-4951
 images: ["backdrop-hp4951.jpg"]
-featuredImagePreview: backdrop-hp4951.jpg
+cover:
+  image: " backdrop-hp4951.jpg"
+  #alt: "<alt text>"
+  #caption: "<text>"
+  #relative: false # To use relative path for cover image, used in hugo Page-bundles
 tags:
 - tech
 - hardware

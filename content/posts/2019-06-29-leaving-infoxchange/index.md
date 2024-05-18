@@ -8,7 +8,11 @@ aliases:
   - /tech/2019/06/29/leaving-infoxchange/
   - /tech/2019/06/29/leaving-infoxchange.html
 images: ["road-no-car-2048.jpg"]
-featuredImagePreview: road-no-car-2048.jpg
+cover:
+  image: " road-no-car-2048.jpg"
+  #alt: "<alt text>"
+  #caption: "<text>"
+  #relative: false # To use relative path for cover image, used in hugo Page-bundles
 
 tags:
 - tech

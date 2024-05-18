@@ -5,7 +5,11 @@ date: "2017-09-22T00:00:00Z"
 aliases:
   - /thoughts/2017/09/22/return-of-the-rss
 images: ["melbourne.jpg"]
-featuredImagePreview: melbourne.jpg
+cover:
+  image: " melbourne.jpg"
+  #alt: "<alt text>"
+  #caption: "<text>"
+  #relative: false # To use relative path for cover image, used in hugo Page-bundles
 tags:
 - tech
 - software

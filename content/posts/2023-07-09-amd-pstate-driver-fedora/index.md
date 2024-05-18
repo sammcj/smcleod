@@ -10,7 +10,11 @@ tags: ["Linux", "Performance"]
 categories: ["Tech", "Linux"]
 series: []
 images: [""]
-# featuredImagePreview: ""
+cover:
+  image: ""
+  #alt: "<alt text>"
+  #caption: "<text>"
+  #relative: false # To use relative path for cover image, used in hugo Page-bundles
 hiddenFromHomePage: false
 hiddenFromSearch: false
 toc:
