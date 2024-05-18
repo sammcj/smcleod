@@ -14,6 +14,9 @@ buildExpired: false
 
 # enableInlineShortcodes: true
 
+params:
+  env: production
+
 minify:
   disableXML: true
   minifyOutput: true
