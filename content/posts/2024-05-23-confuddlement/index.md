@@ -59,7 +59,9 @@ Saved page ./confluence_dump/Painful Change Management.md
 Saved page Illogical Diagrams to ./confluence_dump/Ilogical Diagrams.md
 
 Done!
+```
 
+```plain
 $ go run ./main.go summarise
 Select a file to summarise:
 0: + COOLTEAM - Feature List
@@ -69,6 +71,13 @@ Enter the number of the file to summarise: 1
 
 Summarising Painful Change Management...
 "Change management in the enterprise is painful and slow. It involves many forms and approvals."
+```
+
+```plain
+go run main.go -q 'who is the CEO?' -s 'management' -r 2
+
+Querying the LLM with the prompt 'who is the CEO?'...
+"The CEO of the company is Peewee Herman."
 ```
 
 ## Usage
@@ -94,10 +103,10 @@ To perform a custom query, you can use the `query` argument:
 - `-r`: The number of lines before and after the search term to include in the context to the LLM.
 
 ```shell
-go run main.go -q 'what is change management?' -s 'management' -r 2
+go run main.go -q 'who is the CEO?' -s 'management' -r 2
 
-Querying the LLM with the prompt 'what is change management?'...
-"Change management in the enterprise is painful and slow. It involves many forms and approvals."
+Querying the LLM with the prompt 'who is the CEO?'...
+"The CEO of the company is Peewee Herman."
 ```
 
 <!--more-->
