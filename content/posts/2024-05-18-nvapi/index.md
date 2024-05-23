@@ -10,7 +10,7 @@ TocOpen: false
 draft: false
 hidemeta: false
 comments: false
-description: "Desc Text."
+description: "Nvidia GPU Monitoring API"
 # canonicalURL: "https://canonical.url/to/page"
 disableShare: false
 disableHLJS: false
