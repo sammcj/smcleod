@@ -3,7 +3,7 @@ title: "Confuddlement: Download Confluence Spaces as Markdown"
 date: 2024-05-23T05:45:10+00:00
 # weight: 1
 # aliases: ["/first"]
-tags: ["Confluence", "Markdown", "Go", "Golang"]
+tags: ["Confluence", "Markdown", "Go", "Golang", "Ollama", "AI", "LLM"]
 author: "Sam McLeod"
 showToc: true
 TocOpen: false
@@ -39,7 +39,7 @@ Confuddlement is a Go-based tool that uses the Confluence REST API to fetch page
 ```plain
 $ go run ./main.go
 
-Confuddlement 0.2.0
+Confuddlement 0.3.0
 Spaces: [COOLTEAM, MANAGEMENT]
 Fetching content from space COOLTEAM
 
@@ -55,6 +55,18 @@ Painful Change Management
 Illogical Diagrams
 Saved page ./confluence_dump/Painful Change Management.md
 Saved page Illogical Diagrams to ./confluence_dump/Ilogical Diagrams.md
+
+Done!
+
+$ go run ./main.go summarise
+Select a file to summarise:
+0: + COOLTEAM - Feature List
+1: + Painful Change Management
+2: + Illogical Diagrams
+Enter the number of the file to summarise: 1
+
+Summarising Painful Change Management...
+"Change management in the enterprise is painful and slow. It involves many forms and approvals."
 ```
 
 ## Usage
@@ -64,6 +76,12 @@ Saved page Illogical Diagrams to ./confluence_dump/Ilogical Diagrams.md
 1. Copy [.env.template](.env.template) to `.env` and update the environment variables.
 2. Run the program using the command `go run main.go` or build the program using the command `go build` and run the resulting executable.
 3. The program will fetch Confluence pages and save them as Markdown files in the specified directory.
+
+You can also summarise the content of a fetched page using the Ollama API by running the program with the `summarise` argument:
+
+```shell
+go run ./main.go summarise
+```
 
 <!--more-->
 
@@ -77,6 +95,7 @@ Confuddlement has several customisation options:
 - Specifying the number of pages to fetch per API request
 - Defining the minimum length of a page to be considered valid
 - Skipping pages that have already been fetched
+- Summarisation of fetched pages using the Ollama API
 
 The following environment can be set to configure the program:
 
@@ -90,5 +109,7 @@ The following environment can be set to configure the program:
 > - `MIN_PAGE_LENGTH`: The minimum length of a page to be considered valid.
 > - `SKIP_FETCHED_PAGES`: Set to `true` to skip pages that have already been fetched.
 > - `DEBUG`: Set to `true` to enable debug logging.
+> - `OLLAMA_HOST`: The host of the Ollama API (optional, only required for summarisation).
+> - `OLLAMA_MODEL`: The model to use for summarisation (optional, only required for summarisation).
 
 [Confuddlement](https://github.com/sammcj/confuddlement)
