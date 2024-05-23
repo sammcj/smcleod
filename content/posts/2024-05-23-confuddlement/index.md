@@ -1,5 +1,5 @@
 ---
-title: "Confuddlement: Download Confluence Spaces as Markdown"
+title: "Confuddlement: Download Confluence Spaces as Markdown, Summarise with Ollama"
 date: 2024-05-23T05:45:10+00:00
 # weight: 1
 # aliases: ["/first"]
@@ -10,7 +10,7 @@ TocOpen: false
 draft: false
 hidemeta: false
 comments: false
-description: "Download Confluence Spaces as Markdown"
+description: "Download Confluence Spaces as Markdown, Summarise with Ollama"
 # canonicalURL: "https://canonical.url/to/page"
 disableShare: false
 disableHLJS: false
@@ -35,6 +35,8 @@ UseHugoToc: true
 I was tired of manually downloading Confluence pages and converting them to Markdown, so I wrote a small command-line tool designed to simplify this process.
 
 Confuddlement is a Go-based tool that uses the Confluence REST API to fetch page content and convert it to Markdown files.
+
+It can fetch pages from multiple spaces, skip pages that have already been fetched, and summarise the content of fetched pages using the Ollama API.
 
 ```plain
 $ go run ./main.go
