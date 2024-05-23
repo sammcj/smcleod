@@ -79,10 +79,25 @@ Summarising Painful Change Management...
 2. Run the program using the command `go run main.go` or build the program using the command `go build` and run the resulting executable.
 3. The program will fetch Confluence pages and save them as Markdown files in the specified directory.
 
-You can also summarise the content of a fetched page using the Ollama API by running the program with the `summarise` argument:
+#### Querying the documents with AI
+
+You can summarise the content of a fetched page using the Ollama API by running the program with the `summarise` argument:
 
 ```shell
-go run ./main.go summarise
+go run main.go summarise
+```
+
+To perform a custom query, you can use the `query` argument:
+
+- `-q`: The query to to provide to the LLM.
+- `-s`: The search term to match documents against.
+- `-r`: The number of lines before and after the search term to include in the context to the LLM.
+
+```shell
+go run main.go -q 'what is change management?' -s 'management' -r 2
+
+Querying the LLM with the prompt 'what is change management?'...
+"Change management in the enterprise is painful and slow. It involves many forms and approvals."
 ```
 
 <!--more-->
