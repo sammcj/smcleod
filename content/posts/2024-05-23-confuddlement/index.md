@@ -113,5 +113,7 @@ The following environment can be set to configure the program:
 > - `DEBUG`: Set to `true` to enable debug logging.
 > - `OLLAMA_HOST`: The host of the Ollama API (optional, only required for summarisation).
 > - `OLLAMA_MODEL`: The model to use for summarisation (optional, only required for summarisation).
+> - `OLLAMA_NUM_CTX`: The number of context sentences to include in the summary (optional, only required for summarisation).
+> - `OLLAMA_NUM_PREDICT`: The number of predicted sentences to include in the summary (optional, only required for summarisation).
 
 [Confuddlement](https://github.com/sammcj/confuddlement)
