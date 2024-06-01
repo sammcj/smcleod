@@ -22,6 +22,7 @@ ShowPostNavLinks: true
 ShowWordCount: true
 ShowRssButtonInSectionTermList: true
 UseHugoToc: true
+mermaid: true
 cover:
   image: "https://github.com/sammcj/gollama/blob/main/screenshots/gollama-v1.0.0.jpg?raw=true"
   alt: "Gollama TUI"
@@ -48,9 +49,6 @@ The project started off as a rewrite of my [llamalink](https://smcleod.net/2024/
   - [Simple model listing](#simple-model-listing)
 - [Configuration](#configuration)
 - [Logging](#logging)
-- [Architecture](#architecture)
-  - [Component Diagram](#component-diagram)
-  - [Class Diagram](#class-diagram)
 - [License](#license)
 
 ## Features
@@ -146,111 +144,6 @@ This can be useful if you have a common prefix such as a private registry that y
 
 Logs can be found in the `gollama.log` which is stored in `$HOME/.config/gollama/gollama.log` by default.
 The log level can be set in the configuration file.
-
-## Architecture
-
-### Component Diagram
-
-```mermaid
-graph TD
-    A[Main Application] --> B[API Client]
-    A --> C[Configuration]
-    A --> D[Logging]
-    A --> E[User Interface]
-    E --> F[Model List]
-    E --> G[Key Bindings]
-    E --> H[Item Delegate]
-```
-
-### Class Diagram
-
-```mermaid
-classDiagram
-    class AppModel {
-        +client : *api.Client
-        +list : list.Model
-        +keys : *KeyMap
-        +models : []Model
-        +width : int
-        +height : int
-        +confirmDeletion : bool
-        +selectedForDeletion : []Model
-        +ollamaModelsDir : string
-        +lmStudioModelsDir : string
-        +noCleanup : bool
-        +cfg : *config.Config
-        +message : string
-        +Init() tea.Cmd
-        +Update(msg tea.Msg) (tea.Model, tea.Cmd)
-        +View() string
-        +refreshList()
-        +clearScreen() tea.Model
-    }
-
-    class Model {
-        +Name : string
-        +ID : string
-        +Size : float64
-        +QuantizationLevel : string
-        +Modified : time.Time
-        +Selected : bool
-        +Family : string
-        +IDStr() string
-        +SizeStr() string
-        +FamilyStr() string
-        +ModifiedStr() string
-        +QuantStr() string
-        +SelectedStr() string
-        +NameStr() string
-        +Title() string
-        +Description() string
-        +FilterValue() string
-    }
-
-    class Config {
-        +DefaultSort : string
-        +Columns : []string
-        +OllamaAPIKey : string
-        +LMStudioFilePaths : string
-        +LogLevel : string
-        +LogFilePath : string
-        +SortOrder : string
-        +LastSortSelection : string
-        +StripString : string
-        +LoadConfig() (Config, error)
-        +SaveConfig(config Config) error
-        +getConfigPath() string
-    }
-
-    class KeyMap {
-        +Space : key.Binding
-        +Delete : key.Binding
-        +SortByName : key.Binding
-        +SortBySize : key.Binding
-        +SortByModified : key.Binding
-        +SortByQuant : key.Binding
-        +SortByFamily : key.Binding
-        +RunModel : key.Binding
-        +ConfirmYes : key.Binding
-        +ConfirmNo : key.Binding
-        +LinkModel : key.Binding
-        +LinkAllModels : key.Binding
-        +ClearScreen : key.Binding
-        +GetSortOrder() string
-    }
-
-    class Logging {
-        +DebugLogger : *log.Logger
-        +InfoLogger : *log.Logger
-        +ErrorLogger : *log.Logger
-        +Init(logLevel, logFilePath string) error
-    }
-
-    AppModel --> Model
-    AppModel --> KeyMap
-    AppModel --> Config
-    AppModel --> Logging
-```
 
 ## License
 
