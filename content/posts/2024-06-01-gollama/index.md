@@ -32,7 +32,7 @@ cover:
 - [Gollama on Github](https://github.com/sammcj/gollama)
 
 Gollama is a client for Ollama for managing models.
-It provides a TUI for listing, sorting, selecting and deleting models and can link Ollama models to LM-Studio.
+It provides a TUI for listing, filtering, sorting, selecting, inspecting (coming soon!) and deleting models and can link Ollama models to LM-Studio.
 
 The project started off as a rewrite of my [llamalink](https://smcleod.net/2024/03/llamalink-ollama-to-lm-studio-llm-model-linker/) project, but I decided to expand it to include more features and make it more user-friendly.
 
