@@ -47,6 +47,8 @@ The project started off as a rewrite of my [llamalink](https://smcleod.net/2024/
 - [Installation](#installation)
 - [Usage](#usage)
   - [Simple model listing](#simple-model-listing)
+  - [Key Bindings](#key-bindings)
+    - [Command-line Options](#command-line-options)
 - [Configuration](#configuration)
 - [Logging](#logging)
 - [License](#license)
@@ -55,9 +57,15 @@ The project started off as a rewrite of my [llamalink](https://smcleod.net/2024/
 
 - Interactive TUI with sorting and filtering capabilities.
 - List available models and display basic metadata such as size, quantization level, model family, and modified date.
-- Run models.
-- Select and delete models.
-- Link models to LM-Studio.
+- Sort models by name, size, modification date, quantization level, and family
+- Select and delete models
+- Inspect model details
+- Link models to LM Studio
+- Copy models
+- Push models to a registry
+- Show running models
+
+![](https://raw.githubusercontent.com/sammcj/gollama/main/screenshots/gollama-top.jpg)
 
 ## Installation
 
@@ -100,21 +108,33 @@ Gollama can also be called with `-l` to list models without the TUI.
 
 ![](https://github.com/sammcj/gollama/blob/main/screenshots/cli-list.jpg?raw=true)
 
-Other cli arguments can be listed with `--help`:
+### Key Bindings
 
-```shell
-Loading config from: /Users/samm/.config/gollama/config.json
-Usage of ./gollama:
--cleanup
-    Remove all symlinked models and empty directories and exit
--l  List all available Ollama models and exit
--lm-dir string
-    Custom LM Studio models directory
--no-cleanup
-    Don't cleanup broken symlinks
--ollama-dir string
-    Custom Ollama models directory
-```
+- `Space`: Select
+- `i`: Inspect model
+- `t`: Top (show running models)
+- `r`: Run model (Ollama run)
+- `D`: Delete model
+- `c`: Copy model
+- `P`: Push model
+- `n`: Sort by name
+- `s`: Sort by size
+- `m`: Sort by modified
+- `k`: Sort by quantization
+- `f`: Sort by family
+- `l`: Link model to LM Studio
+- `L`: Link all models to LM Studio
+- `q`: Quit
+- `?`: Help
+
+#### Command-line Options
+
+- `-l`: List all available Ollama models and exit
+- `-ollama-dir`: Custom Ollama models directory
+- `-lm-dir`: Custom LM Studio models directory
+- `-no-cleanup`: Don't cleanup broken symlinks
+- `-cleanup`: Remove all symlinked models and empty directories and exit
+- `-v`: Print the version and exit
 
 ## Configuration
 
