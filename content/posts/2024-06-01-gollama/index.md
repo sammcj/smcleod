@@ -24,7 +24,7 @@ ShowRssButtonInSectionTermList: true
 UseHugoToc: true
 mermaid: true
 cover:
-  image: "https://github.com/sammcj/gollama/blob/main/screenshots/gollama-v1.0.0.jpg?raw=true"
+  image: "gollama-v1.0.0.jpg"
   alt: "Gollama TUI"
   hidden: false
 ---
@@ -36,7 +36,7 @@ It provides a TUI for listing, filtering, sorting, selecting, inspecting (coming
 
 The project started off as a rewrite of my [llamalink](https://smcleod.net/2024/03/llamalink-ollama-to-lm-studio-llm-model-linker/) project, but I decided to expand it to include more features and make it more user-friendly.
 
-![](https://github.com/sammcj/gollama/blob/main/screenshots/gollama-v1.0.0.jpg?raw=true)
+![](gollama-v1.0.0.jpg)
 
 <!--more-->
 
@@ -44,12 +44,13 @@ The project started off as a rewrite of my [llamalink](https://smcleod.net/2024/
 
 - [Table of Contents](#table-of-contents)
 - [Features](#features)
-- [Installation](#installation)
 - [Usage](#usage)
+  - [Top](#top)
   - [Simple model listing](#simple-model-listing)
   - [Key Bindings](#key-bindings)
     - [Command-line Options](#command-line-options)
 - [Configuration](#configuration)
+- [Installation and build from source](#installation-and-build-from-source)
 - [Logging](#logging)
 - [License](#license)
 
@@ -57,46 +58,38 @@ The project started off as a rewrite of my [llamalink](https://smcleod.net/2024/
 
 - Interactive TUI with sorting and filtering capabilities.
 - List available models and display basic metadata such as size, quantization level, model family, and modified date.
-- Sort models by name, size, modification date, quantization level, and family
-- Select and delete models
-- Inspect model details
-- Link models to LM Studio
-- Copy models
-- Push models to a registry
-- Show running models
+- Sort models by name, size, modification date, quantization level, and family.
+- Select and delete models.
+- Inspect model for additional details.
+- Link models to LM Studio.
+- Copy models.
+- Push models to a registry.
+- Show running models.
+- Plenty more comings soon if I continue to find the tool useful.
 
-![](https://raw.githubusercontent.com/sammcj/gollama/main/screenshots/gollama-top.jpg)
-
-## Installation
+From go:
 
 ```shell
 go install github.com/sammcj/gollama@latest
 ```
 
-Or from source:
+From Github:
 
-1. Clone the repository:
+Download the most recent release from the [releases page](https://github.com/sammcj/gollama/releases) and extract the binary to a directory in your PATH.
 
-    ```shell
-    git clone https://github.com/sammcj/gollama.git
-    cd gollama
-    ```
-
-2. Build the project:
-
-    ```shell
-    make build
-    ```
+e.g. `zip -d gollama-v1.4.2.zip -d gollama && mv gollama /usr/local/bin`
 
 ## Usage
 
-1. Run the application:
+To run the `gollama` application, use the following command:
 
-    ```shell
-    ./gollama
-    ```
+```sh
+gollama
+```
 
-2. Use the interactive TUI to list, select, delete, and link models.
+### Top
+
+![](gollama-top.jpg)
 
 ### Simple model listing
 
@@ -106,7 +99,7 @@ Gollama can also be called with `-l` to list models without the TUI.
 ./gollama -l
 ```
 
-![](https://github.com/sammcj/gollama/blob/main/screenshots/cli-list.jpg?raw=true)
+![](/cli-list.jpg)
 
 ### Key Bindings
 
@@ -165,6 +158,28 @@ Example configuration:
 
 The strip string option can be used to remove a prefix from model names as they are displayed in the TUI.
 This can be useful if you have a common prefix such as a private registry that you want to remove for display purposes.
+
+## Installation and build from source
+
+1. Clone the repository:
+
+    ```shell
+    git clone https://github.com/sammcj/gollama.git
+    cd gollama
+    ```
+
+2. Build:
+
+    ```shell
+    go get
+    make build
+    ```
+
+3. Run:
+
+    ```shell
+    ./gollama
+    ```
 
 ## Logging
 
