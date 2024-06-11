@@ -45,6 +45,7 @@ The project started off as a rewrite of my [llamalink](https://smcleod.net/2024/
 - [Table of Contents](#table-of-contents)
 - [Features](#features)
 - [Usage](#usage)
+  - [Inspect](#inspect)
   - [Top](#top)
   - [Simple model listing](#simple-model-listing)
   - [Key Bindings](#key-bindings)
@@ -70,14 +71,14 @@ The project started off as a rewrite of my [llamalink](https://smcleod.net/2024/
 From go:
 
 ```shell
-go install github.com/sammcj/gollama@latest
+go install github.com/sammcj/gollama@HEAD
 ```
 
 From Github:
 
 Download the most recent release from the [releases page](https://github.com/sammcj/gollama/releases) and extract the binary to a directory in your PATH.
 
-e.g. `zip -d gollama-v1.4.2.zip -d gollama && mv gollama /usr/local/bin`
+e.g. `zip -d gollama-v1.8.1.zip -d gollama && mv gollama /usr/local/bin`
 
 ## Usage
 
@@ -87,9 +88,19 @@ To run the `gollama` application, use the following command:
 gollama
 ```
 
+_Tip_: I like to alias gollama to `g` for quick access:
+
+```shell
+echo "alias g=gollama" >> ~/.zshrc
+```
+
+### Inspect
+
+![](https://github.com/sammcj/gollama/blob/main/screenshots/gollama-inspect.png?raw=true)
+
 ### Top
 
-![](gollama-top.jpg)
+![](https://github.com/sammcj/gollama/blob/main/screenshots/gollama-top.jpg?raw=true)
 
 ### Simple model listing
 
@@ -99,16 +110,17 @@ Gollama can also be called with `-l` to list models without the TUI.
 ./gollama -l
 ```
 
-![](/cli-list.jpg)
+![](https://github.com/sammcj/gollama/blob/main/screenshots/cli-list.jpg?raw=true)
 
 ### Key Bindings
 
 - `Space`: Select
+- `Enter`: Run model (Ollama run)
 - `i`: Inspect model
 - `t`: Top (show running models)
-- `r`: Run model (Ollama run)
 - `D`: Delete model
 - `c`: Copy model
+- `u`: Update model (edit Modelfile) **Work in progress**
 - `P`: Push model
 - `n`: Sort by name
 - `s`: Sort by size
@@ -118,7 +130,6 @@ Gollama can also be called with `-l` to list models without the TUI.
 - `l`: Link model to LM Studio
 - `L`: Link all models to LM Studio
 - `q`: Quit
-- `?`: Help
 
 #### Command-line Options
 
@@ -164,7 +175,7 @@ This can be useful if you have a common prefix such as a private registry that y
 1. Clone the repository:
 
     ```shell
-    git clone https://github.com/sammcj/gollama.git
+    git clone --depth=1 https://github.com/sammcj/gollama.git
     cd gollama
     ```
 
