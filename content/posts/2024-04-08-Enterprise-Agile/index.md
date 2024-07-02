@@ -33,7 +33,7 @@ readingTime: true
 showFullContent: true
 asciinema: false
 mermaid: false
-draft: false
+draft: true
 ---
 
 # The Enterprise "Agile" Software Development Manifesto
