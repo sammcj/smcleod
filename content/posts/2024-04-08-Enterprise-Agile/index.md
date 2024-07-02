@@ -19,8 +19,8 @@ tags:
 - Manifesto
 - Enterprise
 # series: ["AI", "Code"]
-hiddenFromHomePage: false
-hiddenFromSearch: false
+hiddenFromHomePage: true
+hiddenFromSearch: true
 toc:
   enable: true
   auto: true
