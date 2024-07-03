@@ -10,7 +10,7 @@ TocOpen: false
 draft: false
 hidemeta: false
 comments: false
-description: "My subjective ratings of the notable AI tools I've tried."
+description: "Subjective ratings of the notable AI tools I've tried."
 disableShare: false
 disableHLJS: false
 hideSummary: false
