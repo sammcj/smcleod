@@ -48,7 +48,6 @@ params:
   showtoc: true
   tocopen: true
 
-
   assets:
     # disableHLJS: true # to disable highlight.js
     disableFingerprinting: true
@@ -166,7 +165,6 @@ menu:
       url: "/contact/"
       title: "Contact me"
       weight: 7
-
 
 # Read: https://github.com/adityatelange/hugo-PaperMod/wiki/FAQs#using-hugos-syntax-highlighter-chroma
 pygmentsUseClasses: true

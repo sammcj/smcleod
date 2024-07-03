@@ -3,157 +3,294 @@
     <div id="heatmap"></div>
     <div id="tooltip"></div>
     <div id="unrated-note"></div>
+    <div id="heatmap-key"></div>
 </div>
 
 <script>
-const toolData = {{ .Site.Data.toolRatings | jsonify | safeJS }};
-const categories = Object.keys(toolData);
+    const toolData = {{ .Site.Data.toolRatings | jsonify | safeJS }};
+    const categories = Object.keys(toolData);
 
-function createHeatmap() {
-    const heatmapElement = document.getElementById('heatmap');
-    const tooltip = document.getElementById('tooltip');
-    const unratedNote = document.getElementById('unrated-note');
-    let hasUnratedItems = false;
+    function createHeatmap() {
+        const heatmapElement = document.getElementById('heatmap');
+        const tooltip = document.getElementById('tooltip');
+        const unratedNote = document.getElementById('unrated-note');
+        const heatmapKey = document.getElementById('heatmap-key');
+        let hasUnratedItems = false;
+        let hasToCheckItems = false;
 
-    categories.forEach(category => {
-        const categoryLabel = document.createElement('div');
-        categoryLabel.textContent = category;
-        categoryLabel.classList.add('category-label');
-        heatmapElement.appendChild(categoryLabel);
+        categories.forEach(category => {
+            const categoryLabel = document.createElement('div');
+            categoryLabel.textContent = category;
+            categoryLabel.classList.add('category-label');
+            heatmapElement.appendChild(categoryLabel);
 
-        const tools = toolData[category];
-        const sortedTools = Object.entries(tools)
-            .sort((a, b) => b[1].rating - a[1].rating);
+            const tools = toolData[category];
+            const sortedTools = Object.entries(tools)
+                .sort((a, b) => b[1].rating - a[1].rating);
 
-        sortedTools.forEach(([tool, data]) => {
-            const cell = document.createElement('div');
-            cell.classList.add('cell');
-            cell.textContent = tool;
+            sortedTools.forEach(([tool, data]) => {
+                const cell = document.createElement('div');
+                cell.classList.add('cell');
+                cell.textContent = tool;
 
-            if (data.rating === 0) {
-                cell.classList.add('not-rated');
-                hasUnratedItems = true;
-            } else {
-                cell.style.backgroundColor = `rgb(0, ${Math.floor(255 * (data.rating / 10))}, 0)`;
-            }
-
-            cell.addEventListener('mouseover', (e) => {
-                tooltip.style.display = 'block';
-                tooltip.innerHTML = data.rating === 0 ?
-                    `<strong>${tool}</strong> (${category})<br>Not Rated` :
-                    `<strong>${tool}</strong> (${category})<br>Rating: ${data.rating}/10`;
-                if (data.notes) {
-                    tooltip.innerHTML += `<br><br>${data.notes}`;
-                }
-                if (data.link) {
-                    tooltip.innerHTML += `<br><br><a href="${data.link}" target="_blank">Click For More Info</a>`;
-                }
-
-                // Position the tooltip
-                const rect = e.target.getBoundingClientRect();
-                const tooltipRect = tooltip.getBoundingClientRect();
-                let left = rect.left + window.scrollX;
-                let top = rect.top + window.scrollY - tooltipRect.height - 10;
-
-                // Adjust if tooltip would go off the right side of the screen
-                if (left + tooltipRect.width > window.innerWidth) {
-                    left = window.innerWidth - tooltipRect.width - 10;
+                if (data.rating === -0) {
+                    cell.classList.add('to-check');
+                    hasToCheckItems = true;
+                } else if (data.rating === 0) {
+                    cell.classList.add('not-rated');
+                    hasUnratedItems = true;
+                } else {
+                    cell.style.backgroundColor = `rgb(0, ${Math.floor(255 * (data.rating / 10))}, 0)`;
+                    if (data.rating >= 9) {
+                        cell.style.backgroundColor = 'gold';
+                        cell.style.color = 'black';
+                        cell.style.fontWeight = 'bold';
+                        cell.style.textShadow = '1px 1px 1px rgba(255, 255, 255, 0.5)';
+                    }
                 }
 
-                // Adjust if tooltip would go off the top of the screen
-                if (top < window.scrollY) {
-                    top = rect.bottom + window.scrollY + 10;
+                if (data.rating < 0) {
+                    cell.style.backgroundColor = `rgb(0, ${Math.floor(255 * (-data.rating / 10))}, 0)`;
+                    cell.style.border = '2px dashed #333';
+                    cell.style.borderWidth = '2px';
+                    cell.style.borderColor = 'lightblue';
                 }
 
-                tooltip.style.left = `${left}px`;
-                tooltip.style.top = `${top}px`;
+                if (tool.length > 10) {
+                    cell.style.fontSize = `${Math.max(10, 14 - (tool.length - 10))}px`;
+                }
+
+                cell.addEventListener('mouseover', (e) => {
+                    tooltip.style.display = 'block';
+                    tooltip.innerHTML = data.rating === -1 ?
+                        `<strong>${tool}</strong> (${category})<br>To Check` :
+                        data.rating === 0 ?
+                            `<strong>${tool}</strong> (${category})<br>Not Rated` :
+                            `<strong>${tool}</strong> (${category})<br>Rating: ${data.rating}/10`;
+                    if (data.notes) {
+                        tooltip.innerHTML += `<br><br>${data.notes}`;
+                    }
+                    if (data.link) {
+                        tooltip.innerHTML += `<br><br><a href="${data.link}" target="_blank">Click For More Info</a>`;
+                    }
+
+                    const rect = e.target.getBoundingClientRect();
+                    const tooltipRect = tooltip.getBoundingClientRect();
+                    let left = rect.left + window.scrollX;
+                    let top = rect.top + window.scrollY - tooltipRect.height - 5;
+                    let right = rect.right + window.scrollX;
+
+                    if (right + tooltipRect.width > window.innerWidth) {
+                        left = rect.right + window.scrollX - tooltipRect.width;
+                    }
+                    if (left < window.scrollX) {
+                        left = rect.left + window.scrollX;
+                    }
+                    if (top < window.scrollY) {
+                        top = rect.bottom + window.scrollY + 5;
+                    }
+
+                    tooltip.style.left = `${left + 10}px`;
+                    tooltip.style.right = `${right - 1000}px`;
+                    tooltip.style.top = `${top}px`;
+                });
+
+                cell.addEventListener('mouseout', () => {
+                    tooltip.style.display = 'none';
+                });
+
+                cell.addEventListener('click', () => {
+                    if (data.link) {
+                        window.open(data.link, '_blank');
+                    }
+                });
+
+                heatmapElement.appendChild(cell);
             });
-
-            cell.addEventListener('mouseout', () => {
-                tooltip.style.display = 'none';
-            });
-
-            cell.addEventListener('click', () => {
-                if (data.link) {
-                    window.open(data.link, '_blank');
-                }
-            });
-
-            heatmapElement.appendChild(cell);
         });
-    });
 
-    if (hasUnratedItems) {
-        unratedNote.textContent = 'Note: Grey cells indicate unrated items.';
+        let noteText = '';
+        if (hasUnratedItems) {
+            noteText += 'Grey cells indicate unrated items. ';
+        }
+        if (hasToCheckItems) {
+            noteText += 'Light blue cells with dashed outlines indicate items to check.';
+        }
+        if (noteText) {
+            unratedNote.textContent = 'Note: ' + noteText;
+        }
+
+        createHeatmapKey(heatmapKey);
     }
-}
 
-document.addEventListener('DOMContentLoaded', createHeatmap);
+    function createHeatmapKey(keyElement) {
+        const keyTitle = document.createElement('h4');
+        keyTitle.textContent = 'Heatmap Key (10 = Best)';
+        keyElement.appendChild(keyTitle);
+
+        const keyGrid = document.createElement('div');
+        keyGrid.classList.add('key-grid');
+
+        const keyItems = [
+            { rating: '9-10', color: 'gold' },
+            { rating: '7-8', color: 'rgb(0, 200, 0)' },
+            { rating: '5-6', color: 'rgb(0, 125, 0)' },
+            { rating: '3-4', color: 'rgb(0, 75, 0)' },
+            { rating: '1-2', color: 'rgb(0, 25, 0)' },
+            { rating: 'Not Rated', color: '#D3D3D3' },
+            { rating: 'Want to check out (again)', color: 'lightblue', class: 'to-check' },
+        ];
+        { {/*  { rating: 'Maybe check out again', color: 'rgb(0, 200, 0)', class: 'to-check-again' },  */ } }
+
+        keyItems.forEach(item => {
+            const keyCell = document.createElement('div');
+            keyCell.classList.add('key-cell');
+            if (item.class) {
+                keyCell.classList.add(item.class);
+            } else {
+                keyCell.style.backgroundColor = item.color;
+            }
+            keyCell.textContent = item.rating;
+            if (item.rating === '9-10') {
+                keyCell.style.color = 'black';
+                keyCell.style.fontWeight = 'bold';
+                keyCell.style.textShadow = '1px 1px 1px rgba(255, 255, 255, 0.5)';
+            }
+            keyGrid.appendChild(keyCell);
+        });
+
+        keyElement.appendChild(keyGrid);
+    }
+
+    document.addEventListener('DOMContentLoaded', createHeatmap);
 </script>
 
 <style>
-.heatmap-container {
-    width: 90vw;
-    margin-left: 50%;
-    transform: translateX(-50%);
-    overflow-x: auto;
-}
-#heatmap {
-    display: grid;
-    grid-template-columns: 140px repeat(auto-fit, minmax(80px, 1fr));
-    gap: 0.5px;
-    min-width: 800px; /* Ensures a minimum width */
-}
-.cell {
-    width: 100%;
-    height: 50px;
-    transition: all 0.2s ease;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    padding: 2px;
-    box-sizing: border-box;
-    border-bottom: #000;
-    font-size: 13px;
-    color: white;
-    text-shadow: 1px 1px 1px rgba(0,0,0,0.5);
-    overflow: hidden;
-    cursor: pointer;
-}
-.cell:hover {
-    transform: scale(1.2);
-    z-index: 1;
-}
-.cell.not-rated {
-    background-color: #D3D3D3;
-    color: #666;
-    font-style: italic;
-    text-shadow: none;
-}
-.category-label {
-    grid-column: 1;
-    display: flex;
-    align-items: center;
-    padding-right: 5px;
-    font-weight: bold;
-    font-size: 14px;
-}
-#tooltip {
-    position: absolute;
-    background: white;
-    border: 1px solid #ddd;
-    padding: 10px;
-    display: none;
-    color: black;
-    text-shadow: none;
-    z-index: 1000;
-    max-width: 300px;
-    font-size: 15px;
-}
-#unrated-note {
-    margin-top: 20px;
-    font-style: italic;
-    color: #666;
-}
+    .heatmap-container {
+        width: 95vw;
+        margin-left: 50%;
+        transform: translateX(-50%);
+        overflow-x: auto;
+        padding-bottom: 200px;
+    }
+
+    #heatmap {
+        display: grid;
+        grid-template-columns: 140px repeat(auto-fit, minmax(80px, 1fr));
+        gap: 0px;
+        min-width: 600px;
+        position: relative;
+    }
+
+    .cell {
+        width: 100%;
+        height: 55px;
+        transition: all 0.2s ease-in-out;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        padding: 2px;
+        box-sizing: border-box;
+        border-bottom: #000;
+        font-size: 14px;
+        color: white;
+        text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.5);
+        overflow: hidden;
+        cursor: pointer;
+    }
+
+    .cell:hover {
+        transform: scale(1.2);
+        z-index: 1;
+    }
+
+    .cell.not-rated {
+        background-color: #D3D3D3;
+        color: #666;
+        font-style: italic;
+        text-shadow: none;
+    }
+
+    .cell.to-check {
+        background-color: lightblue;
+        color: #333;
+        border: 2px dashed #333;
+        text-shadow: none;
+        font-style: italic;
+    }
+
+    .cell.to-check-again {
+        background-color: lightblue;
+        color: #333;
+        border: 2px dashed #333;
+        text-shadow: none;
+        font-style: italic;
+    }
+
+    .category-label {
+        grid-column: 1;
+        display: flex;
+        align-items: center;
+        padding-right: 5px;
+        font-weight: bold;
+        font-size: 14px;
+    }
+
+    #tooltip {
+        position: absolute;
+        background: white;
+        border: 1px solid #000;
+        padding: 5px;
+        display: none;
+        color: black;
+        text-shadow: none;
+        z-index: 1000;
+        max-width: 450px;
+        min-width: 200px;
+        max-height: fit-content;
+        font-size: 15px;
+        transform: translate(-40%, -100%);
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    }
+
+    #unrated-note {
+        margin-top: 20px;
+        font-style: italic;
+        color: #666;
+    }
+
+    #heatmap-key {
+        margin-top: 30px;
+    }
+
+    .key-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+        gap: 10px;
+        margin-top: 10px;
+    }
+
+    .key-cell {
+        padding: 5px;
+        text-align: center;
+        color: white;
+        font-size: 12px;
+        text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.5);
+        border-radius: 5px;
+    }
+
+    .key-cell.to-check {
+        background-color: lightblue;
+        color: #333;
+        border: 2px dashed #333;
+        text-shadow: none;
+    }
+
+    .key-cell.to-check-again {
+        background-color: rgb(0, 200, 0);
+        color: #333;
+        border: 3px dashed lightblue;
+        text-shadow: none;
+    }
 </style>

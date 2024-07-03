@@ -58,8 +58,9 @@ The project started off as a rewrite of my [llamalink](https://smcleod.net/2024/
 ## Features
 
 - Interactive TUI with sorting and filtering capabilities.
-- List available models and display basic metadata such as size, quantization level, model family, and modified date.
-- Sort models by name, size, modification date, quantization level, and family.
+- List available models and display basic metadata such as size, quantisation level, model family, and modified date.
+- Edit / update a model's Modelfile.
+- Sort models by name, size, modification date, quantisation level, and family.
 - Select and delete models.
 - Inspect model for additional details.
 - Link models to LM Studio.
@@ -117,28 +118,55 @@ Gollama can also be called with `-l` to list models without the TUI.
 - `Space`: Select
 - `Enter`: Run model (Ollama run)
 - `i`: Inspect model
-- `t`: Top (show running models)
+- `t`: Top (show running models)  _**(Work in progress)**_
 - `D`: Delete model
+- `e`: Edit model **new**
 - `c`: Copy model
-- `u`: Update model (edit Modelfile) **Work in progress**
+- `U`: Unload all models
 - `P`: Push model
 - `n`: Sort by name
 - `s`: Sort by size
 - `m`: Sort by modified
-- `k`: Sort by quantization
+- `k`: Sort by quantisation
 - `f`: Sort by family
 - `l`: Link model to LM Studio
 - `L`: Link all models to LM Studio
+- `r`: Rename model _**(Work in progress)**_
 - `q`: Quit
 
 #### Command-line Options
 
 - `-l`: List all available Ollama models and exit
+- `-s <search term>`: Search for models by name **new**
+  - OR operator (`'term1|term2'`) returns models that match either term
+  - AND operator (`'term1&term2'`) returns models that match both terms
+- `-e <model>`: Edit the Modelfile for a model **new**
 - `-ollama-dir`: Custom Ollama models directory
 - `-lm-dir`: Custom LM Studio models directory
-- `-no-cleanup`: Don't cleanup broken symlinks
 - `-cleanup`: Remove all symlinked models and empty directories and exit
+- `-no-cleanup`: Don't cleanup broken symlinks
+- `-u`: Unload all running models
 - `-v`: Print the version and exit
+
+##### Edit
+
+Gollama can be called with `-e` to edit the Modelfile for a model.
+
+```shell
+gollama -e my-model
+```
+
+##### Search
+
+Gollama can be called with `-s` to search for models by name.
+
+```shell
+gollama -s my-model # returns models that contain 'my-model'
+
+gollama -s 'my-model|my-other-model' # returns models that contain either 'my-model' or 'my-other-model'
+
+gollama -s 'my-model&instruct' # returns models that contain both 'my-model' and 'instruct'
+```
 
 ## Configuration
 

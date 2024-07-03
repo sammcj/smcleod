@@ -30,9 +30,16 @@ cover:
 
 I spend a lot of time working with AI tools and often get asked for recommendations.
 
-Here is a list of some of the more notable tools I've tried and rated them based on my experience. Hover over the heatmap to see the ratings and any notes as I add them.
+The following is a list of some of the more notable tools I've tried and rated them based on my experience.
+Just because something has a low rating doesn't mean it's bad - it just means it didn't work well for me and I wouldn't personally recommend it.
 
 I plan on keeping this updated as I try new tools _(we'll see how that goes)_.
+
+---
+
+Hover over the heatmap to see the ratings and any notes as I add them.
+
+<span style="font-size: 0.8em;">_Last Updated: 2024-07-04_</span>
 
 {{< heatmap >}}
 
