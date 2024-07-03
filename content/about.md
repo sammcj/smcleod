@@ -21,7 +21,7 @@ toc:
 
 I'm a [1x Engineer](https://1x.engineer/) in the Platform/Automation/DevOps/AI space, Open Source advocate and community maintainer.
 
-Currently working as a [Platform Engineering Lead](/cv/) at [DigIO](htttps://digio.com.au) in Melbourne, Australia.
+Currently working as a [Platform Engineering Lead](/cv/) at [DigIO](https://digio.com.au) in Melbourne, Australia.
 
 This site is my tech blog, a place to share my thoughts and ideas (mainly relating to engineering), and a place to keep track of things I've learned.
 
