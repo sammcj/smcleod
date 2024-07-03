@@ -1,0 +1,159 @@
+{{/* layouts/shortcodes/tool-ratings-heatmap.html */}}
+<div class="heatmap-container">
+    <div id="heatmap"></div>
+    <div id="tooltip"></div>
+    <div id="unrated-note"></div>
+</div>
+
+<script>
+const toolData = {{ .Site.Data.toolRatings | jsonify | safeJS }};
+const categories = Object.keys(toolData);
+
+function createHeatmap() {
+    const heatmapElement = document.getElementById('heatmap');
+    const tooltip = document.getElementById('tooltip');
+    const unratedNote = document.getElementById('unrated-note');
+    let hasUnratedItems = false;
+
+    categories.forEach(category => {
+        const categoryLabel = document.createElement('div');
+        categoryLabel.textContent = category;
+        categoryLabel.classList.add('category-label');
+        heatmapElement.appendChild(categoryLabel);
+
+        const tools = toolData[category];
+        const sortedTools = Object.entries(tools)
+            .sort((a, b) => b[1].rating - a[1].rating);
+
+        sortedTools.forEach(([tool, data]) => {
+            const cell = document.createElement('div');
+            cell.classList.add('cell');
+            cell.textContent = tool;
+
+            if (data.rating === 0) {
+                cell.classList.add('not-rated');
+                hasUnratedItems = true;
+            } else {
+                cell.style.backgroundColor = `rgb(0, ${Math.floor(255 * (data.rating / 10))}, 0)`;
+            }
+
+            cell.addEventListener('mouseover', (e) => {
+                tooltip.style.display = 'block';
+                tooltip.innerHTML = data.rating === 0 ?
+                    `<strong>${tool}</strong> (${category})<br>Not Rated` :
+                    `<strong>${tool}</strong> (${category})<br>Rating: ${data.rating}/10`;
+                if (data.notes) {
+                    tooltip.innerHTML += `<br><br>${data.notes}`;
+                }
+                if (data.link) {
+                    tooltip.innerHTML += `<br><br><a href="${data.link}" target="_blank">Click For More Info</a>`;
+                }
+
+                // Position the tooltip
+                const rect = e.target.getBoundingClientRect();
+                const tooltipRect = tooltip.getBoundingClientRect();
+                let left = rect.left + window.scrollX;
+                let top = rect.top + window.scrollY - tooltipRect.height - 10;
+
+                // Adjust if tooltip would go off the right side of the screen
+                if (left + tooltipRect.width > window.innerWidth) {
+                    left = window.innerWidth - tooltipRect.width - 10;
+                }
+
+                // Adjust if tooltip would go off the top of the screen
+                if (top < window.scrollY) {
+                    top = rect.bottom + window.scrollY + 10;
+                }
+
+                tooltip.style.left = `${left}px`;
+                tooltip.style.top = `${top}px`;
+            });
+
+            cell.addEventListener('mouseout', () => {
+                tooltip.style.display = 'none';
+            });
+
+            cell.addEventListener('click', () => {
+                if (data.link) {
+                    window.open(data.link, '_blank');
+                }
+            });
+
+            heatmapElement.appendChild(cell);
+        });
+    });
+
+    if (hasUnratedItems) {
+        unratedNote.textContent = 'Note: Grey cells indicate unrated items.';
+    }
+}
+
+document.addEventListener('DOMContentLoaded', createHeatmap);
+</script>
+
+<style>
+.heatmap-container {
+    width: 90vw;
+    margin-left: 50%;
+    transform: translateX(-50%);
+    overflow-x: auto;
+}
+#heatmap {
+    display: grid;
+    grid-template-columns: 140px repeat(auto-fit, minmax(80px, 1fr));
+    gap: 0.5px;
+    min-width: 800px; /* Ensures a minimum width */
+}
+.cell {
+    width: 100%;
+    height: 50px;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 2px;
+    box-sizing: border-box;
+    border-bottom: #000;
+    font-size: 13px;
+    color: white;
+    text-shadow: 1px 1px 1px rgba(0,0,0,0.5);
+    overflow: hidden;
+    cursor: pointer;
+}
+.cell:hover {
+    transform: scale(1.2);
+    z-index: 1;
+}
+.cell.not-rated {
+    background-color: #D3D3D3;
+    color: #666;
+    font-style: italic;
+    text-shadow: none;
+}
+.category-label {
+    grid-column: 1;
+    display: flex;
+    align-items: center;
+    padding-right: 5px;
+    font-weight: bold;
+    font-size: 14px;
+}
+#tooltip {
+    position: absolute;
+    background: white;
+    border: 1px solid #ddd;
+    padding: 10px;
+    display: none;
+    color: black;
+    text-shadow: none;
+    z-index: 1000;
+    max-width: 300px;
+    font-size: 15px;
+}
+#unrated-note {
+    margin-top: 20px;
+    font-style: italic;
+    color: #666;
+}
+</style>
