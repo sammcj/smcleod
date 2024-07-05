@@ -221,16 +221,6 @@ Imagegen:
     notes: "Very powerful, huge community, lots of plugins. Cons: UI is very complicated, a lack of workflow (kind of by design), No model management built in."
     link: "https://github.com/comfyanonymous/ComfyUI"
 
-Methods and Techniques:
-  "MoA":
-    rating: 8
-    notes: "I've wanted this from day 1 working with LLMs, simple, effective, easy to use. Cons: Slow, no real UI based apps/clients support this method yet. <b>\n\n*Highly recommend!*</b>"
-    link: "https://github.com/togethercomputer/MoA/"
-  "RAG":
-    rating: 6
-    notes: "Useful for data retrieval, Fast. Cons: Not good for codegen, often lacks context."
-    link: ""
-
 Data and Training:
   "Kohya_SS":
     rating: 9
@@ -346,3 +336,13 @@ SaaS Providers:
     rating: 6
     notes: "STOA (July 2024) Open Source coding models, fast. Cons: Web interface is a bit limited, more of a tech demo."
     link: "https://deepseek.ai/"
+
+Methods and Techniques:
+  "MoA":
+    rating: 8
+    notes: "I've wanted this from day 1 working with LLMs, simple, effective, easy to use. Cons: Slow, no real UI based apps/clients support this method yet. <b>\n\n*Highly recommend!*</b>"
+    link: "https://github.com/togethercomputer/MoA/"
+  "RAG":
+    rating: 6
+    notes: "Useful for data retrieval, Fast. Cons: Not good for codegen, often lacks context."
+    link: ""
