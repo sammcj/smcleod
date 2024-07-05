@@ -48,7 +48,7 @@ Clients:
     link: "https://github.com/janhq/jan/"
   "Anything LLM":
     rating: 5
-    notes: "Strong with RAG and tooling, Ugly UI. Cons: Electron"
+    notes: "Excellent RAG performance, support for browsing, search, confluence, youtube tooling. Cons: Very ugly UI, Electron"
     link: "https://github.com/Mintplex-Labs/anything-llm/"
   "Lobe Chat":
     rating: 5
@@ -70,6 +70,10 @@ Clients:
     rating: 3
     notes: "Very pretty TUI, fast and lightweight. Cons: Limited configurability, no RAG."
     link: "https://github.com/charmbracelet/mods"
+  "GPT4All":
+    rating: 4
+    notes: "Open Source, decent for RAG, . Cons: Electron, Limited configurability, Ugly UI."
+    link: "https://www.nomic.ai"
 
 Servers:
   "Ollama":
