@@ -51,8 +51,8 @@ Clients:
     notes: "Excellent RAG performance, support for browsing, search, confluence, youtube tooling. Cons: Very ugly UI, Electron"
     link: "https://github.com/Mintplex-Labs/anything-llm/"
   "Lobe Chat":
-    rating: 5
-    notes: "Very attractive UI, Plugin ecosystem, Good for building agent personas. Cons: Limited configurability."
+    rating: 3
+    notes: "Very attractive UI, Plugin ecosystem, Good for building agent personas. Cons: Plugin ecosystem seems to be broken now, Limited and confusing configurability."
     link: "https://github.com/lobehub/lobe-chat/"
   "BigAGI":
     rating: 7
