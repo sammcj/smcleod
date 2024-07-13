@@ -39,7 +39,7 @@ I plan on keeping this updated as I try new tools _(we'll see how that goes)_.
 
 Hover over the heatmap to see the ratings and any notes as I add them.
 
-<span style="font-size: 0.8em;">_Last Updated: 2024-07-04_</span>
+<span style="font-size: 0.8em;">_Last Updated: 2024-07-14_</span>
 
 {{< heatmap >}}
 

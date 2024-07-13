@@ -60,7 +60,7 @@
                     cell.style.fontSize = `${Math.max(10, 14 - (tool.length - 10))}px`;
                 }
 
-                cell.addEventListener('mouseover', (e) => {
+                cell.addEventListener('mousemove', (e) => {
                     tooltip.style.display = 'block';
                     tooltip.innerHTML = data.rating === -1 ?
                         `<strong>${tool}</strong> (${category})<br>To Check` :
@@ -74,24 +74,33 @@
                         tooltip.innerHTML += `<br><br><a href="${data.link}" target="_blank">Click For More Info</a>`;
                     }
 
-                    const rect = e.target.getBoundingClientRect();
+                    const heatmapRect = heatmapElement.getBoundingClientRect();
                     const tooltipRect = tooltip.getBoundingClientRect();
-                    let left = rect.left + window.scrollX;
-                    let top = rect.top + window.scrollY - tooltipRect.height - 5;
-                    let right = rect.right + window.scrollX;
 
-                    if (right + tooltipRect.width > window.innerWidth) {
-                        left = rect.right + window.scrollX - tooltipRect.width;
-                    }
-                    if (left < window.scrollX) {
-                        left = rect.left + window.scrollX;
-                    }
-                    if (top < window.scrollY) {
-                        top = rect.bottom + window.scrollY + 5;
+                    // Use mouse position for initial placement
+                    let left = e.clientX + 10; // 10px offset from cursor
+                    let top = e.clientY - tooltipRect.height - 10; // Position above the cursor by default
+
+                    // Adjust if tooltip would go off the left edge of the heatmap
+                    if (left < heatmapRect.left) {
+                        left = heatmapRect.left;
                     }
 
-                    tooltip.style.left = `${left + 10}px`;
-                    tooltip.style.right = `${right - 1000}px`;
+                    // Adjust if tooltip would go off the right edge of the heatmap
+                    if (left + tooltipRect.width > heatmapRect.right) {
+                        left = e.clientX - tooltipRect.width - 10;
+                    }
+
+                    // Adjust if tooltip would go off the top edge of the heatmap
+                    if (top < heatmapRect.top) {
+                        top = e.clientY + 20; // Move below the cursor if not enough space above
+                    }
+
+                    // Ensure the tooltip stays within the heatmap boundaries
+                    left = Math.max(heatmapRect.left, Math.min(left, heatmapRect.right - tooltipRect.width));
+                    top = Math.max(heatmapRect.top, Math.min(top, heatmapRect.bottom - tooltipRect.height));
+
+                    tooltip.style.left = `${left}px`;
                     tooltip.style.top = `${top}px`;
                 });
 
@@ -250,7 +259,6 @@
         min-width: 200px;
         max-height: fit-content;
         font-size: 15px;
-        transform: translate(-40%, -100%);
         box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
     }
 

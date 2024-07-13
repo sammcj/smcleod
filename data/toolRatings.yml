@@ -154,14 +154,6 @@ Pipelines / Integrations:
     rating: 4
     notes: "Cons: Just doesn't seem as a good as Flowise."
     link: "https://www.langflow.org/"
-  "Langfuse":
-    rating: 5
-    notes: "Strong Observability platform for LLMs."
-    link: "https://github.com/langfuse/langfuse/"
-  "Litellm":
-    rating: 6
-    notes: "Good for managing many LLM providers and models in code."
-    link: "https://github.com/BerriAI/litellm/"
   "Jupyter Notebook":
     rating: 4
     notes: "Alright for quick prototyping and testing code in isolation, suffers from the usual python packaging ecosystem and a bit of a clunky UI with no copilot."
@@ -257,9 +249,23 @@ Observability / Utils:
     notes: "My fast TUI for managing Ollama models, plugs the gap in Ollama's functionality. Cons: I'm always creating and finding bugs. <b>\n\n*Highly recommend!*</b>"
     link: "https://github.com/sammcj/gollama/"
   "parllama":
-    rating: 4
+    rating: 3
     notes: "A TUI for managing Ollama models, has some neat ideas. Cons: Very slow / laggy, not very user friendly."
     link: "https://github.com/paulrobello/parllama/"
+
+Libraries:
+  "llm-scraper":
+    rating: -0
+    notes: "Want to checkout: Scrapes Websites to data for LLMs for LLM ingestion"
+    link: "https://github.com/mishushakov/llm-scraper"
+  "Litellm":
+    rating: 6
+    notes: "Good for managing many LLM providers and models in code."
+    link: "https://github.com/BerriAI/litellm/"
+  "Langfuse":
+    rating: 5
+    notes: "Strong Observability platform for LLMs."
+    link: "https://github.com/langfuse/langfuse/"
 
 Multimodal:
   "Llavavision":
@@ -338,6 +344,14 @@ SaaS Providers:
     link: "https://deepseek.ai/"
 
 Methods and Techniques:
+  "MoE":
+    rating: 8
+    notes: "Mixture of Experts can offer greatly improved model performance with less compute overhead. Cons: Still uses the VRAM of all the models combined, can't easily swap out experts. <b>\n\n*Highly recommend!*</b>"
+    link: "https://huggingface.co/blog/moe"
+  "AnyMoE":
+    rating: -0
+    notes: "Want to checkout: A more flexible version of MoE, can use any model or any architecture as an expert."
+    link: "https://github.com/EricLBuehler/mistral.rs/blob/master/docs/ANYMOE.md"
   "MoA":
     rating: 8
     notes: "I've wanted this from day 1 working with LLMs, simple, effective, easy to use. Cons: Slow, no real UI based apps/clients support this method yet. <b>\n\n*Highly recommend!*</b>"
