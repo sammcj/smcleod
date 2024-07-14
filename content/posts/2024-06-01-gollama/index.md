@@ -1,6 +1,7 @@
 ---
 title: "Gollama: Ollama Model Manager"
 date: 2024-06-01T01:00:10+00:00
+lastmod: 2024-07-14T01:00:10+00:00
 # weight: 1
 # aliases: ["/first"]
 tags: ["Markdown", "Go", "Golang", "Ollama", "AI", "LLM", "LMStudio"]
@@ -53,6 +54,8 @@ The project started off as a rewrite of my [llamalink](https://smcleod.net/2024/
 - Inspect model for additional details
 - Link models to LM Studio
 - Copy / rename models
+- Pull (update) existing models
+- Pull (get) new models
 - Push models to a registry
 - Show running models
 - Has some cool bugs
@@ -106,11 +109,13 @@ Gollama can also be called with `-l` to list models without the TUI.
 - `Space`: Select
 - `Enter`: Run model (Ollama run)
 - `i`: Inspect model
-- `t`: Top (show running models)  _**(Work in progress)**_
+- `t`: Top (show running models)
 - `D`: Delete model
 - `e`: Edit model **new**
 - `c`: Copy model
 - `U`: Unload all models
+- `p`: Pull an existing model **new**
+- `g`: Pull (get) new model **new**
 - `P`: Push model
 - `n`: Sort by name
 - `s`: Sort by size
