@@ -74,6 +74,10 @@ Clients:
     rating: 4
     notes: "Open Source, decent for RAG, . Cons: Electron, Limited configurability, Ugly UI."
     link: "https://www.nomic.ai"
+  "Kerlig":
+    rating: 6
+    notes: "Fast, lightweight (despite being Electron) and well integrated with macOS, visually pleasing UI. Cons: Closed source, could do with some more configuration options."
+    link: "https://kerlig.com/"
 
 Servers:
   "Ollama":
