@@ -32,6 +32,10 @@ AI models ("LLMs" in this case) have inherently large sizes and computational re
 
 Quantisation, a technique to reduce model size and memory footprint is often confusing for newcomers and understanding the trade-offs involved in the various quantisation types can be complex.
 
+Quantisation refers to the process of converting model weights from higher to lower precision data types (e.g. floating point -> integer)
+
+![](quant-neural.png)
+
 As a thought experiment and for my own learning, I've created an interactive dashboard to help myself and other users understand the impact of quantisation on LLMs.
 
 This (_somewhat_) interactive dashboard aims to demystify LLM quantisation by providing visual representations of key metrics and trade-offs.
