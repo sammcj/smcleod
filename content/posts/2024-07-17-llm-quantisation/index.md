@@ -5,8 +5,8 @@ date: 2024-07-17T01:00:10+00:00
 # aliases: ["/first"]
 tags: ["ai", "tools", "quantisation", "llm", "gguf", "dashboard"]
 author: "Sam McLeod"
-showToc: false
-TocOpen: false
+showToc: true
+TocOpen: true
 draft: false
 hidemeta: false
 comments: false
@@ -73,3 +73,14 @@ These charts dive deeper into the efficiency of quantisation across different mo
 This visual guide helps users navigate the decision-making process for selecting the most appropriate quantisation level based on their priorities (quality vs. size) and hardware constraints.
 
 The dashboard is open source and available at: https://github.com/sammcj/quant/ and I welcome contributions and feedback.
+
+## Colour Spectrum Analogy
+
+Imagine the model data to be the colour spectrum (pictured as 16 bits here)
+
+![](16-to-8bit.png)
+
+If we quantise the data to 8 bits we are removing (thus compressing) parts of the data based on a set of rules.
+We can still see a wide range of "colours" but we lose some of the detail.
+
+_Note: This is a crude analogy, modern quantisation techniques have smarts that selective quantise parts of the model to varying degrees to reduce the loss._
