@@ -88,3 +88,12 @@ These charts dive deeper into the efficiency of quantisation across different mo
 ### Decision Tree
 
 This visual guide helps users navigate the decision-making process for selecting the most appropriate quantisation level based on their priorities (quality vs. size) and hardware constraints.
+
+## References
+
+- https://github.com/ggerganov/llama.cpp/wiki/Feature-matrix
+- https://gist.github.com/Artefact2/b5f810600771265fc1e39442288e8ec9
+- https://github.com/ggerganov/llama.cpp/discussions/5962
+- https://www.reddit.com/r/LocalLLaMA/comments/1ba55rj/overview_of_gguf_quantization_methods/
+- https://github.com/ggerganov/llama.cpp/blob/master/examples/perplexity/README.md
+- https://github.com/ggerganov/llama.cpp/discussions/5006
