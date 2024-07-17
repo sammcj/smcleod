@@ -36,13 +36,13 @@ I am not a ML or data scientist. I am simply an engineer with an interest in AI.
 
 ## Quantisation
 
-Quantisation, a technique to reduce model size and memory footprint is often confusing for newcomers and understanding the trade-offs involved in the various quantisation types can be complex.
+Quantisation, a technique to reduce model size and memory footprint, is often confusing for newcomers, and understanding the trade-offs involved in the various quantisation types can be complex.
 
 Quantisation refers to the process of converting model weights from higher to lower precision data types (e.g. floating point -> integer)
 
 ![](quant-neural.png)
 
-As a thought experiment and for my own learning, I've created an interactive dashboard to help myself and other users understand the impact of quantisation on LLMs.
+As a thought experiment, and for my own learning, I've created an interactive dashboard to help myself and other users understand the impact of quantisation on LLMs.
 
 This (_somewhat_) interactive dashboard aims to demystify LLM quantisation by providing visual representations of key metrics and trade-offs.
 
@@ -55,7 +55,7 @@ Imagine the model data to be the colour spectrum (pictured as 16 bits here)
 If we quantise the data to 8 bits we are removing (thus compressing) parts of the data based on a set of rules.
 We can still see a wide range of "colours" but we lose some of the detail.
 
-_Note: This is a crude analogy, modern quantisation techniques have smarts that selective quantise parts of the model to varying degrees to reduce the loss._
+_Note: This is a crude analogy, Modern quantisation techniques have smarts that selectively quantise parts of the model to varying degrees to reduce the loss._
 
 ## Dashboard
 
@@ -83,7 +83,7 @@ This table helps to identify the optimal quantisation level for different model 
 
 ### Quantisation Efficiency
 
-These charts dive deeper into the efficiency of quantisation across different model sizes. They show how perplexity increase per GB saved changes with model size and quantisation.
+These charts dive deeper into the efficiency of quantisation across different model sizes, and the resulting perplexity.
 
 ### Decision Tree
 
