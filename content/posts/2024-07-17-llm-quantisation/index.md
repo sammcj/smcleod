@@ -97,3 +97,5 @@ This visual guide helps users navigate the decision-making process for selecting
 - https://www.reddit.com/r/LocalLLaMA/comments/1ba55rj/overview_of_gguf_quantization_methods/
 - https://github.com/ggerganov/llama.cpp/blob/master/examples/perplexity/README.md
 - https://github.com/ggerganov/llama.cpp/discussions/5006
+- https://huggingface.co/docs/optimum/en/concept_guides/quantization
+- https://github.com/matt-c1/llama-3-quant-comparison
