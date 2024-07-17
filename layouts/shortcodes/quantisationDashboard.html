@@ -1,22 +1,20 @@
 <div class="quantisation-dashboard-wrapper">
   <style>
     .quantisation-dashboard-wrapper {
-      --main-width: 1500px !important;
-      max-width: 160% !important;
-      width: 150%;
+      max-width: fit-context !important;
+      width: 140%;
       margin-left: 50%;
       transform: translateX(-50%);
       overflow-x: hidden;
     }
 
     .quantisation-dashboard-content {
-      width: 100%;
+      max-width: 100%;
       overflow-x: auto;
     }
 
     @media (max-width: 1540px) {
       .quantisation-dashboard-wrapper {
-        --main-width: 100vw !important;
         padding: 0 20px;
         overflow-x: hidden;
       }
