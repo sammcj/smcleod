@@ -15,3 +15,8 @@ Feel free to raise a PR or [create an issue](https://github.com/sammcj/smcleod/i
 See [SHORTCODES.md](SHORTCODES.md).
 
 <a rel="me" href="https://aus.social/@s_mcleod">Mastodon</a>
+
+## License
+
+- Copyright © 2024 Sam McLeod
+- This project is open source and licensed under [CC BY-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/)
