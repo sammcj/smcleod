@@ -30,6 +30,12 @@ cover:
 
 AI models ("LLMs" in this case) have inherently large sizes and computational requirements that often pose challenges for deployment and use.
 
+## _Disclaimer_
+
+I am not a ML or data scientist. I am simply an engineer with an interest in AI. This project is a result of my personal interest in understanding the impact of quantisation on LLMs. The visualisations are based on my understanding of the subject and may not be 100% accurate or complete. I encourage you to verify the information presented here with other sources.
+
+## Quantisation
+
 Quantisation, a technique to reduce model size and memory footprint is often confusing for newcomers and understanding the trade-offs involved in the various quantisation types can be complex.
 
 Quantisation refers to the process of converting model weights from higher to lower precision data types (e.g. floating point -> integer)
@@ -40,17 +46,28 @@ As a thought experiment and for my own learning, I've created an interactive das
 
 This (_somewhat_) interactive dashboard aims to demystify LLM quantisation by providing visual representations of key metrics and trade-offs.
 
-### _Disclaimer_
+### Colour Spectrum Analogy
 
-I am not a ML or data scientist. I am simply an engineer with an interest in AI. This project is a result of my personal interest in understanding the impact of quantisation on LLMs. The visualisations are based on my understanding of the subject and may not be 100% accurate or complete. I encourage you to verify the information presented here with other sources.
+Imagine the model data to be the colour spectrum (pictured as 16 bits here)
 
-If you find errors - please do let me know! I want to correct my understanding and improve the visualisations over time.
+![](16-to-8bit.png)
+
+If we quantise the data to 8 bits we are removing (thus compressing) parts of the data based on a set of rules.
+We can still see a wide range of "colours" but we lose some of the detail.
+
+_Note: This is a crude analogy, modern quantisation techniques have smarts that selective quantise parts of the model to varying degrees to reduce the loss._
+
+## Dashboard
 
 The data is mainly focused on GGUF quantisation, however the visualisations can be used to understand other quantisation and model formats as well. I plan to add more quantisation techniques and models in the future.
+
+If you find errors - please do let me know! I want to correct my understanding and improve the visualisations over time. The dashboard is open source and available at: https://github.com/sammcj/quant/ and I welcome contributions and feedback.
 
 <!--more-->
 
 {{< quantisationDashboard >}}
+
+## Visualisations Explained
 
 ### Perplexity vs Compression Chart
 
@@ -71,16 +88,3 @@ These charts dive deeper into the efficiency of quantisation across different mo
 ### Decision Tree
 
 This visual guide helps users navigate the decision-making process for selecting the most appropriate quantisation level based on their priorities (quality vs. size) and hardware constraints.
-
-The dashboard is open source and available at: https://github.com/sammcj/quant/ and I welcome contributions and feedback.
-
-## Colour Spectrum Analogy
-
-Imagine the model data to be the colour spectrum (pictured as 16 bits here)
-
-![](16-to-8bit.png)
-
-If we quantise the data to 8 bits we are removing (thus compressing) parts of the data based on a set of rules.
-We can still see a wide range of "colours" but we lose some of the detail.
-
-_Note: This is a crude analogy, modern quantisation techniques have smarts that selective quantise parts of the model to varying degrees to reduce the loss._
