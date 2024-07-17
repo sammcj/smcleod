@@ -1,25 +1,25 @@
-<div class="quantisation-dashboard-wrapper">
-  <style>
+<style>
+  .quantisation-dashboard-wrapper {
+    max-width: fit-context !important;
+    width: 140%;
+    margin-left: 50%;
+    transform: translateX(-50%);
+    overflow-x: hidden;
+  }
+
+  .quantisation-dashboard-content {
+    max-width: 100%;
+    overflow-x: auto;
+  }
+
+  @media (max-width: 1940px) {
     .quantisation-dashboard-wrapper {
-      max-width: fit-context !important;
-      width: 140%;
-      margin-left: 50%;
-      transform: translateX(-50%);
+      padding: 0 20px;
       overflow-x: hidden;
     }
-
-    .quantisation-dashboard-content {
-      max-width: 100%;
-      overflow-x: auto;
-    }
-
-    @media (max-width: 1540px) {
-      .quantisation-dashboard-wrapper {
-        padding: 0 20px;
-        overflow-x: hidden;
-      }
-    }
-  </style>
+  }
+</style>
+<div class="quantisation-dashboard-wrapper">
   {{ $dashboard := readFile "static/quantisation-dashboard.html" }}
   {{ $dashboard | safeHTML }}
 </div>
