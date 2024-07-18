@@ -51,3 +51,9 @@ Code, Chaos, and Copilots is a talk I gave in July 2024 as an intro to how I use
 I'm not a ML Engineer or data scientist, As such, the information presented here is based on my understanding of the subject and may not be 100% accurate or complete.
 
 If you find errors, or have feedback on my understanding / assumptions - help me learn by [raising an issue](https://github.com/sammcj/smcleod/issues/new/choose)!
+
+### Recording
+
+Personally I think the slides are more valuable than the recording, but if you're interested in hearing me try to rush through some of the content, you can watch it here:
+
+[![Code, Chaos, and Copilots - Integrating AI into Daily Development - Sam McLeod 2024-07-18](https://img.youtube.com/vi/zUAX_UUOdR0/0.jpg)](https://www.youtube.com/watch?v=zUAX_UUOdR0)
