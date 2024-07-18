@@ -5,8 +5,8 @@ date: 2024-07-18T01:00:10+00:00
 # aliases: ["/first"]
 tags: ["ai", "tools", "quantisation", "llm", "gguf", "talk", "tech", "keynote", "presentation"]
 author: "Sam McLeod"
-showToc: true
-TocOpen: true
+showToc: false
+TocOpen: false
 draft: false
 hidemeta: false
 comments: false
