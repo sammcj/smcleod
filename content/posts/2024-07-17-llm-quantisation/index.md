@@ -29,6 +29,7 @@ cover:
 ---
 
 AI models ("LLMs" in this case) have inherently large sizes and computational requirements that often pose challenges for deployment and use.
+<!--more-->
 
 ## _Disclaimer_
 
@@ -63,8 +64,7 @@ The data is mainly focused on GGUF quantisation, however the visualisations can 
 
 If you find errors - please do let me know! I want to correct my understanding and improve the visualisations over time. The dashboard is open source and available at: https://github.com/sammcj/quant/ and I welcome contributions and feedback.
 
-<!--more-->
-
+_Note: This chart requires JavaScript and may not render properly on all mobile devices with small screens._
 {{< quantisationDashboard >}}
 
 ## Visualisations Explained

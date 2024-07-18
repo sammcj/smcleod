@@ -7,9 +7,54 @@
     overflow-x: hidden;
   }
 
-  .quantisation-dashboard-content {
-    max-width: 100%;
-    overflow-x: auto;
+  .quantisation-dashboard-content h2,
+  .quantisation-dashboard-content h3,
+  .quantisation-dashboard-content h4,
+  .quantisation-dashboard-content h5,
+  .quantisation-dashboard-content h6,
+
+  .quantisation-dashboard-content td {
+    color: initial !important;
+  }
+
+  .quantisation-dashboard-content .bg-blue-100 {
+    background-color: #EBF8FF !important;
+    /* This is a light blue color, adjust if needed */
+  }
+
+  .quantisation-dashboard-content .bg-blue-100 * {
+    color: #000000 !important;
+    /* Ensures all text inside is black */
+    opacity: 1 !important;
+  }
+
+
+
+  /* New styles for mobile layout */
+  @media (max-width: 768px) {
+    .quantisation-dashboard-wrapper {
+      width: 135%;
+      padding: 0 10px;
+      overflow-x: auto;
+    }
+
+    .quantisation-dashboard-content>div {
+      margin-bottom: 2rem !important;
+    }
+
+    .quantisation-dashboard-content table {
+      width: 100%;
+      max-width: auto !important;
+      overflow-x: auto !important;
+      display: block !important;
+    }
+
+    .quantisation-dashboard-content .recharts-wrapper {
+      height: auto !important;
+      width: auto !important;
+      margin-bottom: 1rem;
+    }
+
   }
 
   @media (max-width: 1940px) {
