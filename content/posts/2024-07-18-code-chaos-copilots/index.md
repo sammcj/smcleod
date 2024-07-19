@@ -56,4 +56,4 @@ If you find errors, or have feedback on my understanding / assumptions - help me
 
 Personally I think the slides are more valuable than the recording, but if you're interested in hearing me try to rush through some of the content, you can watch it here:
 
-[![Code, Chaos, and Copilots - Integrating AI into Daily Development - Sam McLeod 2024-07-18](https://img.youtube.com/vi/zUAX_UUOdR0/0.jpg)](https://www.youtube.com/watch?v=zUAX_UUOdR0)
+[![Code, Chaos, and Copilots - Integrating AI into Daily Development - Sam McLeod 2024-07-18](https://img.youtube.com/vi/8VY6dY-JiYQ/0.jpg)](https://www.youtube.com/watch?v=8VY6dY-JiYQ)
