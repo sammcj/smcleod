@@ -384,3 +384,9 @@ Methods and Techniques:
     rating: 6
     notes: "Useful for data retrieval, Fast. Cons: Not good for codegen, often lacks context."
     link: ""
+
+CICD:
+  "PR-Agent":
+    rating: 7
+    notes: "Powerful too for AI in CI/CD pipelines (or locally), can review PRs, security, complexity etc...<b>\n\n*Highly recommend!*</b>"
+    link: "https://github.com/Codium-ai/pr-agent"
