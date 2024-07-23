@@ -1,5 +1,5 @@
 # data/toolRatings.yml
-Codegen:
+IDE Integrations:
   "Continue.dev":
     rating: 7
     notes: "Decent UI, good performance, big community. Cons: Models have to be manually configured. <b>\n\n*Highly recommend!*</b>"
@@ -8,6 +8,26 @@ Codegen:
     rating: 8
     notes: "Easy to use, good VSCode integration, huge community. Cons: Sometimes stops responding, sometimes only returns a single line at a time. <b>\n\n*Highly recommend!*</b>"
     link: "https://github.com/features/copilot"
+  "Llama Autocoder":
+    rating: 4
+    notes: "Very easy to use, Very fast, Good for when you just want AI to write code for you. Cons: Limited configurability."
+    link: "https://github.com/10Nates/ollama-autocoder"
+  "Tabby":
+    notes: "Similar to Continue.dev, maybe not quite as polished, haven't tried it in a while"
+    link: "https://tabbyml.com"
+    rating: 4
+  "llm-vscode":
+    notes: "Official huggingface VSCode plugin, works with Ollama as well as Huggingface models, haven't tried it yet"
+    link: "https://github.com/huggingface/llm-vscode.git"
+    rating: -0
+  # "Llama Coder":
+  #   notes: "VSCode plugin for Ollama/llama.cpp, haven't tried it yet"
+  # "Gemini Code Assist + Google Cloud Code":
+  #   notes: "Google's gemini code assistant, alternative to Github Copilot"
+  # "Amazon Q":
+  #   notes: "Amazon's AI code assistant, alternative to Github Copilot"
+
+Codegen:
   "Code2Prompt":
     rating: 9
     notes: "Very useful tool for ingesting directories of code/data for passing to LLMs. <b>\n\n*Highly recommend!*</b>"
@@ -35,8 +55,8 @@ Clients:
     notes: "Attractive UI. Cons: Configuration is complex / brittle."
     link: "https://www.librechat.ai"
   "Open WebUI":
-    rating: 7
-    notes: "Rapidly being developed, Fast UI, RAG, Configurable, Diagram generation. Cons: Commonly used configuration is buried away in 'advanced' settings. <b>\n\n*Highly recommend!*</b>"
+    rating: 8
+    notes: "Rapidly being developed, Fast UI, RAG, Configurable, Diagram generation. <b>\n\n*Highly recommend!*</b>"
     link: "https://github.com/open-webui/open-webui"
   "LM-Studio":
     rating: 6
@@ -72,7 +92,7 @@ Clients:
     link: "https://github.com/charmbracelet/mods"
   "GPT4All":
     rating: 4
-    notes: "Open Source, decent for RAG, . Cons: Electron, Limited configurability, Ugly UI."
+    notes: "Open Source. Cons: Electron, Limited configurability, Ugly UI."
     link: "https://www.nomic.ai"
   "Kerlig":
     rating: 6
@@ -256,6 +276,10 @@ Observability / Utils:
     rating: 3
     notes: "A TUI for managing Ollama models, has some neat ideas. Cons: Very slow / laggy, not very user friendly."
     link: "https://github.com/paulrobello/parllama/"
+  "Langfuse":
+    rating: 5
+    notes: "Strong Observability platform for LLMs."
+    link: "https://github.com/langfuse/langfuse/"
 
 Libraries:
   "llm-scraper":
@@ -266,10 +290,6 @@ Libraries:
     rating: 6
     notes: "Good for managing many LLM providers and models in code."
     link: "https://github.com/BerriAI/litellm/"
-  "Langfuse":
-    rating: 5
-    notes: "Strong Observability platform for LLMs."
-    link: "https://github.com/langfuse/langfuse/"
 
 Multimodal:
   "Llavavision":
