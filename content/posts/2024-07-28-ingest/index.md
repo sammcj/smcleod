@@ -36,7 +36,8 @@ Ingest is a command-line tool that does the heavy lifting of parsing directories
 
 - **Directory Traversal**: Walks through your file structures and generates a neat tree view.
 - **Flexible File Selection**: Include or exclude files using glob patterns.
-- **Git Integration**: Generate diffs and logs to capture changes.
+- **Ollama Integration**: Parse output directly to Ollama for processing.
+- **Git Integration**: Generate diffs and logs to capture changes in the output.
 - **Token Counting**: Gives you an approximate token count for LLM compatibility.
 - **Customizable Output**: Use templates to format the output just how you like it.
 - **Clipboard Integration**: Automatically copies the output to your clipboard (where available).
@@ -85,13 +86,53 @@ Include a git diff and copy to clipboard:
 ingest -d /path/to/project
 ```
 
+Generate a prompt for multiple files/directories:
+
+```shell
+ingest /path/to/project /path/to/other/project
+```
+
 Save the output to a file:
 
 ```shell
 ingest -o output.md /path/to/project
 ```
 
+## Ollama Integration
+
+Ingest can pass the generated prompt to [Ollama](https://ollama.com) for processing.
+
+![ingest ollama](https://raw.githubusercontent.com/sammcj/ingest/main/ollama-ingest.png)
+
+```shell
+ingest --ollama /path/to/project
+```
+
+By default this will ask you to enter a prompt:
+
+```shell
+./ingest utils.go --ollama
+⠋ Traversing directory and building tree...  [0s]
+[!] Enter Ollama prompt:
+explain this code
+This is Go code for a file named `utils.go`. It contains various utility functions for
+handling terminal output, clipboard operations, and configuration directories.
+...
+```
+
 ## Configuration
+
+Ingest uses a configuration file located at `~/.config/ingest/config.json`.
+
+You can make Ollama processing run without prompting setting `"ollama_auto_run": true` in the config file.
+
+The config file also contains:
+
+- `ollama_model`: The model to use for processing the prompt, e.g. "llama3.1:8b-q5_k_m".
+- `ollama_prompt_prefix`: An optional prefix to prepend to the prompt, e.g. "This is my application."
+- `ollama_prompt_suffix`: An optional suffix to append to the prompt, e.g. "explain this code"
+
+### Excludes
 
 Ingest uses the following directories for user-specific settings:
 
@@ -99,8 +140,6 @@ Ingest uses the following directories for user-specific settings:
 - `~/.config/ingest/patterns/templates`: For custom output templates.
 
 These directories are created automatically on first run, complete with README files explaining their purpose.
-
-### Excludes
 
 You can see the default excludes by running:
 
@@ -121,6 +160,32 @@ ingest --print-default-template
 ```
 
 To use your own default template, create a `default.tmpl` file in `~/.config/ingest/patterns/templates`.
+
+## Flags
+
+- `-i, --include`: Patterns to include (can be used multiple times)
+- `-e, --exclude`: Patterns to exclude (can be used multiple times)
+- `--include-priority`: Include files in case of conflict between include and exclude patterns
+- `--exclude-from-tree`: Exclude files/folders from the source tree based on exclude patterns
+- `--tokens`: Display the token count of the generated prompt
+- `-c, --encoding`: Optional tokeniser to use for token count
+- `-o, --output`: Optional output file path
+- `--ollama`: Send the generated prompt to Ollama for processing
+- `-d, --diff`: Include git diff
+- `--git-diff-branch`: Generate git diff between two branches
+- `--git-log-branch`: Retrieve git log between two branches
+- `-l, --line-number`: Add line numbers to the source code
+- `--no-codeblock`: Disable wrapping code inside markdown code blocks
+- `--relative-paths`: Use relative paths instead of absolute paths
+- `-n, --no-clipboard`: Disable copying to clipboard
+- `-t, --template`: Path to a custom Handlebars template
+- `--json`: Print output as JSON
+- `--pattern-exclude`: Path to a specific .glob file for exclude patterns
+- `--print-default-excludes`: Print the default exclude patterns
+- `--print-default-template`: Print the default template
+- `--report`: Print the largest parsed files
+- `--verbose`: Print verbose output
+- `-V, --version`: Print the version number (WIP - still trying to get this to work nicely)
 
 ## Wrapping Up
 
