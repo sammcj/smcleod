@@ -26,9 +26,9 @@ cover:
   hidden: false
 ---
 
-[Ingest](https://github.com/sammcj/ingest/) is a tool I've written to make life easier when preparing content for LLMs.
+[Ingest](https://github.com/sammcj/ingest/) is a tool I've written to make my life easier when preparing content for LLMs.
 
-Ingest is a command-line tool that does the heavy lifting of parsing directories full of plain text files (think source code, documentation, etc.) into a single, coherent markdown file. It's designed to aid the process of feeding code or text into an LLM but don't want to spend a lot of time copying and pasting.
+It parses directories of plain text files, such as source code, documentation etc... into a single markdown file suitable for ingestion by AI/LLMs.
 
 ![Ingest CLI Screenshot](https://raw.githubusercontent.com/sammcj/ingest/main/screenshot.png)
 
@@ -57,13 +57,13 @@ Or, if you prefer, grab a pre-built binary from the [releases page](https://gith
 
 ## Basic Usage
 
-Using ingest is as simple as:
+Basic usage:
 
 ```shell
-ingest [flags] <path>
+ingest [flags] <paths>
 ```
 
-Running `ingest` with no parameters will parse current directory:
+ingest will default the current working directory, if no path is provided, e.g:
 
 ```shell
 $ ingest
@@ -72,15 +72,13 @@ $ ingest
 [✓] Copied to clipboard successfully.
 ```
 
-### Examples
-
 Generate a prompt from a directory, including only Python files:
 
 ```shell
 ingest -i "**/*.py" /path/to/project
 ```
 
-Include a git diff and copy to clipboard:
+Generate a prompt with git diff and copy to clipboard:
 
 ```shell
 ingest -d /path/to/project
@@ -92,76 +90,56 @@ Generate a prompt for multiple files/directories:
 ingest /path/to/project /path/to/other/project
 ```
 
-Save the output to a file:
+Generate a prompt and save to a file:
 
 ```shell
 ingest -o output.md /path/to/project
 ```
 
-## Ollama Integration
+## LLM Integration
 
-Ingest can pass the generated prompt to [Ollama](https://ollama.com) for processing.
-
-![ingest ollama](https://raw.githubusercontent.com/sammcj/ingest/main/ollama-ingest.png)
+Ingest can pass the generated prompt to LLMs that have an OpenAI compatible API such as [Ollama](https://ollama.com) for processing.
 
 ```shell
-ingest --ollama /path/to/project
+ingest --llm /path/to/project
 ```
 
-By default this will ask you to enter a prompt:
+By default this will use any prompt suffix from your configuration file:
 
 ```shell
-./ingest utils.go --ollama
+./ingest utils.go --llm
 ⠋ Traversing directory and building tree...  [0s]
-[!] Enter Ollama prompt:
-explain this code
 This is Go code for a file named `utils.go`. It contains various utility functions for
 handling terminal output, clipboard operations, and configuration directories.
 ...
+```
+
+You can provide a prompt suffix to append to the generated prompt:
+
+```shell
+ingest --llm -p "explain this code" /path/to/project
 ```
 
 ## Configuration
 
 Ingest uses a configuration file located at `~/.config/ingest/config.json`.
 
-You can make Ollama processing run without prompting setting `"ollama_auto_run": true` in the config file.
+You can make Ollama processing run without prompting setting `"llm_auto_run": true` in the config file.
 
 The config file also contains:
 
-- `ollama_model`: The model to use for processing the prompt, e.g. "llama3.1:8b-q5_k_m".
-- `ollama_prompt_prefix`: An optional prefix to prepend to the prompt, e.g. "This is my application."
-- `ollama_prompt_suffix`: An optional suffix to append to the prompt, e.g. "explain this code"
+- `llm_model`: The model to use for processing the prompt, e.g. "llama3.1:8b-q5_k_m".
+- `llm_prompt_prefix`: An optional prefix to prepend to the prompt, e.g. "This is my application."
+- `llm_prompt_suffix`: An optional suffix to append to the prompt, e.g. "explain this code"
 
-### Excludes
+Ingest uses the following directories for user-specific configuration:
 
-Ingest uses the following directories for user-specific settings:
+- `~/.config/ingest/patterns/exclude`: Add .glob files here to exclude additional patterns.
+- `~/.config/ingest/patterns/templates`: Add custom .tmpl files here for different output formats.
 
-- `~/.config/ingest/patterns/exclude`: For additional exclude patterns.
-- `~/.config/ingest/patterns/templates`: For custom output templates.
+These directories will be created automatically on first run, along with README files explaining their purpose.
 
-These directories are created automatically on first run, complete with README files explaining their purpose.
-
-You can see the default excludes by running:
-
-```shell
-ingest --print-default-excludes
-```
-
-To override these, just create a `default.glob` file in `~/.config/ingest/patterns/exclude`.
-
-### Templates
-
-Templates use standard [go templating syntax](https://pkg.go.dev/text/template).
-
-You can view the default template with:
-
-```shell
-ingest --print-default-template
-```
-
-To use your own default template, create a `default.tmpl` file in `~/.config/ingest/patterns/templates`.
-
-## Flags
+### Flags
 
 - `-i, --include`: Patterns to include (can be used multiple times)
 - `-e, --exclude`: Patterns to exclude (can be used multiple times)
@@ -187,11 +165,27 @@ To use your own default template, create a `default.tmpl` file in `~/.config/ing
 - `--verbose`: Print verbose output
 - `-V, --version`: Print the version number (WIP - still trying to get this to work nicely)
 
+### Excludes
+
+You can get a list of the default excludes by parsing `--print-default-excludes` to ingest.
+These are defined in [defaultExcludes.go](https://github.com/sammcj/ingest/blob/main/filesystem/defaultExcludes.go).
+
+To override the default excludes, create a `default.glob` file in `~/.config/ingest/patterns/exclude` with the patterns you want to exclude.
+
+### Templates
+
+Templates are written in standard [go templating syntax](https://pkg.go.dev/text/template).
+
+You can get a list of the default templates by parsing `--print-default-template` to ingest.
+These are defined in [template.go](https://github.com/sammcj/ingest/blob/main/template/template.go).
+
+To override the default templates, create a `default.tmpl` file in `~/.config/ingest/patterns/templates` with the template you want to use by default.
+
 ## Wrapping Up
 
 Ingest is a daily time-saver for me when working with LLMs.
 
-The code is open source and available on [Github](https://github.com/sammcj/ingest/).
+The code is open source and available on [Github](https://github.com/sammcj/ingest/) - Contributions are welcome, Please feel free to submit a Pull Request.
 
 As always, if you find any bugs or have ideas for improvements, don't hesitate to open an issue or submit a PR.
 
