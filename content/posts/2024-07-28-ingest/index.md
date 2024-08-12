@@ -32,10 +32,15 @@ It parses directories of plain text files, such as source code, documentation et
 
 ![Ingest CLI Screenshot](https://raw.githubusercontent.com/sammcj/ingest/main/screenshot.png)
 
+Ingest can also estimate vRAM requirements for a given model, quantisation and context length:
+
+![Ingest vRAM Estimate Screenshot](https://raw.githubusercontent.com/sammcj/ingest/main/screenshot2.png)
+
 ## Features
 
 - Traverse directory structures and generate a tree view
 - Include/exclude files based on glob patterns
+- Estimate vRAM requirements and check model compatibility using another package I've created called [quantest](https://github.com/sammcj/quantest)
 - Parse output directly to LLMs such as Ollama or any OpenAI compatible API for processing
 - Generate and include git diffs and logs
 - Count approximate tokens for LLM compatibility
@@ -43,7 +48,6 @@ It parses directories of plain text files, such as source code, documentation et
 - Copy output to clipboard (when available)
 - Export to file or print to console
 - Optional JSON output
-- Estimate VRAM requirements and check model compatibility using [Gollama](https://github.com/sammcj/gollama)'s vramestimator package
 
 ## Installation
 
