@@ -6,10 +6,14 @@ IDE Integrations:
     link: "https://continue.dev/"
   "Github Copilot":
     rating: 8
-    notes: "Easy to use, good VSCode integration, huge community. Cons: Sometimes stops responding, sometimes only returns a single line at a time. <b>\n\n*Highly recommend!*</b>"
+    notes: "Easy to use, good VSCode integration, huge community. Cons: Sometimes stops responding, limited to single file editing, sometimes only returns a single line at a time. <b>\n\n*Highly recommend!*</b>"
     link: "https://github.com/features/copilot"
+  "Amazon Q":
+    rating: 2
+    notes: "Poor quality suggestions, buggy integration experience, limited to single file editing, not as good as Github Copilot or Continue.dev with local LLMs."
+    link: "https://docs.aws.amazon.com/amazonq/latest/qdeveloper-ug/q-in-IDE.html"
   "Llama Autocoder":
-    rating: 4
+    rating: 3
     notes: "Very easy to use, Very fast, Good for when you just want AI to write code for you. Cons: Limited configurability."
     link: "https://github.com/10Nates/ollama-autocoder"
   "Tabby":
@@ -28,9 +32,13 @@ IDE Integrations:
   #   notes: "Amazon's AI code assistant, alternative to Github Copilot"
 
 Codegen:
+  "Ingest":
+    rating: 10
+    notes: "My tool for ingesting directories of code/data for passing to LLMs. Has advanced vRAM and token estimations <b>\n\n*Highly recommend!*</b>"
+    link: "https://github.com/sammcj/ingest"
   "Code2Prompt":
-    rating: 9
-    notes: "Very useful tool for ingesting directories of code/data for passing to LLMs. <b>\n\n*Highly recommend!*</b>"
+    rating: 5
+    notes: "Useful tool for ingesting directories of code/data for passing to LLMs, can be hard to configure and contribute to."
     link: "https://github.com/mufeedvh/code2prompt"
   "Llama Autocoder":
     rating: 4
@@ -43,15 +51,15 @@ Codegen:
 
 Clients:
   "MindMac":
-    rating: 6
+    rating: 5
     notes: "Good native macOS client for LLMs, has a decent set of features. Cons: Can be a bit slow at times, UI feels dated."
     link: "https://mindmac.app/"
   "Msty":
-    rating: 6
+    rating: 7
     notes: "Lots of potential, nice UI, has branching conversations and document libraries for RAG. Cons: Electron, limited configuration."
     link: "https://msty.app"
   "Librechat":
-    rating: 3
+    rating: 4
     notes: "Attractive UI. Cons: Configuration is complex / brittle."
     link: "https://www.librechat.ai"
   "Open WebUI":
@@ -63,16 +71,16 @@ Clients:
     notes: "Great UI, Performs well. Cons: Electron, Closed Source, Falls behind on llama.cpp updates."
     link: "https://lmstudio.ai/"
   "Jan":
-    rating: 6
+    rating: 5
     notes: "Nice UI, some good futures. Cons: Electron, Limited integration with Ollama."
     link: "https://github.com/janhq/jan/"
   "Anything LLM":
-    rating: 5
+    rating: 6
     notes: "Excellent RAG performance, support for browsing, search, confluence, youtube tooling. Cons: Very ugly UI, Electron"
     link: "https://github.com/Mintplex-Labs/anything-llm/"
   "Lobe Chat":
     rating: 3
-    notes: "Very attractive UI, Plugin ecosystem, Good for building agent personas. Cons: Plugin ecosystem seems to be broken now, Limited and confusing configurability."
+    notes: "Attractive UI, Plugin ecosystem, Good for building agent personas. Cons: Plugin ecosystem seems to be broken now, Limited and confusing configurability."
     link: "https://github.com/lobehub/lobe-chat/"
   "BigAGI":
     rating: 7
@@ -95,7 +103,7 @@ Clients:
     notes: "Open Source. Cons: Electron, Limited configurability, Ugly UI."
     link: "https://www.nomic.ai"
   "Kerlig":
-    rating: 6
+    rating: 3
     notes: "Fast, lightweight (despite being Electron) and well integrated with macOS, visually pleasing UI. Cons: Closed source, could do with some more configuration options."
     link: "https://kerlig.com/"
 
@@ -129,15 +137,15 @@ Servers:
     notes: "Fast. Cons: Can be a pain to setup and configure."
     link: "https://github.com/vllm-project/vllm/"
   "Localai":
-    rating: 1
+    rating: 2
     notes: "Offers lots of features. Cons: A pain to configure and setup, model management is over-complicated."
     link: "https://localai.io"
   "Mistralrs":
-    rating: -0
-    notes: "Want to checkout (again): When exllamav2 support is merged - keeping an eye on https://github.com/EricLBuehler/mistral.rs/issues/546. Fast, Rapid development. Cons: Currently only supports GGUF, can be a pain to configure."
+    rating: 4
+    notes: "Want to checkout (again): When exllamav2 support is merged - keeping an eye on https://github.com/EricLBuehler/mistral.rs/issues/546. Fast, Rapid development. Cons: Currently only supports GGUF and GPTQ, is a pain to configure and remember parameters for."
     link: "https://github.com/EricLBuehler/mistral.rs"
   "Aphrodite engine":
-    rating: 4
+    rating: 3
     notes: "Very fast. Cons: Does not support running with an odd-number of GPUs, A bit of a pain to configure."
     link: "https://github.com/PygmalionAI/aphrodite-engine"
 
@@ -179,7 +187,7 @@ Pipelines / Integrations:
     notes: "Cons: Just doesn't seem as a good as Flowise."
     link: "https://www.langflow.org/"
   "Jupyter Notebook":
-    rating: 4
+    rating: 3
     notes: "Alright for quick prototyping and testing code in isolation, suffers from the usual python packaging ecosystem and a bit of a clunky UI with no copilot."
     link: "https://jupyter.org/"
 
@@ -228,8 +236,16 @@ Imagegen:
     rating: 9
     notes: "Really powerful once you get the hang of prompting, huge community, lots of LoRAs, Lots of fine tunes. <b>\n\n*Highly recommend!*</b>"
     link: "https://huggingface.co/stabilityai/stable-diffusion-xl-base-1.0"
+  "Flux Dev":
+    rating: 9
+    notes: "Easily the best quality generations, growing community and adapters. Can be slow and resource intensive. <b>\n\n*Highly recommend!*</b>"
+    link: "https://huggingface.co/black-forest-labs/FLUX.1-dev"
+  "Stable Diffusion 3":
+    rating: 1
+    notes: "Basically useless, terrible quality, no community, lots of licensing issues."
+    link: "https://stability.ai/news/stable-diffusion-3"
   "Pinokio":
-    rating: 4
+    rating: 3
     notes: "Interesting concept to quickly try new tools out."
     link: "https://pinokio.computer"
   "Comfy":
@@ -290,6 +306,10 @@ Libraries:
     rating: 6
     notes: "Good for managing many LLM providers and models in code."
     link: "https://github.com/BerriAI/litellm/"
+  "GoLLM":
+    rating: 7
+    notes: "Currently the best Golang LLM library with lots of neat features built in"
+    link: "https://github.com/teilomillet/gollm"
 
 Multimodal:
   "Llavavision":
