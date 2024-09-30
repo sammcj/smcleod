@@ -60,6 +60,12 @@ The project started off as a rewrite of my [llamalink](https://smcleod.net/2024/
 - Show running models
 - Has some cool bugs
 
+Gollama Intro ("Podcast" Episode):
+
+<audio src="https://github.com/sammcj/smcleod_files/raw/refs/heads/master/audio/podcast-ep-sw/Podcast%20Episode%20-%20Gollama.mp3" controls preload></audio>
+
+## Installation
+
 From go:
 
 ```shell
@@ -223,3 +229,5 @@ The log level can be set in the configuration file.
 Copyright © 2024 Sam McLeod
 
 This project is licensed under the MIT License.
+
+<script src="http://api.html5media.info/1.1.8/html5media.min.js"></script>

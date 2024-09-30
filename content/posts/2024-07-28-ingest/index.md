@@ -49,6 +49,10 @@ Ingest can also estimate vRAM requirements for a given model, quantisation and c
 - Export to file or print to console
 - Optional JSON output
 
+Ingest Intro ("Podcast" Episode):
+
+<audio src="https://github.com/sammcj/smcleod_files/raw/refs/heads/master/audio/podcast-ep-sw/Podcast%20Episode%20-%20Ingest.mp3" controls preload></audio>
+
 ## Installation
 
 ### go install (recommended)
@@ -270,3 +274,5 @@ The code is open source and available on [Github](https://github.com/sammcj/inge
 As always, if you find any bugs or have ideas for improvements, don't hesitate to open an issue or submit a PR.
 
 Happy ingesting!
+
+<script src="http://api.html5media.info/1.1.8/html5media.min.js"></script>
