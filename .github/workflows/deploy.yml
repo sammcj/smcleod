@@ -29,7 +29,7 @@ jobs:
     strategy:
       matrix:
         environment: ['production']
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     steps:
       - name: Checkout
         uses: actions/checkout@eef61447b9ff4aafe5dcd4e0bbf5d482be7e7871 # v4
@@ -72,7 +72,7 @@ jobs:
   deploy:
     needs: build
     if: github.ref == 'refs/heads/main' && github.repository == 'sammcj/smcleod'
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     environment:
       name: github-pages
       url: ${{ env.baseURL }}
@@ -85,7 +85,7 @@ jobs:
   deploy-staging:
     needs: build
     if: github.ref == 'refs/heads/main' && github.repository == 'sammcj/smcleod-hugo'
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     environment:
       name: github-pages
       url: ${{ env.baseURL }}
