@@ -4,7 +4,7 @@ author: "Sam McLeod"
 description: "A high level intro to LLMs that I'm writing for a few friends that are new to the concept. It is far from complete, definitely contains some errors and is a work in progress."
 categories: [ Tech, AI, LLM, WIP ]
 keywords: ["tech", "ai", "llm", "wip"]
-date: "2023-11-26T01:00:00Z"
+date: "2023-01-26T01:00:00Z"
 images: [""]
 cover:
   image: ""
