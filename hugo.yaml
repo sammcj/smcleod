@@ -4,7 +4,7 @@ title: smcleod.net
 theme: ["PaperMod"]
 gitRepo: "https://github.com/sammcj/smcleod"
 
-paginate: 150
+pagination.pagerSize: 150
 enableEmoji: true
 enableGitInfo: true
 enableRobotsTXT: true
@@ -48,6 +48,23 @@ params:
   showtoc: true
   tocopen: true
 
+  social:
+    twitter: "s_mcleod"
+    github: "sammcj"
+    linkedin: "sammcj"
+    mastodon: "s_mcleod"
+
+  socialIcons:
+    - name: github
+      url: "https://github.com/sammcj/"
+      icon: github
+    - name: linkedin
+      url: "https://www.linkedin.com/in/sammcj/"
+      icon: linkedin
+    - name: mastodon
+      url: "https://aus.social/@s_mcleod"
+      icon: mastodon
+
   assets:
     # disableHLJS: true # to disable highlight.js
     disableFingerprinting: true
@@ -82,16 +99,6 @@ params:
     Title: "smcleod.net \U0001F44B"
     Content: "The personal blog of Sam McLeod. I write about AI, DevOps, Platform Engineering, and other geeky topics."
 
-  socialIcons:
-    - name: github
-      url: "https://github.com/sammcj/"
-      icon: github
-    - name: linkedin
-      url: "https://www.linkedin.com/in/sammcj/"
-      icon: linkedin
-    - name: mastodon
-      url: "https://aus.social/@s_mcleod"
-      icon: mastodon
 
   cover:
     hidden: true # hide everywhere but not in structured data
@@ -114,6 +121,7 @@ params:
     minMatchCharLength: 0
     limit: 10 # refer: https://www.fusejs.io/api/methods.html#search
     keys: ["title", "permalink", "summary", "content"]
+
 menu:
   main:
     - identifier: "Posts"
@@ -227,3 +235,4 @@ taxonomies:
   category: "categories"
   tag: "tags"
   series: "series"
+  social: "socials"
