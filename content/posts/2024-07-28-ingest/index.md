@@ -275,4 +275,3 @@ As always, if you find any bugs or have ideas for improvements, don't hesitate t
 
 Happy ingesting!
 
-<script src="http://api.html5media.info/1.1.8/html5media.min.js"></script>
