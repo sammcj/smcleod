@@ -47,8 +47,7 @@ With llama.cpp running on a machine, how do you connect your LLM clients to it a
 
 Ollama provides a server and client for interfacing and packaging models, such as:
 
-- hot loading models (e.g. when you request a model from your client Ollama will load it on demand).
-
+- Hot loading models (e.g. when you request a model from your client Ollama will load it on demand).
 - Automatic model parallelisation.
 - Automatic model concurrency.
 - Automatic memory calculations for layer and gpu/cpu placement.
@@ -58,9 +57,10 @@ Ollama provides a server and client for interfacing and packaging models, such a
 - Native libraries for common languages.
 - Official container images for hosting.
 - Provides a client/server model for running remote or local inference servers with either ollama or openai compatible clients.
-
-- support for both an official and self hosted model and template repositories.
+- Support for both an official and self hosted model and template repositories.
 
 Ollama currently supports serving llama.cpp's GGUF, Vision LLMs that llama.cpp's example server does not and HF safetensors models, they are adding additional model backends which will be coming soon (e.g. things like exl2, awq, etc...).
 
 Ollama is not "better" or "worse" than llama.cpp because it's completely different.
+
+---
