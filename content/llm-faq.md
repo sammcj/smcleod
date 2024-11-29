@@ -32,6 +32,37 @@ draft: false
 
 <!-- markdownlint-disable MD025 -->
 
+## "Should I run a larger parameter model, or a higher quality smaller model of the same family?"
+
+TLDR; **Larger parameter model [lower quantisation quality] > Smaller parameter model [higher quantisation quality]**
+
+E.g: Qwen2.5 32B Q3_K_M > Qwen2.5 14B Q8_0
+
+Caveats:
+
+- Don't go lower than Q3_K_M, or IQ2_M, especially if the model is under 30B~ parameters.
+- This is in the context of two models of the same family and version (e.g. Qwen2.5 Coder).
+
+Longer answer: Check out the [Code Chaos and Copilots](https://smcleod.net/2024/07/code-chaos-and-copilots-ai/llm-talk-july-2024/) slide deck.
+
+---
+
+## "Should I use F16 quantised models to get the best quality output?"
+
+TLDR; **No.**
+
+For text generation running F16 models will do nothing other than waste your memory, compute, power and will respond slower.
+
+Longer answer:
+
+- Generally speaking you do not notice any improvements over around Q6_K.
+- The larger the models parameter size, the less of an impact you'll see from lowering the quantisation quality.
+- Very small models - below around 4B parameters are more affected by quantisation, try to keep those as high quality as possible up to Q8_0.
+- If there is no larger parameter model in the family - don't go below Q4_K_M unless you really do not have the memory, or if the model is over around 50B parameters.
+- Embeddings models are a bit different and are often kept at fp16, don't go lower than Q8_0.
+
+---
+
 ## Ollama
 
 ### "Is Ollama just a wrapper for Llama.cpp?"
@@ -68,5 +99,3 @@ Ollama provides a server and client for interfacing and packaging models, such a
 In addition to the llama.cpp engine, Ollama are working on adding additional model backends (e.g. things like exl2, awq, etc...).
 
 Ollama is not "better" or "worse" than llama.cpp because it's an entirely different tool.
-
----
