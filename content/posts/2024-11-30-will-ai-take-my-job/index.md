@@ -20,10 +20,6 @@ ShowWordCount: false
 ShowRssButtonInSectionTermList: true
 UseHugoToc: false
 mermaid: false
-# cover:
-#   image: "diagram-gen.png"
-#   alt: "DiagramGen"
-#   hidden: false
 ---
 
 TLDR; Maybe.
