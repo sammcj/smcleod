@@ -24,6 +24,8 @@ mermaid: false
 
 TLDR; Maybe.
 
+<!-- more -->
+
 Longer answer:
 
 Capitalism sucks, hard.
