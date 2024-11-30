@@ -38,6 +38,6 @@ If I was ruthless capitalist tycoon - I would say something like "evolution isn'
 
 In reality while there's a lot of nuance to this discussion, I think it's of the upmost importance to focus efforts on awareness, cross-skilling, re-skilling both yourself and those around you, to push for a more equitable society where the benefits of automation are shared by all (it's good to have dreams, right?) because like it or not - things are changing, and they're changing fast.
 
-Until such time as we're not a world built on the backs of people working to make the rich richer, we're going to have to adapt to the changing landscape of work and the economy.
+Work won't go away. The work we value will change. New work will be created and employers will _(eventually)_ adapt - but it's unlikely to meet the pace of change.
 
-It's not AI itself you have to fear, but the companies that place profits over people and for those that are not in a position to adapt.
+Until such time as the world is no longer built on the backs of working to make the rich richer, It's not AI itself you have to fear, but the companies that place profits over people and for those that are not in a position to adapt.
