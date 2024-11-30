@@ -63,11 +63,43 @@ Longer answer:
 
 ---
 
+## "Should I trust LLM generated code/content? What if the model makes a mistake? Don't they just make everything up?!"
+
+TLDR; You know who else makes mistakes, writes bad code and makes things up? Humans.
+
+Longer answer:
+
+- You (generally) don't blindly trust code from other humans, if you do (and there we all do to a degree) you are accepting the risk that it may not be perfect.
+  - If you took a hand full of random developers with different backgrounds and without providing any context you asked them to write a very specific piece of code, you would get a hand full of different implementations - much of it would be less than ideal if not outright incorrect.
+  - If you first provided them with an education in the language you're working in, a specification, and information about the world - and your expectations - you would get a much better result. The same is true for LLMs. The time and effort it takes however to provide this to an LLM is far less.
+- Just like with humans, you should should either:
+  - Have systems in place to review and/or validate the outputs.
+  - Or, Accept that the task and impact of undesired outcomes is low enough that you can accept the risk.
+
+---
+
+## "Will AI take my job?"
+
+TLDR; Maybe.
+
+Longer answer:
+
+Capitalism sucks, hard.
+It's the shitty card we've been dealt and because of that - for-profit companies will always be looking to reduce costs and increase profits. If this means they can reduce expenses by automating a role - they will (eventually).
+To look at this another way - if the output of your job is repeatable and not creative - one could argue that (other than providing you income), it might also not be the best use of your time.
+
+In the short term I think life will be very hard for many people not in a position to adapt, for-profit companies will continue to focus on profits over people, and governments will continue to be slow to act.
+
+If I was to be cold about it - I would say something like "evolution isn't mandatory, but neither is survival".
+
+In reality while there's a lot of nuance to this discussion, I think it's of the upmost importance to focus efforts on awareness, cross-skilling, re-skilling both yourself and those around you, and to push for a more equitable society where the benefits of automation are shared by all.
+
 ## Ollama
 
 ### "Is Ollama just a wrapper for Llama.cpp?"
 
 TLDR; No.
+
 Ollama uses llama.cpp as it's primary inference engine, but provides a different set of features.
 
 ---
