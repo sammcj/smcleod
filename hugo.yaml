@@ -1,7 +1,7 @@
 baseURL: https://smcleod.net
 languageCode: en-GB
 title: smcleod.net
-theme: ["PaperMod"]
+theme: ["hugo-admonitions","PaperMod"]
 gitRepo: "https://github.com/sammcj/smcleod"
 
 pagination.pagerSize: 150
@@ -11,8 +11,6 @@ enableRobotsTXT: true
 buildDrafts: false
 buildFuture: false
 buildExpired: false
-
-# enableInlineShortcodes: true
 
 minify:
   disableXML: true
@@ -145,13 +143,13 @@ menu:
       url: "/categories/"
       title: ""
       weight: 3
-    # - identifier: "series"
-    #   pre: ""
-    #   post: ""
-    #   name: "📚 Series"
-    #   url: "/series/"
-    #   title: ""
-    #   weight: 4
+    - identifier: "vRAM Estimator"
+      pre: ""
+      post: ""
+      name: "🐏 vRAM Estimator"
+      url: "/vram-estimator/"
+      title: "Estimate the vRAM required for your VMs"
+      weight: 4
     - identifier: "links"
       pre: ""
       post: ""
@@ -236,3 +234,13 @@ taxonomies:
   tag: "tags"
   series: "series"
   social: "socials"
+
+security:
+  enableInlineShortcodes: true
+  exec:
+    allow: ['.*']
+  funcs:
+    getenv: ['^HUGO_']
+  http:
+    methods: ['(?i)GET|POST']
+    urls: ['.*']
