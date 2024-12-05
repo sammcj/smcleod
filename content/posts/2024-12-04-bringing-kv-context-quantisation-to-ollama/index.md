@@ -74,6 +74,8 @@ This is covered in the [Ollama FAQ](https://github.com/ollama/ollama/blob/main/d
 
 Start Ollama and Q8_0 quantisation will be used for the K/V context cache by default.
 
+If you run into issues with quality however - you can simply disable K/V context cache quantisation by setting `OLLAMA_KV_CACHE_TYPE` environment variable to `f16` or not setting it at all. This is even easier if you run Ollama in a container as you can simply run two containers with different configurations (as there's practically no overhead to running multiple containers).
+
 ### Implementation Limitations
 
 See [what wasn't included in the PR](#what-wasnt-included-in-the-pr) for more information on these limitations.
@@ -112,16 +114,26 @@ Quantisation of the K/V context cache has minimal impact on performance, with qu
 ### Quality
 
 • Q8_0 - Minimal quality impact for normal text generation models, suitable for most users to be enabled by default.
-Perplexity measurements on an early implementation showed it added around 0.002~ perplexity to the model.
+Perplexity measurements on an early implementation showed it added around 0.002-0.05~ perplexity to the model.
 
 • Q4_0 - Some noticeable quality reduction, but still usable for those without much vRAM or working on creative tasks where quality is less critical.
-In early testing, Q4_0 added around 0.206~ perplexity to the model.
+In early testing, Q4_0 added around 0.206-0.25~ perplexity to the model.
 
-As stated in the FAQ, it is not recommended to use K/V cache quantisation for embedding models as these are more sensitive to quantisation. The same may apply to vision/multi-modal models although I have not looked into this.
+#### When not to use K/V context cache quantisation
 
-If you run into issues with quality however - you can simply disable K/V context cache quantisation by setting `OLLAMA_KV_CACHE_TYPE` environment variable to `f16` or not setting it at all. This is even easier if you run Ollama in a container as you can simply run two containers with different configurations (as there's practically no overhead to running multiple containers).
+Note that the ability to set the K/V cache quantisation level in a model's Modelfile was [removed from the PR](#what-wasnt-included-in-the-pr), but I hope that Ollama will reconsider this in the future so people can experiment with different quantisation levels for different models and use cases.
 
-Note that the ability to set the K/V cache quantisation level in a model's Modelfile was [removed from the PR](#what-wasnt-included-in-the-pr), but I hope that Ollama will reconsider this in the future.
+**Embedding Models**
+
+As stated in the [FAQ](https://github.com/ollama/ollama/blob/main/docs/faq.md#how-can-i-set-the-quantization-type-for-the-kv-cache), it is not recommended to use K/V cache quantisation for embedding models as these are more sensitive to quantisation. For this reason Ollama attempts to detect embedding models and disable K/V cache quantisation automatically (you'll see a warning in the logs if this happens).
+
+**Vision/Multi-Modal Models (Maybe)**
+
+The same _may_ apply to vision/multi-modal models based on some reports - although I have not personally looked into this.
+
+**High Attention Head Models**
+
+It's been noted in llama.cpp's test back at the start of 2024 that high attention head models can be more sensitive to K/V quantisation, so you may want to avoid using K/V context cache quantisation with these models. How high is too high? I'm not sure - but Qwen 2 was mentioned as an example in the llama.cpp PR, I personally have been using [Qwen 2.5 Coder 32b Q6_K](https://huggingface.co/unsloth/Qwen2.5-Coder-32B-Instruct-128K-GGUF/blob/main/Qwen2.5-Coder-32B-Instruct-Q6_K.gguf) with Q8_0 K/V cache quantisation without any noticeable issues.
 
 ---
 
