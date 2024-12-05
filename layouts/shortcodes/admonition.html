@@ -1,3 +1,4 @@
+<!-- instead use > [!NOTIFY] or similar from https://github.com/KKKZOZ/hugo-admonitions -->
 {{- $inner := .Inner | .Page.RenderString -}}
 {{- $type := cond .IsNamedParams (.Get "type") (.Get 0) | default "note" -}}
 {{- $title := cond .IsNamedParams (.Get "title") (.Get 1) | default (T $type) -}}

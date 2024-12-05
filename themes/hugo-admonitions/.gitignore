@@ -1,0 +1,13 @@
+# Hugo
+public/
+resources/
+
+# Node
+node_modules/
+
+# Mac finder files and hidden folders
+*.DS_Store
+.AppleDouble
+.LSOverride
+
+.vscode
