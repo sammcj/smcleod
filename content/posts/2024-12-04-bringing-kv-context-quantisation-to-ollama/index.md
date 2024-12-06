@@ -119,7 +119,34 @@ Perplexity measurements on an early implementation showed it added around 0.002-
 • Q4_0 - Some noticeable quality reduction, but still usable for those without much vRAM or working on creative tasks where quality is less critical.
 In early testing, Q4_0 added around 0.206-0.25~ perplexity to the model.
 
-#### When not to use K/V context cache quantisation
+---
+
+### Perplexity Measurements
+
+I recently performed some perplexity measurements comparing Q8_0 and Q4_0 quantisation levels on a Qwen 2.5 Coder 7B model as the Qwen series of models is known to be quite sensitive to quantisation.
+
+The results shown below show the difference in quality is minimal with an increase of `0.0043`:
+
+| Model         | Params | Quant | K/V Cache Type | ppl                | Notes                                                                                   | Date       |
+| ------------- | ------ | ----- | -------------- | ------------------ | --------------------------------------------------------------------------------------- | ---------- |
+| qwen2.5 coder | 7b     | q6_k  | `f16/f16`      | 8.3891 +/- 0.02016 | [unsloth 128k gguf](https://huggingface.co/unsloth/Qwen2.5-Coder-7B-Instruct-128K-GGUF) | 2024-12-06 |
+| qwen2.5 coder | 7b     | q6_k  | `q8_0/q8_0`    | 8.3934 +/- 0.02017 | [unsloth 128k gguf](https://huggingface.co/unsloth/Qwen2.5-Coder-7B-Instruct-128K-GGUF) | 2024-12-06 |
+
+{{< perplexity-chart >}}
+
+_Perplexity Measurement_
+```bash
+./llama-perplexity -ngl 99999 -fa -b 2048 -c 6114 -sm none \
+  #   -ctk f16 -ctv f16 \
+  # and
+  #   -ctk q8_0 -ctv q8_0 \
+  -f wiki.train.raw.txt \
+  -m Qwen2.5-Coder-7B-Instruct-128k-Q6_K.gguf
+```
+
+---
+
+### When not to use K/V context cache quantisation
 
 Note that the ability to set the K/V cache quantisation level in a model's Modelfile was [removed from the PR](#what-wasnt-included-in-the-pr), but I hope that Ollama will reconsider this in the future so people can experiment with different quantisation levels for different models and use cases.
 

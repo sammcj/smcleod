@@ -1,0 +1,133 @@
+{{ $containerId := "perplexity-chart" }}
+<div id="{{ $containerId }}" class="w-full min-h-[400px]"></div>
+
+<!-- Load required dependencies -->
+{{ with resources.Get "js/prop-types.min.js" }}
+{{ $prop_types := . | resources.Fingerprint }}
+<script src="{{ $prop_types.RelPermalink }}"></script>
+{{ end }}
+
+{{ with resources.Get "js/react.production.min.js" }}
+{{ $react := . | resources.Fingerprint }}
+<script src="{{ $react.RelPermalink }}"></script>
+{{ end }}
+
+{{ with resources.Get "js/react-dom.production.min.js" }}
+{{ $reactDom := . | resources.Fingerprint }}
+<script src="{{ $reactDom.RelPermalink }}"></script>
+{{ end }}
+
+{{ with resources.Get "js/recharts.min.js" }}
+{{ $recharts := . | resources.Fingerprint }}
+<script src="{{ $recharts.RelPermalink }}"></script>
+{{ end }}
+
+<script type="text/javascript">
+  document.addEventListener('DOMContentLoaded', function () {
+    setTimeout(() => {
+      try {
+        const { ComposedChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, Scatter, ErrorBar, ResponsiveContainer } = Recharts;
+
+        const data = [
+          {
+            name: 'q6_k, f16/f16',
+            ppl: 8.3891,
+            error: 0.02016,
+            config: 'Qwen2.5 Coder 7B\nq6_k, f16/f16',
+            modelGroup: 'q6_k'
+          },
+          {
+            name: 'q6_k, q8_0/q8_0',
+            ppl: 8.3934,
+            error: 0.02017,
+            config: 'Qwen2.5 Coder 7B\nq6_k, q8_0/q8_0',
+            modelGroup: 'q6_k'
+          }
+        ];
+
+        const PerplexityChart = () => {
+          return React.createElement(
+            'div',
+            { className: 'w-full h-full' },
+            React.createElement(
+              ResponsiveContainer,
+              { width: '100%', height: 400 },
+              React.createElement(
+                ComposedChart,
+                {
+                  data: data,
+                  margin: {
+                    top: 20,
+                    right: 60,
+                    left: 80,
+                    bottom: 100,
+                  }
+                },
+                [
+                  React.createElement(CartesianGrid, { strokeDasharray: '3 3' }),
+                  React.createElement(XAxis, {
+                    dataKey: 'config',
+                    angle: -55,
+                    textAnchor: 'end',
+                    interval: 0,
+                    height: 90,
+                    tick: {
+                      fontSize: 11
+                    }
+                  }),
+                  React.createElement(YAxis, {
+                    label: {
+                      value: 'Perplexity',
+                      angle: -90,
+                      position: 'insideLeft',
+                      offset: -40
+                    },
+                    domain: [8.35, 8.45],
+                    tick: {
+                      fontSize: 12
+                    }
+                  }),
+                  React.createElement(Tooltip),
+                  React.createElement(Legend, {
+                    wrapperStyle: {
+                      fontSize: '12px'
+                    }
+                  }),
+                  React.createElement(Line, {
+                    dataKey: 'ppl',
+                    stroke: '#82ca9d',
+                    name: 'KV Cache Connection',
+                    connectNulls: true,
+                    legendType: 'line',
+                    dot: false
+                  }),
+                  React.createElement(
+                    Scatter,
+                    {
+                      name: 'Perplexity Score',
+                      dataKey: 'ppl',
+                      fill: '#8884d8'
+                    },
+                    React.createElement(ErrorBar, {
+                      dataKey: 'error',
+                      width: 4,
+                      strokeWidth: 2,
+                      stroke: '#8884d8'
+                    })
+                  )
+                ]
+              )
+            )
+          );
+        };
+
+        // Render the chart
+        const container = document.getElementById('{{ $containerId }}');
+        const root = ReactDOM.createRoot(container);
+        root.render(React.createElement(PerplexityChart));
+      } catch (error) {
+        console.error('Error rendering chart:', error);
+      }
+    }, 100);
+  });
+</script>
