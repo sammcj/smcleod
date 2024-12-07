@@ -182,9 +182,9 @@ Supported Hardware:
 
 The journey to integrate K/V context cache quantisation into Ollama took around 5 months.
 
-The hard work was done up front by [ggerganov](https://github.com/ggerganov/) in the underlying [llama.cpp](https://github.com/ggerganov/llama.cpp), which Ollama uses as it's primary inference engine.
+The hard work was done up front by [ggerganov](https://github.com/ggerganov/) in the underlying [llama.cpp](https://github.com/ggerganov/llama.cpp), initially in [#7527](https://github.com/ggerganov/llama.cpp/pull/7527), which Ollama uses as it's primary inference engine.
 
-My PR integrated that functionality into Ollama which involved not just supporting the required configuration, but implementing memory estimations for layer placement, error and condition handling, ensuring compatibility with the existing codebase and a lot of testing.
+My PR integrated that functionality into Ollama which involved supporting the required configuration, implementing memory estimations for layer placement, error and condition handling, ensuring compatibility with the existing codebase, a lot of testing and a lot of communication around the feature to help others understand it's importance and how to use it.
 
 ### Successes
 
@@ -291,8 +291,8 @@ Finally, if you can't find an existing issue, you can create an issue (in the re
   - • [Ollama Releases](https://github.com/ollama/ollama/releases)
 - • [HuggingFace's blog post on K/V cache quantisation](https://huggingface.co/blog/kv-cache-quantization), which provides a more technical deep dive into the topic in the context of Transformers
 - • Related llama.cpp PRs and performance measurements (note: these are now quite old and things have likely improved since):
-  - • [ggerganov/llama.cpp#7412](https://github.com/ggerganov/llama.cpp/pull/7412#issuecomment-2120427347)
   - • [ggerganov/llama.cpp#7527](https://github.com/ggerganov/llama.cpp/pull/7527#issuecomment-2132341565)
+  - • [ggerganov/llama.cpp#7412](https://github.com/ggerganov/llama.cpp/pull/7412#issuecomment-2120427347)
 
 ---
 
