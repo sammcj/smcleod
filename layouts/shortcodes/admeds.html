@@ -1,0 +1,218 @@
+{{ $containerId := "admeds-chart" }}
+<div id="{{ $containerId }}" class="admeds-container"></div>
+
+<!-- Load dependencies -->
+{{ with resources.Get "css/admeds.css" }}
+{{ $style := . | resources.Fingerprint }}
+<link rel="stylesheet" href="{{ $style.RelPermalink }}">
+{{ end }}
+
+{{ with resources.Get "js/react.production.min.js" }}
+{{ $react := . | resources.Fingerprint }}
+<script src="{{ $react.RelPermalink }}"></script>
+{{ end }}
+
+{{ with resources.Get "js/react-dom.production.min.js" }}
+{{ $reactDom := . | resources.Fingerprint }}
+<script src="{{ $reactDom.RelPermalink }}"></script>
+{{ end }}
+
+<script type="text/javascript">
+  document.addEventListener('DOMContentLoaded', function () {
+    setTimeout(() => {
+      try {
+        const e = React.createElement;
+
+        const InteractiveMedicationPathways = () => {
+          const [hoveredDrug, setHoveredDrug] = React.useState(null);
+          const [hoveredPathwayItem, setHoveredPathwayItem] = React.useState(null);
+          const [hoveredType, setHoveredType] = React.useState(null);
+
+          const pathwayColors = {
+            metabolism: 'rgb(190, 24, 93)',
+            receptors: 'rgb(67, 56, 202)',
+            effects: 'rgb(21, 128, 61)',
+            duration: 'rgb(124, 58, 237)'
+          };
+
+          const medications = [
+            {
+              name: 'Dexamphetamine',
+              type: 'Amphetamine (Short-acting)',
+              color: 'rgb(34, 197, 94)',
+              pathways: {
+                metabolism: ['norephedrine', 'p-hydroxyamphetamine'],
+                receptors: ['DAT (strong)', 'NET (strong)', '5-HT (weak)'],
+                effects: ['Focus', 'Alertness', 'Executive Function', 'Appetite Suppression', 'Mood Regulation'],
+                duration: ['4-6 hours']
+              }
+            },
+            {
+              name: 'Adderall',
+              type: 'Mixed Amphetamine (75:25)',
+              color: 'rgb(168, 85, 247)',
+              pathways: {
+                metabolism: ['d-amphetamine', 'l-amphetamine', 'norephedrine'],
+                receptors: ['DAT (strong)', 'NET (strong)', '5-HT (weak)'],
+                effects: ['Focus', 'Alertness', 'Executive Function', 'Appetite Suppression', 'Mood Regulation'],
+                duration: ['5-8 hours']
+              }
+            },
+            {
+              name: 'Ritalin',
+              type: 'Methylphenidate (Short-acting)',
+              color: 'rgb(239, 68, 68)',
+              pathways: {
+                metabolism: ['p-hydroxymethylphenidate', 'ritalinic acid'],
+                receptors: ['DAT (strong)', 'NET (strong)'],
+                effects: ['Focus', 'Alertness', 'Executive Function', 'Appetite Suppression'],
+                duration: ['2-4 hours']
+              }
+            },
+            {
+              name: 'Concerta',
+              type: 'Methylphenidate (Long-acting)',
+              color: 'rgb(249, 115, 22)',
+              pathways: {
+                metabolism: ['p-hydroxymethylphenidate', 'ritalinic acid'],
+                receptors: ['DAT (strong)', 'NET (strong)'],
+                effects: ['Focus', 'Alertness', 'Executive Function', 'Appetite Suppression'],
+                duration: ['10-12 hours']
+              }
+            },
+            {
+              name: 'Vyvanse',
+              type: 'Amphetamine (Long-acting)',
+              color: 'rgb(59, 130, 246)',
+              pathways: {
+                metabolism: ['l-lysine + dexamfetamine', 'norephedrine'],
+                receptors: ['DAT (strong)', 'NET (strong)', '5-HT (weak)'],
+                effects: ['Focus', 'Alertness', 'Executive Function', 'Appetite Suppression', 'Mood Regulation'],
+                duration: ['12-14 hours']
+              }
+            },
+            {
+              name: 'Bupropion',
+              type: 'Non-Stimulant (NDRI)',
+              color: 'rgb(20, 184, 166)',
+              pathways: {
+                metabolism: ['hydroxybupropion', 'threohydrobupropion', 'erythrohydrobupropion'],
+                receptors: ['DAT (weak)', 'NET (moderate)', 'nAChR'],
+                effects: ['Focus', 'Mood Regulation', 'Antidepressant'],
+                duration: ['10-24 hours']
+              }
+            },
+
+          ];
+
+          // Get unique values for each column
+          const allMetabolites = [...new Set(medications.flatMap(m => m.pathways.metabolism))];
+          const allReceptors = [...new Set(medications.flatMap(m => m.pathways.receptors))];
+          const allEffects = [...new Set(medications.flatMap(m => m.pathways.effects))];
+          const allDurations = [...new Set(medications.flatMap(m => m.pathways.duration))];
+
+          const Column = ({ title, items, type }) => {
+            const baseColor = pathwayColors[type];
+
+            return e('div', { className: 'admeds-column' },
+              e('h3', {
+                className: 'text-lg font-semibold',
+                style: { color: baseColor }
+              }, title),
+              e('div', { className: 'admeds-items' },
+                items.map((item, idx) => {
+                  const hasActiveConnection = hoveredPathwayItem === item ||
+                    (hoveredDrug && hoveredDrug.pathways[type].includes(item));
+
+                  return e('div', {
+                    key: idx,
+                    className: 'p-3 rounded-lg transition-all duration-300 cursor-pointer',
+                    style: {
+                      backgroundColor: !hoveredDrug && !hoveredPathwayItem ? `${baseColor}10` :
+                        hasActiveConnection ? `${hoveredDrug?.color || baseColor}15` : 'rgb(243, 244, 246)',
+                      color: !hoveredDrug && !hoveredPathwayItem ? baseColor :
+                        hasActiveConnection ? (hoveredDrug?.color || baseColor) : 'rgb(156, 163, 175)',
+                      borderLeft: hasActiveConnection ?
+                        `4px solid ${hoveredDrug?.color || baseColor}` :
+                        `4px solid ${baseColor}40`,
+                      borderBottom: `2px solid ${hasActiveConnection ? (hoveredDrug?.color || baseColor) : baseColor}20`
+                    },
+                    onMouseEnter: () => {
+                      setHoveredPathwayItem(item);
+                      setHoveredType(type);
+                      setHoveredDrug(null);
+                    },
+                    onMouseLeave: () => {
+                      setHoveredPathwayItem(null);
+                      setHoveredType(null);
+                    }
+                  }, item);
+                })
+              )
+            );
+          };
+
+          return e('div', { className: 'admeds-container' },
+            e('div', { className: 'admeds-grid' },
+              // Medications Column
+              e('div', { className: 'admeds-column' },
+                e('h3', { className: 'admeds-column-title' }, 'Medications'),
+                e('div', { className: 'admeds-items' },
+                  medications.map((med, idx) => {
+                    const isActiveReverse = hoveredPathwayItem &&
+                      med.pathways[hoveredType]?.includes(hoveredPathwayItem);
+                    return e('div', {
+                      key: idx,
+                      className: 'admeds-med-card',
+                      style: {
+                        backgroundColor: med.color,
+                        opacity: (hoveredDrug && hoveredDrug.name !== med.name) ||
+                          (hoveredPathwayItem && !isActiveReverse) ? 0.4 : 1,
+                        transform: (hoveredDrug?.name === med.name || isActiveReverse) ?
+                          'translateX(8px)' : 'translateX(0)'
+                      },
+                      onMouseEnter: () => {
+                        setHoveredDrug(med);
+                        setHoveredPathwayItem(null);
+                        setHoveredType(null);
+                      },
+                      onMouseLeave: () => setHoveredDrug(null)
+                    },
+                      e('div', { className: 'admeds-med-name' }, med.name),
+                      e('div', { className: 'admeds-med-type' }, med.type)
+                    );
+                  })
+                )
+              ),
+              // Pathway Columns
+              e(Column, { title: 'Metabolised To', items: allMetabolites, type: 'metabolism' }),
+              e(Column, { title: 'Receptor Targets', items: allReceptors, type: 'receptors' }),
+              e(Column, { title: 'Effects', items: allEffects, type: 'effects' }),
+              e(Column, { title: 'Duration', items: allDurations, type: 'duration' })
+            ),
+            // Legend
+            e('div', { className: 'admeds-legend' },
+              e('h4', { className: 'admeds-legend-title' }, 'Receptor & Abbreviation Legend:'),
+              e('div', { className: 'admeds-legend-grid' },
+                e('p', null, 'DAT: Dopamine Transporter'),
+                e('p', null, 'NET: Norepinephrine Transporter'),
+                e('p', null, '5-HT: Serotonin Receptor'),
+                e('p', null, 'nAChR: Nicotinic Acetylcholine Receptor'),
+                e('p', null, 'NDRI: Norepinephrine-Dopamine Reuptake Inhibitor')
+              )
+            )
+          );
+        };
+
+        // Render the chart
+        const container = document.getElementById('{{ $containerId }}');
+        const root = ReactDOM.createRoot(container);
+        root.render(e(InteractiveMedicationPathways));
+      } catch (error) {
+        console.error('Error rendering visualization:', error);
+        const container = document.getElementById('{{ $containerId }}');
+        container.innerHTML = '<div style="color: red; padding: 1rem;">Error loading visualization. Please check the console for details.</div>';
+      }
+    }, 100);
+  });
+</script>
