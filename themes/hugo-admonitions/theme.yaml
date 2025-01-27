@@ -5,13 +5,14 @@ license: MIT
 licenselink: https://github.com/kkkzoz/hugo-admonitions/blob/master/LICENSE
 description: Hugo theme component to display simple and clean callouts.
 homepage: https://github.com/kkkzoz/hugo-admonitions
-min_version: 0.134.1
 
 tags:
-  - component
-  - callout
-  - notice
   - admonition
+  - alert
+  - callout
+  - component
+  - notice
+
 features:
   - nicely display notices
   - easy to use
