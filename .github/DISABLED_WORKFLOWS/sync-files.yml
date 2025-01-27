@@ -23,7 +23,7 @@ env:
 
 jobs:
   sync-files-to-beta:
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-latest
     timeout-minutes: 15
     steps:
       - id: authenticator # Generates short lives PAT (token) using the IF Authenticator Github App

@@ -29,7 +29,7 @@ jobs:
     strategy:
       matrix:
         environment: ['staging']
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-latest
     steps:
       - name: Checkout
         uses: actions/checkout@8e5e7e5ab8b370d6c329ec480221332ada57f0ab # v3
@@ -41,9 +41,9 @@ jobs:
         uses: actions/configure-pages@f156874f8191504dae5b037505266ed5dda6c382 # v3
 
       - name: Setup Hugo
-        uses: peaceiris/actions-hugo@16361eb4acea8698b220b76c0d4e84e1fd22c61d # v2
+        uses: peaceiris/actions-hugo@v3
         with:
-          hugo-version: 'latest'
+          hugo-version: "0.139.2"
           extended: true
 
       - name: Build
@@ -73,7 +73,7 @@ jobs:
   deploy-beta:
     needs: build-beta
     if: github.ref == 'refs/heads/main' && github.repository == 'sammcj/smcleod-hugo'
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-latest
     environment:
       name: github-pages
       url: ${{ env.baseURL }}

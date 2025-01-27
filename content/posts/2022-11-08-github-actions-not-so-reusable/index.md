@@ -135,7 +135,7 @@ on:
 jobs:
   hello-world:
     name: "Example job in a reusable workflow"
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-latest
     steps:
       - uses: "actions/checkout@v3"
         with:

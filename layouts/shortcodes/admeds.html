@@ -28,6 +28,37 @@
           const [hoveredPathwayItem, setHoveredPathwayItem] = React.useState(null);
           const [hoveredType, setHoveredType] = React.useState(null);
 
+          const descriptions = {
+            // Metabolites
+            'l-lysine': 'An essential amino acid released when Vyvanse is metabolized.',
+            'dextroamphetamine': 'The active form of amphetamine that primarily affects dopamine and norepinephrine levels.',
+            'p-hydroxyamphetamine': 'A metabolite that retains some stimulant properties but is less potent than the parent compound.',
+            'p-hydroxynorephedrine': 'A metabolite that has some cardiovascular effects through norepinephrine pathways.',
+            'hippuric acid': 'An inactive end product of amphetamine metabolism that is excreted in urine.',
+            'p-hydroxymethylphenidate': 'An active metabolite of methylphenidate that contributes to its therapeutic effects.',
+            'ritalinic acid': 'The primary inactive metabolite of methylphenidate, formed through deesterification.',
+            'hydroxybupropion': 'The primary active metabolite of bupropion with antidepressant properties.',
+            'threohydrobupropion': 'A metabolite of bupropion that contributes to its therapeutic effects.',
+            'erythrohydrobupropion': 'A minor metabolite of bupropion with some antidepressant activity.',
+            'norephedrine': 'A metabolite of amphetamine that contributes to its cardiovascular effects.',
+            'd-amphetamine': 'The active form of amphetamine that primarily affects dopamine and norepinephrine levels.',
+            'l-amphetamine': 'The inactive form of amphetamine that is metabolized to d-amphetamine.',
+            'l-lysine + dextroamphetamine': 'Dextroamphetamine is the active form of amphetamine that primarily affects dopamine and norepinephrine levels, while l-lysine is an essential amino acid.',
+
+            // Receptors
+            'DAT (strong)': 'Dopamine transporter - blocks dopamine reuptake, increasing its availability in synapses.',
+            'DAT (weak)': 'Dopamine transporter - blocks dopamine reuptake, increasing its availability in synapses.',
+            'NET (strong)': 'Norepinephrine transporter - blocks norepinephrine reuptake, increasing its synaptic levels.',
+            'NET (moderate)': 'Norepinephrine transporter - blocks norepinephrine reuptake, increasing its synaptic levels.',
+            '5-HT (weak)': 'Serotonin receptor - has mild effects on serotonin neurotransmission.',
+            'Alpha-adrenoreceptors': 'Receptors that mediate cardiovascular effects like blood pressure and heart rate.',
+            'TAAR1': 'Trace amine-associated receptor 1 - regulates dopamine and other monoamine neurotransmitters.',
+            'nAChR': 'Nicotinic acetylcholine receptors - involved in attention and arousal.',
+            'DRI (weak)': 'Dopamine reuptake inhibition - mildly blocks dopamine reuptake.',
+            'Sigma (moderate)': 'Sigma receptors - may contribute to cognitive and mood effects.',
+            'Alpha-adrenoreceptors (secondary)': 'Secondary activation through increased norepinephrine levels rather than direct binding.'
+          };
+
           const pathwayColors = {
             metabolism: 'rgb(190, 24, 93)',
             receptors: 'rgb(67, 56, 202)',
@@ -41,9 +72,9 @@
               type: 'Amphetamine (Short-acting)',
               color: 'rgb(34, 197, 94)',
               pathways: {
-                metabolism: ['norephedrine', 'p-hydroxyamphetamine'],
-                receptors: ['DAT (strong)', 'NET (strong)', '5-HT (weak)'],
-                effects: ['Focus', 'Alertness', 'Executive Function', 'Appetite Suppression', 'Mood Regulation'],
+                metabolism: ['dextroamphetamine', 'norephedrine', 'p-hydroxyamphetamine', 'p-hydroxynorephedrine', 'hippuric acid'],
+                receptors: ['DAT (strong)', 'NET (strong)', '5-HT (weak)', 'Alpha-adrenoreceptors', 'TAAR1'],
+                effects: ['Focus', 'Alertness', 'Executive Function', 'Appetite Suppression', 'Mood Regulation', 'Blood Pressure Regulation', 'Heart Rate Regulation', 'Thermoregulation'],
                 duration: ['4-6 hours']
               }
             },
@@ -52,9 +83,9 @@
               type: 'Mixed Amphetamine (75:25)',
               color: 'rgb(168, 85, 247)',
               pathways: {
-                metabolism: ['d-amphetamine', 'l-amphetamine', 'norephedrine'],
-                receptors: ['DAT (strong)', 'NET (strong)', '5-HT (weak)'],
-                effects: ['Focus', 'Alertness', 'Executive Function', 'Appetite Suppression', 'Mood Regulation'],
+                metabolism: ['d-amphetamine', 'l-amphetamine', 'norephedrine', 'p-hydroxyamphetamine', 'p-hydroxynorephedrine', 'hippuric acid'],
+                receptors: ['DAT (strong)', 'NET (strong)', '5-HT (weak)', 'Alpha-adrenoreceptors', 'TAAR1'],
+                effects: ['Focus', 'Alertness', 'Executive Function', 'Appetite Suppression', 'Mood Regulation', 'Blood Pressure Regulation', 'Heart Rate Regulation', 'Thermoregulation'],
                 duration: ['5-8 hours']
               }
             },
@@ -64,9 +95,9 @@
               color: 'rgb(239, 68, 68)',
               pathways: {
                 metabolism: ['p-hydroxymethylphenidate', 'ritalinic acid'],
-                receptors: ['DAT (strong)', 'NET (strong)'],
-                effects: ['Focus', 'Alertness', 'Executive Function', 'Appetite Suppression'],
-                duration: ['2-4 hours']
+                receptors: ['DAT (strong)', 'NET (strong)', 'Alpha-adrenoreceptors (secondary)', 'Sigma (moderate)'],
+                effects: ['Focus', 'Alertness', 'Executive Function', 'Appetite Suppression', 'Blood Pressure Regulation', 'Heart Rate Regulation'],
+                duration: ['2-6 hours']
               }
             },
             {
@@ -75,19 +106,19 @@
               color: 'rgb(249, 115, 22)',
               pathways: {
                 metabolism: ['p-hydroxymethylphenidate', 'ritalinic acid'],
-                receptors: ['DAT (strong)', 'NET (strong)'],
-                effects: ['Focus', 'Alertness', 'Executive Function', 'Appetite Suppression'],
+                receptors: ['DAT (strong)', 'NET (strong)', 'Alpha-adrenoreceptors (secondary)', 'Sigma (moderate)'],
+                effects: ['Focus', 'Alertness', 'Executive Function', 'Appetite Suppression', 'Blood Pressure Regulation', 'Heart Rate Regulation'],
                 duration: ['10-12 hours']
               }
             },
             {
               name: 'Vyvanse',
-              type: 'Amphetamine (Long-acting)',
+              type: 'CNS Stimulant (Long-acting)',
               color: 'rgb(59, 130, 246)',
               pathways: {
-                metabolism: ['l-lysine + dexamfetamine', 'norephedrine'],
-                receptors: ['DAT (strong)', 'NET (strong)', '5-HT (weak)'],
-                effects: ['Focus', 'Alertness', 'Executive Function', 'Appetite Suppression', 'Mood Regulation'],
+                metabolism: ['l-lysine + dextroamphetamine', 'p-hydroxyamphetamine', 'p-hydroxynorephedrine', 'hippuric acid'],
+                receptors: ['DAT (strong)', 'NET (strong)', '5-HT (weak)', 'Alpha-adrenoreceptors', 'TAAR1'],
+                effects: ['Focus', 'Alertness', 'Executive Function', 'Appetite Suppression', 'Mood Regulation', 'Blood Pressure Regulation', 'Heart Rate Regulation', 'Thermoregulation'],
                 duration: ['12-14 hours']
               }
             },
@@ -97,12 +128,11 @@
               color: 'rgb(20, 184, 166)',
               pathways: {
                 metabolism: ['hydroxybupropion', 'threohydrobupropion', 'erythrohydrobupropion'],
-                receptors: ['DAT (weak)', 'NET (moderate)', 'nAChR'],
+                receptors: ['DAT (weak)', 'NET (moderate)', 'nAChR', 'DRI (weak)'],
                 effects: ['Focus', 'Mood Regulation', 'Antidepressant'],
-                duration: ['10-24 hours']
+                duration: ['6-14 hours']
               }
-            },
-
+            }
           ];
 
           // Get unique values for each column
@@ -126,7 +156,8 @@
 
                   return e('div', {
                     key: idx,
-                    className: 'p-3 rounded-lg transition-all duration-300 cursor-pointer',
+                    className: 'p-3 rounded-lg transition-all duration-300 cursor-pointer group relative',
+                    title: (type === 'metabolism' || type === 'receptors') ? descriptions[item] : null,
                     style: {
                       backgroundColor: !hoveredDrug && !hoveredPathwayItem ? `${baseColor}10` :
                         hasActiveConnection ? `${hoveredDrug?.color || baseColor}15` : 'rgb(243, 244, 246)',
@@ -192,13 +223,15 @@
             ),
             // Legend
             e('div', { className: 'admeds-legend' },
+              e('p', { className: 'admeds-legend-note' }, 'Hover over metabolites or receptors to see connections and their description.'),
               e('h4', { className: 'admeds-legend-title' }, 'Receptor & Abbreviation Legend:'),
               e('div', { className: 'admeds-legend-grid' },
                 e('p', null, 'DAT: Dopamine Transporter'),
                 e('p', null, 'NET: Norepinephrine Transporter'),
                 e('p', null, '5-HT: Serotonin Receptor'),
                 e('p', null, 'nAChR: Nicotinic Acetylcholine Receptor'),
-                e('p', null, 'NDRI: Norepinephrine-Dopamine Reuptake Inhibitor')
+                e('p', null, 'NDRI: Norepinephrine-Dopamine Reuptake Inhibitor'),
+                e('p', null, 'TAAR1: Trace Amine-Associated Receptor 1')
               )
             )
           );
