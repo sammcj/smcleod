@@ -1,5 +1,5 @@
 ---
-title: "Callout Demo"
+title: "Admonition Demo"
 toc: true
 ---
 
@@ -24,9 +24,6 @@ toc: true
 
 > [!CAUTION]
 > Advises about risks or negative outcomes of certain actions.
-
-
-
 
 ## Callout Overview
 
@@ -106,7 +103,6 @@ toc: true
 
 > [!WARNING]
 > Urgent info that needs immediate user attention to avoid problems.
-
 
 ## Customization
 

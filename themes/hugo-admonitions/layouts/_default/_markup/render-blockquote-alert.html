@@ -1,5 +1,11 @@
 {{- /* layouts/_default/_markup/render-blockquote-alert.html */}}
 
+{{- /* Enforce a minimum required Hugo version. */}}
+{{- $minHugoVersion := "0.140.0" }}
+{{- if lt hugo.Version $minHugoVersion }}
+  {{- errorf "Hugo-admonitions requires Hugo v%s or later. Please upgrade Hugo to v%s or higher." $minHugoVersion $minHugoVersion }}
+{{- end -}}
+
 {{- /* Transpile Sass to CSS and render the link element once per page. */}}
 {{- if not (.Page.Store.Get "admonition-style-loaded-flag") }}
   {{- with resources.Get "sass/vendors/_admonitions.scss" }}
@@ -52,13 +58,12 @@
 {{- if templates.Exists (printf "partials/%s" $partial) }}
   <div class="admonition {{ $type }}">
     <div class="admonition-header">
-      {{- partialCached $partial . }}
-      {{- or .AlertTitle (T (printf "admonitions.%s" .AlertType)) (title .AlertType) }}
+      {{ partialCached $partial . }}
+      <span>{{ or .AlertTitle (T (printf "admonitions.%s" .AlertType)) (title .AlertType) }}</span>
     </div>
-    {{- /* See https://github.com/gohugoio/hugo/issues/12913. */}}
-    {{- if ne .Text "<p>" }}
+    {{- with .Text }}
       <div class="admonition-content">
-        {{ .Text }}
+        {{ . }}
       </div>
     {{- end }}
   </div>
