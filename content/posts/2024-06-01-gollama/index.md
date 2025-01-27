@@ -60,10 +60,6 @@ The project started off as a rewrite of my [llamalink](https://smcleod.net/2024/
 - Show running models
 - Has some cool bugs
 
-Gollama Intro ("Podcast" Episode):
-
-<audio src="https://github.com/sammcj/smcleod_files/raw/refs/heads/master/audio/podcast-ep-sw/Podcast%20Episode%20-%20Gollama.mp3" controls preload></audio>
-
 ## Installation
 
 From go:
@@ -94,11 +90,11 @@ echo "alias g=gollama" >> ~/.zshrc
 
 ### Inspect
 
-![](https://github.com/sammcj/gollama/blob/main/screenshots/gollama-inspect.png?raw=true)
+![](./gollama-inspect.png)
 
 ### Top
 
-![](https://github.com/sammcj/gollama/blob/main/screenshots/gollama-top.jpg?raw=true)
+![](./gollama-top.jpg)
 
 ### Simple model listing
 
@@ -108,7 +104,7 @@ Gollama can also be called with `-l` to list models without the TUI.
 ./gollama -l
 ```
 
-![](https://github.com/sammcj/gollama/blob/main/screenshots/cli-list.jpg?raw=true)
+![](./cli-list.jpg)
 
 ### Key Bindings
 
@@ -229,5 +225,3 @@ The log level can be set in the configuration file.
 Copyright © 2024 Sam McLeod
 
 This project is licensed under the MIT License.
-
-<script src="http://api.html5media.info/1.1.8/html5media.min.js"></script>
