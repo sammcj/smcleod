@@ -136,7 +136,7 @@ norss: true
 - [Kinesys Keyboard](https://kinesis-ergo.com/explore-keyboards/) - Splitable, Ergonomic Keyboard
 - [Das Keyboard](http://daskeyboard.com) - Mechanical Keyboard
 - [Keychron](https://www.keychron.com) - Low Profile Mechanical Keyboards
-- [Ergo M575S](https://www.logitech.com/en-us/products/mice/ergo-m575s-wireless-trackball.910-007027.html) - Trackball Mouse
+- [Logitech Ergo M575S](https://www.logitech.com/en-us/products/mice/ergo-m575s-wireless-trackball.910-007027.html) - Trackball Mouse
 
 ### For Your Ears
 
