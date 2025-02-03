@@ -125,7 +125,7 @@ norss: true
 ### For Your Health
 
 - [Fitwork Station](https://fitworkstation.com/) - Lose Weight Without Noticing
-- [Work while walking](https://www.workwhilewalking.com) - Stay Moving At Work
+- [Work While Walking](https://www.workwhilewalking.com) - Stay Moving At Work
 - [Treadmill Desks](https://www.verywellfit.com/should-you-use-a-treadmill-desk-3436654) - Suggesions On Treadmill Desks
 - [Underdesk Bikes](https://www.verywellfit.com/best-under-desk-bike-5195001) - Suggesions On Underdesk Bikes
 - [RelaxTheBack](https://relaxtheback.com) - Zero-gravity Chairs
