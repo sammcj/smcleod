@@ -148,7 +148,7 @@ const VRAMCalculator = () => {
     [72, '72B parameters'],
     [90, '90B parameters'],
     [110, '110B parameters'],
-    [671, '110B parameters']
+    [671, '671B parameters']
   ];
 
   const contextSizes = [
