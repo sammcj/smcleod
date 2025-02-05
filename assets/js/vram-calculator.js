@@ -147,7 +147,8 @@ const VRAMCalculator = () => {
     [70, '70B parameters'],
     [72, '72B parameters'],
     [90, '90B parameters'],
-    [110, '110B parameters']
+    [110, '110B parameters'],
+    [671, '110B parameters']
   ];
 
   const contextSizes = [
@@ -158,7 +159,8 @@ const VRAMCalculator = () => {
     [49152, '48K tokens'],
     [65536, '64K tokens'],
     [98304, '96K tokens'],
-    [131072, '128K tokens']
+    [131072, '128K tokens'],
+    [262144, '256K tokens']
   ];
 
   // IQ1_S 	1.78
@@ -208,7 +210,7 @@ const VRAMCalculator = () => {
           value: config.numParams,
           onChange: (value) => setConfig(prev => ({ ...prev, numParams: value })),
           min: 1,
-          max: 405,
+          max: 671,
           step: 0.1
         }),
         React.createElement(Slider, {
