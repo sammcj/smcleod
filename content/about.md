@@ -85,11 +85,7 @@ Check out the [Links](/links/) page for some of my favourite services, tools and
 
 ## Found A Problem With This Site?
 
-Please log an issue!
-
-{{< github-button button="issue"    user="sammcj" repo="sammcj" count="true" >}}
-
-Or click "Edit this page" at the bottom of a post to submit a PR.
+Please log an {{< github-button button="issue"    user="sammcj" repo="sammcj" count="true" >}}!
 
 ---
 
