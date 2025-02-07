@@ -25,7 +25,11 @@ I've been in tech for 20~ years across platform, software, AI in technical leade
 
 Currently working with [Mantel Group](https://mantelgroup.com.au) (Melbourne, Australia) leading enablement and acceleration of software engineering with AI.
 
-I made it a career goal to be 100% remote which came to fruition through covid - and I will never go back to working from an office. The gains to my health, happiness and productivity have been immense and my position is that any employer that doesn't recognise and value this is not an employer I want to work for.
+> [!INFORMATION] 🎉 Remote Work
+>
+> I made it a career goal to be 100% remote which came to fruition through covid - and I will never go back to working from an office.
+>
+> The gains to my health, happiness and productivity have been immense and my position is that any employer that doesn't recognise and value this is not an employer I want to work for.
 
 This site is my tech blog, a place to share my thoughts and ideas (mainly relating to engineering), and a place to keep track of things I've learned.
 
