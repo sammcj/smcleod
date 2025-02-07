@@ -26,3 +26,13 @@ mermaid: false
 
 Apologies for the video quality, Google Meet/Hangouts records in very low resolution and bitrate.
 
+Links mentioned in the video:
+
+- [Cline](https://cline.bot)
+- [Roo Code](https://github.com/RooVetGit/Roo-Code) (Cline fork with some experimental features)
+- MCP
+  - https://modelcontextprotocol.io/introduction
+  - The package-version MCP server I created: https://github.com/sammcj/mcp-package-version
+  - https://smithery.ai (index of MCP servers)
+  - https://mcp.so(index of MCP servers)
+  - https://glama.ai/mcp/servers (index of MCP servers)
