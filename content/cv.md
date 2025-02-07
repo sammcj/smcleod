@@ -32,15 +32,9 @@ teams and processes into modern product focused platform engineering teams with 
 
 Experience
 
-## > DigIO
+## > Mantel Group / DigIO
 
-Platform Engineering Lead
-
-Aug 2019 - Present
-
-Working in Mantel Group's DigIO brand as a Lead Platform Engineer working with a wide variety of
-clients consulting in the following areas:
-
+- AI & LLM Enablement & Acceleration
 - Platform Engineering Team Leadership
 - DevOps Culture & Practices Transformation
 - CI/CD and Tooling Modernisation
@@ -51,11 +45,22 @@ clients consulting in the following areas:
 
 Below are some of the project I've worked on.
 
+### Leading AI Enablement & Acceleration
+
+June 2024 - Present
+
+Leading efforts to enhance engineering capabilities and accelerate software development with generative AI.
+
+- Building, prototyping, enabling and tuning AI systems using a combination of cloud and open weight large language models with a goal of accelerating development and delivery throughout the SDLC.
+- Advocacy, training and tooling enablement for software developers and platform engineers to leverage AI to enhance their productivity.
+- Researching, prototyping and implementing GenAI tooling and LLMs focused on software development.
+- Driving the organisation-wide adoption of GenAI across diverse teams, projects, and client engagements, proactively shaping our approach to the rapidly evolving AI-driven software development landscape.
+
 ---
 
 ### DevOps & Platform Engineering Lead (Consulting)
 
-Feb 2022 - Present
+Feb 2022 - June 2024 (2 years 5 months)
 
 A hands-on engineering lead role, working with an iconic Australian brand building one of their first
 AWS projects - a robotics automation platform.
@@ -66,6 +71,7 @@ scaffolding etc...
 applications.
 - Github Actions (CI/CD) - Creating highly automated CI/CD workflows and custom Actions to support
 software and infrastructure development and delivery.
+- Development accelerated through the use of AI.
 
 ---
 
@@ -85,6 +91,7 @@ product alignment and capabilities.
 areas for improvements especially between developers and platform engineering teams.
 - Worked with teams to help secure systems and mitigate vulnerabilities.
 - Worked with multiple vendors on solution assessments and proof of concepts.
+- Development accelerated through the use of AI.
 
 ---
 
