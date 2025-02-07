@@ -14,12 +14,12 @@ norss: true
 
 - 🐘 [Mastodon](https://aus.social/@s_mcleod)
 - 🧑‍💻 [Github](https://www.github.com/sammcj)
-- 🦤 [Twitter Archive](https://sammcj.github.io/twitter-archive/)
-- 🦃 [Twitter](https://www.twitter.com/sammcj)
 - 👔 [LinkedIn](https://www.linkedin.com/in/sammcj)
+<!-- - 🦃 [Twitter](https://www.twitter.com/sammcj) -->
+<!-- - 🦤 [Twitter Archive](https://sammcj.github.io/twitter-archive/) -->
 
 - 🦙 [My Ollama Models](https://ollama.com/sammcj)
-- 📚 [My Open WebUI Prompts and Modelfiles](https://openwebui.com/m/samm)
+- 📚 [My LLM Modelfiles and Templates](https://github.com/sammcj/llm-templates)
 - 🖼️ [My LLM Image Models](https://civitai.com/user/mlsa/models)
 
 ## Software
@@ -39,7 +39,6 @@ norss: true
 
 - [Amphetamine](https://apps.apple.com/us/app/amphetamine/id937984704?mt=12) - Keep Your Mac Awake
 - [BetterTouchTool](https://folivora.ai/) - macOS automation and customisation
-- [Bear](https://bear.app) - Markdown / Notes / Web Clipping
 - [MusicHarbor](https://apps.apple.com/au/app/musicharbor-track-new-music/id1440405750) - Track new and upcoming music releases
 - [Brew](https://brew.sh/) - Package manager
   - [mas](https://github.com/mas-cli/mas) - Mac App Store CLI integrated with brew
@@ -47,10 +46,9 @@ norss: true
 - [Stay](https://cordlessdog.com/stay/) - Keep App Windows Where You Want Them
 - [Micro Snitch](https://obdev.at/products/microsnitch/index.html) - Notifications for active mic/webcam
 - [mu-repo](https://fabioz.github.io/mu-repo/) - Manage Multiple Git Repositories
-- [Calibre](http://calibre-ebook.com) - Ebook Management
 - [LaunchControl](https://www.soma-zone.com/LaunchControl/) - Manage launchd
 - [Things](https://culturedcode.com/things/) - Lists / GTD
-- [Reeder](http://reederapp.com) - RSS Client, although I am looking for a replacement that offers filters, deduplication and summarisation
+- [Reeder v5](http://reederapp.com) - RSS Client, although I am looking for a replacement that offers filters, deduplication and summarisation (_Note: Version 5 is fantastic, but version 6 is massive downgrade that I would not recommend_)
 - [MeetingBar](https://apps.apple.com/au/app/meetingbar/id1532419400?mt=12) - Calendar Integration
 - [Bumpr](https://www.getbumpr.com) - Customise Browser By App or Link
 - [DaisyDisk](https://daisydiskapp.com/) - Disk usage inspector
@@ -82,12 +80,8 @@ norss: true
 - [FastForward](https://addons.mozilla.org/en-GB/firefox/addon/fastforwardteam/)
 - [Copy PlainText](https://addons.mozilla.org/en-GB/firefox/addon/copy-plaintext)
 - [Awesome RSS](https://addons.mozilla.org/en-GB/firefox/addon/awesome-rss)
-- [Night Mode - Hacker News](https://addons.mozilla.org/en-GB/firefox/addon/night-mode-hacker-news)
-- [Upvote Anywhere](https://addons.mozilla.org/en-GB/firefox/addon/upvote-anywhere/)
 - [Refined Github](https://github.com/refined-github/refined-github)
 - [MarkDownload](https://addons.mozilla.org/en-GB/firefox/addon/markdownload/)
-- [LocalCDN](https://addons.mozilla.org/en-GB/firefox/addon/localcdn-fork-of-decentraleyes/)
-- [FediAct for Mastodon](https://github.com/lartsch/FediAct)
 
 ----
 
@@ -95,28 +89,31 @@ norss: true
 
 ### Podcasts
 
-- [BBC Global News](https://www.bbc.co.uk/programmes/p02nq0gn/episodes/downloads)
-- [Hiphop Saved My Life](https://podcasts.apple.com/au/podcast/hip-hop-saved-my-life-with-romesh-ranganathan/id982388481)
-- [Huberman Lab](https://hubermanlab.com/category/podcast-episodes/)
-- [No Such Thing As A Fish](https://www.nosuchthingasafish.com/)
-- [Off Menu](https://www.offmenupodcast.co.uk)
-- [RHLSTP](https://www.rhlstp.co.uk/)
-- [Risky.Biz](https://risky.biz)
-- [The Adam Buxton Podcast](https://www.adam-buxton.co.uk/podcasts)
 - [The Skeptics Guide To The Universe (SGU)](https://www.theskepticsguide.org/)
+- [No Such Thing As A Fish](https://www.nosuchthingasafish.com/)
 - [You Are Not So Smart](https://youarenotsosmart.com/)
+- [Hiphop Saved My Life](https://podcasts.apple.com/au/podcast/hip-hop-saved-my-life-with-romesh-ranganathan/id982388481)
+- [Off Menu](https://www.offmenupodcast.co.uk)
+- [Huberman Lab](https://hubermanlab.com/category/podcast-episodes/)
+- [RHLSTP](https://www.rhlstp.co.uk/)
+- [The Adam Buxton Podcast](https://www.adam-buxton.co.uk/podcasts)
+- [Risky.Biz](https://risky.biz)
 
 ----
 
 ### YouTube Channels
 
-- [DTM Racing](https://www.youtube.com/channel/UCwKq447rYMVI5dAQWMmFnfg)
-- [First We Feast (HotOnes)](https://www.youtube.com/channel/UCPD_bxCRGpmmeQcbe2kpPaA)
-- [Huberman Lab](https://www.youtube.com/c/AndrewHubermanLab/videos?view=0&sort=p&flow=grid)
+- [Machine Learning Street Talk](https://www.youtube.com/@MachineLearningStreetTalk)
 - [NPR Tiny Desk Concerts](https://www.youtube.com/playlist?list=PL1B627337ED6F55F0)
-- [Smarter Every Day](https://www.youtube.com/c/smartereveryday)
+- [Matt Williams](https://www.youtube.com/@technovangelist)
+- [First We Feast (HotOnes)](https://www.youtube.com/channel/UCPD_bxCRGpmmeQcbe2kpPaA)
 - [Techmoan](https://www.youtube.com/playlist?list=PLN2yCnHTG_6qxmv_pdBxWxCPsbA1Cl2RI)
+- [DTM Racing](https://www.youtube.com/channel/UCwKq447rYMVI5dAQWMmFnfg)
+- [Smarter Every Day](https://www.youtube.com/c/smartereveryday)
 - [Warped Perception](https://www.youtube.com/channel/UCFH4dWqQQOYkyJZUGT4q5pg)
+- [Retro Game Corps](https://www.youtube.com/@RetroGameCorps)
+- [MoneyZG](https://www.youtube.com/@MoneyZG)
+- [Fireship](https://www.youtube.com/@Fireship)
 
 ----
 
@@ -126,6 +123,7 @@ norss: true
 
 - [Das Keyboard](http://daskeyboard.com) - Mechanical Keyboard
 - [Keychron](https://www.keychron.com) - Low Profile Mechanical Keyboards
+- [Logitech MX Master 3S](https://www.logitech.com/en-au/shop/p/mx-master-3s) - Mouse
 
 ### For Your Ears
 
