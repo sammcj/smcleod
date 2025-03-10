@@ -19,7 +19,7 @@ toc:
 
 > Hi I'm Sam 👋🏻
 
-I'm an engineer, open source advocate, AI enthusiast and community maintainer.
+I'm a principal AI & platform engineer, open source advocate and contributor.
 
 I've been in tech for 20~ years across platform, software, AI in technical leadership roles. The past 5 years I've been heavily focused on LLM and AI technologies.
 
