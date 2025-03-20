@@ -19,7 +19,7 @@ ShowPostNavLinks: true
 ShowWordCount: false
 ShowRssButtonInSectionTermList: true
 UseHugoToc: false
-mermaid: false
+mermaid: true
 ---
 
 Prompt caching is a feature that Anthropic first offered on their API in 2024. It adds a cache for the tokens used
