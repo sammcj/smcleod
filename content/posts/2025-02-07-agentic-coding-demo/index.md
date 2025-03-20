@@ -22,7 +22,9 @@ UseHugoToc: false
 mermaid: false
 ---
 
-{{< youtube MCxGirdbh84 >}}
+<div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;">
+  <iframe src="https://www.youtube.com/embed/MCxGirdbh84" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;" allowfullscreen title="YouTube Video"></iframe>
+</div>
 
 Apologies for the video quality, Google Meet/Hangouts records in very low resolution and bitrate.
 
