@@ -211,8 +211,6 @@ permalinks:
   category: "/blog/category/:slug/"
 
 privacy:
-  twitter:
-    enableDNT: true
   youtube:
     privacyEnhanced: false
 
