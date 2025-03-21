@@ -53,22 +53,9 @@ Here we can see that the cost of Agentic coding with Amazon Bedrock is significa
 ![alt text](closedai-caching-image.png)
 _Image credit: "[Open"AI](https://platform.openai.com/docs/guides/prompt-caching)_
 
-```mermaid
-graph TD
-    A[User Submits Prompt] --> B{Is Prompt in Cache?};
-    B -- Yes --> C[Retrieve Cached Response];
-    B -- No --> D[Generate New Response];
-    D --> E[Store Response in Cache];
-    C --> F[Return Response to User];
-    E --> F;
+![](pc1.png)
 
-    style A fill:#f9d7d7,stroke:#e06c6c,stroke-width:2px
-    style B fill:#f2e0c9,stroke:#e09c3c,stroke-width:2px
-
-    linkStyle 5 stroke:#a9a9a9,stroke-width:2px;
-
-    classDef icons font-family:FontAwesome;
-```
+![](pc2.png)
 
 ---
 
