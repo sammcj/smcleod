@@ -53,6 +53,10 @@ Here we can see that the cost of Agentic coding with Amazon Bedrock is significa
 ![alt text](closedai-caching-image.png)
 _Image credit: "[Open"AI](https://platform.openai.com/docs/guides/prompt-caching)_
 
+---
+
+Anthropic cache architecture
+
 ![](pc1.png)
 
 ![](pc2.png)
