@@ -1,0 +1,406 @@
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    max-width: 98%;
+    margin: 0 auto;
+    padding: 20px;
+    color: #333;
+}
+
+/* Project Presets */
+.chart-container h2 {
+    margin-top: 20px;
+    margin-bottom: 10px;
+    text-align: center;
+}
+
+.chart-container p {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.project-presets {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 4px;
+    margin-top: 5px;
+    margin-bottom: 10px;
+}
+
+.project-preset-card {
+    background-color: #f1f9ff;
+    border: 1px solid #3498db;
+    border-radius: 6px;
+    padding: 8px;
+    width: 120px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.project-preset-card:hover {
+    background-color: #d4e9f7;
+    transform: translateY(-3px);
+}
+
+.project-preset-card.active {
+    background-color: #3498db;
+    color: white;
+}
+
+.project-preset-card h3 {
+    margin-top: 0;
+    margin-bottom: 5px;
+    font-size: 0.95em;
+    text-align: center;
+}
+
+.preset-details {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.preset-detail {
+    font-size: 0.8em;
+    padding: 3px;
+    background-color: rgba(255, 255, 255, 0.5);
+    border-radius: 3px;
+}
+
+.project-preset-card.active .preset-detail {
+    background-color: rgba(255, 255, 255, 0.2);
+}
+h1, h2, h3 {
+    color: #2c3e50;
+}
+h3 {
+    font-size: 1.1em;
+    margin-top: 15px;
+    margin-bottom: 10px;
+}
+.container {
+    display: flex;
+    flex-wrap: nowrap;
+    gap: 20px;
+    width: 100%;
+}
+.chart-container {
+    flex: 2;
+    min-width: 400px;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    background-color: #fff;
+    margin: 0 10px;
+}
+
+/* Layout */
+.page-wrapper {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.container {
+    display: flex;
+    flex-wrap: nowrap;
+    gap: 20px;
+    width: 100%;
+    margin-bottom: 30px;
+}
+
+/* Chart layout styles */
+.main-chart-container, .bar-chart-container {
+    width: 100%;
+    margin-bottom: 30px;
+    box-sizing: border-box; /* Include padding in width calculation */
+}
+
+.main-chart, .bar-chart {
+    width: 100%;
+    position: relative;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    padding: 10px; /* Reduced padding */
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+    box-sizing: border-box; /* Include padding in width calculation */
+    overflow: hidden; /* Prevent content from overflowing */
+}
+
+.main-chart {
+    height: 400px;
+}
+
+.bar-chart {
+    height: 150px; /* Fixed height for the bar chart */
+}
+
+/* Make sure canvas elements don't overflow */
+canvas {
+    max-width: 100%;
+    max-height: 100%;
+    display: block; /* Remove any extra space */
+}
+
+/* Ensure chart container doesn't overflow */
+.chart-container {
+    overflow: hidden; /* Prevent content from overflowing */
+    box-sizing: border-box; /* Include padding in width calculation */
+}
+.controls {
+    flex: 1;
+    min-width: 300px;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    background-color: #fff;
+    overflow-y: auto;
+    max-height: 90vh;
+}
+
+.compact-header {
+    background-color: #f1f9ff;
+    border-radius: 6px;
+    padding: 10px;
+    margin-bottom: 20px;
+    border-left: 4px solid #3498db;
+}
+
+.compact-header h2 {
+    margin-top: 0;
+    margin-bottom: 8px;
+    font-size: 1.2em;
+    color: #2c3e50;
+}
+
+.compact-header p {
+    margin: 0;
+    font-size: 0.9em;
+    color: #555;
+}
+.results {
+    flex: 1;
+    min-width: 300px;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    background-color: #fff;
+    overflow-y: auto;
+    max-height: 90vh;
+}
+
+/* Results sections styling */
+.result-summary {
+    margin-bottom: 25px;
+    padding: 15px;
+    background-color: #f8f9fa;
+    border-radius: 8px;
+    border-left: 4px solid #3498db;
+}
+
+.result-section {
+    margin-bottom: 25px;
+    padding: 15px;
+    background-color: #f8f9fa;
+    border-radius: 8px;
+}
+
+.manual-section {
+    border-left: 4px solid #e74c3c;
+}
+
+.agentic-section {
+    border-left: 4px solid #2ecc71;
+}
+
+.timeline-section {
+    border-left: 4px solid #9b59b6;
+}
+
+/* Definition list styling */
+.cost-explanation dl {
+    margin: 0;
+    padding: 0;
+}
+
+.cost-explanation dt {
+    font-weight: 600;
+    margin-top: 12px;
+    color: #2c3e50;
+}
+
+.cost-explanation dd {
+    margin-left: 0;
+    padding-left: 15px;
+    margin-bottom: 5px;
+}
+
+.cost-explanation dd.explanation {
+    font-size: 0.85em;
+    color: #7f8c8d;
+    font-style: italic;
+    border-left: 2px solid #ecf0f1;
+    padding-left: 10px;
+    margin-top: 2px;
+}
+
+/* Token cost details styling */
+.token-cost-details {
+    margin-top: 15px;
+    background-color: #f1f1f1;
+    border-radius: 6px;
+    overflow: hidden;
+}
+
+.token-cost-details summary {
+    padding: 10px 15px;
+    background-color: #e8f4fc;
+    cursor: pointer;
+    font-weight: 600;
+    color: #2980b9;
+    border-left: 3px solid #3498db;
+}
+
+.token-cost-details summary:hover {
+    background-color: #d4e9f7;
+}
+
+.token-details-content {
+    padding: 15px;
+}
+
+.token-explanation {
+    font-size: 0.9em;
+    margin-top: 0;
+    margin-bottom: 15px;
+    color: #555;
+    background-color: rgba(255, 255, 255, 0.5);
+    padding: 8px;
+    border-radius: 4px;
+}
+.form-group {
+    margin-bottom: 15px;
+}
+label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: 500;
+}
+input, select {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+.range-with-label {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+.range-with-label input[type="range"] {
+    flex-grow: 1;
+}
+.range-with-label span {
+    width: 40px;
+    text-align: right;
+}
+button {
+    background-color: #3498db;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: 500;
+}
+button:hover {
+    background-color: #2980b9;
+}
+.result-item {
+    margin-bottom: 10px;
+    padding: 10px;
+    border-radius: 4px;
+}
+.highlight {
+    background-color: #f1f9ff;
+    border-left: 4px solid #3498db;
+    padding-left: 10px;
+    margin: 10px 0;
+}
+.info-box {
+    background-color: #f8f9fa;
+    border-left: 4px solid #4caf50;
+    padding: 10px;
+    margin-top: 20px;
+}
+
+.explanation {
+    font-size: 0.85em;
+    color: #7f8c8d;
+    font-style: italic;
+    margin-top: 2px;
+}
+.section-header {
+    background-color: #ecf0f1;
+    padding: 10px;
+    margin-top: 20px;
+    margin-bottom: 15px;
+    border-radius: 4px;
+    font-weight: 600;
+    color: #2c3e50;
+}
+.token-breakdown {
+    background-color: #f8f9fa;
+    padding: 15px;
+    border-radius: 8px;
+    margin-bottom: 15px;
+    border: 1px solid #e0e0e0;
+}
+.token-breakdown h3 {
+    margin-top: 5px;
+    color: #2980b9;
+    border-bottom: 1px solid #e0e0e0;
+    padding-bottom: 8px;
+}
+.caching-toggle {
+    background-color: #e8f4fc;
+    padding: 10px;
+    border-radius: 6px;
+    border-left: 4px solid #3498db;
+}
+.toggle-label {
+    font-weight: 600;
+    color: #2c3e50;
+    margin-left: 5px;
+}
+.token-cost-details {
+    margin-top: 15px;
+    background-color: #f8f9fa;
+    padding: 10px;
+    border-radius: 4px;
+}
+.preset-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 15px;
+}
+.preset-button {
+    flex: 1;
+    min-width: 80px;
+    padding: 6px 8px;
+    font-size: 0.9em;
+    text-align: center;
+    background-color: #f1f9ff;
+    border: 1px solid #3498db;
+    border-radius: 4px;
+    cursor: pointer;
+}
+.preset-button:hover {
+    background-color: #d4e9f7;
+}
+.preset-button.active {
+    background-color: #3498db;
+    color: white;
+}
