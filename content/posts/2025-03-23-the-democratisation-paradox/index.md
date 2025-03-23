@@ -8,7 +8,7 @@ TocOpen: false
 draft: false
 hidemeta: false
 comments: false
-description: "Every technological revolution has triggered waves of anxiety about the obsolescence of human skills and professions. The current fears that AI will replace artists, eliminate writing jobs, render illustrators obsolete, and devalue creative work follow a well-established historical pattern that's worth examining critically."
+description: "The Democratisation Paradox: What History Teaches Us About AI."
 disableShare: false
 disableHLJS: false
 hideSummary: false
