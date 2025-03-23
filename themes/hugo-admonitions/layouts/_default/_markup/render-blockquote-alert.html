@@ -8,19 +8,20 @@
 
 {{- /* Transpile Sass to CSS and render the link element once per page. */}}
 {{- if not (.Page.Store.Get "admonition-style-loaded-flag") }}
-  {{- $sassFile := resources.Get "sass/vendors/_admonitions.scss" }}
-  {{- if $sassFile }}
+  {{- with resources.Get "sass/vendors/_admonitions.scss" }}
     {{- $opts := dict
       "enableSourceMap" (not hugo.IsProduction)
       "outputStyle" (cond hugo.IsProduction "compressed" "expanded")
       "targetPath" "css/vendors/admonitions.css"
     }}
-    {{- $style := $sassFile | resources.ToCSS $opts }}
-    {{- if hugo.IsProduction }}
-      {{- $style = $style | resources.Fingerprint }}
-      <link rel="stylesheet" href="{{ $style.RelPermalink }}" integrity="{{ $style.Data.Integrity }}" crossorigin="anonymous">
-    {{- else }}
-      <link rel="stylesheet" href="{{ $style.RelPermalink }}">
+    {{- with . | toCSS $opts }}
+      {{- if hugo.IsProduction }}
+        {{- with . | fingerprint }}
+          <link rel="stylesheet" href="{{ .RelPermalink }}" integrity="{{ .Data.Integrity }}" crossorigin="anonymous">
+        {{- end }}
+      {{- else }}
+        <link rel="stylesheet" href="{{ .RelPermalink }}">
+      {{- end }}
     {{- end }}
   {{- end }}
   {{- .Page.Store.Set "admonition-style-loaded-flag" true }}
