@@ -4,7 +4,7 @@ date: 2025-03-23T01:00:01+10:00
 tags: ["ai","llm","tech","culture","art","economics","capitalism","history","creativity","automation"]
 author: "Sam McLeod"
 showToc: true
-TocOpen: false
+TocOpen: true
 draft: false
 hidemeta: false
 comments: false
