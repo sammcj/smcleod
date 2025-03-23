@@ -42,43 +42,7 @@ This phenomenon mirrors the early days of every democratised medium: when blogs 
 
 What history demonstrates repeatedly is that technological advancements don't typically eliminate fields—they restructure them. The true impact is often a dismantling of exclusive gatekeeping mechanisms that previously restricted access to knowledge and creative tools. This creates opportunities for those previously locked out of creative industries while also challenging established professionals to differentiate their work. When anyone can create, the volume of poor-quality content increases, but so does the potential for innovation from previously excluded voices.
 
-```mermaid
-flowchart LR
-    A[New Technology Emerges] --> B{Disrupts Existing<br>Creative Field}
-    B -->|Initial Reaction| C[Fear of Professional<br>Obsolescence]
-    B -->|Market Effect| D[Tool Democratisation]
-
-    D --> E[Barrier to Entry ↓]
-    D --> F[Content Volume ↑]
-
-    C --> G{Adaptation Phase}
-    E --> G
-    F --> G
-
-    G --> H[Initial Quality Standards<br>Decrease]
-    G --> I[New Creative Opportunities<br>Emerge]
-
-    H --> J{Market Matures}
-    I --> J
-
-    J --> K[Quality Standards<br>Re-Established]
-    J --> L[Professional Role<br>Evolution]
-
-    K --> M[New Equilibrium]
-    L --> M
-
-    classDef inputOutput fill:#FEE0D2,stroke:#E6550D,color:#E6550D
-    classDef llm fill:#E5F5E0,stroke:#31A354,color:#31A354
-    classDef components fill:#E6E6FA,stroke:#756BB1,color:#756BB1
-    classDef process fill:#EAF5EA,stroke:#C6E7C6,color:#77AD77
-    classDef stop fill:#E5E1F2,stroke:#C7C0DE,color:#8471BF
-    classDef data fill:#EFF3FF,stroke:#9ECAE1,color:#3182BD
-    classDef decision fill:#FFF5EB,stroke:#FD8D3C,color:#E6550D
-
-    class A,D,E,F,H,I,K,L process
-    class B,G,J decision
-    class C,M data
-```
+![alt text](art-tech-cycle-1.png)
 
 ## Beyond Technology: Capitalism & Systemic Economics
 
