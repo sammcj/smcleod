@@ -2,7 +2,7 @@ baseURL: https://smcleod.net
 languageCode: en-GB
 title: smcleod.net
 theme: ["PaperMod"] #"hugo-admonitions"
-gitRepo: "https://github.com/sammcj/smcleod"
+gitRepo: "https://github.com/sammcj/smcleod/tree/main"
 
 pagination.pagerSize: 150
 enableEmoji: true
