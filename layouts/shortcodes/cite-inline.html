@@ -1,0 +1,19 @@
+{{ $key := .Get 0 }}
+{{- /* Get the index of this reference in the bibliography */ -}}
+{{- $page := .Page -}}
+{{- $refs := $page.Scratch.Get "bibliography_refs" | default slice -}}
+{{- $index := -1 -}}
+{{- range $i, $ref := $refs -}}
+  {{- if eq $ref $key -}}
+    {{- $index = add $i 1 -}}
+  {{- end -}}
+{{- end -}}
+{{- if eq $index -1 -}}
+  {{- $refs = $refs | append $key -}}
+  {{- $page.Scratch.Set "bibliography_refs" $refs -}}
+  {{- $index = len $refs -}}
+{{- end -}}
+
+<sup class="citation-inline">
+  <a href="#ref-{{ $key }}" aria-label="Reference {{ $index }}">{{ $index }}</a>
+</sup>

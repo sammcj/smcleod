@@ -28,25 +28,31 @@
     text-decoration: underline;
 }
 
-/* Responsive adjustments for smaller screens */
-@media (max-width: 1024px) { /* Adjust breakpoint as needed */
+/* Inline Citation styles */
+.citation-inline {
+  font-size: 0.75em;
+  vertical-align: super;
+  line-height: 1;
+  margin: 0 1px; /* Small spacing around the number */
+}
+
+.citation-inline a {
+  color: var(--primary);
+  text-decoration: none;
+  padding: 0 1px;
+  border: none; /* Ensure no default link borders interfere */
+}
+
+.citation-inline a:hover {
+  text-decoration: underline;
+}
+
+
+/* Responsive adjustments for smaller screens - Hide sidenotes */
+@media (max-width: 768px) { /* Adjusted breakpoint for typical mobile devices */
     .sidenote,
     .marginnote {
-        display: block;
-        float: none;
-        clear: both;
-        width: 95%;
-        margin: 1rem auto;
-        position: relative;
-        vertical-align: baseline;
-        font-size: 0.85rem;
-        padding: 0.5rem;
-        background-color: var(--code-bg); /* Optional: background for clarity */
-        border-left: 3px solid var(--primary); /* Optional: visual indicator */
-    }
-    .sidenote::before {
-        content: attr(id) ": "; /* Show the ID before the note */
-        font-weight: bold;
+        display: none; /* Hide sidenotes completely on smaller screens */
     }
 }
 
