@@ -13,7 +13,14 @@
   {{- $page.Scratch.Set "bibliography_refs" $refs -}}
   {{- $index = len $refs -}}
 {{- end -}}
+{{- $tooltipsMap := $page.Scratch.Get "bib_tooltips" | default dict -}}
+{{- $tooltipContent := index $tooltipsMap $key | default "" -}}
 
-<sup class="citation-inline">
+<sup class="citation-inline has-tooltip">
   <a href="#ref-{{ $key }}" aria-label="Reference {{ $index }}">{{ $index }}</a>
+  {{- if $tooltipContent -}}
+  <div class="citation-tooltip">
+    {{ $tooltipContent | safeHTML }}
+  </div>
+  {{- end -}}
 </sup>

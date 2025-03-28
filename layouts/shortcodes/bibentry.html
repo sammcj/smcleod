@@ -1,4 +1,9 @@
 {{ $key := .Get 0 }}
+{{ $content := .Inner | markdownify }}
+{{/* Store the rendered content in Scratch for tooltips */}}
+{{ $tooltips := .Page.Scratch.Get "bib_tooltips" | default dict }}
+{{ $tooltips = merge $tooltips (dict $key $content) }}
+{{ .Page.Scratch.Set "bib_tooltips" $tooltips }}
 <div class="bibentry" id="ref-{{ $key }}">
-  <p>{{ .Inner | markdownify }}</p>
+  <p>{{ $content | safeHTML }}</p>
 </div>

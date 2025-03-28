@@ -22,10 +22,6 @@ UseHugoToc: false
 mermaid: true
 ---
 
-## Abstract
-
-This paper examines the historical pattern of technological disruption and democratisation across various creative fields and applies these insights to the current AI revolution. We explore how each technological innovation—from photography to digital music production—initially triggered fears of human obsolescence but ultimately restructured rather than eliminated professional domains. The paper argues that the true challenge of AI lies not in the technology itself, but in our economic systems' ability to properly value human contributions in an AI-augmented landscape. By analysing the recurring "democratisation paradox," wherein new technologies simultaneously lower barriers to creation while elevating appreciation for skilled work, we can better understand and navigate the current transition toward AI-assisted creativity and work.
-
 Every technological revolution has triggered waves of anxiety about the obsolescence of human skills and professions. The current fears that AI will replace artists, eliminate writing jobs, render illustrators obsolete, and devalue creative work follow a well-established historical pattern that's worth examining critically.
 
 ## The Democratisation Paradox
@@ -77,6 +73,12 @@ Evolution is not mandatory, but neither is survival.
 The democratisation of creative tools through AI represents the latest chapter in humanity's complex relationship with technology. As we've seen throughout history, the initial disruption eventually gives way to a new equilibrium where human creativity adapts rather than disappears. The true challenge lies not in whether AI will replace us, but in how we choose to structure our economic and social systems around these new capabilities.
 
 Rather than fearing AI itself, we would be wiser to focus our collective energy on building economic models that distribute the benefits of technological advancement more equitably. After all, the most valuable aspect of creativity has never been the tools themselves, but the uniquely human perspective, experience, and purpose that breathes life into them.
+
+---
+
+## Abstract
+
+> This paper examines the historical pattern of technological disruption and democratisation across various creative fields and applies these insights to the current AI revolution. We explore how each technological innovation—from photography to digital music production—initially triggered fears of human obsolescence but ultimately restructured rather than eliminated professional domains. The paper argues that the true challenge of AI lies not in the technology itself, but in our economic systems' ability to properly value human contributions in an AI-augmented landscape. By analysing the recurring "democratisation paradox," wherein new technologies simultaneously lower barriers to creation while elevating appreciation for skilled work, we can better understand and navigate the current transition toward AI-assisted creativity and work.
 
 {{< bibliography >}}
 {{< bibentry "Andrejevic2013" >}}<a href="https://www.routledge.com/Infoglut-How-Too-Much-Information-Is-Changing-the-Way-We-Think-and-Know/Andrejevic/p/book/9780415659086" target="_blank" rel="noopener noreferrer">Andrejevic, M. (2013). *Infoglut: How Too Much Information Is Changing the Way We Think and Know*. New York: Routledge.</a>{{< /bibentry >}}

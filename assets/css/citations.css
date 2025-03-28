@@ -47,6 +47,50 @@
   text-decoration: underline;
 }
 
+/* Tooltip styles */
+.citation-tooltip {
+  display: none; /* Hidden by default */
+  position: absolute;
+  bottom: 1.8em; /* Position above the superscript */
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: var(--code-bg); /* Use theme's code background */
+  color: var(--content); /* Use theme's content color */
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.5rem 0.8rem;
+  font-size: 0.85rem; /* Slightly smaller than main text */
+  line-height: 1.4;
+  width: max-content; /* Adjust width based on content */
+  max-width: 300px; /* Prevent it from becoming too wide */
+  z-index: 10;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+  text-align: left;
+  white-space: normal; /* Allow text wrapping */
+}
+
+/* Tooltip paragraph styling */
+.citation-tooltip p {
+  margin: 0 !important; /* Override theme defaults if necessary */
+  text-indent: 0 !important; /* Override bibentry indent */
+}
+
+/* Tooltip link styling */
+.citation-tooltip a {
+  color: var(--primary); /* Ensure links inside tooltip are styled */
+  text-decoration: underline;
+}
+
+/* Visible state for tooltip */
+.citation-tooltip.tooltip-visible {
+  display: block;
+}
+
+/* Ensure the parent sup has relative positioning */
+.citation-inline.has-tooltip {
+  position: relative;
+}
+
 
 /* Responsive adjustments for smaller screens - Hide sidenotes */
 @media (max-width: 768px) { /* Adjusted breakpoint for typical mobile devices */
