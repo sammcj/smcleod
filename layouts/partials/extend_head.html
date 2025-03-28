@@ -1,0 +1,2 @@
+{{ $citations := resources.Get "css/citations.css" | minify }}
+<link rel="stylesheet" href="{{ $citations.RelPermalink }}">

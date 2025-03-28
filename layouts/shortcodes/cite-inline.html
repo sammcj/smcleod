@@ -1,0 +1,26 @@
+{{ $key := .Get 0 }}
+{{- /* Get the index of this reference in the bibliography */ -}}
+{{- $page := .Page -}}
+{{- $refs := $page.Scratch.Get "bibliography_refs" | default slice -}}
+{{- $index := -1 -}}
+{{- range $i, $ref := $refs -}}
+  {{- if eq $ref $key -}}
+    {{- $index = add $i 1 -}}
+  {{- end -}}
+{{- end -}}
+{{- if eq $index -1 -}}
+  {{- $refs = $refs | append $key -}}
+  {{- $page.Scratch.Set "bibliography_refs" $refs -}}
+  {{- $index = len $refs -}}
+{{- end -}}
+{{- $tooltipsMap := $page.Scratch.Get "bib_tooltips" | default dict -}}
+{{- $tooltipContent := index $tooltipsMap $key | default "" -}}
+
+<sup class="citation-inline has-tooltip">
+  <a href="#ref-{{ $key }}" aria-label="Reference {{ $index }}">{{ $index }}</a>
+  {{- if $tooltipContent -}}
+  <div class="citation-tooltip">
+    {{ $tooltipContent | safeHTML }}
+  </div>
+  {{- end -}}
+</sup>

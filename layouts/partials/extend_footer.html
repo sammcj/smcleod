@@ -1,0 +1,2 @@
+{{ $tooltipJS := resources.Get "js/citation-tooltip.js" | minify }}
+<script src="{{ $tooltipJS.RelPermalink }}" defer></script>
