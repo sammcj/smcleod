@@ -1,20 +1,53 @@
-/* Citation styles */
-.citation {
-  vertical-align: super;
-  font-size: 0.75em;
-  line-height: 0;
-  position: relative;
-  top: -0.5em;
+/* Sidenote/Citation styles */
+.sidenote,
+.marginnote {
+    float: right;
+    clear: right;
+    margin-right: -60%; /* Adjust based on theme's main content width and desired margin */
+    width: 50%; /* Adjust based on theme's main content width */
+    margin-top: 0;
+    margin-bottom: 1rem;
+    font-size: 0.8rem;
+    line-height: 1.4;
+    vertical-align: baseline;
+    position: relative;
+}
+
+.sidenote-number {
+    /* Can be used for numbering if needed, or hidden */
+     display: none;
 }
 
 .citation-link {
-  color: var(--primary);
-  text-decoration: none;
-  padding: 0 2px;
+    color: var(--primary);
+    text-decoration: none;
+    padding: 0 1px;
 }
 
 .citation-link:hover {
-  text-decoration: underline;
+    text-decoration: underline;
+}
+
+/* Responsive adjustments for smaller screens */
+@media (max-width: 1024px) { /* Adjust breakpoint as needed */
+    .sidenote,
+    .marginnote {
+        display: block;
+        float: none;
+        clear: both;
+        width: 95%;
+        margin: 1rem auto;
+        position: relative;
+        vertical-align: baseline;
+        font-size: 0.85rem;
+        padding: 0.5rem;
+        background-color: var(--code-bg); /* Optional: background for clarity */
+        border-left: 3px solid var(--primary); /* Optional: visual indicator */
+    }
+    .sidenote::before {
+        content: attr(id) ": "; /* Show the ID before the note */
+        font-weight: bold;
+    }
 }
 
 /* Bibliography styles */
