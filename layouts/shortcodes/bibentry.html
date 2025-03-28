@@ -1,0 +1,4 @@
+{{ $key := .Get 0 }}
+<div class="bibentry" id="ref-{{ $key }}">
+  <p>{{ .Inner | markdownify }}</p>
+</div>

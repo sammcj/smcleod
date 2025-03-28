@@ -1,0 +1,46 @@
+/* Citation styles */
+.citation {
+  vertical-align: super;
+  font-size: 0.75em;
+  line-height: 0;
+  position: relative;
+  top: -0.5em;
+}
+
+.citation-link {
+  color: var(--primary);
+  text-decoration: none;
+  padding: 0 2px;
+}
+
+.citation-link:hover {
+  text-decoration: underline;
+}
+
+/* Bibliography styles */
+.bibliography {
+  margin-top: 2rem;
+  border-top: 1px solid var(--border);
+  padding-top: 1rem;
+}
+
+.bibentry {
+  margin-bottom: 1rem;
+  padding-left: 2rem;
+  text-indent: -2rem;
+  font-size: 0.9em;
+  line-height: 1.5;
+}
+
+.bibentry p {
+  margin: 0;
+}
+
+/* Academic styling */
+.bibentry em, .bibentry i {
+  font-style: italic;
+}
+
+.bibentry strong, .bibentry b {
+  font-weight: bold;
+}
