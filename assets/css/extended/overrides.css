@@ -1,3 +1,9 @@
 :root {
 	--main-width: 900px ;
 }
+
+/* Force header logo image height to override conflict from shortcode CSS */
+.header .logo img {
+    height: 35px !important;
+    width: auto !important; /* Maintain aspect ratio */
+}
