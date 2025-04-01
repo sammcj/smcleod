@@ -6,6 +6,41 @@ body {
     color: #333;
 }
 
+/* Main content section */
+.main-content {
+    width: 100%;
+    border-top: 2px solid #3498db;
+    padding-top: 20px;
+}
+
+/* Advanced Settings */
+.advanced-settings {
+    margin: 15px 0;
+    border: 1px solid #e0e0e0;
+    border-radius: 6px;
+    overflow: hidden;
+}
+
+.advanced-settings summary {
+    padding: 12px 15px;
+    background-color: #f1f9ff;
+    cursor: pointer;
+    font-weight: 600;
+    color: #2980b9;
+    border-left: 3px solid #3498db;
+    transition: background-color 0.2s ease;
+}
+
+.advanced-settings summary:hover {
+    background-color: #d4e9f7;
+}
+
+.advanced-settings-content {
+    padding: 15px;
+    background-color: #f8f9fa;
+    border-top: 1px solid #e0e0e0;
+}
+
 /* Project Presets */
 .chart-container h2 {
     margin-top: 20px;
@@ -403,4 +438,117 @@ button:hover {
 .preset-button.active {
     background-color: #3498db;
     color: white;
+}
+
+/* AWS Section Styles */
+.aws-section-wrapper {
+    width: 100%;
+    margin-top: 50px;
+    padding: 20px 0;
+    background-color: #f8f9fa;
+    border-top: 2px solid #3498db;
+}
+
+.section-divider {
+    text-align: center;
+    margin-bottom: 30px;
+    padding: 20px;
+}
+
+.section-divider h2 {
+    font-size: 1.8em;
+    color: #2c3e50;
+    margin-bottom: 10px;
+}
+
+.section-divider p {
+    color: #7f8c8d;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.aws-container {
+    display: flex;
+    flex-wrap: nowrap;
+    gap: 30px;
+    width: 95%;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.aws-container.two-column {
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+/* AWS controls and results styling for two-column layout */
+.aws-controls {
+    flex: 1;
+    width: 48%;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    overflow-y: auto;
+    max-height: 90vh;
+}
+
+/* AWS Results with reduced spacing */
+.aws-results .result-section {
+    margin-bottom: 15px;
+    padding: 10px;
+}
+
+.aws-results .result-item {
+    margin-bottom: 5px;
+    padding: 5px;
+}
+
+.aws-results .explanation {
+    margin-top: 0;
+    font-size: 0.8em;
+}
+
+.aws-results h3 {
+    margin-top: 10px;
+    margin-bottom: 8px;
+}
+
+.aws-controls h2 {
+    margin-top: 0;
+    margin-bottom: 20px;
+    color: #2c3e50;
+    border-bottom: 2px solid #3498db;
+    padding-bottom: 10px;
+}
+
+.aws-controls button {
+    width: 200px;
+    margin: 20px auto 0;
+    display: block;
+}
+
+.aws-container.two-column .results {
+    flex: 1;
+    width: 48%;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    overflow-y: auto;
+    max-height: 90vh;
+}
+
+.aws-container.two-column .results h2 {
+    margin-top: 0;
+    margin-bottom: 20px;
+    color: #2c3e50;
+    border-bottom: 2px solid #3498db;
+    padding-bottom: 10px;
+}
+
+/* Ensure the AWS chart has proper dimensions */
+#awsCostChart {
+    width: 100% !important;
+    height: 400px !important;
 }

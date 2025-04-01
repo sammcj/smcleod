@@ -9,7 +9,9 @@
 </head>
 <body>
     <div class="page-wrapper">
-        <div class="container">
+        <!-- Project Cost Calculator -->
+        <div class="main-content" id="project-cost-section">
+            <div class="container">
             <!-- Parameters (Left) -->
             <div class="controls">
                 <div class="compact-header">
@@ -103,58 +105,63 @@
                     </div>
                 </div>
 
-                <div class="section-header">Token Usage</div>
                 <div class="form-group">
                     <label for="tokensUsed">Project Size (Total Tokens):</label>
                     <input type="number" id="tokensUsed" value="5" min="0" step="0.1">
                     <small>Total tokens in millions (e.g., 5 = 5 million tokens)</small>
                 </div>
-                <div class="form-group">
-                    <label for="tokenCostMultiplier">Token Cost Multiplier:</label>
-                    <div class="range-with-label">
-                        <input type="number" id="tokenCostMultiplier" value="1" min="0.1" step="0.1">
-                        <span id="tokenCostMultiplierLabel">1x</span>
-                    </div>
-                    <small>Multiplier for token costs (both cached and uncached)</small>
-                </div>
+<details class="advanced-settings">
+    <summary>Advanced Settings</summary>
+    <div class="advanced-settings-content">
+        <div class="section-header">Token Usage</div>
+                        <div class="form-group">
+                            <label for="tokenCostMultiplier">Token Cost Multiplier:</label>
+                            <div class="range-with-label">
+                                <input type="number" id="tokenCostMultiplier" value="1" min="0.1" step="0.1">
+                                <span id="tokenCostMultiplierLabel">1x</span>
+                            </div>
+                            <small>Multiplier for token costs (both cached and uncached)</small>
+                        </div>
 
-                <div id="tokenBreakdown" class="token-breakdown">
-                    <h3>Token Breakdown</h3>
+                        <div id="tokenBreakdown" class="token-breakdown">
+                            <h3>Token Breakdown</h3>
 
-                    <div class="section-header">Token Distribution (For Cached Calculations)</div>
-                    <div class="form-group">
-                        <label for="outputToInputRatio">Output-to-Input Token Ratio:</label>
-                        <div class="preset-buttons">
-                            <div class="preset-button ratio-preset" data-ratio="1">1:1</div>
-                            <div class="preset-button ratio-preset" data-ratio="3">3:1</div>
-                            <div class="preset-button ratio-preset" data-ratio="8">8:1</div>
-                            <div class="preset-button ratio-preset" data-ratio="12">12:1</div>
-                            <div class="preset-button ratio-preset" data-ratio="16">16:1</div>
-                        </div>
-                        <div class="range-with-label">
-                            <input type="range" id="outputToInputRatio" min="1" max="20" value="8" step="0.5">
-                            <span id="outputToInputRatioLabel">8:1 (89% output / 11% input)</span>
-                        </div>
-                        <small>This ratio only affects cached calculations. Non-cached calculations use a fixed 50/50 distribution.</small>
-                    </div>
+                            <div class="section-header">Token Distribution (For Cached Calculations)</div>
+                            <div class="form-group">
+                                <label for="outputToInputRatio">Output-to-Input Token Ratio:</label>
+                                <div class="preset-buttons">
+                                    <div class="preset-button ratio-preset" data-ratio="1">1:1</div>
+                                    <div class="preset-button ratio-preset" data-ratio="3">3:1</div>
+                                    <div class="preset-button ratio-preset" data-ratio="8">8:1</div>
+                                    <div class="preset-button ratio-preset" data-ratio="12">12:1</div>
+                                    <div class="preset-button ratio-preset" data-ratio="16">16:1</div>
+                                </div>
+                                <div class="range-with-label">
+                                    <input type="range" id="outputToInputRatio" min="1" max="20" value="8" step="0.5">
+                                    <span id="outputToInputRatioLabel">8:1 (89% output / 11% input)</span>
+                                </div>
+                                <small>This ratio only affects cached calculations. Non-cached calculations use a fixed 50/50 distribution.</small>
+                            </div>
 
-                    <div class="section-header">Caching Settings</div>
-                    <div class="form-group">
-                        <label for="cachedTokenPercentage">Cached Tokens (% of input):</label>
-                        <div class="range-with-label">
-                            <input type="range" id="cachedTokenPercentage" min="0" max="100" value="88">
-                            <span id="cachedTokenPercentageLabel">88%</span>
-                        </div>
-                        <small>Higher values = more tokens retrieved from cache = lower costs</small>
+                            <div class="section-header">Caching Settings</div>
+                            <div class="form-group">
+                                <label for="cachedTokenPercentage">Cached Tokens (% of input):</label>
+                                <div class="range-with-label">
+                                    <input type="range" id="cachedTokenPercentage" min="0" max="100" value="88">
+                                    <span id="cachedTokenPercentageLabel">88%</span>
+                                </div>
+                                <small>Higher values = more tokens retrieved from cache = lower costs</small>
+                            </div>
+                            <!-- Caching info - always showing both options -->
+                            <div class="form-group">
+                                <div class="caching-info">
+                                    <p>The chart shows costs both with and without prompt caching for comparison.</p>
+                                    <p>Prompt caching can significantly reduce costs, especially for output tokens.</p>
+                                </div>
+                            </div>
+                            </div>
                     </div>
-                    <!-- Caching info - always showing both options -->
-                    <div class="form-group">
-                        <div class="caching-info">
-                            <p>The chart shows costs both with and without prompt caching for comparison.</p>
-                            <p>Prompt caching can significantly reduce costs, especially for output tokens.</p>
-                        </div>
-                    </div>
-                </div>
+                    </details>
 
                 <button id="calculate">Calculate</button>
             </div>
@@ -186,8 +193,8 @@
             </div>
 
             <!-- Results (Right) -->
-            <div class="results">
-                <h2>Results</h2>
+            <div class="results aws-results">
+                <h2>Run Cost Calculator</h2>
 <!-- Summary Section -->
 <div class="result-summary">
                     <div class="result-item highlight">
@@ -291,6 +298,177 @@
                 </div>
             </div>
         </div>
+</div>
+
+<!-- AWS Run Cost Calculator Section (Full Width) -->
+<div class="aws-section-wrapper">
+    <div class="section-divider">
+        <h2>AWS Agentic Coding Run Cost Calculator</h2>
+        <p>Calculate the estimated ongoing run costs for developers using agentic coding tools.</p>
+    </div>
+
+    <div class="aws-container two-column">
+        <!-- Parameters (Left) -->
+        <div class="aws-controls">
+            <h2>Parameters</h2>
+
+            <div class="section-header">Developer Parameters</div>
+            <div class="form-group">
+                <label for="developerCount">Number of Developers:</label>
+                <input type="number" id="developerCount" value="50" min="1">
+            </div>
+            <div class="form-group">
+                <label for="fteCostPerYear">Average Developer Salary (thousands $ per year):</label>
+                <input type="number" id="fteCostPerYear" value="150" min="1" step="5">
+                <small>Used for ROI and FTE equivalent calculations (e.g., 150 = $150,000)</small>
+            </div>
+            <div class="form-group">
+                <label for="tokensPerDev">Average Tokens per Developer per Day (millions):</label>
+                <input type="number" id="tokensPerDev" value="20" min="1" step="1">
+                <small>Typical range: 15-25M tokens for agentic coding per day</small>
+            </div>
+            <div class="form-group">
+                <label for="forceMultiplier">Force Multiplier Effect:</label>
+                <input type="number" id="forceMultiplier" value="3" min="1" step="0.1">
+                <small>How much more productive developers are with agentic coding (default: 3x)</small>
+            </div>
+
+            <div class="section-header">Model Parameters</div>
+            <div class="form-group">
+                <label for="awsModelSelect">LLM Model:</label>
+                <select id="awsModelSelect">
+                    <option value="claude_3_7_sonnet">Claude 3.7 Sonnet</option>
+                    <option value="claude_3_5_haiku">Claude 3.5 Haiku</option>
+                    <option value="openai_o1">OpenAI o1</option>
+                    <option value="openai_o3_mini">OpenAI o3-mini</option>
+                    <option value="deepseek_chat">DeepSeek Chat</option>
+                    <option value="deepseek_r1">DeepSeek R1</option>
+                    <option value="custom">Custom Pricing</option>
+                </select>
+            </div>
+
+            <div id="awsCustomPricing" style="display: none;">
+                <h3>Custom Pricing ($ per 1K tokens)</h3>
+                <div class="form-group">
+                    <label for="awsInputTokenRate">Input Token Rate:</label>
+                    <input type="number" id="awsInputTokenRate" value="0.003" min="0" step="0.0001">
+                </div>
+                <div class="form-group">
+                    <label for="awsOutputTokenRate">Output Token Rate:</label>
+                    <input type="number" id="awsOutputTokenRate" value="0.015" min="0" step="0.0001">
+                </div>
+                <div class="form-group">
+                    <label for="awsCacheWriteRate">Cache Write Rate:</label>
+                    <input type="number" id="awsCacheWriteRate" value="0.00375" min="0" step="0.00001">
+                    <small>Usually 25% higher than input rate</small>
+                </div>
+                <div class="form-group">
+                    <label for="awsCacheReadRate">Cache Read Rate:</label>
+                    <input type="number" id="awsCacheReadRate" value="0.0003" min="0" step="0.00001">
+                    <small>Usually 10% of input rate</small>
+                </div>
+            </div>
+
+            <details class="advanced-settings">
+                <summary>Advanced Settings</summary>
+                <div class="advanced-settings-content">
+                    <div class="section-header">Token Usage</div>
+                    <div class="form-group">
+                        <label for="awsOutputToInputRatio">Output-to-Input Token Ratio:</label>
+                        <div class="preset-buttons">
+                            <div class="preset-button ratio-preset" data-ratio="1">1:1</div>
+                            <div class="preset-button ratio-preset" data-ratio="3">3:1</div>
+                            <div class="preset-button ratio-preset active" data-ratio="8">8:1</div>
+                            <div class="preset-button ratio-preset" data-ratio="12">12:1</div>
+                            <div class="preset-button ratio-preset" data-ratio="16">16:1</div>
+                        </div>
+                        <div class="range-with-label">
+                            <input type="range" id="awsOutputToInputRatio" min="1" max="20" value="8" step="0.5">
+                            <span id="awsOutputToInputRatioLabel">8:1 (89% output / 11% input)</span>
+                        </div>
+                    </div>
+
+                    <div class="section-header">Caching Settings</div>
+                    <div class="form-group">
+                        <label for="awsCachedTokenPercentage">Cached Tokens (% of input):</label>
+                        <div class="range-with-label">
+                            <input type="range" id="awsCachedTokenPercentage" min="0" max="100" value="88">
+                            <span id="awsCachedTokenPercentageLabel">88%</span>
+                        </div>
+                        <small>Higher values = more tokens retrieved from cache = lower costs</small>
+                    </div>
+                </div>
+            </details>
+
+            <button id="calculateAws">Calculate</button>
+        </div>
+
+        <!-- Removed chart section as requested -->
+
+        <!-- Results (Right) -->
+        <div class="results aws-results">
+            <h2>Run Cost Calculator</h2>
+            <div class="result-summary">
+                <div class="result-item highlight">
+                    <strong>Monthly Average Cost (Total):</strong>
+                    <div id="awsTotalCost">$0.00</div>
+                </div>
+                <div class="result-item">
+                    <strong>Monthly Average Cost (Per Developer):</strong>
+                    <div id="awsPerDevCost">$0.00</div>
+                </div>
+                <div class="result-item">
+                    <strong>ROI from Force Multiplier:</strong>
+                    <div id="awsRoi">0%</div>
+                    <div class="explanation">(Value unlocked by force multiplier minus run cost)</div>
+                </div>
+            </div>
+
+            <div class="result-section">
+                <h3>Cost Breakdown</h3>
+                <div class="result-item">
+                    <strong>Daily Cost per Developer:</strong>
+                    <div id="awsDailyPerDevCost">$0.00</div>
+                </div>
+                <div class="result-item">
+                    <strong>Daily Total Cost:</strong>
+                    <div id="awsDailyTotalCost">$0.00</div>
+                </div>
+                <div class="result-item">
+                    <strong>Working Days per Month:</strong>
+                    <div id="workingDaysPerMonth">20</div>
+                </div>
+            </div>
+
+            <div class="result-section">
+                <h3>Annual Projection</h3>
+                <div class="result-item">
+                    <strong>Annual Run Cost:</strong>
+                    <div id="awsAnnualCost">$0.00</div>
+                </div>
+                <div class="result-item">
+                    <strong>Equivalent FTE Cost:</strong>
+                    <div id="awsFteCost">0 FTE</div>
+                    <div class="explanation">(Based on average annual developer salary)</div>
+                </div>
+            </div>
+            <div class="result-section">
+                <h3>With vs Without Prompt Caching</h3>
+                <div class="result-item">
+                    <strong>Monthly Cost with Caching:</strong>
+                    <div id="awsCostWithCaching">$0.00</div>
+                </div>
+                <div class="result-item">
+                    <strong>Monthly Cost without Caching:</strong>
+                    <div id="awsCostWithoutCaching">$0.00</div>
+                </div>
+                <div class="result-item">
+                    <strong>Monthly Savings from Caching:</strong>
+                    <div id="awsCachingSavings">$0.00</div>
+                </div>
+            </div>
+        </div>
+    </div>
     </div>
 
     <!-- Load the external JavaScript files -->
