@@ -110,15 +110,19 @@ The productivity metrics represent only one dimension of impact. Several other s
 
 ### Economic Assessment
 
+The economics of agentic coding are compelling even when considering upper-bound usage scenarios. The $2,000 monthly figure represents an extreme case—what a power user with constant, intensive AI utilisation might incur—yet even at this upper limit, the investment represents just a 16% increase in direct costs relative to the traditional development approach.
 
-The $2,000 monthly investment on AI inference that enables agentic coding represents a mere 16% increase in direct costs relative to the traditional approach. With ROI calculations ranging from 1,700% to 5,900% and an estimated payback period of 1.3 workdays, this presents an unusual economic opportunity in the development toolchain.
+With productivity gains delivering ROI calculations ranging from 1,700% to 5,900% and an estimated payback period of approximately 1.3 workdays, agentic coding presents an exceptional economic opportunity in the development toolchain.
 
-When properly analysed, the daily cost proposition becomes even clearer:
+When properly analysed, the typical daily cost proposition becomes even more favourable:
 
 - Developer daily cost (excluding hidden costs): $600-1,200
-- AI inference daily cost: $5-25 (assuming extremely heavy use)
+- AI inference daily cost: $5-25 (for heavy usage)
+- For most developers: $2-10 per day (typical usage patterns)
 
-The true economic implications extend beyond direct productivity measures and include structural changes to development processes: reduced dependency on specialised knowledge, shortened feedback cycles, and practical parallel exploration of solution alternatives.
+It's worth emphasising that most engineers will fall well below the upper threshold, with monthly AI costs typically ranging from $200-800 depending on usage patterns and specific tasks. The key insight isn't about spending the maximum possible, but rather enabling engineers to leverage these tools without arbitrary limitations that undermine their effectiveness.
+
+The true economic implications extend beyond direct productivity measures and include structural changes to development processes: reduced dependency on specialised knowledge, shortened feedback cycles, and practical parallel exploration of solution alternatives—all of which compound the value proposition far beyond the simple calculation of coding output per dollar spent.
 
 ### Calculator
 
