@@ -3,7 +3,10 @@ languageCode: en-GB
 title: smcleod.net
 theme: ["PaperMod"] #"hugo-admonitions"
 gitRepo: "https://github.com/sammcj/smcleod/tree/main"
-
+extended: true
+module:
+  imports:
+    - path: github.com/KKKZOZ/hugo-admonitions
 pagination.pagerSize: 150
 enableEmoji: true
 enableGitInfo: true
@@ -29,6 +32,8 @@ params:
   DateFormat: "January 2, 2006"
   defaultTheme: auto # dark, light
   disableThemeToggle: false
+  sass:
+    transpiler: 'dartsass'
 
   ShowReadingTime: true
   ShowShareButtons: false
