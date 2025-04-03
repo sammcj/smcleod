@@ -136,14 +136,16 @@ The [Jevons Paradox](https://en.wikipedia.org/wiki/Jevons_paradox) suggests that
 
 ![Jevons Paradox](jevons.jpg)
 
-The economic value created through this productivity transformation could distribute across:
+The economic value created through this productivity transformation won't simply disappear—it will redistribute across the ecosystem in complex and interconnected ways:
 
-1. **Engineers**: Higher compensation for those effectively leveraging AI capabilities
-2. **Organisations**: Increased capacity to address previously unviable projects
-3. **End users**: Access to purpose-built software addressing previously unsolved problems
-4. **Market entrants**: Reduced barriers for new companies requiring customised development
-5. **Creatives**: Empowers individuals to perform rapid, creative ideation and experimentation
-6. **Society**: Accelerated innovation and problem-solving across various domains
+1. **Engineers**: Engineers gain freedom from repetitive implementation tasks, allowing them to focus on intellectually stimulating work and tackle previously intractable problems—improving both job satisfaction and career development.
+2. **Organisations**: Beyond merely completing existing project backlogs faster, organisations can fundamentally reimagine their product development strategies. Projects previously considered too speculative or resource-intensive become viable, enabling more experimental approaches and reducing the opportunity cost of innovation.
+3. **End users**: As development capacity expands and costs decrease, software solutions will emerge for increasingly specialised needs. Long-neglected "long tail" problems—too niche to warrant conventional development resources—become economically viable to solve, particularly benefiting underserved markets and use cases.
+4. **Market entrants**: The reduced capital requirements and compressed development timelines lower barriers to entry across the technology sector. This democratisation enables more diverse founders to bring solutions to market without requiring extensive initial investment, potentially reshaping competitive dynamics across industries.
+5. **Adjacent professionals**: Product managers, designers, domain experts, and other non-engineering stakeholders gain the ability to more directly influence and participate in the development process, as the technical barrier between concept and implementation diminishes.
+6. **Society**: The cumulative effect of these changes extends beyond immediate economic benefits. As software solutions proliferate into previously underserved domains, we may see accelerated progress on complex societal challenges where software solutions were previously too costly or complex to implement at scale.
+
+Rather than a zero-sum redistribution, agentic coding has the potential to expand the total value created—a rising tide that creates new opportunities across the entire ecosystem while fundamentally changing who can participate in software creation and what problems become economically viable to solve.
 
 ## Workflow Comparison
 
@@ -209,14 +211,26 @@ flowchart LR
     classDef error fill:#FCBBA1,stroke:#FB6A4A,color:#CB181D
 ```
 
+## The Hidden Human Cost of Widget Programming
+
+Perhaps the most overlooked aspect of today's software landscape is its profound misuse of human potential. Globally, talented engineers spend their days building variations of the same widgets - auth systems, API integrations, JS framework migrations and ever-valuable widget implementation - that have been implemented thousands of times before.
+
+When we look beneath the surface of enterprise software development, a sobering reality emerges: much of this work isn't advancing innovation or addressing meaningful challenges, but simply recreating slightly modified versions of existing solutions.
+
+This represents an extraordinary waste of human intelligence and creativity. As we continue to advance AI capabilities in software development, the true opportunity isn't merely efficiency - it's the redirection of human cognitive capacity toward genuinely novel problems that demand creativity, ethical judgment, and domain expertise.
+
+The real cost of our current paradigm isn't measured in dollars, but in squandered human potential that could be addressing the vast landscape of unsolved challenges still awaiting our attention.
+
 ## Conclusion
 
-The economic case for AI inference in development processes warrants careful consideration. A 3-10x productivity gain with a modest 16% cost increase fundamentally changes the economics of software development in resource-constrained environments.
+The economic case for investing in AI-powered development isn't merely compelling—it's transformative. When 3-10x productivity gains can be achieved with only modest increases in cost, we're no longer discussing incremental improvements but a fundamental shift in what's possible.
 
-Rather than representing an incremental improvement to existing workflows, these capabilities enable structural reconsideration of how development work is organised and executed. This prompts important questions about team structure, skill allocation, and process design that extend beyond the immediate productivity gains.
+This isn't just about coding faster—it's about reimagining how value is created through software. For leadership, this represents a strategic inflection point that demands attention: the organisations that systematically leverage these capabilities will operate in an entirely different economic paradigm from those that don't.
 
-We've already crossed the inflection point in development economics that can significantly alter how teams approach daily work and complex technical implementations.
+The question isn't whether to adopt these tools, but how quickly you can integrate them to remain competitive. The benefits extend beyond immediate productivity metrics to encompass risk reduction, solution quality, and—perhaps most importantly—the liberation of human potential from repetitive implementation tasks.
+
+As we stand at this crossroads in software development, the cost-benefit analysis couldn't be clearer. The most expensive AI tools are those left unused by your team, as competitors race ahead with fundamentally different economics.
 
 > Don't ask yourself "_Why are my high performing engineers spending $2k/month on agentic coding?_"
 >
-> **Ask yourself why others _aren't_.**
+> **Ask yourself why others _aren't_ - and what opportunities they're missing as a result.**
