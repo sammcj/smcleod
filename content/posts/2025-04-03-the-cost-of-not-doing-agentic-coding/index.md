@@ -108,6 +108,14 @@ These figures align with real-world observations from development teams integrat
 
 And let's not forget - it's only $2,000 extra if they actually use $2,000 worth of AI inference, if they use less - the cost is less but it might be an indicator that they're not using AI to unlock their full potential.
 
+## Agentic Coding: An Evolutionary Step, Not the Destination
+
+It's important to recognise that agentic coding, while transformative, represents a point on a longer continuum rather than an ultimate destination. Where traditional code completion tools like Copilot operate primarily at the syntax and function level—offering suggestions within a developer's existing workflow-agentic systems represent a significant evolutionary leap by handling cohesive, multi-step development tasks with greater autonomy. However, this is likely not the final form of AI-augmented development.
+
+As foundation models and agent architectures continue to advance, we can anticipate further shifts in how software is conceptualised and created. The wisest approach isn't to view agentic coding as an end goal, but rather as a crucial transitional technology that both delivers immediate productivity benefits and prepares engineering teams for future paradigms where the boundaries between human and machine contributions become increasingly fluid.
+
+Organisations that successfully adopt today's agentic techniques and tools will be better positioned to adapt to whatever comes next, having already developed the organisational practices, mental models, and enabled technical tooling needed to thrive as we likely move towards a future when the importance of human written code for higher level tasks becomes less and less important.
+
 ## Benefits Beyond Raw Productivity
 
 The productivity metrics represent only one dimension of impact. Several other significant effects emerge when examining agentic coding integration more thoroughly:
