@@ -30,7 +30,7 @@ Don't ask yourself _'Why are my high performing engineers spending $2k/month on 
 
 ![](productivity-flywheel.svg)
 
-Agentic coding represents not merely a productivity tool but a fundamental economic shift in software development. While some may balk at potential AI inference costs, this analysis demonstrates that even in extreme cases—where your most intensive power users might approach $2,000 monthly—the economics remain overwhelmingly favourable: a modest cost increase yielding 300-1,000% productivity gains.
+Agentic coding represents not merely a productivity tool but a fundamental economic shift in software development. While some may balk at potential AI inference costs, this analysis demonstrates that even in hypothetical extreme edge cases—where your most AI-intensive power users might theoretically approach $2,000 monthly—the economics would remain overwhelmingly favourable: a modest cost increase yielding 300-1,000% productivity gains. In reality, most engineers using these tools effectively will incur far lower costs (typically $200-800 monthly) while still achieving transformative productivity improvements.
 
 For most engineers, the actual investment will be far lower while still delivering transformative results. Beyond raw output, this approach liberates engineers from repetitive implementation tasks, enables parallel work streams, and makes previously unviable projects economically feasible. The true cost isn't in adopting these tools, but in the opportunity cost of failing to leverage them while competitors operate within an entirely different economic paradigm.
 
