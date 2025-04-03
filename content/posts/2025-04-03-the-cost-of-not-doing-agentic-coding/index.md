@@ -279,11 +279,11 @@ flowchart LR
 
 ## Jevons Paradox and Value Distribution
 
-The [Jevons Paradox](https://en.wikipedia.org/wiki/Jevons_paradox) suggests that as resource utilisation becomes more efficient, total consumption often increases rather than decreases. Applied to software development, historical evidence indicates that a 5x productivity improvement wouldn't reduce demand for development - instead, it would dramatically expand the universe of viable software projects. And let's face it - it wouldn't be a blog post about agentic AI without a reference to Jevon.
+The [Jevons Paradox](https://en.wikipedia.org/wiki/Jevons_paradox) suggests that as resource utilisation becomes more efficient, total consumption often increases rather than decreases. Applied to software development, historical evidence indicates that a 5x productivity improvement wouldn't reduce demand for development - instead, it would dramatically expand the universe of viable software projects. And let's face it—it wouldn't be a blog post about agentic AI without a reference to Jevon.
 
 ![Jevons Paradox](jevons.jpg)
 
-As illustrated above, the Jevons effect means that as agentic coding makes development more efficient, we can expect an expansion of software projects rather than a contraction of development work. The economic value created through this productivity transformation won't simply disappear—it will redistribute across the ecosystem in complex and interconnected ways:
+As illustrated above, the Jevons Paradox (or '_effect_') means that as agentic coding makes development more efficient, we can expect an expansion of software projects rather than a contraction of development work. The economic value created through this productivity transformation won't simply disappear—it will redistribute across the ecosystem in complex and interconnected ways:
 
 1. **Engineers**: Engineers gain freedom from repetitive implementation tasks, allowing them to focus on intellectually stimulating work and tackle previously intractable problems—improving both job satisfaction and career development.
 2. **Organisations**: Beyond merely completing existing project backlogs faster, organisations can fundamentally reimagine their product development strategies. Projects previously considered too speculative or resource-intensive become viable, enabling more experimental approaches and reducing the opportunity cost of innovation.
