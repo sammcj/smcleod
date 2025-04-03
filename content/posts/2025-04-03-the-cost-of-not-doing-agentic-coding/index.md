@@ -279,7 +279,7 @@ flowchart LR
 
 ## Jevons Paradox and Value Distribution
 
-The [Jevons Paradox](https://en.wikipedia.org/wiki/Jevons_paradox) suggests that as resource utilisation becomes more efficient, total consumption often increases rather than decreases. Applied to software development, historical evidence indicates that a 5x productivity improvement wouldn't reduce demand for development - instead, it would dramatically expand the universe of viable software projects.
+The [Jevons Paradox](https://en.wikipedia.org/wiki/Jevons_paradox) suggests that as resource utilisation becomes more efficient, total consumption often increases rather than decreases. Applied to software development, historical evidence indicates that a 5x productivity improvement wouldn't reduce demand for development - instead, it would dramatically expand the universe of viable software projects. And let's face it - it wouldn't be a blog post about agentic AI without a reference to Jevon.
 
 ![Jevons Paradox](jevons.jpg)
 
