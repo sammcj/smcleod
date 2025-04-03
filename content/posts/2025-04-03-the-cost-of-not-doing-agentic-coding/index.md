@@ -22,9 +22,9 @@ UseHugoToc: false
 mermaid: true
 ---
 
-Don't ask yourself _'Why are my high performing engineers spending $2k/month on agentic coding?'_
+Don't ask yourself "_What if my high performing engineers spent $2k/month on agentic coding?_"
 
-...ask yourself _why others aren't_.
+...ask yourself why they (and others) _aren't_ - and what opportunities they're missing as a result.
 
 <!--more-->
 
@@ -137,7 +137,7 @@ With this in mind, let's say for argument's sake, one of your high performing en
 At first glance, this may seem like a significant investment. However, when we consider the productivity gains that agentic coding unlocks, the economics of this decision become much more compelling.
 
 > [!TIP] TLDR
-> Even if enabling agentic coding cost $2,000 per month (which it doesn't), the economics are unmistakable.
+> Even if enabling agentic coding cost a hypothetical $2,000 per month (which it doesn't), the economics are unmistakable.
 >
 > With productivity gains of 300-1,000%, **the return on investment is _exceptional_**.
 
@@ -316,6 +316,6 @@ The question isn't whether to adopt these tools and enable our teams to use them
 
 As we stand at this crossroads in software development, the cost-benefit analysis couldn't be clearer. The most expensive AI tools are those left unused by your team, as competitors race ahead with fundamentally different economics.
 
-> Don't ask yourself "_Why are my high performing engineers spending $2k/month on agentic coding?_"
+> Don't ask yourself "_What if my high performing engineers spent $2k/month on agentic coding?_"
 >
 > **Ask yourself why others _aren't_ - and what opportunities they're missing as a result.**
