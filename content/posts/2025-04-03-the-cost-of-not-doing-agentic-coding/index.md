@@ -308,7 +308,7 @@ The real cost of our current paradigm isn't measured in dollars, but in squander
 
 ## Conclusion
 
-The economic case for investing in AI-powered development isn't merely compelling—it's transformative. When 3-10x productivity gains can be achieved with only modest increases in cost, we're no longer discussing incremental improvements but a fundamental shift in what's possible.
+The economic case for investing in AI-powered development isn't merely compelling—it's transformative. When 3-10x productivity gains can be achieved with only modest increases in cost, we're no longer discussing incremental improvements but a fundamental shift in what's possible when engineers are empowered with the right tools, models and techniques.
 
 This isn't just about coding faster—it's about reimagining how value is created through software. For leadership, this represents a strategic inflection point that demands attention: the organisations that systematically leverage these capabilities will operate in an entirely different economic paradigm from those that don't.
 
