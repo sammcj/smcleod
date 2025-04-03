@@ -61,7 +61,7 @@ The most profound impact isn't merely coding faster—it's the fundamental shift
 
 ## Analysing the Economics of Agentic Development
 
-For argument's sake, let's say an engineer that _heavily_ utilises AI for large amounts of agentic coding could spend up to $2,000 a month on AI inference.
+For argument's sake, let's say an engineer that _heavily_ utilises AI for large amounts of agentic coding and somehow racks up $2,000 a month on AI inference.
 
 At first glance, this may seem like a significant investment. However, when we consider the productivity gains that agentic coding unlocks, the economics of this decision become much more compelling.
 
