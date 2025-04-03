@@ -30,6 +30,10 @@ Don't ask yourself _'Why are my high performing engineers spending $2k/month on 
 
 ![](productivity-flywheel.svg)
 
+Agentic coding represents not merely a productivity tool but a fundamental economic shift in software development. While some may balk at potential AI inference costs, this analysis demonstrates that even in extreme cases—where your most intensive power users might approach $2,000 monthly—the economics remain overwhelmingly favourable: a modest cost increase yielding 300-1,000% productivity gains.
+
+For most engineers, the actual investment will be far lower while still delivering transformative results. Beyond raw output, this approach liberates engineers from repetitive implementation tasks, enables parallel work streams, and makes previously unviable projects economically feasible. The true cost isn't in adopting these tools, but in the opportunity cost of failing to leverage them while competitors operate within an entirely different economic paradigm.
+
 ## Historical Context and Long-Tail Innovation
 
 What we're witnessing with agentic software development is paralleled only by the largest of productivity revolutions throughout history.
@@ -55,7 +59,7 @@ The most profound impact isn't merely coding faster—it's the fundamental shift
 
 ## Analysing the Economics of Agentic Development
 
-For arguments sake, let's say an engineer that _heavily_ utilises AI for large amounts of agentic coding could spend up to $2,000 a month on AI inference.
+For argument's sake, let's say an engineer that _heavily_ utilises AI for large amounts of agentic coding could spend up to $2,000 a month on AI inference.
 
 At first glance, this may seem like a significant investment. However, when we consider the productivity gains that agentic coding unlocks, the economics of this decision become much more compelling.
 
@@ -136,7 +140,7 @@ The [Jevons Paradox](https://en.wikipedia.org/wiki/Jevons_paradox) suggests that
 
 ![Jevons Paradox](jevons.jpg)
 
-The economic value created through this productivity transformation won't simply disappear—it will redistribute across the ecosystem in complex and interconnected ways:
+As illustrated above, the Jevons effect means that as agentic coding makes development more efficient, we can expect an expansion of software projects rather than a contraction of development work. The economic value created through this productivity transformation won't simply disappear—it will redistribute across the ecosystem in complex and interconnected ways:
 
 1. **Engineers**: Engineers gain freedom from repetitive implementation tasks, allowing them to focus on intellectually stimulating work and tackle previously intractable problems—improving both job satisfaction and career development.
 2. **Organisations**: Beyond merely completing existing project backlogs faster, organisations can fundamentally reimagine their product development strategies. Projects previously considered too speculative or resource-intensive become viable, enabling more experimental approaches and reducing the opportunity cost of innovation.
