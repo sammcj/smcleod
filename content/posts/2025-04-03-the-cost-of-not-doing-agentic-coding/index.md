@@ -34,6 +34,8 @@ Agentic coding represents not merely a productivity tool but a fundamental econo
 
 For most engineers, the actual investment will be far lower while still delivering transformative results. Beyond raw output, this approach liberates engineers from repetitive implementation tasks, enables parallel work streams, and makes previously unviable projects economically feasible. The true cost isn't in adopting these tools, but in the opportunity cost of failing to leverage them while competitors operate within an entirely different economic paradigm.
 
+---
+
 ## Historical Context and Long-Tail Innovation
 
 What we're witnessing with agentic software development is paralleled only by the largest of productivity revolutions throughout history.
@@ -159,6 +161,8 @@ As illustrated above, the Jevons effect means that as agentic coding makes devel
 
 Rather than a zero-sum redistribution, agentic coding has the potential to expand the total value created—a rising tide that creates new opportunities across the entire ecosystem while fundamentally changing who can participate in software creation and what problems become economically viable to solve.
 
+---
+
 ## Workflow Comparison
 
 The following diagram illustrates the structural differences between conventional development approaches and agentic coding workflows:
@@ -233,9 +237,11 @@ This represents an extraordinary waste of human intelligence and creativity. As 
 
 The real cost of our current paradigm isn't measured in dollars, but in squandered human potential that could be addressing the vast landscape of unsolved challenges still awaiting our attention.
 
-## Conclusion
+---
 
-The economic case for investing in AI-powered development isn't merely compelling—it's transformative. When 3-10x productivity gains can be achieved with only modest increases in cost, we're no longer discussing incremental improvements but a fundamental shift in what's possible.
+In Conclusion,
+
+The economic case for investing in AI-powered development isn't merely compelling - it's transformative. When 3-10x productivity gains can be achieved with only modest increases in cost, we're no longer discussing incremental improvements but a fundamental shift in what's possible.
 
 This isn't just about coding faster—it's about reimagining how value is created through software. For leadership, this represents a strategic inflection point that demands attention: the organisations that systematically leverage these capabilities will operate in an entirely different economic paradigm from those that don't.
 
