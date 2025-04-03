@@ -40,16 +40,16 @@ Similarly, when semiconductor manufacturing productivity increased 38x between 1
 
 ![](loom-361631_1920.jpg)
 
-## The Multiplicative Nature of AI Productivity
+What makes agentic coding particularly transformative is its ability to fundamentally reshape how engineers approach problem-solving. Unlike traditional automation that simply speeds up existing processes, agentic coding creates a multiplicative effect by:
 
-What makes agentic coding particularly transformative is that these benefits are multiplicative rather than simply additive. When we examine the compound effect across different dimensions:
+- **Eliminating cognitive bottlenecks** - Engineers can offload repetitive implementation details while focusing on higher-level architecture and design choices
+- **Compressing knowledge acquisition cycles** - Where learning a new framework or API might have taken days or weeks, engineers can now leverage domain expertise across multiple technical areas simultaneously
+- **Enabling parallel exploration of solution spaces** - Multiple approaches can be developed and evaluated concurrently rather than sequentially
+- **Reducing the activation energy for creativity** - The cost of experimentation drops dramatically, allowing for more innovative approaches that would otherwise be too resource-intensive to attempt
 
-- **Code output**: 3-10x base productivity increase
-- **Learning efficiency**: 2-5x faster onboarding and knowledge acquisition
-- **Developer sustainability**: 1.5-2x more sustainable high-performance work
-- **Strategic focus**: 2-3x improvement in high-level problem-solving
+This combinatorial effect creates a self-reinforcing productivity flywheel. As engineers spend less time on implementation details and more time on strategic thinking, the quality of their architectural decisions improves. These better foundations then amplify the effectiveness of agentic coding assistance, creating a virtuous cycle that compounds over time.
 
-These factors don't just add together they multiply, creating productivity improvements far beyond what raw code output metrics alone would suggest. Development teams report that this compound effect enables previously impossible projects to become feasible within existing resource constraints.
+The most profound impact isn't merely coding faster—it's the fundamental shift in what becomes economically viable to build. Projects that were previously deemed too complex, time-consuming, or specialised are now within reach, expanding the frontier of what's possible in software development.
 
 ---
 
