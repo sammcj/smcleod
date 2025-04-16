@@ -78,6 +78,7 @@ The Prompting Guide provides essential knowledge for effective interaction with 
 - [Prompting Basics](https://www.promptingguide.ai/introduction/basics)
 - [Prompting Tips and Best Practices](https://www.promptingguide.ai/introduction/tips)
 - [LearnPrompting](https://learnprompting.org/docs/introduction)
+- [Google Prompt Engineering Guide](https://www.gptaiflow.tech/assets/files/2025-01-18-pdf-1-TechAI-Goolge-whitepaper_Prompt%20Engineering_v4-af36dcc7a49bb7269a58b1c9b89a8ae1.pdf) (PDF)
 
 ## Short Training Courses
 
