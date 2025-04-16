@@ -68,7 +68,7 @@ Before diving into implementation, these resources will help you build foundatio
 - [Why Agent Engineering](https://youtu.be/5N33E9tC400) - Why we are all in on Agent Engineering in 2025.
 - [How We Build Effective Agents](https://youtu.be/D7_ipDqhtwk) - Barry Zhang from Anthropic touches on the key points of building effective agents.
 - [Intro to Large Language Models](https://youtu.be/zjkBMFhNj_g) - This is a 1 hour general-audience introduction to Large Language Models: the core technical component behind systems like ChatGPT, Claude, and Bard. What they are, where they are headed, comparisons and analogies to present-day operating systems, and some of the security-related challenges of this new computing paradigm.
-- [LLMs For the working Programmer ](https://youtu.be/zwItokY087U) - Some practical high level tips for developers working with LLMs for the first time.
+- [LLMs For the working Programmer](https://youtu.be/zwItokY087U) - Some practical high level tips for developers working with LLMs for the first time.
 - [The Future of AI Development](https://youtu.be/JhCl-GeT4jw) - Rethinking how we might 'program' in the future.
 
 ### 2. Prompting Fundamentals
@@ -134,5 +134,6 @@ I think the best community in terms to sharing new methods, models and tools is 
 1. **Start small**: Begin with simple agent implementations before moving to complex multi-agent systems.
 2. **Focus on understanding**: Don't just copy code—understand why agents make certain decisions and how they process information.
 3. **Get your hands dirty and experiment**: Create small, disposable proof-of-concept projects to test different agent architectures and approaches.
+4. **Try agentic coding**: Try using tools like Cline or Copilot Agent to help accelerate your coding process.
 
 Start with the fundamentals, work through the tutorials, and gradually take on more complex projects. The goal is not just to understand the theory but to develop practical skills that you can apply in real-world software development.
