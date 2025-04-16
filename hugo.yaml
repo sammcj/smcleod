@@ -20,6 +20,7 @@ minify:
   minifyOutput: true
 
 params:
+  ignoreLogs: ['warning-partial-superfluous-prefix']
   env: production # to enable google analytics, opengraph, twitter-cards and schema.
   title: smcleod.net
   timeZone: Australia/Melbourne
