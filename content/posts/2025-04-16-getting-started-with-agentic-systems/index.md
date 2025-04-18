@@ -26,6 +26,8 @@ As agentic systems become increasingly central to modern software development, m
 
 This guide provides a short list of pre-reading/watching and hands-on training resources to help you get started with developing with AI agents. The focus is on practical implementation for tools and methods you're likely to use in the workplace, so you can quickly gain experience and confidence in building AI powered and agentic systems.
 
+![generative-agent-state-diagram](generative-agent-state-diagram.png)
+
 ## Understanding the Landscape
 
 Before diving into specific frameworks and tools, it's essential to understand the broader context of AI agents and their role in software development. The resources below provide a solid foundation:
