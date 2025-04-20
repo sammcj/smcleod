@@ -13,15 +13,15 @@ toc: true
 
 # Sam McLeod
 
-## DevOps & Platform Engineering Lead
+## AI Engineering Principal
 
 ![](/profilephoto/apple-touch-icon.png)
 
 Advocate for DevOps culture and practices and cloud native architecture with a background in platform
 engineering, automation, highly available systems design and team leadership.
 
-With 17+ years of engineering experience, I enjoy facilitating the transformation of traditional systems engineering
-teams and processes into modern product focused platform engineering teams with DevOps culture and practices.
+With 20+ years of engineering experience, I enjoy enabling and accelerating individuals,
+teams and organisations with generative AI solutions.
 
 *"Easy things should be easy, and hard things should be possible."*
 
