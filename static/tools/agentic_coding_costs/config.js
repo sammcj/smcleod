@@ -118,6 +118,14 @@ var modelPricing = {
         speedMultiplier: 1.5,
         aiCapabilityFactor: 1.0
     },
+    openai_o3: {
+        inputTokenRate: 0.010,
+        outputTokenRate: 0.040,
+        cacheWriteRate: 0.01875,
+        cacheReadRate: 0.0025,
+        speedMultiplier: 1.5,
+        aiCapabilityFactor: 1.1
+    },
     openai_o3_mini: {
         inputTokenRate: 0.0011,
         outputTokenRate: 0.0044,
@@ -140,6 +148,14 @@ var modelPricing = {
         cacheWriteRate: 0.000175,
         cacheReadRate: 0.00055,
         speedMultiplier: 1.5,
+        aiCapabilityFactor: 1.0
+    },
+    gemini_2_5_pro: {
+        inputTokenRate: 0.0025,
+        outputTokenRate: 0.015,
+        cacheWriteRate: 0.0025, //caching not supported
+        cacheReadRate: 0.015,   //caching not supported
+        speedMultiplier: 0.9,
         aiCapabilityFactor: 1.0
     }
 };
