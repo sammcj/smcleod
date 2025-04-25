@@ -33,6 +33,7 @@ params:
   DateFormat: "January 2, 2006"
   defaultTheme: auto # dark, light
   disableThemeToggle: false
+  math: true
   sass:
     transpiler: 'dartsass'
 
@@ -202,6 +203,7 @@ markup:
       table: true
       taskList: true
       typographer: true
+
 
   tableOfContents:
     startLevel: 2
