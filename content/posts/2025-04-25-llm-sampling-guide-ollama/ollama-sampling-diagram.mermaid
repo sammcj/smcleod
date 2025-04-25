@@ -1,0 +1,51 @@
+
+flowchart TD
+    subgraph "How LLMs Generate Text"
+        A[Raw Logits<br>Model's internal numeric scores] -->|Convert to| B[Token Probabilities<br>Normalised % chances]
+        B -->|Apply Sampling Settings| C[Filtered Probabilities]
+        C -->|Select Token Based on<br>Adjusted Probabilities| D[Next Generated Token]
+    end
+
+    subgraph "Key Sampling Methods"
+        E[Temperature] -->|Controls randomness<br>by scaling probabilities| F[Token Selection]
+        G[Top P] -->|Keeps tokens until<br>cumulative % reached| F
+        H[Min P] -->|Keeps tokens with<br>minimum relative probability| F
+        I[Top K] -->|Keeps only K<br>most likely tokens| F
+        J[Repetition Penalty] -->|Reduces probability<br>of repeated tokens| F
+    end
+
+    subgraph "Sampling Method Comparison"
+        K[Top P: 0.9] -->|Issue: Can include<br>too many low-prob tokens| L[Potential incoherence]
+        M[Min P: 0.05] -->|Advantage: Adapts to<br>model's confidence| N[Better balance]
+        O[Temperature: 0.7] -->|Applied last| P[Final token probabilities]
+    end
+
+    subgraph "Recommended Workflow"
+        Q[Set Min P<br>0.05-0.1] -->|Balance coherence<br>and diversity| R[Set Temperature<br>0.7-0.9]
+        R -->|Adjust based on<br>desired creativity| S[Add Repetition Penalty<br>1.0-1.2 if needed]
+        S --> T[Test and refine<br>for your specific use case]
+    end
+
+    style A fill:#EFF3FF,stroke:#9ECAE1,color:#3182BD
+    style B fill:#EFF3FF,stroke:#9ECAE1,color:#3182BD
+    style C fill:#EFF3FF,stroke:#9ECAE1,color:#3182BD
+    style D fill:#EFF3FF,stroke:#9ECAE1,color:#3182BD
+
+    style E fill:#FFF5EB,stroke:#FD8D3C,color:#E6550D
+    style F fill:#FEE0D2,stroke:#E6550D,color:#E6550D
+    style G fill:#FFF5EB,stroke:#FD8D3C,color:#E6550D
+    style H fill:#FFF5EB,stroke:#FD8D3C,color:#E6550D
+    style I fill:#FFF5EB,stroke:#FD8D3C,color:#E6550D
+    style J fill:#FFF5EB,stroke:#FD8D3C,color:#E6550D
+
+    style K fill:#E5F5E0,stroke:#31A354,color:#31A354
+    style L fill:#EAF5EA,stroke:#C6E7C6,color:#77AD77
+    style M fill:#E5F5E0,stroke:#31A354,color:#31A354
+    style N fill:#EAF5EA,stroke:#C6E7C6,color:#77AD77
+    style O fill:#E5F5E0,stroke:#31A354,color:#31A354
+    style P fill:#EAF5EA,stroke:#C6E7C6,color:#77AD77
+
+    style Q fill:#E6E6FA,stroke:#756BB1,color:#756BB1
+    style R fill:#E6E6FA,stroke:#756BB1,color:#756BB1
+    style S fill:#E6E6FA,stroke:#756BB1,color:#756BB1
+    style T fill:#E6E6FA,stroke:#756BB1,color:#756BB1

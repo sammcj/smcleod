@@ -1,0 +1,57 @@
+
+flowchart TD
+    subgraph "Temperature Effect"
+        TE1["Raw Token Probabilities<br>1: 80%, 2: 10%, 3: 10%"] -->|"Temperature 0.5<br>Makes high probabilities higher"| TE2["Adjusted Probabilities<br>1: 97%, 2: 1.5%, 3: 1.5%"]
+        TE1 -->|"Temperature 1.0<br>Keeps original distribution"| TE3["Adjusted Probabilities<br>1: 80%, 2: 10%, 3: 10%"]
+        TE1 -->|"Temperature 2.0<br>Flattens distribution"| TE4["Adjusted Probabilities<br>1: 59%, 2: 21%, 3: 21%"]
+    end
+    subgraph "Top P (Nucleus Sampling)"
+        TP1["Token Probabilities<br>Many tokens with varied probabilities"] -->|"Top P = 0.9"| TP2["Keep tokens until<br>cumulative probability = 90%"]
+        TP2 -->|"When confidence is spread out"| TP3["Many low-probability tokens included<br>Risk of incoherence"]
+        TP2 -->|"When top token dominates"| TP4["Only 1-2 tokens considered<br>Risk of predictability"]
+    end
+    subgraph "Min P Sampling"
+        MP1["Token Probabilities<br>Top token: 90%"] -->|"Min P = 0.05"| MP2["Consider tokens with<br>at least 4.5% probability"]
+        MP1 -->|"Adapts to model confidence"| MP3["Balance between<br>coherence and diversity"]
+        MP4["Token Probabilities<br>Top token: 20%"] -->|"Min P = 0.05"| MP5["Consider tokens with<br>at least 1% probability"]
+    end
+    subgraph "Top K Filtering"
+        TK1["Full vocabulary<br>32,000+ tokens"] -->|"Top K = 40"| TK2["Only 40 highest<br>probability tokens considered"]
+        TK2 -->|"Risk of being"| TK3["Too restrictive<br>or too permissive<br>depending on context"]
+    end
+    subgraph "Recommended Order"
+        RO1["Raw Probabilities"] -->|"Step 1: Apply Min P"| RO2["Filter unlikely tokens"]
+        RO2 -->|"Step 2: Apply Temperature"| RO3["Scale remaining probabilities"]
+        RO3 -->|"Step 3: Select token<br>based on adjusted probabilities"| RO4["Generated token"]
+    end
+    classDef inputOutput fill:#FEE0D2,stroke:#E6550D,color:#E6550D
+    classDef llm fill:#E5F5E0,stroke:#31A354,color:#31A354
+    classDef components fill:#E6E6FA,stroke:#756BB1,color:#756BB1
+    classDef process fill:#EAF5EA,stroke:#C6E7C6,color:#77AD77
+    classDef stop fill:#E5E1F2,stroke:#C7C0DE,color:#8471BF
+    classDef data fill:#EFF3FF,stroke:#9ECAE1,color:#3182BD
+    classDef decision fill:#FFF5EB,stroke:#FD8D3C,color:#E6550D
+    classDef storage fill:#F2F0F7,stroke:#BCBDDC,color:#756BB1
+    classDef api fill:#FFF5F0,stroke:#FD9272,color:#A63603
+    classDef error fill:#FCBBA1,stroke:#FB6A4A,color:#CB181D
+
+    style TE1 fill:#EFF3FF,stroke:#9ECAE1,color:#3182BD
+    style TE2 fill:#E5F5E0,stroke:#31A354,color:#31A354
+    style TE3 fill:#FFF5EB,stroke:#FD8D3C,color:#E6550D
+    style TE4 fill:#FCBBA1,stroke:#FB6A4A,color:#CB181D
+    style TP1 fill:#EFF3FF,stroke:#9ECAE1,color:#3182BD
+    style TP2 fill:#FFF5EB,stroke:#FD8D3C,color:#E6550D
+    style TP3 fill:#FCBBA1,stroke:#FB6A4A,color:#CB181D
+    style TP4 fill:#FFF5EB,stroke:#FD8D3C,color:#E6550D
+    style MP1 fill:#EFF3FF,stroke:#9ECAE1,color:#3182BD
+    style MP2 fill:#E5F5E0,stroke:#31A354,color:#31A354
+    style MP3 fill:#E5F5E0,stroke:#31A354,color:#31A354
+    style MP4 fill:#EFF3FF,stroke:#9ECAE1,color:#3182BD
+    style MP5 fill:#E5F5E0,stroke:#31A354,color:#31A354
+    style TK1 fill:#EFF3FF,stroke:#9ECAE1,color:#3182BD
+    style TK2 fill:#FFF5EB,stroke:#FD8D3C,color:#E6550D
+    style TK3 fill:#FFF5F0,stroke:#FD9272,color:#A63603
+    style RO1 fill:#E6E6FA,stroke:#756BB1,color:#756BB1
+    style RO2 fill:#E6E6FA,stroke:#756BB1,color:#756BB1
+    style RO3 fill:#E6E6FA,stroke:#756BB1,color:#756BB1
+    style RO4 fill:#FEE0D2,stroke:#E6550D,color:#E6550D
