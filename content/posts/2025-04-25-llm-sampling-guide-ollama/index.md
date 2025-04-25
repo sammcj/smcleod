@@ -44,7 +44,7 @@ This guide explains the key sampling parameters and how they affect your model's
 | **mirostat**       | `0`     | `0`    | `0`        | `0`             | `0`              | `0`           |
 | **repeat_penalty** | `1.1`   | `1.05` | `1.05`     | `1.05`          | `1.0`            | `1.15`        |
 | **top_k**          | `40`    | `40`   | `0`*       | `0`*            | `0`              | `0`           |
-| **repeat_last_n**  | `64`    | `128`  | `128`      | `64`            | `64`             | `64`          |
+<!-- | **repeat_last_n**  | `64`    | `128`  | `128`      | `64`            | `64`             | `64`          | -->
 
 > [!NOTE] *For factual/precise use cases
 > Some guides recommend Top K = 40, but Min P generally provides better adaptive filtering. Consider using Min P alone with a higher value (0.1) for most factual use cases.
