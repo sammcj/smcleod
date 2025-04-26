@@ -185,7 +185,7 @@ Using these additional parameters, individually or sometimes in combination (tho
 ### General Purpose / Balanced
 
 ```plain
-temperature: 0.8
+temperature: 0.7
 min_p: 0.05
 top_p: 0.9
 top_k: 0
