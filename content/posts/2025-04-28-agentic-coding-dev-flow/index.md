@@ -33,6 +33,8 @@ The basic flow is Setup -> [Plan -> Act](https://docs.cline.bot/exploring-clines
 
 ## 🕵 Setup
 
+- Ensure any directories or files you don't want Cline to read are excluded by adding them to a `.clineignore` file in the root of your project.
+
 ### 🛠️ Tools
 
 The effective use of tools is critical to the success and cost effectiveness of agentic coding. The MCP Servers (tools) I frequently use are available here: [sammcj/agentic-coding#mcp-servers](https://github.com/sammcj/agentic-coding#mcp-servers)
