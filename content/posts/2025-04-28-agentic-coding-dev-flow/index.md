@@ -24,7 +24,7 @@ mermaid: true
 
 The following is workflow flow I use for agentic coding.
 
-The basic flow is Setup -> Plan -> Act -> Review and Iterate.
+The basic flow is Setup -> [Plan -> Act](https://docs.cline.bot/exploring-clines-tools/plan-and-act-modes-a-guide-to-effective-ai-development) -> Review and Iterate.
 
 1. **Setup** - Ensure the right rules and tools are enabled, optionally gather important documentation or examples.
 2. **Plan** - Build a detailed plan based off your goals, requirements and ideation with the coding agent.
@@ -54,7 +54,7 @@ The effective use of tools is critical to the success and cost effectiveness of 
 
 ### 📏 Rules
 
-I heavily utilise Cline rules to help with the development process. I have a set of global rules that I use for all projects, and then I often add project specific rules as needed.
+I heavily utilise agent rules (e.g. [.Clinerules](https://docs.cline.bot/improving-your-prompting-skills/prompting#clinerules-file)) to help with the development process. I have a set of global rules that I use for all projects, and then I often add project specific rules as needed.
 
 - My rules available here: [sammcj/agentic-coding](https://github.com/sammcj/agentic-coding#rules)
 
