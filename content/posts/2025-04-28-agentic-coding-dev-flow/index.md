@@ -24,14 +24,45 @@ mermaid: true
 
 The following is workflow flow I use for agentic coding.
 
-The basic flow is:
+The basic flow is Setup -> Plan -> Act -> Review and Iterate.
 
-1. **Pre Planning** (Optional) - Gather important documentation or examples.
+1. **Setup** - Ensure the right rules and tools are enabled, optionally gather important documentation or examples.
 2. **Plan** - Build a detailed plan based off your goals, requirements and ideation with the coding agent.
 3. **Act** - Perform the development tasks, in phases.
 4. **Review and Iterate** - Review the work, update the plan and iterate as required.
 
-## 🕵 Pre Planning
+## 🕵 Setup
+
+### 🛠️ Tools
+
+The effective use of tools is critical to the success and cost effectiveness of agentic coding.
+
+- The MCP Servers (tools) I frequently use are available here: [sammcj/agentic-coding#mcp-servers](https://github.com/sammcj/agentic-coding#mcp-servers)
+
+- [MVP / Always On](https://github.com/sammcj/agentic-coding/blob/main/MCP/mcp-config-mvp.json)
+  - [Context7](https://github.com/upstash/context7): Used to fetch documentation.
+  - [Fetch](https://github.com/modelcontextprotocol/servers/blob/main/src/fetch/README.md): Used to fetch URLs.
+  - [Brave Search](https://github.com/modelcontextprotocol/servers/tree/main/src/brave-search): Provides web search (free Brave Search AI API key required).
+  - [Package Version](https://github.com/sammcj/mcp-package-version): Used to get up to date package versions.
+  - [Github](https://github.com/modelcontextprotocol/servers/blob/main/src/github/README.md): Used to fetch information from GitHub repositories, Github Issues & PRs.
+- [Sometimes Used](https://github.com/sammcj/agentic-coding/blob/main/MCP/mcp-config-sometimes.json)
+  - [Firecrawl](https://github.com/mendableai/firecrawl-mcp-server): Provides web scraping and markdown conversion (Self hosted Firecrawl, or Firecrawl API key required).
+  - [Markdownify](github.com/zcaceres/markdownify-mcp): Converts documents to markdown.
+  - [Browser Use](https://github.com/Saik0s/mcp-browser-use): Gives access to a browser.
+  - [SearXNG](https://github.com/ihor-sokoliuk/mcp-searxng): Provides web search (Self hosted SearXNG required).
+  - [Magic MCP](https://github.com/21st-dev/magic-mcp): Provides frontend UI components.
+
+![MCP Servers](mcp-servers.png)
+
+### 📏 Rules
+
+I heavily utilise Cline rules to help with the development process. I have a set of global rules that I use for all projects, and then I often add project specific rules as needed.
+
+- My rules available here: [sammcj/agentic-coding](https://github.com/sammcj/agentic-coding#rules)
+
+![cline rules settings](clinerules-setting.png)
+
+### 📑 Gather Documentation / Examples
 
 Note: I don't _always_ do this step, and if the model is good at using the tools available to it to efficiently fetch this information, it may not be necessary.
 
@@ -44,7 +75,9 @@ If I'm working with especially new libraries, frameworks, specifications or inte
 > - `docs/reference_examples/go-mcp-example-usage.go.txt` - A code example from the go-mcp repository (in this case I'd add .txt to the end so it doesn't interfere with the go builds)
 > - `docs/reference_examples/mcp-specification-2025-03-26.json` - the latest version of the MCP specification
 
-## 🤔📋 Plan Mode
+---
+
+## 🤔 Plan Mode
 
 - Usually I'll start by writing a prompt in a text editor / file with a detailed goal for project I want to build.
 - Then I start a fresh session and switch to Plan mode, and provide that prompt to the agent:
@@ -81,7 +114,7 @@ If I'm working with especially new libraries, frameworks, specifications or inte
   > [!NOTICE] _Example_
   > I like the idea of going with REST, but let's make sure we can easily switch to GraphQL in the future if we need to. Also we should consider how we will handle authentication and authorisation.
 
-### 📄 Plan Document
+### 📄 Create Plan Document
 
 - Prompt the agent to **create a markdown document** with a checklist of tasks to complete in a phased development approach:
   > [!NOTICE] Development Plan Prompt
@@ -93,6 +126,8 @@ If I'm working with especially new libraries, frameworks, specifications or inte
   > Remember to use the tools / functions available to you. After each phase is complete, you must check off any tasks that have been completed in full. Then stop and I will review your work.
 
 The intent here is to have a clear, concise and detailed plan that you could in theory provide to any agent or competant software engineer to undertake the development.
+
+---
 
 ## 🏁 Act Mode
 
@@ -117,6 +152,8 @@ Once completed:
   > [!NOTICE] Continue Development Prompt
   > First read the docs/DEVELOPMENT_PLAN.md file. Then continue development, ensuring all requirements are met.
 - Iterate until all phases are complete.
+
+---
 
 ## 📋 Update Rules
 
