@@ -35,9 +35,7 @@ The basic flow is Setup -> Plan -> Act -> Review and Iterate.
 
 ### 🛠️ Tools
 
-The effective use of tools is critical to the success and cost effectiveness of agentic coding.
-
-- The MCP Servers (tools) I frequently use are available here: [sammcj/agentic-coding#mcp-servers](https://github.com/sammcj/agentic-coding#mcp-servers)
+The effective use of tools is critical to the success and cost effectiveness of agentic coding. The MCP Servers (tools) I frequently use are available here: [sammcj/agentic-coding#mcp-servers](https://github.com/sammcj/agentic-coding#mcp-servers)
 
 - [MVP / Always On](https://github.com/sammcj/agentic-coding/blob/main/MCP/mcp-config-mvp.json)
   - [Context7](https://github.com/upstash/context7): Used to fetch documentation.
