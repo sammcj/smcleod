@@ -47,7 +47,7 @@ The effective use of tools is critical to the success and cost effectiveness of 
   - [Github](https://github.com/modelcontextprotocol/servers/blob/main/src/github/README.md): Used to fetch information from GitHub repositories, Github Issues & PRs.
 - [Sometimes Used](https://github.com/sammcj/agentic-coding/blob/main/MCP/mcp-config-sometimes.json)
   - [Firecrawl](https://github.com/mendableai/firecrawl-mcp-server): Provides web scraping and markdown conversion (Self hosted Firecrawl, or Firecrawl API key required).
-  - [Markdownify](github.com/zcaceres/markdownify-mcp): Converts documents to markdown.
+  - [Markdownify](https://github.com/zcaceres/markdownify-mcp): Converts documents to markdown.
   - [Browser Use](https://github.com/Saik0s/mcp-browser-use): Gives access to a browser.
   - [SearXNG](https://github.com/ihor-sokoliuk/mcp-searxng): Provides web search (Self hosted SearXNG required).
   - [Magic MCP](https://github.com/21st-dev/magic-mcp): Provides frontend UI components.
