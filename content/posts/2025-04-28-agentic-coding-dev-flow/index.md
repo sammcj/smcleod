@@ -22,7 +22,9 @@ UseHugoToc: true
 mermaid: true
 ---
 
-The following is workflow flow I use for agentic coding.
+The following my workflow for agentic coding.
+
+![](agentic-flow.png)
 
 The basic flow is Setup -> [Plan -> Act](https://docs.cline.bot/exploring-clines-tools/plan-and-act-modes-a-guide-to-effective-ai-development) -> Review and Iterate.
 
