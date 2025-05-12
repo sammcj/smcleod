@@ -1,0 +1,1121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My LLM Dashboard</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --bg-primary: #f8f9fa;
+            --bg-secondary: #ffffff;
+            --accent-primary: #8a2be2;
+            --accent-secondary: #673ab7;
+            --text-primary: #212529;
+            --text-secondary: #6c757d;
+            --card-bg: #ffffff;
+            --card-border: #e9ecef;
+            --pass-color: #28a745;
+            --fail-color: #dc3545;
+            --model-1: #673ab7;
+            --model-2: #3f51b5;
+            --model-3: #2196f3;
+            --model-4: #009688;
+            --model-5: #4caf50;
+            --model-6: #8bc34a;
+            --model-7: #cddc39;
+            --model-8: #ffc107;
+            --model-9: #ff9800;
+            --model-10: #ff5722;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.6;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        header {
+            background-color: var(--bg-secondary);
+            padding: 1.5rem;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        h1 {
+            font-size: 2.2rem;
+            font-weight: 800;
+            background: linear-gradient(to right, var(--accent-primary), var(--accent-secondary));
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 0.5rem;
+        }
+
+        .controls {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+
+        .search-box {
+            flex: 1;
+            min-width: 280px;
+            position: relative;
+        }
+
+        .search-box input {
+            width: 100%;
+            padding: 0.8rem 1rem 0.8rem 2.8rem;
+            border-radius: 12px;
+            border: 1px solid var(--card-border);
+            background-color: var(--card-bg);
+            color: var(--text-primary);
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .search-box input:focus {
+            outline: none;
+            border-color: var(--accent-primary);
+            box-shadow: 0 0 0 2px rgba(138, 43, 226, 0.25);
+        }
+
+        .search-icon {
+            position: absolute;
+            left: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-secondary);
+        }
+
+        .filters {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .filter-btn {
+            background-color: var(--card-bg);
+            color: var(--text-primary);
+            border: 1px solid var(--card-border);
+            border-radius: 8px;
+            padding: 0.6rem 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 0.9rem;
+        }
+
+        .filter-btn:hover, .filter-btn.active {
+            background-color: var(--accent-primary);
+            border-color: var(--accent-primary);
+        }
+
+        .controls-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+        
+        .sort-controls {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .sort-controls label {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+        }
+
+        .sort-controls select {
+            padding: 0.6rem 1rem;
+            border-radius: 8px;
+            border: 1px solid var(--card-border);
+            background-color: var(--card-bg);
+            color: var(--text-primary);
+            font-size: 0.9rem;
+        }
+
+        .sort-btn {
+            background-color: var(--card-bg);
+            color: var(--text-primary);
+            border: 1px solid var(--card-border);
+            border-radius: 8px;
+            padding: 0.6rem 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .sort-btn:hover {
+            background-color: var(--accent-primary);
+            border-color: var(--accent-primary);
+            color: white;
+        }
+        
+        .litellm-controls {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .litellm-controls label {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            cursor: pointer;
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+        }
+        
+        .refresh-btn {
+            background-color: var(--card-bg);
+            color: var(--text-primary);
+            border: 1px solid var(--card-border);
+            border-radius: 8px;
+            padding: 0.6rem 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .refresh-btn:hover {
+            background-color: var(--accent-primary);
+            border-color: var(--accent-primary);
+            color: white;
+        }
+        
+        .refresh-btn.loading i {
+            animation: spin 1s linear infinite;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        main {
+            flex: 1;
+            padding: 2rem 1rem;
+            max-width: 1200px;
+            margin: 0 auto;
+            width: 100%;
+        }
+
+        .models-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .model-card {
+            background-color: var(--card-bg);
+            border-radius: 16px;
+            border: 1px solid var(--card-border);
+            overflow: hidden;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+        
+        .model-card:nth-child(3n+1) .model-header {
+            background-color: rgba(138, 43, 226, 0.08);
+        }
+        
+        .model-card:nth-child(3n+2) .model-header {
+            background-color: rgba(16, 163, 127, 0.08);
+        }
+        
+        .model-card:nth-child(3n+3) .model-header {
+            background-color: rgba(6, 104, 225, 0.08);
+        }
+
+        .model-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .model-header {
+            padding: 1.5rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .model-header::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to right, var(--model-color, var(--accent-primary)), transparent);
+            opacity: 0.15;
+            z-index: 0;
+        }
+
+        .model-name {
+            font-size: 1.4rem;
+            font-weight: 700;
+            margin-bottom: 0.3rem;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .model-name a {
+            color: inherit;
+            text-decoration: none;
+            transition: all 0.2s ease;
+        }
+        
+        .model-name a:hover {
+            color: var(--accent-primary);
+            text-decoration: underline;
+        }
+
+        .model-provider {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            position: relative;
+            z-index: 1;
+        }
+
+        .model-content {
+            padding: 0 1.5rem 1.5rem;
+        }
+
+        .rating-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0.8rem;
+            padding-bottom: 0.8rem;
+            border-bottom: 1px solid var(--card-border);
+        }
+
+        .rating-item:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+
+        .rating-label {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+        }
+
+        .emoji-rating {
+            display: flex;
+            align-items: center;
+            gap: 0.15rem;
+        }
+
+        .pass-fail {
+            font-weight: 600;
+            padding: 0.3rem 0.6rem;
+            border-radius: 6px;
+            font-size: 0.8rem;
+        }
+
+        .pass {
+            background-color: rgba(76, 175, 80, 0.2);
+            color: var(--pass-color);
+        }
+
+        .fail {
+            background-color: rgba(244, 67, 54, 0.2);
+            color: var(--fail-color);
+        }
+
+        .conditional-container {
+            margin-top: 1rem;
+            padding-top: 1rem;
+            border-top: 1px dashed var(--card-border);
+        }
+
+        .conditional-header {
+            font-size: 0.9rem;
+            font-weight: 600;
+            margin-bottom: 0.8rem;
+            color: var(--text-secondary);
+        }
+        
+        .model-note {
+            margin-top: 1rem;
+            padding: 0.8rem;
+            background-color: rgba(0, 0, 0, 0.05);
+            border-radius: 8px;
+            font-size: 0.9rem;
+            font-style: italic;
+            color: var(--text-secondary);
+            position: relative;
+            z-index: 1;
+        }
+        
+        .litellm-price-container {
+            margin-top: 1.2rem;
+            padding: 1rem;
+            background-color: rgba(0, 0, 0, 0.03);
+            border-radius: 8px;
+            border-left: 3px solid var(--accent-primary);
+        }
+
+        footer {
+            background-color: var(--bg-secondary);
+            padding: 1.5rem;
+            text-align: center;
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 3rem 1rem;
+            color: var(--text-secondary);
+        }
+
+        .empty-state i {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            opacity: 0.6;
+        }
+
+        .empty-state h2 {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .header-container {
+                flex-direction: column;
+            }
+            
+            .controls {
+                flex-direction: column;
+                align-items: stretch;
+            }
+            
+            .search-box {
+                width: 100%;
+            }
+            
+            .filters {
+                overflow-x: auto;
+                padding-bottom: 0.5rem;
+                margin-bottom: 0.5rem;
+                -ms-overflow-style: none;
+                scrollbar-width: none;
+            }
+            
+            .filters::-webkit-scrollbar {
+                display: none;
+            }
+            
+            .filter-btn {
+                white-space: nowrap;
+            }
+        }
+
+        /* Custom tooltip */
+        .tooltip {
+            position: relative;
+            display: inline-block;
+            cursor: help;
+        }
+
+        .tooltip .tooltiptext {
+            visibility: hidden;
+            width: 200px;
+            background-color: var(--bg-secondary);
+            color: var(--text-primary);
+            text-align: center;
+            border-radius: 6px;
+            padding: 8px;
+            position: absolute;
+            z-index: 1;
+            bottom: 125%;
+            left: 50%;
+            margin-left: -100px;
+            opacity: 0;
+            transition: opacity 0.3s;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            border: 1px solid var(--card-border);
+            font-size: 0.85rem;
+        }
+
+        .tooltip .tooltiptext::after {
+            content: "";
+            position: absolute;
+            top: 100%;
+            left: 50%;
+            margin-left: -5px;
+            border-width: 5px;
+            border-style: solid;
+            border-color: var(--card-border) transparent transparent transparent;
+        }
+
+        .tooltip:hover .tooltiptext {
+            visibility: visible;
+            opacity: 1;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="header-container">
+            <h1>My LLM Dashboard</h1>
+            <div class="controls">
+                <div class="search-box">
+                    <i class="fas fa-search search-icon"></i>
+                    <input type="text" id="search-input" placeholder="Search models...">
+                </div>
+                <div class="filters">
+                    <button class="filter-btn active" data-filter="all">All Models</button>
+                    <button class="filter-btn" data-filter="open-weight">Open Weight</button>
+                    <button class="filter-btn" data-filter="closed-weight">Closed Weight</button>
+                </div>
+            </div>
+            <div class="controls-row">
+                <div class="sort-controls">
+                    <label for="sort-select">Sort by:</label>
+                    <select id="sort-select">
+                        <option value="name">Name</option>
+                        <option value="provider">Provider</option>
+                        <option value="ratings.generalQuality">General Quality</option>
+                        <option value="ratings.codingQuality">Coding Quality</option>
+                        <option value="ratings.agenticCodingCapability">Agentic Coding</option>
+                        <option value="ratings.contextSize">Context Size</option>
+                        <option value="ratings.speed">Speed</option>
+                        <option value="ratings.price">Price</option>
+                        <option value="ratings.vRamRequirements">vRAM Requirements</option>
+                        <option value="ratings.regionalAvailability">Regional Availability</option>
+                    </select>
+                    <button id="sort-direction" class="sort-btn" title="Toggle sort direction">
+                        <i class="fas fa-sort-amount-down"></i>
+                    </button>
+                </div>
+                <div class="litellm-controls">
+                    <label for="litellm-toggle">
+                        <input type="checkbox" id="litellm-toggle">
+                        Enable LiteLLM Pricing
+                    </label>
+                    <button id="litellm-refresh" class="refresh-btn" title="Refresh LiteLLM pricing data">
+                        <i class="fas fa-sync-alt"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main id="main-container">
+        <div class="models-grid" id="models-container">
+            <!-- Models will be rendered here by JavaScript -->
+        </div>
+    </main>
+
+    <footer>
+        <p>LLM Dashboard • Last updated: <span id="last-updated">May 2025</span></p>
+    </footer>
+
+    <script>
+        // Configuration object - easy to update
+        const config = {
+            // This is the data structure you'll update over time
+            models: [
+                {
+                    name: "Claude 3.7 Sonnet",
+                    provider: "Anthropic",
+                    openWeight: false,
+                    color: "#8a2be2", // Custom color for this model
+                    url: "https://www.anthropic.com/claude", // Optional URL for the model
+                    note: "My daily driver for most tasks. Excellent at following complex instructions.", // Optional note
+                    liteLLMModelName: "claude-3-5-sonnet-20240620", // Optional liteLLM model name for pricing data
+                    ratings: {
+                        generalQuality: 9,
+                        codingQuality: 8,
+                        agenticCodingCapability: 7,
+                        contextSize: 9,
+                        promptCaching: true,
+                        speed: 7,
+                        // Open weight specific
+                        vRamRequirements: null, // Not applicable for closed weight
+                        // Closed weight specific
+                        price: 4,
+                        regionalAvailability: 7
+                    }
+                },
+                {
+                    name: "GPT-4o",
+                    provider: "OpenAI",
+                    openWeight: false,
+                    color: "#10a37f",
+                    url: "https://openai.com/gpt-4o",
+                    note: "Fast and extremely capable. Great for coding tasks.",
+                    liteLLMModelName: "gpt-4o",
+                    ratings: {
+                        generalQuality: 10,
+                        codingQuality: 9,
+                        agenticCodingCapability: 9,
+                        contextSize: 10,
+                        promptCaching: true,
+                        speed: 8,
+                        // Open weight specific
+                        vRamRequirements: null,
+                        // Closed weight specific
+                        price: 3,
+                        regionalAvailability: 9
+                    }
+                },
+                {
+                    name: "Llama 3 70B",
+                    provider: "Meta",
+                    openWeight: true,
+                    color: "#0668E1",
+                    url: "https://llama.meta.com/",
+                    ratings: {
+                        generalQuality: 7,
+                        codingQuality: 6,
+                        agenticCodingCapability: 5,
+                        contextSize: 6,
+                        promptCaching: false,
+                        speed: 5,
+                        // Open weight specific
+                        vRamRequirements: 8,
+                        // Closed weight specific
+                        price: null,
+                        regionalAvailability: null
+                    }
+                },
+                {
+                    name: "Claude 3 Opus",
+                    provider: "Anthropic",
+                    openWeight: false,
+                    color: "#8a2be2",
+                    ratings: {
+                        generalQuality: 9,
+                        codingQuality: 7,
+                        agenticCodingCapability: 6,
+                        contextSize: 7,
+                        promptCaching: true,
+                        speed: 4,
+                        // Open weight specific
+                        vRamRequirements: null,
+                        // Closed weight specific
+                        price: 2,
+                        regionalAvailability: 7
+                    }
+                },
+                {
+                    name: "Mistral Medium",
+                    provider: "Mistral AI",
+                    openWeight: false,
+                    color: "#00A0E4",
+                    ratings: {
+                        generalQuality: 7,
+                        codingQuality: 6,
+                        agenticCodingCapability: 5,
+                        contextSize: 8,
+                        promptCaching: false,
+                        speed: 8,
+                        // Open weight specific
+                        vRamRequirements: null,
+                        // Closed weight specific
+                        price: 7,
+                        regionalAvailability: 8
+                    }
+                },
+                {
+                    name: "Mixtral 8x7B",
+                    provider: "Mistral AI",
+                    openWeight: true,
+                    color: "#00A0E4",
+                    ratings: {
+                        generalQuality: 6,
+                        codingQuality: 5,
+                        agenticCodingCapability: 4,
+                        contextSize: 5,
+                        promptCaching: false,
+                        speed: 6,
+                        // Open weight specific
+                        vRamRequirements: 6,
+                        // Closed weight specific
+                        price: null,
+                        regionalAvailability: null
+                    }
+                }
+            ],
+            // Category descriptions for tooltips
+            categoryDescriptions: {
+                generalQuality: "Overall quality for general tasks and prompts",
+                codingQuality: "Quality of code generation and understanding",
+                agenticCodingCapability: "Ability to act as an agent and perform coding tasks autonomously",
+                contextSize: "Maximum context length the model can handle",
+                promptCaching: "Whether the model caches prompts for faster responses",
+                speed: "Response generation speed",
+                vRamRequirements: "GPU memory required to run the model (lower is better)",
+                price: "Cost efficiency (higher rating means more affordable)",
+                regionalAvailability: "Availability across different geographical regions"
+            }
+        };
+
+        // Helper functions
+        function getEmojiRating(score, category) {
+            if (score === null || score === undefined) return 'N/A';
+            
+            const emoji = {
+                generalQuality: '⭐',
+                codingQuality: '💻',
+                agenticCodingCapability: '🤖',
+                contextSize: '📚',
+                speed: '⚡',
+                vRamRequirements: '🧠',
+                price: '💰',
+                regionalAvailability: '🌎'
+            };
+            
+            const selectedEmoji = emoji[category] || '⭐';
+            return Array(score + 1).join(selectedEmoji);
+        }
+
+        function getPassFailBadge(value) {
+            if (value === null || value === undefined) return 'N/A';
+            
+            return value ? 
+                '<span class="pass-fail pass">Pass</span>' : 
+                '<span class="pass-fail fail">Fail</span>';
+        }
+
+        function getRandomModelColor(seed) {
+            // Generate a deterministic color based on the model name
+            let hash = 0;
+            for (let i = 0; i < seed.length; i++) {
+                hash = seed.charCodeAt(i) + ((hash << 5) - hash);
+            }
+            
+            const modelColors = [
+                '#673ab7', '#3f51b5', '#2196f3', '#009688', 
+                '#4caf50', '#8bc34a', '#cddc39', '#ffc107', 
+                '#ff9800', '#ff5722'
+            ];
+            
+            return modelColors[Math.abs(hash) % modelColors.length];
+        }
+
+        // Sorting functions
+        let sortDirection = -1; // 1 for ascending, -1 for descending
+        let currentSortKey = 'name';
+
+        // Enable LiteLLM pricing toggle in settings
+        let liteLLMPricingEnabled = false;
+        let liteLLMPricingData = null;
+
+        // LiteLLM pricing data fetching
+        async function fetchLiteLLMPricing() {
+            // Always use the embedded data to avoid CORS issues
+            return {
+                "gpt-4o": {
+                    "max_tokens": 128000,
+                    "max_input_tokens": 128000,
+                    "max_output_tokens": 4096,
+                    "input_cost_per_token": 0.000005,
+                    "output_cost_per_token": 0.000015,
+                    "supports_prompt_caching": true,
+                    "cache_read_input_token_cost": 0.0000015
+                },
+                "gpt-4.1-mini": {
+                    "max_tokens": 32768,
+                    "max_input_tokens": 1047576,
+                    "max_output_tokens": 32768,
+                    "input_cost_per_token": 0.0000004,
+                    "output_cost_per_token": 0.0000016,
+                    "supports_prompt_caching": true,
+                    "cache_read_input_token_cost": 0.0000001
+                },
+                "gpt-4.1": {
+                    "max_tokens": 32768,
+                    "max_input_tokens": 1047576,
+                    "max_output_tokens": 32768, 
+                    "input_cost_per_token": 0.000002,
+                    "output_cost_per_token": 0.000008,
+                    "supports_prompt_caching": true,
+                    "cache_read_input_token_cost": 0.0000005
+                },
+                "claude-3-5-sonnet-20240620": {
+                    "max_tokens": 200000,
+                    "max_input_tokens": 180000,
+                    "max_output_tokens": 20000,
+                    "input_cost_per_token": 0.000003,
+                    "output_cost_per_token": 0.000015,
+                    "supports_prompt_caching": true,
+                    "cache_read_input_token_cost": 0.000001
+                }
+            };
+        }
+        
+        // Update model with LiteLLM pricing data
+        async function updateModelWithLiteLLMPricing(liteLLMData) {
+            if (!liteLLMData) return;
+            
+            config.models.forEach(model => {
+                if (model.liteLLMModelName && liteLLMData[model.liteLLMModelName]) {
+                    const modelData = liteLLMData[model.liteLLMModelName];
+                    model.liteLLMPrice = {
+                        input_cost_per_token: modelData.input_cost_per_token,
+                        output_cost_per_token: modelData.output_cost_per_token,
+                        max_input_tokens: modelData.max_input_tokens || modelData.max_tokens,
+                        max_output_tokens: modelData.max_output_tokens || modelData.max_tokens,
+                        supports_prompt_caching: modelData.supports_prompt_caching || false,
+                        cache_read_input_token_cost: modelData.cache_read_input_token_cost || null
+                    };
+                }
+            });
+            
+            // Re-render models with updated pricing data
+            applySortAndFilters();
+        }
+
+        // Render models function
+        function renderModels(models) {
+            const container = document.getElementById('models-container');
+            
+            if (models.length === 0) {
+                container.innerHTML = `
+                    <div class="empty-state">
+                        <i class="fas fa-robot"></i>
+                        <h2>No models found</h2>
+                        <p>Try adjusting your search or filters</p>
+                    </div>
+                `;
+                return;
+            }
+            
+            container.innerHTML = '';
+            
+            models.forEach(model => {
+                const modelColor = model.color || getRandomModelColor(model.name);
+                
+                const card = document.createElement('div');
+                card.className = 'model-card';
+                card.style.setProperty('--model-color', modelColor);
+                
+                // Prepare the model name - if URL exists, make it a link
+                const modelNameHTML = model.url 
+                    ? `<h2 class="model-name"><a href="${model.url}" target="_blank">${model.name}</a></h2>`
+                    : `<h2 class="model-name">${model.name}</h2>`;
+                
+                // Prepare the note section if it exists
+                const noteHTML = model.note
+                    ? `<div class="model-note">${model.note}</div>`
+                    : '';
+                
+                // Initialize open weight and closed weight sections as empty strings
+                let openWeightHTML = '';
+                let closedWeightHTML = '';
+                
+                if (model.openWeight && model.ratings.vRamRequirements !== null) {
+                    openWeightHTML = `
+                        <div class="conditional-container">
+                            <div class="conditional-header">Open Weight Model Details</div>
+                            <div class="rating-item">
+                                <div class="rating-label tooltip">
+                                    vRAM Requirements
+                                    <span class="tooltiptext">${config.categoryDescriptions.vRamRequirements || ''}</span>
+                                </div>
+                                <div class="emoji-rating">${getEmojiRating(model.ratings.vRamRequirements, 'vRamRequirements')}</div>
+                            </div>
+                        </div>
+                    `;
+                }
+                
+                if (!model.openWeight && (model.ratings.price !== null || model.ratings.regionalAvailability !== null)) {
+                    closedWeightHTML = `
+                        <div class="conditional-container">
+                            <div class="conditional-header">Closed Weight Model Details</div>
+                            ${model.ratings.price !== null ? `
+                            <div class="rating-item">
+                                <div class="rating-label tooltip">
+                                    Price
+                                    <span class="tooltiptext">${config.categoryDescriptions.price || ''}</span>
+                                </div>
+                                <div class="emoji-rating">${getEmojiRating(model.ratings.price, 'price')}</div>
+                            </div>
+                            ` : ''}
+                            ${model.ratings.regionalAvailability !== null ? `
+                            <div class="rating-item">
+                                <div class="rating-label tooltip">
+                                    Regional Availability
+                                    <span class="tooltiptext">${config.categoryDescriptions.regionalAvailability || ''}</span>
+                                </div>
+                                <div class="emoji-rating">${getEmojiRating(model.ratings.regionalAvailability, 'regionalAvailability')}</div>
+                            </div>
+                            ` : ''}
+                        </div>
+                    `;
+                }
+                
+                // LiteLLM pricing section
+                const liteLLMHTML = model.liteLLMPrice && liteLLMPricingEnabled ? `
+                    <div class="litellm-price-container">
+                        <div class="conditional-header">LiteLLM Pricing</div>
+                        <div class="rating-item">
+                            <div class="rating-label">Input Cost</div>
+                            <div>${model.liteLLMPrice.input_cost_per_token} per token</div>
+                        </div>
+                        <div class="rating-item">
+                            <div class="rating-label">Output Cost</div>
+                            <div>${model.liteLLMPrice.output_cost_per_token} per token</div>
+                        </div>
+                        <div class="rating-item">
+                            <div class="rating-label">Prompt Caching</div>
+                            <div>${getPassFailBadge(model.liteLLMPrice.supports_prompt_caching)}</div>
+                        </div>
+                        ${model.liteLLMPrice.supports_prompt_caching && model.liteLLMPrice.cache_read_input_token_cost ? `
+                        <div class="rating-item">
+                            <div class="rating-label">Cache Read Cost</div>
+                            <div>${model.liteLLMPrice.cache_read_input_token_cost} per token</div>
+                        </div>
+                        ` : ''}
+                        <div class="rating-item">
+                            <div class="rating-label">Max Input Tokens</div>
+                            <div>${model.liteLLMPrice.max_input_tokens.toLocaleString()}</div>
+                        </div>
+                        <div class="rating-item">
+                            <div class="rating-label">Max Output Tokens</div>
+                            <div>${model.liteLLMPrice.max_output_tokens.toLocaleString()}</div>
+                        </div>
+                    </div>
+                ` : '';
+                
+                card.innerHTML = `
+                    <div class="model-header">
+                        ${modelNameHTML}
+                        <div class="model-provider">${model.provider}</div>
+                    </div>
+                    <div class="model-content">
+                        <div class="rating-item">
+                            <div class="rating-label tooltip">
+                                General Quality
+                                <span class="tooltiptext">${config.categoryDescriptions.generalQuality || ''}</span>
+                            </div>
+                            <div class="emoji-rating">${getEmojiRating(model.ratings.generalQuality, 'generalQuality')}</div>
+                        </div>
+                        <div class="rating-item">
+                            <div class="rating-label tooltip">
+                                Coding Quality
+                                <span class="tooltiptext">${config.categoryDescriptions.codingQuality || ''}</span>
+                            </div>
+                            <div class="emoji-rating">${getEmojiRating(model.ratings.codingQuality, 'codingQuality')}</div>
+                        </div>
+                        <div class="rating-item">
+                            <div class="rating-label tooltip">
+                                Agentic Coding Capability
+                                <span class="tooltiptext">${config.categoryDescriptions.agenticCodingCapability || ''}</span>
+                            </div>
+                            <div class="emoji-rating">${getEmojiRating(model.ratings.agenticCodingCapability, 'agenticCodingCapability')}</div>
+                        </div>
+                        <div class="rating-item">
+                            <div class="rating-label tooltip">
+                                Context Size
+                                <span class="tooltiptext">${config.categoryDescriptions.contextSize || ''}</span>
+                            </div>
+                            <div class="emoji-rating">${getEmojiRating(model.ratings.contextSize, 'contextSize')}</div>
+                        </div>
+                        <div class="rating-item">
+                            <div class="rating-label tooltip">
+                                Prompt Caching
+                                <span class="tooltiptext">${config.categoryDescriptions.promptCaching || ''}</span>
+                            </div>
+                            <div>${getPassFailBadge(model.ratings.promptCaching)}</div>
+                        </div>
+                        <div class="rating-item">
+                            <div class="rating-label tooltip">
+                                Speed
+                                <span class="tooltiptext">${config.categoryDescriptions.speed || ''}</span>
+                            </div>
+                            <div class="emoji-rating">${getEmojiRating(model.ratings.speed, 'speed')}</div>
+                        </div>
+                        <div class="rating-item">
+                            <div class="rating-label">Open Weight</div>
+                            <div>${getPassFailBadge(model.openWeight)}</div>
+                        </div>
+                        ${openWeightHTML}
+                        ${closedWeightHTML}
+                        ${liteLLMHTML}
+                        ${noteHTML}
+                    </div>
+                `;
+                
+                container.appendChild(card);
+            });
+        }
+
+        function sortModels(models, key, direction) {
+            return [...models].sort((a, b) => {
+                let aValue, bValue;
+                
+                if (key.includes('.')) {
+                    // Handle nested properties like 'ratings.generalQuality'
+                    const keys = key.split('.');
+                    aValue = a;
+                    bValue = b;
+                    
+                    for (const k of keys) {
+                        aValue = aValue && aValue[k] !== undefined ? aValue[k] : null;
+                        bValue = bValue && bValue[k] !== undefined ? bValue[k] : null;
+                    }
+                } else {
+                    // Handle top-level properties
+                    aValue = a[key];
+                    bValue = b[key];
+                }
+                
+                // Handle null or undefined values
+                if (aValue === null || aValue === undefined) return 1 * direction;
+                if (bValue === null || bValue === undefined) return -1 * direction;
+                
+                // Compare based on type
+                if (typeof aValue === 'string') {
+                    return aValue.localeCompare(bValue) * direction;
+                } else if (typeof aValue === 'number') {
+                    return (aValue - bValue) * direction;
+                } else if (typeof aValue === 'boolean') {
+                    return (aValue === bValue) ? 0 : (aValue ? -1 : 1) * direction;
+                }
+                
+                return 0;
+            });
+        }
+
+        function applySortAndFilters() {
+            const searchTerm = document.getElementById('search-input').value.toLowerCase();
+            const activeFilter = document.querySelector('.filter-btn.active').dataset.filter;
+            
+            let filteredModels = config.models;
+            
+            // Apply type filter
+            if (activeFilter === 'open-weight') {
+                filteredModels = filteredModels.filter(model => model.openWeight);
+            } else if (activeFilter === 'closed-weight') {
+                filteredModels = filteredModels.filter(model => !model.openWeight);
+            }
+            
+            // Apply search
+            if (searchTerm) {
+                filteredModels = filteredModels.filter(model => 
+                    model.name.toLowerCase().includes(searchTerm) || 
+                    model.provider.toLowerCase().includes(searchTerm)
+                );
+            }
+            
+            // Apply sorting
+            filteredModels = sortModels(filteredModels, currentSortKey, sortDirection);
+            
+            renderModels(filteredModels);
+        }
+
+        // Event listeners
+        document.addEventListener('DOMContentLoaded', () => {
+            // Initial render
+            renderModels(config.models);
+            
+            // Search functionality
+            document.getElementById('search-input').addEventListener('input', applySortAndFilters);
+            
+            // Filter buttons
+            document.querySelectorAll('.filter-btn').forEach(button => {
+                button.addEventListener('click', () => {
+                    // Remove active class from all buttons
+                    document.querySelectorAll('.filter-btn').forEach(btn => {
+                        btn.classList.remove('active');
+                    });
+                    
+                    // Add active class to clicked button
+                    button.classList.add('active');
+                    
+                    // Apply filters
+                    applySortAndFilters();
+                });
+            });
+            
+            // Sort functionality
+            document.getElementById('sort-select').addEventListener('change', (e) => {
+                currentSortKey = e.target.value;
+                applySortAndFilters();
+            });
+            
+            // Sort direction toggle
+            document.getElementById('sort-direction').addEventListener('click', () => {
+                sortDirection *= -1;
+                
+                // Update icon
+                const icon = document.querySelector('#sort-direction i');
+                if (sortDirection === 1) {
+                    icon.classList.remove('fa-sort-amount-down');
+                    icon.classList.add('fa-sort-amount-up');
+                } else {
+                    icon.classList.remove('fa-sort-amount-up');
+                    icon.classList.add('fa-sort-amount-down');
+                }
+                
+                applySortAndFilters();
+            });
+            
+            // LiteLLM pricing toggle
+            document.getElementById('litellm-toggle').addEventListener('change', async (e) => {
+                liteLLMPricingEnabled = e.target.checked;
+                
+                if (liteLLMPricingEnabled && !liteLLMPricingData) {
+                    const refreshBtn = document.getElementById('litellm-refresh');
+                    refreshBtn.classList.add('loading');
+                    
+                    liteLLMPricingData = await fetchLiteLLMPricing();
+                    await updateModelWithLiteLLMPricing(liteLLMPricingData);
+                    
+                    refreshBtn.classList.remove('loading');
+                } else {
+                    // Just re-render the models with current state
+                    applySortAndFilters();
+                }
+            });
+            
+            // LiteLLM pricing refresh button
+            document.getElementById('litellm-refresh').addEventListener('click', async () => {
+                const refreshBtn = document.getElementById('litellm-refresh');
+                refreshBtn.classList.add('loading');
+                
+                liteLLMPricingData = await fetchLiteLLMPricing();
+                await updateModelWithLiteLLMPricing(liteLLMPricingData);
+                
+                refreshBtn.classList.remove('loading');
+            });
+            
+            // Set last updated date
+            document.getElementById('last-updated').textContent = new Date().toLocaleDateString('en-GB', {
+                month: 'long',
+                year: 'numeric'
+            });
+        });
+    </script>
+</body>
+</html>

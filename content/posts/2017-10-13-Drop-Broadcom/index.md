@@ -18,6 +18,8 @@ tags:
 title: Broadcom, Or How I Learned To Start Worrying And Drop The Packet
 ---
 
+![](office-space-broadcom.jpg)
+
 Earlier this week we started the process to upgrade one of our hypervisor compute clusters when we encountered a rather painful bug with HP's Broadcom NIC chipsets.
 
 We were part way through a routine rolling pool upgrade of our hypervisor (XenServer) cluster when we observed unexpected and intermittent loss of connectivity between several VMs, then entire XenServer hosts.
