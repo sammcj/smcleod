@@ -81,8 +81,30 @@ If I'm working with especially new libraries, frameworks, specifications or inte
 
 ## 🤔 Plan Mode
 
-- Usually I'll start by writing a prompt in a text editor / file with a detailed goal for project I want to build.
-- Then I start a fresh session and switch to Plan mode, and provide that prompt to the agent:
+I'll start by writing a prompt in a text editor / file with a detailed goal for project I want to build.
+
+Then I start a fresh session and switch to Plan mode, and provide a prompt something like the following:
+
+> I want you to help me develop a new Golang application that provides an API for managing a list of tasks.
+>
+> The intent is to have a simple API I can use across various machines on my network that will keep track of tasks.
+>
+> The application must be able to be run on both Linux and macOS. It must have a Dockerfile that follows best practices to build and deploy the application.
+>
+> I want to use the Gin framework for the API and SQLite for the database.
+>
+> The intended audience is myself and my family, both of which are technical and can use the command line and API tools.
+>
+> We may be deploying the application to a remote server in the future, so it must be able to run on a server with limited resources.
+>
+> I don't know if I want to use a REST or GraphQL API. I'd like you to help me explore the pros and cons of each and make a recommendation.
+>
+> Here are some links to the documentation for the libraries I want to use:
+>  - gin web framework repository - https://github.com/gin-gonic/gin
+>  - Popular SQLite packages for Go - https://github.com/mattn/go-sqlite3, https://github.com/glebarez/go-sqlite
+
+Let's break this down a, I am providing the agent:
+
   - **What** I want to build
     > [!NOTICE] _Example_
     > I want you to help me develop a new Golang application that provides an API for managing a list of tasks.
