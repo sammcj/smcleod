@@ -41,13 +41,13 @@ The basic flow is Setup -> [Plan -> Act](https://docs.cline.bot/exploring-clines
 
 The effective use of tools is critical to the success and cost effectiveness of agentic coding. The MCP Servers (tools) I frequently use are available here: [sammcj/agentic-coding#mcp-servers](https://github.com/sammcj/agentic-coding#mcp-servers)
 
-- [MVP / Always On](https://github.com/sammcj/agentic-coding/blob/main/MCP/mcp-config-mvp.json)
+- [Always Enabled](https://github.com/sammcj/agentic-coding/blob/main/MCP/mcp-config-mvp.json)
   - [Context7](https://github.com/upstash/context7): Used to fetch documentation.
   - [Fetch](https://github.com/modelcontextprotocol/servers/blob/main/src/fetch/README.md): Used to fetch URLs.
   - [Brave Search](https://github.com/modelcontextprotocol/servers/tree/main/src/brave-search): Provides web search (free Brave Search AI API key required).
   - [Package Version](https://github.com/sammcj/mcp-package-version): Used to get up to date package versions.
   - [Github](https://github.com/modelcontextprotocol/servers/blob/main/src/github/README.md): Used to fetch information from GitHub repositories, Github Issues & PRs.
-- [Sometimes Used](https://github.com/sammcj/agentic-coding/blob/main/MCP/mcp-config-sometimes.json)
+- [Sometimes Enabled](https://github.com/sammcj/agentic-coding/blob/main/MCP/mcp-config-sometimes.json)
   - [Firecrawl](https://github.com/mendableai/firecrawl-mcp-server): Provides web scraping and markdown conversion (Self hosted Firecrawl, or Firecrawl API key required).
   - [Markdownify](https://github.com/zcaceres/markdownify-mcp): Converts documents to markdown.
   - [Browser Use](https://github.com/Saik0s/mcp-browser-use): Gives access to a browser.
