@@ -32,7 +32,7 @@ To understand why this distinction matters, I like clarify what we're actually t
 
 **Vibe Coding** represents an experimental and creative process where users prompt their way to creating their idea. It's immediate, intuitive, and often produces remarkable results through iterative experimentation.
 
-**Agentic Coding**, by contrast, focuses on leveraging AI coding agents as engineering *peers* that you can co-engineer solutions with. It's structured, deliberate, and designed for sustainable outcomes.
+**Agentic Coding** by contrast, focuses on leveraging AI coding agents as engineering *peers* that you can co-engineer solutions with. It's structured, deliberate, and designed for sustainable outcomes.
 
 The confusion between these approaches is costing businesses the opportunity to leverage AI's potential in a safe, secure and maintainable way.
 
