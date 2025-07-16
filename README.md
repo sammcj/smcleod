@@ -14,6 +14,14 @@ Feel free to raise a PR or [create an issue](https://github.com/sammcj/smcleod/i
 
 See [SHORTCODES.md](SHORTCODES.md).
 
+## Wide Images
+
+To display images at 80% of the browser width (breaking out of the normal content width), add `?c=wide` or `#wide` to the image URL:
+
+```markdown
+![Description](./image.png?c=wide)
+```
+
 <a rel="me" href="https://aus.social/@s_mcleod">Mastodon</a>
 
 ## License

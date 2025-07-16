@@ -1,0 +1,39 @@
+{{- $alt := .PlainText | safeHTML -}}
+{{- $destination := .Destination -}}
+
+{{/* Check if this is a wide image by looking for the #wide or ?c=wide parameter */}}
+{{- $isWide := false -}}
+{{- if or (strings.HasSuffix $destination "#wide") (strings.Contains $destination "?c=wide") -}}
+  {{- $isWide = true -}}
+  {{/* Clean the destination path by removing query parameters and fragments */}}
+  {{- $destination = $destination | replaceRE "[?#].*$" "" -}}
+{{- end -}}
+
+{{/* Try to get the resource from page resources first (for images in same directory as content) */}}
+{{- $src := $.Page.Resources.GetMatch $destination -}}
+
+{{/* If not found in page resources, try global resources */}}
+{{- if not $src -}}
+  {{- $src = resources.Get $destination -}}
+{{- end -}}
+
+{{- if $src -}}
+  {{/* Add wide class if this is a wide image */}}
+  {{- $imgClass := "" -}}
+  {{- if $isWide -}}
+    {{- $imgClass = "wide-image" -}}
+  {{- end -}}
+
+  <img alt="{{ $alt }}"
+       loading="lazy"
+       title="{{ $alt }}"
+       src="{{ $src.RelPermalink }}"
+       {{- if $imgClass }} class="{{ $imgClass }}"{{ end }}>
+{{- else -}}
+  {{/* Fallback for images that can't be processed as resources */}}
+  {{- $imgClass := "" -}}
+  {{- if $isWide -}}
+    {{- $imgClass = " class=\"wide-image\"" -}}
+  {{- end -}}
+  <img src="{{ $destination }}" alt="{{ $alt }}" loading="lazy" title="{{ $alt }}"{{ $imgClass | safeHTMLAttr }}>
+{{- end -}}

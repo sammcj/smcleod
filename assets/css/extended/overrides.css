@@ -7,3 +7,22 @@
     height: 35px !important;
     width: auto !important; /* Maintain aspect ratio */
 }
+
+  img.wide-image {
+    display: block;
+    width: 80vw;
+    max-width: none;
+    margin-left: 50%;
+    transform: translateX(-50%);
+    border-radius: 0;
+  }
+
+  /* Also support the URL fragment approach for backwards compatibility */
+  img[src$='#wide'] {
+    display: block;
+    width: 80vw;
+    max-width: none;
+    margin-left: 50%;
+    transform: translateX(-50%);
+    border-radius: 0;
+  }
