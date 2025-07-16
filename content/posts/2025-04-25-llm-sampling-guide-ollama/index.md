@@ -33,11 +33,11 @@ This guide explains the key sampling parameters and how they affect your model's
 
 ### Ollama Sampling Diagram
 
-[![Click to open larger image](ollama-sampling-diagram.png)](ollama-sampling-diagram.png)
+{{< wide-image src="ollama-sampling-diagram.png" alt="Ollama Sampling" >}}
 
 ### Sampling Methods Comparison
 
-[![Click to open larger image](sampling-methods-comparison.png)](sampling-methods-comparison.png)
+{{< wide-image src="sampling-methods-comparison.png" alt="Sampling Methods" >}}
 
 ### Example Ollama Sampling Settings Table
 
