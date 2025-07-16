@@ -1,0 +1,31 @@
+{{- $src := .Get "src" -}}
+{{- $alt := .Get "alt" | default "" -}}
+{{- $caption := .Get "caption" | default "" -}}
+
+{{/* Try to get the resource from page resources first */}}
+{{- $resource := $.Page.Resources.GetMatch $src -}}
+
+{{/* If not found in page resources, try global resources */}}
+{{- if not $resource -}}
+  {{- $resource = resources.Get $src -}}
+{{- end -}}
+
+{{- if $resource -}}
+  <img src="{{ $resource.RelPermalink }}"
+       alt="{{ $alt }}"
+       class="wide-image"
+       loading="lazy"
+       {{- if $caption }} title="{{ $caption }}"{{ end }}>
+  {{- if $caption }}
+  <p class="image-caption">{{ $caption }}</p>
+  {{- end -}}
+{{- else -}}
+  <img src="{{ $src }}"
+       alt="{{ $alt }}"
+       class="wide-image"
+       loading="lazy"
+       {{- if $caption }} title="{{ $caption }}"{{ end }}>
+  {{- if $caption }}
+  <p class="image-caption">{{ $caption }}</p>
+  {{- end -}}
+{{- end -}}

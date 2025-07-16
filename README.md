@@ -16,11 +16,18 @@ See [SHORTCODES.md](SHORTCODES.md).
 
 ## Wide Images
 
-To display images at 80% of the browser width (breaking out of the normal content width), add `?c=wide` or `#wide` to the image URL:
+To display images at 80% of the browser width (breaking out of the normal content width), use the `wide-image` shortcode:
 
 ```markdown
-![Description](./image.png?c=wide)
+{{< wide-image src="image.png" alt="Description" caption="Optional caption" >}}
 ```
+
+**Parameters:**
+- `src` (required): Path to the image file
+- `alt` (optional): Alt text for accessibility
+- `caption` (optional): Caption text displayed below the image
+
+**Legacy support:** Images with `?c=wide` or `#wide` URL parameters will still work for backwards compatibility.
 
 <a rel="me" href="https://aus.social/@s_mcleod">Mastodon</a>
 

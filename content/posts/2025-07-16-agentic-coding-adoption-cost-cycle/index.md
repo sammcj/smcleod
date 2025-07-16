@@ -24,7 +24,7 @@ cover:
   image: "agentic-coding-adoption-cost-cycle.png"
   alt: "Agentic Coding Adoption Cost Cycle"
   # caption: "Optional caption text"
-  relative: false  # Set to true for page bundle images
+  relative: true  # Set to true for page bundle images
 ---
 
-![Agentic Coding Adoption Cost Cycle](./agentic-coding-adoption-cost-cycle.png?c=wide)
+{{< wide-image src="agentic-coding-adoption-cost-cycle.png" alt="Agentic Coding Adoption Cost Cycle" >}}
