@@ -136,33 +136,33 @@ menu:
       url: "/posts"
       title: ""
       weight: 1
-    - identifier: "Search"
-      pre: ""
-      post: ""
-      name: "🔎 Search"
-      url: "/search/"
-      title: ""
-      weight: 2
     - identifier: "categories"
       pre: ""
       post: ""
       name: "🍱 Categories"
       url: "/categories/"
       title: ""
-      weight: 3
+      weight: 2
     - identifier: "vRAM Estimator"
       pre: ""
       post: ""
       name: "🐏 vRAM Estimator"
       url: "/vram-estimator/"
       title: "Estimate the vRAM required for your VMs"
-      weight: 4
+      weight: 3
     - identifier: "links"
       pre: ""
       post: ""
       name: "🔗 Links"
       url: "/links/"
       title: "Links to software and services I use"
+      weight: 4
+    - identifier: "contact"
+      pre: ""
+      post: ""
+      name: "💬 Contact"
+      url: "/contact/"
+      title: "Contact me"
       weight: 5
     - identifier: "about"
       pre: ""
@@ -171,14 +171,13 @@ menu:
       url: "/about/"
       title: "Sam McLeod"
       weight: 6
-    - identifier: "contact"
+    - identifier: "Search"
       pre: ""
       post: ""
-      name: "💬 Contact"
-      url: "/contact/"
-      title: "Contact me"
+      name: "🔎 Search"
+      url: "/search/"
+      title: ""
       weight: 7
-
 # Read: https://github.com/adityatelange/hugo-PaperMod/wiki/FAQs#using-hugos-syntax-highlighter-chroma
 pygmentsUseClasses: true
 markup:
