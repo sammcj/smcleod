@@ -20,6 +20,11 @@ ShowWordCount: true
 ShowRssButtonInSectionTermList: true
 UseHugoToc: true
 mermaid: true
+cover:
+  image: "generative-agent-state-diagram.png"
+  alt: "Generative Agent State Diagram"
+  # caption: "Optional caption text"
+  relative: false  # Set to true for page bundle images
 ---
 
 As agentic systems become increasingly central to modern software development, many engineers are looking to build practical skills but don't know where to start.

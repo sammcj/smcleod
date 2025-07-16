@@ -20,6 +20,11 @@ ShowWordCount: true
 ShowRssButtonInSectionTermList: true
 UseHugoToc: true
 mermaid: true
+cover:
+  image: "agentic-coding-adoption-cost-cycle.png"
+  alt: "Agentic Coding Adoption Cost Cycle"
+  # caption: "Optional caption text"
+  relative: false  # Set to true for page bundle images
 ---
 
 ![Agentic Coding Adoption Cost Cycle](./agentic-coding-adoption-cost-cycle.png?c=wide)

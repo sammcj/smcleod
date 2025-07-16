@@ -20,6 +20,11 @@ ShowWordCount: false
 ShowRssButtonInSectionTermList: true
 UseHugoToc: false
 mermaid: true
+cover:
+  image: "cline-1.png"
+  alt: "Cline prompt caching indicator"
+  # caption: "Optional caption text"
+  relative: false  # Set to true for page bundle images
 ---
 
 Prompt caching is a feature that Anthropic first offered on their API in 2024. It adds a cache for the tokens used

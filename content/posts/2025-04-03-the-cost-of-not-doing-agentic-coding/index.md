@@ -20,6 +20,11 @@ ShowWordCount: false
 ShowRssButtonInSectionTermList: true
 UseHugoToc: false
 mermaid: true
+cover:
+  image: "productivity-flywheel.svg"
+  alt: "Productivity Flywheel"
+  # caption: "Optional caption text"
+  relative: false  # Set to true for page bundle images
 ---
 
 Don't ask yourself "_What if my high performing engineers spent $2k/month on agentic coding?_"

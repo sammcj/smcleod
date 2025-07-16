@@ -20,6 +20,11 @@ ShowWordCount: true
 ShowRssButtonInSectionTermList: true
 UseHugoToc: true
 mermaid: true
+cover:
+  image: "sampling-methods-comparison.png"
+  alt: "LLM Sampling Methods Comparison"
+  # caption: "Optional caption text"
+  relative: false  # Set to true for page bundle images
 ---
 
 Large Language Models (LLMs) like those used in Ollama don't generate text deterministically - they use probabilistic sampling to select the next token based on the model's prediction probabilities. How these probabilities are filtered and adjusted before sampling significantly impacts the quality of generated text.

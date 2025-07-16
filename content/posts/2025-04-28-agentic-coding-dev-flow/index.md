@@ -20,6 +20,11 @@ ShowWordCount: true
 ShowRssButtonInSectionTermList: true
 UseHugoToc: true
 mermaid: true
+cover:
+  image: "agentic-flow.png"
+  alt: "Agentic Coding Development Flow"
+  # caption: "Optional caption text"
+  relative: false  # Set to true for page bundle images
 ---
 
 The following my workflow for agentic coding.
