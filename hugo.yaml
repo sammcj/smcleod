@@ -106,7 +106,7 @@ params:
 
 
   cover:
-    hidden: true # hide everywhere but not in structured data
+    hidden: fa # hide everywhere but not in structured data
     hiddenInList: false # hide on list pages and home
     hiddenInSingle: true # hide on single page
 

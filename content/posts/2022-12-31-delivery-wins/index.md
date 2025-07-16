@@ -11,15 +11,12 @@ tags: [ "Delivery", "health", "wins", "DevOps", "Agile", "Leadership", "manageme
 categories: [ "DevOps", "Leadership", "Health" ]
 series: []
 
-image: &image "wins.jpg"
+image: "wins.jpg"
 
-featuredimage: *image
+featuredimage: "wins.jpg"
 cover:
-  image: " *image"
-  #alt: "<alt text>"
-  #caption: "<text>"
-  #relative: false # To use relative path for cover image, used in hugo Page-bundles
-images: [*image]
+  image: "wins.jpg"
+
 
 hiddenFromHomePage: false
 hiddenFromSearch: false

@@ -9,15 +9,9 @@ keywords: ["health","iot","co2"]
 tags: ["health","iot","co2"]
 categories: ["IoT","Health"]
 series: []
-image: &image "https://user-images.githubusercontent.com/862951/52827251-21597e00-3118-11e9-9ebc-ddbbc9fb02a8.jpg"
-
-featuredimage: *image
 cover:
-  image: " *image"
-  #alt: "<alt text>"
-  #caption: "<text>"
-  #relative: false # To use relative path for cover image, used in hugo Page-bundles
-images: [*image]
+  image: "https://user-images.githubusercontent.com/862951/52827251-21597e00-3118-11e9-9ebc-ddbbc9fb02a8.jpg"
+
 
 hiddenFromHomePage: false
 hiddenFromSearch: false

@@ -12,15 +12,11 @@ tags: ["yaml", "DRY"]
 categories: ["Software"]
 series: []
 
-image: &image "Official_YAML_Logo.png"
+image: "Official_YAML_Logo.png"
 
-featuredimage: *image
+featuredimage: "Official_YAML_Logo.png"
 cover:
-  image: " *image"
-  #alt: "<alt text>"
-  #caption: "<text>"
-  #relative: false # To use relative path for cover image, used in hugo Page-bundles
-images: [*image]
+  image: "Official_YAML_Logo.png"
 
 hiddenFromHomePage: false
 hiddenFromSearch: false
