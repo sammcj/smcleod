@@ -23,7 +23,7 @@ ShowRssButtonInSectionTermList: true
 UseHugoToc: false
 mermaid: false
 cover:
-  image: ""
+  image: "code-chaos-copilots-screenshot.png"
   alt: ""
   hidden: false
 ---

@@ -23,7 +23,7 @@ ShowRssButtonInSectionTermList: true
 UseHugoToc: false
 mermaid: false
 cover:
-  image: ""
+  image: "parameter-playground.webp"
   alt: ""
   hidden: false
 ---

@@ -23,9 +23,9 @@ ShowRssButtonInSectionTermList: true
 UseHugoToc: false
 mermaid: false
 cover:
-  image: ""
+  image: "quant-neural.png"
   alt: ""
-  hidden: false
+  relative: true  # Set to true for page bundle images
 ---
 
 AI models ("LLMs" in this case) have inherently large sizes and computational requirements that often pose challenges for deployment and use.
