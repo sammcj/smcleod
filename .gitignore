@@ -199,3 +199,8 @@ hugo.darwin
 
 # Hugo themes
 themes/DoIt/.git
+
+# llms.txt
+hugo_list.csv
+static/llms.txt
+static/llms-full.txt
