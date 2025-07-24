@@ -46,6 +46,23 @@ jobs:
           hugo-version: "0.148.1"
           extended: true
 
+      - name: Setup Python and uvx
+        uses: actions/setup-python@f677139bbe7f9c59b41e40162b753c062f5d49a3 # v5
+        with:
+          python-version: '3.13'
+
+      - name: Generate llms.txt files
+        run: |
+          # Remove any existing hugo_list.csv
+          rm -f hugo_list.csv
+
+          # Generate Hugo content list
+          hugo list all > hugo_list.csv
+
+          # Install and run hugo2llmtxt to generate both files
+          uvx --from hugo2llmtxt hugo2llmtxt hugo_list.csv static/llms.txt false
+          uvx --from hugo2llmtxt hugo2llmtxt hugo_list.csv static/llms-full.txt true
+
       - name: Build
         run: |
           hugo \
