@@ -33,10 +33,10 @@ The flow is simple: **_Setup -> [Plan -> Act](https://docs.cline.bot/exploring-c
 
 ![](agentic-flow.png)
 
-1. **Setup** - Ensure the right rules and tools are enabled, optionally gather important documentation or examples.
-2. **Plan** - Build a detailed plan based off your goals, requirements and ideation with the coding agent.
+1. **Setup** - Ensuring the effective agent **rules** and **tools** are enabled.s.
+2. **Plan** - Building a **detailed plan** based on your goals, requirements and ideation with the coding agent.
 3. **Act** - Perform the development tasks, in phases.
-4. **Review and Iterate** - Review the work, update the plan and iterate as required.
+4. **Review and Iterate** - Review the work, updating the plan and iterating as required.
 
 ---
 
