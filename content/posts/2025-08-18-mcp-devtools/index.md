@@ -21,8 +21,8 @@ ShowRssButtonInSectionTermList: true
 UseHugoToc: true
 mermaid: true
 cover:
-  image: "agentic-coding-adoption-cost-cycle.png"
-  alt: "Agentic Coding Adoption Cost Cycle"
+  image: "sec-block.png"
+  alt: "Security middleware blocking potentially malicious content"
   # caption: "Optional caption text"
   relative: true  # Set to true for page bundle images
 ---
