@@ -168,8 +168,6 @@ This approach allows for more complex filtering logic and better separation of c
 
 ## Just Do It
 
-This isn't revolutionary or complex, it's usually just a few lines of code, but the impact is substantial.
-
 Having a pattern for selective tool disabling is something I now add to all MCP servers that I develop and recommend to others. The implementation effort is minimal, but the user value - and performance improvement - is significant.
 
 If you're maintaining an MCP server, add this feature. Your users are already thinking about their token budgets and context quality - help them optimise both.
