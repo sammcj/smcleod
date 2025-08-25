@@ -27,7 +27,7 @@ cover:
   relative: true  # Set to true for page bundle images
 ---
 
-**TLDR**: If you're building MCP servers, let users disable individual tools via environment variables. It's simple to implement and your context window will thank you.
+**TLDR**: If you're building MCP servers, let users disable individual tools. It's simple to implement and your context window will thank you.
 
 ![alt text](tool-context-usage.png)
 
