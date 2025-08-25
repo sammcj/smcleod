@@ -36,3 +36,13 @@
     transform: translateX(-50%);
     border-radius: 0;
   }
+
+  /* Smaller font size for tables */
+  table {
+    font-size: 0.9rem;
+  }
+
+  /* Table headers */
+  table th {
+    font-size: 0.95rem;
+  }
