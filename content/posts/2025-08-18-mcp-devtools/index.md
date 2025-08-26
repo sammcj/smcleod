@@ -55,17 +55,17 @@ graph LR
     A --> F[Utilities]
     A --> G[Agents]
 
-    B --> B_Tools[🌐 Internet Search<br>📡 Web Fetch<br>📦 Package Search<br>📚 Package Documentation<br>🐙 GitHub<br>🎨 ShadCN UI Components]
+    B --> B_Tools[🌐 Internet Search<br>📡 Web Fetch<br>📦 Package Search<br>📚 Package Documentation<br>🐙 GitHub<br>🎨 ShadCN UI Components<br>🔌 API Integration<br>☁️ AWS Documentation<br📝>Terraform Documentation]
 
     C --> C_Tools[📄 Document Processing<br>📑 PDF Processing]
 
     D --> D_Tools[📋 SBOM Generation<br>🛡️ Vulnerability Scan<br>🔒 Security Framework<br>🛠️ Security Override]
 
-    E --> E_Tools[🧠 Think Tool<br>🕸️ Memory Graph]
+    E --> E_Tools[🧠 Think Tool<br>🔢 Sequential Thinking<br>🕸️ Memory Graph]
 
-    F --> F_Tools[🇬🇧 American→English<br>📁 Filesystem<br>📝 Changelog Generation]
+    F --> F_Tools[h<br>🧮 Calculator🇬🇧 American→English<br>📁 Filesystem<br>📝 Changelog Generation]
 
-    G --> G_Tools[🤖 Claude Code<br>✨ Gemini CLI]
+    G --> G_Tools[🤖 Claude Code<br>✨ Gemini CLI<br>🅰️ Q Developer]
 
     classDef inputOutput fill:#FEE0D2,stroke:#E6550D,color:#E6550D
     classDef llm fill:#E5F5E0,stroke:#31A354,color:#31A354
@@ -108,34 +108,40 @@ The server supports three transport modes:
 
 These tools can be disabled by adding their function name to the `DISABLED_FUNCTIONS` environment variable in your MCP configuration.
 
-| Tool                                                             | Purpose                            | Dependencies                  | Example Usage                    |
-|------------------------------------------------------------------|------------------------------------|-------------------------------|----------------------------------|
-| **[Internet Search](docs/tools/internet-search.md)**             | Multi-provider web search          | None (Provider keys optional) | Web, image, news, video search   |
-| **[Web Fetch](docs/tools/web-fetch.md)**                         | Retrieve web content as Markdown   | None                          | Documentation and articles       |
-| **[GitHub](docs/tools/github.md)**                               | GitHub repositories and data       | None (GitHub token optional)  | Issues, PRs, repos, cloning      |
-| **[Package Documentation](docs/tools/package-documentation.md)** | Library documentation lookup       | None                          | React, Django, TensorFlow docs   |
-| **[Package Search](docs/tools/package-search.md)**               | Check package versions             | None                          | NPM, Python, Go, Java, Docker    |
-| **[Think](docs/tools/think.md)**                                 | Structured reasoning space         | None                          | Complex problem analysis         |
-| **[Find Long Files](docs/tools/find_long_files.md)**             | Identify files needing refactoring | None                          | Find files over 700 lines        |
-| **[Memory](docs/tools/memory.md)**                               | Persistent knowledge graphs        | None                          | Store entities and relationships |
-| **[ShadCN UI Component Library](docs/tools/shadcn-ui.md)**       | Component information              | None                          | Button, Dialog, Form components  |
-| **[American→English](docs/tools/american-to-english.md)**        | Convert to British spelling        | None                          | Organise, colour, centre         |
-| **[DevTools Help](docs/tools/devtools_help.md)**                 | Extended info about DevTools tools | None                          | Usage examples, troubleshooting  |
+| Tool                                                                                                              | Purpose                            | Dependencies                  | Example Usage                   |
+|-------------------------------------------------------------------------------------------------------------------|------------------------------------|-------------------------------|---------------------------------|
+| **[Internet Search](https://github.com/sammcj/mcp-devtools/blob/main/docs/tools/internet-search.md)**             | Multi-provider web search          | None (Provider keys optional) | Web, image, news, video search  |
+| **[Web Fetch](https://github.com/sammcj/mcp-devtools/blob/main/docs/tools/web-fetch.md)**                         | Retrieve web content as Markdown   | None                          | Documentation and articles      |
+| **[GitHub](https://github.com/sammcj/mcp-devtools/blob/main/docs/tools/github.md)**                               | GitHub repositories and data       | None (GitHub token optional)  | Issues, PRs, repos, cloning     |
+| **[Package Documentation](https://github.com/sammcj/mcp-devtools/blob/main/docs/tools/package-documentation.md)** | Library documentation lookup       | None                          | React, Django, TensorFlow docs  |
+| **[Package Search](https://github.com/sammcj/mcp-devtools/blob/main/docs/tools/package-search.md)**               | Check package versions             | None                          | NPM, Python, Go, Java, Docker   |
+| **[Think](https://github.com/sammcj/mcp-devtools/blob/main/docs/tools/think.md)**                                 | Structured reasoning space         | None                          | Complex problem analysis        |
+| **[Find Long Files](https://github.com/sammcj/mcp-devtools/blob/main/docs/tools/find_long_files.md)**             | Identify files needing refactoring | None                          | Find files over 700 lines       |
+| **[Calculator](https://github.com/sammcj/mcp-devtools/blob/main/docs/tools/calculator.md)**                       | Basic arithmetic calculations      | None                          | 2 + 3 * 4, batch processing     |
+| **[DevTools Help](https://github.com/sammcj/mcp-devtools/blob/main/docs/tools/devtools_help.md)**                 | Extended info about DevTools tools | None                          | Usage examples, troubleshooting |
 
 These tools can be enabled by setting the `ENABLE_ADDITIONAL_TOOLS` environment variable in your MCP configuration.
 
-| Tool                                                         | Purpose                                  | `ENABLE_ADDITIONAL_TOOLS` | Example Usage                         |
-|--------------------------------------------------------------|------------------------------------------|---------------------------|---------------------------------------|
-| **[Filesystem](docs/tools/filesystem.md)**                   | File and directory operations            | `filesystem`              | Read, write, edit, search files       |
-| **[Claude Agent](docs/tools/claude-agent.md)**               | Claude Code CLI Agent                    | `claude-agent`            | Code analysis, generation             |
-| **[Gemini Agent](docs/tools/gemini-agent.md)**               | Gemini CLI Agent                         | `gemini-agent`            | Code analysis, generation             |
-| **[SBOM Generation](docs/tools/sbom.md)**                    | Generate Software Bill of Materials      | `sbom`                    | Analyse project dependencies          |
-| **[Vulnerability Scan](docs/tools/vulnerability_scan.md)**   | Security vulnerability scanning          | `vulnerability_scan`      | Find security issues                  |
-| **[Generate Changelog](docs/tools/changelog.md)**            | Generate changelogs from git commits     | `generate_changelog`      | Release notes from local/remote repos |
-| **[Document Processing](docs/tools/document-processing.md)** | Convert documents to Markdown            | `process_document`        | PDF, DOCX → Markdown with OCR         |
-| **[PDF Processing](docs/tools/pdf-processing.md)**           | Fast PDF text extraction                 | `pdf`                     | Quick PDF to Markdown                 |
-| **[Security Framework](docs/security.md)** (BETA)            | Context injection security protections   | `security`                | Content analysis, access control      |
-| **[Security Override](docs/security.md)**                    | Agent managed security warning overrides | `security_override`       | Bypass false positives                |
+| Tool                                                                                                                  | Purpose                                                            | `ENABLE_ADDITIONAL_TOOLS` | Example Usage                               |
+|-----------------------------------------------------------------------------------------------------------------------|--------------------------------------------------------------------|---------------------------|---------------------------------------------|
+| **[Filesystem](https://github.com/sammcj/mcp-devtools/blob/main/docs/tools/filesystem.md)**                           | File and directory operations                                      | `filesystem`              | Read, write, edit, search files             |
+| **[American→English](https://github.com/sammcj/mcp-devtools/blob/main/docs/tools/american-to-english.md)**            | Convert to British spelling                                        | `murican_to_english`      | Organise, colour, centre                    |
+| **[ShadCN UI Component Library](https://github.com/sammcj/mcp-devtools/blob/main/docs/tools/shadcn-ui.md)**           | Component information                                              | `shadcn`                  | Button, Dialog, Form components             |
+| **[Claude Agent](https://github.com/sammcj/mcp-devtools/blob/main/docs/tools/claude-agent.md)**                       | Claude Code CLI Agent                                              | `claude-agent`            | Code analysis, generation                   |
+| **[Gemini Agent](https://github.com/sammcj/mcp-devtools/blob/main/docs/tools/gemini-agent.md)**                       | Gemini CLI Agent                                                   | `gemini-agent`            | Code analysis, generation                   |
+| **[Q Developer Agent](https://github.com/sammcj/mcp-devtools/blob/main/docs/tools/q-developer-agent.md)**             | AWS Q Developer CLI Agent                                          | `q-developer-agent`       | AWS-focused code analysis, generation       |
+| **[Memory](https://github.com/sammcj/mcp-devtools/blob/main/docs/tools/memory.md)**                                   | Persistent knowledge graphs                                        | `memory`                  | Store entities and relationships            |
+| **[SBOM Generation](https://github.com/sammcj/mcp-devtools/blob/main/docs/tools/sbom.md)**                            | Generate Software Bill of Materials                                | `sbom`                    | Analyse project dependencies                |
+| **[Vulnerability Scan](https://github.com/sammcj/mcp-devtools/blob/main/docs/tools/vulnerability_scan.md)**           | Security vulnerability scanning                                    | `vulnerability_scan`      | Find security issues                        |
+| **[Generate Changelog](https://github.com/sammcj/mcp-devtools/blob/main/docs/tools/changelog.md)**                    | Generate changelogs from git commits                               | `generate_changelog`      | Release notes from local/remote repos       |
+| **[Document Processing](https://github.com/sammcj/mcp-devtools/blob/main/docs/tools/document-processing.md)**         | Convert documents to Markdown                                      | `process_document`        | PDF, DOCX → Markdown with OCR               |
+| **[PDF Processing](https://github.com/sammcj/mcp-devtools/blob/main/docs/tools/pdf-processing.md)**                   | Fast PDF text extraction                                           | `pdf`                     | Quick PDF to Markdown                       |
+| **[AWS Documentation](https://github.com/sammcj/mcp-devtools/blob/main/docs/tools/aws_documentation.md)**             | AWS documentation search and retrieval                             | `aws`                     | Search and read AWS docs, recommendations   |
+| **[Terraform Documentation](https://github.com/sammcj/mcp-devtools/blob/main/docs/tools/terraform-documentation.md)** | Terraform Registry API access for providers, modules, and policies | `terraform_documentation` | Provider docs, module search, policy lookup |
+| **[Security Framework](https://github.com/sammcj/mcp-devtools/blob/main/docs/security.md)** (BETA)                    | Context injection security protections                             | `security`                | Content analysis, access control            |
+| **[Security Override](https://github.com/sammcj/mcp-devtools/blob/main/docs/security.md)**                            | Agent managed security warning overrides                           | `security_override`       | Bypass false positives                      |
+| **[Sequential Thinking](https://github.com/sammcj/mcp-devtools/blob/main/docs/tools/sequential-thinking.md)**         | Dynamic problem-solving through structured thoughts                | `sequential-thinking`     | Step-by-step analysis, revision, branching  |
+| **[API to MCP](https://github.com/sammcj/mcp-devtools/blob/main/docs/tools/api.md)**                                  | Dynamic REST API integration                                       | `api`                     | Configure any REST API via YAML             |
 
 ## Tooling Details
 
