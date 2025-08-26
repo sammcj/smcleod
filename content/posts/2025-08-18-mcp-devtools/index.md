@@ -21,7 +21,7 @@ ShowRssButtonInSectionTermList: true
 UseHugoToc: true
 mermaid: true
 cover:
-  image: "sec-block.png"
+  image: "sec-arch.png"
   alt: "Security middleware blocking potentially malicious content"
   # caption: "Optional caption text"
   relative: true  # Set to true for page bundle images
