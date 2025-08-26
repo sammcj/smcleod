@@ -127,9 +127,6 @@ These tools can be enabled by setting the `ENABLE_ADDITIONAL_TOOLS` environment 
 | **[Filesystem](https://github.com/sammcj/mcp-devtools/blob/main/docs/tools/filesystem.md)**                           | File and directory operations                                      | `filesystem`              | Read, write, edit, search files             |
 | **[American→English](https://github.com/sammcj/mcp-devtools/blob/main/docs/tools/american-to-english.md)**            | Convert to British spelling                                        | `murican_to_english`      | Organise, colour, centre                    |
 | **[ShadCN UI Component Library](https://github.com/sammcj/mcp-devtools/blob/main/docs/tools/shadcn-ui.md)**           | Component information                                              | `shadcn`                  | Button, Dialog, Form components             |
-| **[Claude Agent](https://github.com/sammcj/mcp-devtools/blob/main/docs/tools/claude-agent.md)**                       | Claude Code CLI Agent                                              | `claude-agent`            | Code analysis, generation                   |
-| **[Gemini Agent](https://github.com/sammcj/mcp-devtools/blob/main/docs/tools/gemini-agent.md)**                       | Gemini CLI Agent                                                   | `gemini-agent`            | Code analysis, generation                   |
-| **[Q Developer Agent](https://github.com/sammcj/mcp-devtools/blob/main/docs/tools/q-developer-agent.md)**             | AWS Q Developer CLI Agent                                          | `q-developer-agent`       | AWS-focused code analysis, generation       |
 | **[Memory](https://github.com/sammcj/mcp-devtools/blob/main/docs/tools/memory.md)**                                   | Persistent knowledge graphs                                        | `memory`                  | Store entities and relationships            |
 | **[SBOM Generation](https://github.com/sammcj/mcp-devtools/blob/main/docs/tools/sbom.md)**                            | Generate Software Bill of Materials                                | `sbom`                    | Analyse project dependencies                |
 | **[Vulnerability Scan](https://github.com/sammcj/mcp-devtools/blob/main/docs/tools/vulnerability_scan.md)**           | Security vulnerability scanning                                    | `vulnerability_scan`      | Find security issues                        |
@@ -142,6 +139,15 @@ These tools can be enabled by setting the `ENABLE_ADDITIONAL_TOOLS` environment 
 | **[Security Override](https://github.com/sammcj/mcp-devtools/blob/main/docs/security.md)**                            | Agent managed security warning overrides                           | `security_override`       | Bypass false positives                      |
 | **[Sequential Thinking](https://github.com/sammcj/mcp-devtools/blob/main/docs/tools/sequential-thinking.md)**         | Dynamic problem-solving through structured thoughts                | `sequential-thinking`     | Step-by-step analysis, revision, branching  |
 | **[API to MCP](https://github.com/sammcj/mcp-devtools/blob/main/docs/tools/api.md)**                                  | Dynamic REST API integration                                       | `api`                     | Configure any REST API via YAML             |
+
+**Agents as Tools** - In addition to the above tools, MCP DevTools can provide access to AI agents as tools by integrating with external LLMs.
+
+| Agent                                                                                                     | Purpose                   | `ENABLE_ADDITIONAL_TOOLS` |
+|-----------------------------------------------------------------------------------------------------------|---------------------------|---------------------------|
+| **[Claude Agent](https://github.com/sammcj/mcp-devtools/blob/main/docs/tools/claude-agent.md)**           | Claude Code CLI Agent     | `claude-agent`            |
+| **[Gemini Agent](https://github.com/sammcj/mcp-devtools/blob/main/docs/tools/gemini-agent.md)**           | Gemini CLI Agent          | `gemini-agent`            |
+| **[Q Developer Agent](https://github.com/sammcj/mcp-devtools/blob/main/docs/tools/q-developer-agent.md)** | AWS Q Developer CLI Agent | `q-developer-agent`       |
+
 
 ## Tooling Details
 
