@@ -1,0 +1,37 @@
+{{- /*
+get-page-images partial
+Returns a slice of images found in the page content, page resources, and site params
+*/ -}}
+
+{{- $images := slice -}}
+
+{{- /* First, try to get images from page params */ -}}
+{{- with .Params.images -}}
+  {{- range . -}}
+    {{- if (urls.Parse .).Scheme -}}
+      {{- $images = $images | append (dict "Permalink" .) -}}
+    {{- else -}}
+      {{- $images = $images | append (dict "Permalink" (. | absURL)) -}}
+    {{- end -}}
+  {{- end -}}
+{{- end -}}
+
+{{- /* Try to get images from page resources */ -}}
+{{- range .Resources.ByType "image" -}}
+  {{- $images = $images | append . -}}
+{{- end -}}
+
+{{- /* If no images found, try site params */ -}}
+{{- if not $images -}}
+  {{- with site.Params.images -}}
+    {{- range . -}}
+      {{- if (urls.Parse .).Scheme -}}
+        {{- $images = $images | append (dict "Permalink" .) -}}
+      {{- else -}}
+        {{- $images = $images | append (dict "Permalink" (. | absURL)) -}}
+      {{- end -}}
+    {{- end -}}
+  {{- end -}}
+{{- end -}}
+
+{{- return $images -}}
