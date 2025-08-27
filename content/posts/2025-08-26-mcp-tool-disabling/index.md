@@ -171,3 +171,19 @@ This approach allows for more complex filtering logic and better separation of c
 Having a pattern for selective tool disabling is something I now add to all MCP servers that I develop and recommend to others. The implementation effort is minimal, but the user value - and performance improvement - is significant.
 
 If you're maintaining an MCP server, add this feature. Your users are already thinking about their token budgets and context quality - help them optimise both.
+
+---
+
+## Appendix - A Note On The Worst Offender: Github
+
+GitHub's MCP server is a masterclass in context pollution. Where other servers hover around 3-10k tokens, **GitHub consumes a staggering 46k tokens across 91 different tools** that cannot be individually enabled or disabled.
+
+**GitHub alone consumes nearly a quarter of Claude Sonnet / Opus 4's context window** - before you even write a single line of code.
+
+Github's MCP fails to:
+
+- Group functionality into broader tools (e.g. `list_issues`, `search_issues`, `update_issue` could be a single `issue_management` tool).
+- Keep tool description and parameter annotations concise.
+- Provide any mechanism to only enable individual tools.
+
+![Github's Horrible MCP Server](github-dafaq.png)
