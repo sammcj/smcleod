@@ -176,9 +176,9 @@ If you're maintaining an MCP server, add this feature. Your users are already th
 
 ## Appendix - A Note On The Worst Offender: Github
 
-GitHub's MCP server is a masterclass in context pollution. Where other servers hover around 3-10k tokens, **GitHub consumes a staggering 46k tokens across 91 different tools** that cannot be individually enabled or disabled.
+GitHub's MCP server is a masterclass in context pollution.
 
-**GitHub alone consumes nearly a quarter of Claude Sonnet / Opus 4's context window** - before you even write a single line of code.
+Where other servers hover around 3-10k tokens, **GitHub consumes a staggering 46k tokens across 91 different tools** that cannot be individually enabled or disabled. GitHub alone consumes nearly a quarter of Claude Sonnet / Opus 4's context window - before you even write a single line of code.
 
 Github's MCP fails to:
 
