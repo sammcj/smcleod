@@ -180,6 +180,8 @@ GitHub's MCP server is a masterclass in context pollution.
 
 Where other servers hover around 3-10k tokens, **The GitHub MCP consumes a staggering 46k tokens across 91 different tools** that cannot be individually enabled or disabled. GitHub alone consumes nearly a quarter of Claude Sonnet / Opus 4's context window - before you even write a single line of code.
 
+> _For comparison - [MCP-DevTools](https://github.com/sammcj/mcp-devtools) provides the most useful GitHub functionality in just 1.6k tokens with a single tool._
+
 Github's MCP fails to:
 
 - Group functionality into broader tools (e.g. `list_issues`, `search_issues`, `update_issue` could be a single `issue_management` tool).
