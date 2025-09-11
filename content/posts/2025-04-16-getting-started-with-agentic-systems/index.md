@@ -109,6 +109,8 @@ CrewAI offers a different perspective on multi-agent systems:
 
 - [Introduction to MCP](https://www.youtube.com/watch?v=kQmXtrmQ5Zg)
 - [MCP Documentation Website](https://modelcontextprotocol.io/introduction)
+- [DeepLearning & Anthropic MCP Course](https://www.deeplearning.ai/short-courses/mcp-build-rich-context-ai-apps-with-anthropic/)
+- [Huggingface MCP Course](https://huggingface.co/learn/mcp-course/en/unit1/key-concepts)
 
 #### RAG - Retrieval Augmented Generation
 
