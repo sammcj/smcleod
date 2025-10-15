@@ -1,0 +1,233 @@
+tools:
+  - id: cline
+    name: Cline
+  - id: claude_code
+    name: Claude Code
+  - id: cursor
+    name: Cursor
+  - id: github_copilot
+    name: Github Copilot
+  - id: amazon_kiro
+    name: Amazon Kiro
+
+# Optional: Define what each highlight level means for documentation
+highlight_levels:
+  0: No highlight
+  1: Requires enterprise/pro subscription
+  2: Minor concern
+  3: Moderate concern
+  4: Significant concern
+  5: Major concern
+
+categories:
+  - name: Functionality
+    features:
+      - name: Inference Providers
+        cline: Any
+        claude_code: Any that support Claude, DeepSeek, GLM and other strong models
+        cursor: Cursor - US Based, limited by plan, BYO option heavily limits features
+        cursor_highlight: 3
+        github_copilot: US Based with limited context window, Can BYO
+        amazon_kiro: US Based, Waitlist
+
+      - name: Sub-Agents
+        cline: No (coming soon)
+        claude_code: Yes
+        cursor: No
+        github_copilot: No
+        amazon_kiro: No
+
+      - name: Custom Agents
+        cline: No (coming soon)
+        claude_code: Yes
+        cursor: No
+        github_copilot: No
+        amazon_kiro: No
+
+      - name: Prompt templates
+        cline: Yes
+        claude_code: Yes
+        cursor: Yes
+        github_copilot: No
+        amazon_kiro: No
+
+      - name: Coding abilities
+        cline: Best in class
+        claude_code: Best in class
+        cursor: Mid range
+        cursor_highlight: 3
+        github_copilot: Lower end
+        github_copilot_highlight: 4
+        amazon_kiro: Lower end
+        amazon_kiro_highlight: 4
+
+      - name: Speed
+        cline: Fastest
+        claude_code: Fastest
+        cursor: Slow
+        cursor_highlight: 4
+        github_copilot: Slow
+        github_copilot_highlight: 4
+        amazon_kiro: Slow
+        amazon_kiro_highlight: 4
+
+  - name: Operational management
+    features:
+      - name: Per-user budget controls
+        cline: With enterprise / teams subscription
+        cline_highlight: 1
+        claude_code: No
+        cursor: No (for BYO)
+        cursor_highlight: 3
+        github_copilot: Yes
+        amazon_kiro: N/A
+
+  - name: Developer experience
+    features:
+      - name: User Interface
+        cline: VSCode IDE, IntelliJ, CLI
+        claude_code: VSCode, IntelliJ IDE, TUI, Zed, CLI
+        cursor: Standalone IDE (Fork of VSCode), CLI
+        cursor_highlight: 3
+        github_copilot: VSCode, Zed, CLI
+        amazon_kiro: Standalone IDE (Fork of VSCode)
+        amazon_kiro_highlight: 3
+
+      - name: Source
+        cline: Open source
+        claude_code: Closed source
+        cursor: Closed source
+        github_copilot: Open source
+        amazon_kiro: Closed source
+
+      - name: Babysitting required
+        cline: Low
+        claude_code: Low
+        cursor: High
+        cursor_highlight: 5
+        github_copilot: High
+        github_copilot_highlight: 5
+        amazon_kiro: Medium/High
+        amazon_kiro_highlight: 4
+
+      - name: Plan/Act modes
+        cline: Yes
+        claude_code: Yes
+        cursor: No
+        cursor_highlight: 3
+        github_copilot: Partial
+        github_copilot_highlight: 2
+        amazon_kiro: No
+        amazon_kiro_highlight: 3
+
+  - name: Configuration management
+    features:
+      - name: File based configuration
+        cline: No (GUI or web with enterprise / teams subscription)
+        cline_highlight: 1
+        claude_code: Yes
+        cursor: No
+        cursor_highlight: 3
+        github_copilot: Partial
+        github_copilot_highlight: 2
+        amazon_kiro: No
+        amazon_kiro_highlight: 3
+
+      - name: Per-project configuration (MCP, rules, RBAC)
+        cline: In beta
+        cline_highlight: 2
+        claude_code: Yes
+        cursor: No
+        cursor_highlight: 3
+        github_copilot: No
+        github_copilot_highlight: 3
+        amazon_kiro: No
+        amazon_kiro_highlight: 3
+
+      - name: Centralised configuration
+        cline: With enterprise / teams subscription
+        cline_highlight: 1
+        claude_code: Partial (manual - file based)
+        claude_code_highlight: 2
+        cursor: No (for BYO), Yes for US based
+        cursor_highlight: 3
+        github_copilot: No
+        github_copilot_highlight: 3
+        amazon_kiro: No
+        amazon_kiro_highlight: 3
+
+  - name: Automation
+    features:
+      - name: Automation hooks
+        cline: In beta
+        cline_highlight: 2
+        claude_code: Yes
+        cursor: No
+        cursor_highlight: 3
+        github_copilot: No
+        github_copilot_highlight: 3
+        amazon_kiro: Yes
+
+      - name: Headless / CLI / CI/CD mode
+        cline: In beta
+        cline_highlight: 2
+        claude_code: Yes
+        cursor: In beta
+        cursor_highlight: 2
+        github_copilot: Yes
+        amazon_kiro: No
+        amazon_kiro_highlight: 3
+
+      - name: Automated Context Cleanup
+        cline: Yes
+        claude_code: Yes
+        cursor: No
+        cursor_highlight: 3
+        github_copilot: No
+        github_copilot_highlight: 3
+        amazon_kiro: No
+        amazon_kiro_highlight: 3
+
+  - name: Access control
+    features:
+      - name: RBAC - Commands
+        cline: With enterprise / teams subscription
+        cline_highlight: 1
+        claude_code: Yes
+        cursor: No (has basic allow list - easy to bypass)
+        cursor_highlight: 5
+        github_copilot: No
+        github_copilot_highlight: 4
+        amazon_kiro: No
+        amazon_kiro_highlight: 4
+
+      - name: RBAC - Web domains
+        cline: With enterprise / teams subscription
+        cline_highlight: 1
+        claude_code: Yes
+        cursor: No
+        cursor_highlight: 3
+        github_copilot: No
+        github_copilot_highlight: 3
+        amazon_kiro: No
+        amazon_kiro_highlight: 3
+
+      - name: RBAC - MCP
+        cline: With enterprise / teams subscription
+        cline_highlight: 1
+        claude_code: Yes
+        cursor: No
+        cursor_highlight: 3
+        github_copilot: No
+        github_copilot_highlight: 3
+        amazon_kiro: No
+        amazon_kiro_highlight: 3
+
+      - name: SSO
+        cline: With enterprise / teams subscription
+        cline_highlight: 1
+        claude_code: Yes
+        cursor: No (for BYO), Yes for US based
+        cursor_highlight: 2
+        github_copilot: Yes
+        amazon_kiro: Yes

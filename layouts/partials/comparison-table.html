@@ -1,0 +1,36 @@
+{{ $data := .Site.Data.agentic_tools_comparison }}
+
+<div class="comparison-table-wrapper wide-table">
+  <table class="comparison-table">
+    <thead>
+      <tr>
+        <th class="feature-column"></th>
+        {{ range $data.tools }}
+          <th>{{ .name }}</th>
+        {{ end }}
+      </tr>
+    </thead>
+    <tbody>
+      {{ range $category := $data.categories }}
+        <tr class="category-row">
+          <td colspan="{{ add (len $data.tools) 1 }}" class="category-name">
+            {{ $category.name }}
+          </td>
+        </tr>
+        {{ range $feature := $category.features }}
+          <tr>
+            <td class="feature-name">{{ $feature.name }}</td>
+            {{ range $tool := $data.tools }}
+              {{ $value := index $feature $tool.id }}
+              {{ $highlightKey := printf "%s_highlight" $tool.id }}
+              {{ $highlightLevel := index $feature $highlightKey | default 0 }}
+              <td{{ if gt $highlightLevel 0 }} class="highlight-{{ $highlightLevel }}"{{ end }}>
+                {{ $value }}
+              </td>
+            {{ end }}
+          </tr>
+        {{ end }}
+      {{ end }}
+    </tbody>
+  </table>
+</div>
