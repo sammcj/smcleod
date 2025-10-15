@@ -1,197 +1,113 @@
 # data/toolRatings.yml
-IDE Integrations:
-  "Continue.dev":
-    rating: 7
-    notes: "Decent UI, good performance, big community. Cons: Models have to be manually configured. <b>\n\n*Highly recommend!*</b>"
-    link: "https://continue.dev/"
+
+Agentic Coding:
+  "Claude Code":
+    rating: 9
+    notes: "Great value with Claude Max 5 subscription, fast, flexible, strong coding abilities, high quality outcomes. Cons: Config files are a mess <b>\n\n*Highly recommend!*</b>"
+    link: "https://claude.ai/code"
+  "Cline":
+    rating: 8
+    notes: "Best VSCode extension based agent, high quality outcomes. Cons: Consumption based pricing, although you can leveraging Claude Code's subscription it's a bit slower <b>\n\n*Highly recommend!*</b>"
+  "Gemini CLI":
+    rating: 4
+    notes: "Not as good as Claude Code or Cline."
+  "Crush":
+    rating: 4
+    notes: "Great UI, works with any capable model. Cons: Lacks some features and you have to pay for consumption."
+  "Github Copilot Agent":
+    rating: 3
+    notes: "Easy to use, good VSCode integration, huge community. Cons: Slow, heavily rate and token limited, needs a lot of hand holding. Expensive compared to what you get from Claude Code w/ Max 5"
+    link: "https://github.com/features/copilot"
+  "Amazon Kiro":
+    rating: 3
+    notes: "Requires you to run a VSCode fork, lacks a lot of features and configuration other tools have had for a long time, can be buggy, tends to build over-engineered solutions, slow, needs a lot of hand holding. Expensive compared to what you get from Claude Code w/ Max 5"
+
+Non-Agentic Copilots:
   "Github Copilot":
     rating: 8
     notes: "Easy to use, good VSCode integration, huge community. Cons: Sometimes stops responding, limited to single file editing, sometimes only returns a single line at a time. <b>\n\n*Highly recommend!*</b>"
     link: "https://github.com/features/copilot"
+  "Continue.dev":
+    rating: 6
+    notes: "Traditional copilot style completions, decent UI, good performance, big community."
+    link: "https://continue.dev/"
   "Amazon Q":
     rating: 2
     notes: "Poor quality suggestions, buggy integration experience, limited to single file editing, not as good as Github Copilot or Continue.dev with local LLMs."
-    link: "https://docs.aws.amazon.com/amazonq/latest/qdeveloper-ug/q-in-IDE.html"
-  "Llama Autocoder":
-    rating: 3
-    notes: "Very easy to use, Very fast, Good for when you just want AI to write code for you. Cons: Limited configurability."
-    link: "https://github.com/10Nates/ollama-autocoder"
-  "Tabby":
-    notes: "Similar to Continue.dev, maybe not quite as polished, haven't tried it in a while"
-    link: "https://tabbyml.com"
-    rating: 4
-  "llm-vscode":
-    notes: "Official huggingface VSCode plugin, works with Ollama as well as Huggingface models, haven't tried it yet"
-    link: "https://github.com/huggingface/llm-vscode.git"
-    rating: -0
-  # "Llama Coder":
-  #   notes: "VSCode plugin for Ollama/llama.cpp, haven't tried it yet"
-  # "Gemini Code Assist + Google Cloud Code":
-  #   notes: "Google's gemini code assistant, alternative to Github Copilot"
-  # "Amazon Q":
-  #   notes: "Amazon's AI code assistant, alternative to Github Copilot"
-
-Codegen:
-  "Ingest":
-    rating: 10
-    notes: "My tool for ingesting directories of code/data for passing to LLMs. Has advanced vRAM and token estimations <b>\n\n*Highly recommend!*</b>"
-    link: "https://github.com/sammcj/ingest"
-  "Code2Prompt":
-    rating: 5
-    notes: "Useful tool for ingesting directories of code/data for passing to LLMs, can be hard to configure and contribute to."
-    link: "https://github.com/mufeedvh/code2prompt"
-  "Llama Autocoder":
-    rating: 4
-    notes: "Very easy to use, Very fast, Good for when you just want AI to write code for you. Cons: Limited configurability."
-    link: "https://github.com/10Nates/ollama-autocoder"
-  "Aider":
-    rating: 6
-    notes: "Very powerful, supports updating existing code, good for codegen. Cons: The UI feels a bit slow (high latency) and clunky."
-    link: "https://aider.chat"
 
 Clients:
-  "MindMac":
-    rating: 5
-    notes: "Good native macOS client for LLMs, has a decent set of features. Cons: Can be a bit slow at times, UI feels dated."
-    link: "https://mindmac.app/"
   "Msty":
     rating: 7
     notes: "Lots of potential, nice UI, has branching conversations and document libraries for RAG. Cons: Electron, limited configuration."
     link: "https://msty.app"
-  "Librechat":
-    rating: 4
-    notes: "Attractive UI. Cons: Configuration is complex / brittle."
-    link: "https://www.librechat.ai"
   "Open WebUI":
-    rating: 8
+    rating: 7
     notes: "Rapidly being developed, Fast UI, RAG, Configurable, Diagram generation. <b>\n\n*Highly recommend!*</b>"
     link: "https://github.com/open-webui/open-webui"
   "LM-Studio":
-    rating: 6
+    rating: 7
     notes: "Great UI, Performs well. Cons: Electron, Closed Source, Falls behind on llama.cpp updates."
     link: "https://lmstudio.ai/"
   "Jan":
-    rating: 5
-    notes: "Nice UI, some good futures. Cons: Electron, Limited integration with Ollama."
+    rating: 3
+    notes: "UI feels disjointed, Electron, Limited integration when running existing LLM servers."
     link: "https://github.com/janhq/jan/"
   "Anything LLM":
-    rating: 6
+    rating: 4
     notes: "Excellent RAG performance, support for browsing, search, confluence, youtube tooling. Cons: Very ugly UI, Electron"
     link: "https://github.com/Mintplex-Labs/anything-llm/"
   "Lobe Chat":
-    rating: 3
+    rating: 2
     notes: "Attractive UI, Plugin ecosystem, Good for building agent personas. Cons: Plugin ecosystem seems to be broken now, Limited and confusing configurability."
     link: "https://github.com/lobehub/lobe-chat/"
   "BigAGI":
-    rating: 7
+    rating: 4
     notes: "Has unique 'Beam' feature for generating responses from multiple models, Fast UI, Diagram generation. Cons: Not very configurable. <b>\n\n*Highly recommend!*</b>"
     link: "https://github.com/enricoros/big-AGI/"
   "Bolt":
-    rating: 8
+    rating: 6
     notes: "Great native macOS client for LLMs, Responsive developer, Currently go-to for a desktop app. Cons: Lacks RAG, Expensive. <b>\n\n*Highly recommend!*</b>"
     link: "https://boltai.com/"
-  "Khoj":
-    rating: 2
-    notes: "RAG. Cons: Lacks configurability, Dated UI."
-    link: "https://khoj.dev/"
-  "Mods":
-    rating: 3
-    notes: "Very pretty TUI, fast and lightweight. Cons: Limited configurability, no RAG."
-    link: "https://github.com/charmbracelet/mods"
   "GPT4All":
     rating: 4
     notes: "Open Source. Cons: Electron, Limited configurability, Ugly UI."
     link: "https://www.nomic.ai"
-  "Kerlig":
-    rating: 3
-    notes: "Fast, lightweight (despite being Electron) and well integrated with macOS, visually pleasing UI. Cons: Closed source, could do with some more configuration options."
-    link: "https://kerlig.com/"
 
 Servers:
+  "Llama.cpp with LlamaSwap":
+    rating: 9
+    notes: "Simply an amazing feat of engineering, rapid development, huge community, lots of configuration options. Running it with llama-swap makes it easy to hot load/unload models and configuration sets."
+    link: "https://github.com/ggerganov/llama.cpp/"
   "Ollama":
-    rating: 9
-    notes: "As easy to use as Docker, Makes running models very easy, uses Llama.cpp, Huge community. Cons: Features can sometimes lag behind llama.cpp, no support for other servers such as Exllamav2 or MLX. <b>\n\n*Highly recommend!*</b>"
-    link: "https://github.com/ollama/ollama/"
-  "ExLlamav2":
-    rating: 9
-    notes: "Incredibly fast, efficient LLM model serving, excellent caching. Cons: limited servers available (I recommend TabbyAPI). <b>\n\n*Highly recommend!*</b>"
-    link: "https://github.com/turboderp/exllamav2"
-  "Llama.cpp":
-    rating: 10
-    notes: "Simply an amazing feat of engineering, rapid development, huge community, lots of configuration options. Cons: No concept of model management, server is limited without a wrapper like Ollama."
-    link: "https://github.com/ggerganov/llama.cpp/"
-  "llama.cpp RPC":
-    rating: 5
-    notes: "Great concept of distributed inference. Cons: Crashes often, limited server configuration."
-    link: "https://github.com/ggerganov/llama.cpp/"
-  "TabbyAPI":
     rating: 7
-    notes: "Really easy way to host Exllamav2 models. Cons: Doesn't properly free VRAM after unload."
-    link: "https://github.com/theroyallab/tabbyAPI/"
+    notes: "As easy to use as Docker, Makes running models very easy, large community. Cons: Lack of configuration and features can sometimes lag behind llama.cpp, slow to contribute to."
+    link: "https://github.com/ollama/ollama/"
+  "vLLM":
+    rating: 4
+    notes: "Fast, good model support. Cons: Can be a pain to setup and configure, no model hot loading, limited quantisation options."
+    link: "https://github.com/vllm-project/vllm/"
+  "ExLlamav2":
+    rating: 4
+    notes: "Fast, efficient LLM model serving, excellent caching. Cons: Not as well maintained as llama.cpp <b>\n\n*Highly recommend!*</b>"
+    link: "https://github.com/turboderp/exllamav2"
   "Tensorrt-LLM":
     rating: 2
     notes: "Fast. Cons: Horribly terrible to setup, confusing documentation, complex model configuration."
     link: "https://github.com/NVIDIA/TensorRT-LLM/"
-  "vLLM":
-    rating: 4
-    notes: "Fast. Cons: Can be a pain to setup and configure."
-    link: "https://github.com/vllm-project/vllm/"
-  "Localai":
-    rating: 2
-    notes: "Offers lots of features. Cons: A pain to configure and setup, model management is over-complicated."
-    link: "https://localai.io"
   "Mistralrs":
     rating: 4
-    notes: "Want to checkout (again): When exllamav2 support is merged - keeping an eye on https://github.com/EricLBuehler/mistral.rs/issues/546. Fast, Rapid development. Cons: Currently only supports GGUF and GPTQ, is a pain to configure and remember parameters for."
+    notes: "Unique features such as combining unrelated models as a MoE, rapid development, friendly developer. Cons: Confusing runtime arguments, limited model support, is a pain to configure and remember parameters for."
     link: "https://github.com/EricLBuehler/mistral.rs"
-  "Aphrodite engine":
-    rating: 3
-    notes: "Very fast. Cons: Does not support running with an odd-number of GPUs, A bit of a pain to configure."
-    link: "https://github.com/PygmalionAI/aphrodite-engine"
-
-Pipelines / Integrations:
-  "Flowise":
-    rating: 6
-    notes: "Good UI, Lots of plugins, inbuilt API for no-code creations. <b>\n\n*Highly recommend!*</b>"
-    link: "https://github.com/FlowiseAI/Flowise/"
-  "Verba":
-    rating: 3
-    notes: "Good at RAG. Cons: Limited features and configurability."
-    link: "https://github.com/weaviate/Verba"
-  "Fabric":
-    rating: 4
-    notes: "Good for quickly piping YouTube videos into LLMs. Cons: Can be a tad slow, difficult to manage prompt library/templates."
-    link: "https://github.com/danielmiessler/fabric/"
-  "Crewai":
-    rating: 6
-    notes: "Incredibly powerful, easy to do the basics. Cons: Could do with a UI. <b>\n\n*Highly recommend!*</b>"
-    link: "https://github.com/joaomdmoura/crewAI/"
-  "Autogen":
-    rating: 4
-    notes: "Felt over-complicated and a bit dated compared to CrewAI."
-    link: "https://github.com/microsoft/autogen/"
-  "Danswer":
-    rating: 7
-    notes: "Strong integrations with Slack, Confluence etc..."
-    link: "https://github.com/danswer-ai/danswer/"
-  "HomeAssistant AI Integration":
-    rating: 6
-    notes: "Awesome to be able to integration Home Assistant with Local LLMs. Limited configuration and somewhat jacky onboarding - probably a limitation of Home Assistant."
-    link: "https://github.com/jekalmin/extended_openai_conversation"
-  "Perplexica":
-    rating: 5
-    notes: "Nice self-hostable Perplexity clone."
-    link: "https://github.com/ItzCrazyKns/Perplexica/"
-  "Langflow":
-    rating: 4
-    notes: "Cons: Just doesn't seem as a good as Flowise."
-    link: "https://www.langflow.org/"
-  "Jupyter Notebook":
-    rating: 3
-    notes: "Alright for quick prototyping and testing code in isolation, suffers from the usual python packaging ecosystem and a bit of a clunky UI with no copilot."
-    link: "https://jupyter.org/"
 
 Imagegen:
+  "Invokeai":
+    rating: 9
+    notes: "My go-to imagegen tool, lots of configuration, big community, responsive devs, good UI, great performance. <b>\n\n*Highly recommend!*</b>"
+    link: "https://github.com/invoke-ai/InvokeAI"
+  "Comfy":
+    rating: 5
+    notes: "Very powerful, huge community, lots of plugins. Cons: UI is very complicated, a lack of workflow (kind of by design), No model management built in."
+    link: "https://github.com/comfyanonymous/ComfyUI"
   "Automatic1111":
     rating: 4
     notes: "Powerful, huge community, lots of plugins. Cons: Terrible UI, configuration and model management is painful, UI has lack of flow."
@@ -204,26 +120,6 @@ Imagegen:
     rating: 8
     notes: "Excellent for creating memes with coworkers, fast, easy to use. Cons: The Gradio interface has some limitations.  <b>\n\n*Highly recommend!*</b>"
     link: "https://github.com/facefusion/facefusion/"
-  "Fooocus":
-    rating: 1
-    notes: "Cons: Everything? Seems pretty limited."
-    link: "https://github.com/lllyasviel/Fooocus"
-  "Invokeai":
-    rating: 9
-    notes: "My go-to imagegen tool, lots of configuration, big community, responsive devs, good UI, great performance. <b>\n\n*Highly recommend!*</b>"
-    link: "https://github.com/invoke-ai/InvokeAI"
-  "Sogni":
-    rating: 3
-    notes: "A decent native application for ImageGen, a bit faster than Draw Things. Cons: Limited configuration."
-    link: "https://www.sogni.ai"
-  "Stability Matrix":
-    rating: 7
-    notes: "Handy tool for when you quickly want to install ComfyUI/InvokeAI/Automatic1111/StableSwarmUI. Cons: Limited packages available."
-    link: "https://github.com/LykosAI/StabilityMatrix"
-  "Stable Swarm":
-    rating: 5
-    notes: "Has potential, in some ways easier to use than Automatic1111. Cons: UI is a bit clunky."
-    link: "https://github.com/Stability-AI/StableSwarmUI"
   "Topaz Photo AI":
     rating: 7
     notes: "Powerful, high quality upscaling. Cons: Expensive, closed source."
@@ -232,122 +128,51 @@ Imagegen:
     rating: 9
     notes: "Best in class for video upscaling and quality enhancement. Cons: Expensive, closed source. <b>\n\n*Highly recommend!*</b>"
     link: "https://www.topazlabs.com/topaz-video-ai"
-  "Stable Diffusion XL":
-    rating: 9
-    notes: "Really powerful once you get the hang of prompting, huge community, lots of LoRAs, Lots of fine tunes. <b>\n\n*Highly recommend!*</b>"
-    link: "https://huggingface.co/stabilityai/stable-diffusion-xl-base-1.0"
-  "Flux Dev":
-    rating: 9
-    notes: "Easily the best quality generations, growing community and adapters. Can be slow and resource intensive. <b>\n\n*Highly recommend!*</b>"
-    link: "https://huggingface.co/black-forest-labs/FLUX.1-dev"
-  "Stable Diffusion 3":
-    rating: 1
-    notes: "Basically useless, terrible quality, no community, lots of licensing issues."
-    link: "https://stability.ai/news/stable-diffusion-3"
-  "Pinokio":
-    rating: 3
-    notes: "Interesting concept to quickly try new tools out."
-    link: "https://pinokio.computer"
-  "Comfy":
-    rating: 5
-    notes: "Very powerful, huge community, lots of plugins. Cons: UI is very complicated, a lack of workflow (kind of by design), No model management built in."
-    link: "https://github.com/comfyanonymous/ComfyUI"
 
-Data and Training:
-  "Kohya_SS":
-    rating: 9
-    notes: "Very powerful ImageGen training and fine tuning, lots of configuration options, flexible, decent community, fast. Cons: Some documentation not in English, Gradio based UI has it's limits. <b>\n\n*Highly recommend!*</b>"
-    link: "https://github.com/bmaltais/kohya_ss"
-  "Augment Toolkit":
-    rating: 6
-    notes: "Very interesting one of a kind tool for generating training datasets. Cons: Built for the role play community of which I'm not into, needs a lot of tweaking. <b>\n\n*Highly recommend!*</b>"
-    link: "https://github.com/e-p-armstrong/augmentoolkit"
-  "RefactAI":
-    rating: 5
-    notes: "Excellent UI for fine tuning models and serving LLMs for code completion. Cons: Limited configurability, limited models, fine tuning can be a bit slow compared to unsloth etc..."
-    link: "https://refact.ai"
-  "Llama Factory":
-    rating: 6
-    notes: "Interface for various fine-tuning/training LLM tools such as unsloth. Cons: Gradio UI has its limits, not always clear why something goes wrong. <b>\n\n*Highly recommend!*</b>"
-    link: "https://github.com/hiyouga/LLaMA-Factory"
-  "H2O Studio":
-    rating: 2
-    notes: "Quite powerful for training. Cons: Feels very heavy (Java?)"
-    link: "https://h2o.ai"
-  "Unsloth":
-    rating: 7
-    notes: "Very powerful, lots of configuration options, fast, good community. Cons: No native UI, but can be used with Llama Factory <b>\n\n*Highly recommend!*</b>"
-    link: "https://unsloth.com"
-
-Observability / Utils:
+Utils:
   "nvapi":
-    rating: 9
+    rating: 8
     notes: "My tool for exposing NVidia GPU metrics as an API, I find it very useful, but then... I would say that! <b>\n\n*Highly recommend!*</b>"
     link: "https://github.com/sammcj/nvapi/"
   "gollama":
-    rating: 9
+    rating: 8
     notes: "My fast TUI for managing Ollama models, plugs the gap in Ollama's functionality. Cons: I'm always creating and finding bugs. <b>\n\n*Highly recommend!*</b>"
     link: "https://github.com/sammcj/gollama/"
-  "parllama":
-    rating: 3
-    notes: "A TUI for managing Ollama models, has some neat ideas. Cons: Very slow / laggy, not very user friendly."
-    link: "https://github.com/paulrobello/parllama/"
   "Langfuse":
     rating: 5
     notes: "Strong Observability platform for LLMs."
     link: "https://github.com/langfuse/langfuse/"
-
-Libraries:
-  "llm-scraper":
-    rating: -0
-    notes: "Want to checkout: Scrapes Websites to data for LLMs for LLM ingestion"
-    link: "https://github.com/mishushakov/llm-scraper"
-  "Litellm":
-    rating: 6
-    notes: "Good for managing many LLM providers and models in code."
-    link: "https://github.com/BerriAI/litellm/"
-  "GoLLM":
+  "PR-Agent":
     rating: 7
-    notes: "Currently the best Golang LLM library with lots of neat features built in"
-    link: "https://github.com/teilomillet/gollm"
-
-Multimodal:
-  "Llavavision":
-    rating: 5
-    notes: "Neat tool to demo vision models, can use with iPhone to live comment from LLMs on the camera feed. Cons: Limited configurability, no updates in a while."
-    link: "https://github.com/aitecnico/llavavision/"
-  "Text-generation-webui":
-    rating: 7
-    notes: "Very powerful, big community, lots of models and inference servers supported, frequent updates. Cons: Very clunky Gradio UI. <b>\n\n*Highly recommend!*</b>"
-    link: "https://github.com/oobabooga/text-generation-webui/"
-  "TTS-generation-webui":
-    rating: 6
-    notes: "Like Text Generation WebUI but for Audio. Cons: Not always clear why you get good/bad results."
-    link: "https://github.com/rsxdalv/tts-generation-webui"
-  "Whisper":
-    rating: 7
-    notes: "Powerful STT"
-    link: "https://github.com/openai/whisper"
-  "Piper":
+    notes: "Powerful too for AI in CI/CD pipelines (or locally), can review PRs, security, complexity etc...<b>\n\n*Highly recommend!*</b>"
+    link: "https://github.com/Codium-ai/pr-agent"
+  "Ingest":
     rating: 8
-    notes: "Powerful TTS"
-    link: "https://github.com/rhasspy/piper"
-  "OpenWakeWord":
-    rating: 6
-    notes: "Wake word detection for IoT, easy to train new wake word models. Cons: Can be a bit heavy and slow for low power devices."
-    link: "https://github.com/dscripka/openWakeWord"
-  "MicroWakeWord":
-    rating: 6
-    notes: "Fast and light wake words for IoT. Cons: Limited configurability and very hard to train new wake word models. <b>\n\n*Highly recommend!*</b>"
-    link: "https://github.com/kahrendt/microWakeWord"
+    notes: "My tool for ingesting directories of code/data for passing to LLMs. Has advanced vRAM and token estimations <b>\n\n*Highly recommend!*</b>"
+    link: "https://github.com/sammcj/ingest"
 
 SaaS Providers:
   "Claude":
-    rating: 7
+    rating: 9
     notes: "Since Claude Sonnet 3.5 has been quite good at coding, especially with 'projects' and generating code as text attachments. Cons: Expensive, get rate limited all the time <b>\n\n*Highly recommend!*</b>"
     link: "https://claude.ai"
+  "OpenAI":
+    rating: 7
+    notes: "The O.G. of modern AI SaaS providers. Cons: Hostile to Open Source, Too much VC funding, Lobbies Governments, For-profit, Expensive."
+    link: "https://openai.com/"
+  "Gemini":
+    rating: 7
+    notes: "The Pro and image editing models can be useful, but they need a lot of hand holding and are very happy clappy."
+  "Qwen (API)":
+    rating: 6
+    notes: "Open weight coding models, fast. Cons: Historical and political inaccuracies, probably fine for coding."
+    link: "https://deepseek.ai/"
+  "DeepSeek (API)":
+    rating: 6
+    notes: "Open weight coding models, fast. Cons: Historical and political inaccuracies, probably fine for coding."
+    link: "https://deepseek.ai/"
   "TogetherAI":
-    rating: 8
+    rating: 5
     notes: "Lots of Open Source models available, Very fast, drop in replacement for OpenAI Cons: Can be expensive for larger models. <b>\n\n*Highly recommend!*</b>"
     link: "https://www.together.ai"
   "OpenRouter":
@@ -355,58 +180,17 @@ SaaS Providers:
     notes: "Lots of models to choose from, easy to drop in to replace OpenAI. Cons: Can be a bit laggy at times."
     link: "https://openrouter.ai"
   "Groq":
-    rating: 6
-    notes: "Incredibly fast, uses Open Source models, Free. Cons: Closed source hardware, web UI is very basic, limited models."
-    link: "https://groq.com/"
-  "OpenAI":
-    rating: 5
-    notes: "The O.G. of modern AI SaaS providers. Cons: Hostile to Open Source, Too much VC funding, Lobbies Governments, For-profit, Expensive."
-    link: "https://openai.com/"
-  "Github Copilot":
-    rating: 8
-    notes: "Easy to use, good VSCode integration, huge community. Cons: Sometimes stops responding, sometimes only returns a single line at a time. <b>\n\n*Highly recommend!*</b>"
-    link: "https://github.com/features/copilot"
-  "Kagi AI":
-    rating: 5
-    notes: "Kagi search engine is IMO the best in the business, it has some AI based features such as summarisation and question answering. Lots of potential."
-    link: "https://help.kagi.com/kagi/ai/kagi-ai.html"
-  "Elevenlabs":
-    rating: 6
-    notes: "Great webUI, lots of models, easy to use. Cons: Can be expensive when you go over the free tier."
-    link: "https://elevenlabs.io/"
-  "Suno":
-    rating: 5
-    notes: "Fun"
-    link: "https://suno.com/"
-  "01.ai":
     rating: 4
-    notes: "They offered me a free trial of Yi-Large which was a good small-context model, Easy drop in replacement for OpenAI. Cons: Very small context window sizes in the Yi Models"
-    link: "https://01.ai/"
-  "DeepSeek AI":
-    rating: 6
-    notes: "STOA (July 2024) Open Source coding models, fast. Cons: Web interface is a bit limited, more of a tech demo."
-    link: "https://deepseek.ai/"
+    notes: "Incredibly fast, uses Open Source models, Free. Cons: Old, limited models."
+    link: "https://groq.com/"
 
-Methods and Techniques:
-  "MoE":
-    rating: 8
-    notes: "Mixture of Experts can offer greatly improved model performance with less compute overhead. Cons: Still uses the VRAM of all the models combined, can't easily swap out experts. <b>\n\n*Highly recommend!*</b>"
-    link: "https://huggingface.co/blog/moe"
-  "AnyMoE":
-    rating: -0
-    notes: "Want to checkout: A more flexible version of MoE, can use any model or any architecture as an expert."
-    link: "https://github.com/EricLBuehler/mistral.rs/blob/master/docs/ANYMOE.md"
-  "MoA":
-    rating: 8
-    notes: "I've wanted this from day 1 working with LLMs, simple, effective, easy to use. Cons: Slow, no real UI based apps/clients support this method yet. <b>\n\n*Highly recommend!*</b>"
-    link: "https://github.com/togethercomputer/MoA/"
-  "RAG":
-    rating: 6
-    notes: "Useful for data retrieval, Fast. Cons: Not good for codegen, often lacks context."
-    link: ""
 
-CICD:
-  "PR-Agent":
-    rating: 7
-    notes: "Powerful too for AI in CI/CD pipelines (or locally), can review PRs, security, complexity etc...<b>\n\n*Highly recommend!*</b>"
-    link: "https://github.com/Codium-ai/pr-agent"
+Data and Training:
+  "Kohya_SS":
+    rating: 9
+    notes: "Very powerful ImageGen training and fine tuning, lots of configuration options, flexible, decent community, fast. Cons: Some documentation not in English, Gradio based UI has it's limits. <b>\n\n*Highly recommend!*</b>"
+    link: "https://github.com/bmaltais/kohya_ss"
+  "Llama Factory":
+    rating: 6
+    notes: "Interface for various fine-tuning/training LLM tools such as unsloth. Cons: Gradio UI has its limits, not always clear why something goes wrong. <b>\n\n*Highly recommend!*</b>"
+    link: "https://github.com/hiyouga/LLaMA-Factory"

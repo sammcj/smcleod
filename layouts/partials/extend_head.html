@@ -1,2 +1,9 @@
 {{ $citations := resources.Get "css/citations.css" | minify }}
 <link rel="stylesheet" href="{{ $citations.RelPermalink }}">
+
+{{ range .Params.extra_css }}
+  {{ $css := resources.Get . }}
+  {{ if $css }}
+    <link rel="stylesheet" href="{{ $css.RelPermalink }}">
+  {{ end }}
+{{ end }}
