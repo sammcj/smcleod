@@ -5,11 +5,14 @@ tools:
   - id: cline
     name: Cline
     header_highlight: 0
-  - id: cursor
-    name: Cursor
-    header_highlight: 4
+  - id: openai_codex
+    name: OpenAI Codex
+    header_highlight: 3
   - id: github_copilot
     name: Github Copilot
+    header_highlight: 4
+  - id: cursor
+    name: Cursor
     header_highlight: 4
   - id: amazon_kiro
     name: Amazon Kiro
@@ -46,6 +49,8 @@ categories:
         github_copilot: US Based with limited context window, Can BYO
         amazon_kiro: US Based, Waitlist
         amazon_kiro_highlight: 3
+        openai_codex: OpenAI models (US Based), Can BYO baseURL
+        openai_codex_highlight: 3
 
       - name: Sub-Agents
         cline: Yes
@@ -56,6 +61,8 @@ categories:
         github_copilot_highlight: 3
         amazon_kiro: No
         amazon_kiro_highlight: 3
+        openai_codex: No
+        openai_codex_highlight: 3
 
       - name: Custom Agents
         cline: No (coming soon)
@@ -66,6 +73,8 @@ categories:
         github_copilot_highlight: 2
         amazon_kiro: No
         amazon_kiro_highlight: 2
+        openai_codex: No
+        openai_codex_highlight: 2
 
       - name: Prompt templates
         claude_code: Yes
@@ -74,6 +83,8 @@ categories:
         github_copilot: Yes
         amazon_kiro: No
         amazon_kiro_highlight: 3
+        openai_codex: No
+        openai_codex_highlight: 3
 
       - name: Coding abilities
         claude_code: Best in class
@@ -84,6 +95,8 @@ categories:
         github_copilot_highlight: 4
         amazon_kiro: Mid range
         amazon_kiro_highlight: 3
+        openai_codex: Mid/Higher end
+        openai_codex_highlight: 2
 
       - name: Speed
         claude_code: Fastest
@@ -105,6 +118,7 @@ categories:
         github_copilot: High
         amazon_kiro: Low
         amazon_kiro_highlight: 4
+        openai_codex: High
 
   - name: Operational management
     features:
@@ -116,6 +130,10 @@ categories:
         cursor_highlight: 3
         github_copilot: N/A
         amazon_kiro: N/A
+        openai_codex:
+          text: Partial
+          highlight: 2
+          tooltip: Can set hard limits on API key / project usage, but not for Codex plan usage
 
   - name: Developer experience
     features:
@@ -127,6 +145,7 @@ categories:
         github_copilot: VSCode, Zed, CLI
         amazon_kiro: Standalone IDE (Fork of VSCode)
         amazon_kiro_highlight: 3
+        openai_codex: VSCode IDE, CLI
 
       - name: Babysitting required
         cline: Low
@@ -155,6 +174,8 @@ categories:
         github_copilot: Large
         amazon_kiro: Small
         amazon_kiro_highlight: 3
+        openai_codex: Medium
+        openai_codex_highlight: 2
 
       - name: Source
         cline: Yes
@@ -165,6 +186,7 @@ categories:
         github_copilot: Yes
         amazon_kiro: Closed source
         amazon_kiro_highlight: 5
+        openai_codex: Yes
 
   - name: Configuration management
     features:
@@ -180,6 +202,7 @@ categories:
         github_copilot_highlight: 3
         amazon_kiro: Limited - no RBAC or rules
         amazon_kiro_highlight: 3
+        openai_codex: Yes
 
       - name: Per-project configuration (rules, MCP, RBAC)
         claude_code: Yes
@@ -191,6 +214,7 @@ categories:
         github_copilot_highlight: 2
         amazon_kiro: Limited - no RBAC
         amazon_kiro_highlight: 2
+        openai_codex: Yes
 
       - name: Centralised configuration
         claude_code:
@@ -205,6 +229,10 @@ categories:
         github_copilot_highlight: 3
         amazon_kiro: No
         amazon_kiro_highlight: 3
+        openai_codex:
+          text: No
+          tooltip: File-based configuration only via config.toml
+        openai_codex_highlight: 3
 
   - name: Automation
     features:
@@ -217,16 +245,17 @@ categories:
         github_copilot: No
         github_copilot_highlight: 3
         amazon_kiro: Yes
+        openai_codex: Yes
 
       - name: Headless / CLI / CI/CD mode
-        cline: In beta
-        cline_highlight: 2
+        cline: Yes
         claude_code: Yes
         cursor: In beta
         cursor_highlight: 2
         github_copilot: Yes
         amazon_kiro: No
         amazon_kiro_highlight: 3
+        openai_codex: Yes
 
       - name: Automated Context Cleanup
         cline: Yes
@@ -252,6 +281,10 @@ categories:
         github_copilot_highlight: 5
         amazon_kiro: No
         amazon_kiro_highlight: 5
+        openai_codex:
+          text: Partial
+          tooltip: Approval policies and sandboxing controls but not full RBAC per-command
+          highlight: 3
 
       - name: RBAC - MCP tools
         cline: With enterprise / teams subscription
@@ -263,6 +296,8 @@ categories:
         github_copilot_highlight: 4
         amazon_kiro: No
         amazon_kiro_highlight: 4
+        openai_codex: No
+        openai_codex_highlight: 4
 
       - name: RBAC - Web domains
         cline: With enterprise / teams subscription
@@ -274,6 +309,8 @@ categories:
         github_copilot_highlight: 3
         amazon_kiro: No
         amazon_kiro_highlight: 3
+        openai_codex: No
+        openai_codex_highlight: 3
 
       - name: SSO
         cline: With enterprise / teams subscription
@@ -283,6 +320,8 @@ categories:
         cursor_highlight: 2
         github_copilot: Yes
         amazon_kiro: Yes
+        openai_codex: Yes
+        openai_codex_highlight: 1
 
 # Manually added - do not remove
   - name: User Interface (Subjective)
@@ -298,6 +337,8 @@ categories:
         github_copilot_highlight: 2
         amazon_kiro: Average
         amazon_kiro_highlight: 4
+        openai_codex: Good
+        openai_codex_highlight: 2
 
 # Manually added - do not remove
   - name: Cost (Estimate)
@@ -314,3 +355,6 @@ categories:
           highlight: 2
         amazon_kiro: $200+
         amazon_kiro_highlight: 3
+        openai_codex:
+          text: $200+
+          highlight: 2
