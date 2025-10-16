@@ -45,7 +45,7 @@
               {{ if $cellUrl }}
                 <td class="highlight-{{ $highlightLevel }} has-cell-link{{ if $tooltip }} has-tooltip{{ end }}"
                     {{ if $tooltip }}data-tooltip="{{ $tooltip }}"{{ end }}>
-                  <a href="{{ $cellUrl }}" target="_blank" rel="noopener noreferrer" class="cell-link" onclick="console.log('Link clicked: {{ $cellUrl }}')">
+                  <a href="{{ $cellUrl }}" target="_blank" rel="noopener noreferrer" class="cell-link">
                     {{ $displayText }}
                   </a>
                 </td>
@@ -65,6 +65,9 @@
 
 {{ $js := resources.Get "js/comparison-table-tooltips.js" }}
 {{ if $js }}
-  {{ $js = $js | resources.Minify }}
   <script src="{{ $js.RelPermalink }}"></script>
+{{ else }}
+  <script>
+    console.error('Failed to load comparison-table-tooltips.js');
+  </script>
 {{ end }}

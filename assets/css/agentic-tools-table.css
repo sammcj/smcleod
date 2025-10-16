@@ -230,10 +230,9 @@
   cursor: pointer !important;
 }
 
-/* Tooltip styling */
+/* Tooltip styling - tooltips are JavaScript-driven only */
 .comparison-table td[data-tooltip] {
   position: relative;
-  overflow: visible;
 }
 
 /* Cell has tooltip but no link */
@@ -248,65 +247,6 @@
 
 .comparison-table td.has-cell-link[data-tooltip] .cell-link {
   cursor: pointer !important;
-}
-
-.comparison-table td[data-tooltip]::after {
-  content: attr(data-tooltip);
-  position: absolute;
-  bottom: 100%;
-  left: 50%;
-  transform: translateX(-50%) translateY(-8px);
-  background-color: rgba(0, 0, 0, 0.9);
-  color: white;
-  padding: 0.75rem 1rem;
-  border-radius: 6px;
-  font-size: 0.85rem;
-  white-space: normal;
-  max-width: 400px;
-  width: auto;
-  z-index: 1000;
-  opacity: 0;
-  pointer-events: none !important;
-  transition: opacity 0.2s ease-in-out;
-  line-height: 1.4;
-  text-align: left;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-}
-
-.comparison-table td[data-tooltip]::before {
-  content: '';
-  position: absolute;
-  bottom: 100%;
-  left: 50%;
-  transform: translateX(-50%) translateY(-2px);
-  border: 6px solid transparent;
-  border-top-color: rgba(0, 0, 0, 0.9);
-  z-index: 1001;
-  opacity: 0;
-  pointer-events: none !important;
-  transition: opacity 0.2s ease-in-out;
-}
-
-.comparison-table td[data-tooltip]:hover::after,
-.comparison-table td[data-tooltip]:hover::before {
-  opacity: 1;
-}
-
-/* Handle tooltip positioning on edge cases */
-.comparison-table tr:first-child td[data-tooltip]::after,
-.comparison-table tr:nth-child(2) td[data-tooltip]::after {
-  bottom: auto;
-  top: 100%;
-  transform: translateX(-50%) translateY(8px);
-}
-
-.comparison-table tr:first-child td[data-tooltip]::before,
-.comparison-table tr:nth-child(2) td[data-tooltip]::before {
-  bottom: auto;
-  top: 100%;
-  transform: translateX(-50%) translateY(2px);
-  border-top-color: transparent;
-  border-bottom-color: rgba(0, 0, 0, 0.9);
 }
 
 @media (max-width: 768px) {
@@ -399,15 +339,9 @@
   color: #99ccff;
 }
 
-/* Hide CSS tooltip when interactive tooltip is present */
-.comparison-table td.has-interactive-tooltip::after,
-.comparison-table td.has-interactive-tooltip::before {
-  display: none;
-}
-
 /* Cells with interactive tooltips */
 .comparison-table td.has-interactive-tooltip {
-  position: relative;
+  cursor: help;
 }
 
 @media (max-width: 768px) {

@@ -4,6 +4,10 @@
 
 Important: NEVER make changes to files in the themes/ directory, these are git submodules / clones of upstream code.
 
+## Logging
+
+DO NOT log to the console at info level as it can slow down rendering the site when it's deployed, only log to the console on error
+
 ## Agentic Coding Tools Comparison Table
 
 ### Data Updates
