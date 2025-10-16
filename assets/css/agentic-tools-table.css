@@ -203,6 +203,111 @@
   background-color: var(--highlight-5) !important;
 }
 
+/* Cell link styling */
+.comparison-table td .cell-link {
+  color: inherit;
+  text-decoration: none;
+  display: block;
+  cursor: pointer !important;
+  position: relative;
+  z-index: 10;
+  width: 100%;
+}
+
+.comparison-table td .cell-link:hover {
+  text-decoration: underline;
+}
+
+/* Cells with links should have pointer cursor */
+.comparison-table td.has-cell-link {
+  cursor: pointer !important;
+  padding: 0;
+}
+
+.comparison-table td.has-cell-link .cell-link {
+  padding: 0.75rem;
+  cursor: pointer !important;
+}
+
+/* Tooltip styling */
+.comparison-table td[data-tooltip] {
+  position: relative;
+}
+
+/* Cell has tooltip but no link */
+.comparison-table td.has-tooltip:not(.has-cell-link) {
+  cursor: help;
+}
+
+/* Cell has both link and tooltip - link cursor takes precedence */
+.comparison-table td.has-cell-link[data-tooltip] {
+  cursor: pointer !important;
+}
+
+.comparison-table td.has-cell-link[data-tooltip] .cell-link {
+  cursor: pointer !important;
+}
+
+.comparison-table td[data-tooltip]::after {
+  content: attr(data-tooltip);
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  transform: translateX(-50%) translateY(-8px);
+  background-color: rgba(0, 0, 0, 0.9);
+  color: white;
+  padding: 0.75rem 1rem;
+  border-radius: 6px;
+  font-size: 0.85rem;
+  white-space: normal;
+  max-width: 400px;
+  min-width: 200px;
+  width: max-content;
+  z-index: 1000;
+  opacity: 0;
+  pointer-events: none !important;
+  transition: opacity 0.2s ease-in-out;
+  line-height: 1.4;
+  text-align: left;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.comparison-table td[data-tooltip]::before {
+  content: '';
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  transform: translateX(-50%) translateY(-2px);
+  border: 6px solid transparent;
+  border-top-color: rgba(0, 0, 0, 0.9);
+  z-index: 1001;
+  opacity: 0;
+  pointer-events: none !important;
+  transition: opacity 0.2s ease-in-out;
+}
+
+.comparison-table td[data-tooltip]:hover::after,
+.comparison-table td[data-tooltip]:hover::before {
+  opacity: 1;
+}
+
+/* Handle tooltip positioning on edge cases */
+.comparison-table tr:first-child td[data-tooltip]::after,
+.comparison-table tr:nth-child(2) td[data-tooltip]::after {
+  bottom: auto;
+  top: 100%;
+  transform: translateX(-50%) translateY(8px);
+}
+
+.comparison-table tr:first-child td[data-tooltip]::before,
+.comparison-table tr:nth-child(2) td[data-tooltip]::before {
+  bottom: auto;
+  top: 100%;
+  transform: translateX(-50%) translateY(2px);
+  border-top-color: transparent;
+  border-bottom-color: rgba(0, 0, 0, 0.9);
+}
+
 @media (max-width: 768px) {
   .wide-table {
     padding: 0 1rem !important;
@@ -220,5 +325,95 @@
 
   .comparison-table .feature-name {
     min-width: 150px;
+  }
+
+  /* Adjust tooltip size for mobile */
+  .comparison-table td[data-tooltip]::after {
+    max-width: 250px;
+    font-size: 0.8rem;
+    padding: 0.5rem 0.75rem;
+  }
+}
+
+/* Interactive tooltips with clickable links */
+.interactive-tooltip {
+  position: absolute;
+  background-color: rgba(0, 0, 0, 0.9);
+  color: white;
+  padding: 0.75rem 1rem;
+  border-radius: 6px;
+  font-size: 0.85rem;
+  max-width: 400px;
+  min-width: 200px;
+  width: max-content;
+  z-index: 1000;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s ease-in-out;
+  line-height: 1.4;
+  text-align: left;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.interactive-tooltip.visible {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.interactive-tooltip.top {
+  bottom: 100%;
+  margin-bottom: 8px;
+}
+
+.interactive-tooltip.bottom {
+  top: 100%;
+  margin-top: 8px;
+}
+
+.tooltip-arrow {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 0;
+  height: 0;
+  border: 6px solid transparent;
+}
+
+.interactive-tooltip.top .tooltip-arrow {
+  bottom: -12px;
+  border-top-color: rgba(0, 0, 0, 0.9);
+  border-bottom: none;
+}
+
+.interactive-tooltip.bottom .tooltip-arrow {
+  top: -12px;
+  border-bottom-color: rgba(0, 0, 0, 0.9);
+  border-top: none;
+}
+
+.tooltip-link {
+  color: #66b3ff;
+  text-decoration: underline;
+  cursor: pointer;
+  word-break: break-all;
+}
+
+.tooltip-link:hover {
+  color: #99ccff;
+}
+
+/* Hide CSS tooltip when interactive tooltip is present */
+.comparison-table td.has-interactive-tooltip::after,
+.comparison-table td.has-interactive-tooltip::before {
+  display: none;
+}
+
+@media (max-width: 768px) {
+  .interactive-tooltip {
+    max-width: 250px;
+    font-size: 0.8rem;
+    padding: 0.5rem 0.75rem;
   }
 }

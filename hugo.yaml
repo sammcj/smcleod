@@ -143,34 +143,41 @@ menu:
       url: "/categories/"
       title: ""
       weight: 2
+    - identifier: "Agentic Coding Tools"
+      pre: ""
+      post: ""
+      name: "🤖 Agentic Coding Tools"
+      url: "/agentic-coding-tools/"
+      title: "Rating Agentic Coding Tools"
+      weight: 3
     - identifier: "vRAM Estimator"
       pre: ""
       post: ""
       name: "🐏 vRAM Estimator"
       url: "/vram-estimator/"
       title: "Estimate the vRAM required for your VMs"
-      weight: 3
+      weight: 4
     - identifier: "links"
       pre: ""
       post: ""
       name: "🔗 Links"
       url: "/links/"
       title: "Links to software and services I use"
-      weight: 4
+      weight: 5
     - identifier: "contact"
       pre: ""
       post: ""
       name: "💬 Contact"
       url: "/contact/"
       title: "Contact me"
-      weight: 5
+      weight: 6
     - identifier: "about"
       pre: ""
       post: ""
       name: "🤦🏻‍♂️ About"
       url: "/about/"
       title: "Sam McLeod"
-      weight: 6
+      weight: 7
     - identifier: "Search"
       pre: ""
       post: ""

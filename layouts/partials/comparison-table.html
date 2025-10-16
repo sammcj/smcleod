@@ -28,9 +28,33 @@
               {{ if eq $highlightLevel nil }}
                 {{ $highlightLevel = 0 }}
               {{ end }}
-              <td class="highlight-{{ $highlightLevel }}">
-                {{ $value }}
-              </td>
+
+              {{ $displayText := "" }}
+              {{ $cellUrl := "" }}
+              {{ $tooltip := "" }}
+
+              {{ $valueType := printf "%T" $value }}
+              {{ if or (eq $valueType "map[string]interface {}") (eq $valueType "map[interface {}]interface {}") }}
+                {{ $displayText = index $value "text" }}
+                {{ $cellUrl = index $value "url" | default "" }}
+                {{ $tooltip = index $value "tooltip" | default "" }}
+              {{ else }}
+                {{ $displayText = $value }}
+              {{ end }}
+
+              {{ if $cellUrl }}
+                <td class="highlight-{{ $highlightLevel }} has-cell-link{{ if $tooltip }} has-tooltip{{ end }}"
+                    {{ if $tooltip }}data-tooltip="{{ $tooltip }}"{{ end }}>
+                  <a href="{{ $cellUrl }}" target="_blank" rel="noopener noreferrer" class="cell-link" onclick="console.log('Link clicked: {{ $cellUrl }}')">
+                    {{ $displayText }}
+                  </a>
+                </td>
+              {{ else }}
+                <td class="highlight-{{ $highlightLevel }}{{ if $tooltip }} has-tooltip{{ end }}"
+                    {{ if $tooltip }}data-tooltip="{{ $tooltip }}"{{ end }}>
+                  {{ $displayText }}
+                </td>
+              {{ end }}
             {{ end }}
           </tr>
         {{ end }}
@@ -38,3 +62,9 @@
     </tbody>
   </table>
 </div>
+
+{{ $js := resources.Get "js/comparison-table-tooltips.js" }}
+{{ if $js }}
+  {{ $js = $js | resources.Minify }}
+  <script src="{{ $js.RelPermalink }}"></script>
+{{ end }}

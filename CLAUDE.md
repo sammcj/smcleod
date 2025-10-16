@@ -16,6 +16,45 @@ To update the comparison table data, edit:
   - 1 = Light yellow (enterprise required)
   - 2-5 = Increasing levels of concern (light orange to red)
 
+### Cell Values with URLs and Tooltips
+Cell values support three formats:
+
+1. **Simple text** (backward compatible):
+   ```yaml
+   tool_name: Simple text value
+   ```
+
+2. **Text with direct URL** (clicking opens link in new tab):
+   ```yaml
+   tool_name:
+     text: Display text
+     url: https://example.com
+   ```
+
+3. **Text with tooltip** (hover to see additional info):
+   ```yaml
+   tool_name:
+     text: Display text
+     tooltip: "Additional information shown on hover"
+   ```
+
+4. **Text with tooltip containing URLs** (hover shows popup with clickable links):
+   ```yaml
+   tool_name:
+     text: Display text
+     tooltip: "More info at https://docs.example.com and https://github.com/example"
+   ```
+
+5. **Combined URL and tooltip** (cell is clickable AND shows tooltip on hover):
+   ```yaml
+   tool_name:
+     text: Display text
+     url: https://example.com
+     tooltip: "Click to visit. See also https://docs.example.com"
+   ```
+
+URLs in tooltips are automatically detected and made clickable.
+
 ### Styling Changes
 If table styling needs adjustment:
 - **CSS File**: `assets/css/agentic-tools-table.css`

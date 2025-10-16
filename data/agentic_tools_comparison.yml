@@ -28,9 +28,13 @@ categories:
   - name: Functionality
     features:
       - name: Inference Providers & Model Selection
-        claude_code: Any that support Claude, DeepSeek, GLM and other strong models
+        claude_code:
+          text: Any that support Claude, DeepSeek, GLM and other strong models
+          tooltip: "Supports multiple providers. See https://docs.anthropic.com/claude/docs for Claude documentation and https://platform.openai.com/docs for OpenAI alternatives"
         cline: Any
-        cursor: Cursor - US Based, limited by plan, BYO option heavily limits features
+        cursor:
+          text: Cursor - US Based, limited by plan, BYO option heavily limits features
+          tooltip: "US-based servers required for full features. Privacy policy at https://cursor.sh/privacy"
         cursor_highlight: 3
         github_copilot: US Based with limited context window, Can BYO
         amazon_kiro: US Based, Waitlist
@@ -137,19 +141,26 @@ categories:
 
       - name: Community size
         claude_code: Large
-        cline: Large
+        cline:
+          text: Large
+          url: https://github.com/cline/cline
+          tooltip: "Active community with regular updates. See discussions at https://github.com/cline/cline/discussions"
         cursor: Large
         github_copilot: Large
         amazon_kiro: Small
         amazon_kiro_highlight: 3
 
       - name: Source
-        cline: Open source
+        cline:
+          text: Open source
+          url: https://github.com/cline/cline
         claude_code: Closed source
         claude_code_highlight: 5
         cursor: Closed source
         cursor_highlight: 5
-        github_copilot: Open source
+        github_copilot:
+          text: Open source
+          url: https://github.com/features/copilot
         amazon_kiro: Closed source
         amazon_kiro_highlight: 5
 
