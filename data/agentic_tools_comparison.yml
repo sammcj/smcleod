@@ -308,7 +308,9 @@ categories:
         claude_code: $100-$200
         cursor: $200+
         cursor_highlight: 3
-        github_copilot: $100-$300 (starts at $40, but will hit limits)
-        github_copilot_highlight: 2
+        github_copilot:
+          text: $100-$300
+          tooltip: Starts at $40, but hit monthly limits within a few days of use, then blocked from using good models for a month
+          highlight: 2
         amazon_kiro: $200+
         amazon_kiro_highlight: 3

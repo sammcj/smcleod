@@ -17,6 +17,8 @@ extra_css:
 
 I am a heavy user of agentic coding tools, part of my job is to evaluate their capabilities and limitations. This is an experiment where I am tracking their capabilities, limitations and my overall impression of them.
 
+_Note: Some cells have more information when you hover over them._
+
 {{< comparison-table-legend >}}
 
 {{< comparison-table >}}

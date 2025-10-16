@@ -24,6 +24,7 @@
   margin-left: -47.5vw !important;
   margin-right: -47.5vw !important;
   overflow-x: auto !important;
+  overflow-y: visible !important;
   margin-top: 2rem !important;
   margin-bottom: 2rem !important;
 }
@@ -232,6 +233,7 @@
 /* Tooltip styling */
 .comparison-table td[data-tooltip] {
   position: relative;
+  overflow: visible;
 }
 
 /* Cell has tooltip but no link */
@@ -261,8 +263,7 @@
   font-size: 0.85rem;
   white-space: normal;
   max-width: 400px;
-  min-width: 200px;
-  width: max-content;
+  width: auto;
   z-index: 1000;
   opacity: 0;
   pointer-events: none !important;
@@ -337,15 +338,14 @@
 
 /* Interactive tooltips with clickable links */
 .interactive-tooltip {
-  position: absolute;
+  position: fixed;
   background-color: rgba(0, 0, 0, 0.9);
   color: white;
   padding: 0.75rem 1rem;
   border-radius: 6px;
   font-size: 0.85rem;
   max-width: 400px;
-  min-width: 200px;
-  width: max-content;
+  width: auto;
   z-index: 1000;
   opacity: 0;
   pointer-events: none;
@@ -353,8 +353,9 @@
   line-height: 1.4;
   text-align: left;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-  left: 50%;
-  transform: translateX(-50%);
+  white-space: normal;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
 }
 
 .interactive-tooltip.visible {
@@ -362,15 +363,7 @@
   pointer-events: auto;
 }
 
-.interactive-tooltip.top {
-  bottom: 100%;
-  margin-bottom: 8px;
-}
-
-.interactive-tooltip.bottom {
-  top: 100%;
-  margin-top: 8px;
-}
+/* Position is now handled by JavaScript for fixed positioning */
 
 .tooltip-arrow {
   position: absolute;
@@ -382,13 +375,15 @@
 }
 
 .interactive-tooltip.top .tooltip-arrow {
-  bottom: -12px;
+  bottom: 0;
+  transform: translateX(-50%) translateY(100%);
   border-top-color: rgba(0, 0, 0, 0.9);
   border-bottom: none;
 }
 
 .interactive-tooltip.bottom .tooltip-arrow {
-  top: -12px;
+  top: 0;
+  transform: translateX(-50%) translateY(-100%);
   border-bottom-color: rgba(0, 0, 0, 0.9);
   border-top: none;
 }
@@ -408,6 +403,11 @@
 .comparison-table td.has-interactive-tooltip::after,
 .comparison-table td.has-interactive-tooltip::before {
   display: none;
+}
+
+/* Cells with interactive tooltips */
+.comparison-table td.has-interactive-tooltip {
+  position: relative;
 }
 
 @media (max-width: 768px) {

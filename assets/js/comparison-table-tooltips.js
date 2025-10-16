@@ -35,9 +35,12 @@ document.addEventListener('DOMContentLoaded', function() {
     arrow.className = 'tooltip-arrow';
     tooltipDiv.appendChild(arrow);
 
-    // Add to cell
-    cell.appendChild(tooltipDiv);
+    // Add to body for fixed positioning (not cell)
+    document.body.appendChild(tooltipDiv);
     cell.classList.add('has-interactive-tooltip');
+
+    // Store reference to tooltip on cell
+    cell._tooltip = tooltipDiv;
 
     let hideTimeout = null;
 
@@ -72,6 +75,17 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Hide when leaving tooltip
     tooltipDiv.addEventListener('mouseleave', hideTooltip);
+
+    // Reposition tooltip on scroll since we're using fixed positioning
+    let scrollTimeout;
+    window.addEventListener('scroll', () => {
+      if (tooltipDiv.classList.contains('visible')) {
+        clearTimeout(scrollTimeout);
+        scrollTimeout = setTimeout(() => {
+          positionTooltip(cell, tooltipDiv);
+        }, 10);
+      }
+    }, { passive: true });
   });
 });
 
@@ -80,6 +94,10 @@ function positionTooltip(cell, tooltip) {
   const tooltipRect = tooltip.getBoundingClientRect();
   const viewportHeight = window.innerHeight;
 
+  // Position horizontally - center on cell
+  tooltip.style.left = rect.left + (rect.width / 2) + 'px';
+  tooltip.style.transform = 'translateX(-50%)';
+
   // Check if there's enough space above
   const spaceAbove = rect.top;
   const spaceBelow = viewportHeight - rect.bottom;
@@ -87,8 +105,14 @@ function positionTooltip(cell, tooltip) {
   if (spaceAbove > tooltipRect.height + 20 || spaceAbove > spaceBelow) {
     tooltip.classList.remove('bottom');
     tooltip.classList.add('top');
+    tooltip.style.top = (rect.top - 8) + 'px';
+    tooltip.style.bottom = 'auto';
+    tooltip.style.transform = 'translateX(-50%) translateY(-100%)';
   } else {
     tooltip.classList.remove('top');
     tooltip.classList.add('bottom');
+    tooltip.style.top = (rect.bottom + 8) + 'px';
+    tooltip.style.bottom = 'auto';
+    tooltip.style.transform = 'translateX(-50%)';
   }
 }
