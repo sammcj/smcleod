@@ -283,7 +283,7 @@ categories:
 # Manually added - do not remove
   - name: Cost (Estimate)
     features:
-      - name: Monthly cost ($USD) estimate for agentic coding (used to the best of it's capabilities)
+      - name: Monthly cost ($USD) estimate for agentic coding (used to the best of the tools limitations)
         cline: $1200-$2200
         cline_highlight: 4
         claude_code: $100-$200
