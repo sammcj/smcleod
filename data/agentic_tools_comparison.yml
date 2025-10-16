@@ -1,18 +1,23 @@
 tools:
-  - id: cline
-    name: Cline
   - id: claude_code
     name: Claude Code
+    header_highlight: 0
+  - id: cline
+    name: Cline
+    header_highlight: 0
   - id: cursor
     name: Cursor
+    header_highlight: 4
   - id: github_copilot
     name: Github Copilot
+    header_highlight: 4
   - id: amazon_kiro
     name: Amazon Kiro
+    header_highlight: 4
 
 # Optional: Define what each highlight level means for documentation
 highlight_levels:
-  0: No highlight
+  0: Light blue - positive/meets requirements
   1: Requires enterprise/pro subscription
   2: Minor concern
   3: Moderate concern
@@ -22,64 +27,81 @@ highlight_levels:
 categories:
   - name: Functionality
     features:
-      - name: Inference Providers
-        cline: Any
+      - name: Inference Providers & Model Selection
         claude_code: Any that support Claude, DeepSeek, GLM and other strong models
+        cline: Any
         cursor: Cursor - US Based, limited by plan, BYO option heavily limits features
         cursor_highlight: 3
         github_copilot: US Based with limited context window, Can BYO
         amazon_kiro: US Based, Waitlist
+        amazon_kiro_highlight: 3
 
       - name: Sub-Agents
         cline: No (coming soon)
         claude_code: Yes
         cursor: No
+        cursor_highlight: 2
         github_copilot: No
+        github_copilot_highlight: 2
         amazon_kiro: No
+        amazon_kiro_highlight: 2
 
       - name: Custom Agents
         cline: No (coming soon)
         claude_code: Yes
         cursor: No
+        cursor_highlight: 2
         github_copilot: No
+        github_copilot_highlight: 2
         amazon_kiro: No
+        amazon_kiro_highlight: 2
 
       - name: Prompt templates
-        cline: Yes
         claude_code: Yes
+        cline: Yes
         cursor: Yes
-        github_copilot: No
+        github_copilot: Yes
         amazon_kiro: No
+        amazon_kiro_highlight: 3
 
       - name: Coding abilities
-        cline: Best in class
         claude_code: Best in class
-        cursor: Mid range
+        cline: Best in class
+        cursor: Mid/Lower end
         cursor_highlight: 3
         github_copilot: Lower end
         github_copilot_highlight: 4
-        amazon_kiro: Lower end
-        amazon_kiro_highlight: 4
+        amazon_kiro: Mid range
+        amazon_kiro_highlight: 3
 
       - name: Speed
-        cline: Fastest
         claude_code: Fastest
+        cline: Fastest
         cursor: Slow
         cursor_highlight: 4
         github_copilot: Slow
         github_copilot_highlight: 4
-        amazon_kiro: Slow
+        amazon_kiro: Medium/Slow (Availability issues)
+        amazon_kiro_highlight: 3
+
+      - name: MCP Spec alignment
+        claude_code: High
+        cline: Medium/High
+        cursor: Medium/Low
+        cursor_highlight: 3
+        github_copilot: High
+        amazon_kiro: Low
         amazon_kiro_highlight: 4
 
   - name: Operational management
     features:
-      - name: Per-user budget controls
+      - name: Consumption budget controls
+        claude_code: No
         cline: With enterprise / teams subscription
         cline_highlight: 1
-        claude_code: No
         cursor: No (for BYO)
         cursor_highlight: 3
-        github_copilot: Yes
+        github_copilot: N/A
         amazon_kiro: N/A
 
   - name: Developer experience
@@ -93,13 +115,6 @@ categories:
         amazon_kiro: Standalone IDE (Fork of VSCode)
         amazon_kiro_highlight: 3
 
-      - name: Source
-        cline: Open source
-        claude_code: Closed source
-        cursor: Closed source
-        github_copilot: Open source
-        amazon_kiro: Closed source
-
       - name: Babysitting required
         cline: Low
         claude_code: Low
@@ -111,44 +126,62 @@ categories:
         amazon_kiro_highlight: 4
 
       - name: Plan/Act modes
-        cline: Yes
         claude_code: Yes
+        cline: Yes
         cursor: No
         cursor_highlight: 3
         github_copilot: Partial
         github_copilot_highlight: 2
         amazon_kiro: No
         amazon_kiro_highlight: 3
+
+      - name: Community size
+        claude_code: Large
+        cline: Large
+        cursor: Large
+        github_copilot: Large
+        amazon_kiro: Small
+        amazon_kiro_highlight: 3
+
+      - name: Source
+        cline: Open source
+        claude_code: Closed source
+        claude_code_highlight: 5
+        cursor: Closed source
+        cursor_highlight: 5
+        github_copilot: Open source
+        amazon_kiro: Closed source
+        amazon_kiro_highlight: 5
 
   - name: Configuration management
     features:
       - name: File based configuration
-        cline: No (GUI or web with enterprise / teams subscription)
-        cline_highlight: 1
         claude_code: Yes
+        cline: No (does have central web UI with enterprise / teams subscription)
+        cline_highlight: 1
         cursor: No
-        cursor_highlight: 3
-        github_copilot: Partial
-        github_copilot_highlight: 2
-        amazon_kiro: No
+        cursor_highlight: 4
+        github_copilot: Limited - no RBAC
+        github_copilot_highlight: 3
+        amazon_kiro: Limited - no RBAC or rules
         amazon_kiro_highlight: 3
 
-      - name: Per-project configuration (MCP, rules, RBAC)
+      - name: Per-project configuration (rules, MCP, RBAC)
+        claude_code: Yes
         cline: In beta
         cline_highlight: 2
-        claude_code: Yes
         cursor: No
         cursor_highlight: 3
-        github_copilot: No
-        github_copilot_highlight: 3
-        amazon_kiro: No
-        amazon_kiro_highlight: 3
+        github_copilot: Limited - no RBAC
+        github_copilot_highlight: 2
+        amazon_kiro: Limited - no RBAC
+        amazon_kiro_highlight: 2
 
       - name: Centralised configuration
+        claude_code: Partial (manual - split across config files)
+        claude_code_highlight: 2
         cline: With enterprise / teams subscription
         cline_highlight: 1
-        claude_code: Partial (manual - file based)
-        claude_code_highlight: 2
         cursor: No (for BYO), Yes for US based
         cursor_highlight: 3
         github_copilot: No
@@ -194,25 +227,25 @@ categories:
         cline: With enterprise / teams subscription
         cline_highlight: 1
         claude_code: Yes
-        cursor: No (has basic allow list - easy to bypass)
+        cursor: False
         cursor_highlight: 5
+        github_copilot: No
+        github_copilot_highlight: 5
+        amazon_kiro: No
+        amazon_kiro_highlight: 5
+
+      - name: RBAC - MCP tools
+        cline: With enterprise / teams subscription
+        cline_highlight: 1
+        claude_code: Yes
+        cursor: No
+        cursor_highlight: 4
         github_copilot: No
         github_copilot_highlight: 4
         amazon_kiro: No
         amazon_kiro_highlight: 4
 
       - name: RBAC - Web domains
-        cline: With enterprise / teams subscription
-        cline_highlight: 1
-        claude_code: Yes
-        cursor: No
-        cursor_highlight: 3
-        github_copilot: No
-        github_copilot_highlight: 3
-        amazon_kiro: No
-        amazon_kiro_highlight: 3
-
-      - name: RBAC - MCP
         cline: With enterprise / teams subscription
         cline_highlight: 1
         claude_code: Yes
@@ -231,3 +264,32 @@ categories:
         cursor_highlight: 2
         github_copilot: Yes
         amazon_kiro: Yes
+
+# Manually added - do not remove
+  - name: User Interface (Subjective)
+    features:
+      - name: User Interface
+        cline: Best
+        cline_highlight: 0
+        claude_code: Best
+        claude_code_highlight: 0
+        cursor: Good
+        cursor_highlight: 2
+        github_copilot: Good
+        github_copilot_highlight: 2
+        amazon_kiro: Average
+        amazon_kiro_highlight: 4
+
+# Manually added - do not remove
+  - name: Cost (Estimate)
+    features:
+      - name: Monthly cost ($USD) estimate for agentic coding (used to the best of it's capabilities)
+        cline: $1200-$2200
+        cline_highlight: 4
+        claude_code: $100-$200
+        cursor: $200
+        cursor_highlight: 3
+        github_copilot: $100-$300 (starts at $40, but will hit limits)
+        github_copilot_highlight: 2
+        amazon_kiro: $200
+        amazon_kiro_highlight: 3

@@ -9,8 +9,12 @@ Important: NEVER make changes to files in the themes/ directory, these are git s
 ### Data Updates
 To update the comparison table data, edit:
 - **File**: `data/agentic_tools_comparison.yml`
-- **Structure**: Tools are defined at the top, followed by categories with features
-- **Highlights**: Add `{tool_id}_highlight: 1-5` to apply colour coding (1=enterprise required, 5=major concern)
+- **Structure**: Tools are defined at the top with `header_highlight` values, followed by categories with features
+- **Tool Headers**: Set `header_highlight: 0-5` for each tool to colour the header cell
+- **Cell Highlights**: Add `{tool_id}_highlight: 0-5` to apply colour coding to individual cells:
+  - 0 = Light blue (positive/meets requirements)
+  - 1 = Light yellow (enterprise required)
+  - 2-5 = Increasing levels of concern (light orange to red)
 
 ### Styling Changes
 If table styling needs adjustment:

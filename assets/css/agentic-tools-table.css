@@ -9,6 +9,9 @@
 
   /* Table cell max width - configurable */
   --table-cell-max-width: 300px;
+
+  /* Positive highlight colour for Yes/True values */
+  --highlight-positive: rgba(173, 216, 230, 0.6); /* Light blue - more visible */
 }
 
 /* Wide table - centered */
@@ -56,6 +59,31 @@
   hyphens: auto;
 }
 
+/* Tool header colours - manually configured */
+.comparison-table th.tool-avg-0 {
+  background-color: rgba(173, 216, 230, 0.7) !important; /* Light blue - best */
+}
+
+.comparison-table th.tool-avg-1 {
+  background-color: rgba(255, 244, 179, 0.7) !important; /* Light yellow */
+}
+
+.comparison-table th.tool-avg-2 {
+  background-color: rgba(255, 205, 179, 0.7) !important; /* Light orange */
+}
+
+.comparison-table th.tool-avg-3 {
+  background-color: rgba(255, 171, 145, 0.7) !important; /* Orange-red */
+}
+
+.comparison-table th.tool-avg-4 {
+  background-color: rgba(255, 138, 128, 0.7) !important; /* Red-orange */
+}
+
+.comparison-table th.tool-avg-5 {
+  background-color: rgba(239, 83, 80, 0.7) !important; /* Red - worst */
+}
+
 .comparison-table td {
   padding: 0.75rem;
   border: 1px solid #ddd;
@@ -69,12 +97,12 @@
 }
 
 .comparison-table .feature-column {
-  background-color: #d6eef7 !important;
+  background-color: #f0f4f7 !important;
   font-weight: 500;
 }
 
 .comparison-table .feature-name {
-  background-color: #d6eef7 !important;
+  background-color: #f0f4f7 !important;
   font-weight: 500;
   min-width: 200px;
   position: sticky;
@@ -83,16 +111,20 @@
 }
 
 .comparison-table .category-row {
-  background-color: #d1e7f5 !important;
+  background-color: white !important;
 }
 
 .comparison-table .category-name {
   font-weight: 600;
   padding: 0.5rem 0.75rem;
-  background-color: #d1e7f5 !important;
+  background-color: white !important;
 }
 
 /* Highlight levels - with !important to override theme styles */
+.comparison-table td.highlight-0 {
+  background-color: rgba(173, 216, 230, 0.5) !important; /* Light blue for positive/good */
+}
+
 .comparison-table td.highlight-1 {
   background-color: var(--highlight-1) !important;
 }
