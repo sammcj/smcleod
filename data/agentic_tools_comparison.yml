@@ -24,17 +24,24 @@ highlight_levels:
   4: Significant concern
   5: Major concern
 
+# Example parameters:
+# - name: "Feature Name"
+#   description: "Optional description for the feature"
+#   features:
+#     - name: "Sub-feature or detail"
+#       tool_id: "Tool Identifier"
+#       text: "Description or value"
+#       tooltip: "Optional tooltip text with more info and optionally a URL"
+
 categories:
   - name: Functionality
     features:
       - name: Inference Providers & Model Selection
         claude_code:
           text: Any that support Claude, DeepSeek, GLM and other strong models
-          tooltip: "Supports multiple providers. See https://docs.anthropic.com/claude/docs for Claude documentation and https://platform.openai.com/docs for OpenAI alternatives"
         cline: Any
         cursor:
           text: Cursor - US Based, limited by plan, BYO option heavily limits features
-          tooltip: "US-based servers required for full features. Privacy policy at https://cursor.sh/privacy"
         cursor_highlight: 3
         github_copilot: US Based with limited context window, Can BYO
         amazon_kiro: US Based, Waitlist
@@ -85,8 +92,10 @@ categories:
         cursor_highlight: 4
         github_copilot: Slow
         github_copilot_highlight: 4
-        amazon_kiro: Medium/Slow (Availability issues)
-        amazon_kiro_highlight: 3
+        amazon_kiro:
+          text: Medium/Slow
+          tooltip: Have had availability issues needing manual retries and have to do a lot of hand holding to keep it going
+          highlight: 3
 
       - name: MCP Spec alignment
         claude_code: High
@@ -141,26 +150,19 @@ categories:
 
       - name: Community size
         claude_code: Large
-        cline:
-          text: Large
-          url: https://github.com/cline/cline
-          tooltip: "Active community with regular updates. See discussions at https://github.com/cline/cline/discussions"
+        cline: large
         cursor: Large
         github_copilot: Large
         amazon_kiro: Small
         amazon_kiro_highlight: 3
 
       - name: Source
-        cline:
-          text: Open source
-          url: https://github.com/cline/cline
+        cline: Yes
         claude_code: Closed source
         claude_code_highlight: 5
         cursor: Closed source
         cursor_highlight: 5
-        github_copilot:
-          text: Open source
-          url: https://github.com/features/copilot
+        github_copilot: Yes
         amazon_kiro: Closed source
         amazon_kiro_highlight: 5
 
@@ -168,8 +170,10 @@ categories:
     features:
       - name: File based configuration
         claude_code: Yes
-        cline: No (does have central web UI with enterprise / teams subscription)
-        cline_highlight: 1
+        cline:
+          text: No
+          tooltip: Does have central web UI with enterprise / teams subscription
+          highlight: 1
         cursor: No
         cursor_highlight: 4
         github_copilot: Limited - no RBAC
@@ -189,8 +193,10 @@ categories:
         amazon_kiro_highlight: 2
 
       - name: Centralised configuration
-        claude_code: Partial (manual - split across config files)
-        claude_code_highlight: 2
+        claude_code:
+          text: Partial
+          tooltip: "Split across config files"
+          highlight: 2
         cline: With enterprise / teams subscription
         cline_highlight: 1
         cursor: No (for BYO), Yes for US based
@@ -238,8 +244,10 @@ categories:
         cline: With enterprise / teams subscription
         cline_highlight: 1
         claude_code: Yes
-        cursor: False
-        cursor_highlight: 5
+        cursor:
+          text: No
+          highlight: 5
+          tooltip: "Easily bypassed https://www.backslash.security/blog/cursor-ai-security-flaw-autorun-denylist"
         github_copilot: No
         github_copilot_highlight: 5
         amazon_kiro: No
