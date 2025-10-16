@@ -287,9 +287,9 @@ categories:
         cline: $1200-$2200
         cline_highlight: 4
         claude_code: $100-$200
-        cursor: $200
+        cursor: $200+
         cursor_highlight: 3
         github_copilot: $100-$300 (starts at $40, but will hit limits)
         github_copilot_highlight: 2
-        amazon_kiro: $200
+        amazon_kiro: $200+
         amazon_kiro_highlight: 3
