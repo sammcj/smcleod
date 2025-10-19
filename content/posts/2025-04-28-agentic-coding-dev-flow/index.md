@@ -57,7 +57,7 @@ Outline of Setup -> Plan -> Act -> Review & Iterate workflow:
 
 The intent of this workflow is to have a simple, clear, reviewable and actionable plan that can be worked from. It allows you to start a fresh session throughout the process without losing track of state, critical context or requirements.
 
-You may have heard of PRD or spec driven development with agents which can work well with large and complex codebases but requires a lot of time and effort spent in the setup and maintenance ensuring it doesn't become technical debt. The Setup -> Plan -> Act -> Review & Iterate workflow is a more agile approach that aims to be lighter, more portable and can be less likely to over-engineer solutions to deliver value faster while still maintaining quality.
+You may have heard of PRD or spec driven development with agents which can work well with large and complex codebases but requires a lot of time and effort spent in the setup and maintenance ensuring it doesn't become technical debt. The Setup -> Plan -> Act -> Review & Iterate workflow is a more agile approach that aims to be lighter, more portable (across both projects and tools) and can be less likely to over-engineer solutions to deliver value faster while still maintaining quality.
 
 ---
 
