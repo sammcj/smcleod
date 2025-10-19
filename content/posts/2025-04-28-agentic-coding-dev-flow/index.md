@@ -33,6 +33,8 @@ The flow is simple: **_Setup -> [Plan -> Act](https://docs.cline.bot/exploring-c
 
 ![](agentic-flow.png)
 
+## Workflow Quickstart
+
 Outline of Setup -> Plan -> Act -> Review & Iterate workflow:
 
 1. **Setup**
@@ -58,6 +60,8 @@ The intent of this workflow is to have a simple, clear, reviewable and actionabl
 You may have heard of PRD or spec driven development with agents which can work well with large and complex codebases but requires a lot of time and effort spent in the setup and maintenance ensuring it doesn't become technical debt. The Setup -> Plan -> Act -> Review & Iterate workflow is a more agile approach that aims to be lighter, more portable and can be less likely to over-engineer solutions to deliver value faster while still maintaining quality.
 
 ---
+
+The following is a more detailed breakdown of each phase of the workflow along with examples and prompt templates you can use to get started.
 
 ## 🕵 Setup
 
