@@ -149,7 +149,7 @@ If I'm working with especially new libraries, frameworks, specifications or inte
 
 ---
 
-## 🤔 Plan Mode
+## 🤔 Plan Mode (Read Only)
 
 _If you want to skip straight to a prompt template for this, see [#prompt-template-workflow-create-development-plan](#prompt-template-workflow-create-development-plan)_
 
@@ -200,7 +200,7 @@ _See [#-create-plan-document](#-create-plan-document) for an example._
 
 ---
 
-## 🏁 Act Mode
+## 🏁 Act Mode (Read / Write)
 
 I start a fresh session, this so we're not pulling all the context (token usage) added during planning to keep the development focused and cost effective.
 
