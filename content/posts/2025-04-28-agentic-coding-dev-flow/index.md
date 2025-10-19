@@ -33,10 +33,29 @@ The flow is simple: **_Setup -> [Plan -> Act](https://docs.cline.bot/exploring-c
 
 ![](agentic-flow.png)
 
-1. **Setup** - Ensuring the effective agent **rules** and **tools** are enabled.
-2. **Plan** - Building a **detailed plan** based on your goals, requirements and ideation with the coding agent.
-3. **Act** - Perform the development tasks, in phases.
-4. **Review and Iterate** - Review the work, updating the plan and iterating as required.
+Outline of Setup -> Plan -> Act -> Review & Iterate workflow:
+
+1. **Setup**
+   - Ensure the agentic coding tool is setup with effective agent **rules** and agent (MCP) **tools**.
+2. **Plan**
+   - Ideate with the agent to hone in on the goal and requirements until you're satisfied that the agent and you are on the same page.
+   - Prompting the agent to **create a development plan** based to achieve the goal that includes:
+     - Relevant context & background information.
+     - Requirements / constraints.
+     - Measures of success.
+     - A **phased checklist of developments tasks** to achieve the goal (important!).
+     - Optionally start a fresh session with an agent in parallel and prompt it to read the plan and validate they understand it, asking any clarifying questions as needed.
+3. **Act**
+   - Start a fresh session.
+   - Prompt the agent to read the development plan and begin the first phase of development tasks.
+4. **Review and Iterate**
+   - Review the work, updating the plan for future phases if required.
+   - Iterate towards the goal.
+   - Refine any project or global agent rules or access to tools from lessons learned.
+
+The intent of this workflow is to have a simple, clear, reviewable and actionable plan that can be worked from. It allows you to start a fresh session throughout the process without losing track of state, critical context or requirements.
+
+You may have heard of PRD or spec driven development with agents which can work well with large and complex codebases but requires a lot of time and effort spent in the setup and maintenance ensuring it doesn't become technical debt. The Setup -> Plan -> Act -> Review & Iterate workflow is a more agile approach that aims to be lighter, more portable and can be less likely to over-engineer solutions to deliver value faster while still maintaining quality.
 
 ---
 
