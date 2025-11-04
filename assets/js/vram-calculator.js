@@ -338,6 +338,37 @@ function normalizeHuggingFaceUrl(u) {
   } catch { return u; }
 }
 
+function extractQuantizationFromFilename(filename) {
+  if (!filename) return null;
+
+  // Quantization format mapping to bpw values
+  // Order matters - check more specific patterns first (e.g., Q5_K_XL before Q5_K_L)
+  const quantMap = {
+    'F16': 16.00, 'FP16': 16.00,
+    'Q8_0': 8.50,
+    'Q6_K': 6.57,
+    'Q5_K_XL': 6.15, 'Q5_K_L': 5.90, 'Q5_K_M': 5.67, 'Q5_K_S': 5.52,
+    'Q4_K_XL': 5.45, 'Q4_K_L': 5.15, 'Q4_K_M': 4.83, 'Q4_K_S': 4.57,
+    'IQ4_NL': 4.56, 'IQ4_XS': 4.32,
+    'Q3_K_XL': 4.50, 'Q3_K_L': 4.22, 'Q3_K_M': 3.89, 'Q3_K_S': 3.50,
+    'IQ3_M': 3.63, 'IQ3_S': 3.52, 'IQ3_XXS': 3.21, 'IQ3_XS': 3.32,
+    'Q4_0': 4.00,
+    'Q2_K_S': 2.79, 'Q2_K': 3.00,
+    'IQ2_XXS': 2.20, 'IQ2_XS': 2.43, 'IQ2_S': 2.55, 'IQ2_M': 2.76,
+    'IQ1_S': 1.78
+  };
+
+  // Try to match quantization pattern in filename
+  const upperFilename = filename.toUpperCase();
+  for (const [pattern, bpw] of Object.entries(quantMap)) {
+    if (upperFilename.includes(pattern)) {
+      return bpw;
+    }
+  }
+
+  return null;
+}
+
 const calculateMemoryBreakdown = (config, ggufMetadata = null) => {
   const { numParams, contextSize, bitsPerWeight, kvCacheType } = config;
 
@@ -465,10 +496,11 @@ const VRAMCalculator = () => {
 
   const [showAdvanced, setShowAdvanced] = React.useState(false);
 
-  const [ggufUrl, setGgufUrl] = React.useState('');
+  const [ggufUrl, setGgufUrl] = React.useState('https://huggingface.co/unsloth/Qwen3-30B-A3B-128K-GGUF/resolve/main/Qwen3-30B-A3B-128K-UD-Q5_K_XL.gguf');
   const [ggufMetadata, setGgufMetadata] = React.useState(null);
   const [loadingStatus, setLoadingStatus] = React.useState('');
   const [errorMessage, setErrorMessage] = React.useState('');
+  const [dynamicModelSizes, setDynamicModelSizes] = React.useState([]);
   const fileInputRef = React.useRef(null);
 
   const [memoryBreakdown, setMemoryBreakdown] = React.useState({
@@ -522,18 +554,39 @@ const VRAMCalculator = () => {
         if (single) sizeBytesTotal = single;
       }
 
+      const fileName = url.split('/').pop() || 'GGUF file';
       const metadata = {
         ...params,
         modelSizeBytes: sizeBytesTotal || 0,
-        fileName: url.split('/').pop() || 'GGUF file'
+        fileName
       };
 
       setGgufMetadata(metadata);
 
-      // Calculate params from file size
+      // Extract quantization format from filename
+      const detectedQuant = extractQuantizationFromFilename(fileName);
+
+      // Calculate params from file size and update config
       if (sizeBytesTotal) {
-        const estimatedParams = (sizeBytesTotal / (config.bitsPerWeight / 8)) / 1e9;
-        setConfig(prev => ({ ...prev, numParams: Number(estimatedParams.toFixed(1)) }));
+        const bpw = detectedQuant || config.bitsPerWeight;
+        const estimatedParams = (sizeBytesTotal / (bpw / 8)) / 1e9;
+        const roundedParams = Number(estimatedParams.toFixed(1));
+
+        // Add to dynamic model sizes if not already in static list
+        const staticModelValues = [1.5, 3.8, 7, 8, 14, 22, 24, 32, 70, 72, 90, 110, 671];
+        if (!staticModelValues.includes(roundedParams) && !dynamicModelSizes.some(s => s[0] === roundedParams)) {
+          setDynamicModelSizes(prev => [...prev, [roundedParams, `${roundedParams}B parameters (from GGUF)`]]);
+        }
+
+        // Update config with detected quantization and calculated params
+        setConfig(prev => ({
+          ...prev,
+          numParams: roundedParams,
+          ...(detectedQuant && { bitsPerWeight: detectedQuant })
+        }));
+      } else if (detectedQuant) {
+        // If we only have quantization but no file size, still update it
+        setConfig(prev => ({ ...prev, bitsPerWeight: detectedQuant }));
       }
 
       setLoadingStatus('Successfully loaded GGUF metadata');
@@ -587,9 +640,26 @@ const VRAMCalculator = () => {
 
       setGgufMetadata(metadata);
 
+      // Extract quantization format from filename
+      const detectedQuant = extractQuantizationFromFilename(file.name);
+
       // Calculate params from file size
-      const estimatedParams = (totalBytes / (config.bitsPerWeight / 8)) / 1e9;
-      setConfig(prev => ({ ...prev, numParams: Number(estimatedParams.toFixed(1)) }));
+      const bpw = detectedQuant || config.bitsPerWeight;
+      const estimatedParams = (totalBytes / (bpw / 8)) / 1e9;
+      const roundedParams = Number(estimatedParams.toFixed(1));
+
+      // Add to dynamic model sizes if not already in static list
+      const staticModelValues = [1.5, 3.8, 7, 8, 14, 22, 24, 32, 70, 72, 90, 110, 671];
+      if (!staticModelValues.includes(roundedParams) && !dynamicModelSizes.some(s => s[0] === roundedParams)) {
+        setDynamicModelSizes(prev => [...prev, [roundedParams, `${roundedParams}B parameters (from GGUF)`]]);
+      }
+
+      // Update config with detected quantization and calculated params
+      setConfig(prev => ({
+        ...prev,
+        numParams: roundedParams,
+        ...(detectedQuant && { bitsPerWeight: detectedQuant })
+      }));
 
       setLoadingStatus('Successfully loaded GGUF metadata from local file');
       setTimeout(() => setLoadingStatus(''), 3000);
@@ -601,13 +671,14 @@ const VRAMCalculator = () => {
 
   const handleClearMetadata = () => {
     setGgufMetadata(null);
-    setGgufUrl('');
+    setGgufUrl('https://huggingface.co/unsloth/Qwen3-30B-A3B-128K-GGUF/resolve/main/Qwen3-30B-A3B-128K-UD-Q5_K_XL.gguf');
     setErrorMessage('');
     setLoadingStatus('');
+    setDynamicModelSizes([]);
     if (fileInputRef.current) fileInputRef.current.value = '';
   };
 
-  const modelSizes = [
+  const staticModelSizes = [
     [1.5, '1.5B parameters'],
     [3.8, '3.8B parameters'],
     [7, '7B parameters'],
@@ -623,6 +694,11 @@ const VRAMCalculator = () => {
     [671, '671B parameters']
   ];
 
+  // Combine static and dynamic model sizes, sorted by parameter count
+  const modelSizes = React.useMemo(() => {
+    return [...staticModelSizes, ...dynamicModelSizes].sort((a, b) => a[0] - b[0]);
+  }, [dynamicModelSizes]);
+
   const contextSizes = [
     [4096, '4K tokens'],
     [8192, '8K tokens'],
@@ -635,43 +711,36 @@ const VRAMCalculator = () => {
     [262144, '256K tokens']
   ];
 
-  // IQ1_S 	1.78
-  // IQ2_XXS 2.20
-  // IQ2_XS 	2.43
-  // IQ2_S 	2.55
-  // IQ2_M 	2.76
-  // Q2_K_S 	2.79
-  // Q2_K 	  3.00
-  // IQ3_XXS 3.21
-  // IQ3_XS 	3.32
-  // Q3_K_S 	3.50
-  // IQ3_S 	3.52
-  // IQ3_M 	3.63
-  // Q3_K_M 	3.89
-  // Q3_K_L 	4.22
-  // IQ4_XS 	4.32
-  // IQ4_NL 	4.56
-  // Q4_K_S 	4.57
-  // Q4_K_M 	4.83
-  // Q5_K_S 	5.52
-  // Q5_K_M 	5.67
-  // Q6_K 	  6.57
-
   const quantizationLevels = [
-    [16, 'F16/FP16 (16.00)'],
+    [16.00, 'FP16 (16.00)'],
     [8.50, 'Q8_0 (8.50)'],
     [6.57, 'Q6_K (6.57)'],
+    [6.15, 'Q5_K_XL (6.15)'],
+    [5.90, 'Q5_K_L (5.90)'],
     [5.67, 'Q5_K_M (5.67)'],
-    [4.56, 'IQ4_NL (4.56)'],
+    [5.52, 'Q5_K_S (5.52)'],
+    [5.45, 'Q4_K_XL (5.45)'],
+    [5.15, 'Q4_K_L (5.15)'],
     [4.83, 'Q4_K_M (4.83)'],
+    [4.57, 'Q4_K_S (4.57)'],
+    [4.56, 'IQ4_NL (4.56)'],
+    [4.50, 'Q3_K_XL (4.50)'],
     [4.32, 'IQ4_XS (4.32)'],
     [4.22, 'Q3_K_L (4.22)'],
-    [4.00, 'Q4_0 (4.00) (Legacy!)'],
-    [3.66, 'IQ3_M (3.66)'],
+    [4.00, 'Q4_0 (4.00)'],
+    [3.89, 'Q3_K_M (3.89)'],
+    [3.63, 'IQ3_M (3.63)'],
+    [3.52, 'IQ3_S (3.52)'],
     [3.50, 'Q3_K_S (3.50)'],
     [3.32, 'IQ3_XS (3.32)'],
+    [3.21, 'IQ3_XXS (3.21)'],
     [3.00, 'Q2_K (3.00)'],
+    [2.79, 'Q2_K_S (2.79)'],
     [2.76, 'IQ2_M (2.76)'],
+    [2.55, 'IQ2_S (2.55)'],
+    [2.43, 'IQ2_XS (2.43)'],
+    [2.20, 'IQ2_XXS (2.20)'],
+    [1.78, 'IQ1_S (1.78)']
   ];
 
   const renderControls = () => {
@@ -754,7 +823,7 @@ const VRAMCalculator = () => {
           className: 'sm:self-end px-4 py-2 bg-blue-600 hover:bg-blue-700 disabled:bg-gray-400 text-white rounded-lg text-sm font-medium transition-colors'
         }, 'Load')
       ),
-      React.createElement('div', { className: 'flex flex-col sm:flex-row gap-2 items-start sm:items-center' },
+      showAdvanced && React.createElement('div', { className: 'flex flex-col sm:flex-row gap-2 items-start sm:items-center' },
         React.createElement('div', { className: 'flex-1' },
           React.createElement('label', {
             className: 'text-sm font-medium text-gray-700 dark:text-gray-300 block mb-1'
