@@ -72,3 +72,4 @@ If table styling needs adjustment:
 - **Shortcode**: `layouts/shortcodes/comparison-table.html` (calls partial)
 - **Partial**: `layouts/partials/comparison-table.html` (renders table from data)
 - **Page**: `content/agentic-coding-tools.md` (uses the shortcode)
+- NEVER commit or push a git repo unless the user has explicitly requested you to do so

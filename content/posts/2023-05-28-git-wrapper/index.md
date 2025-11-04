@@ -23,9 +23,6 @@ readingTime: true
 showFullContent: true
 draft: false
 type: posts
-toc:
-  enable: true
-  auto: false # collapse all sections by default
 
 code:
     maxShownLines: 100

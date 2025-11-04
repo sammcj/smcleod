@@ -5,7 +5,6 @@ subtitle: ""
 date: 2022-11-06T15:52:27+11:00
 lastmod: 2022-11-08T08:52:27+11:00
 author: Sam McLeod
-description: ""
 keywords: ["github", "ci", "yaml"]
 
 tags: ["github", "ci", "yaml", "DRY"]

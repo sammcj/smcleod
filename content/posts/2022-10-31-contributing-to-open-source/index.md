@@ -9,10 +9,6 @@ cover:
   #alt: "<alt text>"
   #caption: "<text>"
   #relative: false # To use relative path for cover image, used in hugo Page-bundles
-tags:
-- culture
-- tech
-- work
 title: Encourage Your Peers To Contribute To Open Source
 hideComments: false
 showFullContent: false
