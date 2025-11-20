@@ -31,38 +31,45 @@ An observation on functional correctness without domain quality.
 
 AI tools are enabling people to work beyond their existing capabilities to learn and contribute in places they wouldn't otherwise. The risk emerges when operating outside one's area of expertise - when the ability to generate output outpaces the ability or incentive to evaluate its quality. The technology makes this possible, left unchecked, the results demonstrate why domain expertise still matters.
 
-## Expertise Gap
+## The Expertise Gap
 
 Without domain expertise to architect, guide and critique AI-generated work, two paths emerge:
 
 1. Moving forward while being unaware of the quality and alignment gap that stems from a lack of domain expertise.
 2. Giving up, thinking that the AI isn't capable of delivering quality results.
 
-Let's talk about the former for a moment.
+Let's focus on the first path - the more insidious one.
 
 Code gets written, interfaces get built, documents get produced, and they all _look_ correct enough to ship. The output appears competent, so it moves forward without the critical evaluation that domain expertise provides.
 
-This is particularly insidious because the work is often functionally correct. Tests pass, the UI renders, the API responds. What's missing is the engineering mindset - the architectural considerations, the edge case handling, the maintainability concerns that come from actually understanding the domain you're working in.
+This is particularly problematic because the work is often functionally correct. Tests pass, the UI renders, the API responds. What's missing is the domain mindset - the architectural considerations, the edge case handling, the maintainability concerns that come from actually understanding the domain you're working in.
 
-- When a data analyst uses AI to submit a pull request to codebases they otherwise wouldn't touch - they're producing code, but not applying software engineering principles.
-- When a front-end developer generates backend code, it might work today but could lack the patterns that make it work reliably at scale.
-- When designers use tools like Figma AI or V0 to generate frontend code, the interface looks polished but the code underneath may be unmaintainable or introduce tight coupling.
+Consider these scenarios:
 
-The work ships because it superficially meets requirements. The problems emerge later - in production incidents, in refactoring costs, in the accumulated friction of a codebase that wasn't built with engineering craft.
+- A data analyst uses AI to submit a pull request to codebases they otherwise wouldn't touch - they're producing code, but not applying software engineering principles.
+- A front-end developer generates backend code that works today but lacks the patterns that make it work reliably at scale.
+- Designers use tools like Figma AI or V0 to generate frontend code where the interface looks polished but the code underneath is unmaintainable or introduces tight coupling.
+- Engineers draft proposals that read coherently but lack the strategic thinking and stakeholder awareness that experienced BAs and product owners would bring.
+
+The work ships because it superficially meets requirements. The problems emerge later.
 
 ## Technical Debt at Scale
 
-**Visual prototyping tools**: Figma AI and V0 sell themselves as capable of generating production code, but the output is often unmaintainable - instant technical debt that looks good in demos.
+The real cost isn't visible immediately. It accumulates over time as these outputs compound:
 
-**Code from non-engineers**: People with expertise in areas other than software development using AI to write code that functions but violates fundamental engineering principles or introduces poor architectural patterns. The pull requests either get rejected by frustrated development teams or make it through and the codebase degrades.
+**Erosion of quality standards**: As AI-generated output that "looks good enough" ships more frequently, teams may unconsciously lower their quality bar. The distinction between functional correctness and engineering quality blurs.
 
-**Domain switching by engineers**: A front-end specialist using AI to write API code may produce something that works, but lacks the architectural patterns, error handling, and security considerations that backend expertise provides.
+**Maintenance burden**: Code that works but wasn't built with an engineering mindset becomes increasingly expensive to modify. Each change requires understanding and working around patterns that don't align with the domain's best practices.
 
-**Non-technical documents**: Engineers underestimate the expertise required for effective proposals and communications, leading to declining quality as they accept generic AI outputs without applying the critical thinking and domain knowledge that BAs and product owners would bring.
+**Knowledge gaps**: When people contribute code to systems they aren't capable of understanding, the codebase becomes fragmented. Different sections follow different patterns, making it harder for the team to maintain a coherent mental model.
 
-## What's Missing
+**Review fatigue**: Development teams spend increasing time either rejecting pull requests from well-intentioned contributors or cleaning up merged code that technically functions but violates fundamental principles.
 
-The pattern is consistent: functional correctness without domain quality. The code runs, the document reads coherently, the interface renders - but none of it reflects the practices and considerations that come from actual expertise in that area.
+**False velocity**: Teams may appear to move faster because more work ships, but the accumulated friction slows future development. Technical debt grows faster than it's addressed.
+
+The pattern is consistent across domains: functional correctness without domain quality. The code runs, the document reads coherently, the interface renders - but none of it reflects the practices and considerations that come from actual expertise in that area.
+
+## Moving Forward
 
 AI tools excel at acceleration, automation and helping us learn. The issue isn't the tools themselves, but how we apply them. Engineering problems require an engineering mindset - the critical thinking to evaluate outputs, iterate on solutions, and recognise when generated code lacks the architectural patterns or error handling that deliver high quality outcomes.
 
@@ -76,7 +83,7 @@ If you're using AI to work in adjacent domains, there are practical steps to imp
 
 **Extend AI capability beyond base knowledge**: Use Model Context Protocol (MCP) tools to connect AI to documentation, code repositories, and domain-specific knowledge. Rather than simply relying on the model's internal training data that will be outdated and is certainly generic.
 
-**Constrain and guide with agent rules**: Agent rules (really more suggestions than rules) help to reinforce boundaries, patterns, and standards. Whenever repeatedly AI fails to follow instructions or operate outside your intended scope - that is an opportunity to consider adding or refining your agent rules.
+**Constrain and guide with agent rules**: Agent rules (really more suggestions than rules) help to reinforce boundaries, patterns, and standards. Whenever AI repeatedly fails to follow instructions or operate outside your intended scope - that is an opportunity to consider adding or refining your agent rules.
 
 **Document and have AI operate from a plan**: Establish quality gates, good workflows help to keep agents on task and create checkpoints where domain experts review outputs before they move forward.
 
