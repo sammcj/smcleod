@@ -78,6 +78,18 @@ body {
   letter-spacing: 0.015em;
 }
 
+
+.post-content b,
+.post-content strong,
+.content b,
+.content strong,
+article b,
+article strong,
+main b,
+main strong {
+  font-weight: 500 !important;
+}
+
 h1, h2, h3, h4, h5, h6,
 .h1, .h2, .h3, .h4, .h5, .h6,
 .post-title,
