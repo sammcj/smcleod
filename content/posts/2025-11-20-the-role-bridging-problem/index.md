@@ -20,11 +20,10 @@ ShowWordCount: true
 ShowRssButtonInSectionTermList: true
 UseHugoToc: true
 mermaid: true
-# cover:
-#   image: "tool-context-usage.png"
-#   alt: "MCP Server Tool Context Usage"
-#   # caption: "Optional caption text"
-#   relative: true  # Set to true for page bundle images
+cover:
+  image: "facade-of-competence-jpeg-2260.jpg"
+  alt: "The Facade of Competence"
+  relative: true  # Set to true for page bundle images
 ---
 
 An observation on functional correctness without domain quality.
