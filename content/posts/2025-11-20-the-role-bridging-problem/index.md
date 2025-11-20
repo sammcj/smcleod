@@ -42,17 +42,17 @@ Let's talk about the former for a moment.
 
 Code gets written, interfaces get built, documents get produced, and they all _look_ correct enough to ship. The output appears competent, so it moves forward without the critical evaluation that domain expertise provides.
 
-This is particularly insidious because the work is often functionally correct. Tests pass, the UI renders, the API responds. What's missing is the engineering mindset—the architectural considerations, the edge case handling, the maintainability concerns that come from actually understanding the domain you're working in.
+This is particularly insidious because the work is often functionally correct. Tests pass, the UI renders, the API responds. What's missing is the engineering mindset - the architectural considerations, the edge case handling, the maintainability concerns that come from actually understanding the domain you're working in.
 
 - When a data analyst uses AI to submit a pull request to codebases they otherwise wouldn't touch - they're producing code, but not applying software engineering principles.
 - When a front-end developer generates backend code, it might work today but could lack the patterns that make it work reliably at scale.
 - When designers use tools like Figma AI or V0 to generate frontend code, the interface looks polished but the code underneath may be unmaintainable or introduce tight coupling.
 
-The work ships because it superficially meets requirements. The problems emerge later—in production incidents, in refactoring costs, in the accumulated friction of a codebase that wasn't built with engineering craft.
+The work ships because it superficially meets requirements. The problems emerge later - in production incidents, in refactoring costs, in the accumulated friction of a codebase that wasn't built with engineering craft.
 
 ## Technical Debt at Scale
 
-**Visual prototyping tools**: Figma AI and V0 sell themselves as capable of generating production code, but the output is often unmaintainable—instant technical debt that looks good in demos.
+**Visual prototyping tools**: Figma AI and V0 sell themselves as capable of generating production code, but the output is often unmaintainable - instant technical debt that looks good in demos.
 
 **Code from non-engineers**: People with expertise in areas other than software development using AI to write code that functions but violates fundamental engineering principles or introduces poor architectural patterns. The pull requests either get rejected by frustrated development teams or make it through and the codebase degrades.
 
