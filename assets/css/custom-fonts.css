@@ -75,6 +75,7 @@
 body {
   font-family: var(--font-body);
   font-weight: 320;
+  letter-spacing: 0.015em;
 }
 
 h1, h2, h3, h4, h5, h6,

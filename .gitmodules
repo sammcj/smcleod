@@ -3,4 +3,5 @@
 # 	url = https://github.com/adityatelange/hugo-PaperMod.git
 [submodule "themes/github.com/KKKZOZ/hugo-admonitions"]
 	path = themes/github.com/KKKZOZ/hugo-admonitions
-	url = https://github.com/KKKZOZ/hugo-admonitions.git
+	url = https://github.com/sammcj/hugo-admonitions.git
+	branch = update

@@ -27,11 +27,9 @@ mermaid: true
 #   relative: true  # Set to true for page bundle images
 ---
 
-# The Role Bridging Problem
-
 An observation on functional correctness without domain quality.
 
-AI tools are enabling people to work outside their core domains - with the likes of front-end engineers writing backend code, data analysts submitting pull requests to add features, designers and product owners generating frontend code. The technology makes this possible, but the results often demonstrate why domain expertise still matters.
+AI tools are enabling people to work beyond their existing capabilities to learn and contribute in places they wouldn't otherwise. The risk emerges when operating outside one's area of expertise - when the ability to generate output outpaces the ability or incentive to evaluate its quality. The technology makes this possible, left unchecked, the results demonstrate the results demonstrate why domain expertise still matters.
 
 ## Expertise Gap
 
@@ -74,7 +72,7 @@ Good engineering still requires good engineers - AI doesn't change that, but it 
 
 ## Bridging the Gap
 
-If you're using AI to work in adjacent domains, there are practical steps to improve output quality:
+If you're using AI to work in adjacent domains, there are practical steps to improve the quality of the artefacts you produce:
 
 **Extend AI capability beyond base knowledge**: Use Model Context Protocol (MCP) tools to connect AI to documentation, code repositories, and domain-specific knowledge. Rather than simply relying on on the model's internal training data that will be outdated and is certainly generic.
 
