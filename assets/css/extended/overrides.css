@@ -52,3 +52,8 @@
   .logo a {
     font-family: var(--font-heading);
   }
+
+  /* Post tags/categories - use heading font */
+  .post-tags a {
+    font-family: var(--font-heading);
+  }

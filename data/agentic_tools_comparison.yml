@@ -11,6 +11,9 @@ tools:
   - id: github_copilot
     name: Github Copilot
     header_highlight: 4
+  - id: google_antigravity
+    name: Google Antigravity
+    header_highlight: 3
   - id: cursor
     name: Cursor
     header_highlight: 4
@@ -47,6 +50,8 @@ categories:
           text: Cursor - US Based, limited by plan, BYO option heavily limits features
         cursor_highlight: 3
         github_copilot: US Based with limited context window, Can BYO
+        google_antigravity: US Based
+        google_antigravity_highlight: 3
         amazon_kiro: US Based, Waitlist
         amazon_kiro_highlight: 3
         openai_codex: OpenAI models (US Based), Can BYO baseURL
@@ -59,6 +64,8 @@ categories:
         cursor_highlight: 3
         github_copilot: No
         github_copilot_highlight: 3
+        google_antigravity: Partial / Limited
+        google_antigravity_highlight: 2
         amazon_kiro: No
         amazon_kiro_highlight: 3
         openai_codex: No
@@ -71,6 +78,7 @@ categories:
         cursor_highlight: 2
         github_copilot: No
         github_copilot_highlight: 2
+        google_antigravity: Yes
         amazon_kiro: No
         amazon_kiro_highlight: 2
         openai_codex: No
@@ -81,6 +89,8 @@ categories:
         cline: Yes
         cursor: Yes
         github_copilot: Yes
+        google_antigravity: Partial
+        google_antigravity_highlight: 2
         amazon_kiro: No
         amazon_kiro_highlight: 3
         openai_codex: No
@@ -93,9 +103,11 @@ categories:
         cursor_highlight: 3
         github_copilot: Lower end
         github_copilot_highlight: 4
+        google_antigravity: Good
+        google_antigravity_highlight: 2
         amazon_kiro: Mid range
         amazon_kiro_highlight: 3
-        openai_codex: Mid/Higher end
+        openai_codex: Good
         openai_codex_highlight: 2
 
       - name: Speed
@@ -105,10 +117,13 @@ categories:
         cursor_highlight: 4
         github_copilot: Slow
         github_copilot_highlight: 4
+        google_antigravity: Medium
+        google_antigravity_highlight: 2
         amazon_kiro:
-          text: Medium/Slow
+          text: Slow
           tooltip: Have had availability issues needing manual retries and have to do a lot of hand holding to keep it going
           highlight: 3
+        openai_codex: Medium/Fast
 
       - name: MCP Spec alignment
         claude_code: High
@@ -116,9 +131,11 @@ categories:
         cursor: Medium/Low
         cursor_highlight: 3
         github_copilot: High
+        google_antigravity: Medium
+        google_antigravity_highlight: 2
         amazon_kiro: Low
         amazon_kiro_highlight: 4
-        openai_codex: High
+        openai_codex: Medium/High
 
   - name: Operational management
     features:
@@ -129,6 +146,8 @@ categories:
         cursor: No (for BYO)
         cursor_highlight: 3
         github_copilot: N/A
+        google_antigravity: No
+        google_antigravity_highlight: 3
         amazon_kiro: N/A
         openai_codex:
           text: Partial
@@ -143,6 +162,8 @@ categories:
         cursor: Standalone IDE (Fork of VSCode), CLI
         cursor_highlight: 3
         github_copilot: VSCode, Zed, CLI
+        google_antigravity: Standalone IDE (Fork of VSCode), CLI
+        google_antigravity_highlight: 3
         amazon_kiro: Standalone IDE (Fork of VSCode)
         amazon_kiro_highlight: 3
         openai_codex: VSCode IDE, CLI
@@ -154,8 +175,11 @@ categories:
         cursor_highlight: 5
         github_copilot: High
         github_copilot_highlight: 5
-        amazon_kiro: Medium/High
+        google_antigravity: High
+        google_antigravity_highlight: 5
+        amazon_kiro: Very High
         amazon_kiro_highlight: 4
+        openai_codex: Medium/Low
 
       - name: Plan/Act modes
         claude_code: Yes
@@ -164,14 +188,20 @@ categories:
         cursor_highlight: 3
         github_copilot: Partial
         github_copilot_highlight: 2
+        google_antigravity:
+          text: Partial (doesn't work)
+          highlight: 4
         amazon_kiro: No
         amazon_kiro_highlight: 3
+        openai_codex: No
 
       - name: Community size
         claude_code: Large
         cline: large
         cursor: Large
         github_copilot: Large
+        google_antigravity: Small
+        google_antigravity_highlight: 3
         amazon_kiro: Small
         amazon_kiro_highlight: 3
         openai_codex: Medium
@@ -184,9 +214,11 @@ categories:
         cursor: Closed source
         cursor_highlight: 5
         github_copilot: Yes
+        google_antigravity: Closed source
+        google_antigravity_highlight: 5
         amazon_kiro: Closed source
         amazon_kiro_highlight: 5
-        openai_codex: Yes
+        openai_codex: Open source
 
   - name: Configuration management
     features:
@@ -200,6 +232,8 @@ categories:
         cursor_highlight: 4
         github_copilot: Limited - no RBAC
         github_copilot_highlight: 3
+        google_antigravity: Limited
+        google_antigravity_highlight: 3
         amazon_kiro: Limited - no RBAC or rules
         amazon_kiro_highlight: 3
         openai_codex: Yes
@@ -212,9 +246,11 @@ categories:
         cursor_highlight: 3
         github_copilot: Limited - no RBAC
         github_copilot_highlight: 2
+        google_antigravity: Limited
+        google_antigravity_highlight: 2
         amazon_kiro: Limited - no RBAC
         amazon_kiro_highlight: 2
-        openai_codex: Yes
+        openai_codex: Partial
 
       - name: Centralised configuration
         claude_code:
@@ -227,6 +263,8 @@ categories:
         cursor_highlight: 3
         github_copilot: No
         github_copilot_highlight: 3
+        google_antigravity: No
+        google_antigravity_highlight: 3
         amazon_kiro: No
         amazon_kiro_highlight: 3
         openai_codex:
@@ -237,13 +275,14 @@ categories:
   - name: Automation
     features:
       - name: Automation hooks
-        cline: In beta
-        cline_highlight: 2
+        cline: Yes
         claude_code: Yes
         cursor: No
         cursor_highlight: 3
         github_copilot: No
         github_copilot_highlight: 3
+        google_antigravity: No
+        google_antigravity_highlight: 3
         amazon_kiro: Yes
         openai_codex: Yes
 
@@ -253,6 +292,7 @@ categories:
         cursor: In beta
         cursor_highlight: 2
         github_copilot: Yes
+        google_antigravity: Yes
         amazon_kiro: No
         amazon_kiro_highlight: 3
         openai_codex: Yes
@@ -264,8 +304,10 @@ categories:
         cursor_highlight: 3
         github_copilot: No
         github_copilot_highlight: 3
+        google_antigravity: Yes
         amazon_kiro: No
         amazon_kiro_highlight: 3
+        openai_codex: ""
 
   - name: Access control
     features:
@@ -279,6 +321,9 @@ categories:
           tooltip: "Easily bypassed https://www.backslash.security/blog/cursor-ai-security-flaw-autorun-denylist"
         github_copilot: No
         github_copilot_highlight: 5
+        google_antigravity:
+          text: No (has basic allow list - easy to bypass)
+          highlight: 5
         amazon_kiro: No
         amazon_kiro_highlight: 5
         openai_codex:
@@ -294,6 +339,8 @@ categories:
         cursor_highlight: 4
         github_copilot: No
         github_copilot_highlight: 4
+        google_antigravity: No
+        google_antigravity_highlight: 4
         amazon_kiro: No
         amazon_kiro_highlight: 4
         openai_codex: No
@@ -307,6 +354,8 @@ categories:
         cursor_highlight: 3
         github_copilot: No
         github_copilot_highlight: 3
+        google_antigravity: No
+        google_antigravity_highlight: 3
         amazon_kiro: No
         amazon_kiro_highlight: 3
         openai_codex: No
@@ -319,9 +368,9 @@ categories:
         cursor: No (for BYO), Yes for US based
         cursor_highlight: 2
         github_copilot: Yes
+        google_antigravity: Yes
         amazon_kiro: Yes
-        openai_codex: Yes
-        openai_codex_highlight: 1
+        openai_codex: No
 
 # Manually added - do not remove
   - name: User Interface (Subjective)
@@ -335,6 +384,8 @@ categories:
         cursor_highlight: 2
         github_copilot: Good
         github_copilot_highlight: 2
+        google_antigravity: Good
+        google_antigravity_highlight: 2
         amazon_kiro: Average
         amazon_kiro_highlight: 4
         openai_codex: Good
@@ -353,6 +404,8 @@ categories:
           text: $100-$300
           tooltip: Starts at $40, but hit monthly limits within a few days of use, then blocked from using good models for a month
           highlight: 2
+        google_antigravity: $200+
+        google_antigravity_highlight: 3
         amazon_kiro: $200+
         amazon_kiro_highlight: 3
         openai_codex:
