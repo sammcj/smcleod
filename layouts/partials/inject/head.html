@@ -9,10 +9,6 @@
 <link rel="stylesheet" type="text/css" href="{{ .Site.BaseURL }}css/asciinema-player.css" />
 {{ end }}
 
-{{ template "_internal/twitter_cards.html" . }}
-
-{{ template "_internal/opengraph.html" . }}
-
 {{ if .HasShortcode "github_button" }}
 <script async defer src="{{ .Site.BaseURL }}js/buttons.js"></script>
 {{ end }}
