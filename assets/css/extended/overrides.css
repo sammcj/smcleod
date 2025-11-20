@@ -57,3 +57,9 @@
   .post-tags a {
     font-family: var(--font-heading);
   }
+
+  /* Reduce excessive spacing for home-info section */
+  .first-entry.home-info {
+    min-height: auto;
+    margin: var(--gap) 0;
+  }
