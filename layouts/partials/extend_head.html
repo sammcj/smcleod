@@ -1,3 +1,6 @@
+{{ $customFonts := resources.Get "css/custom-fonts.css" | minify }}
+<link rel="stylesheet" href="{{ $customFonts.RelPermalink }}">
+
 {{ $citations := resources.Get "css/citations.css" | minify }}
 <link rel="stylesheet" href="{{ $citations.RelPermalink }}">
 

@@ -43,8 +43,14 @@ jobs:
       - name: Setup Hugo
         uses: peaceiris/actions-hugo@v3
         with:
-          hugo-version: "0.148.1"
+          hugo-version: "0.152.2"
           extended: true
+
+      - name: Install Dart Sass
+        run: |
+          curl -LJO https://github.com/sass/dart-sass/releases/download/1.94.2/dart-sass-1.94.2-linux-x64.tar.gz
+          tar -xf dart-sass-1.94.2-linux-x64.tar.gz
+          echo "$GITHUB_WORKSPACE/dart-sass" >> $GITHUB_PATH
 
       - name: Setup Python and install uv
         uses: actions/setup-python@f677139bbe7f9c59b41e40162b753c062f5d49a3 # v5
