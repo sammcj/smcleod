@@ -24,7 +24,8 @@ norss: true
 
 ## Software
 
-- [Plex](https://plex.tv) - Home Media Streaming
+- ~~[Plex](https://plex.tv) - Home Media Streaming~~
+- [Jellyfin](https://jellyfin.org) - Home Media Streaming
 - [PFsense](https://www.pfsense.org) - Routing, Firewall, VPN and Network Management
 
 ### AI / LLM
@@ -90,12 +91,9 @@ norss: true
 - [The Skeptics Guide To The Universe (SGU)](https://www.theskepticsguide.org/)
 - [No Such Thing As A Fish](https://www.nosuchthingasafish.com/)
 - [You Are Not So Smart](https://youarenotsosmart.com/)
-- [Hiphop Saved My Life](https://podcasts.apple.com/au/podcast/hip-hop-saved-my-life-with-romesh-ranganathan/id982388481)
 - [Off Menu](https://www.offmenupodcast.co.uk)
-- [Huberman Lab](https://hubermanlab.com/category/podcast-episodes/)
 - [RHLSTP](https://www.rhlstp.co.uk/)
 - [The Adam Buxton Podcast](https://www.adam-buxton.co.uk/podcasts)
-- [Risky.Biz](https://risky.biz)
 
 ----
 
@@ -103,15 +101,13 @@ norss: true
 
 - [Machine Learning Street Talk](https://www.youtube.com/@MachineLearningStreetTalk)
 - [NPR Tiny Desk Concerts](https://www.youtube.com/playlist?list=PL1B627337ED6F55F0)
-- [Matt Williams](https://www.youtube.com/@technovangelist)
-- [First We Feast (HotOnes)](https://www.youtube.com/channel/UCPD_bxCRGpmmeQcbe2kpPaA)
 - [Techmoan](https://www.youtube.com/playlist?list=PLN2yCnHTG_6qxmv_pdBxWxCPsbA1Cl2RI)
+- [Big Clive](https://www.youtube.com/@bigclivedotcom)
+- [Fireship](https://www.youtube.com/@Fireship)
 - [DTM Racing](https://www.youtube.com/channel/UCwKq447rYMVI5dAQWMmFnfg)
 - [Smarter Every Day](https://www.youtube.com/c/smartereveryday)
 - [Warped Perception](https://www.youtube.com/channel/UCFH4dWqQQOYkyJZUGT4q5pg)
 - [Retro Game Corps](https://www.youtube.com/@RetroGameCorps)
-- [MoneyZG](https://www.youtube.com/@MoneyZG)
-- [Fireship](https://www.youtube.com/@Fireship)
 
 ----
 
@@ -128,11 +124,3 @@ norss: true
 - [Ultrasone Signature Pro](https://www.ultrasone.com/en/products/headphones/signature-pro) - HiFi Headphones
 - [Sony WH-1000XM5](https://www.sony.com.au/electronics/headband-headphones/wh-1000xm5) - Portable Headphones
 - [Benchmark DAC](https://benchmarkmedia.com/collections/digital-to-analog-audio-converter) - DAC & Preamp
-
-### For Your Feet
-
-- [All Day Socks](http://alldaysocks.com) - For Your Feet
-
-### For Your Pocket
-
-- [Bellroy Wallets](http://bellroy.com) - For Your Pocket
