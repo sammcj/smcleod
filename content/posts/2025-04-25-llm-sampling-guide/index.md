@@ -303,14 +303,16 @@ Before adjusting parameters, check:
 
 ### Model keeps repeating itself
 
+Note: Perform changes one at a time to isolate effects.
+
 1. Check prompt doesn't encourage repetition
-2. Gradually increase `repeat_penalty` (max 1.15-1.2)
+2. Gradually increase `repeat_penalty` (start with 1.05, max 1.15-1.2~)
 3. Try `frequency_penalty` (0.1-0.5) or `presence_penalty` (0.1-0.5)
 4. Slightly increase `min_p` or decrease `top_p`
 
 ### Outputs too random/incoherent
 
-1. Lower temperature (try 0.7, then 0.5)
+1. Lower temperature (try 0.6, then 0.4)
 2. Increase `min_p` to 0.1
 3. If still problematic, enable `top_k=40`
 
