@@ -1,0 +1,113 @@
+/* Sidebar TOC - positioned in left margin of viewport */
+:root {
+  --toc-width: 220px;
+  --toc-offset: 20px;
+}
+
+/* Sidebar container - fixed position in left margin */
+.toc-sidebar {
+  position: fixed;
+  top: calc(var(--header-height) + 40px);
+  left: var(--toc-offset);
+  width: var(--toc-width);
+  max-height: calc(100vh - var(--header-height) - 80px);
+  overflow-y: auto;
+  z-index: 10;
+}
+
+.toc-sidebar .toc {
+  margin: 0;
+  padding: 0.6em;
+  border: 1px solid var(--border);
+  background: var(--code-bg);
+  border-radius: var(--radius);
+  font-size: 0.82em;
+}
+
+.dark .toc-sidebar .toc {
+  background: var(--entry);
+}
+
+.toc-sidebar .toc details summary {
+  cursor: pointer;
+  margin-inline-start: 0;
+  padding: 4px 0;
+}
+
+.toc-sidebar .toc .details {
+  font-size: 0.9em;
+  font-weight: 600;
+  color: var(--primary);
+}
+
+.toc-sidebar .toc .inner {
+  margin: 8px 0 0;
+  padding: 0;
+}
+
+.toc-sidebar .toc ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.toc-sidebar .toc li {
+  margin: 0;
+  padding: 0;
+}
+
+.toc-sidebar .toc li ul {
+  margin-inline-start: 10px;
+  padding-inline-start: 8px;
+  border-inline-start: 1px solid var(--border);
+}
+
+.toc-sidebar .toc a {
+  display: block;
+  padding: 3px 0;
+  color: var(--secondary);
+  text-decoration: none;
+  line-height: 1.35;
+  transition: color 0.15s ease;
+}
+
+.toc-sidebar .toc a:hover {
+  color: var(--primary);
+  box-shadow: none;
+}
+
+/* Toggle between sidebar and inline TOC based on screen width */
+/* Wide screens: show sidebar, hide inline */
+/* Narrow screens: hide sidebar, show inline */
+
+/* Hide inline TOC on wide screens */
+@media (min-width: 1401px) {
+  .toc-inline {
+    display: none;
+  }
+}
+
+/* Hide sidebar on narrow screens */
+@media (max-width: 1400px) {
+  .toc-sidebar {
+    display: none;
+  }
+}
+
+/* Scrollbar styling for TOC */
+.toc-sidebar::-webkit-scrollbar {
+  width: 4px;
+}
+
+.toc-sidebar::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.toc-sidebar::-webkit-scrollbar-thumb {
+  background: var(--border);
+  border-radius: 2px;
+}
+
+.toc-sidebar::-webkit-scrollbar-thumb:hover {
+  background: var(--secondary);
+}

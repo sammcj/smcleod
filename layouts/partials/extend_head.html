@@ -4,6 +4,9 @@
 {{ $citations := resources.Get "css/citations.css" | minify }}
 <link rel="stylesheet" href="{{ $citations.RelPermalink }}">
 
+{{ $sidebarToc := resources.Get "css/sidebar-toc.css" | minify }}
+<link rel="stylesheet" href="{{ $sidebarToc.RelPermalink }}">
+
 {{ range .Params.extra_css }}
   {{ $css := resources.Get . }}
   {{ if $css }}

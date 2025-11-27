@@ -1,0 +1,16 @@
+{{- $headers := findRE "<h[1-6].*?>(.|\n])+?</h[1-6]>" .Content -}}
+{{- $has_headers := ge (len $headers) 1 -}}
+{{- if $has_headers -}}
+<aside class="toc-sidebar">
+  <div class="toc">
+    <details open>
+      <summary accesskey="c" title="(Alt + C)">
+        <span class="details">{{- i18n "toc" | default "Contents" }}</span>
+      </summary>
+      <div class="inner">
+        {{- .TableOfContents -}}
+      </div>
+    </details>
+  </div>
+</aside>
+{{- end }}
