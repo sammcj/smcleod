@@ -318,7 +318,7 @@ Note: Perform changes one at a time to isolate effects.
 
 ### Outputs too generic/predictable
 
-1. Increase temperature (0.9, then 1.0)
+1. Increase temperature (0.7-1.0)
 2. Lower `min_p` to 0.03-0.05
 3. Ensure `top_k` is disabled (0)
 
