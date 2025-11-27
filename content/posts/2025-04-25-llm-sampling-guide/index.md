@@ -30,20 +30,52 @@ Large Language Models don't generate text deterministically - they use probabili
 
 This guide explains the key sampling parameters, how they interact, and provides recommended settings for different use cases.
 
-## Quick Reference
+## Framework Reference
 
-Before diving into details, here's a quick reference table for common use cases:
+### Parameter Comparison
 
-| Setting            | General | Coding | Factual | Creative |
-|--------------------|---------|--------|---------|----------|
-| **temperature**    | 0.7     | 0.2    | 0.3     | 1.0      |
-| **min_p**          | 0.05    | 0.05   | 0.1     | 0.05     |
-| **top_p**          | 0.9     | 0.9    | 0.8     | 0.95     |
-| **top_k**          | 0       | 0      | 40      | 0        |
-| **repeat_penalty** | 1.05    | 1.05   | 1.05    | 1.0      |
-| **repeat_last_n**  | 64      | 128    | 64      | 64       |
+| Parameter         | llama.cpp             | Default | Ollama           | Default | MLX                 |
+|-------------------|-----------------------|---------|------------------|---------|---------------------|
+| Temperature       | `--temp`              | `0.8`   | `temperature`    | `0.8`   | `--temp`            |
+| Top P             | `--top-p`             | `0.9`   | `top_p`          | `0.9`   | `--top-p`           |
+| Min P             | `--min-p`             | `0.1`   | `min_p`          | `0.0`   | `--min-p`           |
+| Top K             | `--top-k`             | `40 `   | `top_k`          | `40`    | `--top-k`           |
+| Repeat Penalty    | `--repeat-penalty`    | `1.0`   | `repeat_penalty` | `1.1`   | -                   |
+| Repeat Last N     | `--repeat-last-n`     | `64 `   | `repeat_last_n`  | `64`    | -                   |
+| Presence Penalty  | `--presence-penalty`  | `0.0`   | -                | -       | -                   |
+| Frequency Penalty | `--frequency-penalty` | `0.0`   | -                | -       | -                   |
+| Mirostat          | `--mirostat`          | `0  `   | `mirostat`       | `0`     | -                   |
+| Mirostat Tau      | `--mirostat-ent`      | `5.0`   | `mirostat_tau`   | `5.0`   | -                   |
+| Mirostat Eta      | `--mirostat-lr`       | `0.1`   | `mirostat_eta`   | `0.1`   | -                   |
+| Top N Sigma       | `--top-nsigma`        | `-1.0`  | -                | -       | -                   |
+| Typical P         | `--typical`           | `1.0`   | `typical_p`      | `1.0`   | -                   |
+| XTC Probability   | `--xtc-probability`   | `0.0`   | -                | -       | `--xtc-probability` |
+| XTC Threshold     | `--xtc-threshold`     | `0.1`   | -                | -       | `--xtc-threshold`   |
+| DRY Multiplier    | `--dry-multiplier`    | `0.0`   | -                | -       | -                   |
+| DRY Base          | `--dry-base`          | `1.75`  | -                | -       | -                   |
+| Dynamic Temp      | `--dynatemp-range`    | `0.0`   | -                | -       | -                   |
+| Seed              | `--seed`              | `-1`    | `seed`           | `0`     | -                   |
+| Context Size      | `--ctx-size`          | `2048`  | `num_ctx`        | `2048`  | -                   |
+| Max Tokens        | `--predict`           | `-1`    | `num_predict`    | `-1`    | -                   |
 
-See [Recommended Settings](#recommended-settings-by-use-case) for detailed explanations.
+### Notable Default Differences
+
+| Parameter      | llama.cpp     | Ollama | Note                                    |
+|----------------|---------------|--------|-----------------------------------------|
+| min_p          | `0.1`         | `0.0`  | Ollama disables Min P by default        |
+| repeat_penalty | `1.0`         | `1.1`  | Ollama applies light penalty by default |
+| seed           | `-1` (random) | `0`    | Different random behaviour              |
+
+### Feature Support
+
+| Feature                                | llama.cpp | Ollama | MLX     |
+|----------------------------------------|-----------|--------|---------|
+| Core (temp, top_p, top_k, min_p)       | ✓         | ✓      | ✓       |
+| Repetition penalties                   | ✓         | ✓      | ✗       |
+| Presence/frequency penalties           | ✓         | ✗      | ✗       |
+| Mirostat                               | ✓         | ✓      | ✗       |
+| Advanced (DRY, XTC, typical, dynatemp) | ✓         | ✗      | Partial |
+| Custom sampler ordering                | ✓         | ✗      | ✗       |
 
 ---
 
@@ -208,15 +240,15 @@ An adaptive sampling method that dynamically adjusts constraints to maintain a t
 
 ### Other Sampling Methods
 
-| Parameter     | Name                | Description                                             | Use Case                        | Range                    |
-|---------------|---------------------|---------------------------------------------------------|---------------------------------|--------------------------|
-| `tfs_z`       | Tail Free Sampling  | Filters low-probability tail based on second derivative | Alternative to Top P/Min P      | 0.9-1.0 (1.0 disables)   |
-| `typical_p`   | Typical Sampling    | Selects tokens close to expected probability            | Surprising yet coherent outputs | 0.9-1.0 (1.0 disables)   |
-| `top_a`       | Top-A               | Threshold based on squared top probability              | Adaptive filtering              | 0.0-1.0 (0.0 disables)   |
-| `dry_*`       | DRY                 | Detects and penalises repeating n-gram patterns         | Prevents phrase recycling       | Multiplier 0.0-2.0       |
-| `dynatemp_*`  | Dynamic Temperature | Adjusts temp based on distribution entropy              | Automatic temperature tuning    | Range 0.0-2.0            |
-| `top_n_sigma` | Top-N-Sigma         | Threshold at max logit minus N standard deviations      | Statistical filtering           | 1.0-3.0 (-1.0 disables)  |
-| `xtc_*`       | XTC                 | Occasionally forces lower-probability token selection   | Breaks predictable patterns     | Prob 0.0-1.0, Thresh 0.1 |
+| Parameter     | Name                | Description                                             | Use Case                        | Range                        |
+|---------------|---------------------|---------------------------------------------------------|---------------------------------|------------------------------|
+| `tfs_z`       | Tail Free Sampling  | Filters low-probability tail based on second derivative | Alternative to Top P/Min P      | `0.9-1.0` (`1.0` disables)   |
+| `typical_p`   | Typical Sampling    | Selects tokens close to expected probability            | Surprising yet coherent outputs | `0.9-1.0` (`1.0` disables)   |
+| `top_a`       | Top-A               | Threshold based on squared top probability              | Adaptive filtering              | `0.0-1.0` (`0.0` disables)   |
+| `dry_*`       | DRY                 | Detects and penalises repeating n-gram patterns         | Prevents phrase recycling       | Multiplier `0.0-2.0`         |
+| `dynatemp_*`  | Dynamic Temperature | Adjusts temp based on distribution entropy              | Automatic temperature tuning    | Range `0.0-2.0`              |
+| `top_n_sigma` | Top-N-Sigma         | Threshold at max logit minus N standard deviations      | Statistical filtering           | `1.0-3.0` (`-1.0` disables)  |
+| `xtc_*`       | XTC                 | Occasionally forces lower-probability token selection   | Breaks predictable patterns     | Prob `0.0-1.0`, Thresh `0.1` |
 
 ---
 
@@ -239,55 +271,6 @@ Applying temperature *before* filtering could distort the distribution, causing 
 
 When using Mirostat, it replaces the filtering steps and dynamically controls the process itself.
 
----
-
-## Framework Reference
-
-### Parameter Comparison
-
-| Parameter         | llama.cpp             | Default | Ollama           | Default | MLX                 |
-|-------------------|-----------------------|---------|------------------|---------|---------------------|
-| Temperature       | `--temp`              | 0.8     | `temperature`    | 0.8     | `--temp`            |
-| Top P             | `--top-p`             | 0.9     | `top_p`          | 0.9     | `--top-p`           |
-| Min P             | `--min-p`             | 0.1     | `min_p`          | 0.0     | `--min-p`           |
-| Top K             | `--top-k`             | 40      | `top_k`          | 40      | `--top-k`           |
-| Repeat Penalty    | `--repeat-penalty`    | 1.0     | `repeat_penalty` | 1.1     | -                   |
-| Repeat Last N     | `--repeat-last-n`     | 64      | `repeat_last_n`  | 64      | -                   |
-| Presence Penalty  | `--presence-penalty`  | 0.0     | -                | -       | -                   |
-| Frequency Penalty | `--frequency-penalty` | 0.0     | -                | -       | -                   |
-| Mirostat          | `--mirostat`          | 0       | `mirostat`       | 0       | -                   |
-| Mirostat Tau      | `--mirostat-ent`      | 5.0     | `mirostat_tau`   | 5.0     | -                   |
-| Mirostat Eta      | `--mirostat-lr`       | 0.1     | `mirostat_eta`   | 0.1     | -                   |
-| Top N Sigma       | `--top-nsigma`        | -1.0    | -                | -       | -                   |
-| Typical P         | `--typical`           | 1.0     | `typical_p`      | 1.0     | -                   |
-| XTC Probability   | `--xtc-probability`   | 0.0     | -                | -       | `--xtc-probability` |
-| XTC Threshold     | `--xtc-threshold`     | 0.1     | -                | -       | `--xtc-threshold`   |
-| DRY Multiplier    | `--dry-multiplier`    | 0.0     | -                | -       | -                   |
-| DRY Base          | `--dry-base`          | 1.75    | -                | -       | -                   |
-| Dynamic Temp      | `--dynatemp-range`    | 0.0     | -                | -       | -                   |
-| Seed              | `--seed`              | -1      | `seed`           | 0       | -                   |
-| Context Size      | `--ctx-size`          | 2048    | `num_ctx`        | 2048    | -                   |
-| Max Tokens        | `--predict`           | -1      | `num_predict`    | -1      | -                   |
-
-### Notable Default Differences
-
-| Parameter      | llama.cpp   | Ollama | Note                                    |
-|----------------|-------------|--------|-----------------------------------------|
-| min_p          | 0.1         | 0.0    | Ollama disables Min P by default        |
-| repeat_penalty | 1.0         | 1.1    | Ollama applies light penalty by default |
-| seed           | -1 (random) | 0      | Different random behaviour              |
-
-### Feature Support
-
-| Feature                                | llama.cpp | Ollama | MLX     |
-|----------------------------------------|-----------|--------|---------|
-| Core (temp, top_p, top_k, min_p)       | ✓         | ✓      | ✓       |
-| Repetition penalties                   | ✓         | ✓      | ✗       |
-| Presence/frequency penalties           | ✓         | ✗      | ✗       |
-| Mirostat                               | ✓         | ✓      | ✗       |
-| Advanced (DRY, XTC, typical, dynatemp) | ✓         | ✗      | Partial |
-| Custom sampler ordering                | ✓         | ✗      | ✗       |
-
 ### llama.cpp Default Sampler Order
 
 ```
@@ -305,77 +288,6 @@ Customise with `--samplers` or `--sampling-seq`.
 {{< wide-image src="sampling-methods-comparison.png" alt="Sampling Methods Comparison" >}}
 
 {{< wide-image src="ollama-sampling-diagram.png" alt="Ollama Sampling Pipeline" >}}
-
----
-
-## Recommended Settings by Use Case
-
-### General Purpose
-
-```env
-PARAMETER temperature 0.7
-PARAMETER min_p 0.05
-PARAMETER top_p 0.9
-PARAMETER top_k 0
-PARAMETER repeat_penalty 1.05
-PARAMETER repeat_last_n 64
-```
-
-Balanced settings suitable for most conversational and general tasks.
-
-### Factual / Precise
-
-```env
-PARAMETER temperature 0.3
-PARAMETER min_p 0.1
-PARAMETER top_p 0.8
-PARAMETER top_k 40
-PARAMETER repeat_penalty 1.05
-PARAMETER repeat_last_n 64
-```
-
-Lower temperature and tighter filtering for accuracy.
-
-### Creative Writing
-
-```env
-PARAMETER temperature 1.0
-PARAMETER min_p 0.05
-PARAMETER top_p 0.95
-PARAMETER top_k 0
-PARAMETER repeat_penalty 1.0
-PARAMETER repeat_last_n 64
-```
-
-Higher temperature and minimal penalties for variety.
-
-### Code Generation
-
-```env
-PARAMETER temperature 0.2
-PARAMETER min_p 0.05
-PARAMETER top_p 0.9
-PARAMETER repeat_penalty 1.05
-PARAMETER repeat_last_n 128
-```
-
-Low temperature for precision, extended lookback for variable naming consistency.
-
-<details>
-<summary>Alternative: High Min P for peaked models</summary>
-
-For models like Qwen 2.5 Coder that produce very peaked distributions:
-
-```env
-PARAMETER temperature 0.2
-PARAMETER min_p 0.9
-PARAMETER top_p 1.0
-PARAMETER repeat_penalty 1.05
-```
-
-The high min_p (0.9) means only tokens with probability ≥90% of the top token are considered. Combined with low temperature, this produces near-deterministic output. Works well when the model is highly confident and there's usually one "correct" next token.
-
-</details>
 
 ---
 
@@ -424,76 +336,3 @@ Code generation has unique requirements - intentional repetition (variable names
 - **Context length:** Longer repeat lookback (128-512) maintains variable naming consistency
 - **Temperature sweet spot:** 0.1-0.4 for most code tasks
 - **Precision vs. creativity:** Lower (0.1-0.2) for critical implementations, slightly higher (0.3-0.4) when multiple valid approaches exist
-
-### Preset Configurations
-
-**Precision-Focused** (correctness critical):
-
-```plain
-temperature: 0.2
-min_p: 0.1
-top_p: 0.95
-top_k: 40
-repeat_penalty: 1.02
-repeat_last_n: 128
-```
-
-**Balanced** (general-purpose code):
-
-```plain
-temperature: 0.3
-min_p: 0.05
-top_p: 0.9
-top_k: 0
-repeat_penalty: 1.03
-repeat_last_n: 256
-```
-
-**Pattern-Respecting** (follows existing code style):
-
-```plain
-temperature: 0.4
-min_p: 0.05
-top_p: 0.95
-top_k: 0
-repeat_penalty: 1.0
-repeat_last_n: 64
-```
-
-**Algorithm Implementation** (mathematical logic):
-
-```plain
-temperature: 0.15
-min_p: 0.1
-top_p: 0.9
-top_k: 30
-repeat_penalty: 1.05
-repeat_last_n: 64
-```
-
-**Maintenance/Refactoring** (conservative modifications):
-
-```plain
-temperature: 0.1
-min_p: 0.15
-top_p: 0.8
-top_k: 50
-repeat_penalty: 1.0
-repeat_last_n: 512
-```
-
-**Mirostat-Only** (adaptive control):
-
-```plain
-temperature: 1.0
-min_p: 0.0
-top_p: 1.0
-top_k: 0
-repeat_penalty: 1.0
-mirostat: 2
-mirostat_tau: 3.0
-mirostat_eta: 0.1
-repeat_last_n: 128
-```
-
-Delegates all sampling control to Mirostat, which dynamically adapts to different code sections.
