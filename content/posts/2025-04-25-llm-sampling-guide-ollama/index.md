@@ -60,13 +60,32 @@ This guide explains the key sampling parameters and how they affect your model's
 
 ### Temperature
 
-**What it does:** Controls the randomness of the output by scaling the model's token prediction probabilities before sampling.
+**What it does:** Controls the randomness of token selection by modifying the probability distribution before sampling.
 
-* **Low temperature (e.g., 0.1-0.5):** Makes high-probability tokens significantly more likely and low-probability tokens less likely. Leads to more focused, deterministic, and potentially repetitive outputs.
-* **Medium temperature (e.g., 0.6-0.9):** Offers a balance between predictability and creativity.
-* **High temperature (e.g., >1.0):** Flattens the probability distribution, making lower-probability tokens more likely. Increases diversity, creativity, and the risk of unexpected or less coherent outputs.
+**The formula:** Each token's logit (raw score) is divided by the temperature value, then softmax is applied to get the final probabilities:
 
-**How it works mathematically:** Temperature divides the raw logit scores before they're converted to probabilities. Lower temperatures amplify differences between logits, making the distribution sharper, while higher temperatures reduce these differences, making the distribution flatter.
+```
+adjusted_probability = softmax(logits / temperature)
+```
+
+**Temperature values explained:**
+
+* **Temperature = 1.0 (baseline):** The model's original probability distribution is used as-is. If the model assigns "the" a 40% probability and "a" a 30% probability, those exact values are used for sampling.
+* **Temperature < 1.0 (e.g., 0.1-0.5):** Makes the distribution *sharper*. High-probability tokens become more likely, low-probability tokens become less likely. Output becomes more deterministic, favouring the model's top choices.
+* **Temperature > 1.0 (e.g., 1.5-2.0):** Makes the distribution *flatter*. Probabilities become more uniform, giving lower-ranked tokens a better chance of selection. Output becomes more random and varied.
+* **Temperature = 0:** Greedy decoding. Always selects the highest probability token. Fully deterministic. (Implementations handle this as argmax rather than literal division by zero.)
+
+**Practical example:** Say the model's top 3 tokens have these base probabilities (at temp 1.0):
+
+* "cat": 60%
+* "dog": 30%
+* "fish": 10%
+
+At **temp 0.5**: Distribution sharpens - "cat" dominates even more strongly (~85%), others become unlikely.
+
+At **temp 2.0**: Distribution flattens - probabilities converge toward each other (~40%, ~35%, ~25%).
+
+*(Exact values depend on the underlying logits; these illustrate the directional effect.)*
 
 **Important concepts:**
 
@@ -117,7 +136,7 @@ This guide explains the key sampling parameters and how they affect your model's
 * **Limitation: Non-Adaptability:** As a fixed-count filter, Top K cannot adapt to the model's confidence level.
   * It can be too restrictive when many good alternatives exist just outside the top K.
   * It can be too permissive when only a few tokens have meaningful probability, yet it still includes K candidates.
-* **Usage:** Sometimes used for highly factual scenarios requiring focused output, or as recommended for specific models (e.g., *verify and insert confirmed Gemma 3 recommendation here if applicable*).
+* **Usage:** Sometimes used for highly factual scenarios requiring focused output, or as recommended for specific models (e.g., Gemma 3 recommends `top_k=64`).
 
 **Interaction with Other Filters:** In `llama.cpp`, filters are often applied sequentially (Top K → Top P → ... → Min P). If Top K > 0 is enabled alongside other filters like Top P or Min P, Top K acts *first*, creating an initial pool of K tokens. Subsequent filters then operate *only within that K-sized pool*. This means Top K can serve as a hard cap on the candidate pool size.
 
@@ -263,8 +282,8 @@ The order in which sampling methods are applied significantly impacts output qua
 **Why this order is critical:**
 
 * Filtering first removes low-probability or otherwise undesirable tokens based on the model's original predictions.
-* Temperature then rescales the probabilities *only among the plausible candidates* that survived filtering, fine-tuning the final selection likelihood without re-introducing poor candidates.
-* Applying temperature *before* filtering could distort the initial probabilities, potentially causing unwanted tokens to pass the filtering stage or good tokens to be incorrectly filtered out.
+* Temperature then rescales the *logits* of the remaining candidates before softmax converts them to probabilities, adjusting relative likelihoods without re-introducing filtered tokens.
+* Applying temperature *before* filtering could distort the initial probability distribution, potentially causing unwanted tokens to pass the filtering stage or good tokens to be incorrectly filtered out.
 
 Adhering to this standard order ensures that each step functions as intended. When using Mirostat, remember it replaces steps 2 and 3, dynamically controlling the process itself.
 
