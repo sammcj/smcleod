@@ -62,11 +62,11 @@ Last updated: November 2025
 
 ### Notable Default Differences
 
-| Parameter      | llama.cpp     | Ollama | Note                                    |
-|----------------|---------------|--------|-----------------------------------------|
-| min_p          | `0.1`         | `0.0`  | Ollama disables Min P by default        |
-| repeat_penalty | `1.0`         | `1.1`  | Ollama applies light penalty by default |
-| seed           | `-1` (random) | `0`    | Different random behaviour              |
+| Parameter      | llama.cpp     | Ollama | Note                              |
+|----------------|---------------|--------|-----------------------------------|
+| min_p          | `0.1`         | `0.0`  | Ollama disables Min P by default  |
+| repeat_penalty | `1.0`         | `1.1`  | Ollama applies penalty by default |
+| seed           | `-1` (random) | `0`    | Different random behaviour        |
 
 ### Feature Support
 
