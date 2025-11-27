@@ -245,29 +245,29 @@ When using Mirostat, it replaces the filtering steps and dynamically controls th
 
 ### Parameter Comparison
 
-| Parameter         | llama.cpp             | Default | Ollama           | Default | MLX                 | Default |
-|-------------------|-----------------------|---------|------------------|---------|---------------------|---------|
-| Temperature       | `--temp`              | 0.8     | `temperature`    | 0.8     | `--temp`            | -       |
-| Top P             | `--top-p`             | 0.9     | `top_p`          | 0.9     | `--top-p`           | -       |
-| Min P             | `--min-p`             | 0.1     | `min_p`          | 0.0     | `--min-p`           | -       |
-| Top K             | `--top-k`             | 40      | `top_k`          | 40      | `--top-k`           | -       |
-| Repeat Penalty    | `--repeat-penalty`    | 1.0     | `repeat_penalty` | 1.1     | -                   | -       |
-| Repeat Last N     | `--repeat-last-n`     | 64      | `repeat_last_n`  | 64      | -                   | -       |
-| Presence Penalty  | `--presence-penalty`  | 0.0     | -                | -       | -                   | -       |
-| Frequency Penalty | `--frequency-penalty` | 0.0     | -                | -       | -                   | -       |
-| Mirostat          | `--mirostat`          | 0       | `mirostat`       | 0       | -                   | -       |
-| Mirostat Tau      | `--mirostat-ent`      | 5.0     | `mirostat_tau`   | 5.0     | -                   | -       |
-| Mirostat Eta      | `--mirostat-lr`       | 0.1     | `mirostat_eta`   | 0.1     | -                   | -       |
-| Top N Sigma       | `--top-nsigma`        | -1.0    | -                | -       | -                   | -       |
-| Typical P         | `--typical`           | 1.0     | `typical_p`      | 1.0     | -                   | -       |
-| XTC Probability   | `--xtc-probability`   | 0.0     | -                | -       | `--xtc-probability` | -       |
-| XTC Threshold     | `--xtc-threshold`     | 0.1     | -                | -       | `--xtc-threshold`   | -       |
-| DRY Multiplier    | `--dry-multiplier`    | 0.0     | -                | -       | -                   | -       |
-| DRY Base          | `--dry-base`          | 1.75    | -                | -       | -                   | -       |
-| Dynamic Temp      | `--dynatemp-range`    | 0.0     | -                | -       | -                   | -       |
-| Seed              | `--seed`              | -1      | `seed`           | 0       | -                   | -       |
-| Context Size      | `--ctx-size`          | 2048    | `num_ctx`        | 2048    | -                   | -       |
-| Max Tokens        | `--predict`           | -1      | `num_predict`    | -1      | -                   | -       |
+| Parameter         | llama.cpp             | Default | Ollama           | Default | MLX                 |
+|-------------------|-----------------------|---------|------------------|---------|---------------------|
+| Temperature       | `--temp`              | 0.8     | `temperature`    | 0.8     | `--temp`            |
+| Top P             | `--top-p`             | 0.9     | `top_p`          | 0.9     | `--top-p`           |
+| Min P             | `--min-p`             | 0.1     | `min_p`          | 0.0     | `--min-p`           |
+| Top K             | `--top-k`             | 40      | `top_k`          | 40      | `--top-k`           |
+| Repeat Penalty    | `--repeat-penalty`    | 1.0     | `repeat_penalty` | 1.1     | -                   |
+| Repeat Last N     | `--repeat-last-n`     | 64      | `repeat_last_n`  | 64      | -                   |
+| Presence Penalty  | `--presence-penalty`  | 0.0     | -                | -       | -                   |
+| Frequency Penalty | `--frequency-penalty` | 0.0     | -                | -       | -                   |
+| Mirostat          | `--mirostat`          | 0       | `mirostat`       | 0       | -                   |
+| Mirostat Tau      | `--mirostat-ent`      | 5.0     | `mirostat_tau`   | 5.0     | -                   |
+| Mirostat Eta      | `--mirostat-lr`       | 0.1     | `mirostat_eta`   | 0.1     | -                   |
+| Top N Sigma       | `--top-nsigma`        | -1.0    | -                | -       | -                   |
+| Typical P         | `--typical`           | 1.0     | `typical_p`      | 1.0     | -                   |
+| XTC Probability   | `--xtc-probability`   | 0.0     | -                | -       | `--xtc-probability` |
+| XTC Threshold     | `--xtc-threshold`     | 0.1     | -                | -       | `--xtc-threshold`   |
+| DRY Multiplier    | `--dry-multiplier`    | 0.0     | -                | -       | -                   |
+| DRY Base          | `--dry-base`          | 1.75    | -                | -       | -                   |
+| Dynamic Temp      | `--dynatemp-range`    | 0.0     | -                | -       | -                   |
+| Seed              | `--seed`              | -1      | `seed`           | 0       | -                   |
+| Context Size      | `--ctx-size`          | 2048    | `num_ctx`        | 2048    | -                   |
+| Max Tokens        | `--predict`           | -1      | `num_predict`    | -1      | -                   |
 
 ### Notable Default Differences
 
