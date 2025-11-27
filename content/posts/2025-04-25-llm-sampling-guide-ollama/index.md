@@ -1,5 +1,5 @@
 ---
-title: "Comprehensive Guide to LLM Sampling Parameters"
+title: "LLM Sampling Parameters Guide"
 date: 2025-04-25T01:10:00+10:00
 tags: ["ai", "llm", "tech", "ollama", "coding", "sampling", "inference", "tutorials", "llama"]
 author: "Sam McLeod"
@@ -8,7 +8,7 @@ TocOpen: true
 draft: false
 hidemeta: false
 comments: false
-description: "A comprehensive guide to sampling parameters for LLMs using Ollama"
+description: "A comprehensive guide to LLM sampling parameters"
 disableShare: false
 disableHLJS: false
 hideSummary: false
@@ -49,7 +49,7 @@ This guide explains the key sampling parameters and how they affect your model's
 | **mirostat**       | `0`     | `0`    | `0`        | `0`             | `0`              | `0`           |
 | **repeat_penalty** | `1.1`   | `1.05` | `1.05`     | `1.05`          | `1.0`            | `1.15`        |
 | **top_k**          | `40`    | `40`   | `0`*       | `0`*            | `0`              | `0`           |
-<!-- | **repeat_last_n**  | `64`    | `128`  | `128`      | `64`            | `64`             | `64`          | -->
+| **repeat_last_n**  | `64`    | `128`  | `128`      | `64`            | `64`             | `64`          |
 
 > [!NOTE] *For factual/precise use cases
 > Some guides recommend Top K = 40, but Min P generally provides better adaptive filtering. Consider using Min P alone with a higher value (0.1) for most factual use cases.
@@ -189,12 +189,17 @@ At **temp 2.0**: Distribution flattens - probabilities converge toward each othe
 
 Beyond the core parameters, `llama.cpp` and Ollama offer additional controls for fine-tuning generation:
 
-| Parameter Concept  | Ollama/Llama.cpp Name | Brief Description                                                                                                                                                  | Typical Use Case/Effect                                                                | Common Value Range (Approx.) |
-|:-------------------|:----------------------|:-------------------------------------------------------------------------------------------------------------------------------------------------------------------|:---------------------------------------------------------------------------------------|:-----------------------------|
-| Tail Free Sampling | `tfs_z`               | Filters the low-probability "tail" of the distribution based on the second derivative, aiming for a more dynamic cutoff than Top P.                                | Alternative/complement to Top P/Min P for dynamic filtering.                           | 0.9 - 1.0 (1.0 disables)     |
-| Typical Sampling   | `typical_p`           | Selects tokens whose probability is close to the "typical" or expected probability value for that step, potentially reducing the impact of overly dominant tokens. | Encourages surprising yet coherent outputs; alternative filtering method.              | 0.9 - 1.0 (1.0 disables)     |
-| Frequency Penalty  | `frequency_penalty`   | Penalises tokens based on how frequently they have already appeared in the entire preceding context (prompt + generation).                                         | Reduces stylistic repetition and overuse of common words; increases lexical diversity. | 0.0 - 2.0 (0.0 disables)     |
-| Presence Penalty   | `presence_penalty`    | Applies a fixed penalty to any token that has appeared *at least once* in the preceding context.                                                                   | Encourages introducing new concepts or tokens; discourages topic looping.              | 0.0 - 2.0 (0.0 disables)     |
+| Parameter Concept   | Ollama/Llama.cpp Name | Brief Description                                                                                                                                                  | Typical Use Case/Effect                                                                | Common Value Range (Approx.) |
+|:--------------------|:----------------------|:-------------------------------------------------------------------------------------------------------------------------------------------------------------------|:---------------------------------------------------------------------------------------|:-----------------------------|
+| Tail Free Sampling  | `tfs_z`               | Filters the low-probability "tail" of the distribution based on the second derivative, aiming for a more dynamic cutoff than Top P.                                | Alternative/complement to Top P/Min P for dynamic filtering.                           | 0.9 - 1.0 (1.0 disables)     |
+| Typical Sampling    | `typical_p`           | Selects tokens whose probability is close to the "typical" or expected probability value for that step, potentially reducing the impact of overly dominant tokens. | Encourages surprising yet coherent outputs; alternative filtering method.              | 0.9 - 1.0 (1.0 disables)     |
+| Top-A               | `top_a`               | Filters using a threshold based on the squared probability of the top token: `threshold = A × (top_prob)²`. Gets stricter when the model is confident.             | Adaptive filtering that tightens automatically during high-confidence predictions.     | 0.0 - 1.0 (0.0 disables)     |
+| DRY                 | `dry_*`               | "Don't Repeat Yourself" - detects repeating n-gram patterns and penalises tokens that would continue them. Longer patterns receive stronger penalties.             | Prevents phrase recycling more effectively than simple repetition penalty.             | Multiplier: 0.0 - 2.0        |
+| Dynamic Temperature | `dynatemp_*`          | Adjusts temperature based on distribution entropy. Low entropy (high confidence) → higher temp for diversity. High entropy (uncertainty) → lower temp for focus.   | Automatic temperature tuning; balances creativity and coherence contextually.          | Range: 0.0 - 2.0             |
+| Top-N-Sigma         | `top_n_sigma`         | Creates threshold at max logit minus N standard deviations. Adapts to distribution shape rather than absolute probability values.                                  | Statistical filtering that adjusts to varying distribution characteristics.            | 1.0 - 3.0 (-1.0 disables)    |
+| XTC                 | `xtc_probability`, `xtc_threshold` | "eXclude Top Choices" - occasionally forces selection of lower-probability tokens among high-probability candidates, encouraging unconventional choices.  | Adds controlled randomness to break predictable patterns; use sparingly.               | Prob: 0.0-1.0, Thresh: 0.1 (0.0 disables) |
+| Frequency Penalty   | `frequency_penalty`   | Penalises tokens based on how frequently they have already appeared in the entire preceding context (prompt + generation).                                         | Reduces stylistic repetition and overuse of common words; increases lexical diversity. | 0.0 - 2.0 (0.0 disables)     |
+| Presence Penalty    | `presence_penalty`    | Applies a fixed penalty to any token that has appeared *at least once* in the preceding context.                                                                   | Encourages introducing new concepts or tokens; discourages topic looping.              | 0.0 - 2.0 (0.0 disables)     |
 
 **Key Differences in Repetition Control:**
 
@@ -257,24 +262,33 @@ repeat_penalty: 1.05
 
 ## Sampler Ordering Best Practices
 
-The order in which sampling methods are applied significantly impacts output quality. The standard and recommended pipeline, as implemented in frameworks like `llama.cpp`, is generally:
+The order in which sampling methods are applied significantly impacts output quality. The default pipeline in `llama.cpp` is:
 
-1. **Penalties:** Apply penalties (like `repeat_penalty`, `frequency_penalty`, `presence_penalty`) to the initial logits.
-2. **Filtering/Truncation:** Apply filtering methods sequentially to remove less likely or undesirable tokens. The typical order in `llama.cpp` is:
-    * Top K (`top_k`)
-    * Tail Free Sampling (`tfs_z`)
-    * Typical Sampling (`typical_p`)
-    * Top P (`top_p`)
-    * Min P (`min_p`)
-    *(Note: The exact order might vary slightly between versions or forks; consult specific documentation if precision is critical. Each filter operates on the candidate set passed down by the previous one.)*
-3. **Temperature Scaling:** Divide the logits of the *remaining* candidate tokens by the `temperature` value.
-4. **Softmax & Sampling:** Apply the softmax function to convert the final scaled logits into probabilities, then sample the next token based on this distribution.
+```
+penalties → dry → top_n_sigma → top_k → typical_p → top_p → min_p → xtc → temperature
+```
+
+Breaking this down:
+
+1. **Penalties:** Apply penalties (`repeat_penalty`, `frequency_penalty`, `presence_penalty`) to the initial logits.
+2. **DRY:** Apply n-gram repetition detection and penalties.
+3. **Filtering/Truncation:** Apply filtering methods sequentially:
+    * Top-N-Sigma (`top_n_sigma`) - statistical threshold
+    * Top K (`top_k`) - fixed count filter
+    * Typical P (`typical_p`) - entropy-based selection
+    * Top P (`top_p`) - cumulative probability threshold
+    * Min P (`min_p`) - relative probability threshold
+    * XTC (`xtc`) - occasional top-choice exclusion
+4. **Temperature Scaling:** Divide the logits of the *remaining* candidate tokens by the `temperature` value.
+5. **Softmax & Sampling:** Apply softmax to convert scaled logits to probabilities, then sample.
+
+*(Note: TFS is available but not in the default chain. The order can be customised via `--samplers` or `--sampling-seq`.)*
 
 **Simplified Flow:**
 
 * Raw Logits
-  * → Apply Penalties
-  * → Apply Filters (Top K → TFS → Typical P → Top P → Min P) sequentially
+  * → Apply Penalties + DRY
+  * → Apply Filters (Top-N-Sigma → Top K → Typical P → Top P → Min P → XTC)
   * → Divide remaining logits by Temperature
   * → Softmax Function
   * → Sample Next Token
