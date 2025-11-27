@@ -1,8 +1,13 @@
 {{- define "main" }}
 
-{{- $showToc := .Param "ShowToc" }}
+{{- /* Check various ways TOC can be disabled */ -}}
+{{- $showToc := .Param "ShowToc" | default true }}
+{{- $tocEnable := .Param "toc.enable" }}
+{{- $tocDisable := .Param "toc.disable" }}
+{{- /* TOC is enabled if ShowToc is true AND toc.enable is not false AND toc.disable is not true */ -}}
+{{- $tocEnabled := and $showToc (ne $tocEnable false) (ne $tocDisable true) }}
 {{- $headers := findRE "<h[1-6].*?>(.|\n])+?</h[1-6]>" .Content }}
-{{- $hasToc := and $showToc (ge (len $headers) 1) }}
+{{- $hasToc := and $tocEnabled (ge (len $headers) 1) }}
 
 {{- if $hasToc }}
 {{- partial "toc-sidebar.html" . }}
