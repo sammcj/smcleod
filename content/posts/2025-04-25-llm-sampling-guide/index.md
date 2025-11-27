@@ -43,20 +43,20 @@ Last updated: November 2025
 | Top P             | `--top-p`             | `0.9`   | `top_p`             | `0.9`   | `--top-p`           |
 | Min P             | `--min-p`             | `0.1`   | `min_p`             | `0.0`   | `--min-p`           |
 | Top K             | `--top-k`             | `40`    | `top_k`             | `40`    | `--top-k`           |
-| Repeat Penalty    | `--repeat-penalty`    | `1.0`   | `repeat_penalty`    | `1.1`   | Unsupported         |
-| Repeat Last N     | `--repeat-last-n`     | `64`    | `repeat_last_n`     | `64`    | Unsupported         |
-| Presence Penalty  | `--presence-penalty`  | `0.0`   | `presence_penalty`  | -       | Unsupported         |
-| Frequency Penalty | `--frequency-penalty` | `0.0`   | `frequency_penalty` | -       | Unsupported         |
-| Mirostat          | `--mirostat`          | `0`     | `mirostat`          | `0`     | Unsupported         |
-| Mirostat Tau      | `--mirostat-ent`      | `5.0`   | `mirostat_tau`      | `5.0`   | Unsupported         |
-| Mirostat Eta      | `--mirostat-lr`       | `0.1`   | `mirostat_eta`      | `0.1`   | Unsupported         |
-| Top N Sigma       | `--top-nsigma`        | `-1.0`  | Unsupported         | -       | Unsupported         |
-| Typical P         | `--typical`           | `1.0`   | `typical_p`         | `1.0`   | Unsupported         |
-| XTC Probability   | `--xtc-probability`   | `0.0`   | Unsupported         | -       | `--xtc-probability` |
-| XTC Threshold     | `--xtc-threshold`     | `0.1`   | Unsupported         | -       | `--xtc-threshold`   |
-| DRY Multiplier    | `--dry-multiplier`    | `0.0`   | Unsupported         | -       | Unsupported         |
-| DRY Base          | `--dry-base`          | `1.75`  | Unsupported         | -       | Unsupported         |
-| Dynamic Temp      | `--dynatemp-range`    | `0.0`   | Unsupported         | -       | Unsupported         |
+| Repeat Penalty    | `--repeat-penalty`    | `1.0`   | `repeat_penalty`    | `1.1`   | _Unsupported_       |
+| Repeat Last N     | `--repeat-last-n`     | `64`    | `repeat_last_n`     | `64`    | _Unsupported_       |
+| Presence Penalty  | `--presence-penalty`  | `0.0`   | `presence_penalty`  | -       | _Unsupported_       |
+| Frequency Penalty | `--frequency-penalty` | `0.0`   | `frequency_penalty` | -       | _Unsupported_       |
+| Mirostat          | `--mirostat`          | `0`     | `mirostat`          | `0`     | _Unsupported_       |
+| Mirostat Tau      | `--mirostat-ent`      | `5.0`   | `mirostat_tau`      | `5.0`   | _Unsupported_       |
+| Mirostat Eta      | `--mirostat-lr`       | `0.1`   | `mirostat_eta`      | `0.1`   | _Unsupported_       |
+| Top N Sigma       | `--top-nsigma`        | `-1.0`  | _Unsupported_       | -       | _Unsupported_       |
+| Typical P         | `--typical`           | `1.0`   | `typical_p`         | `1.0`   | _Unsupported_       |
+| XTC Probability   | `--xtc-probability`   | `0.0`   | _Unsupported_       | -       | `--xtc-probability` |
+| XTC Threshold     | `--xtc-threshold`     | `0.1`   | _Unsupported_       | -       | `--xtc-threshold`   |
+| DRY Multiplier    | `--dry-multiplier`    | `0.0`   | _Unsupported_       | -       | _Unsupported_       |
+| DRY Base          | `--dry-base`          | `1.75`  | _Unsupported_       | -       | _Unsupported_       |
+| Dynamic Temp      | `--dynatemp-range`    | `0.0`   | _Unsupported_       | -       | _Unsupported_       |
 | Seed              | `--seed`              | `-1`    | `seed`              | `0`     | -                   |
 | Context Size      | `--ctx-size`          | `2048`  | `num_ctx`           | `2048`  | -                   |
 | Max Tokens        | `--predict`           | `-1`    | `num_predict`       | `-1`    | -                   |
