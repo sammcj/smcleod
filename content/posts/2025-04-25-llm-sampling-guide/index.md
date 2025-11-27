@@ -1,6 +1,7 @@
 ---
 title: "LLM Sampling Parameters Guide"
 date: 2025-04-25T01:10:00+10:00
+lastmod: 2025-11-27T01:00:00+10:00
 tags: ["ai", "llm", "tech", "ollama", "coding", "sampling", "inference", "tutorials", "llama"]
 author: "Sam McLeod"
 showToc: true
