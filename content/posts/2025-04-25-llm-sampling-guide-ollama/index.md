@@ -31,15 +31,15 @@ Large Language Models (LLMs) like those used in Ollama don't generate text deter
 
 This guide explains the key sampling parameters and how they affect your model's outputs, along with recommended settings for different use cases.
 
+## Sampling Methods Comparison
+
+{{< wide-image src="sampling-methods-comparison.png" alt="Sampling Methods" >}}
+
 ### Ollama Sampling Diagram
 
 {{< wide-image src="ollama-sampling-diagram.png" alt="Ollama Sampling" >}}
 
-### Sampling Methods Comparison
-
-{{< wide-image src="sampling-methods-comparison.png" alt="Sampling Methods" >}}
-
-### Example Ollama Sampling Settings Table
+#### Example Ollama Sampling Settings Table
 
 | Setting            | General | Coding | Coding Alt | Factual/Precise | Creative Writing | Creative Chat |
 |--------------------|---------|--------|------------|-----------------|------------------|---------------|
