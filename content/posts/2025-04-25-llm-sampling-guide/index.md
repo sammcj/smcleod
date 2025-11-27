@@ -32,6 +32,8 @@ This guide explains the key sampling parameters, how they interact, and provides
 
 ## Framework Reference
 
+Last updated: November 2025
+
 ### Parameter Comparison
 
 | Parameter         | llama.cpp             | Default | Ollama              | Default | MLX                 |
