@@ -334,7 +334,7 @@ Code generation has unique requirements - intentional repetition (variable names
 
 ### Key Considerations
 
-- **Repetition handling:** Low or no repeat penalties (1.0-1.03) work better than for text
+- **Repetition handling:** Low or no repeat penalties (1.0-1.05) work better than for text
 - **Context length:** Longer repeat lookback (128-512) maintains variable naming consistency
-- **Temperature sweet spot:** 0.1-0.4 for most code tasks
-- **Precision vs. creativity:** Lower (0.1-0.2) for critical implementations, slightly higher (0.3-0.4) when multiple valid approaches exist
+- **Temperature sweet spot:** 0.1-0.7 for most code tasks
+- **Precision vs. creativity:** Lower (0.1-0.2) for critical implementations, slightly higher (0.3-0.6) when multiple valid approaches exist
