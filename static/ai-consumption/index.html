@@ -1,0 +1,2651 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI Energy and Water Consumption: Data in Context</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-primary: #0a0a0f;
+      --bg-secondary: #12121a;
+      --bg-card: #1a1a24;
+      --bg-card-hover: #22222e;
+      --text-primary: #f5f5f7;
+      --text-secondary: #a1a1aa;
+      --text-muted: #71717a;
+      --accent-purple: #8b5cf6;
+      --accent-blue: #3b82f6;
+      --accent-cyan: #06b6d4;
+      --accent-green: #22c55e;
+      --accent-orange: #f97316;
+      --accent-red: #ef4444;
+      --accent-pink: #ec4899;
+      --gradient-purple: linear-gradient(135deg, #8b5cf6 0%, #6366f1 100%);
+      --gradient-blue: linear-gradient(135deg, #3b82f6 0%, #06b6d4 100%);
+      --gradient-warm: linear-gradient(135deg, #f97316 0%, #ef4444 100%);
+      --gradient-green: linear-gradient(135deg, #22c55e 0%, #10b981 100%);
+      --border-subtle: rgba(255, 255, 255, 0.08);
+      --glow-purple: 0 0 60px rgba(139, 92, 246, 0.3);
+      --glow-blue: 0 0 60px rgba(59, 130, 246, 0.3);
+      --glow-green: 0 0 60px rgba(34, 197, 94, 0.3);
+    }
+
+    [data-theme="light"] {
+      --bg-primary: #ffffff;
+      --bg-secondary: #f9fafb;
+      --bg-card: #f3f4f6;
+      --bg-card-hover: #e5e7eb;
+      --text-primary: #111827;
+      --text-secondary: #4b5563;
+      --text-muted: #9ca3af;
+      --border-subtle: rgba(0, 0, 0, 0.08);
+      --glow-purple: 0 0 30px rgba(139, 92, 246, 0.15);
+      --glow-blue: 0 0 30px rgba(59, 130, 246, 0.15);
+      --glow-green: 0 0 30px rgba(34, 197, 94, 0.15);
+    }
+
+    [data-theme="light"] .bg-grid {
+      background-image:
+        linear-gradient(rgba(139, 92, 246, 0.05) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(139, 92, 246, 0.05) 1px, transparent 1px);
+    }
+
+    [data-theme="light"] .bg-gradient-orb {
+      opacity: 0.05;
+    }
+
+    [data-theme="light"] .nav {
+      background: rgba(255, 255, 255, 0.9);
+      border-bottom: 1px solid var(--border-subtle);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: var(--bg-primary);
+      color: var(--text-primary);
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    .bg-grid {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-image:
+        linear-gradient(rgba(139, 92, 246, 0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(139, 92, 246, 0.03) 1px, transparent 1px);
+      background-size: 60px 60px;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .bg-gradient-orb {
+      position: fixed;
+      width: 600px;
+      height: 600px;
+      border-radius: 50%;
+      filter: blur(120px);
+      opacity: 0.15;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .orb-1 {
+      top: -200px;
+      right: -200px;
+      background: var(--accent-purple);
+      animation: float 20s ease-in-out infinite;
+    }
+
+    .orb-2 {
+      bottom: -200px;
+      left: -200px;
+      background: var(--accent-blue);
+      animation: float 25s ease-in-out infinite reverse;
+    }
+
+    .orb-3 {
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: var(--accent-green);
+      opacity: 0.08;
+      animation: float 30s ease-in-out infinite;
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translate(0, 0); }
+      50% { transform: translate(50px, 50px); }
+    }
+
+    .container {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 0 24px;
+      position: relative;
+      z-index: 1;
+    }
+
+    /* Navigation */
+    .nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+      padding: 16px 24px;
+      background: rgba(10, 10, 15, 0.8);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border-subtle);
+    }
+
+    .nav-content {
+      max-width: 1400px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .nav-logo {
+      font-weight: 700;
+      font-size: 1.1rem;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 24px;
+    }
+
+    .nav-links a {
+      color: var(--text-secondary);
+      text-decoration: none;
+      font-size: 14px;
+      transition: color 0.2s;
+    }
+
+    .nav-links a:hover {
+      color: var(--text-primary);
+    }
+
+    .theme-toggle {
+      background: transparent;
+      border: 1px solid var(--border-subtle);
+      border-radius: 8px;
+      padding: 8px 12px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      color: var(--text-secondary);
+      font-size: 14px;
+      transition: all 0.2s;
+    }
+
+    .theme-toggle:hover {
+      background: var(--bg-card);
+      color: var(--text-primary);
+      border-color: rgba(139, 92, 246, 0.3);
+    }
+
+    .theme-toggle svg {
+      width: 16px;
+      height: 16px;
+    }
+
+    /* Hero Section */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      padding: 120px 24px 80px;
+      position: relative;
+    }
+
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 16px;
+      background: rgba(139, 92, 246, 0.1);
+      border: 1px solid rgba(139, 92, 246, 0.2);
+      border-radius: 100px;
+      font-size: 14px;
+      color: var(--accent-purple);
+      margin-bottom: 32px;
+      animation: fadeInUp 0.8s ease-out;
+    }
+
+    .hero-title {
+      font-size: clamp(2.5rem, 8vw, 5rem);
+      font-weight: 800;
+      line-height: 1.1;
+      margin-bottom: 24px;
+      animation: fadeInUp 0.8s ease-out 0.1s both;
+    }
+
+    .hero-title .gradient-text {
+      background: linear-gradient(135deg, #8b5cf6 0%, #06b6d4 50%, #22c55e 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .hero-subtitle {
+      font-size: clamp(1.1rem, 2.5vw, 1.5rem);
+      color: var(--text-secondary);
+      max-width: 700px;
+      margin-bottom: 48px;
+      animation: fadeInUp 0.8s ease-out 0.2s both;
+    }
+
+    .hero-stats {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 20px;
+      width: 100%;
+      max-width: 1000px;
+      animation: fadeInUp 0.8s ease-out 0.3s both;
+    }
+
+    .stat-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: 16px;
+      padding: 24px 16px;
+      text-align: center;
+      transition: all 0.3s ease;
+    }
+
+    .stat-card:hover {
+      background: var(--bg-card-hover);
+      transform: translateY(-4px);
+      box-shadow: var(--glow-purple);
+    }
+
+    .stat-number {
+      font-size: 2rem;
+      font-weight: 700;
+      background: var(--gradient-purple);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .stat-label {
+      font-size: 13px;
+      color: var(--text-secondary);
+      margin-top: 8px;
+    }
+
+    .scroll-indicator {
+      position: absolute;
+      bottom: 40px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+      color: var(--text-muted);
+      font-size: 14px;
+      animation: bounce 2s infinite;
+    }
+
+    .scroll-indicator svg {
+      width: 24px;
+      height: 24px;
+    }
+
+    @keyframes bounce {
+      0%, 100% { transform: translateX(-50%) translateY(0); }
+      50% { transform: translateX(-50%) translateY(10px); }
+    }
+
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* Section Styling */
+    section {
+      padding: 100px 0;
+    }
+
+    .section-header {
+      text-align: center;
+      margin-bottom: 64px;
+    }
+
+    .section-label {
+      display: inline-block;
+      font-size: 12px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      color: var(--accent-purple);
+      margin-bottom: 16px;
+    }
+
+    .section-title {
+      font-size: clamp(1.8rem, 4vw, 3rem);
+      font-weight: 700;
+      margin-bottom: 16px;
+    }
+
+    .section-subtitle {
+      font-size: 1.1rem;
+      color: var(--text-secondary);
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    /* Comparison Cards */
+    .comparison-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 24px;
+      margin-top: 48px;
+    }
+
+    .comparison-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: 20px;
+      padding: 32px;
+      position: relative;
+      overflow: hidden;
+      transition: all 0.4s ease;
+    }
+
+    .comparison-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: var(--card-accent, var(--gradient-purple));
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    .comparison-card:hover {
+      background: var(--bg-card-hover);
+      transform: translateY(-8px);
+      border-color: rgba(139, 92, 246, 0.3);
+    }
+
+    .comparison-card:hover::before {
+      opacity: 1;
+    }
+
+    .card-icon {
+      width: 48px;
+      height: 48px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 24px;
+      margin-bottom: 20px;
+      background: rgba(139, 92, 246, 0.1);
+    }
+
+    .card-title {
+      font-size: 1.25rem;
+      font-weight: 600;
+      margin-bottom: 8px;
+    }
+
+    .card-value {
+      font-size: 2rem;
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+
+    .card-unit {
+      font-size: 14px;
+      color: var(--text-muted);
+      margin-bottom: 16px;
+    }
+
+    .card-insight {
+      font-size: 14px;
+      color: var(--text-secondary);
+      padding-top: 16px;
+      border-top: 1px solid var(--border-subtle);
+    }
+
+    /* Chart Container */
+    .chart-container {
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: 20px;
+      padding: 32px;
+      margin-top: 48px;
+    }
+
+    .chart-title {
+      font-size: 1.25rem;
+      font-weight: 600;
+      margin-bottom: 24px;
+    }
+
+    .chart-wrapper {
+      position: relative;
+      height: 400px;
+    }
+
+    .chart-wrapper.tall {
+      height: 500px;
+    }
+
+    /* Perspective Cards */
+    .perspective-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+      gap: 24px;
+    }
+
+    .perspective-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: 20px;
+      padding: 32px;
+      position: relative;
+      overflow: hidden;
+      transition: all 0.4s ease;
+    }
+
+    .perspective-card:hover {
+      background: var(--bg-card-hover);
+      transform: scale(1.02);
+    }
+
+    .perspective-card .quote-mark {
+      position: absolute;
+      top: 20px;
+      right: 24px;
+      font-size: 4rem;
+      font-weight: 800;
+      color: rgba(139, 92, 246, 0.1);
+      line-height: 1;
+    }
+
+    .perspective-title {
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: var(--accent-purple);
+      margin-bottom: 16px;
+    }
+
+    .perspective-fact {
+      font-size: 1.4rem;
+      font-weight: 600;
+      margin-bottom: 12px;
+      line-height: 1.3;
+    }
+
+    .perspective-comparison {
+      font-size: 1rem;
+      color: var(--accent-cyan);
+      margin-bottom: 16px;
+    }
+
+    .perspective-takeaway {
+      font-size: 14px;
+      color: var(--text-secondary);
+      padding-top: 16px;
+      border-top: 1px solid var(--border-subtle);
+      font-style: italic;
+    }
+
+    /* Big Number Display */
+    .big-number-section {
+      text-align: center;
+      padding: 120px 24px;
+      position: relative;
+    }
+
+    .big-number {
+      font-size: clamp(4rem, 15vw, 12rem);
+      font-weight: 800;
+      line-height: 1;
+      background: var(--gradient-purple);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 24px;
+    }
+
+    .big-number.green {
+      background: var(--gradient-green);
+      -webkit-background-clip: text;
+      background-clip: text;
+    }
+
+    .big-number-label {
+      font-size: clamp(1.2rem, 3vw, 1.8rem);
+      color: var(--text-secondary);
+      max-width: 700px;
+      margin: 0 auto;
+    }
+
+    /* Horizontal Bar Chart */
+    .bar-chart-container {
+      margin-top: 48px;
+    }
+
+    .bar-item {
+      margin-bottom: 24px;
+    }
+
+    .bar-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      margin-bottom: 8px;
+    }
+
+    .bar-label {
+      font-weight: 500;
+    }
+
+    .bar-sublabel {
+      font-size: 13px;
+      color: var(--text-muted);
+    }
+
+    .bar-value {
+      font-weight: 600;
+      text-align: right;
+    }
+
+    .bar-track {
+      height: 12px;
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 6px;
+      overflow: hidden;
+    }
+
+    .bar-fill {
+      height: 100%;
+      border-radius: 6px;
+      transition: width 1.5s ease-out;
+      position: relative;
+    }
+
+    .bar-fill::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+      animation: shimmer 2s infinite;
+    }
+
+    @keyframes shimmer {
+      0% { transform: translateX(-100%); }
+      100% { transform: translateX(100%); }
+    }
+
+    /* Myth Buster Cards */
+    .myth-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+      gap: 24px;
+    }
+
+    .myth-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: 20px;
+      padding: 32px;
+      transition: all 0.3s ease;
+    }
+
+    .myth-card:hover {
+      background: var(--bg-card-hover);
+      transform: translateY(-4px);
+    }
+
+    .myth-label {
+      display: inline-block;
+      font-size: 11px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: var(--accent-orange);
+      background: rgba(249, 115, 22, 0.1);
+      padding: 4px 12px;
+      border-radius: 100px;
+      margin-bottom: 12px;
+    }
+
+    .myth-text {
+      font-size: 1.25rem;
+      font-weight: 600;
+      margin-bottom: 16px;
+      opacity: 0.85;
+    }
+
+    .reality-label {
+      display: inline-block;
+      font-size: 11px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: var(--accent-blue);
+      background: rgba(59, 130, 246, 0.1);
+      padding: 4px 12px;
+      border-radius: 100px;
+      margin-bottom: 12px;
+    }
+
+    .reality-text {
+      font-size: 1rem;
+      color: var(--text-secondary);
+      margin-bottom: 12px;
+    }
+
+    .myth-source {
+      font-size: 12px;
+      color: var(--text-muted);
+    }
+
+    /* Efficiency Section */
+    .efficiency-showcase {
+      display: grid;
+      grid-template-columns: 1fr 100px 1fr;
+      gap: 24px;
+      align-items: center;
+      margin-top: 48px;
+    }
+
+    .efficiency-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: 20px;
+      padding: 32px;
+      text-align: center;
+    }
+
+    .efficiency-card.before {
+      border-color: rgba(239, 68, 68, 0.3);
+    }
+
+    .efficiency-card.after {
+      border-color: rgba(34, 197, 94, 0.3);
+    }
+
+    .efficiency-year {
+      font-size: 14px;
+      color: var(--text-muted);
+      margin-bottom: 8px;
+    }
+
+    .efficiency-value {
+      font-size: 3rem;
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+
+    .efficiency-card.before .efficiency-value {
+      color: var(--accent-red);
+    }
+
+    .efficiency-card.after .efficiency-value {
+      color: var(--accent-green);
+    }
+
+    .efficiency-unit {
+      font-size: 14px;
+      color: var(--text-secondary);
+    }
+
+    .efficiency-arrow {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .efficiency-arrow svg {
+      width: 48px;
+      height: 48px;
+      color: var(--accent-green);
+    }
+
+    .efficiency-arrow span {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--accent-green);
+    }
+
+    /* Video vs Text comparison */
+    .video-text-compare {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+      margin-top: 48px;
+    }
+
+    .compare-item {
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: 20px;
+      padding: 32px;
+      text-align: center;
+      position: relative;
+    }
+
+    .compare-item.highlight {
+      border-color: var(--accent-red);
+      background: rgba(244, 63, 94, 0.05);
+    }
+
+    .compare-icon {
+      font-size: 3rem;
+      margin-bottom: 16px;
+    }
+
+    .compare-label {
+      font-size: 1rem;
+      color: var(--text-secondary);
+      margin-bottom: 8px;
+    }
+
+    .compare-value {
+      font-size: 2rem;
+      font-weight: 700;
+    }
+
+    .compare-multiplier {
+      position: absolute;
+      top: -12px;
+      right: -12px;
+      background: var(--accent-red);
+      color: white;
+      font-size: 12px;
+      font-weight: 700;
+      padding: 6px 12px;
+      border-radius: 100px;
+    }
+
+    /* Quote Section */
+    .quote-section {
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: 20px;
+      padding: 48px;
+      margin-top: 48px;
+      position: relative;
+    }
+
+    .quote-mark-large {
+      position: absolute;
+      top: 24px;
+      left: 32px;
+      font-size: 6rem;
+      font-weight: 800;
+      color: rgba(139, 92, 246, 0.1);
+      line-height: 1;
+    }
+
+    .quote-text {
+      font-size: 1.5rem;
+      font-style: italic;
+      color: var(--text-primary);
+      margin-bottom: 24px;
+      padding-left: 48px;
+    }
+
+    .quote-attribution {
+      padding-left: 48px;
+      color: var(--text-secondary);
+    }
+
+    .quote-author {
+      font-weight: 600;
+      color: var(--accent-purple);
+    }
+
+    /* Footer */
+    footer {
+      border-top: 1px solid var(--border-subtle);
+      padding: 48px 0;
+      text-align: center;
+    }
+
+    .footer-text {
+      color: var(--text-muted);
+      font-size: 14px;
+    }
+
+    .footer-sources {
+      margin-top: 16px;
+      font-size: 13px;
+      color: var(--text-muted);
+    }
+
+    .footer-sources a {
+      color: var(--accent-purple);
+      text-decoration: none;
+    }
+
+    .footer-sources a:hover {
+      text-decoration: underline;
+    }
+
+    /* Utility Classes */
+    .text-gradient {
+      background: var(--gradient-purple);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .text-gradient-blue {
+      background: var(--gradient-blue);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .text-gradient-green {
+      background: var(--gradient-green);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    /* Animations on scroll */
+    .animate-on-scroll {
+      opacity: 0;
+      transform: translateY(40px);
+      transition: all 0.8s ease-out;
+    }
+
+    .animate-on-scroll.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .nav-links {
+        display: none;
+      }
+
+      .theme-toggle {
+        margin-left: auto;
+      }
+
+      .hero-stats {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .comparison-grid,
+      .perspective-grid,
+      .myth-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .chart-wrapper {
+        height: 300px;
+      }
+
+      .efficiency-showcase {
+        grid-template-columns: 1fr;
+        gap: 16px;
+      }
+
+      .efficiency-arrow {
+        transform: rotate(90deg);
+      }
+
+      .video-text-compare {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* Loading state */
+    .loading {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 200px;
+      color: var(--text-muted);
+    }
+
+    .loading::after {
+      content: '';
+      width: 24px;
+      height: 24px;
+      border: 2px solid var(--border-subtle);
+      border-top-color: var(--accent-purple);
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+      margin-left: 12px;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    /* Highlight box */
+    .highlight-box {
+      background: rgba(139, 92, 246, 0.1);
+      border: 1px solid rgba(139, 92, 246, 0.2);
+      border-radius: 12px;
+      padding: 16px 20px;
+      margin-top: 24px;
+      font-size: 14px;
+      color: var(--text-secondary);
+    }
+
+    .highlight-box strong {
+      color: var(--accent-purple);
+    }
+  </style>
+</head>
+<body>
+  <div class="bg-grid"></div>
+  <div class="bg-gradient-orb orb-1"></div>
+  <div class="bg-gradient-orb orb-2"></div>
+  <div class="bg-gradient-orb orb-3"></div>
+
+  <!-- Navigation -->
+  <nav class="nav">
+    <div class="nav-content">
+      <div class="nav-logo">AI Consumption Data</div>
+      <div style="display: flex; align-items: center; gap: 24px;">
+        <div class="nav-links">
+          <a href="#efficiency">Efficiency</a>
+          <a href="#water">Water</a>
+          <a href="#energy">Energy</a>
+          <a href="#myths">Claims</a>
+          <a href="#perspectives">Context</a>
+        </div>
+        <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
+          <svg id="darkIcon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+          </svg>
+          <svg id="lightIcon" style="display: none;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="5"/>
+            <line x1="12" y1="1" x2="12" y2="3"/>
+            <line x1="12" y1="21" x2="12" y2="23"/>
+            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/>
+            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/>
+            <line x1="1" y1="12" x2="3" y2="12"/>
+            <line x1="21" y1="12" x2="23" y2="12"/>
+            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/>
+            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero Section -->
+  <section class="hero">
+    <div class="hero-badge">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
+      </svg>
+      Research Data 2024-2025
+    </div>
+    <h1 class="hero-title">
+      AI <span class="gradient-text">Consumption</span> in Context
+    </h1>
+    <p class="hero-subtitle">
+      Data on AI energy and water use compared with everyday activities. Sources include Google, OpenAI, Harvard/UCLA, MIT Technology Review, EPA, and Nielsen.
+    </p>
+    <div class="hero-stats" id="heroStats">
+      <div class="loading">Loading data</div>
+    </div>
+    <div class="scroll-indicator">
+      <span>Scroll to explore</span>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M12 5v14M5 12l7 7 7-7"/>
+      </svg>
+    </div>
+  </section>
+
+  <!-- Efficiency Section -->
+  <section id="efficiency">
+    <div class="container">
+      <div class="section-header animate-on-scroll">
+        <span class="section-label">Efficiency Trends</span>
+        <h2 class="section-title">AI Efficiency is Improving</h2>
+        <p class="section-subtitle">
+          Google disclosed a 33x energy reduction in 12 months. Hardware and software optimisations are driving gains.
+        </p>
+      </div>
+
+      <div class="efficiency-showcase animate-on-scroll">
+        <div class="efficiency-card before">
+          <div class="efficiency-year">May 2024</div>
+          <div class="efficiency-value">9 Wh</div>
+          <div class="efficiency-unit">per Gemini query</div>
+        </div>
+        <div class="efficiency-arrow">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M5 12h14M12 5l7 7-7 7"/>
+          </svg>
+          <span>33x</span>
+        </div>
+        <div class="efficiency-card after">
+          <div class="efficiency-year">May 2025</div>
+          <div class="efficiency-value">0.24 Wh</div>
+          <div class="efficiency-unit">per Gemini query</div>
+        </div>
+      </div>
+
+      <div class="highlight-box animate-on-scroll">
+        <strong>Technical factors:</strong> Hardware improvements (A100 to H100 GPUs), sparse neural networks, and architecture optimisations contribute to efficiency gains. University of Michigan research suggests training carbon footprint could be reduced by up to 75% with location and configuration optimisation.
+      </div>
+
+      <div class="comparison-grid animate-on-scroll">
+        <div class="comparison-card" style="--card-accent: var(--gradient-green)">
+          <div class="card-icon" style="background: rgba(34, 197, 94, 0.1);">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#22c55e" stroke-width="2">
+              <polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/>
+              <polyline points="17 6 23 6 23 12"/>
+            </svg>
+          </div>
+          <h3 class="card-title">Energy Reduction</h3>
+          <div class="card-value text-gradient-green">33x</div>
+          <p class="card-unit">improvement in 12 months</p>
+          <p class="card-insight">Google Gemini reduced from 9 Wh to 0.24 Wh per query through hardware and software optimisation.</p>
+        </div>
+
+        <div class="comparison-card" style="--card-accent: var(--gradient-blue)">
+          <div class="card-icon" style="background: rgba(59, 130, 246, 0.1);">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#3b82f6" stroke-width="2">
+              <path d="M12 2a10 10 0 1 0 10 10H12V2z"/>
+            </svg>
+          </div>
+          <h3 class="card-title">Emissions Reduction</h3>
+          <div class="card-value text-gradient-blue">44x</div>
+          <p class="card-unit">lower CO₂ per query</p>
+          <p class="card-insight">From 1.32g to 0.03g CO₂e per query. Energy efficiency combined with cleaner energy sourcing.</p>
+        </div>
+
+        <div class="comparison-card" style="--card-accent: var(--gradient-purple)">
+          <div class="card-icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#8b5cf6" stroke-width="2">
+              <rect x="2" y="3" width="20" height="14" rx="2" ry="2"/>
+              <line x1="8" y1="21" x2="16" y2="21"/>
+              <line x1="12" y1="17" x2="12" y2="21"/>
+            </svg>
+          </div>
+          <h3 class="card-title">Sparse Networks</h3>
+          <div class="card-value text-gradient">&lt;10%</div>
+          <p class="card-unit">energy of dense networks</p>
+          <p class="card-insight">Sparsely activated neural networks can use under 10% of the energy of traditional dense networks (MIT Tech Review).</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Big Number - Efficiency -->
+  <section class="big-number-section animate-on-scroll">
+    <div class="container">
+      <div class="big-number green">0.24 Wh</div>
+      <p class="big-number-label">
+        A single Google Gemini query uses <strong>0.24 watt-hours</strong> - equivalent to microwaving for 1 second, or running your fridge for 6 seconds.
+      </p>
+    </div>
+  </section>
+
+  <!-- Video vs Text Section -->
+  <section id="video-text">
+    <div class="container">
+      <div class="section-header animate-on-scroll">
+        <span class="section-label">Task Comparison</span>
+        <h2 class="section-title">Energy Varies by AI Task Type</h2>
+        <p class="section-subtitle">
+          Text queries, image generation, and video generation have different energy requirements.
+        </p>
+      </div>
+
+      <div class="video-text-compare animate-on-scroll">
+        <div class="compare-item">
+          <div class="compare-icon">💬</div>
+          <div class="compare-label">Text Query</div>
+          <div class="compare-value text-gradient-green">0.3 Wh</div>
+        </div>
+        <div class="compare-item">
+          <div class="compare-icon">🖼️</div>
+          <div class="compare-label">Image Generation</div>
+          <div class="compare-value" style="color: var(--accent-orange)">0.3-1.2 Wh</div>
+        </div>
+        <div class="compare-item highlight">
+          <div class="compare-multiplier">4,000x</div>
+          <div class="compare-icon">🎬</div>
+          <div class="compare-label">5-sec Video (Sora)</div>
+          <div class="compare-value" style="color: var(--accent-red)">~1,000 Wh</div>
+        </div>
+      </div>
+
+      <div class="highlight-box animate-on-scroll">
+        <strong>Note:</strong> Discussions of AI energy consumption often conflate different use cases. Text-based chatbots and video generation tools have substantially different energy profiles. One 5-second AI video uses approximately 4,000x more energy than a text query.
+      </div>
+    </div>
+  </section>
+
+  <!-- Water Consumption Section -->
+  <section id="water">
+    <div class="container">
+      <div class="section-header animate-on-scroll">
+        <span class="section-label">Water Consumption</span>
+        <h2 class="section-title">Annual Water Usage Comparison</h2>
+        <p class="section-subtitle">
+          Water consumption across different sectors in the United States.
+        </p>
+      </div>
+
+      <div class="chart-container animate-on-scroll">
+        <h3 class="chart-title">Annual Water Consumption (USA, litres)</h3>
+        <div class="bar-chart-container" id="waterBarChart">
+          <div class="loading">Loading chart</div>
+        </div>
+      </div>
+
+      <div class="comparison-grid" id="waterComparisons">
+        <div class="loading">Loading comparisons</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Big Number - Infrastructure -->
+  <section class="big-number-section animate-on-scroll">
+    <div class="container">
+      <div class="big-number">1,134x</div>
+      <p class="big-number-label">
+        US infrastructure leaks lose <strong>1,134 times more water</strong> than ChatGPT's estimated annual consumption. 14-18% of treated water is lost before reaching consumers (ASCE).
+      </p>
+    </div>
+  </section>
+
+  <!-- Energy Section -->
+  <section id="energy">
+    <div class="container">
+      <div class="section-header animate-on-scroll">
+        <span class="section-label">Energy Consumption</span>
+        <h2 class="section-title">Daily Energy Comparison</h2>
+        <p class="section-subtitle">
+          Average daily energy consumption across different activities.
+        </p>
+      </div>
+
+      <div class="chart-container animate-on-scroll">
+        <h3 class="chart-title">Energy Comparison (Watt-hours)</h3>
+        <div class="bar-chart-container" id="energyBarChart">
+          <div class="loading">Loading chart</div>
+        </div>
+      </div>
+
+      <!-- Daily Habits Comparison -->
+      <div class="comparison-grid animate-on-scroll">
+        <div class="comparison-card" style="--card-accent: linear-gradient(135deg, #e50914 0%, #b20710 100%)">
+          <div class="card-icon" style="background: rgba(229, 9, 20, 0.1);">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#e50914" stroke-width="2">
+              <rect x="2" y="7" width="20" height="15" rx="2" ry="2"/>
+              <polyline points="17 2 12 7 7 2"/>
+            </svg>
+          </div>
+          <h3 class="card-title">Daily TV/Streaming</h3>
+          <div class="card-value" style="color: #e50914">520 Wh</div>
+          <p class="card-unit">6 hours 45 minutes average</p>
+          <p class="card-insight">Average US adult daily consumption. Sources: eMarketer, Nielsen (2024).</p>
+        </div>
+
+        <div class="comparison-card" style="--card-accent: var(--gradient-purple)">
+          <div class="card-icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#8b5cf6" stroke-width="2">
+              <circle cx="12" cy="12" r="10"/>
+              <path d="M12 6v6l4 2"/>
+            </svg>
+          </div>
+          <h3 class="card-title">Daily ChatGPT Use</h3>
+          <div class="card-value text-gradient">1.05 Wh</div>
+          <p class="card-unit">3-4 queries (typical user)</p>
+          <p class="card-insight">Average prompts per day for weekly active users. Source: OpenAI via CNBC (2025).</p>
+        </div>
+
+        <div class="comparison-card" style="--card-accent: var(--gradient-green)">
+          <div class="card-icon" style="background: rgba(34, 197, 94, 0.1);">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#22c55e" stroke-width="2">
+              <polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/>
+              <polyline points="17 6 23 6 23 12"/>
+            </svg>
+          </div>
+          <h3 class="card-title">Daily Usage Ratio</h3>
+          <div class="card-value text-gradient-green">495x</div>
+          <p class="card-unit">TV/streaming vs ChatGPT</p>
+          <p class="card-insight">For typical daily usage patterns, TV/streaming uses 495x more energy than ChatGPT.</p>
+        </div>
+      </div>
+
+      <div class="highlight-box animate-on-scroll">
+        <strong>Methodology:</strong> TV/streaming hours from eMarketer/Nielsen (2024). ChatGPT queries calculated from OpenAI data: 2.5B daily prompts / 800M weekly active users = 3.5 queries/day average. Energy: streaming at 77 Wh/hour, ChatGPT at 0.3 Wh/query. Even daily active users (22 queries/day = 6.6 Wh) use 79x less energy than average daily TV/streaming.
+      </div>
+    </div>
+  </section>
+
+  <!-- Myth Busters Section -->
+  <section id="myths">
+    <div class="container">
+      <div class="section-header animate-on-scroll">
+        <span class="section-label">Claims vs Data</span>
+        <h2 class="section-title">Common Claims Examined</h2>
+        <p class="section-subtitle">
+          Comparing common claims about AI environmental impact with available research.
+        </p>
+      </div>
+
+      <div class="myth-grid" id="mythGrid">
+        <div class="loading">Loading myths</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Quote Section -->
+  <section>
+    <div class="container">
+      <div class="quote-section animate-on-scroll">
+        <span class="quote-mark-large">"</span>
+        <p class="quote-text">Individual usage of ChatGPT and other LLMs for most people is a small part of their carbon and energy footprint.</p>
+        <p class="quote-attribution">
+          <span class="quote-author">Sustainability by Numbers</span> - Analysis of AI environmental impact, 2025
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Perspectives Section -->
+  <section id="perspectives">
+    <div class="container">
+      <div class="section-header animate-on-scroll">
+        <span class="section-label">Comparative Data</span>
+        <h2 class="section-title">Additional Context</h2>
+        <p class="section-subtitle">
+          Related consumption data from various sectors for comparison.
+        </p>
+      </div>
+
+      <div class="perspective-grid" id="perspectiveGrid">
+        <div class="loading">Loading perspectives</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Data Centre Context -->
+  <section id="datacentres">
+    <div class="container">
+      <div class="section-header animate-on-scroll">
+        <span class="section-label">Industry Context</span>
+        <h2 class="section-title">Data Centre Energy and Emissions</h2>
+        <p class="section-subtitle">
+          Where AI fits within the broader data centre industry.
+        </p>
+      </div>
+
+      <div class="comparison-grid animate-on-scroll">
+        <div class="comparison-card">
+          <div class="card-icon" style="background: rgba(239, 68, 68, 0.1);">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#ef4444" stroke-width="2">
+              <path d="M18 20V10"/>
+              <path d="M12 20V4"/>
+              <path d="M6 20v-6"/>
+            </svg>
+          </div>
+          <h3 class="card-title">US Data Centre Energy</h3>
+          <div class="card-value" style="color: var(--accent-red)">4.4%</div>
+          <p class="card-unit">of total US energy (2025)</p>
+          <p class="card-insight">Up from 1.9% in 2018. Source: Harvard/UCLA Study (2024).</p>
+        </div>
+
+        <div class="comparison-card">
+          <div class="card-icon" style="background: rgba(249, 115, 22, 0.1);">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#f97316" stroke-width="2">
+              <circle cx="12" cy="12" r="10"/>
+              <path d="M12 8v8"/>
+              <path d="M8 12h8"/>
+            </svg>
+          </div>
+          <h3 class="card-title">Carbon Intensity</h3>
+          <div class="card-value" style="color: var(--accent-orange)">48%</div>
+          <p class="card-unit">higher than US average</p>
+          <p class="card-insight">95% of data centres are in locations with above-average grid carbon intensity due to 24/7 power requirements.</p>
+        </div>
+
+        <div class="comparison-card">
+          <div class="card-icon" style="background: rgba(6, 182, 212, 0.1);">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#06b6d4" stroke-width="2">
+              <path d="M3 3v18h18"/>
+              <path d="M18 17V9"/>
+              <path d="M13 17V5"/>
+              <path d="M8 17v-3"/>
+            </svg>
+          </div>
+          <h3 class="card-title">Emissions Share</h3>
+          <div class="card-value" style="color: var(--accent-cyan)">2.18%</div>
+          <p class="card-unit">of US national emissions</p>
+          <p class="card-insight">Comparable to domestic aviation (~2.5%). 105 million metric tons CO₂ in 2024.</p>
+        </div>
+      </div>
+
+      <div class="highlight-box animate-on-scroll">
+        <strong>Location factor:</strong> Carbon intensity varies significantly by grid location. Quebec (32 g CO₂e/kWh) vs Central US coal regions (1,000 g CO₂e/kWh) represents a 16x difference. Source: Harvard/UCLA Study.
+      </div>
+    </div>
+  </section>
+
+  <!-- Training Section -->
+  <section id="training">
+    <div class="container">
+      <div class="section-header animate-on-scroll">
+        <span class="section-label">AI Training Costs</span>
+        <h2 class="section-title">Training Energy Per User</h2>
+        <p class="section-subtitle">
+          Training is a one-time cost amortised across the user base.
+        </p>
+      </div>
+
+      <div class="chart-container animate-on-scroll">
+        <h3 class="chart-title">Training Energy Per User (as user base grows)</h3>
+        <div class="chart-wrapper">
+          <canvas id="trainingChart"></canvas>
+        </div>
+      </div>
+
+      <div class="comparison-grid animate-on-scroll">
+        <div class="comparison-card">
+          <div class="card-icon" style="background: rgba(34, 197, 94, 0.1);">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#22c55e" stroke-width="2">
+              <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+              <circle cx="9" cy="7" r="4"/>
+              <path d="M23 21v-2a4 4 0 0 0-3-3.87"/>
+              <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+            </svg>
+          </div>
+          <h3 class="card-title">GPT-4 @ 300M Users</h3>
+          <div class="card-value" style="color: var(--accent-green)">166.7 Wh</div>
+          <p class="card-unit">Training energy per user</p>
+          <p class="card-insight">Based on ~50 GWh estimated training energy. One-time cost divided by user base.</p>
+        </div>
+
+        <div class="comparison-card">
+          <div class="card-icon" style="background: rgba(6, 182, 212, 0.1);">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#06b6d4" stroke-width="2">
+              <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+              <circle cx="9" cy="7" r="4"/>
+              <path d="M23 21v-2a4 4 0 0 0-3-3.87"/>
+              <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+            </svg>
+          </div>
+          <h3 class="card-title">GPT-4 @ 800M Users</h3>
+          <div class="card-value" style="color: var(--accent-cyan)">62.5 Wh</div>
+          <p class="card-unit">Training energy per user</p>
+          <p class="card-insight">Per-user training energy decreases as adoption increases.</p>
+        </div>
+
+        <div class="comparison-card">
+          <div class="card-icon" style="background: rgba(139, 92, 246, 0.1);">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#8b5cf6" stroke-width="2">
+              <polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/>
+              <polyline points="17 6 23 6 23 12"/>
+            </svg>
+          </div>
+          <h3 class="card-title">Daily Inference Volume</h3>
+          <div class="card-value text-gradient">2.5B</div>
+          <p class="card-unit">queries per day</p>
+          <p class="card-insight">At scale, aggregate inference energy (~300 GWh/year) approaches training costs. Both amortised across 800M users.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Users Section -->
+  <section id="users">
+    <div class="container">
+      <div class="section-header animate-on-scroll">
+        <span class="section-label">User Growth</span>
+        <h2 class="section-title">ChatGPT Adoption</h2>
+        <p class="section-subtitle">
+          Weekly active users over time. Per-user resource consumption decreases with scale.
+        </p>
+      </div>
+
+      <div class="chart-container animate-on-scroll">
+        <h3 class="chart-title">Weekly Active Users (Global)</h3>
+        <div class="chart-wrapper">
+          <canvas id="usersChart"></canvas>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <div class="container">
+      <p class="footer-text">
+        Data compiled from Google, OpenAI, MIT Technology Review, Harvard/UCLA Study, EPA, USGA, Epoch AI, ASCE, IEA, and other sources (2024-2025).
+      </p>
+      <p class="footer-sources">
+        Full research and sources available in <a href="research.md">research.md</a> |
+        Raw data in <a href="data.json">data.json</a> |
+        Blog extractions in <a href="extract_sustainabilitybynumbers.md">Sustainability by Numbers</a>,
+        <a href="extract_technologyreview.md">MIT Tech Review</a>,
+        <a href="extract_epochai.md">Epoch AI</a>
+      </p>
+    </div>
+  </footer>
+
+  <script>
+    // ============================================================================
+    // DATA - Update this section to modify dashboard content
+    // ============================================================================
+    const appData = {
+  "metadata": {
+    "title": "The True Cost of AI: A Reality Check",
+    "subtitle": "Putting AI consumption in perspective with everyday activities",
+    "lastUpdated": "2025-11-28",
+    "sources": "EPA, USGA, GCSAA, NGF, OpenAI, Google, Epoch AI, MIT Technology Review, Harvard/UCLA Study, ASCE, IEA, US Census Bureau"
+  },
+  "waterConsumption": {
+    "unit": "litres/year",
+    "unitDisplay": "litres per year",
+    "items": [
+      {
+        "id": "infrastructure_leaks",
+        "label": "US Infrastructure Leaks",
+        "sublabel": "Aging pipes & water mains",
+        "value": 126054153000000,
+        "displayValue": "126.1 trillion",
+        "color": "#ef4444",
+        "icon": "pipe",
+        "source": "ASCE Infrastructure Report Card 2025",
+        "sourceUrl": "https://infrastructurereportcard.org/cat-item/drinking-water-infrastructure/",
+        "year": 2025,
+        "notes": "14-18% of all treated water lost; $187B in lost revenue annually"
+      },
+      {
+        "id": "microsoft_datacenters",
+        "label": "Microsoft Data Centres (Annual)",
+        "sublabel": "All Microsoft global operations",
+        "value": 6435197000,
+        "displayValue": "6.44 billion",
+        "color": "#0ea5e9",
+        "icon": "datacenter",
+        "source": "MIT Technology Review / Microsoft",
+        "sourceUrl": "https://www.technologyreview.com/2025/05/20/1116327/ai-energy-usage-climate-footprint-big-tech/",
+        "year": 2022,
+        "notes": "34% increase from 2021; equivalent to 2,500 Olympic pools"
+      },
+      {
+        "id": "residential_leaks",
+        "label": "US Household Leaks",
+        "sublabel": "Dripping taps, toilets, pipes",
+        "value": 3406869000000,
+        "displayValue": "3.41 trillion",
+        "color": "#f97316",
+        "icon": "faucet",
+        "source": "EPA WaterSense",
+        "sourceUrl": "https://www.epa.gov/watersense/statistics-and-facts",
+        "year": 2024,
+        "notes": "Equivalent to water use of 11 million homes"
+      },
+      {
+        "id": "golf_courses",
+        "label": "US Golf Courses",
+        "sublabel": "15,962 courses nationwide",
+        "value": 2072511975000,
+        "displayValue": "2.07 trillion",
+        "color": "#22c55e",
+        "icon": "golf",
+        "source": "USGA/GCSAA",
+        "sourceUrl": "https://www.usga.org/content/dam/usga/pdf/Water%20Resource%20Center/how-much-water-does-golf-use.pdf",
+        "year": 2024,
+        "notes": "Reduced 29% since 2005; 0.5% of total US water use"
+      },
+      {
+        "id": "chatgpt_annual",
+        "label": "ChatGPT Annual (All Queries)",
+        "sublabel": "2.5 billion queries/day globally",
+        "value": 111194762633,
+        "displayValue": "111.2 billion",
+        "color": "#8b5cf6",
+        "icon": "ai",
+        "source": "OpenAI (Sam Altman) / MIT Tech Review",
+        "sourceUrl": "https://www.technologyreview.com/2025/05/20/1116327/ai-energy-usage-climate-footprint-big-tech/",
+        "year": 2025,
+        "notes": "0.32 mL per query × 2.5B queries/day × 365 days"
+      }
+    ],
+    "perQuery": {
+      "chatgpt": {
+        "value": 0.32,
+        "unit": "mL",
+        "source": "OpenAI (Sam Altman)"
+      },
+      "gemini": {
+        "value": 0.26,
+        "unit": "mL",
+        "source": "Google (August 2025)",
+        "notes": "About 5 drops of water"
+      },
+      "comparison": "A single dripping tap wastes 11,000+ litres/year - equivalent to 35 million ChatGPT queries"
+    }
+  },
+  "energyConsumption": {
+    "unit": "kWh",
+    "items": [
+      {
+        "id": "chatgpt_query",
+        "label": "ChatGPT Query (GPT-4o)",
+        "value": 0.00034,
+        "displayValue": "0.34 Wh",
+        "color": "#8b5cf6",
+        "source": "OpenAI (Sam Altman)",
+        "sourceUrl": "https://www.devsustainability.com/p/chatgpt-energy-usage-is-034-wh-per",
+        "year": 2024,
+        "notes": "Typical text query; range 0.1-4 Wh depending on complexity"
+      },
+      {
+        "id": "gemini_query",
+        "label": "Google Gemini Query",
+        "value": 0.00024,
+        "displayValue": "0.24 Wh",
+        "color": "#4285f4",
+        "source": "Google (Official)",
+        "sourceUrl": "https://www.sustainabilitybynumbers.com/p/ai-footprint-august-2025",
+        "year": 2025,
+        "notes": "Median text query; first official per-query disclosure by major AI company"
+      },
+      {
+        "id": "gemini_query_2024",
+        "label": "Google Gemini Query (2024)",
+        "value": 0.009,
+        "displayValue": "9 Wh",
+        "color": "#ea4335",
+        "source": "Google (Official)",
+        "year": 2024,
+        "notes": "Same query type, 12 months earlier - 33x less efficient"
+      },
+      {
+        "id": "google_search",
+        "label": "Google Search",
+        "value": 0.0003,
+        "displayValue": "0.3 Wh",
+        "color": "#34a853",
+        "source": "Various estimates (2009 baseline)",
+        "year": 2024
+      },
+      {
+        "id": "netflix_hour",
+        "label": "Netflix Streaming (1 hour HD)",
+        "value": 0.077,
+        "displayValue": "77 Wh",
+        "color": "#e50914",
+        "source": "MIT Technology Review",
+        "sourceUrl": "https://www.technologyreview.com/2025/05/20/1116327/ai-energy-usage-climate-footprint-big-tech/",
+        "year": 2025
+      },
+      {
+        "id": "tv_oled_65_hour",
+        "label": "165 cm OLED TV (1 hour)",
+        "value": 0.12,
+        "displayValue": "120 Wh",
+        "color": "#0e7490",
+        "source": "Solar Tech Online 2025",
+        "sourceUrl": "https://solartechonline.com/blog/tv-electricity-usage-guide/",
+        "year": 2025
+      },
+      {
+        "id": "sora_video",
+        "label": "Sora AI Video (5 seconds)",
+        "value": 1.0,
+        "displayValue": "~1,000 Wh (1 kWh)",
+        "color": "#f43f5e",
+        "source": "Sustainability by Numbers (estimate)",
+        "sourceUrl": "https://www.sustainabilitybynumbers.com/p/ai-footprint-august-2025",
+        "year": 2025,
+        "notes": "~4,000x more than a text query; estimate has uncertainty"
+      }
+    ],
+    "comparisons": [
+      {
+        "description": "1 hour of 165 cm TV watching",
+        "equivalentQueries": 279,
+        "calculation": "95 Wh ÷ 0.34 Wh = 279 queries"
+      },
+      {
+        "description": "1 hour of 191 cm OLED TV",
+        "equivalentQueries": 544,
+        "calculation": "185 Wh ÷ 0.34 Wh = 544 queries"
+      },
+      {
+        "description": "1 hour of Netflix streaming",
+        "equivalentQueries": 227,
+        "calculation": "77 Wh ÷ 0.34 Wh = 227 queries"
+      },
+      {
+        "description": "One 5-second AI video generation",
+        "equivalentQueries": 2941,
+        "calculation": "1000 Wh ÷ 0.34 Wh = 2,941 queries"
+      }
+    ],
+    "householdEquivalents": {
+      "geminiQuery": {
+        "value": 0.24,
+        "unit": "Wh",
+        "equivalents": [
+          { "activity": "Microwave", "duration": "1 second" },
+          { "activity": "Television", "duration": "9 seconds" },
+          { "activity": "Refrigerator", "duration": "6 seconds" },
+          { "activity": "Laptop", "duration": "17 seconds" },
+          { "activity": "Phone charging", "amount": "2% charge" }
+        ],
+        "source": "Sustainability by Numbers"
+      }
+    },
+    "uncertaintyNote": "Energy per query ranges from 0.1-4 Wh depending on model, token count, and complexity. Queries with 100k input tokens can use ~40 Wh."
+  },
+  "videoVsText": {
+    "title": "Video Generation: The Real Energy Consumer",
+    "comparison": {
+      "textQuery": {
+        "label": "Text Query (Gemini/ChatGPT)",
+        "energy": 0.3,
+        "unit": "Wh"
+      },
+      "imageGeneration": {
+        "label": "Image Generation",
+        "energyMin": 0.3,
+        "energyMax": 1.2,
+        "unit": "Wh"
+      },
+      "videoGeneration": {
+        "label": "5-second Video (Sora)",
+        "energy": 1000,
+        "unit": "Wh"
+      }
+    },
+    "ratio": "~4,000x more energy for video vs text",
+    "insight": "When people worry about AI energy use, they should distinguish between text (minimal) and video generation (significant)"
+  },
+  "efficiencyImprovements": {
+    "title": "AI Efficiency is Improving Rapidly",
+    "google": {
+      "model": "Gemini",
+      "period": "12 months (May 2024 - May 2025)",
+      "energyReduction": 33,
+      "emissionsReduction": 44,
+      "before": {
+        "energy": 9,
+        "emissions": 1.32,
+        "units": { "energy": "Wh", "emissions": "g CO₂e" }
+      },
+      "after": {
+        "energy": 0.24,
+        "emissions": 0.03,
+        "units": { "energy": "Wh", "emissions": "g CO₂e" }
+      },
+      "source": "Google (Official)",
+      "sourceUrl": "https://www.sustainabilitybynumbers.com/p/ai-footprint-august-2025"
+    },
+    "industryTrend": "Hardware improvements (A100 → H100 GPUs), model architecture (sparse networks), and optimisation are driving rapid efficiency gains",
+    "potentialOptimisation": {
+      "trainingCarbonReduction": "Up to 75%",
+      "source": "University of Michigan",
+      "method": "Tuning GPU power limits, batch size, and location selection"
+    },
+    "sparseNetworks": {
+      "description": "Sparsely activated neural networks can consume <10% of energy vs dense networks",
+      "source": "MIT Technology Review"
+    }
+  },
+  "dataCentreIndustry": {
+    "title": "The Bigger Picture: Data Centre Industry",
+    "usEnergyShare": {
+      "current": 4.4,
+      "previous": 1.9,
+      "previousYear": 2018,
+      "currentYear": 2025,
+      "unit": "% of US energy",
+      "source": "Harvard/UCLA Study",
+      "sourceUrl": "https://arxiv.org/html/2411.09786v1"
+    },
+    "usEmissions": {
+      "value": 105,
+      "unit": "million metric tons CO₂",
+      "year": 2024,
+      "percentOfNational": 2.18,
+      "comparison": "Comparable to domestic aviation (~2.5%)",
+      "source": "Harvard/UCLA Study"
+    },
+    "carbonIntensity": {
+      "dataCentreAverage": 548,
+      "usAverage": 369,
+      "premium": 48,
+      "unit": "g CO₂e/kWh",
+      "reason": "95% of US data centres in locations with dirtier-than-average electricity due to 24/7 power needs",
+      "source": "Harvard/UCLA Study"
+    },
+    "regionalVariation": {
+      "bestCase": { "location": "Quebec, Canada", "intensity": 32 },
+      "worstCase": { "location": "Central US (coal regions)", "intensity": 1000 },
+      "variationFactor": "16x difference between best and worst locations",
+      "unit": "g CO₂e/kWh"
+    },
+    "projections": {
+      "iea2030": {
+        "globalDemand": 945,
+        "unit": "TWh",
+        "percentOfGlobalEmissions": "1-1.4%",
+        "source": "International Energy Agency"
+      },
+      "lawrenceBerkeley2028": {
+        "usShare": "6-12% of US electricity",
+        "source": "Lawrence Berkeley National Laboratory"
+      },
+      "fossilFuelShare": {
+        "value": 60,
+        "unit": "% of new demand met by fossil fuels by 2030",
+        "source": "Goldman Sachs"
+      }
+    },
+    "context": "While data centre energy use is growing (80% increase 2020-2025), AI is not yet tracked as its own sector. Video streaming alone accounts for 60% of global internet traffic."
+  },
+  "fuelConsumption": {
+    "unit": "litres/year",
+    "items": [
+      {
+        "id": "personal_car_commute",
+        "label": "Average US Car Commute",
+        "sublabel": "12,282 km/year @ 8.68 L/100km",
+        "value": 1066,
+        "displayValue": "1,066 litres",
+        "color": "#ef4444",
+        "source": "EPA/US Census",
+        "sourceUrl": "https://www.epa.gov/automotive-trends/highlights-automotive-trends-report",
+        "year": 2024,
+        "notes": "69.2% of Americans drive personal vehicles to work"
+      },
+      {
+        "id": "pickup_commute",
+        "label": "Full-Size Pickup Commute",
+        "sublabel": "12,282 km/year @ 13.07 L/100km",
+        "value": 1605,
+        "displayValue": "1,605 litres",
+        "color": "#dc2626",
+        "source": "US Gas Price News",
+        "sourceUrl": "https://news.usgasprice.com/how-much-fuel-does-the-average-american-commute-use-each-year/",
+        "year": 2024
+      },
+      {
+        "id": "hybrid_commute",
+        "label": "Hybrid Car Commute",
+        "sublabel": "12,282 km/year @ 4.70 L/100km",
+        "value": 579,
+        "displayValue": "579 litres",
+        "color": "#22c55e",
+        "source": "US Gas Price News",
+        "year": 2024
+      }
+    ],
+    "context": {
+      "totalNational": "$90+ billion spent annually on commuting fuel",
+      "idlingWaste": "57-76 litres/year wasted from idling alone",
+      "averageCost": "$2,043/year average commuting cost"
+    }
+  },
+  "aiTraining": {
+    "models": [
+      {
+        "id": "gpt3",
+        "label": "GPT-3 Training",
+        "parameters": "175 billion",
+        "energyGWh": 1.287,
+        "energyDisplay": "1.287 GWh (1,287 MWh)",
+        "carbonTonnes": 552,
+        "perUserWh": {
+          "users300M": 4.29,
+          "users800M": 1.61
+        },
+        "equivalents": [
+          "120 US homes for 1 year",
+          "1 US household for 120 years"
+        ],
+        "source": "MIT Technology Review / Various research",
+        "year": 2020
+      },
+      {
+        "id": "gpt4",
+        "label": "GPT-4 Training",
+        "parameters": "~200-280 billion (estimated)",
+        "energyGWh": 50,
+        "energyDisplay": "~50 GWh",
+        "carbonTonnes": "12,456-14,994",
+        "perUserWh": {
+          "users300M": 166.7,
+          "users800M": 62.5
+        },
+        "equivalents": [
+          "San Francisco for 3 days",
+          "~300 round-trip flights NYC to San Francisco"
+        ],
+        "vsGpt3": "40-48x more energy than GPT-3",
+        "source": "MIT Technology Review (leaked data, unverified)",
+        "sourceUrl": "https://www.technologyreview.com/2025/05/20/1116327/ai-energy-usage-climate-footprint-big-tech/",
+        "year": 2023,
+        "notes": "Training cost over $100 million; ~25,000 A100 GPUs for 90-100 days"
+      },
+      {
+        "id": "gpt4o_training",
+        "label": "GPT-4o Training",
+        "powerMW": "20-25",
+        "duration": "~3 months",
+        "source": "Epoch AI",
+        "year": 2024
+      }
+    ],
+    "context": "Training is a one-time cost amortised across all users. As the user base grows from 300M to 800M, per-user training energy drops significantly. Inference (daily queries) is now a larger aggregate cost than training due to scale (2.5 billion queries/day)."
+  },
+  "chatgptStats": {
+    "dailyQueries": {
+      "value": 2500000000,
+      "display": "2.5 billion",
+      "source": "OpenAI / MIT Technology Review",
+      "year": 2025
+    },
+    "annualEnergy": {
+      "value": 300,
+      "unit": "GWh",
+      "equivalent": "Powering ~30,000 US homes annually",
+      "source": "MIT Technology Review"
+    }
+  },
+  "chatgptUsers": {
+    "global": {
+      "weeklyActive": [
+        { "date": "2024-12", "users": 300000000, "display": "300 million" },
+        { "date": "2025-08", "users": 700000000, "display": "700 million" },
+        { "date": "2025-10", "users": 800000000, "display": "800 million" }
+      ],
+      "source": "TechCrunch",
+      "sourceUrl": "https://techcrunch.com/2025/10/06/sam-altman-says-chatgpt-has-hit-800m-weekly-active-users/"
+    },
+    "usa": {
+      "monthlyActive": 70000000,
+      "display": "70 million",
+      "percentOfGlobal": 19.01,
+      "source": "Backlinko/DemandSage",
+      "year": 2025
+    }
+  },
+  "individualImpact": {
+    "title": "Personal AI Usage in Context",
+    "dailyUsage": [
+      {
+        "queries": 10,
+        "energyWh": 3.4,
+        "percentOfDailyUse": 0.03,
+        "context": "Less than running a fridge for 1 minute"
+      },
+      {
+        "queries": 50,
+        "energyWh": 17,
+        "percentOfDailyUse": 0.15,
+        "context": "About 10 seconds of microwave use"
+      },
+      {
+        "queries": 100,
+        "energyWh": 34,
+        "percentOfDailyUse": 0.3,
+        "context": "About 20 minutes of TV watching"
+      }
+    ],
+    "usHouseholdDaily": 28000,
+    "unit": "Wh",
+    "source": "Sustainability by Numbers / Epoch AI",
+    "note": "100 queries/day represents about 0.3% of typical household electricity"
+  },
+  "dailyHabitsComparison": {
+    "title": "Typical Daily Usage Patterns",
+    "description": "How energy consumption compares for average daily use",
+    "tvStreaming": {
+      "hoursPerDay": 6.75,
+      "hoursDisplay": "6 hours 45 minutes",
+      "breakdown": {
+        "traditionalTV": 2.92,
+        "streaming": 3.83
+      },
+      "energyPerHour": {
+        "streaming": 77,
+        "tv65inch": 95,
+        "average": 77
+      },
+      "dailyEnergyWh": {
+        "low": 520,
+        "high": 675,
+        "typical": 520
+      },
+      "sources": ["eMarketer", "Nielsen", "Pew Research"],
+      "year": 2024
+    },
+    "chatgpt": {
+      "queriesPerDay": {
+        "typicalWeeklyUser": 3.5,
+        "dailyActiveUser": 22,
+        "range": "3-4"
+      },
+      "energyPerQuery": 0.3,
+      "dailyEnergyWh": {
+        "typicalUser": 1.05,
+        "dailyActiveUser": 6.6
+      },
+      "sources": ["OpenAI via TechCrunch", "CNBC"],
+      "year": 2025,
+      "methodology": "2.5 billion daily prompts / 800 million weekly active users"
+    },
+    "comparison": {
+      "ratioTypicalUser": 495,
+      "ratioDailyActiveUser": 79,
+      "description": "TV/streaming uses 495x more energy daily than typical ChatGPT usage"
+    }
+  },
+  "perspectives": [
+    {
+      "title": "Household Leaks",
+      "fact": "A single dripping tap wastes 11,000+ litres per year",
+      "comparison": "Equivalent to 35.3 million ChatGPT queries",
+      "context": "EPA estimates 10% of US homes have leaks wasting 340+ litres daily"
+    },
+    {
+      "title": "Daily Media Consumption",
+      "fact": "Average American watches 6 hours 45 minutes of TV/streaming per day",
+      "comparison": "Uses 520 Wh daily vs 1.05 Wh for typical AI use (3-4 queries)",
+      "context": "Sources: eMarketer, Nielsen (2024)"
+    },
+    {
+      "title": "Streaming Energy",
+      "fact": "1 hour of Netflix streaming uses 77 Wh",
+      "comparison": "Equivalent to 227 ChatGPT queries",
+      "context": "Video streaming accounts for 60% of global internet traffic"
+    },
+    {
+      "title": "Golf Course Water Use",
+      "fact": "US golf courses use 2.07 trillion litres of water per year",
+      "comparison": "18x more than ChatGPT's estimated global annual water use",
+      "context": "15,962 courses serving 28 million golfers vs 800 million AI users"
+    },
+    {
+      "title": "Infrastructure Water Loss",
+      "fact": "126.1 trillion litres lost to US infrastructure leaks annually",
+      "comparison": "1,134x ChatGPT's estimated annual water consumption",
+      "context": "14-18% of treated water lost before reaching consumers (ASCE)"
+    },
+    {
+      "title": "Efficiency Improvements",
+      "fact": "Google Gemini reduced energy use 33x in 12 months",
+      "comparison": "From 9 Wh to 0.24 Wh per query",
+      "context": "Hardware and architecture improvements driving gains"
+    },
+    {
+      "title": "Video vs Text AI",
+      "fact": "A 5-second AI-generated video uses approximately 1 kWh",
+      "comparison": "4,000x more energy than a text query",
+      "context": "Text chatbots and video generation have very different footprints"
+    },
+    {
+      "title": "Data Centre Location",
+      "fact": "95% of US data centres are in locations with dirtier-than-average electricity",
+      "comparison": "Carbon intensity varies 16x between best and worst locations",
+      "context": "24/7 power requirements limit location flexibility (Harvard/UCLA)"
+    },
+    {
+      "title": "Commuting Emissions",
+      "fact": "One year of average US car commuting uses 1,066 litres of fuel",
+      "comparison": "Produces approximately 2.5 tonnes of CO₂",
+      "context": "69% of Americans drive personal vehicles to work"
+    }
+  ],
+  "keyInsights": [
+    {
+      "stat": "33x",
+      "description": "Efficiency improvement in AI (Gemini) in just 12 months"
+    },
+    {
+      "stat": "1,134x",
+      "description": "More water wasted by US infrastructure leaks than ChatGPT uses annually"
+    },
+    {
+      "stat": "227",
+      "description": "ChatGPT queries to equal 1 hour of Netflix streaming"
+    },
+    {
+      "stat": "0.3%",
+      "description": "Maximum share of your daily electricity even with 100 AI queries"
+    },
+    {
+      "stat": "4,000x",
+      "description": "More energy for video generation vs text queries"
+    },
+    {
+      "stat": "18x",
+      "description": "More water used by US golf courses than ChatGPT globally"
+    }
+  ],
+  "mythBusters": [
+    {
+      "myth": "AI is destroying the climate",
+      "reality": "Data centres are 2.18% of US emissions - comparable to aviation. The concern is growth rate, not current scale.",
+      "source": "Harvard/UCLA Study"
+    },
+    {
+      "myth": "Every AI query wastes massive resources",
+      "reality": "A typical query uses 0.24-0.34 Wh - equivalent to microwaving for 1 second or charging your phone 2%.",
+      "source": "Google, OpenAI"
+    },
+    {
+      "myth": "AI efficiency isn't improving",
+      "reality": "Google showed 33x energy reduction in 12 months. Hardware and architecture improvements are rapid.",
+      "source": "Google"
+    },
+    {
+      "myth": "Data centres use clean energy",
+      "reality": "95% of US data centres are in dirtier-than-average locations. Carbon intensity is 48% higher than US average.",
+      "source": "Harvard/UCLA Study"
+    },
+    {
+      "myth": "Training AI is the main energy cost",
+      "reality": "With 2.5 billion daily queries, inference now rivals training in total energy. But both are amortised across 800M users.",
+      "source": "MIT Technology Review"
+    }
+  ],
+  "quotes": [
+    {
+      "text": "Individual usage of ChatGPT and other LLMs for most people is a small part of their carbon and energy footprint.",
+      "source": "Sustainability by Numbers",
+      "context": "Analysis of AI environmental impact"
+    },
+    {
+      "text": "We should stop trying to reverse-engineer numbers based on hearsay and put more pressure on these companies to actually share the real ones.",
+      "author": "Sasha Luccioni",
+      "role": "Creator of AI Energy Score",
+      "source": "MIT Technology Review"
+    },
+    {
+      "text": "Dirtier energy is available throughout the entire day, and data centres require that to maintain peak operation 24-7. Renewable energy, like wind or solar, might not be as available.",
+      "author": "Falco Bargagli-Stoffi",
+      "role": "Assistant Professor, UCLA",
+      "source": "MIT Technology Review"
+    }
+  ]
+};
+    // ============================================================================
+    // END DATA
+    // ============================================================================
+
+    // Initialise dashboard
+    function init() {
+      renderAll();
+      initScrollAnimations();
+    }
+
+    function renderAll() {
+      renderHeroStats();
+      renderWaterBarChart();
+      renderWaterComparisons();
+      renderMythBusters();
+      renderPerspectives();
+      renderEnergyBarChart();
+      renderTrainingChart();
+      renderUsersChart();
+    }
+
+    function renderHeroStats() {
+      const container = document.getElementById('heroStats');
+      const stats = appData.keyInsights;
+
+      container.innerHTML = stats.map(stat => `
+        <div class="stat-card">
+          <div class="stat-number">${stat.stat}</div>
+          <div class="stat-label">${stat.description}</div>
+        </div>
+      `).join('');
+    }
+
+    function renderWaterBarChart() {
+      const container = document.getElementById('waterBarChart');
+      const items = appData.waterConsumption.items;
+
+      // Sort items by value (largest to smallest)
+      const sortedItems = [...items].sort((a, b) => b.value - a.value);
+
+      // Find max value (infrastructure leaks)
+      const maxValue = Math.max(...sortedItems.map(i => i.value));
+      // Scale other items relative to half of infrastructure (since it's split into 2 bars)
+      const halfMax = maxValue / 2;
+
+      container.innerHTML = sortedItems.map(item => {
+        const isInfraLeaks = item.id === 'infrastructure_leaks';
+
+        if (isInfraLeaks) {
+          // Split infrastructure leaks into two FULL WIDTH bars
+          return `
+            <div class="bar-item">
+              <div class="bar-header">
+                <div>
+                  <div class="bar-label">${item.label} <span style="font-size: 0.9em; color: var(--text-muted);">(split for scale)</span></div>
+                  <div class="bar-sublabel">${item.sublabel}</div>
+                </div>
+                <div class="bar-value" style="color: ${item.color}">${item.displayValue}</div>
+              </div>
+              <div class="bar-track">
+                <div class="bar-fill" style="width: 0%; background: ${item.color};" data-width="100%"></div>
+              </div>
+              <div class="bar-track" style="margin-top: 4px;">
+                <div class="bar-fill" style="width: 0%; background: linear-gradient(90deg, ${item.color} 0%, #dc2626 100%);" data-width="100%"></div>
+              </div>
+            </div>
+          `;
+        } else {
+          // Scale other items relative to half of infrastructure total
+          const percentage = (item.value / halfMax) * 100;
+          return `
+            <div class="bar-item">
+              <div class="bar-header">
+                <div>
+                  <div class="bar-label">${item.label}</div>
+                  <div class="bar-sublabel">${item.sublabel}</div>
+                </div>
+                <div class="bar-value" style="color: ${item.color}">${item.displayValue}</div>
+              </div>
+              <div class="bar-track">
+                <div class="bar-fill" style="width: 0%; background: ${item.color};" data-width="${percentage}%"></div>
+              </div>
+            </div>
+          `;
+        }
+      }).join('');
+
+      // Animate bars
+      setTimeout(() => {
+        container.querySelectorAll('.bar-fill').forEach(bar => {
+          bar.style.width = bar.dataset.width;
+        });
+      }, 100);
+    }
+
+    function renderWaterComparisons() {
+      const container = document.getElementById('waterComparisons');
+      const items = appData.waterConsumption.items;
+
+      const chatgptItem = items.find(i => i.id === 'chatgpt_annual');
+      const infraItem = items.find(i => i.id === 'infrastructure_leaks');
+      const golfItem = items.find(i => i.id === 'golf_courses');
+
+      container.innerHTML = `
+        <div class="comparison-card" style="--card-accent: linear-gradient(135deg, ${infraItem.color} 0%, #dc2626 100%)">
+          <div class="card-icon" style="background: rgba(239, 68, 68, 0.1);">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="${infraItem.color}" stroke-width="2">
+              <path d="M4 14h6v7H4z"/>
+              <path d="M14 9h6v12h-6z"/>
+              <path d="M2 21h20"/>
+            </svg>
+          </div>
+          <h3 class="card-title">${infraItem.label}</h3>
+          <div class="card-value" style="color: ${infraItem.color}">${infraItem.displayValue}</div>
+          <p class="card-unit">litres per year</p>
+          <p class="card-insight">${infraItem.notes}</p>
+        </div>
+
+        <div class="comparison-card" style="--card-accent: linear-gradient(135deg, ${golfItem.color} 0%, #16a34a 100%)">
+          <div class="card-icon" style="background: rgba(34, 197, 94, 0.1);">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="${golfItem.color}" stroke-width="2">
+              <circle cx="12" cy="18" r="3"/>
+              <path d="M12 2v13"/>
+              <path d="M12 5l7-2v6l-7 2"/>
+            </svg>
+          </div>
+          <h3 class="card-title">${golfItem.label}</h3>
+          <div class="card-value" style="color: ${golfItem.color}">${golfItem.displayValue}</div>
+          <p class="card-unit">litres per year</p>
+          <p class="card-insight">${golfItem.notes}. 28 million golfers vs 800 million AI users.</p>
+        </div>
+
+        <div class="comparison-card" style="--card-accent: var(--gradient-purple)">
+          <div class="card-icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#8b5cf6" stroke-width="2">
+              <path d="M12 2a10 10 0 1 0 10 10H12V2z"/>
+              <path d="M12 2a10 10 0 0 1 10 10"/>
+            </svg>
+          </div>
+          <h3 class="card-title">${chatgptItem.label}</h3>
+          <div class="card-value text-gradient">${chatgptItem.displayValue}</div>
+          <p class="card-unit">litres per year</p>
+          <p class="card-insight">${chatgptItem.notes}</p>
+        </div>
+      `;
+    }
+
+    function renderMythBusters() {
+      const container = document.getElementById('mythGrid');
+      const myths = appData.mythBusters;
+
+      container.innerHTML = myths.map(m => `
+        <div class="myth-card animate-on-scroll">
+          <span class="myth-label">Claim</span>
+          <p class="myth-text">${m.myth}</p>
+          <span class="reality-label">Data</span>
+          <p class="reality-text">${m.reality}</p>
+          <p class="myth-source">Source: ${m.source}</p>
+        </div>
+      `).join('');
+    }
+
+    function renderPerspectives() {
+      const container = document.getElementById('perspectiveGrid');
+      const perspectives = appData.perspectives;
+
+      container.innerHTML = perspectives.map(p => `
+        <div class="perspective-card animate-on-scroll">
+          <h3 class="perspective-title">${p.title}</h3>
+          <p class="perspective-fact">${p.fact}</p>
+          <p class="perspective-comparison">${p.comparison}</p>
+          <p class="perspective-takeaway">${p.context}</p>
+        </div>
+      `).join('');
+    }
+
+    function renderEnergyChart() {
+      const ctx = document.getElementById('energyChart').getContext('2d');
+      const items = appData.energyConsumption.items;
+
+      // Filter out the 2024 Gemini comparison for chart clarity
+      const chartItems = items.filter(i => i.id !== 'gemini_query_2024');
+
+      new Chart(ctx, {
+        type: 'bar',
+        data: {
+          labels: chartItems.map(i => i.label),
+          datasets: [{
+            label: 'Energy (Wh)',
+            data: chartItems.map(i => i.value * 1000), // Convert to Wh
+            backgroundColor: chartItems.map(i => i.color + '99'),
+            borderColor: chartItems.map(i => i.color),
+            borderWidth: 2,
+            borderRadius: 8
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          indexAxis: 'y',
+          plugins: {
+            legend: {
+              display: false
+            },
+            tooltip: {
+              backgroundColor: '#1a1a24',
+              titleColor: '#f5f5f7',
+              bodyColor: '#a1a1aa',
+              borderColor: 'rgba(255,255,255,0.1)',
+              borderWidth: 1,
+              padding: 12,
+              displayColors: false,
+              callbacks: {
+                label: function(context) {
+                  const value = context.raw;
+                  if (value >= 1000) {
+                    return (value / 1000).toFixed(1) + ' kWh';
+                  }
+                  return value.toFixed(2) + ' Wh';
+                }
+              }
+            }
+          },
+          scales: {
+            x: {
+              type: 'logarithmic',
+              grid: {
+                color: 'rgba(255,255,255,0.05)'
+              },
+              ticks: {
+                color: '#71717a',
+                callback: function(value) {
+                  if ([0.1, 1, 10, 100, 1000].includes(value)) {
+                    return value >= 1000 ? (value/1000) + ' kWh' : value + ' Wh';
+                  }
+                  return '';
+                }
+              }
+            },
+            y: {
+              grid: {
+                display: false
+              },
+              ticks: {
+                color: '#a1a1aa',
+                font: {
+                  size: 11
+                }
+              }
+            }
+          }
+        }
+      });
+    }
+
+    function renderEnergyBarChart() {
+      const container = document.getElementById('energyBarChart');
+      const items = appData.energyConsumption.items;
+
+      // Filter out the 2024 Gemini comparison for chart clarity
+      const chartItems = items.filter(i => i.id !== 'gemini_query_2024');
+
+      // Sort items by value (largest to smallest)
+      const sortedItems = [...chartItems].sort((a, b) => b.value - a.value);
+
+      // Find max value among non-Sora items for linear scaling
+      const nonSoraItems = sortedItems.filter(i => i.id !== 'sora_video');
+      const maxNonSoraValue = Math.max(...nonSoraItems.map(i => i.value));
+
+      container.innerHTML = sortedItems.map(item => {
+        const isSoraVideo = item.id === 'sora_video';
+        const valueInWh = item.value * 1000; // Convert kWh to Wh
+
+        if (isSoraVideo) {
+          // Use logarithmic scale for Sora only
+          // log10(1000) = 3.0, scale to make it clearly visible
+          // Map log value to percentage: log10(value) * 28 gives ~84% for 1000 Wh
+          const logPercentage = Math.log10(valueInWh) * 28;
+
+          return `
+            <div class="bar-item">
+              <div class="bar-header">
+                <div>
+                  <div class="bar-label">${item.label} <span style="font-size: 0.9em; color: #f59e0b;">(log scale)</span></div>
+                  ${item.notes ? `<div class="bar-sublabel">${item.notes}</div>` : ''}
+                </div>
+                <div class="bar-value" style="color: #f59e0b">${item.displayValue}</div>
+              </div>
+              <div class="bar-track">
+                <div class="bar-fill" style="width: 0%; background: linear-gradient(90deg, #f59e0b 0%, #d97706 100%);" data-width="${logPercentage}%"></div>
+              </div>
+            </div>
+          `;
+        } else {
+          // Linear scale for all other items relative to max non-Sora value
+          const percentage = (item.value / maxNonSoraValue) * 100;
+          return `
+            <div class="bar-item">
+              <div class="bar-header">
+                <div>
+                  <div class="bar-label">${item.label}</div>
+                  ${item.notes ? `<div class="bar-sublabel">${item.notes}</div>` : ''}
+                </div>
+                <div class="bar-value" style="color: ${item.color}">${item.displayValue}</div>
+              </div>
+              <div class="bar-track">
+                <div class="bar-fill" style="width: 0%; background: ${item.color};" data-width="${percentage}%"></div>
+              </div>
+            </div>
+          `;
+        }
+      }).join('');
+
+      // Animate bars
+      setTimeout(() => {
+        container.querySelectorAll('.bar-fill').forEach(bar => {
+          bar.style.width = bar.dataset.width;
+        });
+      }, 100);
+    }
+
+    function renderTrainingChart() {
+      const ctx = document.getElementById('trainingChart').getContext('2d');
+
+      // GPT-4 at 50 GWh
+      const gpt4Energy = 50000000000; // 50 GWh in Wh
+
+      new Chart(ctx, {
+        type: 'line',
+        data: {
+          labels: ['100M', '200M', '300M', '400M', '500M', '600M', '700M', '800M'],
+          datasets: [{
+            label: 'GPT-4 Training Energy per User (Wh)',
+            data: [500, 250, 166.7, 125, 100, 83.3, 71.4, 62.5],
+            borderColor: '#8b5cf6',
+            backgroundColor: 'rgba(139, 92, 246, 0.1)',
+            fill: true,
+            tension: 0.4,
+            pointBackgroundColor: '#8b5cf6',
+            pointBorderColor: '#fff',
+            pointBorderWidth: 2,
+            pointRadius: 6
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: {
+            legend: {
+              display: true,
+              labels: {
+                color: '#a1a1aa',
+                usePointStyle: true,
+                padding: 20
+              }
+            },
+            tooltip: {
+              backgroundColor: '#1a1a24',
+              titleColor: '#f5f5f7',
+              bodyColor: '#a1a1aa',
+              borderColor: 'rgba(255,255,255,0.1)',
+              borderWidth: 1,
+              padding: 12,
+              callbacks: {
+                label: function(context) {
+                  return context.raw.toFixed(1) + ' Wh per user';
+                }
+              }
+            }
+          },
+          scales: {
+            x: {
+              title: {
+                display: true,
+                text: 'Number of Users',
+                color: '#71717a'
+              },
+              grid: {
+                color: 'rgba(255,255,255,0.05)'
+              },
+              ticks: {
+                color: '#71717a'
+              }
+            },
+            y: {
+              title: {
+                display: true,
+                text: 'Watt-hours per User',
+                color: '#71717a'
+              },
+              grid: {
+                color: 'rgba(255,255,255,0.05)'
+              },
+              ticks: {
+                color: '#71717a'
+              }
+            }
+          }
+        }
+      });
+    }
+
+    function renderUsersChart() {
+      const ctx = document.getElementById('usersChart').getContext('2d');
+      const userData = appData.chatgptUsers.global.weeklyActive;
+
+      new Chart(ctx, {
+        type: 'bar',
+        data: {
+          labels: userData.map(d => d.date),
+          datasets: [{
+            label: 'Weekly Active Users',
+            data: userData.map(d => d.users / 1000000),
+            backgroundColor: [
+              'rgba(139, 92, 246, 0.8)',
+              'rgba(99, 102, 241, 0.8)',
+              'rgba(59, 130, 246, 0.8)'
+            ],
+            borderColor: [
+              '#8b5cf6',
+              '#6366f1',
+              '#3b82f6'
+            ],
+            borderWidth: 2,
+            borderRadius: 8
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: {
+            legend: {
+              display: false
+            },
+            tooltip: {
+              backgroundColor: '#1a1a24',
+              titleColor: '#f5f5f7',
+              bodyColor: '#a1a1aa',
+              borderColor: 'rgba(255,255,255,0.1)',
+              borderWidth: 1,
+              padding: 12,
+              callbacks: {
+                label: function(context) {
+                  return context.raw + ' million users';
+                }
+              }
+            }
+          },
+          scales: {
+            x: {
+              grid: {
+                display: false
+              },
+              ticks: {
+                color: '#a1a1aa'
+              }
+            },
+            y: {
+              title: {
+                display: true,
+                text: 'Users (millions)',
+                color: '#71717a'
+              },
+              grid: {
+                color: 'rgba(255,255,255,0.05)'
+              },
+              ticks: {
+                color: '#71717a',
+                callback: function(value) {
+                  return value + 'M';
+                }
+              }
+            }
+          }
+        }
+      });
+    }
+
+    function initScrollAnimations() {
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+          }
+        });
+      }, {
+        threshold: 0.1,
+        rootMargin: '0px 0px -50px 0px'
+      });
+
+      document.querySelectorAll('.animate-on-scroll').forEach(el => {
+        observer.observe(el);
+      });
+    }
+
+    // Theme toggle functionality
+    function initTheme() {
+      const themeToggle = document.getElementById('themeToggle');
+      const darkIcon = document.getElementById('darkIcon');
+      const lightIcon = document.getElementById('lightIcon');
+      const html = document.documentElement;
+
+      // Get saved theme or default to dark
+      const savedTheme = localStorage.getItem('theme') || 'dark';
+      html.setAttribute('data-theme', savedTheme);
+      updateIcons(savedTheme);
+
+      themeToggle.addEventListener('click', () => {
+        const currentTheme = html.getAttribute('data-theme');
+        const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+
+        html.setAttribute('data-theme', newTheme);
+        localStorage.setItem('theme', newTheme);
+        updateIcons(newTheme);
+      });
+
+      function updateIcons(theme) {
+        if (theme === 'dark') {
+          darkIcon.style.display = 'block';
+          lightIcon.style.display = 'none';
+        } else {
+          darkIcon.style.display = 'none';
+          lightIcon.style.display = 'block';
+        }
+      }
+    }
+
+    // Initialise
+    initTheme();
+    init();
+  </script>
+</body>
+</html>

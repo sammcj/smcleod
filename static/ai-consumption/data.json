@@ -1,0 +1,639 @@
+{
+  "metadata": {
+    "title": "The True Cost of AI: A Reality Check",
+    "subtitle": "Putting AI consumption in perspective with everyday activities",
+    "lastUpdated": "2025-11-28",
+    "sources": "EPA, USGA, GCSAA, NGF, OpenAI, Google, Epoch AI, MIT Technology Review, Harvard/UCLA Study, ASCE, IEA, US Census Bureau"
+  },
+  "waterConsumption": {
+    "unit": "litres/year",
+    "unitDisplay": "litres per year",
+    "items": [
+      {
+        "id": "infrastructure_leaks",
+        "label": "US Infrastructure Leaks",
+        "sublabel": "Aging pipes & water mains",
+        "value": 126054153000000,
+        "displayValue": "126.1 trillion",
+        "color": "#ef4444",
+        "icon": "pipe",
+        "source": "ASCE Infrastructure Report Card 2025",
+        "sourceUrl": "https://infrastructurereportcard.org/cat-item/drinking-water-infrastructure/",
+        "year": 2025,
+        "notes": "14-18% of all treated water lost; $187B in lost revenue annually"
+      },
+      {
+        "id": "microsoft_datacenters",
+        "label": "Microsoft Data Centres (Annual)",
+        "sublabel": "All Microsoft global operations",
+        "value": 6435197000,
+        "displayValue": "6.44 billion",
+        "color": "#0ea5e9",
+        "icon": "datacenter",
+        "source": "MIT Technology Review / Microsoft",
+        "sourceUrl": "https://www.technologyreview.com/2025/05/20/1116327/ai-energy-usage-climate-footprint-big-tech/",
+        "year": 2022,
+        "notes": "34% increase from 2021; equivalent to 2,500 Olympic pools"
+      },
+      {
+        "id": "residential_leaks",
+        "label": "US Household Leaks",
+        "sublabel": "Dripping taps, toilets, pipes",
+        "value": 3406869000000,
+        "displayValue": "3.41 trillion",
+        "color": "#f97316",
+        "icon": "faucet",
+        "source": "EPA WaterSense",
+        "sourceUrl": "https://www.epa.gov/watersense/statistics-and-facts",
+        "year": 2024,
+        "notes": "Equivalent to water use of 11 million homes"
+      },
+      {
+        "id": "golf_courses",
+        "label": "US Golf Courses",
+        "sublabel": "15,962 courses nationwide",
+        "value": 2072511975000,
+        "displayValue": "2.07 trillion",
+        "color": "#22c55e",
+        "icon": "golf",
+        "source": "USGA/GCSAA",
+        "sourceUrl": "https://www.usga.org/content/dam/usga/pdf/Water%20Resource%20Center/how-much-water-does-golf-use.pdf",
+        "year": 2024,
+        "notes": "Reduced 29% since 2005; 0.5% of total US water use"
+      },
+      {
+        "id": "chatgpt_annual",
+        "label": "ChatGPT Annual (All Queries)",
+        "sublabel": "2.5 billion queries/day globally",
+        "value": 111194762633,
+        "displayValue": "111.2 billion",
+        "color": "#8b5cf6",
+        "icon": "ai",
+        "source": "OpenAI (Sam Altman) / MIT Tech Review",
+        "sourceUrl": "https://www.technologyreview.com/2025/05/20/1116327/ai-energy-usage-climate-footprint-big-tech/",
+        "year": 2025,
+        "notes": "0.32 mL per query × 2.5B queries/day × 365 days"
+      }
+    ],
+    "perQuery": {
+      "chatgpt": {
+        "value": 0.32,
+        "unit": "mL",
+        "source": "OpenAI (Sam Altman)"
+      },
+      "gemini": {
+        "value": 0.26,
+        "unit": "mL",
+        "source": "Google (August 2025)",
+        "notes": "About 5 drops of water"
+      },
+      "comparison": "A single dripping tap wastes 11,000+ litres/year - equivalent to 35 million ChatGPT queries"
+    }
+  },
+  "energyConsumption": {
+    "unit": "kWh",
+    "items": [
+      {
+        "id": "chatgpt_query",
+        "label": "ChatGPT Query (GPT-4o)",
+        "value": 0.00034,
+        "displayValue": "0.34 Wh",
+        "color": "#8b5cf6",
+        "source": "OpenAI (Sam Altman)",
+        "sourceUrl": "https://www.devsustainability.com/p/chatgpt-energy-usage-is-034-wh-per",
+        "year": 2024,
+        "notes": "Typical text query; range 0.1-4 Wh depending on complexity"
+      },
+      {
+        "id": "gemini_query",
+        "label": "Google Gemini Query",
+        "value": 0.00024,
+        "displayValue": "0.24 Wh",
+        "color": "#4285f4",
+        "source": "Google (Official)",
+        "sourceUrl": "https://www.sustainabilitybynumbers.com/p/ai-footprint-august-2025",
+        "year": 2025,
+        "notes": "Median text query; first official per-query disclosure by major AI company"
+      },
+      {
+        "id": "gemini_query_2024",
+        "label": "Google Gemini Query (2024)",
+        "value": 0.009,
+        "displayValue": "9 Wh",
+        "color": "#ea4335",
+        "source": "Google (Official)",
+        "year": 2024,
+        "notes": "Same query type, 12 months earlier - 33x less efficient"
+      },
+      {
+        "id": "google_search",
+        "label": "Google Search",
+        "value": 0.0003,
+        "displayValue": "0.3 Wh",
+        "color": "#34a853",
+        "source": "Various estimates (2009 baseline)",
+        "year": 2024
+      },
+      {
+        "id": "netflix_hour",
+        "label": "Netflix Streaming (1 hour HD)",
+        "value": 0.077,
+        "displayValue": "77 Wh",
+        "color": "#e50914",
+        "source": "MIT Technology Review",
+        "sourceUrl": "https://www.technologyreview.com/2025/05/20/1116327/ai-energy-usage-climate-footprint-big-tech/",
+        "year": 2025
+      },
+      {
+        "id": "tv_oled_65_hour",
+        "label": "165 cm OLED TV (1 hour)",
+        "value": 0.12,
+        "displayValue": "120 Wh",
+        "color": "#0e7490",
+        "source": "Solar Tech Online 2025",
+        "sourceUrl": "https://solartechonline.com/blog/tv-electricity-usage-guide/",
+        "year": 2025
+      },
+      {
+        "id": "sora_video",
+        "label": "Sora AI Video (5 seconds)",
+        "value": 1.0,
+        "displayValue": "~1,000 Wh (1 kWh)",
+        "color": "#f43f5e",
+        "source": "Sustainability by Numbers (estimate)",
+        "sourceUrl": "https://www.sustainabilitybynumbers.com/p/ai-footprint-august-2025",
+        "year": 2025,
+        "notes": "~4,000x more than a text query; estimate has uncertainty"
+      }
+    ],
+    "comparisons": [
+      {
+        "description": "1 hour of 165 cm TV watching",
+        "equivalentQueries": 279,
+        "calculation": "95 Wh ÷ 0.34 Wh = 279 queries"
+      },
+      {
+        "description": "1 hour of 191 cm OLED TV",
+        "equivalentQueries": 544,
+        "calculation": "185 Wh ÷ 0.34 Wh = 544 queries"
+      },
+      {
+        "description": "1 hour of Netflix streaming",
+        "equivalentQueries": 227,
+        "calculation": "77 Wh ÷ 0.34 Wh = 227 queries"
+      },
+      {
+        "description": "One 5-second AI video generation",
+        "equivalentQueries": 2941,
+        "calculation": "1000 Wh ÷ 0.34 Wh = 2,941 queries"
+      }
+    ],
+    "householdEquivalents": {
+      "geminiQuery": {
+        "value": 0.24,
+        "unit": "Wh",
+        "equivalents": [
+          { "activity": "Microwave", "duration": "1 second" },
+          { "activity": "Television", "duration": "9 seconds" },
+          { "activity": "Refrigerator", "duration": "6 seconds" },
+          { "activity": "Laptop", "duration": "17 seconds" },
+          { "activity": "Phone charging", "amount": "2% charge" }
+        ],
+        "source": "Sustainability by Numbers"
+      }
+    },
+    "uncertaintyNote": "Energy per query ranges from 0.1-4 Wh depending on model, token count, and complexity. Queries with 100k input tokens can use ~40 Wh."
+  },
+  "videoVsText": {
+    "title": "Video Generation: The Real Energy Consumer",
+    "comparison": {
+      "textQuery": {
+        "label": "Text Query (Gemini/ChatGPT)",
+        "energy": 0.3,
+        "unit": "Wh"
+      },
+      "imageGeneration": {
+        "label": "Image Generation",
+        "energyMin": 0.3,
+        "energyMax": 1.2,
+        "unit": "Wh"
+      },
+      "videoGeneration": {
+        "label": "5-second Video (Sora)",
+        "energy": 1000,
+        "unit": "Wh"
+      }
+    },
+    "ratio": "~4,000x more energy for video vs text",
+    "insight": "When people worry about AI energy use, they should distinguish between text (minimal) and video generation (significant)"
+  },
+  "efficiencyImprovements": {
+    "title": "AI Efficiency is Improving Rapidly",
+    "google": {
+      "model": "Gemini",
+      "period": "12 months (May 2024 - May 2025)",
+      "energyReduction": 33,
+      "emissionsReduction": 44,
+      "before": {
+        "energy": 9,
+        "emissions": 1.32,
+        "units": { "energy": "Wh", "emissions": "g CO₂e" }
+      },
+      "after": {
+        "energy": 0.24,
+        "emissions": 0.03,
+        "units": { "energy": "Wh", "emissions": "g CO₂e" }
+      },
+      "source": "Google (Official)",
+      "sourceUrl": "https://www.sustainabilitybynumbers.com/p/ai-footprint-august-2025"
+    },
+    "industryTrend": "Hardware improvements (A100 → H100 GPUs), model architecture (sparse networks), and optimisation are driving rapid efficiency gains",
+    "potentialOptimisation": {
+      "trainingCarbonReduction": "Up to 75%",
+      "source": "University of Michigan",
+      "method": "Tuning GPU power limits, batch size, and location selection"
+    },
+    "sparseNetworks": {
+      "description": "Sparsely activated neural networks can consume <10% of energy vs dense networks",
+      "source": "MIT Technology Review"
+    }
+  },
+  "dataCentreIndustry": {
+    "title": "The Bigger Picture: Data Centre Industry",
+    "usEnergyShare": {
+      "current": 4.4,
+      "previous": 1.9,
+      "previousYear": 2018,
+      "currentYear": 2025,
+      "unit": "% of US energy",
+      "source": "Harvard/UCLA Study",
+      "sourceUrl": "https://arxiv.org/html/2411.09786v1"
+    },
+    "usEmissions": {
+      "value": 105,
+      "unit": "million metric tons CO₂",
+      "year": 2024,
+      "percentOfNational": 2.18,
+      "comparison": "Comparable to domestic aviation (~2.5%)",
+      "source": "Harvard/UCLA Study"
+    },
+    "carbonIntensity": {
+      "dataCentreAverage": 548,
+      "usAverage": 369,
+      "premium": 48,
+      "unit": "g CO₂e/kWh",
+      "reason": "95% of US data centres in locations with dirtier-than-average electricity due to 24/7 power needs",
+      "source": "Harvard/UCLA Study"
+    },
+    "regionalVariation": {
+      "bestCase": { "location": "Quebec, Canada", "intensity": 32 },
+      "worstCase": { "location": "Central US (coal regions)", "intensity": 1000 },
+      "variationFactor": "16x difference between best and worst locations",
+      "unit": "g CO₂e/kWh"
+    },
+    "projections": {
+      "iea2030": {
+        "globalDemand": 945,
+        "unit": "TWh",
+        "percentOfGlobalEmissions": "1-1.4%",
+        "source": "International Energy Agency"
+      },
+      "lawrenceBerkeley2028": {
+        "usShare": "6-12% of US electricity",
+        "source": "Lawrence Berkeley National Laboratory"
+      },
+      "fossilFuelShare": {
+        "value": 60,
+        "unit": "% of new demand met by fossil fuels by 2030",
+        "source": "Goldman Sachs"
+      }
+    },
+    "context": "While data centre energy use is growing (80% increase 2020-2025), AI is not yet tracked as its own sector. Video streaming alone accounts for 60% of global internet traffic."
+  },
+  "fuelConsumption": {
+    "unit": "litres/year",
+    "items": [
+      {
+        "id": "personal_car_commute",
+        "label": "Average US Car Commute",
+        "sublabel": "12,282 km/year @ 8.68 L/100km",
+        "value": 1066,
+        "displayValue": "1,066 litres",
+        "color": "#ef4444",
+        "source": "EPA/US Census",
+        "sourceUrl": "https://www.epa.gov/automotive-trends/highlights-automotive-trends-report",
+        "year": 2024,
+        "notes": "69.2% of Americans drive personal vehicles to work"
+      },
+      {
+        "id": "pickup_commute",
+        "label": "Full-Size Pickup Commute",
+        "sublabel": "12,282 km/year @ 13.07 L/100km",
+        "value": 1605,
+        "displayValue": "1,605 litres",
+        "color": "#dc2626",
+        "source": "US Gas Price News",
+        "sourceUrl": "https://news.usgasprice.com/how-much-fuel-does-the-average-american-commute-use-each-year/",
+        "year": 2024
+      },
+      {
+        "id": "hybrid_commute",
+        "label": "Hybrid Car Commute",
+        "sublabel": "12,282 km/year @ 4.70 L/100km",
+        "value": 579,
+        "displayValue": "579 litres",
+        "color": "#22c55e",
+        "source": "US Gas Price News",
+        "year": 2024
+      }
+    ],
+    "context": {
+      "totalNational": "$90+ billion spent annually on commuting fuel",
+      "idlingWaste": "57-76 litres/year wasted from idling alone",
+      "averageCost": "$2,043/year average commuting cost"
+    }
+  },
+  "aiTraining": {
+    "models": [
+      {
+        "id": "gpt3",
+        "label": "GPT-3 Training",
+        "parameters": "175 billion",
+        "energyGWh": 1.287,
+        "energyDisplay": "1.287 GWh (1,287 MWh)",
+        "carbonTonnes": 552,
+        "perUserWh": {
+          "users300M": 4.29,
+          "users800M": 1.61
+        },
+        "equivalents": [
+          "120 US homes for 1 year",
+          "1 US household for 120 years"
+        ],
+        "source": "MIT Technology Review / Various research",
+        "year": 2020
+      },
+      {
+        "id": "gpt4",
+        "label": "GPT-4 Training",
+        "parameters": "~200-280 billion (estimated)",
+        "energyGWh": 50,
+        "energyDisplay": "~50 GWh",
+        "carbonTonnes": "12,456-14,994",
+        "perUserWh": {
+          "users300M": 166.7,
+          "users800M": 62.5
+        },
+        "equivalents": [
+          "San Francisco for 3 days",
+          "~300 round-trip flights NYC to San Francisco"
+        ],
+        "vsGpt3": "40-48x more energy than GPT-3",
+        "source": "MIT Technology Review (leaked data, unverified)",
+        "sourceUrl": "https://www.technologyreview.com/2025/05/20/1116327/ai-energy-usage-climate-footprint-big-tech/",
+        "year": 2023,
+        "notes": "Training cost over $100 million; ~25,000 A100 GPUs for 90-100 days"
+      },
+      {
+        "id": "gpt4o_training",
+        "label": "GPT-4o Training",
+        "powerMW": "20-25",
+        "duration": "~3 months",
+        "source": "Epoch AI",
+        "year": 2024
+      }
+    ],
+    "context": "Training is a one-time cost amortised across all users. As the user base grows from 300M to 800M, per-user training energy drops significantly. Inference (daily queries) is now a larger aggregate cost than training due to scale (2.5 billion queries/day)."
+  },
+  "chatgptStats": {
+    "dailyQueries": {
+      "value": 2500000000,
+      "display": "2.5 billion",
+      "source": "OpenAI / MIT Technology Review",
+      "year": 2025
+    },
+    "annualEnergy": {
+      "value": 300,
+      "unit": "GWh",
+      "equivalent": "Powering ~30,000 US homes annually",
+      "source": "MIT Technology Review"
+    }
+  },
+  "chatgptUsers": {
+    "global": {
+      "weeklyActive": [
+        { "date": "2024-12", "users": 300000000, "display": "300 million" },
+        { "date": "2025-08", "users": 700000000, "display": "700 million" },
+        { "date": "2025-10", "users": 800000000, "display": "800 million" }
+      ],
+      "source": "TechCrunch",
+      "sourceUrl": "https://techcrunch.com/2025/10/06/sam-altman-says-chatgpt-has-hit-800m-weekly-active-users/"
+    },
+    "usa": {
+      "monthlyActive": 70000000,
+      "display": "70 million",
+      "percentOfGlobal": 19.01,
+      "source": "Backlinko/DemandSage",
+      "year": 2025
+    }
+  },
+  "individualImpact": {
+    "title": "Personal AI Usage in Context",
+    "dailyUsage": [
+      {
+        "queries": 10,
+        "energyWh": 3.4,
+        "percentOfDailyUse": 0.03,
+        "context": "Less than running a fridge for 1 minute"
+      },
+      {
+        "queries": 50,
+        "energyWh": 17,
+        "percentOfDailyUse": 0.15,
+        "context": "About 10 seconds of microwave use"
+      },
+      {
+        "queries": 100,
+        "energyWh": 34,
+        "percentOfDailyUse": 0.3,
+        "context": "About 20 minutes of TV watching"
+      }
+    ],
+    "usHouseholdDaily": 28000,
+    "unit": "Wh",
+    "source": "Sustainability by Numbers / Epoch AI",
+    "note": "100 queries/day represents about 0.3% of typical household electricity"
+  },
+  "dailyHabitsComparison": {
+    "title": "Typical Daily Usage Patterns",
+    "description": "How energy consumption compares for average daily use",
+    "tvStreaming": {
+      "hoursPerDay": 6.75,
+      "hoursDisplay": "6 hours 45 minutes",
+      "breakdown": {
+        "traditionalTV": 2.92,
+        "streaming": 3.83
+      },
+      "energyPerHour": {
+        "streaming": 77,
+        "tv65inch": 95,
+        "average": 77
+      },
+      "dailyEnergyWh": {
+        "low": 520,
+        "high": 675,
+        "typical": 520
+      },
+      "sources": ["eMarketer", "Nielsen", "Pew Research"],
+      "year": 2024
+    },
+    "chatgpt": {
+      "queriesPerDay": {
+        "typicalWeeklyUser": 3.5,
+        "dailyActiveUser": 22,
+        "range": "3-4"
+      },
+      "energyPerQuery": 0.3,
+      "dailyEnergyWh": {
+        "typicalUser": 1.05,
+        "dailyActiveUser": 6.6
+      },
+      "sources": ["OpenAI via TechCrunch", "CNBC"],
+      "year": 2025,
+      "methodology": "2.5 billion daily prompts / 800 million weekly active users"
+    },
+    "comparison": {
+      "ratioTypicalUser": 495,
+      "ratioDailyActiveUser": 79,
+      "description": "TV/streaming uses 495x more energy daily than typical ChatGPT usage"
+    }
+  },
+  "perspectives": [
+    {
+      "title": "Household Leaks",
+      "fact": "A single dripping tap wastes 11,000+ litres per year",
+      "comparison": "Equivalent to 35.3 million ChatGPT queries",
+      "context": "EPA estimates 10% of US homes have leaks wasting 340+ litres daily"
+    },
+    {
+      "title": "Daily Media Consumption",
+      "fact": "Average American watches 6 hours 45 minutes of TV/streaming per day",
+      "comparison": "Uses 520 Wh daily vs 1.05 Wh for typical AI use (3-4 queries)",
+      "context": "Sources: eMarketer, Nielsen (2024)"
+    },
+    {
+      "title": "Streaming Energy",
+      "fact": "1 hour of Netflix streaming uses 77 Wh",
+      "comparison": "Equivalent to 227 ChatGPT queries",
+      "context": "Video streaming accounts for 60% of global internet traffic"
+    },
+    {
+      "title": "Golf Course Water Use",
+      "fact": "US golf courses use 2.07 trillion litres of water per year",
+      "comparison": "18x more than ChatGPT's estimated global annual water use",
+      "context": "15,962 courses serving 28 million golfers vs 800 million AI users"
+    },
+    {
+      "title": "Infrastructure Water Loss",
+      "fact": "126.1 trillion litres lost to US infrastructure leaks annually",
+      "comparison": "1,134x ChatGPT's estimated annual water consumption",
+      "context": "14-18% of treated water lost before reaching consumers (ASCE)"
+    },
+    {
+      "title": "Efficiency Improvements",
+      "fact": "Google Gemini reduced energy use 33x in 12 months",
+      "comparison": "From 9 Wh to 0.24 Wh per query",
+      "context": "Hardware and architecture improvements driving gains"
+    },
+    {
+      "title": "Video vs Text AI",
+      "fact": "A 5-second AI-generated video uses approximately 1 kWh",
+      "comparison": "4,000x more energy than a text query",
+      "context": "Text chatbots and video generation have very different footprints"
+    },
+    {
+      "title": "Data Centre Location",
+      "fact": "95% of US data centres are in locations with dirtier-than-average electricity",
+      "comparison": "Carbon intensity varies 16x between best and worst locations",
+      "context": "24/7 power requirements limit location flexibility (Harvard/UCLA)"
+    },
+    {
+      "title": "Commuting Emissions",
+      "fact": "One year of average US car commuting uses 1,066 litres of fuel",
+      "comparison": "Produces approximately 2.5 tonnes of CO₂",
+      "context": "69% of Americans drive personal vehicles to work"
+    }
+  ],
+  "keyInsights": [
+    {
+      "stat": "33x",
+      "description": "Efficiency improvement in AI (Gemini) in just 12 months"
+    },
+    {
+      "stat": "1,134x",
+      "description": "More water wasted by US infrastructure leaks than ChatGPT uses annually"
+    },
+    {
+      "stat": "227",
+      "description": "ChatGPT queries to equal 1 hour of Netflix streaming"
+    },
+    {
+      "stat": "0.3%",
+      "description": "Maximum share of your daily electricity even with 100 AI queries"
+    },
+    {
+      "stat": "4,000x",
+      "description": "More energy for video generation vs text queries"
+    },
+    {
+      "stat": "18x",
+      "description": "More water used by US golf courses than ChatGPT globally"
+    }
+  ],
+  "mythBusters": [
+    {
+      "myth": "AI is destroying the climate",
+      "reality": "Data centres are 2.18% of US emissions - comparable to aviation. The concern is growth rate, not current scale.",
+      "source": "Harvard/UCLA Study"
+    },
+    {
+      "myth": "Every AI query wastes massive resources",
+      "reality": "A typical query uses 0.24-0.34 Wh - equivalent to microwaving for 1 second or charging your phone 2%.",
+      "source": "Google, OpenAI"
+    },
+    {
+      "myth": "AI efficiency isn't improving",
+      "reality": "Google showed 33x energy reduction in 12 months. Hardware and architecture improvements are rapid.",
+      "source": "Google"
+    },
+    {
+      "myth": "Data centres use clean energy",
+      "reality": "95% of US data centres are in dirtier-than-average locations. Carbon intensity is 48% higher than US average.",
+      "source": "Harvard/UCLA Study"
+    },
+    {
+      "myth": "Training AI is the main energy cost",
+      "reality": "With 2.5 billion daily queries, inference now rivals training in total energy. But both are amortised across 800M users.",
+      "source": "MIT Technology Review"
+    }
+  ],
+  "quotes": [
+    {
+      "text": "Individual usage of ChatGPT and other LLMs for most people is a small part of their carbon and energy footprint.",
+      "source": "Sustainability by Numbers",
+      "context": "Analysis of AI environmental impact"
+    },
+    {
+      "text": "We should stop trying to reverse-engineer numbers based on hearsay and put more pressure on these companies to actually share the real ones.",
+      "author": "Sasha Luccioni",
+      "role": "Creator of AI Energy Score",
+      "source": "MIT Technology Review"
+    },
+    {
+      "text": "Dirtier energy is available throughout the entire day, and data centres require that to maintain peak operation 24-7. Renewable energy, like wind or solar, might not be as available.",
+      "author": "Falco Bargagli-Stoffi",
+      "role": "Assistant Professor, UCLA",
+      "source": "MIT Technology Review"
+    }
+  ]
+}
