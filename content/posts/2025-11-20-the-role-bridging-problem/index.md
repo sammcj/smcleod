@@ -43,6 +43,8 @@ Code gets written, interfaces get built, documents get produced, and they all _l
 
 This is particularly problematic because the work is often functionally correct. Tests pass, the UI renders, the API responds. What's missing is the domain mindset - the architectural considerations, the edge case handling, the maintainability concerns that come from actually understanding the domain you're working in.
 
+It's the ultracrepidarian's dilemma: AI provides the competence to produce, but not the expertise to evaluate.
+
 Consider these scenarios:
 
 - A data analyst uses AI to submit a pull request to codebases they otherwise wouldn't touch - they're producing code, but not applying software engineering principles.
