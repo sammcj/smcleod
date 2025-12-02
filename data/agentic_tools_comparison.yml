@@ -159,12 +159,12 @@ categories:
       - name: User Interface
         cline: VSCode IDE, IntelliJ, CLI
         claude_code: VSCode, IntelliJ IDE, TUI, Zed, CLI
-        cursor: Standalone IDE (Fork of VSCode), CLI
+        cursor: Standalone IDE (VSCode Fork), CLI
         cursor_highlight: 3
         github_copilot: VSCode, Zed, CLI
-        google_antigravity: Standalone IDE (Fork of VSCode), CLI
+        google_antigravity: Standalone IDE (VSCode Fork), CLI
         google_antigravity_highlight: 3
-        amazon_kiro: Standalone IDE (Fork of VSCode)
+        amazon_kiro: Standalone IDE (VSCode Fork)
         amazon_kiro_highlight: 3
         openai_codex: VSCode IDE, CLI
 
@@ -178,7 +178,7 @@ categories:
         google_antigravity: High
         google_antigravity_highlight: 5
         amazon_kiro: Very High
-        amazon_kiro_highlight: 4
+        amazon_kiro_highlight: 5
         openai_codex: Medium/Low
 
       - name: Plan/Act modes
