@@ -185,14 +185,14 @@ categories:
         claude_code: Yes
         cline: Yes
         cursor: No
-        cursor_highlight: 3
+        cursor_highlight: 5
         github_copilot: Partial
         github_copilot_highlight: 2
         google_antigravity:
           text: Partial (doesn't work)
           highlight: 4
         amazon_kiro: No
-        amazon_kiro_highlight: 3
+        amazon_kiro_highlight: 5
         openai_codex: No
 
       - name: Community size
@@ -201,9 +201,9 @@ categories:
         cursor: Large
         github_copilot: Large
         google_antigravity: Small
-        google_antigravity_highlight: 3
+        google_antigravity_highlight: 4
         amazon_kiro: Small
-        amazon_kiro_highlight: 3
+        amazon_kiro_highlight: 4
         openai_codex: Medium
         openai_codex_highlight: 2
 
