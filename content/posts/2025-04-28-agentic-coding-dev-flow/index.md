@@ -21,7 +21,7 @@ ShowRssButtonInSectionTermList: true
 UseHugoToc: true
 mermaid: true
 cover:
-  image: "agentic-flow.png"
+  image: "setup-plan-act-iterate.png"
   alt: "Agentic Coding Development Flow"
   # caption: "Optional caption text"
   relative: false  # Set to true for page bundle images
@@ -31,7 +31,7 @@ I follow a simple, yet effective flow for agentic coding that helps me to effici
 
 The flow is simple: **_Setup -> [Plan -> Act](https://docs.cline.bot/exploring-clines-tools/plan-and-act-modes-a-guide-to-effective-ai-development) -> Review and Iterate._**
 
-![](agentic-flow.png)
+![](setup-plan-act-iterate.png)
 
 ## Workflow Quickstart
 
