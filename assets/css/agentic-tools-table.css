@@ -351,3 +351,44 @@
     padding: 0.5rem 0.75rem;
   }
 }
+
+/* Dark mode overrides - force black text on light backgrounds */
+@media (prefers-color-scheme: dark) {
+  .comparison-table,
+  .comparison-table th,
+  .comparison-table td,
+  .comparison-table .feature-name,
+  .comparison-table .feature-column,
+  .comparison-table .category-name,
+  .comparison-table .category-row,
+  .comparison-table td .cell-link {
+    color: #000 !important;
+  }
+
+  .comparison-legend {
+    color: #000 !important;
+  }
+
+  .comparison-legend h4,
+  .comparison-legend li {
+    color: #000 !important;
+  }
+}
+
+/* Also handle theme class-based dark mode if used */
+.dark .comparison-table,
+.dark .comparison-table th,
+.dark .comparison-table td,
+.dark .comparison-table .feature-name,
+.dark .comparison-table .feature-column,
+.dark .comparison-table .category-name,
+.dark .comparison-table .category-row,
+.dark .comparison-table td .cell-link {
+  color: #000 !important;
+}
+
+.dark .comparison-legend,
+.dark .comparison-legend h4,
+.dark .comparison-legend li {
+  color: #000 !important;
+}
