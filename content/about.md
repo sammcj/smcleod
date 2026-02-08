@@ -85,7 +85,7 @@ Check out the [Links](/links/) page for some of my favourite services, tools and
 
 ## Support my work
 
-You can help sponsor my projects by trading the $INGEST token: https://bags.fm/Dm98Qa1Xw2n35bq73R2t1bFgXPApUKu2YwzU8TjWBAGS
+https://buymeacoffee.com/sam.mcleod
 
 ---
 
