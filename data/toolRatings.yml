@@ -154,7 +154,7 @@ Utils:
 SaaS Providers:
   "Claude":
     rating: 9
-    notes: "Since Claude Sonnet 3.5 has been quite good at coding, especially with 'projects' and generating code as text attachments. Cons: Expensive, get rate limited all the time <b>\n\n*Highly recommend!*</b>"
+    notes: "SOTA / Best for agentic coding. Cons: Expensive, get rate limited all the time <b>\n\n*Highly recommend!*</b>"
     link: "https://claude.ai"
   "OpenAI":
     rating: 7
