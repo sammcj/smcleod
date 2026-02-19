@@ -465,11 +465,11 @@ const MemoryBar = ({ label, modelMemory, kvCacheMemory, maxMemory, colors }) => 
       React.createElement('div', {
         className: 'text-sm space-x-4 text-gray-600 dark:text-gray-300'
       },
-        React.createElement('span', null, `Model: ${modelMemory.toFixed(1)} GB`),
-        React.createElement('span', null, `K/V: ${kvCacheMemory.toFixed(1)} GB`),
+        React.createElement('span', null, `Model: ${modelMemory.toFixed(1)} GiB`),
+        React.createElement('span', null, `K/V: ${kvCacheMemory.toFixed(1)} GiB`),
         React.createElement('span', {
           className: 'font-semibold'
-        }, `Total: ${totalMemory.toFixed(1)} GB`)
+        }, `Total: ${totalMemory.toFixed(1)} GiB`)
       )
     ),
     React.createElement('div', {
@@ -849,7 +849,7 @@ const VRAMCalculator = () => {
           ),
           React.createElement('div', {
             className: 'text-xs text-green-700 dark:text-green-400 mt-1'
-          }, `${(ggufMetadata.modelSizeBytes / 1e9).toFixed(1)}GB, ${ggufMetadata.hidden_layers} layers, ${ggufMetadata.hidden_size} hidden size${ggufMetadata.split_count > 1 ? `, ${ggufMetadata.split_count} splits` : ''}`)
+          }, `${(ggufMetadata.modelSizeBytes / (1024 * 1024 * 1024)).toFixed(1)} GiB, ${ggufMetadata.hidden_layers} layers, ${ggufMetadata.hidden_size} hidden size${ggufMetadata.split_count > 1 ? `, ${ggufMetadata.split_count} splits` : ''}`)
         ),
         React.createElement('button', {
           onClick: handleClearMetadata,
