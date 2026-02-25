@@ -204,3 +204,5 @@ themes/DoIt/.git
 hugo_list.csv
 static/llms.txt
 static/llms-full.txt
+
+**/content/**/.claude
