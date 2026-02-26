@@ -357,6 +357,7 @@ models:
       --slots --metrics --props
       --threads -1 --threads-batch -1 --threads-http -1 --prio-batch 2 --prio 2
       --flash-attn on --cache-type-k q8_0 --cache-type-v q8_0
+    # note: don't use --cache-reuse with Qwen 3.5 MoE models until https://github.com/ggml-org/llama.cpp/issues/18497 is resolved
       --no-context-shift --keep -1 --cache-reuse 256
       --cache-ram -1
       --kv-unified
