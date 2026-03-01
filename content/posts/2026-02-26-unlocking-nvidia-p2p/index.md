@@ -319,7 +319,7 @@ services:
 
       # speculative decoding (drafting) using MTP (model-based token prediction)
       - '--speculative-config'
-      - '{"method":"qwen3_next_mtp","num_speculative_tokens":2}'
+      - '{"method":"mtp","num_speculative_tokens":1}'
 
       - '--enable-prefix-caching'
       - '--enable-chunked-prefill'
@@ -364,7 +364,7 @@ command:
   - "--enable-auto-tool-choice"
 
   - "--speculative-config"
-  - '{"method":"qwen3_next_mtp","num_speculative_tokens":2}'
+  - '{"method":"mtp","num_speculative_tokens":1}'
   - "--tensor-parallel-size"
   - "2"
 
