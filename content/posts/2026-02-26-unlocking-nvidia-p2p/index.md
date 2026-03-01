@@ -338,6 +338,60 @@ services:
               capabilities: ['compute', 'utility', 'graphics']
 ```
 
+Resulting in:
+
+```
+Engine 000: Avg generation throughput: 169.6 tokens/s
+Engine 000: Avg generation throughput: 187.6 tokens/s
+Engine 000: Avg generation throughput: 138.6 tokens/s
+```
+
+And for the 27b dense model, something like:
+
+```yaml
+
+command:
+  - "--model"
+  - "cyankiwi/Qwen3.5-27B-AWQ-4bit"
+  - "--served-model-name"
+  - "vLLM"
+
+  - "--trust-remote-code"
+  - "--tool-call-parser"
+  - "qwen3_coder"
+  - "--reasoning-parser"
+  - "qwen3"
+  - "--enable-auto-tool-choice"
+
+  - "--speculative-config"
+  - '{"method":"qwen3_next_mtp","num_speculative_tokens":2}'
+  - "--tensor-parallel-size"
+  - "2"
+
+  - "--enable-prefix-caching"
+  - "--enable-chunked-prefill"
+
+  - "--max-model-len"
+  - "65535"
+  - "--max-num-batched-tokens"
+  - "8192"
+  - "--max-num-seqs"
+  - "32"
+
+  - "--gpu-memory-utilization"
+  - "0.85"
+  - "--swap-space"
+  - "16"
+```
+
+Resulting in:
+
+```
+Engine 000: Avg generation throughput: 81.1 tokens/s
+Engine 000: Avg generation throughput: 86.3 tokens/s
+Engine 000: Avg generation throughput: 90.7 tokens/s
+```
+
 ### llama.cpp
 
 I use [llama-swap](https://github.com/mostlygeek/llama-swap) for hot loading models with llama.cpp, my real configuration uses a number of macros so I've compiled relevant parts of the config roughly as follows:
