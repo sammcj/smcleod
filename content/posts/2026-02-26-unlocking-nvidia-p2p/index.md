@@ -199,22 +199,28 @@ On startup, vLLM should no longer print the "Using default MoE config" warning. 
 
 Running Qwen 3.5 35b-a3b (a MoE model with ~3 billion active parameters per token) with 64k context on dual RTX 3090s:
 
-| Setting                | Value                 | Without P2P   |
-| ---------------------- | --------------------- | ------------- |
-| vLLM version           |                       |               |
-| llama.cpp version      |                       |               |
-| Model                  | Qwen 3.5 35b-a3b      |               |
-| Context length         | 64k                   |               |
-| vLLM Quantisation      | 4-bit (Dynamic) AWQ   |               |
-| llama.cpp Quantisation | Unsloth UD-Q4_K_XL    |               |
-| Inference engine       | vLLM                  |               |
-| GPUs                   | 2x RTX 3090           |               |
-| CPU                    | Ryzen 9 9900X 12-core |               |
-| RAM                    | 192GB DDR5 3600 MT/s  |               |
-| P2P                    | Enabled               | Disabled      |
-| Fused MoE config       | Tuned                 | Tuned         |
-| **llama.cpp avg tk/s** | **134.11 tk/s**       | Untested      |
-| **vLLM avg tk/s**      | **172.4 tk/s**        | ~120-145 tk/s |
+| Setting                | Value                 | Without P2P |
+| ---------------------- | --------------------- | ----------- |
+| vLLM version           |                       |             |
+| llama.cpp version      |                       |             |
+| Model                  | Qwen 3.5 35b-a3b      |             |
+| Context length         | 64k                   |             |
+| vLLM Quantisation      | 4-bit (Dynamic) AWQ   |             |
+| llama.cpp Quantisation | Unsloth UD-Q4_K_XL    |             |
+| Inference engine       | vLLM                  |             |
+| GPUs                   | 2x RTX 3090           |             |
+| CPU                    | Ryzen 9 9900X 12-core |             |
+| RAM                    | 192GB DDR5 3600 MT/s  |             |
+| P2P                    | Enabled               | Disabled    |
+| Fused MoE config       | Tuned                 | Tuned       |
+
+
+| Server/Model            | Value            | Without P2P   |
+| ----------------------- | ---------------- | ------------- |
+| **llama.cpp / 35b-a3b** | **110-130 tk/s** | Untested      |
+| **vLLM / 35b-a3b**      | **120-190 tk/s** | ~120-145 tk/s |
+| **llama.cpp / 27b**     | **30-70 tk/s**   | Untested      |
+| **vLLM / 27b**          | **32-195 tk/s**  | ~32-140 tk/s  |
 
 That's a 10-30% improvement over the same configuration without the P2P patch and MoE tuning, depending on the workload. The gain varies with batch size, sequence length, and how much inter-GPU communication the model actually needs. MoE architectures like Qwen 3.5 benefit particularly well since expert routing creates more cross-GPU traffic during tensor parallel inference, and the fused_moe kernel is on the critical path for every token generated.
 
@@ -266,6 +272,8 @@ services:
       CUDA_DEVICE_ORDER: FASTEST_FIRST
       CUDA_DEVICE_MAX_CONNECTIONS: 10
       CUDA_CACHE_MAXSIZE: 4294967296 # 4GB
+      NCCL_CUMEM_ENABLE: 1
+      RAY_memory_monitor_refresh_ms: 0
 
       # https://docs.vllm.ai/en/latest/configuration/env_vars/
       FLASH_ATTN: 1
@@ -279,12 +287,13 @@ services:
       VLLM_SLEEP_WHEN_IDLE: 1
       VLLM_TARGET_DEVICE: cuda
       VLLM_USE_PRECOMPILED: 1
+      VLLM_ENABLE_CUDAGRAPH_GC: 1
 
       VLLM_TUNED_CONFIG_FOLDER: /tuned_configs # Contains my fused MoE kernels
 
       # Qwen 3.5 specific settings
       VLLM_USE_FLASHINFER_MOE_FP16: '1'
-      VLLM_USE_FLASHINFER_SAMPLER: '0'
+      VLLM_USE_FLASHINFER_SAMPLER: '1' # I did have this as 0, but it _might_ be faster with it on
       VLLM_USE_DEEP_GEMM: 0
 
     command:
@@ -292,35 +301,37 @@ services:
       - 'vLLM'
       - '--tensor-parallel-size' # split across 2 GPUs
       - '2'
+      - "--attention-backend"
+      - "FLASHINFER"
 
       # memory optimisation
       # https://docs.vllm.ai/en/stable/configuration/optimization.html
       - '--max-model-len'
-      - '65535'
+      - '131070'
       - '--max-num-batched-tokens'
-      - '8192'
+      - '6144'
       - '--max-num-seqs'
       - '32'
       - '--gpu-memory-utilization'
-      - '0.85'
+      - '0.9'
       - '--swap-space'
       - '16'
 
       ## Qwen 3.5 specific settings
       - '--model'
-      - 'cyankiwi/Qwen3.5-35B-A3B-AWQ-4bit'
-      - '--trust-remote-code' # May no longer be needed
+      - 'cyankiwi/Qwen3.5-35B-A3B-AWQ-4bit'    # 35b-a3b
+      # - "cyankiwi/Qwen3.5-27B-AWQ-BF16-INT4" # 27b - linear attention layers kept at full-precision
       - '--tool-call-parser'
       - 'qwen3_coder'
       - '--reasoning-parser'
       - 'qwen3'
       - '--enable-auto-tool-choice'
-      - '--enable-expert-parallel' # MoE models only
+      - '--speculative-config' # speculative decoding (drafting) using MTP (model-based token prediction)
+      - '{"method":"mtp","num_speculative_tokens":5}'
+      - "--override-generation-config"
+      - '{"temperature": 0.7, "repetition_penalty": 1.0, "presence_penalty": "1.5", "top_k": 20}'
 
-      # speculative decoding (drafting) using MTP (model-based token prediction)
-      - '--speculative-config'
-      - '{"method":"mtp","num_speculative_tokens":1}'
-
+      - '--enable-expert-parallel' # MoE models only, disable for 27b model
       - '--enable-prefix-caching'
       - '--enable-chunked-prefill'
 
@@ -336,60 +347,6 @@ services:
               device_ids:
                 - nvidia.com/gpu=all
               capabilities: ['compute', 'utility', 'graphics']
-```
-
-Resulting in:
-
-```
-Engine 000: Avg generation throughput: 169.6 tokens/s
-Engine 000: Avg generation throughput: 187.6 tokens/s
-Engine 000: Avg generation throughput: 138.6 tokens/s
-```
-
-And for the 27b dense model, something like:
-
-```yaml
-
-command:
-  - "--model"
-  - "cyankiwi/Qwen3.5-27B-AWQ-4bit"
-  - "--served-model-name"
-  - "vLLM"
-
-  - "--trust-remote-code"
-  - "--tool-call-parser"
-  - "qwen3_coder"
-  - "--reasoning-parser"
-  - "qwen3"
-  - "--enable-auto-tool-choice"
-
-  - "--speculative-config"
-  - '{"method":"mtp","num_speculative_tokens":1}'
-  - "--tensor-parallel-size"
-  - "2"
-
-  - "--enable-prefix-caching"
-  - "--enable-chunked-prefill"
-
-  - "--max-model-len"
-  - "65535"
-  - "--max-num-batched-tokens"
-  - "8192"
-  - "--max-num-seqs"
-  - "32"
-
-  - "--gpu-memory-utilization"
-  - "0.85"
-  - "--swap-space"
-  - "16"
-```
-
-Resulting in:
-
-```
-Engine 000: Avg generation throughput: 81.1 tokens/s
-Engine 000: Avg generation throughput: 86.3 tokens/s
-Engine 000: Avg generation throughput: 90.7 tokens/s
 ```
 
 ### llama.cpp
