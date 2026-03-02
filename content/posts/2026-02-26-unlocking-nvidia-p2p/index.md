@@ -272,6 +272,7 @@ services:
       CUDA_DEVICE_ORDER: FASTEST_FIRST
       CUDA_DEVICE_MAX_CONNECTIONS: 10
       CUDA_CACHE_MAXSIZE: 4294967296 # 4GB
+      CUDA_SCALE_LAUNCH_QUEUES: '4x'
       NCCL_CUMEM_ENABLE: 1
       RAY_memory_monitor_refresh_ms: 0
 
@@ -359,6 +360,7 @@ env:
   - GGML_CUDA_GRAPH_OPT=1
   - LLAMA_SET_ROWS=1
   - LLAMA_ARG_KV_SPLIT=false
+  - CUDA_SCALE_LAUNCH_QUEUES=4x
 
 models:
   "qwen3-5-35b-a3b-ud-q4kxl-64k-coding-instruct":
