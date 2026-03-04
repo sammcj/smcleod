@@ -355,16 +355,16 @@ services:
 I use [llama-swap](https://github.com/mostlygeek/llama-swap) for hot loading models with llama.cpp, my real configuration uses a number of macros so I've compiled relevant parts of the config roughly as follows:
 
 ```yaml
-env:
-  - GGML_CUDA_ENABLE_UNIFIED_MEMORY=1
-  - GGML_CUDA_GRAPH_OPT=1
-  - LLAMA_SET_ROWS=1
-  - LLAMA_ARG_KV_SPLIT=false
-  - CUDA_SCALE_LAUNCH_QUEUES=4x
 
 models:
   "qwen3-5-35b-a3b-ud-q4kxl-64k-coding-instruct":
     ttl: 300 # 5 minutes
+    env:
+      - CUDA_SCALE_LAUNCH_QUEUES=4x
+      - CUDA_CACHE_MAXSIZE=4294967296
+      - GGML_CUDA_GRAPH_OPT=1
+      - LLAMA_SET_ROWS=1
+      - LLAMA_ARG_KV_SPLIT=false
     cmd: >
     # server
       --slots --metrics --props
