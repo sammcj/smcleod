@@ -23,28 +23,28 @@ mermaid: false
 ---
 
 - **Configuration**
-  - [Layered rules](#add-tight-layered-rules) - concise, scoped CLAUDE.md files that shape agent behaviour
+  - [Agent rules](#agent-rules) - concise, scoped CLAUDE.md files that shape agent behaviour
   - [Sandboxing](#enable-sandboxing) - constrain file access and network connections
-  - [Permissions](#set-up-allow-ask-and-deny-permissions) - pre-approve safe operations, hard-block dangerous ones
+  - [Permissions](#configure-agent-permissions-allow-ask-deny) - pre-approve safe operations, hard-block dangerous ones
   - [Hooks](#use-hooks-to-help-with-safety-and-automation) - run shell commands before/after tool calls as a safety net
 - **Extend knowledge and capabilities**
-  - [Skills](#2-lean-into-skills) - on-demand markdown knowledge the agent self-selects when relevant
-  - [Language servers](#5-enable-lsp-for-code-intelligence) - give the agent go-to-definition, find-references, and type checking
-  - [MCP tools](#6-take-a-minimalist-approach-to-mcp-tools) - external tool servers, used sparingly
+  - [Skills](#lean-into-skills) - dynamic knowledge acquisition with progressive disclosure
+  - [Language servers](#enable-language-servers-lsp) - give the agent go-to-definition, find-references, and type checking
+  - [MCP tools](#take-a-minimalist-approach-to-mcp-tools) - external tool servers, used sparingly
 - **Workflow**
-  - [Plan before acting](#3-use-planning-mode) - read-only exploration before making changes
-  - [Start fresh sessions](#4-embrace-starting-fresh-sessions) - keep context windows lean
-  - [Custom commands](#create-commands-for-frequent-prompts) - reusable prompts for common tasks
+  - [Plan before acting](#use-planning-mode) - read-only exploration and task definition
+  - [Embrace starting fresh sessions](#embrace-starting-fresh-sessions) - keep context clean
+  - [Template out common commands](#create-commands-or-skills-for-frequent-prompts) - reusable prompts for common tasks
 
 ![](/2025/04/my-plan-document-act-review-flow-for-agentic-software-development/setup-plan-act-iterate.svg)
 
 ---
 
-## 1. Setup
+## Configuration
 
-### Add tight, layered rules
+### Agent Rules
 
-Claude Code loads `CLAUDE.md` files into context on every single message. Every line you add is tokens the model has to process and remember. Treat it like a config file, not a wiki.
+Add tight, layered rules - Claude Code loads `CLAUDE.md` files into context on every single message. Every line you add is tokens the model has to process and remember. Treat it like a config file, not a wiki.
 
 Use two layers:
 
@@ -65,6 +65,8 @@ Remember: Rules are suggestions, not hard controls.
 
 - [Claude Memory / Rules](https://code.claude.com/docs/en/memory)
 - [Claude.md vs Rules vs Skills](https://code.claude.com/docs/en/features-overview#claude-md-vs-rules-vs-skills)
+
+---
 
 ### Enable sandboxing
 
@@ -98,7 +100,7 @@ The network allowlist stops the agent from making unexpected outbound connection
 
 Note: The sandbox is not a silver bullet. Claude can actually choose not to use the Sandbox if it encounters problems with it - and somewhat [idiotically there's no way to disable this - _yet_](https://github.com/anthropics/claude-code/issues/10089).
 
-### Set up allow, ask, and deny permissions
+### Configure agent permissions (allow, ask, deny)
 
 [Permissions](https://code.claude.com/docs/en/permissions) let you pre-approve safe operations (so you're not interrupted constantly) and hard-block dangerous ones (so a confused agent can't do real damage). The syntax is `Tool(pattern *)`.
 
@@ -136,15 +138,9 @@ Note: The sandbox is not a silver bullet. Claude can actually choose not to use 
 
 The deny list is your hard safety net. `git push` and `sudo` are the obvious ones. The ask list catches things that are usually fine but you want to eyeball first, like commits and destructive deletes. Everything in allow runs without prompting.
 
-### Use hooks to help with safety and automation
-
-Hooks can run shell commands before or after tool calls. `PreToolUse` hooks can inspect and block commands before execution which can be used as a line of defence against unexpected behavior.
-
-- [claude-code-safety-net](https://github.com/kenryu42/claude-code-safety-net) is one I often recommend as a good starting point that aims to catch common dangerous patterns.
-
 ---
 
-## 2. Lean into skills
+## Lean into skills
 
 [Skills](https://agentskills.io) are an effective way of extending your agent's knowledge. Think of them like a library where the agent can see all the book spines and pull out the relevant one whenever it encounters a situation where that knowledge would be useful. They're simple markdown files that Claude loads into context on demand, rather than permanently like rules.
 
@@ -169,40 +165,9 @@ Note: Never blindly install skills you find online, always review the content an
 
 ---
 
-## 3. Use planning mode
+## Agent Tools
 
-Planning mode (`shift+tab` to toggle) keeps the agent in read-only exploration mode. It can use sub-agents, read files, search code, use tools to research - but it can't make changes until you approve its plan.
-
-This is valuable for anything beyond a simple, targeted fix. The plan itself is an artefact you can inspect and refine with Claude, when you're ready Claude will offer to start a fresh session to act upon the plan.
-
-**[TLDR](/posts/2025-04-28-agentic-coding-dev-flow/): plan first, act second, iterate.**
-
----
-
-## 4. Embrace starting fresh sessions
-
-LLMs are stateless. Every message you send includes the full conversation history. As a session gets longer, the model has more to process; it slows down and output quality degrades.
-
-Embrace starting fresh sessions, operating from a plan allows you to do this without losing where you're up to.
-
-### Create commands for frequent prompts
-
-In addition to operating from a plan, you can also create commands for frequent prompts in `~/.claude/commands/` (global) or `.claude/commands/` (project). They become `/command-name` in the CLI.
-
-Here's my most-used one, `/self-review` that I run after Claude completes multiple tasks:
-
-```markdown
----
-description: Conduct a critical self-review of your changes & fix any errors
----
-
-Please conduct a critical self-review of your changes, check for
-any errors or changes you missed, correct any errors you may find.
-```
-
----
-
-## 5. Enable LSP for code intelligence
+### Enable Language Servers (LSP)
 
 Claude Code has a built-in LSP tool that gives the agent access to go-to-definition, find-references, hover types, and diagnostics - the same code intelligence IDEs use. With LSP enabled, the agent can navigate code structurally rather than relying on text search - jumping to definitions, finding all call sites before refactoring, and catching type errors as it works.
 
@@ -232,15 +197,52 @@ rustup component add rust-analyzer
 pnpm install -g typescript typescript-language-server
 ```
 
----
-
-## 6. Take a minimalist approach to MCP tools
+### Take a minimalist approach to MCP tools
 
 Every MCP server you enable adds tool descriptions to the context. If you have 10 servers each exposing 5-20 tools, that's a lot of tokens spent in every interaction just telling the model what's available.
 
 - If you have easy to use CLI tools (e.g. `gh` for Github) - let the agent use those instead of adding permanent MCP servers for them.
 - Don't load every MCP server for every project. Use project-level `.claude/settings.json` to scope servers to where they're actually needed.
 - For 99% of tasks [I only have one MCP server enabled](https://github.com/sammcj/mcp-devtools).
+
+### Use hooks to help with safety and automation
+
+Hooks can run shell commands before or after tool calls. `PreToolUse` hooks can inspect and block commands before execution which can be used as a line of defence against unexpected behavior.
+
+- [claude-code-safety-net](https://github.com/kenryu42/claude-code-safety-net) is one I often recommend as a good starting point that aims to catch common dangerous patterns.
+
+---
+
+## Workflow
+
+### Use planning mode
+
+Planning mode (`shift+tab` to toggle) keeps the agent in read-only exploration mode. It can use sub-agents, read files, search code, use tools to research - but it can't make changes until you approve its plan.
+
+This is valuable for anything beyond a simple, targeted fix. The plan itself is an artefact you can inspect and refine with Claude, when you're ready Claude will offer to start a fresh session to act upon the plan.
+
+**[TLDR](/posts/2025-04-28-agentic-coding-dev-flow/): plan first, act second, iterate.**
+
+### Embrace starting fresh sessions
+
+LLMs are stateless. Every message you send includes the full conversation history. As a session gets longer, the model has more to process; it slows down and output quality degrades.
+
+Embrace starting fresh sessions, operating from a plan allows you to do this without losing where you're up to.
+
+### Create commands (or skills) for frequent prompts
+
+In addition to operating from a plan, you can also create commands for frequent prompts in `~/.claude/commands/` (global) or `.claude/commands/` (project). They become `/command-name` in the CLI.
+
+Here's my most-used one, `/self-review` that I run after Claude completes multiple tasks:
+
+```markdown
+---
+description: Conduct a critical self-review of your changes & fix any errors
+---
+
+Please conduct a critical self-review of your changes, check for
+any errors or changes you missed, correct any errors you may find.
+```
 
 ---
 
