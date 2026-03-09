@@ -231,7 +231,7 @@ Embrace starting fresh sessions, operating from a plan allows you to do this wit
 
 ### Create commands (or skills) for frequent prompts
 
-In addition to operating from a plan, you can also create commands for frequent prompts in `~/.claude/commands/` (global) or `.claude/commands/` (project). They become `/command-name` in the CLI.
+Create commands or skills for frequently used prompts, providing you quick access via `/command-name`.
 
 Here's my most-used one, `/self-review` that I run after Claude completes multiple tasks:
 
