@@ -22,6 +22,22 @@ UseHugoToc: true
 mermaid: false
 ---
 
+- **Configuration**
+  - [Layered rules](#add-tight-layered-rules) - concise, scoped CLAUDE.md files that shape agent behaviour
+  - [Sandboxing](#enable-sandboxing) - constrain file access and network connections
+  - [Permissions](#set-up-allow-ask-and-deny-permissions) - pre-approve safe operations, hard-block dangerous ones
+  - [Hooks](#use-hooks-to-help-with-safety-and-automation) - run shell commands before/after tool calls as a safety net
+- **Extend knowledge and capabilities**
+  - [Skills](#2-lean-into-skills) - on-demand markdown knowledge the agent self-selects when relevant
+  - [Language servers](#5-enable-lsp-for-code-intelligence) - give the agent go-to-definition, find-references, and type checking
+  - [MCP tools](#6-take-a-minimalist-approach-to-mcp-tools) - external tool servers, used sparingly
+- **Workflow**
+  - [Plan before acting](#3-use-planning-mode) - read-only exploration before making changes
+  - [Start fresh sessions](#4-embrace-starting-fresh-sessions) - keep context windows lean
+  - [Custom commands](#create-commands-for-frequent-prompts) - reusable prompts for common tasks
+
+---
+
 ## 1. Setup
 
 ### Add tight, layered rules
@@ -184,7 +200,39 @@ any errors or changes you missed, correct any errors you may find.
 
 ---
 
-## 5. Take a minimalist approach to MCP tools
+## 5. Enable LSP for code intelligence
+
+Claude Code has a built-in LSP tool that gives the agent access to go-to-definition, find-references, hover types, and diagnostics - the same code intelligence IDEs use. With LSP enabled, the agent can navigate code structurally rather than relying on text search - jumping to definitions, finding all call sites before refactoring, and catching type errors as it works.
+
+It's enabled by installing [code intelligence plugins](https://code.claude.com/docs/en/discover-plugins#code-intelligence) from the official marketplace:
+
+```bash
+# Browse available code intelligence plugins (try searching for 'lsp')
+/plugin
+
+# Or install directly, e.g.
+/plugin install typescript-lsp@claude-plugins-official
+```
+
+Some LSPs may also need the language servers installed for the languages you work with:
+
+```bash
+# Python
+pip install python-lsp-server   # or: uvx install python-lsp-server
+
+# Go (included with the Go toolchain)
+go install golang.org/x/tools/gopls@latest
+
+# Rust
+rustup component add rust-analyzer
+
+# TypeScript / JavaScript
+pnpm install -g typescript typescript-language-server
+```
+
+---
+
+## 6. Take a minimalist approach to MCP tools
 
 Every MCP server you enable adds tool descriptions to the context. If you have 10 servers each exposing 5-20 tools, that's a lot of tokens spent in every interaction just telling the model what's available.
 
