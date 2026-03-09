@@ -36,6 +36,8 @@ mermaid: false
   - [Start fresh sessions](#4-embrace-starting-fresh-sessions) - keep context windows lean
   - [Custom commands](#create-commands-for-frequent-prompts) - reusable prompts for common tasks
 
+![](/2025/04/my-plan-document-act-review-flow-for-agentic-software-development/setup-plan-act-iterate.svg)
+
 ---
 
 ## 1. Setup
