@@ -370,8 +370,6 @@ EP on gave slightly more KV cache (experts split = less per-GPU model memory), b
 
 I came to the conclusion that the cross-GPU expert routing overhead is eating more than the VRAM savings give back and am keeping it off for now.
 
-Your final config is solid. The main thing left on the table is prefix caching (still 0% hit rate). If you can confirm your client sends identical system prompts between requests, that's free performance you're leaving behind. Otherwise you've roughly doubled your effective throughput from where you started.
-
 ### llama.cpp
 
 I use [llama-swap](https://github.com/mostlygeek/llama-swap) for hot loading models with llama.cpp, my real configuration uses a number of macros so I've compiled relevant parts of the config roughly as follows:
