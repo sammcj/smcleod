@@ -22,7 +22,7 @@ TocOpen: true
 draft: false
 hidemeta: false
 comments: false
-summary: 'NVIDIA artificially restricts peer-to-peer (P2P) GPU communication to their enterprise cards. Turns out this is a software limitation, not a hardware one. I patched my drivers to remove it, hacked vLLM to take advantage of it, and got a 10-30% throughput improvement running Qwen 3.5 35b on dual RTX 3090s.'
+summary: 'NVIDIA artificially restricts peer-to-peer (P2P) GPU communication to their enterprise cards. Turns out this is a software limitation, not a hardware one. I patched my drivers to remove it, hacked vLLM to take advantage of it, and got a 15-50% throughput improvement running Qwen 3.5 35b on dual RTX 3090s.'
 disableShare: false
 disableHLJS: false
 hideSummary: false
@@ -214,11 +214,10 @@ Running Qwen 3.5 35b-a3b (a MoE model with ~3 billion active parameters per toke
 | P2P                    | Enabled               | Disabled    |
 | Fused MoE config       | Tuned                 | Tuned       |
 
-
 | Server/Model            | Value            | Without P2P |
 | ----------------------- | ---------------- | ----------- |
 | **llama.cpp / 35b-a3b** | **110-130 tk/s** | Untested    |
-| **vLLM / 35b-a3b**      | **120-190 tk/s** | ~35-65 tk/s |
+| **vLLM / 35b-a3b**      | **90-197 tk/s**  | ~35-65 tk/s |
 | **llama.cpp / 27b**     | **30-70 tk/s**   | Untested    |
 | **vLLM / 27b**          | **32-195 tk/s**  | ~32-70 tk/s |
 
@@ -273,7 +272,7 @@ services:
       CUDA_DEVICE_MAX_CONNECTIONS: 10
       CUDA_CACHE_MAXSIZE: 4294967296 # 4GB
       CUDA_SCALE_LAUNCH_QUEUES: '4x'
-      NCCL_CUMEM_ENABLE: 1
+      NCCL_CUMEM_ENABLE: 0
       RAY_memory_monitor_refresh_ms: 0
 
       # https://docs.vllm.ai/en/latest/configuration/env_vars/
@@ -283,19 +282,17 @@ services:
       TENSOR_PARALLEL_SIZE: 2
       VLLM_CPU_KVCACHE_SPACE: 8 # (gb)
       VLLM_DO_NOT_TRACK: 1
+      VLLM_ENABLE_CUDAGRAPH_GC: 1
       VLLM_FLASHINFER_MOE_BACKEND: throughput
       VLLM_MARLIN_USE_ATOMIC_ADD: 1
-      VLLM_SLEEP_WHEN_IDLE: 1
+      VLLM_MEMORY_PROFILER_ESTIMATE_CUDAGRAPHS: 1
       VLLM_TARGET_DEVICE: cuda
+      VLLM_USE_DEEP_GEMM: 0
+      VLLM_USE_FLASHINFER_SAMPLER: '1'
       VLLM_USE_PRECOMPILED: 1
-      VLLM_ENABLE_CUDAGRAPH_GC: 1
 
       VLLM_TUNED_CONFIG_FOLDER: /tuned_configs # Contains my fused MoE kernels
 
-      # Qwen 3.5 specific settings
-      VLLM_USE_FLASHINFER_MOE_FP16: '1'
-      VLLM_USE_FLASHINFER_SAMPLER: '1' # I did have this as 0, but it _might_ be faster with it on
-      VLLM_USE_DEEP_GEMM: 0
 
     command:
       - '--served-model-name'
@@ -310,18 +307,21 @@ services:
       - '--max-model-len'
       - '131070'
       - '--max-num-batched-tokens'
-      - '6144'
+      - '16384'
       - '--max-num-seqs'
-      - '32'
+      - '8'
       - '--gpu-memory-utilization'
       - '0.95'
       - '--swap-space'
       - '16'
+      - '--block-size'
+      - '32'
 
       ## Qwen 3.5 specific settings
       - '--model'
       - 'cyankiwi/Qwen3.5-35B-A3B-AWQ-4bit'    # 35b-a3b
-      # - "cyankiwi/Qwen3.5-27B-AWQ-BF16-INT4" # 27b - linear attention layers kept at full-precision
+      # - 'cyankiwi/Qwen3.5-27B-AWQ-BF16-INT4' # 27b - linear attention layers kept at full-precision
+      - '--language-model-only' # disables vision if not needed
       - '--tool-call-parser'
       - 'qwen3_coder'
       - '--reasoning-parser'
@@ -329,12 +329,15 @@ services:
       - '--enable-auto-tool-choice'
       - '--speculative-config' # speculative decoding (drafting) using MTP (model-based token prediction)
       - '{"method":"mtp","num_speculative_tokens":2}'
-      - "--override-generation-config"
+      - '--override-generation-config'
       - '{"temperature": 0.7, "repetition_penalty": 1.0, "top_k": 20}'
+      - '--mamba-cache-mode'
+      - 'all'
 
-      - '--enable-expert-parallel' # MoE models only, disable for 27b model
       - '--enable-prefix-caching'
       - '--enable-chunked-prefill'
+
+    # - '--enable-expert-parallel' # MoE models only, disable for 27b model, note: Disabled at present, see below for details
 
     runtime: nvidia
     deploy:
@@ -349,6 +352,25 @@ services:
                 - nvidia.com/gpu=all
               capabilities: ['compute', 'utility', 'graphics']
 ```
+
+#### vLLM Expert Parallelism
+
+I did some testing with vLLM's expert parallelism (EP) feature (`--enable-expert-parallel`) but found that it actually slightly decreased performance.
+
+| Metric                | EP off  | EP on   |
+| --------------------- | ------- | ------- |
+| Short request tk/s    | 82.7    | 71.9    |
+| Medium request tk/s   | 69.6    | 67.7    |
+| Long request tk/s     | 164.9   | 168.6   |
+| Tail tk/s             | 39.9    | 20.7    |
+| Spec acceptance range | 76-88%  | 70-77%  |
+| KV cache tokens       | 232,624 | 236,912 |
+
+EP on gave slightly more KV cache (experts split = less per-GPU model memory), but throughput is consistently lower on short/medium requests and the speculative decode acceptance rate drops. The long request window is a wash (168 vs 165).
+
+I came to the conclusion that the cross-GPU expert routing overhead is eating more than the VRAM savings give back and am keeping it off for now.
+
+Your final config is solid. The main thing left on the table is prefix caching (still 0% hit rate). If you can confirm your client sends identical system prompts between requests, that's free performance you're leaving behind. Otherwise you've roughly doubled your effective throughput from where you started.
 
 ### llama.cpp
 
