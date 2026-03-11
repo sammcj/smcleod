@@ -215,12 +215,12 @@ Running Qwen 3.5 35b-a3b (a MoE model with ~3 billion active parameters per toke
 | Fused MoE config       | Tuned                 | Tuned       |
 
 
-| Server/Model            | Value            | Without P2P   |
-| ----------------------- | ---------------- | ------------- |
-| **llama.cpp / 35b-a3b** | **110-130 tk/s** | Untested      |
-| **vLLM / 35b-a3b**      | **120-190 tk/s** | ~120-145 tk/s |
-| **llama.cpp / 27b**     | **30-70 tk/s**   | Untested      |
-| **vLLM / 27b**          | **32-195 tk/s**  | ~32-140 tk/s  |
+| Server/Model            | Value            | Without P2P |
+| ----------------------- | ---------------- | ----------- |
+| **llama.cpp / 35b-a3b** | **110-130 tk/s** | Untested    |
+| **vLLM / 35b-a3b**      | **120-190 tk/s** | ~35-65 tk/s |
+| **llama.cpp / 27b**     | **30-70 tk/s**   | Untested    |
+| **vLLM / 27b**          | **32-195 tk/s**  | ~32-70 tk/s |
 
 That's a 10-30% improvement over the same configuration without the P2P patch and MoE tuning, depending on the workload. The gain varies with batch size, sequence length, and how much inter-GPU communication the model actually needs. MoE architectures like Qwen 3.5 benefit particularly well since expert routing creates more cross-GPU traffic during tensor parallel inference, and the fused_moe kernel is on the critical path for every token generated.
 
@@ -314,7 +314,7 @@ services:
       - '--max-num-seqs'
       - '32'
       - '--gpu-memory-utilization'
-      - '0.9'
+      - '0.95'
       - '--swap-space'
       - '16'
 
@@ -328,9 +328,9 @@ services:
       - 'qwen3'
       - '--enable-auto-tool-choice'
       - '--speculative-config' # speculative decoding (drafting) using MTP (model-based token prediction)
-      - '{"method":"mtp","num_speculative_tokens":5}'
+      - '{"method":"mtp","num_speculative_tokens":2}'
       - "--override-generation-config"
-      - '{"temperature": 0.7, "repetition_penalty": 1.0, "presence_penalty": "1.5", "top_k": 20}'
+      - '{"temperature": 0.7, "repetition_penalty": 1.0, "top_k": 20}'
 
       - '--enable-expert-parallel' # MoE models only, disable for 27b model
       - '--enable-prefix-caching'
@@ -388,7 +388,6 @@ models:
       --temp 0.6 --top-k 20 --top-p 0.95 --min-p 0.00 --presence-penalty 0.0 --repeat-penalty 1.0
       --chat-template-kwargs "{\"enable_thinking\": false}"
 
-      --mmproj /models/Qwen3.5-35B-A3B-UD-mmproj-bf16.gguf
       --model /models/Qwen3.5-35B-A3B-UD-Q4_K_XL.gguf
 ```
 
