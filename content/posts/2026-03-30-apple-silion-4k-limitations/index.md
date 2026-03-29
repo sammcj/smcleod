@@ -422,3 +422,4 @@ The DCP-reported capabilities (`MaxActivePixelRate`, `MaxW`, `MaxH`, `MaxTotalPi
 - [BetterDisplay Discussion #4215](https://github.com/waydabber/BetterDisplay/discussions/4215): Confirmed by BetterDisplay developer as M4-generation Apple Silicon limitation
 - Apple M5 Max specifications: "Supports 8K (7680x4320) at 60Hz over Thunderbolt"
 - `AppleDisplayCrossbar` / `AppleDisplayConnectionManager`: IOKit drivers managing DCP display pipe allocation
+- I've logged this with Apple Feedback (FB22365722)
