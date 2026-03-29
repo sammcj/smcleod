@@ -1,6 +1,6 @@
 ---
 title: 'New Apple Silicon M4/M5 HiDPI Limitation on 4K External Displays'
-date: 2026-03-05T01:00:00+10:00
+date: 2026-03-29T01:00:00+10:00
 tags: ['apple', '4k', 'monitor', 'software', 'hardware', 'bugs']
 author: 'Sam McLeod'
 showToc: true
