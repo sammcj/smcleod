@@ -32,7 +32,7 @@ With this regression Apple is leaving users to choose between:
 
 or
 
-- Reduced screen real estate at 3.3k (3360x1890) with sharp text (HiDPI) but significantly less usable working space, and macOS's UI looking rediculously oversized.
+- Reduced screen real estate at 3.3k (3360x1890) with sharp text (HiDPI) but significantly less usable working space, and macOS's UI looking ridiculously oversized.
 
 **This does not appear to be a hardware limitation**
 
