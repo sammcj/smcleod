@@ -24,15 +24,15 @@ mermaid: false
 
 Starting with the M4 and including the new M5 generations of Apple Silicon, macOS no longer offers or allows full-resolution HiDPI 4k modes for external displays.
 
-The maximum HiDPI mode available on a 3840x2160 panel is now just 3360x1890 (with a 6720x3780, instead of 7680x4320 backing store), M2/M3 machines did not have this limitation.
+The maximum HiDPI mode available on a 3840x2160 panel is now just 3360x1890 (with a 6720x3780, instead of 7680x4320 backing store) - M2/M3 machines did not have this limitation.
 
-I think this is a pretty serious regression as Apple is leaving users to choose between:
+With this regression Apple is leaving users to choose between:
 
-- Full screen real estate at 4k (3840x2160) but with blurry text due to no HiDPI / 2x rendering.
+- Full screen real estate at 4k (3840x2160) with blurry text due to HiDPI being disabled.
 
 or
 
-- Reduced screen real estate at 3.3k (3360x1890) with sharp text but significantly less usable working space, and macOS's UI looking rediculously oversized.
+- Reduced screen real estate at 3.3k (3360x1890) with sharp text (HiDPI) but significantly less usable working space, and macOS's UI looking rediculously oversized.
 
 **This is not a hardware limitation**
 
@@ -414,7 +414,7 @@ Identical to M2 Max.
 
 ### Key observation
 
-The DCP-reported capabilities (MaxActivePixelRate, MaxW, MaxH, MaxTotalPixelRate, DisplayHints) are **byte-for-byte identical** between M2 Max and M5 Max for the same display. The difference is entirely in the GPU driver's mode generation policy, which sits above the DCP layer and below WindowServer.
+The DCP-reported capabilities (`MaxActivePixelRate`, `MaxW`, `MaxH`, `MaxTotalPixelRate`, `DisplayHints`) are **byte-for-byte identical** between M2 Max and M5 Max for the same display. The difference is entirely in the GPU driver's mode generation policy, which sits above the DCP layer and below WindowServer.
 
 ## References
 
