@@ -34,7 +34,7 @@ or
 
 - Reduced screen real estate at 3.3k (3360x1890) with sharp text (HiDPI) but significantly less usable working space, and macOS's UI looking rediculously oversized.
 
-**This is not a hardware limitation**
+**This does not appear to be a hardware limitation**
 
 The DCP-reported capabilities are byte-for-byte identical between M2 Max and M5 Max. The limitation is in the GPU driver's (`AppleDisplayCrossbar`) mode generation policy, which sits between the DCP and WindowServer. On M4/M5, this driver caps the HiDPI backing store at approximately 1.75x the native resolution, rather than the 2.0x needed for full 3840x2160 HiDPI. The M5 Max hardware supports 8K (7680x4320) at 60Hz natively - the GPU driver simply won't allocate the framebuffer.
 
