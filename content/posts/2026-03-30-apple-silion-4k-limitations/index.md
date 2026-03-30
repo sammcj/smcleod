@@ -99,7 +99,7 @@ The override plist that works on M2 Max:
 - Pixel clock set to maximum (655.35 MHz)
 - Range limits boosted to 2550 MHz max pixel clock, 255 kHz max H-freq, 255 Hz max V-freq
 
-**Result**: No effect. The DCP reads EDID from the physical display over DDC/AUX, not from the override plist. The patched EDID only affects the macOS software layer, which is not where the limitation is enforced on M5 Max.
+**Result**: No effect with these values. However, waydabber (BetterDisplay developer) [has confirmed](https://github.com/waydabber/BetterDisplay/discussions/4215) that software EDID overrides _can_ work on M4 - he got an 8K framebuffer on a 4K TV by adding a valid 8K timing and defining it as the native resolution. My attempt likely failed because 4095x4095 isn't a real display timing. The catch: even with a correct override, a 4K panel can't actually accept an 8K signal, so this confirms the mechanism (scaled modes derive from the system's idea of native resolution) without providing a practical fix.
 
 ### EDID Flash to Monitor EEPROM
 
@@ -160,15 +160,17 @@ The observable facts:
 - The DCP reports identical capabilities on M2 Max and M5 Max (same `MaxW`, `MaxH`, `MaxActivePixelRate`)
 - WindowServer's mode list on M5 Max tops out at 3360x1890 HiDPI (6720x3780 backing store) instead of 3840x2160 HiDPI (7680x4320 backing store)
 - Disconnecting other displays doesn't change this
-- No userspace API can override it - `IORegistryEntrySetCFProperty` returns `kIOReturnUnsupported`, SkyLight's private API validates against the same capped mode list
+- Software EDID overrides may be able to influence mode generation (waydabber confirmed this by spoofing an 8K native resolution on M4), but only by lying about the display's native resolution - which means the display can't actually use the resulting signal
 
-Something between the DCP and WindowServer - likely in the `AppleDisplayCrossbar` kernel driver - is generating a reduced mode list on M4/M5. Whether this is a deliberate resource reservation policy (as waydabber suggests) or a bug in the mode generation logic, we can't say for certain from userspace. The effect is the same: the backing store is capped well below what the hardware supports, and there's no way to override it.
+The scaled resolution modes on M4/M5 are derived from whatever the system believes is the display's native resolution. On M2/M3, the system would generate HiDPI modes up to 2.0x the native resolution (so 3840x2160 native got you a 7680x4320 backing store). On M4/M5, this tops out at around 1.75x. You can trick the system by overriding the EDID to claim a higher native resolution, but then the display can't actually handle the signal, so it's not a practical workaround for 4K panels.
 
 ---
 
 ## What could fix this
 
-This needs a change from Apple - either to the framebuffer allocation policy in the kernel driver, or a user-facing override. I've filed Apple Feedback FB22365722.
+This needs a change from Apple - either to the scaling ratio limit in the mode generation logic, or a user-facing override. I've filed Apple Feedback FB22365722.
+
+A 5K or 8K panel may not hit the exact same limit since its EDID native resolution is high enough that 1.75x scaling still provides a usable backing store.
 
 ## Appendix: Diagnostic Commands and Output
 
