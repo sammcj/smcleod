@@ -35,9 +35,9 @@ or
 
 - Reduced screen real estate at 3.3k (3360x1890) with sharp text (HiDPI) but significantly less usable working space, and macOS's UI looking ridiculously oversized.
 
-**This is not a hardware limitation**
+**A regression in the display controller architecture**
 
-The DCP (Display Coprocessor) reports identical capabilities on both M2 Max and M5 Max for the same display. The M5 Max hardware supports 8K (7680x4320) at 60Hz per Apple's own specs. The GPU driver's per-pipe framebuffer budget (`IOMFBMaxSrcPixels`) artificially caps Pipe 0 at 6720 pixels wide - exactly the backing store width for 3360x1890 HiDPI - while the other three pipes get the full 7680 that would allow 3840x2160 HiDPI.
+The DCP (Display Coprocessor) reports identical capabilities on both M2 Max and M5 Max for the same display. The M5 Max hardware supports 8K (7680x4320) at 60Hz per Apple's own specs. However, the M4/M5 generation introduced a new per-sub-pipe framebuffer budget system (`IOMFBMaxSrcPixels`) that caps the single-stream scaler path (sub-pipe 0) at 6720 pixels wide - exactly the backing store width for 3360x1890 HiDPI. The M2 Max uses a completely different architecture with a flat per-controller budget of 7680 pixels wide, which is why it works there.
 
 ![System Settings > Display on a M5 Max](macOS.jpeg)
 
@@ -99,13 +99,21 @@ The override plist that works on M2 Max:
 - Pixel clock set to maximum (655.35 MHz)
 - Range limits boosted to 2550 MHz max pixel clock, 255 kHz max H-freq, 255 Hz max V-freq
 
-**Result**: No effect with these values. However, waydabber (BetterDisplay developer) [has confirmed](https://github.com/waydabber/BetterDisplay/discussions/4215) that software EDID overrides _can_ work on M4 - he got an 8K framebuffer on a 4K TV by adding a valid 8K timing and defining it as the native resolution. My attempt likely failed because 4095x4095 isn't a real display timing. The catch: even with a correct override, a 4K panel can't actually accept an 8K signal, so this confirms the mechanism (scaled modes derive from the system's idea of native resolution) without providing a practical fix.
+**Result**: No effect with these values. However, waydabber (incredibly helpful BetterDisplay developer) [has confirmed](https://github.com/waydabber/BetterDisplay/discussions/4215) that software EDID overrides _can_ work on M4 - he got an 8K framebuffer on a 4K TV by adding a valid 8K timing and defining it as the native resolution. The catch: even with a correct override, a 4K panel can't actually accept an 8K signal, so this confirms the mechanism (scaled modes derive from the system's idea of native resolution) without providing a practical fix.
 
-### EDID Flash to Monitor EEPROM
+### EDID Hardware Flash - VIC 199 (8K) and DisplayID Extension
 
-**What**: Created a patched EDID binary with boosted range limits (keeping preferred timing at native 3840x2160 to avoid breaking display output), attempted to flash to the LG monitor's EEPROM via BetterDisplay's "Upload EDID" feature.
+**What**: Created a patched EDID with VIC 199 (7680x4320@60Hz) added to the CEA Video Data Block, keeping the preferred detailed timing at 3840x2160. Successfully flashed to the LG monitor's EEPROM via BetterDisplay.
 
-**Result**: The flash did not take effect. The monitor continued serving the original EDID. The LG 32UN880's EEPROM may be read-only, or BetterDisplay's DDC write failed silently. Even if successful, this approach would only change range limits, not the preferred timing that the DCP derives MaxW/MaxH from.
+**Result**: The DCP read VIC 199 from the hardware EDID and updated its reported capabilities: `MaxW` changed from 3840 to 7680, `MaxH` from 2160 to 4320, and `MaxActivePixelRate` to 1,990,656,000. The DCP also allocated 2 pipes (`PipeIDs=(0,2)`, `MaxPipes=2`) as it would for a real 8K display. However, the sub-pipe 0 framebuffer budget (`MaxSrcRectWidthForPipe`) remained at 6720, and no 3840x2160 HiDPI mode appeared.
+
+A further attempt added a DisplayID Type I Detailed Timing for 7680x4320@30Hz marked as preferred and native. This **did** generate a 3840x2160 scale=2.0 mode in the CG mode list. However, when selected, macOS attempted to output 7680x4320 on the wire (since the EDID declared it as a supported output mode), which the LG could not display. A DisplayID Display Parameters block (declaring 7680x4320 as native pixel format without creating an output timing) did not generate any new modes.
+
+### EDID Flash to Monitor EEPROM (Range Limits Only)
+
+**What**: Created a patched EDID binary with boosted range limits only (keeping preferred timing at native 3840x2160 to avoid breaking display output), attempted to flash to the LG monitor's EEPROM via BetterDisplay's "Upload EDID" feature.
+
+**Result**: The range-limits-only flash did not change any DCP parameters. The DCP derives `MaxActivePixelRate` from the preferred timing's pixel clock, not from the range limits. A subsequent flash with VIC 199 added to the Video Data Block was successful (see "EDID Hardware Flash" section above).
 
 ### IOKit Registry Override (DisplayHints)
 
@@ -149,11 +157,27 @@ The DCP reports identical capability parameters on both machines - `MaxActivePix
 
 The difference shows up in WindowServer's mode list. On M2 Max, `CGSGetNumberOfDisplayModes` includes 3840x2160 at scale=2.0. On M5 Max, with the same DCP parameters and the same override plists, that mode doesn't exist.
 
-### IOMFBMaxSrcPixels - the per-pipe framebuffer budget
+### IOMFBMaxSrcPixels - the per-sub-pipe framebuffer budget
 
-The `IOMFBMaxSrcPixels` property on the `IOMobileFramebufferShim` IOKit service exposes per-pipe framebuffer size budgets. On the M5 Max with the LG on Pipe 0:
+The `IOMFBMaxSrcPixels` property on the `IOMobileFramebufferShim` IOKit service exposes framebuffer size budgets. The M2 Max and M5 Max use fundamentally different structures here, which is the root cause of the regression.
+
+**M2 Max** uses a flat per-controller budget:
 
 ```
+# Each external display controller (all identical):
+"IOMFBMaxSrcPixels" = {
+    "MaxSrcRectWidth" = 7680,
+    "MaxSrcRectTotal" = 33177600,
+    ...
+}
+```
+
+Every external display controller gets a flat `MaxSrcRectWidth` of **7680** and `MaxSrcRectTotal` of **33,177,600** (exactly 7680 x 4320). The LG is assigned to `PipeIDs=(1)`. With a 7680-pixel budget, 3840x2160 HiDPI (7680x4320 backing store) fits comfortably.
+
+**M5 Max** restructured to per-sub-pipe budgets within each controller:
+
+```
+# Each external display controller (all identical):
 "IOMFBMaxSrcPixels" = {
     "MaxSrcRectHeightForPipe" = (4608, 4608, 4608, 4608),
     "MaxSrcRectWidthForPipe"  = (6720, 7680, 7680, 7680),
@@ -163,16 +187,25 @@ The `IOMFBMaxSrcPixels` property on the `IOMobileFramebufferShim` IOKit service 
 }
 ```
 
-`MaxSrcRectWidthForPipe` is a per-pipe array defining the maximum backing store width the GPU driver will allocate for each display pipe:
+The 4 values in `MaxSrcRectWidthForPipe` are **sub-pipes within each display controller**, not separate display outputs. A single-stream 4K display only uses sub-pipe 0. Sub-pipes 1-3 are for multi-pipe configurations (8K displays use 2 sub-pipes simultaneously, which is why an 8K EDID causes the DCP to assign `PipeIDs=(0,2)` with `MaxPipes=2`).
 
-| Pipe | MaxSrcRectWidth | Implication                                           |
-| ---- | --------------- | ----------------------------------------------------- |
-| 0    | **6720**        | LG's pipe (confirmed via `ConnectionMapping` PipeIDs) |
-| 1    | 7680            | Would be sufficient for 3840x2160 HiDPI               |
-| 2    | 7680            | Would be sufficient for 3840x2160 HiDPI               |
-| 3    | 7680            | Would be sufficient for 3840x2160 HiDPI               |
+| Sub-pipe | MaxSrcRectWidth | What it's for                                        |
+| -------- | --------------- | ---------------------------------------------------- |
+| 0        | **6720**        | Single-stream output (used by all standard displays) |
+| 1        | 7680            | Multi-pipe mode only (e.g. 8K displays)              |
+| 2        | 7680            | Multi-pipe mode only                                 |
+| 3        | 7680            | Multi-pipe mode only                                 |
 
-Pipe 0's budget of 6720 pixels lines up exactly with the observed cap: 3360x1890 HiDPI needs a 6720x3780 backing store. For 3840x2160 HiDPI, the backing store would need to be 7680 pixels wide. Pipe 0 doesn't have enough budget, but Pipes 1-3 do - the hardware can clearly handle it, the LG just landed on the wrong pipe.
+Sub-pipe 0's budget of 6720 pixels lines up exactly with the observed cap: 3360x1890 HiDPI needs a 6720x3780 backing store. For 3840x2160 HiDPI, the backing store would need to be 7680 pixels wide. Sub-pipes 1-3 have this budget, but they're only accessible in multi-pipe mode for displays that genuinely output above 4K.
+
+| Property                   | M2 Max                   | M5 Max                                              |
+| -------------------------- | ------------------------ | --------------------------------------------------- |
+| Budget structure           | Flat per controller      | Per sub-pipe array                                  |
+| External controller budget | `MaxSrcRectWidth` = 7680 | `MaxSrcRectWidthForPipe` = (6720, 7680, 7680, 7680) |
+| Single-stream max width    | **7680**                 | **6720**                                            |
+| `MaxSrcRectTotal`          | 33,177,600 (7680x4320)   | Not present                                         |
+| LG pipe assignment         | `PipeIDs=(1)`            | `PipeIDs=(0)`                                       |
+| 3840x2160 HiDPI            | Yes                      | No                                                  |
 
 This property is set by the kernel-level `IOMobileFramebufferShim` driver and can't be modified from userspace.
 
@@ -206,24 +239,26 @@ The `IOMFBMaxSrcPixels` data fits this description. The M5 Max supports up to 4 
 Putting it together:
 
 - The DCP reports identical capabilities on M2 Max and M5 Max (same `MaxW`, `MaxH`, `MaxActivePixelRate`)
-- On M5 Max, Pipe 0's `MaxSrcRectWidthForPipe` is 6720, which caps the backing store width and therefore caps HiDPI at 3360x1890
-- On M2 Max, this per-pipe constraint either doesn't exist or allocates a full 7680 to the LG's pipe
-- Disconnecting other displays doesn't change the pipe budgets
-- Software EDID overrides can influence mode generation (waydabber confirmed this by spoofing an 8K native resolution on M4), but only by lying about the display's native resolution - which means the display can't actually use the resulting signal
+- The M2 Max uses a flat per-controller framebuffer budget (`MaxSrcRectWidth=7680`), giving every external display enough backing store width for 3840x2160 HiDPI
+- The M5 Max restructured to per-sub-pipe budgets (`MaxSrcRectWidthForPipe=(6720, 7680, 7680, 7680)`), where the single-stream sub-pipe (the only one a 4K display can use) is capped at 6720
+- This caps the backing store width and therefore caps HiDPI at 3360x1890 on M5 Max
+- Disconnecting other displays, switching ports, or closing the laptop lid doesn't change the sub-pipe budgets
+- Adding VIC 199 (8K) to the EDID changes DCP-reported MaxW/MaxH but doesn't affect the sub-pipe budget
+- Adding a DisplayID 7680x4320 timing creates a 3840x2160 scale=2.0 mode, but macOS tries to output 8K on the wire (treating it as a real output mode rather than a scaling mode), which the 4K panel can't display
 
-The scaled resolution modes on M4/M5 are derived from whatever the system believes is the display's native resolution. On M2/M3, the system would generate HiDPI modes up to 2.0x the native resolution (so 3840x2160 native got you a 7680x4320 backing store). On M4/M5, this tops out at around 1.75x. You can trick the system by overriding the EDID to claim a higher native resolution, but then the display can't actually handle the signal, so it's not a practical workaround for 4K panels.
+The scaled resolution modes on M4/M5 are derived from whatever the system believes is the display's native resolution. On M2/M3, the system would generate HiDPI modes up to 2.0x the native resolution (so 3840x2160 native got you a 7680x4320 backing store). On M4/M5, the single-stream sub-pipe budget caps this at around 1.75x. Whether this is a hardware constraint in the new scaler architecture or a conservative firmware allocation policy is unclear without Apple's documentation - but the architectural change from M2's flat budget to M5's sub-pipe budget is the direct cause of the regression.
 
 ---
 
 ## What could fix this
 
-This needs a change from Apple in the `IOMobileFramebufferShim` driver's per-pipe budget allocation. Specifically, Pipe 0's `MaxSrcRectWidthForPipe` needs to be 7680 instead of 6720 when a 3840x2160 display is connected. A few ways they could approach it:
+This needs a change from Apple in the `IOMobileFramebufferShim` driver's sub-pipe budget allocation. Specifically, sub-pipe 0's `MaxSrcRectWidthForPipe` needs to be 7680 instead of 6720 when a 3840x2160 display is connected. A few ways they could approach it:
 
-1. Raise the per-pipe budget to 7680 when the connected display's native resolution is 3840x2160
-2. Reallocate pipe budgets based on actually connected displays instead of reserving for worst-case scenarios
-3. Expose a user override for per-pipe framebuffer budgets (system preference or `nvram` variable)
+1. Raise sub-pipe 0's budget to 7680 for external display controllers (matching the M2 Max's flat allocation)
+2. Dynamically reallocate sub-pipe budgets based on actually connected displays and their capabilities
+3. Expose a user override for sub-pipe framebuffer budgets (system preference or `nvram` variable)
 
-The hardware is not the problem - Pipes 1-3 already have 7680-wide budgets on the same machine. I've filed Apple Feedback FB22365722.
+The M2 Max's flat per-controller budget of 7680 proves the display controller hardware can handle it. The M5 Max's multi-pipe sub-pipes (1-3) also have 7680, but these are only used for 8K multi-stream output. I've filed Apple Feedback FB22365722.
 
 A 5K or 8K panel may not hit the exact same limit since its EDID native resolution is high enough that 1.75x scaling still provides a usable backing store.
 
@@ -451,11 +486,11 @@ Identical to M2 Max.
 }
 ```
 
-Pipe 0 (the LG's pipe) has a `MaxSrcRectWidthForPipe` of 6720, which is exactly the backing store width for 3360x1890 HiDPI. The 7680 needed for 3840x2160 HiDPI is available on the other three pipes but not on Pipe 0.
+Sub-pipe 0 (the single-stream path all standard displays use) has a `MaxSrcRectWidthForPipe` of 6720, which is exactly the backing store width for 3360x1890 HiDPI. Sub-pipes 1-3 have 7680 but are only used for multi-pipe 8K configurations.
 
 ### Key observation
 
-DCP-reported capabilities are identical between M2 Max and M5 Max for the same display. The difference is in the per-pipe framebuffer budget (`IOMFBMaxSrcPixels`) set by `IOMobileFramebufferShim` - Pipe 0 gets a 6720-wide budget on M5 Max, capping HiDPI at 3360x1890 before WindowServer ever builds its mode list.
+DCP-reported capabilities are identical between M2 Max and M5 Max for the same display. The difference is in the display controller architecture: the M2 Max uses a flat per-controller budget (`MaxSrcRectWidth=7680`), while the M5 Max uses per-sub-pipe budgets (`MaxSrcRectWidthForPipe=(6720, 7680, 7680, 7680)`). The single-stream sub-pipe (the only one a 4K display uses) gets a 6720-wide budget on M5 Max, capping HiDPI at 3360x1890 before WindowServer ever builds its mode list.
 
 ## References
 
