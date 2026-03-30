@@ -37,7 +37,7 @@ or
 
 **This does not appear to be a hardware limitation**
 
-The DCP-reported capabilities are byte-for-byte identical between M2 Max and M5 Max. The limitation is in the GPU driver's (`AppleDisplayCrossbar`) mode generation policy, which sits between the DCP and WindowServer. On M4/M5, this driver caps the HiDPI backing store at approximately 1.75x the native resolution, rather than the 2.0x needed for full 3840x2160 HiDPI. The M5 Max hardware supports 8K (7680x4320) at 60Hz natively - the GPU driver simply won't allocate the framebuffer.
+The DCP (Display Coprocessor) reports identical capabilities on both M2 Max and M5 Max for the same display. The M5 Max hardware supports 8K (7680x4320) at 60Hz per Apple's own specs. Something in the software stack between the DCP and WindowServer is refusing to generate the mode - the details of why are explored below.
 
 ![System Settings > Display on a M5 Max](macOS.jpeg)
 
@@ -54,7 +54,7 @@ The DCP-reported capabilities are byte-for-byte identical between M2 Max and M5 
 | Connection        | USB-C/Thunderbolt, HBR3 (8.1 Gbps), 4 lanes | USB-C/Thunderbolt, HBR3 (8.1 Gbps), 4 lanes |
 | Max HiDPI Mode    | **3360x1890**                               | **3840x2160**                               |
 
-Both machines report **identical** DCP (Display Coprocessor) parameters for the LG display:
+Both machines report identical DCP parameters for the LG display:
 
 ```
 MaxActivePixelRate  = 497,664,000
@@ -63,8 +63,6 @@ MaxW                = 3840
 MaxH                = 2160
 MaxBpc              = 10
 ```
-
-The M5 Max officially supports "one external display up to 8K (7680x4320) at 60Hz" per Apple's specifications. The hardware is unquestionably capable.
 
 ## Diagnosis and Troubleshooting
 
@@ -96,6 +94,7 @@ The override plist that works on M2 Max:
 ### EDID Patching (Software Override)
 
 **What**: Wrote a patched EDID into the override plist's `IODisplayEDID` key with:
+
 - Preferred timing doubled to 4095x4095 (12-bit EDID field maximum)
 - Pixel clock set to maximum (655.35 MHz)
 - Range limits boosted to 2550 MHz max pixel clock, 255 kHz max H-freq, 255 Hz max V-freq
@@ -144,69 +143,36 @@ The override plist that works on M2 Max:
 
 **Result**: Returns error code 1000 when the mode is not in the display's own mode list. The SkyLight display configuration API validates modes against the same DCP-derived mode list as WindowServer. There is no private API path to bypass the mode list validation.
 
-## Hypothesis: Where the Limit Is Applied
+## Where the limit is applied
 
-### What the DCP reports (same on both machines)
+The DCP reports identical capability parameters on both machines - `MaxActivePixelRate`, `MaxW`, `MaxH`, `MaxTotalPixelRate` all match. These come from the display's EDID, so that's expected.
 
-The Display Coprocessor reports identical capability parameters for the LG display on both M2 Max and M5 Max. The `MaxActivePixelRate`, `MaxW`, `MaxH`, and `MaxTotalPixelRate` values are derived from the display's physical EDID preferred timing and are identical across generations.
+The difference shows up in WindowServer's mode list. On M2 Max, `CGSGetNumberOfDisplayModes` includes 3840x2160 at scale=2.0. On M5 Max, with the same DCP parameters and the same override plists, that mode doesn't exist.
 
-### What WindowServer does differently
+### What we think is happening
 
-The CG mode list (`CGSGetNumberOfDisplayModes` / `CGSGetDisplayModeDescriptionOfLength`) on M5 Max simply does not include 3840x2160 at scale=2.0. On M2 Max, with identical DCP parameters and identical override plists, the mode exists.
-
-### The dynamic framebuffer allocation theory
-
-According to BetterDisplay developer waydabber ([discussion #4215](https://github.com/waydabber/BetterDisplay/discussions/4215)):
+BetterDisplay developer waydabber ([discussion #4215](https://github.com/waydabber/BetterDisplay/discussions/4215)) describes the change:
 
 > "Generally 3840x2160 HiDPI is not available with any M4 generation Mac on non-8K displays due to the new dynamic nature of how the system allocates resources. There might be exceptions maybe - when the system concludes that no other displays could be attached and there are resources left still for a higher resolution framebuffer. But normally the system allocates as low framebuffer size as possible, anticipating further displays to be connected and saving room for those."
 
-This aligns with our findings. The M4/M5 DCP firmware implements a **conservative framebuffer pre-allocation strategy** that:
+The observable facts:
 
-1. Reads the display's native resolution from EDID (3840x2160)
-2. Calculates the maximum framebuffer it will allocate based on a per-display-pipe budget
-3. Reserves headroom for potential additional displays that might be connected later
-4. Caps the HiDPI backing store to approximately 1.75x the native resolution (6720x3780 for 3840x2160 native), rather than the 2.0x needed for full HiDPI (7680x4320)
+- The DCP reports identical capabilities on M2 Max and M5 Max (same `MaxW`, `MaxH`, `MaxActivePixelRate`)
+- WindowServer's mode list on M5 Max tops out at 3360x1890 HiDPI (6720x3780 backing store) instead of 3840x2160 HiDPI (7680x4320 backing store)
+- Disconnecting other displays doesn't change this
+- No userspace API can override it - `IORegistryEntrySetCFProperty` returns `kIOReturnUnsupported`, SkyLight's private API validates against the same capped mode list
 
-### Where exactly in the stack
-
-The limitation sits in the **GPU driver's display mode generation** layer, between the DCP hardware interface and WindowServer's mode enumeration:
-
-```
-Physical Display (EDID/DPCD)
-        |
-    DCP Firmware (reads EDID, sets DisplayHints)  <-- Same on M2 and M5
-        |
-    GPU Driver (AppleDisplayCrossbar)             <-- DIFFERENT on M5
-    [Dynamic framebuffer allocation policy]
-    [Caps backing store to ~1.75x native]
-        |
-    WindowServer (CGS mode enumeration)           <-- Receives capped mode list
-        |
-    CoreGraphics (CGDisplayCopyAllDisplayModes)
-        |
-    Applications / System Settings
-```
-
-The DCP itself is not the bottleneck (identical values). The restriction is in the GPU driver's mode generation policy, which runs in kernel space and cannot be modified from userspace. This policy is new to M4/M5 generation silicon and does not exist on M1/M2/M3.
+Something between the DCP and WindowServer - likely in the `AppleDisplayCrossbar` kernel driver - is generating a reduced mode list on M4/M5. Whether this is a deliberate resource reservation policy (as waydabber suggests) or a bug in the mode generation logic, we can't say for certain from userspace. The effect is the same: the backing store is capped well below what the hardware supports, and there's no way to override it.
 
 ---
 
-## What Could Address This
+## What could fix this
 
-### Apple needs to fix this
-
-1. **Smarter framebuffer allocation**: The DCP should account for actual connected displays rather than reserving for hypothetical future connections. If only one external display is connected, the full framebuffer budget should be available.
-2. **User override**: Provide a system preference or `nvram` variable that lets users opt into higher framebuffer allocation at the cost of reduced headroom for additional displays.
-3. **Per-display-pipe budgets**: Allow the user or the system to reallocate framebuffer budget from unused display pipes to active ones.
-
-### User actions
-
-1. **File Feedback with Apple**: Reference this analysis and BetterDisplay discussion #4215. The more reports Apple receives about this M4/M5 regression, the more likely they are to address it.
-2. **Native 5K/8K displays**: A 5120x2880 or 7680x4320 panel would not hit this limitation, as the DCP would allocate a larger framebuffer natively.
+This needs a change from Apple - either to the framebuffer allocation policy in the kernel driver, or a user-facing override. I've filed Apple Feedback FB22365722.
 
 ## Appendix: Diagnostic Commands and Output
 
-The following commands can be used to reproduce and verify this issue on any Mac. All commands except #3 work without special permissions.
+Commands to reproduce this on any Mac. All except #3 work without special permissions.
 
 ### Diagnostic commands
 
@@ -415,11 +381,10 @@ Identical to M2 Max.
 
 ### Key observation
 
-The DCP-reported capabilities (`MaxActivePixelRate`, `MaxW`, `MaxH`, `MaxTotalPixelRate`, `DisplayHints`) are **byte-for-byte identical** between M2 Max and M5 Max for the same display. The difference is entirely in the GPU driver's mode generation policy, which sits above the DCP layer and below WindowServer.
+DCP-reported capabilities are identical between M2 Max and M5 Max for the same display. The difference is in whatever generates the mode list between the DCP layer and WindowServer.
 
 ## References
 
-- [BetterDisplay Discussion #4215](https://github.com/waydabber/BetterDisplay/discussions/4215): Confirmed by BetterDisplay developer as M4-generation Apple Silicon limitation
-- Apple M5 Max specifications: "Supports 8K (7680x4320) at 60Hz over Thunderbolt"
-- `AppleDisplayCrossbar` / `AppleDisplayConnectionManager`: IOKit drivers managing DCP display pipe allocation
-- I've logged this with Apple Feedback (FB22365722)
+- [BetterDisplay Discussion #4215](https://github.com/waydabber/BetterDisplay/discussions/4215) - waydabber's description of the M4-generation limitation
+- [Apple M5 Max specifications](https://www.apple.com/macbook-pro/specs/) - claims 8K (7680x4320) at 60Hz over Thunderbolt
+- Apple Feedback FB22365722
