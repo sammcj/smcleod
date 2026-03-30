@@ -65,6 +65,10 @@ MaxH                = 2160
 MaxBpc              = 10
 ```
 
+| | |
+|-|-|
+| ![M5](m5-low-dpi.jpeg) | ![M2](m2-hidpi.jpeg) |
+
 ## Diagnosis and Troubleshooting
 
 ### Display Override Plist (scale-resolutions)
