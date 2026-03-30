@@ -25,7 +25,9 @@ mermaid: false
 
 Starting with the M4 and including the new M5 generations of Apple Silicon, macOS no longer offers or allows full-resolution HiDPI 4k modes for external displays.
 
-The maximum HiDPI mode available on a 3840x2160 panel is now just 3360x1890 (with a 6720x3780, instead of 7680x4320 backing store) - M2/M3 machines did not have this limitation.
+The maximum HiDPI mode available on a 3840x2160 panel is now just 3360x1890 - _M2/M3 machines did not have this limitation_.
+
+![System Settings > Display on a M5 Max](macOS.jpeg)
 
 With this regression Apple is leaving users to choose between:
 
@@ -35,11 +37,10 @@ or
 
 - Reduced screen real estate at 3.3k (3360x1890) with sharp text (HiDPI) but significantly less usable working space, and macOS's UI looking ridiculously oversized.
 
-**A regression in the display controller architecture**
+## A regression in the display controller architecture
 
-The DCP (Display Coprocessor) reports identical capabilities on both M2 Max and M5 Max for the same display. The M5 Max hardware supports 8K (7680x4320) at 60Hz per Apple's own specs. However, the M4/M5 generation introduced a new per-sub-pipe framebuffer budget system (`IOMFBMaxSrcPixels`) that caps the single-stream scaler path (sub-pipe 0) at 6720 pixels wide - exactly the backing store width for 3360x1890 HiDPI. The M2 Max uses a completely different architecture with a flat per-controller budget of 7680 pixels wide, which is why it works there.
+The DCP (Display Coprocessor) reports identical capabilities on both M2 Max and M5 Max for the same display. The M5 Max hardware supports 8K (7680x4320) at 60Hz per Apple's own specs. _However_, the M4/M5 generation appears to have introduced a new per-sub-pipe framebuffer budget system (`IOMFBMaxSrcPixels`) that caps the single-stream scaler path (sub-pipe 0) at 6720 pixels wide - exactly the backing store width for 3360x1890 HiDPI. The M2 Max used a completely different architecture with a flat per-controller budget of 7680 pixels wide, which is why it worked.
 
-![System Settings > Display on a M5 Max](macOS.jpeg)
 
 ## Environment and Test Setup
 
