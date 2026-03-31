@@ -39,7 +39,7 @@ or
 
 ## A regression in the display controller architecture
 
-The DCP (Display Coprocessor) reports identical capabilities on both M2 Max and M5 Max for the same display. The M5 Max supports 8K at 60Hz per Apple's own specs. But the M4/M5 generation introduced a per-sub-pipe framebuffer budget system (`IOMFBMaxSrcPixels`) that caps the single-stream path at 6720 pixels wide - exactly the backing store width for 3360x1890 HiDPI. The M2 Max had a flat per-controller budget of 7680, which is why it worked. Disassembly of the DCP firmware confirms 6720 is a hardcoded constant, not derived from any hardware capability or display property.
+This is likely not a hardware limitation. The M5 Max supports 8K at 60Hz per Apple's own specs, and its Display Coprocessor (DCP) reports identical capabilities to the M2 Max for the same display. The M4/M5 generation changed how framebuffer budgets are allocated across display pipes, and the budget for the path that standard 4K displays use dropped from 7680 pixels wide (enough for 3840x2160 HiDPI) to 6720 (only enough for 3360x1890 HiDPI). Disassembly of the DCP firmware shows the 6720 value is a hardcoded constant - the details are below.
 
 ## Environment and Test Setup
 
@@ -310,133 +310,18 @@ Physical Display (EDID/DPCD)
     CoreGraphics / Applications
 ```
 
-On M2/M3, the system generated HiDPI modes up to 2.0x the native resolution (3840x2160 native = 7680x4320 backing store). On M4/M5, sub-pipe 0's hardcoded budget of 6720 caps this at ~1.75x. The architectural change from M2's flat 7680 budget to M5's sub-pipe model, with a smaller constant for sub-pipe 0, is what broke 4K HiDPI.
-
----
-
-## DCP Firmware Analysis
-
-The DCP co-processor firmware is stored as an Image4 payload (im4p) on the Preboot volume at `/System/Volumes/Preboot/<UUID>/restore/Firmware/dcp/`. Each SoC variant has its own firmware file (e.g. `t605xdcp.im4p` for M5 Max). The M5 Max firmware is LZFSE-compressed (4.1MB compressed, 16.4MB decompressed) and not encrypted - no KBAG, extractable directly with [img4tool](https://github.com/tihmstar/img4tool):
-
-```bash
-img4tool -e t605xdcp.im4p -o t605xdcp.bin
-```
-
-All the IOKit property names involved in the HiDPI limit come from this firmware, not from any kext:
-
-```
-MaxVideoSrcDownscalingWidth
-MaxSrcRectWidthForPipe
-MaxSrcRectHeightForPipe
-IOMFBMaxSrcPixels
-ExternalAppleLook
-IOMFBSwapAppleLookSupported
-```
-
-None of these strings appear in any kext binary on disk. The kexts are fully stripped and searching for 0x1A40 (6720) in them returned nothing. The values come from the DCP firmware running on its dedicated ARM core, passed to `IOMobileFramebufferShim` via RTKit mailbox.
-
-The function that enforces the limit at runtime is `IOMFB::UPPipe::verify_downscaling(SwapRequest *)`, with the log message:
-
-```
-%s: source video downscaling width %d exceeds %d
-```
-
-### RuntimeProperty boot-args
-
-The firmware has a runtime property system with functions like `IOMobileFramebuffer::parse_RTP_boot_args()` and `IOMFB::get_RTP_boot_arg_name(RuntimeProperty)` that suggest properties can be overridden at boot:
-
-| RuntimeProperty                                    | Purpose                                            |
-| -------------------------------------------------- | -------------------------------------------------- |
-| `iomfb_RuntimeProperty_ExternalAppleLook`          | Toggle Apple display identity on external displays |
-| `iomfb_RuntimeProperty_allocateDefaultFramebuffer` | Control default framebuffer allocation             |
-| `iomfb_enable_bw_check`                            | Enable/disable bandwidth checking                  |
-| `iomfb_disable_rt_bw`                              | Disable real-time bandwidth management             |
-| `iomfb_dual_pipe_policy`                           | Controls dual-pipe assignment policy               |
-
-`ExternalAppleLook` is a toggleable state in the firmware (log message: `IOMFB : Cannot %s external Apple Look since it's already %s!`), not a hardware-derived read-only flag.
-
-### Boot-arg testing
-
-With SIP reduced (`csrutil enable --without nvram` from Recovery) and Startup Security set to Reduced Security, the following boot-args were tested via `sudo nvram boot-args=`:
-
-```
-iomfb_RuntimeProperty_ExternalAppleLook=0x1 iomfb_enable_bw_check=0 iomfb_dual_pipe_policy=0x1 iomfb_disable_rt_bw=1
-```
-
-The boot-args appeared in the device tree (confirmed via `ioreg`), so iBoot passed them through. But the DCP firmware did not act on any of them - `ExternalAppleLook` stayed `No`, `MaxVideoSrcDownscalingWidth` stayed 6720, no new HiDPI modes appeared.
-
-The DCP co-processor likely does not read boot-args from the kernel's device tree. It may receive its configuration through a separate channel (the firmware references a `boot-args-prefix` mechanism), or via RTKit mailbox from iBoot directly. On production hardware, `parse_RTP_boot_args()` may be a development-only code path that's disabled.
-
-The kernel's own `allowed-boot-args` device tree property (`trace,trace_wake,kperf,-x,-v,trm_enabled,trace_typefilter,nox86exec`) doesn't include any display-related arguments either.
-
-### Ghidra disassembly: it's a hardcoded constant
-
-Loading the decompressed DCP firmware (`t605xdcp.bin`, ARM64) in Ghidra, the function that builds the `IOMFBMaxSrcPixels` dictionary is at `FUN_002eb62c` (source file `UPPipeDCP_H17GSCD.cpp` based on nearby debug strings):
-
-```c
-// Determine pipe 0 width: 6720 for external, 5120 for internal
-puVar1 = &DAT_00001a40;          // 0x1A40 = 6720
-if (isInternalDisplay == 0) {
-    puVar1 = &DAT_00001400;      // 0x1400 = 5120
-}
-pipe0_width = create_number(puVar1, 0x20);
-
-// Determine pipes 1-3 width: 7680 for external, 0 for internal
-uVar14 = 0x1e00;                 // 0x1E00 = 7680
-if (isInternalDisplay == 0) {
-    uVar14 = 0;
-}
-pipeN_width = create_number(uVar14, 0x20);
-
-// Build the MaxSrcRectWidthForPipe array: [pipe0, pipeN, pipeN, pipeN]
-counter = 4;
-do {
-    value = pipe0_width;         // First iteration (counter==4): use pipe0_width
-    if (counter != 4) {
-        value = pipeN_width;     // Iterations 2-4: use pipeN_width
-    }
-    array_append(widthArray, value);
-    counter = counter - 1;
-} while (counter != 0);
-
-// Height is always 4608 for all pipes
-pipe_height = create_number(&DAT_00001200, 0x20);  // 0x1200 = 4608
-```
-
-All four values are hardcoded constants:
-
-| Constant       | Hex    | Decimal  | Used for                             |
-| -------------- | ------ | -------- | ------------------------------------ |
-| `DAT_00001a40` | 0x1A40 | **6720** | External display sub-pipe 0 width    |
-| `0x1e00`       | 0x1E00 | **7680** | External display sub-pipes 1-3 width |
-| `DAT_00001400` | 0x1400 | **5120** | Internal display sub-pipe 0 width    |
-| `DAT_00001200` | 0x1200 | **4608** | All sub-pipe heights                 |
-
-The internal-vs-external decision is made by a virtual method call at vtable offset 0xa40 on the display pipe object, returning non-zero for external displays.
-
-`MaxVideoSrcDownscalingWidth` is set separately from object state (`param_1[0x46]`), not from a hardcoded constant:
-
-```c
-set_property(dict, "MaxVideoSrcDownscalingWidth", (int)param_1[0x46], 0x20);
-```
-
-This value is likely derived from or set equal to the sub-pipe 0 width (6720) during earlier initialisation.
-
-The 6720 value is a hardcoded constant in the firmware binary. It is not read from hardware registers, not calculated from EDID data, and not configurable at runtime.
-
-The constant lives in `UPPipeDCP_H17GSCD.cpp` (H17G = M5 Max display pipe variant). Changing `0x1A40` to `0x1E00` would set the sub-pipe 0 budget to 7680, matching what sub-pipes 1-3 already use.
+On M2/M3, the system generated HiDPI modes up to 2.0x the native resolution (3840x2160 native = 7680x4320 backing store). On M4/M5, sub-pipe 0's budget of 6720 caps this at ~1.75x. The pipe budget is a hardcoded constant; the runtime scaler gate (`MaxVideoSrcDownscalingWidth`) is derived from hardware config that likely traces back to the same value. The architectural change from M2's flat 7680 budget to M5's sub-pipe model, with a smaller constant for sub-pipe 0, is what broke 4K HiDPI.
 
 ---
 
 ## What could fix this
 
-The 6720 constant in the DCP firmware (`t605xdcp.im4p` for M5 Max, equivalent files for other M4/M5 variants) sets the sub-pipe 0 budget that gates HiDPI mode generation. Sub-pipes 1-3 on the same controllers already use 7680, and the internal display scaler runs at 2.1x its sub-pipe width.
+Apple would need to update the DCP firmware (`t605xdcp.im4p` and equivalents for other M4/M5 variants):
 
-Options:
-
-1. Change the hardcoded constant from 6720 to 7680 for external sub-pipe 0 (matching M2 Max behaviour)
-2. Make the allocation dynamic based on actually connected displays rather than worst-case scenarios
-3. Expose a user override via system preference or `nvram`
+1. Increase the hardcoded constant from 0x1A40 to 0x1E00 and update the hardware config register accordingly
+2. Allow multi-pipe for HiDPI backing stores even when the output resolution fits in a single pipe
+3. Make the allocation dynamic based on actually connected displays
+4. Expose the RuntimeProperty or boot-arg mechanism on production hardware
 
 I've filed Apple Feedback FB22365722.
 
@@ -678,6 +563,54 @@ Sub-pipe 0 (the single-stream path all standard displays use) has a `MaxSrcRectW
 ### Key observation
 
 DCP-reported capabilities are identical between M2 Max and M5 Max for the same display. The difference is in the display controller architecture: the M2 Max uses a flat per-controller budget (`MaxSrcRectWidth=7680`), while the M5 Max uses per-sub-pipe budgets (`MaxSrcRectWidthForPipe=(6720, 7680, 7680, 7680)`). The single-stream sub-pipe (the only one a 4K display uses) gets a 6720-wide budget on M5 Max, capping HiDPI at 3360x1890 before WindowServer ever builds its mode list.
+
+## Appendix: DCP Firmware Analysis
+
+The DCP co-processor firmware is stored as an Image4 payload (im4p) on the Preboot volume at `/System/Volumes/Preboot/<UUID>/restore/Firmware/dcp/`. Each SoC variant has its own firmware file (e.g. `t605xdcp.im4p` for M5 Max). The M5 Max firmware is LZFSE-compressed (4.1MB compressed, 16.4MB decompressed) and not encrypted - extractable with [img4tool](https://github.com/tihmstar/img4tool):
+
+```bash
+img4tool -e t605xdcp.im4p -o t605xdcp.bin
+```
+
+All the IOKit property names involved in the HiDPI limit (`MaxVideoSrcDownscalingWidth`, `MaxSrcRectWidthForPipe`, `IOMFBMaxSrcPixels`, `ExternalAppleLook`, etc.) come from this firmware, not from any kext. The kexts are fully stripped and searching for 0x1A40 (6720) in them returned nothing.
+
+The runtime enforcement function is `IOMFB::UPPipe::verify_downscaling(SwapRequest *)`, which checks `MaxVideoSrcDownscalingWidth` (not the `MaxSrcRectWidthForPipe` array) against the requested source width. The pipe width array informs mode enumeration; the swap validation checks a separate field.
+
+### RuntimeProperty boot-args
+
+The firmware has a runtime property system (`IOMobileFramebuffer::parse_RTP_boot_args()`) that suggests properties can be overridden at boot:
+
+| RuntimeProperty                                    | Purpose                                            |
+| -------------------------------------------------- | -------------------------------------------------- |
+| `iomfb_RuntimeProperty_ExternalAppleLook`          | Toggle Apple display identity on external displays |
+| `iomfb_RuntimeProperty_allocateDefaultFramebuffer` | Control default framebuffer allocation             |
+| `iomfb_enable_bw_check`                            | Enable/disable bandwidth checking                  |
+| `iomfb_disable_rt_bw`                              | Disable real-time bandwidth management             |
+| `iomfb_dual_pipe_policy`                           | Controls dual-pipe assignment policy               |
+
+With SIP reduced and Startup Security set to Reduced Security, these were tested via `sudo nvram boot-args=`. iBoot passed them through to the device tree, but the DCP firmware did not act on any of them. The DCP likely receives its configuration through a separate channel, or `parse_RTP_boot_args()` is a development-only code path disabled on production hardware.
+
+### Disassembly
+
+Decompiling the DCP firmware in Ghidra, the function that builds the `IOMFBMaxSrcPixels` dictionary (`FUN_002eb62c` in `UPPipeDCP_H17GSCD.cpp`) checks whether the display is internal or external, then assigns pipe widths from hardcoded constants:
+
+| Constant       | Hex    | Decimal  | Used for                             |
+| -------------- | ------ | -------- | ------------------------------------ |
+| `DAT_00001a40` | 0x1A40 | **6720** | External display sub-pipe 0 width    |
+| `0x1e00`       | 0x1E00 | **7680** | External display sub-pipes 1-3 width |
+| `DAT_00001400` | 0x1400 | **5120** | Internal display sub-pipe 0 width    |
+| `DAT_00001200` | 0x1200 | **4608** | All sub-pipe heights                 |
+
+`MaxVideoSrcDownscalingWidth` (the runtime gate) is not a simple hardcoded literal. It's initialised from a hardware config register or firmware config table and may be recalculated during display configuration. But on external controllers it ends up at 6720, same as `MaxSrcRectWidthForPipe[0]`, suggesting both derive from the same source.
+
+The limitation operates at two levels: `MaxSrcRectWidthForPipe[0]` (hardcoded 0x1A40) controls which modes get enumerated, and `MaxVideoSrcDownscalingWidth` (derived, but also 6720) is the runtime check that blocks swap requests exceeding the budget.
+
+Why we think this is a firmware policy choice rather than a hardware constraint:
+
+- Sub-pipes 1-3 of the same external controllers support 7680 (hardcoded 0x1E00)
+- The internal display's `MaxVideoSrcDownscalingWidth` is 10744, suggesting the scaler silicon handles values well above 6720
+- 8K displays work via multi-pipe, where each pipe handles 3840 width (within budget)
+- 4K at 2x HiDPI (7680 backing store) falls in a gap: too wide for single-pipe at 6720, but the DCP won't assign multi-pipe because the 3840x2160 output resolution doesn't need it
 
 ## References
 
