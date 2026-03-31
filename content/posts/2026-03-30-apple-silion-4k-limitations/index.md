@@ -612,6 +612,23 @@ Why we think this is a firmware policy choice rather than a hardware constraint:
 - 8K displays work via multi-pipe, where each pipe handles 3840 width (within budget)
 - 4K at 2x HiDPI (7680 backing store) falls in a gap: too wide for single-pipe at 6720, but the DCP won't assign multi-pipe because the 3840x2160 output resolution doesn't need it
 
+## Virtual Display Mirror Workaround (Temporary)
+
+I wrote a small CLI tool ([force-hidpi](https://github.com/sammcj/force-hidpi)) that works around the pipe 0 budget by creating a virtual display at 7680x4320 via SkyLight's private `SLVirtualDisplay` API, then hardware-mirroring the physical 4K panel from it.
+
+![](settings.jpeg)
+![](details.jpeg)
+
+The hardware mirror path in the DCP bypasses `verify_downscaling` entirely - mirrored displays receive pre-composited frames from the compositor rather than direct backing store swaps through the pipe budget check. `system_profiler` confirms "Hardware Mirror: Yes" with the virtual display as the source.
+
+This gets 3840x2160 HiDPI working on the physical panel. Text is measurably sharper than 1.0x scale (confirmed by more content visible at the same font size), and macOS's UI elements render at proper 2x density. The virtual display uses PQ (ST 2084) EOTF for 16-bit/64bpp compositing, with a PQ-to-SDR gamma correction table applied so the output looks correct on SDR panels.
+
+There are trade-offs. The tool must stay running (killing it tears down the virtual display and reverts to 1.0x). An extra "display" appears in System Settings. Text rendering is not quite identical to native HiDPI on an M2 Max driving the same panel - whether that's the extra compositing pass, the 8-bit vs 10-bit intermediate surface, or something else in the mirror path, I haven't been able to pin down. It also relies on private SkyLight APIs that could break with any macOS update.
+
+The point is - it's a hack, not a fix. The real solution is Apple updating the DCP firmware constant from 0x1A40 to 0x1E00.
+
+_Note: If you want an all-rounder display configuration tool for macOS consider supporting [BetterDisplay](https://betterdisplay.pro)._
+
 ## References
 
 - [BetterDisplay Discussion #4215](https://github.com/waydabber/BetterDisplay/discussions/4215) - waydabber's description of the M4-generation limitation
