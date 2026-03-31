@@ -614,7 +614,7 @@ Why we think this is a firmware policy choice rather than a hardware constraint:
 
 ## Virtual Display Mirror Workaround (Temporary)
 
-I wrote a small CLI tool ([force-hidpi](https://github.com/sammcj/force-hidpi)) that works around the pipe 0 budget by creating a virtual display at 7680x4320 via SkyLight's private `SLVirtualDisplay` API, then hardware-mirroring the physical 4K panel from it.
+I wrote a small menu bar app ([force-hidpi](https://github.com/sammcj/force-hidpi)) that works around the pipe 0 budget by creating a virtual display at 7680x4320 via CoreGraphics' `CGVirtualDisplay` API (a semi-public API also used by DisplayLink), then hardware-mirroring the physical 4K panel from it.
 
 ![](settings.jpeg)
 ![](details.jpeg)
@@ -623,7 +623,7 @@ The hardware mirror path in the DCP bypasses `verify_downscaling` entirely - mir
 
 This gets 3840x2160 HiDPI working on the physical panel. Text is measurably sharper than 1.0x scale (confirmed by more content visible at the same font size), and macOS's UI elements render at proper 2x density. The virtual display uses PQ (ST 2084) EOTF for 16-bit/64bpp compositing, with a PQ-to-SDR gamma correction table applied so the output looks correct on SDR panels.
 
-There are trade-offs. The tool must stay running (killing it tears down the virtual display and reverts to 1.0x). An extra "display" appears in System Settings. Text rendering is not quite identical to native HiDPI on an M2 Max driving the same panel - whether that's the extra compositing pass, the 8-bit vs 10-bit intermediate surface, or something else in the mirror path, I haven't been able to pin down. It also relies on private SkyLight APIs that could break with any macOS update.
+There are trade-offs. The app must stay running (quitting it tears down the virtual display and reverts to 1.0x). An extra "display" appears in System Settings. Text rendering is not quite identical to native HiDPI on an M2 Max driving the same panel - whether that's the extra compositing pass or something else in the mirror path, I haven't been able to pin down. It uses CoreGraphics' `CGVirtualDisplay` API which is semi-public (used by DisplayLink and other hardware vendors) but could still break with future macOS updates.
 
 The point is - it's a hack, not a fix. The real solution is Apple updating the DCP firmware constant from 0x1A40 to 0x1E00.
 
