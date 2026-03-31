@@ -39,8 +39,7 @@ or
 
 ## A regression in the display controller architecture
 
-The DCP (Display Coprocessor) reports identical capabilities on both M2 Max and M5 Max for the same display. The M5 Max hardware supports 8K (7680x4320) at 60Hz per Apple's own specs. _However_, the M4/M5 generation appears to have introduced a new per-sub-pipe framebuffer budget system (`IOMFBMaxSrcPixels`) that caps the single-stream scaler path (sub-pipe 0) at 6720 pixels wide - exactly the backing store width for 3360x1890 HiDPI. The M2 Max used a completely different architecture with a flat per-controller budget of 7680 pixels wide, which is why it worked.
-
+The DCP (Display Coprocessor) reports identical capabilities on both M2 Max and M5 Max for the same display. The M5 Max supports 8K at 60Hz per Apple's own specs. But the M4/M5 generation introduced a per-sub-pipe framebuffer budget system (`IOMFBMaxSrcPixels`) that caps the single-stream path at 6720 pixels wide - exactly the backing store width for 3360x1890 HiDPI. The M2 Max had a flat per-controller budget of 7680, which is why it worked. Disassembly of the DCP firmware confirms 6720 is a hardcoded constant, not derived from any hardware capability or display property.
 
 ## Environment and Test Setup
 
@@ -65,8 +64,8 @@ MaxH                = 2160
 MaxBpc              = 10
 ```
 
-| | |
-|-|-|
+|                        |                      |
+| ---------------------- | -------------------- |
 | ![M5](m5-low-dpi.jpeg) | ![M2](m2-hidpi.jpeg) |
 
 ## Diagnosis and Troubleshooting
@@ -104,7 +103,7 @@ The override plist that works on M2 Max:
 - Pixel clock set to maximum (655.35 MHz)
 - Range limits boosted to 2550 MHz max pixel clock, 255 kHz max H-freq, 255 Hz max V-freq
 
-**Result**: No effect with these values. However, waydabber (incredibly helpful BetterDisplay developer) [has confirmed](https://github.com/waydabber/BetterDisplay/discussions/4215) that software EDID overrides _can_ work on M4 - he got an 8K framebuffer on a 4K TV by adding a valid 8K timing and defining it as the native resolution. The catch: even with a correct override, a 4K panel can't actually accept an 8K signal, so this confirms the mechanism (scaled modes derive from the system's idea of native resolution) without providing a practical fix.
+**Result**: No effect with these values. However, waydabber (BetterDisplay developer) [has confirmed](https://github.com/waydabber/BetterDisplay/discussions/4215) that software EDID overrides did work for him on M4 in the past - he got an 8K framebuffer on a 4K TV by adding a valid 8K timing and defining it as the native resolution. The catch: a 4K panel can't actually accept an 8K signal, so this confirms the mechanism (scaled modes derive from the system's idea of native resolution) without providing a practical fix.
 
 ### EDID Hardware Flash - VIC 199 (8K) and DisplayID Extension
 
@@ -156,6 +155,31 @@ A further attempt added a DisplayID Type I Detailed Timing for 7680x4320@30Hz ma
 
 **Result**: Returns error code 1000 when the mode is not in the display's own mode list. The SkyLight display configuration API validates modes against the same DCP-derived mode list as WindowServer. There is no private API path to bypass the mode list validation.
 
+### Faking Apple Display Identity
+
+**What**: Tested whether the DCP firmware treats Apple-branded displays differently. Added `IOGFlags = 4` (`kIOGFlagAppleLook`) to the LG's display override plist, then created a patched EDID with Apple's vendor ID ("APP" = 0x0610) and Pro Display XDR product code (0xAE21), uploaded via BetterDisplay.
+
+**Result**: The display appeared as "Apple Pro Display X" in System Settings, but `ExternalAppleLook` remained `No` on all `IOMobileFramebufferShim` instances and `MaxVideoSrcDownscalingWidth` stayed at 6720. Apple displays are identified by a hardware-level handshake over Thunderbolt/DisplayPort AUX, not by EDID vendor ID.
+
+Apple's own displays have native resolutions where HiDPI backing stores fit within the 6720 budget anyway (Pro Display XDR: 6016x3384, Studio Display: 5120x2880), so `ExternalAppleLook` may not even affect scaler budgets.
+
+### Comprehensive IOKit Write Attempts
+
+Every available IOKit API and service was tested for writing `MaxVideoSrcDownscalingWidth` and `IOMFBMaxSrcPixels`:
+
+| Service                   | Method                                 | Result                                          |
+| ------------------------- | -------------------------------------- | ----------------------------------------------- |
+| IOMobileFramebufferShim   | IORegistryEntrySetCFProperty           | kIOReturnUnsupported (no setProperties handler) |
+| IOMobileFramebufferShim   | IOConnectSetCFProperties (user client) | kIOReturnNotReady                               |
+| IOMobileFramebufferShim   | IOConnectCallMethod selectors 0-30     | All kIOReturnUnsupported (stub user client)     |
+| AppleARMIODevice (parent) | IORegistryEntrySetCFProperty           | kIOReturnNotReady                               |
+| AppleDCPLinkService       | IORegistryEntrySetCFProperty           | kIOReturnNotReady                               |
+| DCPAVServiceProxy         | IORegistryEntrySetCFProperty           | kIOReturnNotReady                               |
+| AppleDisplayCrossbar      | IORegistryEntrySetCFProperty           | kIOReturnNotReady                               |
+| IOAVController            | IORegistryEntrySetCFProperty           | **Accepted** but does not propagate to DCP      |
+
+`IOAVController` is the only service that accepted property writes, but it just stores them in its own registry entry without forwarding anything to the DCP pipeline.
+
 ## Where the limit is applied
 
 The DCP reports identical capability parameters on both machines - `MaxActivePixelRate`, `MaxW`, `MaxH`, `MaxTotalPixelRate` all match. These come from the display's EDID, so that's expected.
@@ -164,7 +188,7 @@ The difference shows up in WindowServer's mode list. On M2 Max, `CGSGetNumberOfD
 
 ### IOMFBMaxSrcPixels - the per-sub-pipe framebuffer budget
 
-The `IOMFBMaxSrcPixels` property on the `IOMobileFramebufferShim` IOKit service exposes framebuffer size budgets. The M2 Max and M5 Max use fundamentally different structures here, which is the root cause of the regression.
+The `IOMFBMaxSrcPixels` property on the `IOMobileFramebufferShim` IOKit service exposes framebuffer size budgets. The M2 Max and M5 Max use different structures here.
 
 **M2 Max** uses a flat per-controller budget:
 
@@ -177,7 +201,7 @@ The `IOMFBMaxSrcPixels` property on the `IOMobileFramebufferShim` IOKit service 
 }
 ```
 
-Every external display controller gets a flat `MaxSrcRectWidth` of **7680** and `MaxSrcRectTotal` of **33,177,600** (exactly 7680 x 4320). The LG is assigned to `PipeIDs=(1)`. With a 7680-pixel budget, 3840x2160 HiDPI (7680x4320 backing store) fits comfortably.
+Every external display controller gets a flat `MaxSrcRectWidth` of **7680** and `MaxSrcRectTotal` of **33,177,600** (7680 x 4320). With a 7680-pixel budget, 3840x2160 HiDPI (7680x4320 backing store) fits.
 
 **M5 Max** restructured to per-sub-pipe budgets within each controller:
 
@@ -201,7 +225,7 @@ The 4 values in `MaxSrcRectWidthForPipe` are **sub-pipes within each display con
 | 2        | 7680            | Multi-pipe mode only                                 |
 | 3        | 7680            | Multi-pipe mode only                                 |
 
-Sub-pipe 0's budget of 6720 pixels lines up exactly with the observed cap: 3360x1890 HiDPI needs a 6720x3780 backing store. For 3840x2160 HiDPI, the backing store would need to be 7680 pixels wide. Sub-pipes 1-3 have this budget, but they're only accessible in multi-pipe mode for displays that genuinely output above 4K.
+Sub-pipe 0's budget of 6720 pixels lines up exactly with the observed cap: 3360x1890 HiDPI needs a 6720x3780 backing store. For 3840x2160 HiDPI, the backing store would need to be 7680 pixels wide. Sub-pipes 1-3 have this budget, but they're only used in multi-pipe mode for displays that output above 4K.
 
 | Property                   | M2 Max                   | M5 Max                                              |
 | -------------------------- | ------------------------ | --------------------------------------------------- |
@@ -214,32 +238,45 @@ Sub-pipe 0's budget of 6720 pixels lines up exactly with the observed cap: 3360x
 
 This property is set by the kernel-level `IOMobileFramebufferShim` driver and can't be modified from userspace.
 
+### MaxVideoSrcDownscalingWidth
+
+There's also a `MaxVideoSrcDownscalingWidth` property on each `IOMobileFramebufferShim` that controls the maximum width the video scaler will accept for HiDPI downscaling:
+
+| Controller           | MaxSrcRectWidthForPipe[0] | MaxVideoSrcDownscalingWidth | Ratio |
+| -------------------- | ------------------------- | --------------------------- | ----- |
+| Internal display     | 5120                      | **10744**                   | 2.1x  |
+| External controllers | 6720                      | **6720**                    | 1.0x  |
+
+The internal display's scaler runs at 2.1x its sub-pipe width. The external controllers get zero headroom - scaler budget equals sub-pipe budget. If external controllers got even a fraction of the internal display's ratio, 3840x2160 HiDPI (7680 backing store) would fit.
+
 ### The budget is fixed at boot
 
-Testing confirmed that `MaxSrcRectWidthForPipe` is set when the driver loads and does not change at runtime, regardless of what you do:
+Testing confirmed that both `MaxSrcRectWidthForPipe` and `MaxVideoSrcDownscalingWidth` are set when the driver loads and do not change at runtime, regardless of what you do:
 
-| Test                                               | Pipe 0 MaxSrcRectWidth | Changed? |
-| -------------------------------------------------- | ---------------------- | -------- |
-| LG on USB-C port 1                                 | 6720                   | No       |
-| LG on USB-C port 2                                 | 6720                   | No       |
-| LG on USB-C port 3                                 | 6720                   | No       |
-| LG on HDMI                                         | 6720                   | No       |
-| U13ZA disconnected (2 displays total)              | 6720                   | No       |
-| Clamshell mode (LG only, lid closed)               | 6720                   | No       |
-| EDID with VIC 199 (8K) flashed to monitor          | 6720                   | No       |
-| EDID with 4095x4095 preferred DTD                  | 6720                   | No       |
-| Software override plist with 8K default-resolution | 6720                   | No       |
-| BetterDisplay native resolution set to 7680x4320   | 6720                   | No       |
+| Test                                               | Sub-pipe 0 MaxSrcRectWidth | MaxVideoSrcDownscalingWidth | Changed?                              |
+| -------------------------------------------------- | -------------------------- | --------------------------- | ------------------------------------- |
+| LG on USB-C port 1                                 | 6720                       | 6720                        | No                                    |
+| LG on USB-C port 2                                 | 6720                       | 6720                        | No                                    |
+| LG on USB-C port 3                                 | 6720                       | 6720                        | No                                    |
+| LG on HDMI                                         | 6720                       | 6720                        | No                                    |
+| U13ZA disconnected (2 displays total)              | 6720                       | 6720                        | No                                    |
+| Clamshell mode (LG only, lid closed)               | 6720                       | 6720                        | No                                    |
+| EDID with VIC 199 (8K) flashed to monitor          | 6720                       | 6720                        | No                                    |
+| EDID with 4095x4095 preferred DTD                  | 6720                       | 6720                        | No                                    |
+| EDID with DisplayID 7680x4320 timing               | 6720                       | 6720                        | No                                    |
+| Software override plist with 8K default-resolution | 6720                       | 6720                        | No                                    |
+| BetterDisplay native resolution set to 7680x4320   | 6720                       | 6720                        | No                                    |
+| 8K-only EDID (VIC 199 sole mode)                   | 6720                       | 6720                        | No (got 2 pipes but budget unchanged) |
 
-It's possible the driver reads EDID content during early boot to determine these allocations (as waydabber's analysis suggests), but that hasn't been confirmed with a cold boot test using a modified EDID yet.
+Ghidra disassembly later confirmed these values are hardcoded constants in the DCP firmware binary, not derived from EDID or any runtime input.
 
 ### What's going on
 
-BetterDisplay developer waydabber ([discussion #4215](https://github.com/waydabber/BetterDisplay/discussions/4215)) describes the change:
+BetterDisplay developer waydabber ([discussion #4215](https://github.com/waydabber/BetterDisplay/discussions/4215)) initially described this as dynamic resource allocation:
 
 > "Generally 3840x2160 HiDPI is not available with any M4 generation Mac on non-8K displays due to the new dynamic nature of how the system allocates resources. There might be exceptions maybe - when the system concludes that no other displays could be attached and there are resources left still for a higher resolution framebuffer. But normally the system allocates as low framebuffer size as possible, anticipating further displays to be connected and saving room for those."
 
-The `IOMFBMaxSrcPixels` data fits this description. The M5 Max supports up to 4 external displays, and the GPU driver pre-allocates framebuffer budgets across all pipes at boot to cover the chip's maximum supported display configuration. Pipe 0 gets a reduced budget of 6720 to leave room for displays that _could_ be plugged in. Even in clamshell mode with only the LG connected, the budget stays at 6720 - the driver doesn't care how many displays are actually present.
+The Ghidra disassembly tells a simpler story: the sub-pipe 0 budget is a hardcoded constant (6720) in the DCP firmware, not dynamically calculated. It doesn't change based on connected displays, EDID data, or any runtime condition. Even in clamshell mode with a single external display, the budget stays at 6720.
 
 Putting it together:
 
@@ -251,19 +288,161 @@ Putting it together:
 - Adding VIC 199 (8K) to the EDID changes DCP-reported MaxW/MaxH but doesn't affect the sub-pipe budget
 - Adding a DisplayID 7680x4320 timing creates a 3840x2160 scale=2.0 mode, but macOS tries to output 8K on the wire (treating it as a real output mode rather than a scaling mode), which the 4K panel can't display
 
-The scaled resolution modes on M4/M5 are derived from whatever the system believes is the display's native resolution. On M2/M3, the system would generate HiDPI modes up to 2.0x the native resolution (so 3840x2160 native got you a 7680x4320 backing store). On M4/M5, the single-stream sub-pipe budget caps this at around 1.75x. Whether this is a hardware constraint in the new scaler architecture or a conservative firmware allocation policy is unclear without Apple's documentation - but the architectural change from M2's flat budget to M5's sub-pipe budget is the direct cause of the regression.
+The full stack from display to application:
+
+```
+Physical Display (EDID/DPCD)
+        |
+    DCP Co-processor Firmware (t605xdcp.im4p)
+    [Hardcoded constant: 0x1A40 (6720) for external sub-pipe 0]
+    [Signed, runs on dedicated ARM core, not encrypted]
+        |
+    IOMobileFramebufferShim (kernel kext)
+    [Receives values from DCP via RTKit mailbox]
+    [No setProperties handler - read-only from userspace]
+        |
+    AppleDisplayCrossbar (kernel kext)
+    [Mode generation uses MaxVideoSrcDownscalingWidth as cap]
+        |
+    WindowServer / SkyLight
+    [CGSGetNumberOfDisplayModes enumerates only valid modes]
+        |
+    CoreGraphics / Applications
+```
+
+On M2/M3, the system generated HiDPI modes up to 2.0x the native resolution (3840x2160 native = 7680x4320 backing store). On M4/M5, sub-pipe 0's hardcoded budget of 6720 caps this at ~1.75x. The architectural change from M2's flat 7680 budget to M5's sub-pipe model, with a smaller constant for sub-pipe 0, is what broke 4K HiDPI.
+
+---
+
+## DCP Firmware Analysis
+
+The DCP co-processor firmware is stored as an Image4 payload (im4p) on the Preboot volume at `/System/Volumes/Preboot/<UUID>/restore/Firmware/dcp/`. Each SoC variant has its own firmware file (e.g. `t605xdcp.im4p` for M5 Max). The M5 Max firmware is LZFSE-compressed (4.1MB compressed, 16.4MB decompressed) and not encrypted - no KBAG, extractable directly with [img4tool](https://github.com/tihmstar/img4tool):
+
+```bash
+img4tool -e t605xdcp.im4p -o t605xdcp.bin
+```
+
+All the IOKit property names involved in the HiDPI limit come from this firmware, not from any kext:
+
+```
+MaxVideoSrcDownscalingWidth
+MaxSrcRectWidthForPipe
+MaxSrcRectHeightForPipe
+IOMFBMaxSrcPixels
+ExternalAppleLook
+IOMFBSwapAppleLookSupported
+```
+
+None of these strings appear in any kext binary on disk. The kexts are fully stripped and searching for 0x1A40 (6720) in them returned nothing. The values come from the DCP firmware running on its dedicated ARM core, passed to `IOMobileFramebufferShim` via RTKit mailbox.
+
+The function that enforces the limit at runtime is `IOMFB::UPPipe::verify_downscaling(SwapRequest *)`, with the log message:
+
+```
+%s: source video downscaling width %d exceeds %d
+```
+
+### RuntimeProperty boot-args
+
+The firmware has a runtime property system with functions like `IOMobileFramebuffer::parse_RTP_boot_args()` and `IOMFB::get_RTP_boot_arg_name(RuntimeProperty)` that suggest properties can be overridden at boot:
+
+| RuntimeProperty                                    | Purpose                                            |
+| -------------------------------------------------- | -------------------------------------------------- |
+| `iomfb_RuntimeProperty_ExternalAppleLook`          | Toggle Apple display identity on external displays |
+| `iomfb_RuntimeProperty_allocateDefaultFramebuffer` | Control default framebuffer allocation             |
+| `iomfb_enable_bw_check`                            | Enable/disable bandwidth checking                  |
+| `iomfb_disable_rt_bw`                              | Disable real-time bandwidth management             |
+| `iomfb_dual_pipe_policy`                           | Controls dual-pipe assignment policy               |
+
+`ExternalAppleLook` is a toggleable state in the firmware (log message: `IOMFB : Cannot %s external Apple Look since it's already %s!`), not a hardware-derived read-only flag.
+
+### Boot-arg testing
+
+With SIP reduced (`csrutil enable --without nvram` from Recovery) and Startup Security set to Reduced Security, the following boot-args were tested via `sudo nvram boot-args=`:
+
+```
+iomfb_RuntimeProperty_ExternalAppleLook=0x1 iomfb_enable_bw_check=0 iomfb_dual_pipe_policy=0x1 iomfb_disable_rt_bw=1
+```
+
+The boot-args appeared in the device tree (confirmed via `ioreg`), so iBoot passed them through. But the DCP firmware did not act on any of them - `ExternalAppleLook` stayed `No`, `MaxVideoSrcDownscalingWidth` stayed 6720, no new HiDPI modes appeared.
+
+The DCP co-processor likely does not read boot-args from the kernel's device tree. It may receive its configuration through a separate channel (the firmware references a `boot-args-prefix` mechanism), or via RTKit mailbox from iBoot directly. On production hardware, `parse_RTP_boot_args()` may be a development-only code path that's disabled.
+
+The kernel's own `allowed-boot-args` device tree property (`trace,trace_wake,kperf,-x,-v,trm_enabled,trace_typefilter,nox86exec`) doesn't include any display-related arguments either.
+
+### Ghidra disassembly: it's a hardcoded constant
+
+Loading the decompressed DCP firmware (`t605xdcp.bin`, ARM64) in Ghidra, the function that builds the `IOMFBMaxSrcPixels` dictionary is at `FUN_002eb62c` (source file `UPPipeDCP_H17GSCD.cpp` based on nearby debug strings):
+
+```c
+// Determine pipe 0 width: 6720 for external, 5120 for internal
+puVar1 = &DAT_00001a40;          // 0x1A40 = 6720
+if (isInternalDisplay == 0) {
+    puVar1 = &DAT_00001400;      // 0x1400 = 5120
+}
+pipe0_width = create_number(puVar1, 0x20);
+
+// Determine pipes 1-3 width: 7680 for external, 0 for internal
+uVar14 = 0x1e00;                 // 0x1E00 = 7680
+if (isInternalDisplay == 0) {
+    uVar14 = 0;
+}
+pipeN_width = create_number(uVar14, 0x20);
+
+// Build the MaxSrcRectWidthForPipe array: [pipe0, pipeN, pipeN, pipeN]
+counter = 4;
+do {
+    value = pipe0_width;         // First iteration (counter==4): use pipe0_width
+    if (counter != 4) {
+        value = pipeN_width;     // Iterations 2-4: use pipeN_width
+    }
+    array_append(widthArray, value);
+    counter = counter - 1;
+} while (counter != 0);
+
+// Height is always 4608 for all pipes
+pipe_height = create_number(&DAT_00001200, 0x20);  // 0x1200 = 4608
+```
+
+All four values are hardcoded constants:
+
+| Constant       | Hex    | Decimal  | Used for                             |
+| -------------- | ------ | -------- | ------------------------------------ |
+| `DAT_00001a40` | 0x1A40 | **6720** | External display sub-pipe 0 width    |
+| `0x1e00`       | 0x1E00 | **7680** | External display sub-pipes 1-3 width |
+| `DAT_00001400` | 0x1400 | **5120** | Internal display sub-pipe 0 width    |
+| `DAT_00001200` | 0x1200 | **4608** | All sub-pipe heights                 |
+
+The internal-vs-external decision is made by a virtual method call at vtable offset 0xa40 on the display pipe object, returning non-zero for external displays.
+
+`MaxVideoSrcDownscalingWidth` is set separately from object state (`param_1[0x46]`), not from a hardcoded constant:
+
+```c
+set_property(dict, "MaxVideoSrcDownscalingWidth", (int)param_1[0x46], 0x20);
+```
+
+This value is likely derived from or set equal to the sub-pipe 0 width (6720) during earlier initialisation.
+
+The 6720 value is a hardcoded constant in the firmware binary. It is not read from hardware registers, not calculated from EDID data, and not configurable at runtime.
+
+The constant lives in `UPPipeDCP_H17GSCD.cpp` (H17G = M5 Max display pipe variant). Changing `0x1A40` to `0x1E00` would set the sub-pipe 0 budget to 7680, matching what sub-pipes 1-3 already use.
 
 ---
 
 ## What could fix this
 
-This needs a change from Apple in the `IOMobileFramebufferShim` driver's sub-pipe budget allocation. Specifically, sub-pipe 0's `MaxSrcRectWidthForPipe` needs to be 7680 instead of 6720 when a 3840x2160 display is connected. A few ways they could approach it:
+The 6720 constant in the DCP firmware (`t605xdcp.im4p` for M5 Max, equivalent files for other M4/M5 variants) sets the sub-pipe 0 budget that gates HiDPI mode generation. Sub-pipes 1-3 on the same controllers already use 7680, and the internal display scaler runs at 2.1x its sub-pipe width.
 
-1. Raise sub-pipe 0's budget to 7680 for external display controllers (matching the M2 Max's flat allocation)
-2. Dynamically reallocate sub-pipe budgets based on actually connected displays and their capabilities
-3. Expose a user override for sub-pipe framebuffer budgets (system preference or `nvram` variable)
+Options:
 
-The M2 Max's flat per-controller budget of 7680 proves the display controller hardware can handle it. The M5 Max's multi-pipe sub-pipes (1-3) also have 7680, but these are only used for 8K multi-stream output. I've filed Apple Feedback FB22365722.
+1. Change the hardcoded constant from 6720 to 7680 for external sub-pipe 0 (matching M2 Max behaviour)
+2. Make the allocation dynamic based on actually connected displays rather than worst-case scenarios
+3. Expose a user override via system preference or `nvram`
+
+I've filed Apple Feedback FB22365722.
+
+waydabber's take on Apple's position:
+
+> "Apple is certainly aware of the issue but since so far it affected a minority, the solution was to add a disclaimer to the product page about the availability of scaled resolutions, which shows some level of deliberation and a conclusion that they don't want to change things just yet."
 
 A 5K or 8K panel may not hit the exact same limit since its EDID native resolution is high enough that 1.75x scaling still provides a usable backing store.
 
@@ -294,6 +473,9 @@ ioreg -l -w0 | grep "ConnectionMapping"
 
 # 6. Per-pipe framebuffer budgets (the key constraint on M4/M5)
 ioreg -l -w0 | grep "IOMFBMaxSrcPixels"
+
+# 7. Video scaler downscaling width cap per controller
+ioreg -l -w0 | grep "MaxVideoSrcDownscalingWidth"
 ```
 
 ### M2 Max (Mac14,6) - Working
@@ -503,4 +685,6 @@ DCP-reported capabilities are identical between M2 Max and M5 Max for the same d
 - [MacRumors discussion](https://forums.macrumors.com/threads/5k2k-at-120hz-with-mac-mini-m4.2441289/page-29)
 - [Apple Discussions](https://discussions.apple.com/thread/256265624?sortBy=oldest_first&page=1)
 - [Apple M5 Max specifications](https://www.apple.com/macbook-pro/specs/) - claims 8K (7680x4320) at 60Hz over Thunderbolt
+- [img4tool](https://github.com/tihmstar/img4tool) - used to extract DCP firmware (`t605xdcp.im4p`)
+- [Ghidra](https://ghidra-sre.org/) - used to disassemble the ARM64 DCP firmware binary, confirming the 6720 constant
 - Apple Feedback FB22365722
