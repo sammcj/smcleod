@@ -54,6 +54,7 @@
   position: sticky;
   top: 0;
   z-index: 10;
+  min-width: 140px !important;
   max-width: var(--table-cell-max-width);
   word-wrap: break-word;
   overflow-wrap: break-word;
