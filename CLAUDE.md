@@ -1,12 +1,11 @@
 # Project Instructions for Coding Agents
 
-## Theme
+- NEVER make changes to files in the themes/ directory, these are git submodules / clones of upstream code.
+- NEVER commit or push a git repo unless the user has explicitly requested you to do so.
+- In markdown content always use - for lists, _underscores_ and **bold**
+- If you are asked to review the users content, as well as the usual Australian English spelling and grammar, you should check the clarity of prose, ensure there's no fluff, filler, empty verbiage, buzzwords, hype or marketing speak, that the content is clear, concise and to the point as well as being factually accurate and well structured.
 
-Important: NEVER make changes to files in the themes/ directory, these are git submodules / clones of upstream code.
-
-## Logging
-
-DO NOT log to the console at info level as it can slow down rendering the site when it's deployed, only log to the console on error
+---
 
 ## Agentic Coding Tools Comparison Table
 
@@ -72,4 +71,3 @@ If table styling needs adjustment:
 - **Shortcode**: `layouts/shortcodes/comparison-table.html` (calls partial)
 - **Partial**: `layouts/partials/comparison-table.html` (renders table from data)
 - **Page**: `content/agentic-coding-tools.md` (uses the shortcode)
-- NEVER commit or push a git repo unless the user has explicitly requested you to do so
