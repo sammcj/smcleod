@@ -2,21 +2,21 @@ tools:
   - id: claude_code
     name: Claude Code
     header_highlight: 0
-  - id: cline
-    name: Cline
-    header_highlight: 0
   - id: opencode
     name: OpenCode
-    header_highlight: 0
+    header_highlight: 1
   - id: openai_codex
     name: OpenAI Codex
-    header_highlight: 3
+    header_highlight: 1
+  - id: cline
+    name: Cline
+    header_highlight: 1
   - id: github_copilot
     name: Github Copilot
-    header_highlight: 4
+    header_highlight: 3
   - id: google_antigravity
     name: Google Antigravity
-    header_highlight: 3
+    header_highlight: 4
   - id: cursor
     name: Cursor
     header_highlight: 4
@@ -41,23 +41,22 @@ categories:
           text: Any (works best with Anthropic models)
         cline: Any
         opencode: Any
-        openai_codex: OpenAI models only, US based or BYO baseURL
-        openai_codex_highlight: 3
-        github_copilot: US based with limited context window, can BYO
-        github_copilot_highlight: 3
+        openai_codex: OpenAI models only, US based sub or BYO baseURL
+        openai_codex_highlight: 2
+        github_copilot: US based sub or BYO baseURL
+        github_copilot_highlight: 1
         google_antigravity: US based Gemini models only
-        google_antigravity_highlight: 3
-        cursor: US based models, limited by plan, BYO option but limits features
-        cursor_highlight: 3
-        amazon_kiro: US based models
-        amazon_kiro_highlight: 3
+        google_antigravity_highlight: 4
+        cursor: US based models, limited by plan, BYO option limits features
+        cursor_highlight: 4
+        amazon_kiro: US based sub or BYO baseURL
+        amazon_kiro_highlight: 2
 
       - name: Sub-Agents
         claude_code: Yes
         cline: Yes
         opencode: Yes
-        openai_codex: No
-        openai_codex_highlight: 3
+        openai_codex: Yes
         github_copilot: No
         github_copilot_highlight: 3
         google_antigravity: Partial / very limited
@@ -65,7 +64,7 @@ categories:
         cursor: Yes (limited)
         cursor_highlight: 2
         amazon_kiro: No
-        amazon_kiro_highlight: 3
+        amazon_kiro_highlight: 4
 
       - name: Custom Agents
         claude_code: Yes
@@ -124,12 +123,12 @@ categories:
       - name: MCP Spec alignment
         claude_code: High
         cline: Medium/High
-        opencode: Medium
+        opencode: Medium/High
         openai_codex: Medium/High
         github_copilot: High
         google_antigravity: Medium
         google_antigravity_highlight: 2
-        cursor: Medium/Low
+        cursor: Medium
         cursor_highlight: 3
         amazon_kiro: Low
         amazon_kiro_highlight: 4
@@ -170,17 +169,17 @@ categories:
   - name: Developer experience
     features:
       - name: User Interface
-        claude_code: VSCode, IntelliJ IDE, TUI, Zed, CLI, CI/CD
+        claude_code: VSCode, IntelliJ, TUI, Zed, CLI, CI/CD, Web, Desktop
         cline: VSCode IDE, IntelliJ, CLI
         opencode: TUI, CLI
         openai_codex: VSCode IDE, CLI
         github_copilot: VSCode, Zed, CLI
-        google_antigravity: Standalone IDE (Fork of VSCode), CLI
-        google_antigravity_highlight: 3
+        google_antigravity: Standalone IDE (Fork of VSCode that adds no value), CLI
+        google_antigravity_highlight: 5
         cursor: Standalone IDE (Fork of VSCode), CLI
         cursor_highlight: 3
-        amazon_kiro: Standalone IDE (Fork of VSCode), CLI
-        amazon_kiro_highlight: 3
+        amazon_kiro: Standalone IDE (Fork of VSCode that adds no value), CLI
+        amazon_kiro_highlight: 5
 
       - name: Source
         claude_code: Closed source
@@ -214,8 +213,7 @@ categories:
         claude_code: Yes
         cline: Yes
         opencode: Yes
-        openai_codex: No
-        openai_codex_highlight: 3
+        openai_codex: Yes
         github_copilot: Yes
         google_antigravity:
           text: Partial (doesn't work)
@@ -230,20 +228,21 @@ categories:
         cline: High
         opencode: High
         openai_codex: High
-        github_copilot: Medium
-        github_copilot_highlight: 2
-        google_antigravity: Medium
-        google_antigravity_highlight: 2
-        cursor: Medium
-        cursor_highlight: 2
+        github_copilot: Medium/Low
+        github_copilot_highlight: 3
+        google_antigravity: Medium/Low
+        google_antigravity_highlight: 3
+        cursor: Medium/Low
+        cursor_highlight: 3
         amazon_kiro: Very Low
-        amazon_kiro_highlight: 4
+        amazon_kiro_highlight: 5
 
       - name: Community size
         claude_code: Very Large
-        cline: Large
+        cline: Medium
+        cline_highlight: 1
         opencode: Medium
-        opencode_highlight: 2
+        opencode_highlight: 1
         openai_codex: Medium
         openai_codex_highlight: 2
         github_copilot: Large
@@ -260,12 +259,12 @@ categories:
         cline:
           text: No
           tooltip: Does have central web UI with enterprise / teams subscription
-          highlight: 1
+          highlight: 2
         cline_highlight: 1
         opencode: Yes
         openai_codex: Yes
-        github_copilot: Partial
-        github_copilot_highlight: 2
+        github_copilot: Yes
+        github_copilot_highlight: 1
         google_antigravity: Limited
         google_antigravity_highlight: 3
         cursor: No
@@ -277,11 +276,10 @@ categories:
         claude_code: Yes
         cline: In beta
         cline_highlight: 2
-        opencode: Partial
-        opencode_highlight: 2
+        opencode: Yes
         openai_codex: Partial
         openai_codex_highlight: 2
-        github_copilot: Limited - no RBAC
+        github_copilot: Partial
         github_copilot_highlight: 2
         google_antigravity: Limited
         google_antigravity_highlight: 2
@@ -446,22 +444,20 @@ categories:
     features:
       - name: Monthly cost ($USD) estimate for agentic coding (used to the best of the tools limitations)
         claude_code: $100-$200
-        cline: $1200-$2200
-        cline_highlight: 4
-        opencode: $1200-$2200
-        opencode_highlight: 4
-        openai_codex:
-          text: $200+
-          highlight: 2
+        cline: $200-$4000
+        cline_highlight: 3
+        opencode: $200-$4000 (depends on sub or consumption)
+        opencode_highlight: 3
+        openai_codex: $200
         openai_codex_highlight: 2
         github_copilot:
           text: $100-$300
-          tooltip: Starts at $40, but hit monthly limits within a few days of use, then blocked from using good models for a month
+          tooltip: Starts at $40, but hit monthly limits within a day, then blocked from using good models for a month
           highlight: 2
         github_copilot_highlight: 2
         google_antigravity: $200+
         google_antigravity_highlight: 3
         cursor: $200+
         cursor_highlight: 3
-        amazon_kiro: $200+
-        amazon_kiro_highlight: 3
+        amazon_kiro: $200++
+        amazon_kiro_highlight: 4
