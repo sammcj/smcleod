@@ -444,7 +444,7 @@ categories:
     features:
       - name: Monthly cost ($USD) estimate for agentic coding (used to the best of the tools limitations)
         claude_code: $100-$200
-        cline: $200-$4000
+        cline: $200-$4000 (depends on sub or consumption)
         cline_highlight: 3
         opencode: $200-$4000 (depends on sub or consumption)
         opencode_highlight: 3
