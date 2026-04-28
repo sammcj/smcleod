@@ -65,7 +65,7 @@ Clients:
     notes: "Has unique 'Beam' feature for generating responses from multiple models, Fast UI, Diagram generation. Cons: Not very configurable. <b>\n\n*Highly recommend!*</b>"
     link: "https://github.com/enricoros/big-AGI/"
   "Bolt":
-    rating: 6
+    rating: 4
     notes: "Great native macOS client for LLMs, Responsive developer, Currently go-to for a desktop app. Cons: Lacks RAG, Expensive. <b>\n\n*Highly recommend!*</b>"
     link: "https://boltai.com/"
   "GPT4All":
