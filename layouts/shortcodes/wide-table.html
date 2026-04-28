@@ -1,0 +1,17 @@
+{{/*
+  Paired shortcode that breaks its inner content out of the post's max-width,
+  letting wide tables (or other content) span up to 95vw with horizontal
+  scrolling only when truly needed. Use with the `%` form so the inner
+  content is rendered as Markdown:
+
+    {{% wide-table %}}
+    | col | col | col |
+    | --- | --- | --- |
+    | ... | ... | ... |
+    {{% /wide-table %}}
+*/}}
+<div class="wide-content">
+
+{{ .Inner }}
+
+</div>
