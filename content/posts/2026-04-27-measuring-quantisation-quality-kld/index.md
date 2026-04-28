@@ -45,7 +45,7 @@ Rough scale (in nats, on Qwen-class instruct models):
 | `1e-2` to `5e-2` | Measurably larger drift; typical 4-bit territory. Whether it's perceptible under sampling isn't well-established |
 | `> 1e-1`         | Substantial divergence; sampled outputs likely to differ obviously                                               |
 
-KLD is a distance metric, not a perceptual one. Treat the bands above as ranking aids, not quality verdicts.
+KLD is a divergence (asymmetric, no triangle inequality), not a perceptual measure. Treat the bands above as ranking aids, not quality verdicts.
 
 Two caveats:
 
@@ -82,7 +82,7 @@ KL divergence vs the bf16 reference, ordered by mean KLD (lower = closer to bf16
 | `mlx-community/Qwen3.6-27B-4bit`  | 16.05 GB | 5.27     | 0.11324       | 0.02147        | 0.02180       | 0.18127       | 1.13275       | 26.91660       |
 {{% /wide-table %}}
 
-★ = best on that metric, excluding the 8-bit reference. Mean KLD / bpw is a quality-per-bit ratio (lower is better).
+★ = best on that metric, excluding 8-bit (which trivially leads on bit width). Mean KLD / bpw is a damage-per-bit ratio (lower is better); most useful within a bit class, since KLD doesn't scale linearly with bit reduction across classes.
 
 ### Per-tensor configs
 
@@ -145,11 +145,11 @@ The MoE has tensor categories the dense model doesn't: `router` (the gating netw
 | `mlx-community/Qwen3.6-35B-A3B-4bit` (RTN baseline) | RTN affine (mixed) | 4/gs64    | 80 (8-bit×80)                        | router×40, shared_expert×40                                                                          |
 {{% /wide-table %}}
 
-DWQ's config has an 8-bit base with 4-bit downcasts on most tensors, the inverse of the usual "4-bit base + 8-bit elevations" pattern. Effective bpw still lands at 4.84, so the "4-bit" name matches the on-disk reality. Unsloth Dynamic on the dense 27B doesn't (8.60 bpw despite the "4-bit" name).
+DWQ's config has an 8-bit base with 4-bit downcasts on most tensors, the inverse of the usual "4-bit base + 8-bit elevations" pattern. Effective bpw still lands at 4.84, so the "4-bit" name matches the on-disk reality. Unsloth Dynamic on the dense 27B doesn't match its on-disk size (8.60 bpw despite the "4-bit" name).
 
 ### What stands out
 
-**MoE 6-bit is closer to 8-bit than dense 27B's was.** Mean KLD ~0.011 vs the 8-bit reference, against dense 27B's ~0.029 vs bf16. Different references, but the 6-to-8 step buys less on the MoE: both 6-bit recipes already lift routers and shared experts to 8-bit, so the remaining damage is in tensors that fire less often.
+**MoE 6-bit is closer to 8-bit than dense 27B's 6-bit was to bf16.** Mean KLD ~0.011 here vs the 8-bit reference, against dense 27B's ~0.029 vs bf16. Different references, but the 6-to-8 step buys less on the MoE: both 6-bit recipes already lift routers and shared experts to 8-bit, so the remaining damage is in tensors that fire less often.
 
 **The plain RTN 4-bit is the worst, but no longer unusable.** `mlx-community/Qwen3.6-35B-A3B-4bit` (RTN with only router and shared_expert at 8-bit) sits at mean KLD 0.074, ~3x worse than DWQ-4bit. P99 is 0.63: bad, but not the 1.97 short mode showed. Coherent but noticeably degraded. If you need 4-bit, DWQ is the pick.
 
@@ -159,11 +159,11 @@ DWQ's config has an 8-bit base with 4-bit downcasts on most tensors, the inverse
 
 **Quant rankings don't generalise between dense and MoE.** Dense 27B: oQ4 beats RTN-4bit by ~3%. MoE: oQ4 beats the RTN baseline by ~46% but loses to DWQ by ~34%, because DWQ protects the routers and oQ4 doesn't. Pick a quant for the actual model, not "the same family at the same bit width".
 
-**MoE prefill is much faster than the dense 27B's at similar size,** because only ~3B parameters fire per token.
+**MoE prefill is much faster than the dense 27B's despite being larger on disk,** because only ~3B parameters fire per token.
 
 ## What I'd actually run
 
-Anything in the 5.8-7 bpw band from a well-made quant should be indistinguishable from bf16 in actual output. Choose on memory and speed, not quality. Two things drive quality at a given bit width: the _recipe_ (which tensors got more bits) and the implementation (group size, calibration data).
+Anything in the 5.8-7 bpw band from a well-made quant should be indistinguishable from bf16 in practice. Choose on memory and speed, not quality. Two things drive quality at a given bit width: the _recipe_ (which tensors got more bits) and the implementation (group size, calibration data).
 
 For Qwen 3.6 27B (dense) on a 64-128 GB Mac:
 
@@ -185,7 +185,7 @@ For Qwen 3.6 35B-A3B (MoE):
 
 ## Measuring KLD with [mlx-kld](https://github.com/sammcj/mlx-kld)
 
-[mlx-kld](https://github.com/sammcj/mlx-kld) is what I've been using for this on MLX. It's my fork / rewrite of `TipKnuckle/mlx-kld`.
+[mlx-kld](https://github.com/sammcj/mlx-kld) is what I've been using for this on MLX. It's my fork/rewrite of `TipKnuckle/mlx-kld`.
 
 ### How the tool works
 
@@ -196,7 +196,7 @@ Two stages, with the expensive bit cached:
 
 Only one model is in memory at a time. Forward passes use `--chunk-tokens 2048` with `mlx-lm`'s shared KV cache; bit-equivalent to an un-chunked pass. Reference token IDs are authoritative: the comparison model is fed exactly the tokens the reference saw, never re-tokenised.
 
-Sparse top-K stores only the K most-likely log-probs per position, plus a _tail-mass scalar_ (the total probability of every other token combined). K=256 default keeps 256 explicit log-probs out of ~248k vocab entries. Lumping the tail into one bin introduces a ~3-5% rank-preserving underestimate. Compression on real Qwen output is ~420x at K=256 (210 MB dense, 0.5 MB sparse for ~300 tokens).
+Sparse top-K stores only the K most-likely log-probs per position, plus a _tail-mass scalar_ (the total probability of every other token combined). K=256 default keeps 256 explicit log-probs out of ~248k vocab entries. Lumping the tail into one bin introduces a small rank-preserving underestimate (~4% at K=256 default; see error table below). Compression on real Qwen output is ~420x at K=256 (210 MB dense, 0.5 MB sparse for ~300 tokens).
 
 #### Running it
 
@@ -243,7 +243,7 @@ Each run reports KLD stats (mean, median, std, P95, P99, max), model metadata (s
   | K=512              | 0.9 MB     | 0.018286          | -3.10%              |
   | K=1024             | 1.8 MB     | 0.018435          | -2.31%              |
 
-  Every K produces a small *negative* bias: lumping the tail into one bin under-counts disagreement from low-mass tail tokens. ~4% at K=256, rank-preserving across all six comparison models. K=512 buys ~1% more accuracy at 2x the storage.
+  Every K produces a small *negative* bias: lumping the tail into one bin under-counts disagreement from low-mass tail tokens. ~4% at the K=256 default (range -2.3% at K=1024 to -6.6% at K=64), rank-preserving across all six comparison models. K=512 buys ~1% more accuracy at 2x the storage.
 
 ## Caveats
 
@@ -251,7 +251,7 @@ What this measurement doesn't tell you:
 
 - **Generation drift.** Prefill KLD is per-position next-token disagreement. It doesn't track how sampled outputs diverge over a long generation, where per-token errors compound. A generation mode sampling N tokens at fixed prefill positions and measuring exact-match length plus trajectory KLD would close the gap; on the list.
 - **Confidence intervals.** Means above are point estimates. 65k tokens makes the close pairs much more stable than short mode but still point estimates. A paired bootstrap on per-position differences would give 95% CIs.
-- **No category breakdown.** WikiText-2 is mostly Wikipedia prose, so long mode says less about code, JSON, math or non-English than short mode. A quant that holds up on prose but falls apart on code would look fine here. Tagging chunks by category, or running long mode against more diverse corpora, would fix this.
+- **No category breakdown.** WikiText-2 is mostly Wikipedia prose, so long mode says less about code, JSON, maths or non-English than short mode. A quant that holds up on prose but falls apart on code would look fine here. Tagging chunks by category, or running long mode against more diverse corpora, would fix this.
 
 ---
 
