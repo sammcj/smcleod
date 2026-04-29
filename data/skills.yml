@@ -58,29 +58,18 @@ categories:
       - name: Azure
         avoid: true
 
-  - name: Operating Systems
-    skills:
-      - name: Linux
-        level: 5
-      - name: macOS
-        level: 5
-      - name: FreeBSD
-        level: 3
-      - name: Windows
-        avoid: true
-
   - name: Languages
     skills:
       - name: Go
         level: 3
-      - name: C / C++
-        level: 2
       - name: Python
         level: 3
       - name: TypeScript / JavaScript
         level: 3
       - name: Bash
         level: 5
+      - name: C / C++
+        level: 2
       - name: Rust
         level: 1
       - name: Terraform
@@ -92,24 +81,35 @@ categories:
       - name: .Net
         avoid: true
 
-  - name: Software
+  - name: Operating Systems
     skills:
-      - name: Open source contribution
+      - name: Linux
         level: 5
-      - name: Developer tooling
+      - name: macOS
         level: 5
+      - name: FreeBSD
+        level: 3
+      - name: Windows
+        avoid: true
+
+  - name: General
+    skills:
       - name: Technical leadership
         level: 5
-      - name: Distributed systems design
-        level: 3
-      - name: Application architecture
-        level: 2
+      - name: OSS development & contribution
+        level: 5
+      # - name: Developer tooling
+      #   level: 5
+      # - name: Distributed systems design
+      #   level: 3
+      # - name: Application architecture
+      #   level: 2
 
-  - name: Hardware
-    skills:
-      - name: Hardware optimisation
-        level: 4
-      - name: HA storage systems
-        level: 4
-      - name: IoT
-        level: 2
+  # - name: Hardware
+  #   skills:
+  #     - name: Hardware platform optimisation
+  #       level: 4
+  #     - name: HA storage systems
+  #       level: 4
+  #     - name: IoT
+  #       level: 2
