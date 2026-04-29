@@ -21,7 +21,9 @@ toc:
 
 I'm an AI engineer, open source contributor and music geek based in Melbourne, Australia.
 
-I've been in tech for 20~ years across AI, platform engineering in technical leadership roles. The past 5 years I've been heavily focused on LLMs and AI. I am currently working with [Mantel Group](https://mantelgroup.com.au) as a Principal AI Engineer. ([Resumé / CV](/cv/))
+I've been in tech for 20~ years across AI, platform engineering in technical leadership roles. The past 5 years I've been heavily focused on LLMs and AI. I am currently working with [Mantel Group](https://mantelgroup.com.au) as a AI Engineering Principal.
+
+[Resumé / CV](/cv/)
 
 > [!INFORMATION] 🎉 Remote Work
 >

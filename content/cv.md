@@ -17,7 +17,7 @@ extra_css:
 
 ![](/profilephoto/apple-touch-icon.png)
 
-Principal AI Engineer, an early advocate for DevOps culture and practices with a background in platform
+AI Engineering Principal, an early advocate for DevOps culture and practices with a background in platform
 engineering, automation, highly available systems design and team leadership.
 
 With 20+ years of engineering experience, I enjoy enabling and accelerating individuals,
@@ -57,7 +57,7 @@ Below are some of the project I've worked on.
 
 June 2024 - Present
 
-Principal AI engineer, leading efforts to enhance engineering capabilities and accelerate software development with generative AI.
+AI Engineering Principal, leading efforts to enhance engineering capabilities and accelerate software development with generative AI.
 
 - Building, prototyping, enabling and tuning AI systems using a combination of cloud and open weight large language models with a goal of accelerating development and delivery throughout the SDLC.
 - Advocacy, training and tooling enablement for software developers and platform engineers to leverage AI to enhance their productivity.
