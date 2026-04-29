@@ -1,5 +1,5 @@
 ---
-title: "Digital CV"
+title: "Resumé / CV"
 description: "Sam McLeod"
 aliases: ["cv", "resume", "experience", "jobs", "linkedin"]
 author: "Sam McLeod"
@@ -8,16 +8,16 @@ comments: false
 showDate: false
 subtitle: Sam McLeod
 toc: true
+extra_css:
+  - "css/skills-matrix.css"
 ---
 <!-- markdownlint-disable MD025 -->
 
 # Sam McLeod
 
-## AI Engineering Principal
-
 ![](/profilephoto/apple-touch-icon.png)
 
-Advocate for DevOps culture and practices and cloud native architecture with a background in platform
+Principal AI Engineer, an early advocate for DevOps culture and practices with a background in platform
 engineering, automation, highly available systems design and team leadership.
 
 With 20+ years of engineering experience, I enjoy enabling and accelerating individuals,
@@ -30,11 +30,19 @@ teams and organisations with generative AI solutions.
 
 ---
 
-Experience
+## Skills
+
+A rough self-assessment of where I sit across the areas I work in.
+
+{{< skills-matrix >}}
+
+---
+
+## Experience
 
 ## > Mantel Group / DigIO
 
-- AI & LLM Enablement & Acceleration
+- AI & LLM Enablement, Acceleration, R&D, Agentic Systems
 - Platform Engineering Team Leadership
 - DevOps Culture & Practices Transformation
 - CI/CD and Tooling Modernisation
@@ -49,12 +57,12 @@ Below are some of the project I've worked on.
 
 June 2024 - Present
 
-Leading efforts to enhance engineering capabilities and accelerate software development with generative AI.
+Principal AI engineer, leading efforts to enhance engineering capabilities and accelerate software development with generative AI.
 
 - Building, prototyping, enabling and tuning AI systems using a combination of cloud and open weight large language models with a goal of accelerating development and delivery throughout the SDLC.
 - Advocacy, training and tooling enablement for software developers and platform engineers to leverage AI to enhance their productivity.
-- Researching, prototyping and implementing GenAI tooling and LLMs focused on software development.
-- Driving the organisation-wide adoption of GenAI across diverse teams, projects, and client engagements, proactively shaping our approach to the rapidly evolving AI-driven software development landscape.
+- Researching, prototyping and implementing AI tooling and LLMs focused on software development.
+- Driving the organisation-wide adoption of AI across diverse teams, projects, and client engagements, proactively shaping our approach to the rapidly evolving AI-driven software development landscape.
 
 ---
 

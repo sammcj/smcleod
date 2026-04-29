@@ -1,0 +1,115 @@
+# Skill / capability matrix rendered on /about/ via {{< skills-matrix >}}.
+#
+# Levels (1-5):
+#   1 = Aware     - exposure, can read/contribute superficially
+#   2 = Limited   - have used in anger but not deeply
+#   3 = Senior   - day-to-day proficient, can ship unaided
+#   4 = Lead    - lead delivery, mentor others, design decisions
+#   5 = Principal      - recognised expert, set direction across teams
+#
+# Each skill: { name, level, note? (sub-line context), avoid? }
+#
+# Set `avoid: true` for skills you have but actively don't want to work on.
+# These render with a hatched/muted bar instead of the progress style.
+# `level` is ignored when `avoid: true` (still set it if you want it preserved).
+#
+# These ratings are starter placeholders - update to taste.
+
+levels:
+  - ★
+  - ★★
+  - ★★★
+  - ★★★★
+  - ★★★★★
+
+# Label shown on `avoid: true` rows. Override here if you prefer e.g. "Pass" or "No thanks".
+avoid_label: Avoid
+
+categories:
+  - name: AI & LLMs
+    skills:
+      - name: Agentic coding tooling & practices
+        level: 5
+        note: e.g. Claude Code / Cline / OpenCode, Workflows, Integrations
+      - name: Model inference serving
+        level: 5
+        note: llama.cpp, vLLM, MLX
+      - name: MCP & agent tooling
+        level: 5
+      - name: Context engineering & prompt crafting
+        level: 5
+      - name: Model fine-tuning
+        level: 2
+      - name: Retrieval & RAG
+        level: 2
+      - name: Evals & observability
+        level: 2
+      - name: Guardrails implementation
+        level: 3
+      - name: Running AI training
+        level: 4
+
+  - name: Platform & Cloud
+    skills:
+      - name: AWS
+        level: 3
+      - name: GCP
+        level: 1
+      - name: Azure
+        avoid: true
+
+  - name: Operating Systems
+    skills:
+      - name: Linux
+        level: 5
+      - name: macOS
+        level: 5
+      - name: FreeBSD
+        level: 3
+      - name: Windows
+        avoid: true
+
+  - name: Languages
+    skills:
+      - name: Go
+        level: 3
+      - name: C / C++
+        level: 2
+      - name: Python
+        level: 3
+      - name: TypeScript / JavaScript
+        level: 3
+      - name: Bash
+        level: 5
+      - name: Rust
+        level: 1
+      - name: Terraform
+        level: 4
+      - name: AWS CDK
+        level: 3
+      - name: Java
+        avoid: true
+      - name: .Net
+        avoid: true
+
+  - name: Software
+    skills:
+      - name: Open source contribution
+        level: 5
+      - name: Developer tooling
+        level: 5
+      - name: Technical leadership
+        level: 5
+      - name: Distributed systems design
+        level: 3
+      - name: Application architecture
+        level: 2
+
+  - name: Hardware
+    skills:
+      - name: Hardware optimisation
+        level: 4
+      - name: HA storage systems
+        level: 4
+      - name: IoT
+        level: 2
