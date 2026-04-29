@@ -45,7 +45,7 @@ categories:
       - name: Evals & observability
         level: 2
       - name: Guardrails implementation
-        level: 3
+        level: 2
       - name: Running AI training
         level: 4
 
@@ -87,8 +87,8 @@ categories:
         level: 5
       - name: macOS
         level: 5
-      - name: FreeBSD
-        level: 3
+      # - name: FreeBSD
+      #   level: 3
       - name: Windows
         avoid: true
 
