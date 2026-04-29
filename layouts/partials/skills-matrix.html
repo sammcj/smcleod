@@ -1,0 +1,64 @@
+{{ $data := .Site.Data.skills }}
+{{ $levels := $data.levels | default (slice "Aware" "Limited" "Working" "Strong" "Lead") }}
+{{ $avoidLabel := $data.avoid_label | default "Avoid" }}
+
+<div class="skills-matrix">
+  <div class="skills-legend">
+    {{ range $i, $label := $levels }}
+      {{ $level := add $i 1 }}
+      <span class="skills-legend-item">
+        <span class="skill-bar" aria-hidden="true">
+          {{ range $seg := (seq 1 (len $levels)) }}
+            <span class="skill-bar-segment{{ if le $seg $level }} filled level-{{ $level }}{{ end }}"></span>
+          {{ end }}
+        </span>
+        <span class="skill-label">{{ $label }}</span>
+      </span>
+    {{ end }}
+    <span class="skills-legend-item">
+      <span class="skill-bar skill-bar--avoid" aria-hidden="true"></span>
+      <span class="skill-label">{{ $avoidLabel }}</span>
+    </span>
+  </div>
+
+  {{ range $cat := $data.categories }}
+    <section class="skills-category">
+      <h3 class="skills-category-name">{{ $cat.name }}</h3>
+      <ul class="skills-list">
+        {{ range $skill := $cat.skills }}
+          {{ if $skill.avoid }}
+            <li class="skill-row skill-row--avoid" data-level="avoid">
+              <span class="skill-name">{{ $skill.name }}</span>
+              <span class="skill-bar skill-bar--avoid" role="img" aria-label="{{ $avoidLabel }}"></span>
+              <span class="skill-label">{{ $avoidLabel }}</span>
+              {{ with $skill.note }}
+                <span class="skill-note">{{ . }}</span>
+              {{ end }}
+            </li>
+          {{ else }}
+            {{ $level := $skill.level | default 0 }}
+            {{ $labelIndex := sub $level 1 }}
+            {{ $label := "" }}
+            {{ if and (ge $labelIndex 0) (lt $labelIndex (len $levels)) }}
+              {{ $label = index $levels $labelIndex }}
+            {{ else }}
+              {{ $label = "None" }}
+            {{ end }}
+            <li class="skill-row" data-level="{{ $level }}">
+              <span class="skill-name">{{ $skill.name }}</span>
+              <span class="skill-bar" role="img" aria-label="{{ $label }}">
+                {{ range $seg := (seq 1 (len $levels)) }}
+                  <span class="skill-bar-segment{{ if le $seg $level }} filled level-{{ $level }}{{ end }}"></span>
+                {{ end }}
+              </span>
+              <span class="skill-label">{{ $label }}</span>
+              {{ with $skill.note }}
+                <span class="skill-note">{{ . }}</span>
+              {{ end }}
+            </li>
+          {{ end }}
+        {{ end }}
+      </ul>
+    </section>
+  {{ end }}
+</div>

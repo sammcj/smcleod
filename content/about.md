@@ -19,11 +19,9 @@ toc:
 
 > Hi I'm Sam 👋🏻
 
-I'm a principal AI & platform engineer, open source advocate and contributor.
+I'm an AI engineer, open source contributor and music geek based in Melbourne, Australia.
 
-I've been in tech for 20~ years across platform, software, AI in technical leadership roles. The past 5 years I've been heavily focused on LLM and AI technologies.
-
-Currently working with [Mantel Group](https://mantelgroup.com.au) (Melbourne, Australia) leading enablement and acceleration of software engineering with AI.
+I've been in tech for 20~ years across AI, platform engineering in technical leadership roles. The past 5 years I've been heavily focused on LLMs and AI. I am currently working with [Mantel Group](https://mantelgroup.com.au) as a Principal AI Engineer. ([Resumé / CV](/cv/))
 
 > [!INFORMATION] 🎉 Remote Work
 >
@@ -37,10 +35,10 @@ This site is my tech blog, a place to share my thoughts and ideas (mainly relati
 
 - 🧑‍💻 [Github](https://www.github.com/sammcj)
 - 👔 [LinkedIn](https://www.linkedin.com/in/sammcj)
-- 🐘 [Mastodon](https://aus.social/@s_mcleod)
+<!-- - 🐘 [Mastodon](https://aus.social/@s_mcleod) -->
 <!-- - 🦤 [Twitter Archive](https://sammcj.github.io/twitter-archive/) -->
 
---
+---
 
 ## Interests
 
@@ -60,10 +58,6 @@ Outside of work my interests include:
 
 Check out the [Links](/links/) page for some of my favourite services, tools and media.
 
-## Work
-
-> See my [Digital CV](/cv/).
-
 ---
 
 ### 🔋 Things that give me energy
@@ -80,6 +74,12 @@ Check out the [Links](/links/) page for some of my favourite services, tools and
 - 💼 Bureaucracy.
 - 🔐 Disempowered teams.
 - 📈 Slow feedback loops.
+
+---
+
+## Resumé / CV
+
+> My [Resumé / CV](/cv/), (_or view my [LinkedIn](https://www.linkedin.com/in/sammcj)_)
 
 ---
 
