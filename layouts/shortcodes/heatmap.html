@@ -7,7 +7,7 @@
 </div>
 
 <script>
-    const toolData = {{ .Site.Data.toolRatings | jsonify | safeJS }};
+    const toolData = {{ hugo.Data.toolRatings | jsonify | safeJS }};
     const categories = Object.keys(toolData);
 
     function createHeatmap() {

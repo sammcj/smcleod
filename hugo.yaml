@@ -1,5 +1,5 @@
 baseURL: https://smcleod.net
-languageCode: en-GB
+locale: en-GB
 title: smcleod.net
 theme: ["PaperMod"] #"hugo-admonitions"
 gitRepo: "https://github.com/sammcj/smcleod/tree/main"
