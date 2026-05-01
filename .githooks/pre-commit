@@ -1,0 +1,64 @@
+#!/usr/bin/env bash
+# Auto-replace smart quotes, em-dashes and en-dashes with plain ASCII in staged
+# markdown. Re-stages the fixed file and lets the commit proceed.
+#
+# Aborts (non-zero) only if a file needs fixing AND has unstaged changes - this
+# avoids silently pulling unstaged edits into the commit.
+#
+# Activate per clone with: git config core.hooksPath .githooks
+
+set -euo pipefail
+
+mapfile -t files < <(git diff --cached --name-only --diff-filter=ACM -- '*.md' '*.markdown')
+
+if [[ ${#files[@]} -eq 0 ]]; then
+  exit 0
+fi
+
+needs_abort=0
+fixed_any=0
+
+for file in "${files[@]}"; do
+  [[ -f "$file" ]] || continue
+
+  # U+2018/2019 smart singles, U+201C/201D smart doubles, U+2013 en-dash, U+2014 em-dash
+  if ! perl -CSD -ne 'BEGIN { $f = 0 } $f = 1 if /[\x{2018}\x{2019}\x{201C}\x{201D}\x{2013}\x{2014}]/; END { exit($f ? 0 : 1) }' "$file"; then
+    continue
+  fi
+
+  # Refuse to touch a file that has unstaged modifications - fixing the working
+  # tree would re-stage those too.
+  if ! git diff --quiet -- "$file"; then
+    if [[ $needs_abort -eq 0 ]]; then
+      echo "pre-commit: smart chars present but file has unstaged changes:" >&2
+      needs_abort=1
+    fi
+    echo "  $file" >&2
+    continue
+  fi
+
+  perl -CSD -i -pe '
+    s/\x{2018}/'"'"'/g;
+    s/\x{2019}/'"'"'/g;
+    s/\x{201C}/"/g;
+    s/\x{201D}/"/g;
+    s/\x{2013}/-/g;
+    s/\x{2014}/-/g;
+  ' "$file"
+
+  git add -- "$file"
+
+  if [[ $fixed_any -eq 0 ]]; then
+    echo "pre-commit: replaced smart chars with plain ASCII in:" >&2
+    fixed_any=1
+  fi
+  echo "  $file" >&2
+done
+
+if [[ $needs_abort -ne 0 ]]; then
+  echo >&2
+  echo "Stage or stash the unstaged changes, then re-commit." >&2
+  exit 1
+fi
+
+exit 0
