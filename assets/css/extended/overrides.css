@@ -84,3 +84,81 @@
     min-height: auto;
     margin: var(--gap) 0;
   }
+
+  /* Mobile-only proportional text scaling (~80% of desktop sizes).
+     PaperMod hardcodes pixel font sizes with no mobile breakpoint,
+     so on phones the desktop sizes render too large. */
+  @media screen and (max-width: 768px) {
+    body {
+      font-size: 15px;
+    }
+
+    .post-title {
+      font-size: 32px;
+    }
+
+    .post-content h1 {
+      font-size: 32px;
+    }
+
+    .post-content h2 {
+      font-size: 26px;
+    }
+
+    .post-content h3 {
+      font-size: 20px;
+    }
+
+    .post-content h4 {
+      font-size: 13px;
+    }
+
+    .post-content h5 {
+      font-size: 12px;
+    }
+
+    .post-content h6 {
+      font-size: 10px;
+    }
+
+    .post-meta,
+    .breadcrumbs {
+      font-size: 12px;
+    }
+
+    .breadcrumbs a {
+      font-size: 13px;
+    }
+
+    .first-entry .entry-header h1 {
+      font-size: 27px;
+    }
+
+    .first-entry .entry-content {
+      font-size: 13px;
+    }
+
+    .first-entry .entry-footer {
+      font-size: 12px;
+    }
+
+    .entry-header h2 {
+      font-size: 20px;
+    }
+
+    .entry-content {
+      font-size: 12px;
+    }
+
+    .entry-footer {
+      font-size: 11px;
+    }
+
+    .entry-cover {
+      font-size: 12px;
+    }
+
+    table {
+      font-size: 0.85rem;
+    }
+  }
