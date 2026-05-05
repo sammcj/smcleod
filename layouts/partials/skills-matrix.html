@@ -1,4 +1,4 @@
-{{ $data := hugo.Data.skills }}
+{{ $data := site.Data.skills }}
 {{ $levels := $data.levels | default (slice "Aware" "Limited" "Working" "Strong" "Lead") }}
 {{ $avoidLabel := $data.avoid_label | default "Avoid" }}
 
