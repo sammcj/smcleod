@@ -84,3 +84,41 @@
     min-height: auto;
     margin: var(--gap) 0;
   }
+
+  /* Mobile-only proportional text scaling (~80% of desktop sizes).
+     PaperMod hardcodes pixel font sizes with no mobile breakpoint,
+     so on phones the desktop sizes render too large. */
+  @media screen and (max-width: 768px) {
+    body {
+      font-size: 15px;
+    }
+
+    .post-title {
+      font-size: 32px;
+    }
+
+    .post-content h1 {
+      font-size: 32px;
+    }
+
+    .post-content h2 {
+      font-size: 26px;
+    }
+
+    .post-content h3 {
+      font-size: 20px;
+    }
+
+    .first-entry .entry-header h1 {
+      font-size: 27px;
+    }
+
+    .entry-header h2 {
+      font-size: 20px;
+    }
+
+    table,
+    .post-content table {
+      font-size: 0.85rem;
+    }
+  }
