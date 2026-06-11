@@ -20,7 +20,7 @@ title: How to cluster and failover (almost) anything - An intro to Pacemaker and
 
 ## Slides
 
-[![Click to Start Slides]({{< ref "/" >}}/img/san/cluster_anything_screenshot.jpg)](https://www.dropbox.com/s/n3g3nk9kp6q54h8/cluster_anything.pdf?dl=0)
+[![Click to Start Slides]({{< ref "/" >}}/img/san/cluster_anything_screenshot.jpg)](https://media.githubusercontent.com/media/sammcj/smcleod_files/refs/heads/master/slides/cluster_anything.pdf)
 
 ## Failover Demo
 

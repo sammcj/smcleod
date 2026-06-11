@@ -23,9 +23,9 @@ title: Talk - High Performance Software Defined Storage
 
 A high level talk from Infracoders Melbourne on 12/04/2015.
 
-[![Click to Start Slides]({{< ref "/" >}}/img/san/supermicrox2.jpg)](https://www.dropbox.com/s/rdojhb399639e4k/lightning_san.pdf?dl=0)
+[![Click to Start Slides]({{< ref "/" >}}/img/san/supermicrox2.jpg)](https://media.githubusercontent.com/media/sammcj/smcleod_files/refs/heads/master/slides/lightning_san.pdf)
 
-[![Click to Start Slides]({{< ref "/" >}}/img/san/ic-slides-image.png)](https://www.dropbox.com/s/rdojhb399639e4k/lightning_san.pdf?dl=0)
+[![Click to Start Slides]({{< ref "/" >}}/img/san/ic-slides-image.png)](https://media.githubusercontent.com/media/sammcj/smcleod_files/refs/heads/master/slides/lightning_san.pdf)
 
 There's also a low quality recording available here:
 
