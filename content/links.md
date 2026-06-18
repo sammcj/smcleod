@@ -13,7 +13,6 @@ norss: true
 ## Mine
 
 - 🧑‍💻 [Github](https://www.github.com/sammcj)
-- 🐘 [Mastodon](https://aus.social/@s_mcleod)
 - 👔 [LinkedIn](https://www.linkedin.com/in/sammcj)
 <!-- - 🦃 [Twitter](https://www.twitter.com/sammcj) -->
 <!-- - 🦤 [Twitter Archive](https://sammcj.github.io/twitter-archive/) -->

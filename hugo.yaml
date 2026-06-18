@@ -54,10 +54,8 @@ params:
   tocopen: true
 
   social:
-    twitter: "s_mcleod"
     github: "sammcj"
     linkedin: "sammcj"
-    mastodon: "s_mcleod"
 
   socialIcons:
     - name: github
@@ -66,9 +64,6 @@ params:
     - name: linkedin
       url: "https://www.linkedin.com/in/sammcj/"
       icon: linkedin
-    - name: mastodon
-      url: "https://aus.social/@s_mcleod"
-      icon: mastodon
 
   assets:
     # disableHLJS: true # to disable highlight.js
