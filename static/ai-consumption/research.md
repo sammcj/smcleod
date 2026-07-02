@@ -1,6 +1,7 @@
 # Water and Energy Consumption Research: USA 2024-2025
 
 Research conducted: 28 November 2025
+Updated: 3 July 2026 - see "July 2026 Update" at the end of this document for corrections and new data. Where the two conflict, the July 2026 section supersedes the original notes below.
 All data sources from 2024-2025 unless otherwise noted.
 
 ---
@@ -307,3 +308,68 @@ All data sources from 2024-2025 unless otherwise noted.
 - USA-specific data prioritised; global data included where relevant for context
 
 **Research Completed:** 28 November 2025
+
+---
+
+# July 2026 Update
+
+Research conducted: 3 July 2026 via six parallel research agents, with load-bearing figures re-verified against primary sources. This section supersedes the November 2025 notes where they conflict.
+
+## Corrections to the original research
+
+- **"US Infrastructure Leaks" (126.1 trillion litres / 33.3 trillion gallons) is a GLOBAL figure, not US.** ASCE's drinking water page quotes 126 billion m³ without a geographic label, but the same page states US public supply withdraws only ~39 billion gallons/day (~14.2T gallons/yr) - you cannot lose 33.3T gallons from a 14.2T gallon supply. The figure matches the widely-cited global non-revenue-water estimate. US-specific losses: ~6 billion gallons of treated water per day ≈ 2.19T gallons ≈ **8.3 trillion litres/year** (EPA/ASCE lineage). The dashboard now shows both, labelled.
+  - Source: [ASCE Drinking Water](https://infrastructurereportcard.org/cat-item/drinking-water-infrastructure/) (checked 3 Jul 2026)
+- **ChatGPT annual water value contained an arithmetic error.** The stated formula (0.32 mL x 2.5B queries/day x 365) gives **~292 million litres/year**, not the 111.2 billion previously shown (~380x overstatement). Corrected; labelled "on-site cooling only".
+- **Sora video energy is per 10 seconds, not 5.** The ~1 kWh estimate traces to a Nov 2025 SemiAnalysis-derived calculation for a 10-second Sora 2 clip. Ratio vs text query: ~2,900x (not 4,000x). Measured open video models span 0.14-109 Wh/clip ([Hugging Face, Jul 2025](https://huggingface.co/blog/jdelavande/text-to-video-energy-cost)).
+- **"100 queries/day = 0.3% of household electricity" recomputes to ~0.12%** (34 Wh ÷ ~28.8 kWh/day household average).
+- **Netflix note:** the "IEA says ~36" figure sometimes cited against the 77 Wh/hour estimate is 36 g CO₂/hour (emissions), not 36 Wh - not a competing energy figure. 77 Wh/hour stands; ~72% of it is the viewing device, not the data centre.
+
+## Key new data (mid-2026)
+
+### Usage and adoption
+- ChatGPT: **900M+ weekly active users** (Feb 2026, [TechCrunch](https://techcrunch.com/2026/02/27/chatgpt-reaches-900m-weekly-active-users/)); ~1B **monthly** actives (Jun 2026, Reuters/Sensor Tower - different metric). Latest officially confirmed volume remains **2.5B+ prompts/day** (Jul 2025); the "2.8B/day Q1 2026" figure circulating could not be verified on OpenAI's own Q1 2026 post (checked directly, 3 Jul 2026).
+- **Pew Research (survey Feb 2026, n=5,119, published 17 Jun 2026):** 49% of US adults have used AI chatbots (33% in 2024, 23% in 2023); 24% use daily. ChatGPT 44%, Gemini 24%, Copilot 17%, Meta AI 14%, Grok 8%, Claude 6%. [Source](https://www.pewresearch.org/internet/2026/06/17/americans-and-ai-2026-chatbots-smart-devices-and-views-on-impact/)
+- Google Gemini: 750M MAU (Q4 2025 earnings), reportedly 900M+ by May 2026.
+
+### Per-query figures (unchanged, still the latest disclosures)
+- Google Gemini: 0.24 Wh / 0.26 mL / 0.03 g CO₂e per median text prompt (Aug 2025, [Google Cloud](https://cloud.google.com/blog/products/infrastructure/measuring-the-environmental-impact-of-ai-inference)) - no newer disclosure through mid-2026. The accelerator-only boundary would be 0.10 Wh / 0.12 mL; the headline figure is full-stack (idle + overhead included). Note: the widely-quoted "9 Wh in May 2024" before-value doesn't reconcile with Google's own 33x claim (0.24 x 33 ≈ 8 Wh); the dashboard now shows ~8 Wh, derived.
+- OpenAI: 0.34 Wh / 0.32 mL (Altman, Jun 2025; reaffirmed Feb 2026 - he called per-query water concerns "fake" and said OpenAI has largely moved off evaporative cooling, [CNBC](https://www.cnbc.com/2026/02/23/openai-altman-defends-ai-resource-usage-water-concerns-fake-humans-use-energy-summit.html)). No methodology published.
+- Mistral Large 2 LCA (Jul 2025): 1.14 g CO₂e / **45 mL** water per 400-token reply - includes Scope 2 electricity water, hence ~170x Google's number. Boundary, not thirst.
+- Anthropic, Meta, xAI, DeepSeek: no per-query disclosures as of mid-2026.
+
+### Reasoning models (new headline insight; measured)
+- Reasoning modes average **25-30x more energy** than standard queries; same-model reasoning on/off measured at **150-700x**; driven by ~10x more output tokens. Two independent sources: [HF AI Energy Score v2](https://huggingface.co/blog/sasha/ai-energy-score-v2) (Dec 2025) and [ML.Energy v3](https://ml.energy/blog/measurement/energy/diagnosing-inference-energy-consumption-with-the-mlenergy-leaderboard-v30/).
+- Newer ≠ greener: 8 of 14 comparable models used equal-or-more energy than early-2025 predecessors (HF v2). MoE: measured 3.6x lower energy/token vs similar-size dense (ML.Energy).
+- A frontier per-model energy comparison (GPT-5.x vs Claude vs Gemini) is NOT honestly sourceable - no closed-lab disclosures; third-party estimates (Jegham et al. arXiv 2505.09598; URI ~18 Wh GPT-5 claim) are modelled, not measured, and mix methodologies.
+
+### Water accounting and boundaries
+- Morgan Stanley (Sep 2025): AI data centre water ~**1,068 billion L/yr by 2028** (range 637-1,485B; ~11x 2024), counting Scope 1 cooling + Scope 2 power-generation + Scope 3 chip-fab water.
+- All global AI today (Scope 1+2): ~312-765 billion L/yr (de Vries; Ren via [IEEE Spectrum](https://spectrum.ieee.org/ai-water-usage)) - wide uncertainty. The "~260B gallons global AI" figure traces to Mordor Intelligence market research via aggregators: low quality, avoid.
+- The "training ≈ 50% of a model's resource use" claim (Hank Green video) is a misattribution of UC Riverside's work; current consensus is inference dominates lifetime footprint (60-90%).
+- USGS: thermoelectric = 41% of total US water withdrawals (34% of freshwater), but only ~3-4% consumed.
+- Corn (verified for the comparison anchor): US corn **irrigation** ~5.3-5.5T gallons ≈ 20.4T litres/yr (USDA NASS 2023); total evapotranspiration ~45-60T gallons. Green's "20T gallons" matches neither (likely conflation with all-crop irrigation). ~35-40% of corn to ethanol (USDA); 1,174-1,492 gal water/gal ethanol (Water Resources Research).
+- ~2/3 of new US data centres since 2022 in high water-stress areas (Bloomberg/S&P Global).
+- Microsoft FY2024: 5.81B L consumed / 10.71B withdrawn. Google 2024: 8.1B gal (30.7B L) consumed; ~9.9B gal derived for 2025.
+
+### Data centre macro (IEA/LBNL/PJM)
+- **2025 actual: 485 TWh global data centre electricity, +17% YoY; AI-focused facilities +50%** ([IEA Electricity 2026](https://www.iea.org/reports/electricity-2026), Dec 2025). ~950 TWh by 2030 (~3% of global electricity); ~1,200 TWh by 2035; higher scenarios judged less likely due to bottlenecks.
+- US: 4.4% of electricity is 2023 data (LBNL, 176 TWh); 6.7-12% projected by 2028. 105 Mt CO₂ / 2.18% of emissions (2023). Carbon intensity 548 vs 369 g CO₂e/kWh (48% premium) independently reproduced (~545 g) by a June 2026 Harvard/UCLA hyperscale preprint (arXiv 2606.05420).
+- **Electricity prices (new 2026 story):** PJM capacity auction record $333.44/MW-day (Dec 2025); market monitor attributes 63% of the 2025/26 increase ($9.3B) to data centres; PJM-state residential bills +1.5-5% from June 2026; NRDC scenario: up to $163B through 2033.
+- Overbuild risk mainstream: Microsoft froze ~1.5 GW self-build; Nadella: "there will be an overbuild"; BIS Annual Report 2026 lists AI capex bust as a top systemic risk (~$1T/yr capex vs ~$50-60B AI revenue).
+- Proportion: data centres ≈ 8% of projected global demand GROWTH to 2030 - less than EVs or air conditioning (Carbon Brief).
+
+### Training
+- Grok 4: ~310 GWh, 754M L water, 154 kt CO₂e - largest credibly-estimated run, ~6x GPT-4 ([Epoch AI](https://epoch.ai/data-insights/grok-4-training-resources), significant uncertainty flagged).
+- GPT-5: ~5x10²⁵ FLOP median - LESS training compute than GPT-4.5 ([Epoch AI](https://epoch.ai/gradient-updates/why-gpt5-used-less-training-compute-than-gpt45-but-gpt6-probably-wont)). Frontier training is not monotonically growing.
+- Training power demand grows ~2.2x/yr; hardware efficiency +~40%/yr; GW announcements (Stargate, Colossus 2) are capacity targets, not consumption.
+
+### Everyday anchors (re-verified)
+- Golf: 2.01T litres (531.1B gal, 2024 survey released Dec 2025, -31% vs 2005); ~16,000 courses; 29.1M on-course golfers (GCSAA/USGA/NGF).
+- TV/streaming 6h45m/day confirmed (eMarketer 2025, reported as the peak year); 77 Wh/hr streaming confirmed; commuting 1,066 L/yr confirmed (EPA MY2024: 27.2 mpg); household leaks 3.41T L confirmed (EPA, with a noted internal EPA inconsistency: "nearly 1 trillion gallons" on its Fix-a-Leak page vs 900B on Statistics and Facts).
+- US residential outdoor watering: EPA's current figure is ~8B gallons/day (~11T L/yr), superseding the older 9B figure.
+
+## Framing credit
+
+The measurement-boundary framing (why honest numbers disagree by 1,000x; withdrawal vs consumption; water locality) was prompted by Hank Green's video ["Why is Everyone So Wrong About AI Water Use?"](https://youtu.be/H_c6MWk7PQc) (June 2026). His specific figures were independently verified: the boundary argument and locality thesis hold; his corn total and the "training is ~50%" claim did not survive verification and were replaced with primary-sourced figures.
+
+**Update completed:** 3 July 2026

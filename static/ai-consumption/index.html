@@ -891,7 +891,7 @@
     .animate-on-scroll {
       opacity: 0;
       transform: translateY(40px);
-      transition: all 0.8s ease-out;
+      transition: all 0.5s ease-out;
     }
 
     .animate-on-scroll.visible {
@@ -991,6 +991,7 @@
         <div class="nav-links">
           <a href="#efficiency">Efficiency</a>
           <a href="#water">Water</a>
+          <a href="#boundaries">Boundaries</a>
           <a href="#energy">Energy</a>
           <a href="#myths">Claims</a>
           <a href="#perspectives">Context</a>
@@ -1021,13 +1022,13 @@
       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
         <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
       </svg>
-      Research Data 2024-2025
+      Research Data 2024-2026
     </div>
     <h1 class="hero-title">
       AI <span class="gradient-text">Consumption</span> in Context
     </h1>
     <p class="hero-subtitle">
-      Data on AI energy and water use compared with everyday activities. Sources include Google, OpenAI, Harvard/UCLA, MIT Technology Review, EPA, and Nielsen.
+      Data on AI energy and water use compared with everyday activities - with the measurement boundary labelled, because that's where most disagreement hides. Sources include the IEA, Google, OpenAI, Pew Research, EPA, USGS, and Epoch AI.
     </p>
     <div class="hero-stats" id="heroStats">
       <div class="loading">Loading data</div>
@@ -1047,14 +1048,14 @@
         <span class="section-label">Efficiency Trends</span>
         <h2 class="section-title">AI Efficiency is Improving</h2>
         <p class="section-subtitle">
-          Google disclosed a 33x energy reduction in 12 months. Hardware and software optimisations are driving gains.
+          Google reports a 33x per-query energy reduction in 12 months, and inference cost per token fell ~50x/year - though reasoning models spend more tokens per query.
         </p>
       </div>
 
       <div class="efficiency-showcase animate-on-scroll">
         <div class="efficiency-card before">
           <div class="efficiency-year">May 2024</div>
-          <div class="efficiency-value">9 Wh</div>
+          <div class="efficiency-value">~8 Wh</div>
           <div class="efficiency-unit">per Gemini query</div>
         </div>
         <div class="efficiency-arrow">
@@ -1071,7 +1072,7 @@
       </div>
 
       <div class="highlight-box animate-on-scroll">
-        <strong>Technical factors:</strong> Hardware improvements (A100 to H100 GPUs), sparse neural networks, and architecture optimisations contribute to efficiency gains. University of Michigan research suggests training carbon footprint could be reduced by up to 75% with location and configuration optimisation.
+        <strong>Technical factors:</strong> Newer accelerators (NVIDIA markets Blackwell as 10-50x more efficient than Hopper; independent teardown puts the real per-watt silicon gain at ~47%), mixture-of-experts architectures, and serving optimisations drive the gains. Caveats: Google's 33x figure is self-reported, and 8 of 14 comparable models measured in Dec 2025 used equal or more energy than their early-2025 predecessors - newer isn't automatically greener.
       </div>
 
       <div class="comparison-grid animate-on-scroll">
@@ -1085,7 +1086,7 @@
           <h3 class="card-title">Energy Reduction</h3>
           <div class="card-value text-gradient-green">33x</div>
           <p class="card-unit">improvement in 12 months</p>
-          <p class="card-insight">Google Gemini reduced from 9 Wh to 0.24 Wh per query through hardware and software optimisation.</p>
+          <p class="card-insight">Google Gemini reduced from ~8 Wh to 0.24 Wh per query through hardware and software optimisation (before-value derived from Google's 33x claim).</p>
         </div>
 
         <div class="comparison-card" style="--card-accent: var(--gradient-blue)">
@@ -1108,10 +1109,10 @@
               <line x1="12" y1="17" x2="12" y2="21"/>
             </svg>
           </div>
-          <h3 class="card-title">Sparse Networks</h3>
-          <div class="card-value text-gradient">&lt;10%</div>
-          <p class="card-unit">energy of dense networks</p>
-          <p class="card-insight">Sparsely activated neural networks can use under 10% of the energy of traditional dense networks (MIT Tech Review).</p>
+          <h3 class="card-title">Cost per Token</h3>
+          <div class="card-value text-gradient">~50x/yr</div>
+          <p class="card-unit">inference price decline</p>
+          <p class="card-insight">Median across benchmarks (Epoch AI), expected to slow to 3-5x/year through 2027. MoE models measure 3.6x lower energy/token than similar-size dense models (ML.Energy).</p>
         </div>
       </div>
     </div>
@@ -1122,7 +1123,7 @@
     <div class="container">
       <div class="big-number green">0.24 Wh</div>
       <p class="big-number-label">
-        A single Google Gemini query uses <strong>0.24 watt-hours</strong> - equivalent to microwaving for 1 second, or running your fridge for 6 seconds.
+        A single Google Gemini query uses <strong>0.24 watt-hours</strong> - equivalent to microwaving for 1 second, or running your fridge for 6 seconds. Still the latest official disclosure as of mid-2026.
       </p>
     </div>
   </section>
@@ -1134,7 +1135,7 @@
         <span class="section-label">Task Comparison</span>
         <h2 class="section-title">Energy Varies by AI Task Type</h2>
         <p class="section-subtitle">
-          Text queries, image generation, and video generation have different energy requirements.
+          Text queries, image generation, and video generation have very different energy requirements.
         </p>
       </div>
 
@@ -1142,23 +1143,59 @@
         <div class="compare-item">
           <div class="compare-icon">💬</div>
           <div class="compare-label">Text Query</div>
-          <div class="compare-value text-gradient-green">0.3 Wh</div>
+          <div class="compare-value text-gradient-green">0.34 Wh</div>
         </div>
         <div class="compare-item">
           <div class="compare-icon">🖼️</div>
-          <div class="compare-label">Image Generation</div>
-          <div class="compare-value" style="color: var(--accent-orange)">0.3-1.2 Wh</div>
+          <div class="compare-label">Image Generation (measured)</div>
+          <div class="compare-value" style="color: var(--accent-orange)">0.1-4 Wh</div>
         </div>
         <div class="compare-item highlight">
-          <div class="compare-multiplier">4,000x</div>
+          <div class="compare-multiplier">~2,900x</div>
           <div class="compare-icon">🎬</div>
-          <div class="compare-label">5-sec Video (Sora)</div>
+          <div class="compare-label">10-sec Video (Sora 2, estimate)</div>
           <div class="compare-value" style="color: var(--accent-red)">~1,000 Wh</div>
         </div>
       </div>
 
       <div class="highlight-box animate-on-scroll">
-        <strong>Note:</strong> Discussions of AI energy consumption often conflate different use cases. Text-based chatbots and video generation tools have substantially different energy profiles. One 5-second AI video uses approximately 4,000x more energy than a text query.
+        <strong>Note:</strong> Discussions of AI energy consumption often conflate different use cases. One 10-second AI video is estimated at ~2,900x the energy of a text query - though no official figure exists for closed video models, and measured open video models span 0.14-109 Wh per clip (an 800x range).
+      </div>
+    </div>
+  </section>
+
+  <!-- Reasoning Models Section -->
+  <section id="reasoning">
+    <div class="container">
+      <div class="section-header animate-on-scroll">
+        <span class="section-label">Measured in 2025-2026</span>
+        <h2 class="section-title">Reasoning Models Changed the Maths</h2>
+        <p class="section-subtitle">
+          "Thinking" modes answer with ~10x more output tokens. Two independent measured benchmarks put the energy cost at 25-30x a standard query on average.
+        </p>
+      </div>
+
+      <div class="video-text-compare animate-on-scroll">
+        <div class="compare-item">
+          <div class="compare-icon">💬</div>
+          <div class="compare-label">Standard Query</div>
+          <div class="compare-value text-gradient-green">0.24-0.34 Wh</div>
+        </div>
+        <div class="compare-item">
+          <div class="compare-icon">🧠</div>
+          <div class="compare-label">Reasoning Mode (average)</div>
+          <div class="compare-value" style="color: var(--accent-orange)">25-30x</div>
+        </div>
+        <div class="compare-item highlight">
+          <div class="compare-multiplier">extremes</div>
+          <div class="compare-icon">🔥</div>
+          <div class="compare-label">Same Model, Reasoning On vs Off</div>
+          <div class="compare-value" style="color: var(--accent-red)">150-700x</div>
+        </div>
+      </div>
+
+      <div class="highlight-box animate-on-scroll">
+        <strong>Why no frontier model comparison?</strong> Only Google (Gemini: 0.24 Wh per median prompt) and Mistral (Large 2: 1.14 g CO₂e per reply) publish audited per-model figures. OpenAI offers only an unaudited CEO figure with no methodology, and Anthropic, xAI and Meta disclose nothing per-query as of mid-2026 - so a GPT-5 vs Claude vs Gemini energy table would be guesswork. The measured data above comes from open models (Hugging Face AI Energy Score v2, ML.Energy v3).
       </div>
     </div>
   </section>
@@ -1170,12 +1207,12 @@
         <span class="section-label">Water Consumption</span>
         <h2 class="section-title">Annual Water Usage Comparison</h2>
         <p class="section-subtitle">
-          Water consumption across different sectors in the United States.
+          Annual water use across sectors, with the measurement boundary labelled on each bar.
         </p>
       </div>
 
       <div class="chart-container animate-on-scroll">
-        <h3 class="chart-title">Annual Water Consumption (USA, litres)</h3>
+        <h3 class="chart-title">Annual Water Use (litres per year, log scale)</h3>
         <div class="bar-chart-container" id="waterBarChart">
           <div class="loading">Loading chart</div>
         </div>
@@ -1187,13 +1224,72 @@
     </div>
   </section>
 
-  <!-- Big Number - Infrastructure -->
+  <!-- Big Number - Golf vs AI -->
   <section class="big-number-section animate-on-scroll">
     <div class="container">
-      <div class="big-number">1,134x</div>
+      <div class="big-number">3-6x</div>
       <p class="big-number-label">
-        US infrastructure leaks lose <strong>1,134 times more water</strong> than ChatGPT's estimated annual consumption. 14-18% of treated water is lost before reaching consumers (ASCE).
+        US golf courses alone use <strong>3-6 times more water</strong> than every AI data centre on Earth combined - even counting the water behind their electricity.
       </p>
+    </div>
+  </section>
+
+  <!-- Boundaries Section -->
+  <section id="boundaries">
+    <div class="container">
+      <div class="section-header animate-on-scroll">
+        <span class="section-label">Methodology Matters</span>
+        <h2 class="section-title">Why the Water Numbers Disagree</h2>
+        <p class="section-subtitle">
+          A fifteenth of a teaspoon per query and a trillion litres a year can both be honest - they draw the measurement boundary in different places.
+        </p>
+      </div>
+
+      <div class="comparison-grid animate-on-scroll">
+        <div class="comparison-card" style="--card-accent: var(--gradient-green)">
+          <div class="card-icon" style="background: rgba(34, 197, 94, 0.1);">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#22c55e" stroke-width="2">
+              <path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"/>
+            </svg>
+          </div>
+          <h3 class="card-title">The Small Number</h3>
+          <div class="card-value text-gradient-green">0.32 mL</div>
+          <p class="card-unit">per query (OpenAI)</p>
+          <p class="card-insight">Counts on-site cooling only, per query, today. Excludes the water behind electricity generation and chip fabrication; no methodology published.</p>
+        </div>
+
+        <div class="comparison-card" style="--card-accent: var(--gradient-warm)">
+          <div class="card-icon" style="background: rgba(249, 115, 22, 0.1);">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#f97316" stroke-width="2">
+              <path d="M3 3v18h18"/>
+              <path d="M7 15l4-4 4 2 5-6"/>
+            </svg>
+          </div>
+          <h3 class="card-title">The Big Number</h3>
+          <div class="card-value" style="color: var(--accent-orange)">~1,068B L</div>
+          <p class="card-unit">per year by 2028 (Morgan Stanley)</p>
+          <p class="card-insight">Adds power-generation and chip-fabrication water across all AI data centres, projected to 2028 (~11x 2024; range 637-1,485B). Same industry, different boundary.</p>
+        </div>
+
+        <div class="comparison-card" style="--card-accent: var(--gradient-blue)">
+          <div class="card-icon" style="background: rgba(59, 130, 246, 0.1);">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#3b82f6" stroke-width="2">
+              <path d="M17 3v18"/>
+              <path d="M7 3v18"/>
+              <path d="M17 8l-5 4 5 4"/>
+              <path d="M7 8l5 4-5 4"/>
+            </svg>
+          </div>
+          <h3 class="card-title">Withdrawal ≠ Consumption</h3>
+          <div class="card-value text-gradient-blue">~3-4%</div>
+          <p class="card-unit">of power-plant water is consumed</p>
+          <p class="card-insight">US thermoelectric plants withdraw 34% of the nation's freshwater (USGS) but return almost all of it; only ~3-4% evaporates. Counting withdrawals as "use" inflates electricity-linked water figures ~25x.</p>
+        </div>
+      </div>
+
+      <div class="highlight-box animate-on-scroll">
+        <strong>Water is local:</strong> ~2/3 of new US data centres since 2022 sit in high water-stress areas (Bloomberg/S&P Global), and facility-level water data remains largely undisclosed. The same facility can be benign in a wet region and a real problem in a dry one - where water is drawn matters more than how much. A concrete example of boundaries: Mistral discloses 45 mL per reply against Google's 0.26 mL; the 170x gap is methodology (Mistral counts electricity-generation water), not thirst.
+      </div>
     </div>
   </section>
 
@@ -1227,7 +1323,7 @@
           <h3 class="card-title">Daily TV/Streaming</h3>
           <div class="card-value" style="color: #e50914">520 Wh</div>
           <p class="card-unit">6 hours 45 minutes average</p>
-          <p class="card-insight">Average US adult daily consumption. Sources: eMarketer, Nielsen (2024).</p>
+          <p class="card-insight">Average US adult daily consumption. Sources: eMarketer, Nielsen (2025).</p>
         </div>
 
         <div class="comparison-card" style="--card-accent: var(--gradient-purple)">
@@ -1238,9 +1334,9 @@
             </svg>
           </div>
           <h3 class="card-title">Daily ChatGPT Use</h3>
-          <div class="card-value text-gradient">1.05 Wh</div>
-          <p class="card-unit">3-4 queries (typical user)</p>
-          <p class="card-insight">Average prompts per day for weekly active users. Source: OpenAI via CNBC (2025).</p>
+          <div class="card-value text-gradient">~1 Wh</div>
+          <p class="card-unit">2-3 queries (typical user)</p>
+          <p class="card-insight">Average prompts per day for weekly active users. Source: OpenAI usage data (2026).</p>
         </div>
 
         <div class="comparison-card" style="--card-accent: var(--gradient-green)">
@@ -1251,14 +1347,14 @@
             </svg>
           </div>
           <h3 class="card-title">Daily Usage Ratio</h3>
-          <div class="card-value text-gradient-green">495x</div>
+          <div class="card-value text-gradient-green">~550x</div>
           <p class="card-unit">TV/streaming vs ChatGPT</p>
-          <p class="card-insight">For typical daily usage patterns, TV/streaming uses 495x more energy than ChatGPT.</p>
+          <p class="card-insight">For typical daily usage patterns, TV/streaming uses ~550x more energy than ChatGPT.</p>
         </div>
       </div>
 
       <div class="highlight-box animate-on-scroll">
-        <strong>Methodology:</strong> TV/streaming hours from eMarketer/Nielsen (2024). ChatGPT queries calculated from OpenAI data: 2.5B daily prompts / 800M weekly active users = 3.5 queries/day average. Energy: streaming at 77 Wh/hour, ChatGPT at 0.3 Wh/query. Even daily active users (22 queries/day = 6.6 Wh) use 79x less energy than average daily TV/streaming.
+        <strong>Methodology:</strong> TV/streaming hours from eMarketer/Nielsen (2025). ChatGPT queries from OpenAI data: 2.5B+ daily prompts / 900M weekly active users ≈ 2.8 queries/day. Energy: streaming at 77 Wh/hour (~72% of which is your TV, not the data centre), ChatGPT at 0.34 Wh/query. Even heavy users (22 queries/day ≈ 7.5 Wh) use ~70x less energy than average daily TV/streaming; reasoning-heavy use runs ~25-30x higher per query.
       </div>
     </div>
   </section>
@@ -1332,8 +1428,8 @@
           </div>
           <h3 class="card-title">US Data Centre Energy</h3>
           <div class="card-value" style="color: var(--accent-red)">4.4%</div>
-          <p class="card-unit">of total US energy (2025)</p>
-          <p class="card-insight">Up from 1.9% in 2018. Source: Harvard/UCLA Study (2024).</p>
+          <p class="card-unit">of US electricity (2023, latest full data)</p>
+          <p class="card-insight">Up from 1.9% in 2018; projected 6.7-12% by 2028. Source: LBNL/DOE. Globally: 485 TWh in 2025, +17% YoY, with AI-focused facilities up ~50% (IEA).</p>
         </div>
 
         <div class="comparison-card">
@@ -1347,7 +1443,7 @@
           <h3 class="card-title">Carbon Intensity</h3>
           <div class="card-value" style="color: var(--accent-orange)">48%</div>
           <p class="card-unit">higher than US average</p>
-          <p class="card-insight">95% of data centres are in locations with above-average grid carbon intensity due to 24/7 power requirements.</p>
+          <p class="card-insight">95% of data centres are in locations with above-average grid carbon intensity due to 24/7 power requirements. Independently reproduced by a second study in June 2026.</p>
         </div>
 
         <div class="comparison-card">
@@ -1362,12 +1458,71 @@
           <h3 class="card-title">Emissions Share</h3>
           <div class="card-value" style="color: var(--accent-cyan)">2.18%</div>
           <p class="card-unit">of US national emissions</p>
-          <p class="card-insight">Comparable to domestic aviation (~2.5%). 105 million metric tons CO₂ in 2024.</p>
+          <p class="card-insight">Comparable to domestic aviation (~2.5%). 105 million metric tons CO₂ (2023 data, Harvard/UCLA).</p>
         </div>
       </div>
 
       <div class="highlight-box animate-on-scroll">
         <strong>Location factor:</strong> Carbon intensity varies significantly by grid location. Quebec (32 g CO₂e/kWh) vs Central US coal regions (1,000 g CO₂e/kWh) represents a 16x difference. Source: Harvard/UCLA Study.
+      </div>
+    </div>
+  </section>
+
+  <!-- Electricity Prices Section -->
+  <section id="prices">
+    <div class="container">
+      <div class="section-header animate-on-scroll">
+        <span class="section-label">The 2026 Story</span>
+        <h2 class="section-title">Electricity Prices, Not Water</h2>
+        <p class="section-subtitle">
+          The best-evidenced cost of the AI buildout to ordinary people in 2026 is arriving on power bills, not in water supplies.
+        </p>
+      </div>
+
+      <div class="comparison-grid animate-on-scroll">
+        <div class="comparison-card">
+          <div class="card-icon" style="background: rgba(239, 68, 68, 0.1);">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#ef4444" stroke-width="2">
+              <polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/>
+              <polyline points="17 6 23 6 23 12"/>
+            </svg>
+          </div>
+          <h3 class="card-title">Record Capacity Prices</h3>
+          <div class="card-value" style="color: var(--accent-red)">$333.44</div>
+          <p class="card-unit">per MW-day, PJM 2027/28 auction</p>
+          <p class="card-insight">Third consecutive record in America's largest grid market; $16.4B total cost. Would have reached ~$530 without a price cap. Source: PJM (Dec 2025).</p>
+        </div>
+
+        <div class="comparison-card">
+          <div class="card-icon" style="background: rgba(249, 115, 22, 0.1);">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#f97316" stroke-width="2">
+              <circle cx="12" cy="12" r="10"/>
+              <path d="M12 6v6l4 2"/>
+            </svg>
+          </div>
+          <h3 class="card-title">Attributed to Data Centres</h3>
+          <div class="card-value" style="color: var(--accent-orange)">63%</div>
+          <p class="card-unit">of the capacity price increase</p>
+          <p class="card-insight">PJM's independent market monitor attributes $9.3B of the 2025/26 increase - recovered from customers - to data centre demand. Source: Monitoring Analytics.</p>
+        </div>
+
+        <div class="comparison-card">
+          <div class="card-icon" style="background: rgba(6, 182, 212, 0.1);">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#06b6d4" stroke-width="2">
+              <path d="M3 21h18"/>
+              <path d="M5 21V7l8-4v18"/>
+              <path d="M19 21V11l-6-4"/>
+            </svg>
+          </div>
+          <h3 class="card-title">Household Bills</h3>
+          <div class="card-value" style="color: var(--accent-cyan)">+1.5-5%</div>
+          <p class="card-unit">PJM-state residential bills, from June 2026</p>
+          <p class="card-insight">~$16-18/month in the worst-hit areas. NRDC projects up to $163B in PJM bill increases through 2033 (model-dependent scenario). Sources: Canary Media, IEEFA.</p>
+        </div>
+      </div>
+
+      <div class="highlight-box animate-on-scroll">
+        <strong>Kept in proportion:</strong> Data centres are ~8% of projected global electricity demand growth to 2030 - less than EVs or air conditioning (Carbon Brief). And the buildout may not materialise as promised: Microsoft froze ~1.5 GW of self-build capacity, Satya Nadella conceded "there will be an overbuild", and the Bank for International Settlements lists an AI capex bust among its top systemic risks (2026).
       </div>
     </div>
   </section>
@@ -1415,8 +1570,8 @@
               <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
             </svg>
           </div>
-          <h3 class="card-title">GPT-4 @ 800M Users</h3>
-          <div class="card-value" style="color: var(--accent-cyan)">62.5 Wh</div>
+          <h3 class="card-title">GPT-4 @ 900M Users</h3>
+          <div class="card-value" style="color: var(--accent-cyan)">55.6 Wh</div>
           <p class="card-unit">Training energy per user</p>
           <p class="card-insight">Per-user training energy decreases as adoption increases.</p>
         </div>
@@ -1429,10 +1584,14 @@
             </svg>
           </div>
           <h3 class="card-title">Daily Inference Volume</h3>
-          <div class="card-value text-gradient">2.5B</div>
+          <div class="card-value text-gradient">2.5B+</div>
           <p class="card-unit">queries per day</p>
-          <p class="card-insight">At scale, aggregate inference energy (~300 GWh/year) approaches training costs. Both amortised across 800M users.</p>
+          <p class="card-insight">Over a deployed model's lifetime, inference dominates: 60-90% of total footprint depending on boundary. Amortised across 900M+ weekly users.</p>
         </div>
+      </div>
+
+      <div class="highlight-box animate-on-scroll">
+        <strong>Frontier training in 2025-2026:</strong> The largest credibly-estimated run is Grok 4 at ~310 GWh (Epoch AI, ~6x GPT-4) - yet GPT-5 used <em>less</em> training compute than GPT-4.5, as OpenAI scaled post-training on a smaller base model. Frontier training is not monotonically growing. Beware GW-scale headlines (Stargate, Colossus 2): those are build-out capacity targets, not measured consumption.
       </div>
     </div>
   </section>
@@ -1454,6 +1613,10 @@
           <canvas id="usersChart"></canvas>
         </div>
       </div>
+
+      <div class="highlight-box animate-on-scroll">
+        <strong>US adoption (Pew Research, Feb 2026, n=5,119):</strong> 49% of US adults have used AI chatbots (up from 33% in 2024 and 23% in 2023); 24% use them daily. Platform reach: ChatGPT 44%, Gemini 24%, Copilot 17%, Meta AI 14%, Grok 8%, Claude 6%. ChatGPT also passed ~1 billion <em>monthly</em> actives in June 2026 (a different metric to the weekly figures charted above).
+      </div>
     </div>
   </section>
 
@@ -1461,14 +1624,12 @@
   <footer>
     <div class="container">
       <p class="footer-text">
-        Data compiled from Google, OpenAI, MIT Technology Review, Harvard/UCLA Study, EPA, USGA, Epoch AI, ASCE, IEA, and other sources (2024-2025).
+        Data compiled from the IEA, LBNL, EPA, USGS, USDA, ASCE, GCSAA/USGA, OpenAI, Google, Mistral, Epoch AI, Hugging Face, ML.Energy, Pew Research, PJM, Harvard/UCLA, MIT Technology Review, and other sources (2024-2026). Last updated 3 July 2026.
       </p>
       <p class="footer-sources">
-        Full research and sources available in <a href="research.md">research.md</a> |
+        Full research and sources in <a href="research.md">research.md</a> |
         Raw data in <a href="data.json">data.json</a> |
-        Blog extractions in <a href="extract_sustainabilitybynumbers.md">Sustainability by Numbers</a>,
-        <a href="extract_technologyreview.md">MIT Tech Review</a>,
-        <a href="extract_epochai.md">Epoch AI</a>
+        The measurement-boundary framing of the water section was prompted by <a href="https://youtu.be/H_c6MWk7PQc" target="_blank" rel="noopener">Hank Green's video on AI water use</a> (figures independently verified against primary sources)
       </p>
     </div>
   </footer>
@@ -1479,40 +1640,54 @@
     // ============================================================================
     const appData = {
   "metadata": {
-    "title": "The True Cost of AI: A Reality Check",
-    "subtitle": "Putting AI consumption in perspective with everyday activities",
-    "lastUpdated": "2025-11-28",
-    "sources": "EPA, USGA, GCSAA, NGF, OpenAI, Google, Epoch AI, MIT Technology Review, Harvard/UCLA Study, ASCE, IEA, US Census Bureau"
+    "title": "AI Consumption in Context",
+    "subtitle": "AI energy and water use compared with everyday activities, with measurement boundaries labelled",
+    "lastUpdated": "2026-07-03",
+    "sources": "IEA, LBNL, EPA, USGS, USDA, ASCE, GCSAA/USGA, NGF, OpenAI, Google, Mistral, Epoch AI, Hugging Face AI Energy Score, ML.Energy, Pew Research Center, PJM/Monitoring Analytics, Morgan Stanley, MIT Technology Review, Harvard/UCLA Study"
   },
   "waterConsumption": {
     "unit": "litres/year",
     "unitDisplay": "litres per year",
+    "scaleNote": "Chart uses a logarithmic scale. On a linear scale, ChatGPT's cooling-water bar would be invisible - less than 1/400,000th of the top bar.",
     "items": [
       {
-        "id": "infrastructure_leaks",
-        "label": "US Infrastructure Leaks",
-        "sublabel": "Aging pipes & water mains",
+        "id": "global_network_losses",
+        "label": "<u>Global</u> Water Network Losses",
+        "sublabel": "All countries - often misquoted as US-only",
         "value": 126054153000000,
         "displayValue": "126.1 trillion",
-        "color": "#ef4444",
+        "color": "#dc2626",
         "icon": "pipe",
-        "source": "ASCE Infrastructure Report Card 2025",
+        "source": "ASCE (citing global non-revenue water studies)",
         "sourceUrl": "https://infrastructurereportcard.org/cat-item/drinking-water-infrastructure/",
         "year": 2025,
-        "notes": "14-18% of all treated water lost; $187B in lost revenue annually"
+        "notes": "Worldwide non-revenue water; frequently misattributed to the US alone. The US share is roughly 8.3 trillion litres - a reminder that a number's boundary matters as much as its size"
       },
       {
-        "id": "microsoft_datacenters",
-        "label": "Microsoft Data Centres (Annual)",
-        "sublabel": "All Microsoft global operations",
-        "value": 6435197000,
-        "displayValue": "6.44 billion",
-        "color": "#0ea5e9",
-        "icon": "datacenter",
-        "source": "MIT Technology Review / Microsoft",
-        "sourceUrl": "https://www.technologyreview.com/2025/05/20/1116327/ai-energy-usage-climate-footprint-big-tech/",
-        "year": 2022,
-        "notes": "34% increase from 2021; equivalent to 2,500 Olympic pools"
+        "id": "corn_irrigation",
+        "label": "US Corn Irrigation",
+        "sublabel": "Irrigation water only, not rainfall",
+        "value": 20440000000000,
+        "displayValue": "20.4 trillion",
+        "color": "#eab308",
+        "icon": "corn",
+        "source": "USDA NASS Irrigation Survey 2023",
+        "sourceUrl": "https://www.nass.usda.gov/Newsroom/2024/10-31-2024.php",
+        "year": 2023,
+        "notes": "~35-40% of US corn becomes ethanol; each litre of ethanol carries a ~1,200-1,500 litre water footprint (mostly evapotranspiration)"
+      },
+      {
+        "id": "us_infrastructure_leaks",
+        "label": "US Treated Water Lost to Leaks",
+        "sublabel": "~6 billion gallons lost every day",
+        "value": 8290000000000,
+        "displayValue": "8.3 trillion",
+        "color": "#ef4444",
+        "icon": "pipe",
+        "source": "EPA / ASCE",
+        "sourceUrl": "https://www.epa.gov/watersense/statistics-and-facts",
+        "year": 2025,
+        "notes": "~240,000 water main breaks per year; nearly 20% of US water mains have exceeded their useful life"
       },
       {
         "id": "residential_leaks",
@@ -1524,47 +1699,93 @@
         "icon": "faucet",
         "source": "EPA WaterSense",
         "sourceUrl": "https://www.epa.gov/watersense/statistics-and-facts",
-        "year": 2024,
-        "notes": "Equivalent to water use of 11 million homes"
+        "year": 2026,
+        "notes": "Equivalent to the water use of 11 million homes; the average family wastes 9,400 gallons (35,600 litres) a year"
       },
       {
         "id": "golf_courses",
         "label": "US Golf Courses",
-        "sublabel": "15,962 courses nationwide",
-        "value": 2072511975000,
-        "displayValue": "2.07 trillion",
+        "sublabel": "~16,000 courses nationwide",
+        "value": 2010000000000,
+        "displayValue": "2.01 trillion",
         "color": "#22c55e",
         "icon": "golf",
-        "source": "USGA/GCSAA",
-        "sourceUrl": "https://www.usga.org/content/dam/usga/pdf/Water%20Resource%20Center/how-much-water-does-golf-use.pdf",
+        "source": "GCSAA/USGA National Water Survey (Dec 2025)",
+        "sourceUrl": "https://gcsaa.org/who-we-are/media/news-release/2025-news-releases/2025/12/30/golf-courses-reduce-water-usage-by-31-percent-according-to-national-survey",
         "year": 2024,
-        "notes": "Reduced 29% since 2005; 0.5% of total US water use"
+        "notes": "Down 31% since 2005; 29.1 million on-course golfers"
+      },
+      {
+        "id": "ai_global_all",
+        "label": "All <u>Global</u> AI Data Centres",
+        "sublabel": "Incl. water behind their electricity (Scope 1+2)",
+        "value": 540000000000,
+        "displayValue": "312-765 billion",
+        "color": "#a855f7",
+        "icon": "ai",
+        "source": "de Vries (VU Amsterdam) / UC Riverside via IEEE Spectrum",
+        "sourceUrl": "https://spectrum.ieee.org/ai-water-usage",
+        "year": 2025,
+        "notes": "Wide uncertainty band; counts on-site cooling plus water consumed generating the electricity. Morgan Stanley projects ~1,068 billion L/yr by 2028 on this boundary"
+      },
+      {
+        "id": "google_datacenters",
+        "label": "Google Data Centres + Offices",
+        "sublabel": "All Google operations <u>worldwide</u>, consumption",
+        "value": 30660000000,
+        "displayValue": "30.7 billion",
+        "color": "#4285f4",
+        "icon": "datacenter",
+        "source": "Google Environmental Report",
+        "sourceUrl": "https://sustainability.google/google-2026-environmental-report/",
+        "year": 2024,
+        "notes": "8.1 billion gallons consumed in 2024; ~9.9 billion gallons in 2025 (derived from Google's replenishment disclosure)"
+      },
+      {
+        "id": "microsoft_datacenters",
+        "label": "Microsoft (<u>Global</u>, Consumption)",
+        "sublabel": "FY2024; withdrawal was 10.7 billion L",
+        "value": 5810000000,
+        "displayValue": "5.81 billion",
+        "color": "#0ea5e9",
+        "icon": "datacenter",
+        "source": "Microsoft Environmental Data Fact Sheet 2025",
+        "sourceUrl": "https://cdn-dynmedia-1.microsoft.com/is/content/microsoftcorp/microsoft/msc/documents/presentations/CSR/2025-Microsoft-Environmental-Data-Fact-Sheet-PDF.pdf",
+        "year": 2024,
+        "notes": "Consumption (evaporated), not withdrawal - the two are often conflated in coverage"
       },
       {
         "id": "chatgpt_annual",
-        "label": "ChatGPT Annual (All Queries)",
-        "sublabel": "2.5 billion queries/day globally",
-        "value": 111194762633,
-        "displayValue": "111.2 billion",
+        "label": "ChatGPT Cooling Water (Annual)",
+        "sublabel": "On-site cooling only, all queries <u>globally</u>",
+        "value": 292000000,
+        "displayValue": "292 million",
         "color": "#8b5cf6",
         "icon": "ai",
-        "source": "OpenAI (Sam Altman) / MIT Tech Review",
-        "sourceUrl": "https://www.technologyreview.com/2025/05/20/1116327/ai-energy-usage-climate-footprint-big-tech/",
-        "year": 2025,
-        "notes": "0.32 mL per query × 2.5B queries/day × 365 days"
+        "source": "OpenAI (Sam Altman, reaffirmed Feb 2026)",
+        "sourceUrl": "https://www.datacenterdynamics.com/en/news/sam-altman-chatgpt-queries-consume-034-watt-hours-of-electricity-and-0000085-gallons-of-water/",
+        "year": 2026,
+        "notes": "0.32 mL/query x 2.5B+ queries/day x 365. Excludes power-generation and chip-fab water; no methodology published. Corrects an arithmetic error in earlier versions of this page (111.2B)"
       }
     ],
     "perQuery": {
       "chatgpt": {
         "value": 0.32,
         "unit": "mL",
-        "source": "OpenAI (Sam Altman)"
+        "source": "OpenAI (Sam Altman, Jun 2025; reaffirmed Feb 2026)",
+        "notes": "On-site cooling only; no methodology published"
       },
       "gemini": {
         "value": 0.26,
         "unit": "mL",
-        "source": "Google (August 2025)",
-        "notes": "About 5 drops of water"
+        "source": "Google (August 2025, still latest official disclosure)",
+        "notes": "About 5 drops of water; median text prompt, full-stack methodology"
+      },
+      "mistral": {
+        "value": 45,
+        "unit": "mL",
+        "source": "Mistral Large 2 lifecycle analysis (July 2025)",
+        "notes": "Looks 170x higher than Google's figure because Mistral also counts water consumed generating the electricity (Scope 2) - the gap is methodology, not thirst"
       },
       "comparison": "A single dripping tap wastes 11,000+ litres/year - equivalent to 35 million ChatGPT queries"
     }
@@ -1573,36 +1794,36 @@
     "unit": "kWh",
     "items": [
       {
-        "id": "chatgpt_query",
-        "label": "ChatGPT Query (GPT-4o)",
-        "value": 0.00034,
-        "displayValue": "0.34 Wh",
-        "color": "#8b5cf6",
-        "source": "OpenAI (Sam Altman)",
-        "sourceUrl": "https://www.devsustainability.com/p/chatgpt-energy-usage-is-034-wh-per",
-        "year": 2024,
-        "notes": "Typical text query; range 0.1-4 Wh depending on complexity"
-      },
-      {
         "id": "gemini_query",
         "label": "Google Gemini Query",
         "value": 0.00024,
         "displayValue": "0.24 Wh",
         "color": "#4285f4",
         "source": "Google (Official)",
-        "sourceUrl": "https://www.sustainabilitybynumbers.com/p/ai-footprint-august-2025",
+        "sourceUrl": "https://cloud.google.com/blog/products/infrastructure/measuring-the-environmental-impact-of-ai-inference",
         "year": 2025,
-        "notes": "Median text query; first official per-query disclosure by major AI company"
+        "notes": "Median text prompt, full-stack methodology; still the latest official disclosure as of mid-2026"
+      },
+      {
+        "id": "chatgpt_query",
+        "label": "ChatGPT Query (average)",
+        "value": 0.00034,
+        "displayValue": "0.34 Wh",
+        "color": "#8b5cf6",
+        "source": "OpenAI (Sam Altman, reaffirmed Feb 2026)",
+        "sourceUrl": "https://epoch.ai/gradient-updates/how-much-energy-does-chatgpt-use",
+        "year": 2026,
+        "notes": "No methodology published; independently corroborated by Epoch AI's ~0.3 Wh estimate for GPT-4o"
       },
       {
         "id": "gemini_query_2024",
         "label": "Google Gemini Query (2024)",
-        "value": 0.009,
-        "displayValue": "9 Wh",
+        "value": 0.008,
+        "displayValue": "~8 Wh",
         "color": "#ea4335",
         "source": "Google (Official)",
         "year": 2024,
-        "notes": "Same query type, 12 months earlier - 33x less efficient"
+        "notes": "Same query type, 12 months earlier - 33x less efficient (derived: 0.24 Wh x 33)"
       },
       {
         "id": "google_search",
@@ -1610,8 +1831,30 @@
         "value": 0.0003,
         "displayValue": "0.3 Wh",
         "color": "#34a853",
-        "source": "Various estimates (2009 baseline)",
-        "year": 2024
+        "source": "Google (2009 figure - stale baseline, no modern disclosure)",
+        "year": 2009
+      },
+      {
+        "id": "reasoning_query",
+        "label": "Reasoning Query (complex)",
+        "value": 0.0039,
+        "displayValue": "~3.9 Wh",
+        "color": "#ec4899",
+        "source": "Epoch AI (o3-style estimate)",
+        "sourceUrl": "https://epoch.ai/gradient-updates/how-much-energy-does-chatgpt-use",
+        "year": 2025,
+        "notes": "Epoch AI point estimate (~11x a standard query); measured open-model averages run higher at 25-30x (HF AI Energy Score v2, ML.Energy v3)"
+      },
+      {
+        "id": "image_generation",
+        "label": "AI Image Generation",
+        "value": 0.002,
+        "displayValue": "0.1-4 Wh",
+        "color": "#f97316",
+        "source": "Measured, 17 models (arXiv 2506.17016)",
+        "sourceUrl": "https://arxiv.org/abs/2506.17016",
+        "year": 2025,
+        "notes": "46x range across models; higher resolution adds 1.3-4.7x"
       },
       {
         "id": "netflix_hour",
@@ -1619,9 +1862,10 @@
         "value": 0.077,
         "displayValue": "77 Wh",
         "color": "#e50914",
-        "source": "MIT Technology Review",
-        "sourceUrl": "https://www.technologyreview.com/2025/05/20/1116327/ai-energy-usage-climate-footprint-big-tech/",
-        "year": 2025
+        "source": "IEA / Carbon Trust (DIMPACT)",
+        "sourceUrl": "https://www.iea.org/commentaries/the-carbon-footprint-of-streaming-video-fact-checking-the-headlines",
+        "year": 2025,
+        "notes": "~72% of this is your TV/device, not the data centre"
       },
       {
         "id": "tv_oled_65_hour",
@@ -1629,20 +1873,21 @@
         "value": 0.12,
         "displayValue": "120 Wh",
         "color": "#0e7490",
-        "source": "Solar Tech Online 2025",
-        "sourceUrl": "https://solartechonline.com/blog/tv-electricity-usage-guide/",
-        "year": 2025
+        "source": "RTINGS / Solar Tech Online",
+        "sourceUrl": "https://www.rtings.com/tv/learn/led-oled-power-consumption-and-electricity-cost",
+        "year": 2025,
+        "notes": "2025 flagship OLEDs range ~110-165 W"
       },
       {
         "id": "sora_video",
-        "label": "Sora AI Video (5 seconds)",
+        "label": "Sora 2 AI Video (10 seconds)",
         "value": 1.0,
         "displayValue": "~1,000 Wh (1 kWh)",
         "color": "#f43f5e",
-        "source": "Sustainability by Numbers (estimate)",
-        "sourceUrl": "https://www.sustainabilitybynumbers.com/p/ai-footprint-august-2025",
+        "source": "SemiAnalysis-derived estimate (no official figure)",
+        "sourceUrl": "https://huggingface.co/blog/jdelavande/text-to-video-energy-cost",
         "year": 2025,
-        "notes": "~4,000x more than a text query; estimate has uncertainty"
+        "notes": "~2,900x a text query; derived estimate. Measured open video models span 0.14-109 Wh per clip - an 800x range"
       }
     ],
     "comparisons": [
@@ -1662,9 +1907,9 @@
         "calculation": "77 Wh ÷ 0.34 Wh = 227 queries"
       },
       {
-        "description": "One 5-second AI video generation",
+        "description": "One 10-second AI video generation",
         "equivalentQueries": 2941,
-        "calculation": "1000 Wh ÷ 0.34 Wh = 2,941 queries"
+        "calculation": "1,000 Wh ÷ 0.34 Wh = ~2,900 queries"
       }
     ],
     "householdEquivalents": {
@@ -1681,40 +1926,85 @@
         "source": "Sustainability by Numbers"
       }
     },
-    "uncertaintyNote": "Energy per query ranges from 0.1-4 Wh depending on model, token count, and complexity. Queries with 100k input tokens can use ~40 Wh."
+    "uncertaintyNote": "Energy per query ranges from 0.1-4 Wh for standard text depending on model, token count, and complexity. Reasoning modes average 25-30x more (measured); extreme cases reach 150-700x."
+  },
+  "reasoningModels": {
+    "title": "Reasoning Models Changed the Maths",
+    "averageMultiplier": "25-30x",
+    "extremeMultiplier": "150-700x",
+    "tokenMultiplier": "~10x more output tokens",
+    "sources": [
+      {
+        "name": "Hugging Face AI Energy Score v2",
+        "finding": "Reasoning models average 30x more energy; same model with reasoning on vs off measured at 150-700x",
+        "url": "https://huggingface.co/blog/sasha/ai-energy-score-v2",
+        "date": "2025-12-04"
+      },
+      {
+        "name": "ML.Energy Leaderboard v3",
+        "finding": "Problem-solving (reasoning) responses used 25x more energy than conversation, driven by ~10x more output tokens at lower GPU utilisation",
+        "url": "https://ml.energy/blog/measurement/energy/diagnosing-inference-energy-consumption-with-the-mlenergy-leaderboard-v30/",
+        "date": "2025"
+      }
+    ],
+    "disclosureGap": "Only Google (Gemini: 0.24 Wh, 0.26 mL, 0.03 g CO2e per median prompt) and Mistral (Large 2: 1.14 g CO2e, 45 mL per 400-token reply, Scope 2 included) publish audited per-model figures. OpenAI offers an aggregate CEO figure with no methodology; Anthropic, xAI and Meta publish nothing per-query as of mid-2026.",
+    "newerNotGreener": "Newer models are not automatically more efficient: 8 of 14 comparable models used equal or more energy than their early-2025 predecessors (HF AI Energy Score v2). MoE architectures help - active-parameter count drives energy, with a measured 3.6x lower energy/token vs a similar-size dense model."
+  },
+  "boundaries": {
+    "title": "Why the Water Numbers Disagree",
+    "explainer": "Resource figures depend on where the measurement boundary sits. Small numbers count only on-site cooling at query time; large numbers add the water consumed generating the electricity (Scope 2), chip fabrication (Scope 3), and projections of growth. Both can be arithmetically honest.",
+    "bookends": {
+      "small": {
+        "figure": "0.32 mL per query",
+        "source": "OpenAI (Sam Altman)",
+        "boundary": "On-site cooling only, per query, today"
+      },
+      "large": {
+        "figure": "~1,068 billion litres/year by 2028",
+        "source": "Morgan Stanley Research (Sep 2025); range 637-1,485B",
+        "boundary": "All AI data centres, cooling + power-generation + chip-fab water, projected 2028 (~11x 2024)"
+      }
+    },
+    "withdrawalVsConsumption": "US thermoelectric power plants account for 41% of total water withdrawals (34% of freshwater withdrawals, USGS) - but only ~3-4% of that is consumed (evaporated); the rest returns to the source. Counting withdrawals as 'use' inflates any electricity-linked water figure ~25x.",
+    "locality": {
+      "fact": "~2/3 of new US data centres built since 2022 are in high water-stress areas",
+      "source": "Bloomberg / S&P Global",
+      "note": "Water is local: the same facility can be benign in a wet region and a real problem in a dry one. Quantity matters less than where it is drawn.",
+      "operatorResponse": "Sam Altman said in Feb 2026 that OpenAI's data centres have largely moved off evaporative cooling (CNBC); facility-level water data remains largely undisclosed (AGU Advances, 2026)"
+    }
   },
   "videoVsText": {
     "title": "Video Generation: The Real Energy Consumer",
     "comparison": {
       "textQuery": {
         "label": "Text Query (Gemini/ChatGPT)",
-        "energy": 0.3,
+        "energy": 0.34,
         "unit": "Wh"
       },
       "imageGeneration": {
-        "label": "Image Generation",
-        "energyMin": 0.3,
-        "energyMax": 1.2,
+        "label": "Image Generation (measured)",
+        "energyMin": 0.1,
+        "energyMax": 4,
         "unit": "Wh"
       },
       "videoGeneration": {
-        "label": "5-second Video (Sora)",
+        "label": "10-second Video (Sora 2, estimate)",
         "energy": 1000,
         "unit": "Wh"
       }
     },
-    "ratio": "~4,000x more energy for video vs text",
-    "insight": "When people worry about AI energy use, they should distinguish between text (minimal) and video generation (significant)"
+    "ratio": "~2,900x more energy for a 10-second video vs a text query",
+    "insight": "Concerns about AI energy should distinguish between text (minimal), reasoning modes (25-30x text), and video generation (thousands of times text)"
   },
   "efficiencyImprovements": {
-    "title": "AI Efficiency is Improving Rapidly",
+    "title": "AI Efficiency is Improving - With Caveats",
     "google": {
       "model": "Gemini",
       "period": "12 months (May 2024 - May 2025)",
       "energyReduction": 33,
       "emissionsReduction": 44,
       "before": {
-        "energy": 9,
+        "energy": 8,
         "emissions": 1.32,
         "units": { "energy": "Wh", "emissions": "g CO₂e" }
       },
@@ -1723,18 +2013,27 @@
         "emissions": 0.03,
         "units": { "energy": "Wh", "emissions": "g CO₂e" }
       },
-      "source": "Google (Official)",
-      "sourceUrl": "https://www.sustainabilitybynumbers.com/p/ai-footprint-august-2025"
+      "source": "Google (self-reported, no independent verification as of mid-2026)",
+      "sourceUrl": "https://cloud.google.com/blog/products/infrastructure/measuring-the-environmental-impact-of-ai-inference"
     },
-    "industryTrend": "Hardware improvements (A100 → H100 GPUs), model architecture (sparse networks), and optimisation are driving rapid efficiency gains",
+    "costPerToken": {
+      "finding": "LLM inference price per token fell ~50x/year (median across benchmarks; ~200x/year after Jan 2024), expected to decelerate to 3-5x/year through 2027",
+      "source": "Epoch AI",
+      "sourceUrl": "https://epoch.ai/data-insights/llm-inference-price-trends"
+    },
+    "hardware": {
+      "finding": "NVIDIA markets Blackwell as 10-50x more efficient than Hopper; independent teardown puts the real per-watt silicon gain at ~47%, with the rest from FP4 quantisation and architecture changes",
+      "source": "NVIDIA claims vs independent analysis (adrianco)"
+    },
+    "caveat": "Efficiency per token improves rapidly, but reasoning models spend ~10x more tokens per query - so energy per QUERY can rise even as energy per token falls. 8 of 14 comparable models used equal or more energy than their early-2025 predecessors (HF AI Energy Score v2).",
     "potentialOptimisation": {
       "trainingCarbonReduction": "Up to 75%",
-      "source": "University of Michigan",
+      "source": "University of Michigan (2023 study, still cited)",
       "method": "Tuning GPU power limits, batch size, and location selection"
     },
-    "sparseNetworks": {
-      "description": "Sparsely activated neural networks can consume <10% of energy vs dense networks",
-      "source": "MIT Technology Review"
+    "moe": {
+      "description": "Mixture-of-experts models: active-parameter count drives energy, not total - measured 3.6x lower energy/token vs similar-size dense model (ML.Energy v3)",
+      "source": "ML.Energy Leaderboard"
     }
   },
   "dataCentreIndustry": {
@@ -1743,18 +2042,25 @@
       "current": 4.4,
       "previous": 1.9,
       "previousYear": 2018,
-      "currentYear": 2025,
-      "unit": "% of US energy",
-      "source": "Harvard/UCLA Study",
-      "sourceUrl": "https://arxiv.org/html/2411.09786v1"
+      "currentYear": 2023,
+      "unit": "% of US electricity (2023, latest full-economy data)",
+      "source": "LBNL 2024 US Data Center Energy Usage Report",
+      "sourceUrl": "https://eta-publications.lbl.gov/sites/default/files/2024-12/lbnl-2024-united-states-data-center-energy-usage-report_1.pdf"
+    },
+    "global2025": {
+      "actual": 485,
+      "unit": "TWh",
+      "growth": "+17% year on year; AI-focused data centres +50%",
+      "source": "IEA Electricity 2026 (Dec 2025)",
+      "sourceUrl": "https://www.iea.org/reports/electricity-2026"
     },
     "usEmissions": {
       "value": 105,
       "unit": "million metric tons CO₂",
-      "year": 2024,
+      "year": 2023,
       "percentOfNational": 2.18,
       "comparison": "Comparable to domestic aviation (~2.5%)",
-      "source": "Harvard/UCLA Study"
+      "source": "Harvard/UCLA Study (2023 data; hyperscale subset independently reproduced June 2026)"
     },
     "carbonIntensity": {
       "dataCentreAverage": 548,
@@ -1762,7 +2068,7 @@
       "premium": 48,
       "unit": "g CO₂e/kWh",
       "reason": "95% of US data centres in locations with dirtier-than-average electricity due to 24/7 power needs",
-      "source": "Harvard/UCLA Study"
+      "source": "Harvard/UCLA Study; independently reproduced (~545 g) by June 2026 hyperscale study"
     },
     "regionalVariation": {
       "bestCase": { "location": "Quebec, Canada", "intensity": 32 },
@@ -1770,24 +2076,37 @@
       "variationFactor": "16x difference between best and worst locations",
       "unit": "g CO₂e/kWh"
     },
+    "electricityPrices": {
+      "title": "The 2026 story: electricity prices",
+      "pjmRecord": "$333.44/MW-day record capacity price (2027/28 auction, third consecutive record); $16.4B total market cost",
+      "attribution": "PJM's market monitor attributes 63% of the 2025/26 auction price increase ($9.3B recovered from customers) to data centres",
+      "billImpact": "Residential bills in PJM states rising 1.5-5% from June 2026 (~$16-18/month in the worst-hit areas); NRDC projects up to $163B in PJM bill increases through 2033 (model-dependent scenario)",
+      "sources": "PJM, Monitoring Analytics, Canary Media, IEEFA (Dec 2025 - 2026)"
+    },
     "projections": {
       "iea2030": {
-        "globalDemand": 945,
+        "globalDemand": 950,
         "unit": "TWh",
-        "percentOfGlobalEmissions": "1-1.4%",
-        "source": "International Energy Agency"
+        "percentOfGlobalElectricity": "~3%",
+        "source": "IEA Electricity 2026; central case unchanged, higher scenarios now judged less likely due to supply-chain bottlenecks"
+      },
+      "iea2035": {
+        "globalDemand": 1200,
+        "unit": "TWh",
+        "source": "IEA Electricity 2026 (Base Case)"
       },
       "lawrenceBerkeley2028": {
-        "usShare": "6-12% of US electricity",
-        "source": "Lawrence Berkeley National Laboratory"
+        "usShare": "6.7-12% of US electricity",
+        "source": "Lawrence Berkeley National Laboratory / DOE"
       },
       "fossilFuelShare": {
         "value": 60,
         "unit": "% of new demand met by fossil fuels by 2030",
-        "source": "Goldman Sachs"
+        "source": "Goldman Sachs; consistent with 2026 gas-turbine order books (~100 GW vs 60-70 GW/yr manufacturing capacity)"
       }
     },
-    "context": "While data centre energy use is growing (80% increase 2020-2025), AI is not yet tracked as its own sector. Video streaming alone accounts for 60% of global internet traffic."
+    "overbuildRisk": "The buildout may not materialise as promised: Microsoft froze ~1.5 GW of self-build capacity and Satya Nadella conceded 'there will be an overbuild'; the Bank for International Settlements lists an AI capex bust among its top systemic risks (2026), noting ~$1T/year hyperscaler capex against ~$50-60B AI revenue",
+    "context": "Data centres are ~8% of projected global electricity demand GROWTH to 2030 - less than EVs or air conditioning (Carbon Brief). Current scale is modest; the trajectory and its local grid/water impacts are the legitimate concerns."
   },
   "fuelConsumption": {
     "unit": "litres/year",
@@ -1795,14 +2114,14 @@
       {
         "id": "personal_car_commute",
         "label": "Average US Car Commute",
-        "sublabel": "12,282 km/year @ 8.68 L/100km",
+        "sublabel": "12,282 km/year @ 8.65 L/100km",
         "value": 1066,
         "displayValue": "1,066 litres",
         "color": "#ef4444",
-        "source": "EPA/US Census",
-        "sourceUrl": "https://www.epa.gov/automotive-trends/highlights-automotive-trends-report",
-        "year": 2024,
-        "notes": "69.2% of Americans drive personal vehicles to work"
+        "source": "EPA Automotive Trends (MY2024) / US Census",
+        "sourceUrl": "https://www.epa.gov/automotive-trends",
+        "year": 2026,
+        "notes": "69.2% of Americans drive alone to work (ACS 2024)"
       },
       {
         "id": "pickup_commute",
@@ -1843,11 +2162,10 @@
         "carbonTonnes": 552,
         "perUserWh": {
           "users300M": 4.29,
-          "users800M": 1.61
+          "users900M": 1.43
         },
         "equivalents": [
-          "120 US homes for 1 year",
-          "1 US household for 120 years"
+          "120 US homes for 1 year"
         ],
         "source": "MIT Technology Review / Various research",
         "year": 2020
@@ -1861,7 +2179,7 @@
         "carbonTonnes": "12,456-14,994",
         "perUserWh": {
           "users300M": 166.7,
-          "users800M": 62.5
+          "users900M": 55.6
         },
         "equivalents": [
           "San Francisco for 3 days",
@@ -1874,28 +2192,42 @@
         "notes": "Training cost over $100 million; ~25,000 A100 GPUs for 90-100 days"
       },
       {
-        "id": "gpt4o_training",
-        "label": "GPT-4o Training",
-        "powerMW": "20-25",
-        "duration": "~3 months",
+        "id": "grok4",
+        "label": "Grok 4 Training",
+        "energyGWh": 310,
+        "energyDisplay": "~310 GWh",
+        "carbonTonnes": 154000,
+        "waterLitres": 754000000,
+        "source": "Epoch AI (significant uncertainty flagged)",
+        "sourceUrl": "https://epoch.ai/data-insights/grok-4-training-resources",
+        "year": 2025,
+        "notes": "Largest credibly-estimated training run: ~6x GPT-4; 246M H100-hours, ~$490M compute"
+      },
+      {
+        "id": "gpt5",
+        "label": "GPT-5 Training",
+        "compute": "~5x10^25 FLOP (median estimate)",
         "source": "Epoch AI",
-        "year": 2024
+        "sourceUrl": "https://epoch.ai/gradient-updates/why-gpt5-used-less-training-compute-than-gpt45-but-gpt6-probably-wont",
+        "year": 2025,
+        "notes": "Used LESS training compute than GPT-4.5 - OpenAI scaled post-training on a smaller base model. Frontier training is not monotonically growing; no credible GWh estimate exists"
       }
     ],
-    "context": "Training is a one-time cost amortised across all users. As the user base grows from 300M to 800M, per-user training energy drops significantly. Inference (daily queries) is now a larger aggregate cost than training due to scale (2.5 billion queries/day)."
+    "trend": "Frontier training runs now draw >100 MW; training power demand grows ~2.2x/year while hardware efficiency improves ~40%/year (Epoch AI). GW-scale announcements (Stargate, Colossus 2) are build-out CAPACITY targets, not measured consumption.",
+    "context": "Training is a one-time cost amortised across all users. Over a deployed model's lifetime, INFERENCE dominates: estimates range 60-90% of total footprint depending on boundary."
   },
   "chatgptStats": {
     "dailyQueries": {
       "value": 2500000000,
-      "display": "2.5 billion",
-      "source": "OpenAI / MIT Technology Review",
+      "display": "2.5+ billion",
+      "source": "OpenAI (July 2025 - latest officially confirmed volume)",
       "year": 2025
     },
     "annualEnergy": {
-      "value": 300,
+      "value": 310,
       "unit": "GWh",
       "equivalent": "Powering ~30,000 US homes annually",
-      "source": "MIT Technology Review"
+      "source": "Derived: 0.34 Wh x 2.5B/day x 365; MIT Technology Review independently estimated ~300 GWh"
     }
   },
   "chatgptUsers": {
@@ -1903,17 +2235,31 @@
       "weeklyActive": [
         { "date": "2024-12", "users": 300000000, "display": "300 million" },
         { "date": "2025-08", "users": 700000000, "display": "700 million" },
-        { "date": "2025-10", "users": 800000000, "display": "800 million" }
+        { "date": "2025-10", "users": 800000000, "display": "800 million" },
+        { "date": "2026-Q1", "users": 900000000, "display": "900+ million" }
       ],
-      "source": "TechCrunch",
-      "sourceUrl": "https://techcrunch.com/2025/10/06/sam-altman-says-chatgpt-has-hit-800m-weekly-active-users/"
+      "monthlyActive": {
+        "value": 1000000000,
+        "display": "~1 billion",
+        "date": "2026-06",
+        "source": "Reuters / Sensor Tower estimate (MAU, a different metric to WAU)"
+      },
+      "source": "OpenAI / TechCrunch",
+      "sourceUrl": "https://techcrunch.com/2026/02/27/chatgpt-reaches-900m-weekly-active-users/"
     },
     "usa": {
-      "monthlyActive": 70000000,
-      "display": "70 million",
-      "percentOfGlobal": 19.01,
-      "source": "Backlinko/DemandSage",
-      "year": 2025
+      "trafficShare": "~17-19% of global usage (US); ~19.8% for North America (OpenAI)",
+      "source": "OpenAI / Similarweb-based estimates",
+      "year": 2026
+    },
+    "adoption": {
+      "usedChatbots": 49,
+      "usedChatbots2024": 33,
+      "dailyUse": 24,
+      "platformShare": "ChatGPT 44%, Gemini 24%, Copilot 17%, Meta AI 14%, Grok 8%, Claude 6%",
+      "unit": "% of US adults",
+      "source": "Pew Research Center (survey Feb 2026, n=5,119, published Jun 2026)",
+      "sourceUrl": "https://www.pewresearch.org/internet/2026/06/17/americans-and-ai-2026-chatbots-smart-devices-and-views-on-impact/"
     }
   },
   "individualImpact": {
@@ -1922,26 +2268,26 @@
       {
         "queries": 10,
         "energyWh": 3.4,
-        "percentOfDailyUse": 0.03,
-        "context": "Less than running a fridge for 1 minute"
+        "percentOfDailyUse": 0.012,
+        "context": "Less than running a fridge for 2 minutes"
       },
       {
         "queries": 50,
         "energyWh": 17,
-        "percentOfDailyUse": 0.15,
+        "percentOfDailyUse": 0.06,
         "context": "About 10 seconds of microwave use"
       },
       {
         "queries": 100,
         "energyWh": 34,
-        "percentOfDailyUse": 0.3,
+        "percentOfDailyUse": 0.12,
         "context": "About 20 minutes of TV watching"
       }
     ],
-    "usHouseholdDaily": 28000,
+    "usHouseholdDaily": 28800,
     "unit": "Wh",
-    "source": "Sustainability by Numbers / Epoch AI",
-    "note": "100 queries/day represents about 0.3% of typical household electricity"
+    "source": "Derived from EIA average household consumption (~10,500 kWh/yr)",
+    "note": "Even 100 standard queries/day is ~0.12% of typical household electricity. Corrects the 0.3% previously shown. Reasoning-heavy use runs higher (~25-30x per query)"
   },
   "dailyHabitsComparison": {
     "title": "Typical Daily Usage Patterns",
@@ -1950,7 +2296,7 @@
       "hoursPerDay": 6.75,
       "hoursDisplay": "6 hours 45 minutes",
       "breakdown": {
-        "traditionalTV": 2.92,
+        "traditionalTV": 2.48,
         "streaming": 3.83
       },
       "energyPerHour": {
@@ -1963,137 +2309,154 @@
         "high": 675,
         "typical": 520
       },
-      "sources": ["eMarketer", "Nielsen", "Pew Research"],
-      "year": 2024
+      "sources": ["eMarketer US Time Spent With Media 2025", "Nielsen"],
+      "year": 2025,
+      "notes": "2025 reported as the peak year; traditional TV component now declining"
     },
     "chatgpt": {
       "queriesPerDay": {
-        "typicalWeeklyUser": 3.5,
+        "typicalWeeklyUser": 2.8,
         "dailyActiveUser": 22,
-        "range": "3-4"
+        "range": "2-3"
       },
-      "energyPerQuery": 0.3,
+      "energyPerQuery": 0.34,
       "dailyEnergyWh": {
-        "typicalUser": 1.05,
-        "dailyActiveUser": 6.6
+        "typicalUser": 0.95,
+        "dailyActiveUser": 7.5
       },
-      "sources": ["OpenAI via TechCrunch", "CNBC"],
-      "year": 2025,
-      "methodology": "2.5 billion daily prompts / 800 million weekly active users"
+      "sources": ["OpenAI usage data"],
+      "year": 2026,
+      "methodology": "2.5B+ daily prompts / 900M weekly active users ≈ 2.8 prompts/day"
     },
     "comparison": {
-      "ratioTypicalUser": 495,
-      "ratioDailyActiveUser": 79,
-      "description": "TV/streaming uses 495x more energy daily than typical ChatGPT usage"
+      "ratioTypicalUser": 550,
+      "ratioDailyActiveUser": 70,
+      "description": "TV/streaming uses ~550x more energy daily than typical ChatGPT usage"
     }
   },
   "perspectives": [
     {
       "title": "Household Leaks",
       "fact": "A single dripping tap wastes 11,000+ litres per year",
-      "comparison": "Equivalent to 35.3 million ChatGPT queries",
+      "comparison": "Equivalent to 35 million ChatGPT queries",
       "context": "EPA estimates 10% of US homes have leaks wasting 340+ litres daily"
     },
     {
       "title": "Daily Media Consumption",
       "fact": "Average American watches 6 hours 45 minutes of TV/streaming per day",
-      "comparison": "Uses 520 Wh daily vs 1.05 Wh for typical AI use (3-4 queries)",
-      "context": "Sources: eMarketer, Nielsen (2024)"
+      "comparison": "Uses 520 Wh daily vs ~1 Wh for typical AI use (2-3 queries)",
+      "context": "Sources: eMarketer, Nielsen (2025)"
     },
     {
       "title": "Streaming Energy",
       "fact": "1 hour of Netflix streaming uses 77 Wh",
-      "comparison": "Equivalent to 227 ChatGPT queries",
-      "context": "Video streaming accounts for 60% of global internet traffic"
+      "comparison": "Equivalent to 227 ChatGPT queries - and ~72% of it is your TV, not the data centre",
+      "context": "Video streaming accounts for ~60% of global internet traffic"
     },
     {
       "title": "Golf Course Water Use",
-      "fact": "US golf courses use 2.07 trillion litres of water per year",
-      "comparison": "18x more than ChatGPT's estimated global annual water use",
-      "context": "15,962 courses serving 28 million golfers vs 800 million AI users"
+      "fact": "US golf courses use 2.01 trillion litres of water per year",
+      "comparison": "Roughly 3-6x ALL global AI data centres combined - including the water behind their electricity",
+      "context": "~16,000 courses serving 29.1 million golfers vs 900+ million ChatGPT users"
     },
     {
-      "title": "Infrastructure Water Loss",
-      "fact": "126.1 trillion litres lost to US infrastructure leaks annually",
-      "comparison": "1,134x ChatGPT's estimated annual water consumption",
-      "context": "14-18% of treated water lost before reaching consumers (ASCE)"
+      "title": "Corn and Ethanol",
+      "fact": "US corn irrigation draws ~20.4 trillion litres per year - and ~35-40% of the crop is burned as car fuel",
+      "comparison": "26-65x the water footprint of all global AI data centres",
+      "context": "Each litre of ethanol carries a ~1,200-1,500 litre water footprint (USDA/Water Resources Research). Different water kinds: irrigation is largely non-potable; data centre cooling is often municipal"
     },
     {
-      "title": "Efficiency Improvements",
-      "fact": "Google Gemini reduced energy use 33x in 12 months",
-      "comparison": "From 9 Wh to 0.24 Wh per query",
-      "context": "Hardware and architecture improvements driving gains"
+      "title": "Same Industry, 170x Apart",
+      "fact": "Mistral discloses 45 mL of water per reply; Google discloses 0.26 mL per prompt",
+      "comparison": "The 170x gap is methodology, not thirst",
+      "context": "Mistral counts water consumed generating the electricity (Scope 2); Google counts on-site cooling. Never compare figures without checking the boundary"
     },
     {
-      "title": "Video vs Text AI",
-      "fact": "A 5-second AI-generated video uses approximately 1 kWh",
-      "comparison": "4,000x more energy than a text query",
-      "context": "Text chatbots and video generation have very different footprints"
+      "title": "Water is Local",
+      "fact": "~2/3 of new US data centres since 2022 are in high water-stress areas",
+      "comparison": "The same facility can be benign in a wet region and a problem in a dry one",
+      "context": "Bloomberg / S&P Global. Facility-level water data remains largely undisclosed"
     },
     {
-      "title": "Data Centre Location",
-      "fact": "95% of US data centres are in locations with dirtier-than-average electricity",
-      "comparison": "Carbon intensity varies 16x between best and worst locations",
-      "context": "24/7 power requirements limit location flexibility (Harvard/UCLA)"
+      "title": "Reasoning Costs Tokens",
+      "fact": "Reasoning modes use 25-30x more energy than standard queries on average",
+      "comparison": "Extreme cases measured at 150-700x, driven by ~10x more output tokens",
+      "context": "Measured: Hugging Face AI Energy Score v2, ML.Energy v3 (Dec 2025). One visible query can be many hidden ones"
+    },
+    {
+      "title": "Electricity Prices",
+      "fact": "Data centres drove 63% of the record PJM capacity price increase - $9.3B recovered from customers",
+      "comparison": "Residential bills in PJM states rising 1.5-5% from June 2026",
+      "context": "PJM market monitor / Canary Media. The strongest evidence yet of AI's cost to ordinary bill-payers"
     },
     {
       "title": "Commuting Emissions",
       "fact": "One year of average US car commuting uses 1,066 litres of fuel",
       "comparison": "Produces approximately 2.5 tonnes of CO₂",
-      "context": "69% of Americans drive personal vehicles to work"
+      "context": "69% of Americans drive alone to work"
     }
   ],
   "keyInsights": [
     {
       "stat": "33x",
-      "description": "Efficiency improvement in AI (Gemini) in just 12 months"
+      "description": "Gemini efficiency gain in 12 months (Google-reported)"
     },
     {
-      "stat": "1,134x",
-      "description": "More water wasted by US infrastructure leaks than ChatGPT uses annually"
+      "stat": "25-30x",
+      "description": "More energy used by reasoning modes vs standard queries (measured)"
     },
     {
       "stat": "227",
       "description": "ChatGPT queries to equal 1 hour of Netflix streaming"
     },
     {
-      "stat": "0.3%",
-      "description": "Maximum share of your daily electricity even with 100 AI queries"
+      "stat": "~550x",
+      "description": "More energy for daily TV/streaming than typical daily ChatGPT use"
     },
     {
-      "stat": "4,000x",
-      "description": "More energy for video generation vs text queries"
+      "stat": "3-6x",
+      "description": "More water used by US golf courses than ALL global AI data centres"
     },
     {
-      "stat": "18x",
-      "description": "More water used by US golf courses than ChatGPT globally"
+      "stat": "49%",
+      "description": "US adults who have used AI chatbots (Pew, Feb 2026)"
     }
   ],
   "mythBusters": [
     {
       "myth": "AI is destroying the climate",
-      "reality": "Data centres are 2.18% of US emissions - comparable to aviation. The concern is growth rate, not current scale.",
-      "source": "Harvard/UCLA Study"
+      "reality": "US data centres are 2.18% of national emissions (2023 data) - comparable to aviation. The concern is the trajectory: global data centre electricity grew 17% in 2025, with AI-focused facilities up ~50%.",
+      "source": "Harvard/UCLA Study; IEA Electricity 2026"
     },
     {
       "myth": "Every AI query wastes massive resources",
-      "reality": "A typical query uses 0.24-0.34 Wh - equivalent to microwaving for 1 second or charging your phone 2%.",
-      "source": "Google, OpenAI"
+      "reality": "A typical text query uses 0.24-0.34 Wh and ~5 drops of water - like microwaving for 1 second. Reasoning modes (25-30x) and video generation (~2,900x) are the real outliers.",
+      "source": "Google, OpenAI, HF AI Energy Score"
+    },
+    {
+      "myth": "Each query uses a bottle of water",
+      "reality": "Official on-site figures are 0.26-0.32 mL - about 5 drops. The viral ~500 mL figure counted the water behind electricity generation for older models. Boundary, not dishonesty, explains the 1,000x gap.",
+      "source": "Google, OpenAI, UC Riverside"
     },
     {
       "myth": "AI efficiency isn't improving",
-      "reality": "Google showed 33x energy reduction in 12 months. Hardware and architecture improvements are rapid.",
-      "source": "Google"
+      "reality": "Inference cost per token fell ~50x/year (Epoch AI) and Google reports a 33x per-query gain. But reasoning models spend ~10x more tokens, so energy per query can still rise.",
+      "source": "Epoch AI, Google, ML.Energy"
     },
     {
-      "myth": "Data centres use clean energy",
-      "reality": "95% of US data centres are in dirtier-than-average locations. Carbon intensity is 48% higher than US average.",
-      "source": "Harvard/UCLA Study"
+      "myth": "Data centres run on clean energy",
+      "reality": "95% of US data centres sit on dirtier-than-average grids (48% above US average carbon intensity, independently reproduced in 2026), ~2/3 of new builds are in water-stressed areas, and the near-term buildout is gas-heavy.",
+      "source": "Harvard/UCLA, S&P Global, RBC"
     },
     {
-      "myth": "Training AI is the main energy cost",
-      "reality": "With 2.5 billion daily queries, inference now rivals training in total energy. But both are amortised across 800M users.",
-      "source": "MIT Technology Review"
+      "myth": "Training is the main energy cost",
+      "reality": "Over a model's lifetime, inference dominates (60-90% of footprint). And frontier training isn't monotonically growing: GPT-5 used less training compute than GPT-4.5.",
+      "source": "Epoch AI, UNU-INWEH"
+    },
+    {
+      "myth": "The water numbers must be lies - they differ by 1,000x",
+      "reality": "Altman's 0.32 mL counts on-site cooling per query; Morgan Stanley's ~1 trillion litres by 2028 adds power-generation and chip-fab water, projected forward. Both can be arithmetically honest. Always ask where the boundary sits.",
+      "source": "OpenAI, Morgan Stanley, USGS"
     }
   ],
   "quotes": [
@@ -2109,12 +2472,22 @@
       "source": "MIT Technology Review"
     },
     {
-      "text": "Dirtier energy is available throughout the entire day, and data centres require that to maintain peak operation 24-7. Renewable energy, like wind or solar, might not be as available.",
-      "author": "Falco Bargagli-Stoffi",
-      "role": "Assistant Professor, UCLA",
-      "source": "MIT Technology Review"
+      "text": "It suggests that energy demand for data centres and AI will still be pretty small for the next five years at least. I read it as them saying: 'Everyone just needs to chill out a bit.'",
+      "author": "Hannah Ritchie",
+      "role": "Data scientist, Our World in Data (on the IEA outlook)",
+      "source": "Sustainability by Numbers"
+    },
+    {
+      "text": "Disappointment in returns could trigger a sudden pullback in financing and turn the capex boom into a protracted investment bust.",
+      "author": "Bank for International Settlements",
+      "role": "Annual Economic Report 2026",
+      "source": "BIS"
     }
-  ]
+  ],
+  "credits": {
+    "framing": "The measurement-boundary framing of the water section was prompted by Hank Green's video 'Why is Everyone So Wrong About AI Water Use?' (June 2026). Figures were independently verified against primary sources; where his numbers didn't hold (corn total, the 'training is 50%' claim), the verified figures are used instead.",
+    "url": "https://youtu.be/H_c6MWk7PQc"
+  }
 };
     // ============================================================================
     // END DATA
@@ -2156,52 +2529,27 @@
       // Sort items by value (largest to smallest)
       const sortedItems = [...items].sort((a, b) => b.value - a.value);
 
-      // Find max value (infrastructure leaks)
-      const maxValue = Math.max(...sortedItems.map(i => i.value));
-      // Scale other items relative to half of infrastructure (since it's split into 2 bars)
-      const halfMax = maxValue / 2;
+      // Values span ~6 orders of magnitude, so bar widths use a log scale
+      const minLog = 8;    // 100 million litres
+      const maxLog = 14.2; // beyond the largest bar
+      const logWidth = v => Math.max(2, (Math.log10(v) - minLog) / (maxLog - minLog) * 100);
 
-      container.innerHTML = sortedItems.map(item => {
-        const isInfraLeaks = item.id === 'infrastructure_leaks';
-
-        if (isInfraLeaks) {
-          // Split infrastructure leaks into two FULL WIDTH bars
-          return `
-            <div class="bar-item">
-              <div class="bar-header">
-                <div>
-                  <div class="bar-label">${item.label} <span style="font-size: 0.9em; color: var(--text-muted);">(split for scale)</span></div>
-                  <div class="bar-sublabel">${item.sublabel}</div>
-                </div>
-                <div class="bar-value" style="color: ${item.color}">${item.displayValue}</div>
-              </div>
-              <div class="bar-track">
-                <div class="bar-fill" style="width: 0%; background: ${item.color};" data-width="100%"></div>
-              </div>
-              <div class="bar-track" style="margin-top: 4px;">
-                <div class="bar-fill" style="width: 0%; background: linear-gradient(90deg, ${item.color} 0%, #dc2626 100%);" data-width="100%"></div>
-              </div>
+      container.innerHTML = sortedItems.map(item => `
+        <div class="bar-item">
+          <div class="bar-header">
+            <div>
+              <div class="bar-label">${item.label}</div>
+              <div class="bar-sublabel">${item.sublabel}</div>
             </div>
-          `;
-        } else {
-          // Scale other items relative to half of infrastructure total
-          const percentage = (item.value / halfMax) * 100;
-          return `
-            <div class="bar-item">
-              <div class="bar-header">
-                <div>
-                  <div class="bar-label">${item.label}</div>
-                  <div class="bar-sublabel">${item.sublabel}</div>
-                </div>
-                <div class="bar-value" style="color: ${item.color}">${item.displayValue}</div>
-              </div>
-              <div class="bar-track">
-                <div class="bar-fill" style="width: 0%; background: ${item.color};" data-width="${percentage}%"></div>
-              </div>
-            </div>
-          `;
-        }
-      }).join('');
+            <div class="bar-value" style="color: ${item.color}">${item.displayValue}</div>
+          </div>
+          <div class="bar-track">
+            <div class="bar-fill" style="width: 0%; background: ${item.color};" data-width="${logWidth(item.value).toFixed(1)}%"></div>
+          </div>
+        </div>
+      `).join('') + `
+        <div class="bar-sublabel" style="margin-top: 16px;">${appData.waterConsumption.scaleNote}</div>
+      `;
 
       // Animate bars
       setTimeout(() => {
@@ -2216,8 +2564,9 @@
       const items = appData.waterConsumption.items;
 
       const chatgptItem = items.find(i => i.id === 'chatgpt_annual');
-      const infraItem = items.find(i => i.id === 'infrastructure_leaks');
+      const infraItem = items.find(i => i.id === 'us_infrastructure_leaks');
       const golfItem = items.find(i => i.id === 'golf_courses');
+      const cornItem = items.find(i => i.id === 'corn_irrigation');
 
       container.innerHTML = `
         <div class="comparison-card" style="--card-accent: linear-gradient(135deg, ${infraItem.color} 0%, #dc2626 100%)">
@@ -2245,7 +2594,23 @@
           <h3 class="card-title">${golfItem.label}</h3>
           <div class="card-value" style="color: ${golfItem.color}">${golfItem.displayValue}</div>
           <p class="card-unit">litres per year</p>
-          <p class="card-insight">${golfItem.notes}. 28 million golfers vs 800 million AI users.</p>
+          <p class="card-insight">${golfItem.notes}. Roughly 3-6x the water footprint of all global AI data centres.</p>
+        </div>
+
+        <div class="comparison-card" style="--card-accent: linear-gradient(135deg, ${cornItem.color} 0%, #ca8a04 100%)">
+          <div class="card-icon" style="background: rgba(234, 179, 8, 0.1);">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="${cornItem.color}" stroke-width="2">
+              <path d="M12 2v20"/>
+              <path d="M12 8c-3 0-5-2-5-5 3 0 5 2 5 5z"/>
+              <path d="M12 8c3 0 5-2 5-5-3 0-5 2-5 5z"/>
+              <path d="M12 14c-3 0-5-2-5-5 3 0 5 2 5 5z"/>
+              <path d="M12 14c3 0 5-2 5-5-3 0-5 2-5 5z"/>
+            </svg>
+          </div>
+          <h3 class="card-title">${cornItem.label}</h3>
+          <div class="card-value" style="color: ${cornItem.color}">${cornItem.displayValue}</div>
+          <p class="card-unit">litres per year</p>
+          <p class="card-insight">${cornItem.notes}</p>
         </div>
 
         <div class="comparison-card" style="--card-accent: var(--gradient-purple)">
@@ -2290,85 +2655,6 @@
           <p class="perspective-takeaway">${p.context}</p>
         </div>
       `).join('');
-    }
-
-    function renderEnergyChart() {
-      const ctx = document.getElementById('energyChart').getContext('2d');
-      const items = appData.energyConsumption.items;
-
-      // Filter out the 2024 Gemini comparison for chart clarity
-      const chartItems = items.filter(i => i.id !== 'gemini_query_2024');
-
-      new Chart(ctx, {
-        type: 'bar',
-        data: {
-          labels: chartItems.map(i => i.label),
-          datasets: [{
-            label: 'Energy (Wh)',
-            data: chartItems.map(i => i.value * 1000), // Convert to Wh
-            backgroundColor: chartItems.map(i => i.color + '99'),
-            borderColor: chartItems.map(i => i.color),
-            borderWidth: 2,
-            borderRadius: 8
-          }]
-        },
-        options: {
-          responsive: true,
-          maintainAspectRatio: false,
-          indexAxis: 'y',
-          plugins: {
-            legend: {
-              display: false
-            },
-            tooltip: {
-              backgroundColor: '#1a1a24',
-              titleColor: '#f5f5f7',
-              bodyColor: '#a1a1aa',
-              borderColor: 'rgba(255,255,255,0.1)',
-              borderWidth: 1,
-              padding: 12,
-              displayColors: false,
-              callbacks: {
-                label: function(context) {
-                  const value = context.raw;
-                  if (value >= 1000) {
-                    return (value / 1000).toFixed(1) + ' kWh';
-                  }
-                  return value.toFixed(2) + ' Wh';
-                }
-              }
-            }
-          },
-          scales: {
-            x: {
-              type: 'logarithmic',
-              grid: {
-                color: 'rgba(255,255,255,0.05)'
-              },
-              ticks: {
-                color: '#71717a',
-                callback: function(value) {
-                  if ([0.1, 1, 10, 100, 1000].includes(value)) {
-                    return value >= 1000 ? (value/1000) + ' kWh' : value + ' Wh';
-                  }
-                  return '';
-                }
-              }
-            },
-            y: {
-              grid: {
-                display: false
-              },
-              ticks: {
-                color: '#a1a1aa',
-                font: {
-                  size: 11
-                }
-              }
-            }
-          }
-        }
-      });
     }
 
     function renderEnergyBarChart() {
@@ -2440,16 +2726,13 @@
     function renderTrainingChart() {
       const ctx = document.getElementById('trainingChart').getContext('2d');
 
-      // GPT-4 at 50 GWh
-      const gpt4Energy = 50000000000; // 50 GWh in Wh
-
       new Chart(ctx, {
         type: 'line',
         data: {
-          labels: ['100M', '200M', '300M', '400M', '500M', '600M', '700M', '800M'],
+          labels: ['100M', '200M', '300M', '400M', '500M', '600M', '700M', '800M', '900M'],
           datasets: [{
             label: 'GPT-4 Training Energy per User (Wh)',
-            data: [500, 250, 166.7, 125, 100, 83.3, 71.4, 62.5],
+            data: [500, 250, 166.7, 125, 100, 83.3, 71.4, 62.5, 55.6],
             borderColor: '#8b5cf6',
             backgroundColor: 'rgba(139, 92, 246, 0.1)',
             fill: true,
@@ -2532,12 +2815,14 @@
             backgroundColor: [
               'rgba(139, 92, 246, 0.8)',
               'rgba(99, 102, 241, 0.8)',
-              'rgba(59, 130, 246, 0.8)'
+              'rgba(59, 130, 246, 0.8)',
+              'rgba(6, 182, 212, 0.8)'
             ],
             borderColor: [
               '#8b5cf6',
               '#6366f1',
-              '#3b82f6'
+              '#3b82f6',
+              '#06b6d4'
             ],
             borderWidth: 2,
             borderRadius: 8
