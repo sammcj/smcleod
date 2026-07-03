@@ -22,11 +22,11 @@ UseHugoToc: true
 mermaid: true
 ---
 
-Picture this: A business leader overhears their engineering team discussing "vibe coding" and immediately imagines developers throwing prompts at ChatGPT until something works, shipping whatever emerges to production. The term alone—"vibe coding"—conjures images of seat-of-the-pants development that would make any CTO break out in a cold sweat.
+Picture this: A business leader overhears their engineering team discussing "vibe coding" and immediately imagines developers throwing prompts at ChatGPT until something works, shipping whatever emerges to production. The term alone-"vibe coding"-conjures images of seat-of-the-pants development that would make any CTO break out in a cold sweat.
 
 This misunderstanding is creating a real problem. Whilst vibe coding represents genuine creative exploration that has its place, the unfortunate terminology is causing some business leaders to conflate all AI-assisted / accelerated development with haphazard experimentation. I fear that engineers using sophisticated AI coding agents be it with advanced agentic coding tools like Cline to deliver production-quality solutions are finding their approaches questioned or dismissed entirely.
 
-The irony is that these same business leaders are missing out on the transformative potential of agentic coding—a disciplined approach that treats AI as a skilled development partner rather than a random code generator. The difference isn't just semantic; it's the distinction between sustainable engineering practice and creative tinkering.
+The irony is that these same business leaders are missing out on the transformative potential of agentic coding-a disciplined approach that treats AI as a skilled development partner rather than a random code generator. The difference isn't just semantic; it's the distinction between sustainable engineering practice and creative tinkering.
 
 To understand why this distinction matters, I like clarify what we're actually talking about into these two distinct approaches:
 
@@ -52,7 +52,7 @@ Of course - not all solutions _need_ to be well engineered or production ready, 
 
 Agentic coding - while still leveraging AI coding tools takes a more engineered and extended approach. Rather than treating AI as a black box that spits out code, it positions AI agents as sophisticated development partners equipped with the right tools, context, data and constraints to deliver production-grade solutions.
 
-This isn't about asking an AI to write your entire application—it's about creating a more structured, measurable development process where AI agents work within defined parameters, armed with the right tools and knowledge to make informed decisions on tasks towards completing a goal.
+This isn't about asking an AI to write your entire application-it's about creating a more structured, measurable development process where AI agents work within defined parameters, armed with the right tools and knowledge to make informed decisions on tasks towards completing a goal.
 
 - Humans operating with an engineering mindset.
 - Significant value is placed on the time invested in design before implementation.
@@ -60,6 +60,7 @@ This isn't about asking an AI to write your entire application—it's about crea
 - Agents aligned to business and technical requirements.
 - Leverage deterministic tools for deterministic outcomes.
 - Apply the same quality and security measures as you would for a human.
+- Enforce safety through sandboxing and scoped permissions rather than trusting the model to behave.
 
 It's a shift from treating AI as full auto-pilot to treating it as a peer developer who operates best with proper tooling and context.
 
@@ -69,14 +70,18 @@ It's a shift from treating AI as full auto-pilot to treating it as a peer develo
 
 I like to follow a "[Setup → Plan → Act → Review and Iterate](https://smcleod.net/2025/04/my-plan-document-act-review-flow-for-agentic-software-development/)" workflow for agentic coding, which can loosely be broken down as:
 
-- **Setup**: Configure your coding agent with the right MCP tools, access to documentation, coding standards, and business context
+- **Setup**: Configure your coding agent with the right skills and tools, access to documentation, coding standards, and business context
 - **Plan**: Have the agent analyse requirements, propose architecture, and create a structured approach before writing code
-- **Act**: Let the agent implement solutions while adhering to established patterns and constraints
-- **Review and Iterate**: Human oversight validates outputs, provides feedback, and guides refinements
+- **Act**: Let the agent implement solutions while adhering to established patterns and constraints, delegating research-heavy tasks to sub-agents with fresh context windows
+- **Review and Iterate**: Human oversight validates outputs, provides feedback, and guides refinements - with what you learn fed back into your rules, skills and plans
+
+Threaded through all four stages is context management. Models are stateless and their working memory (the context window) is finite - as it fills, they become noticeably less capable. Development plans, skills that load on demand and sub-agents with fresh context all exist to protect that limited working memory.
 
 ## Agentic Coding: Tooling
 
-A key component of agentic coding is the integration of MCP servers that give AI agents access to tools (external integrations), new capabilities (skills) and data sources (knowledge).
+A key component of agentic coding is extending your agent's capabilities and knowledge. This takes three main forms: rules and guidelines that steer behaviour (coding standards, conventions and guardrails in the agent's system prompt), Agent Skills that package up instructions, scripts and reference material the agent loads when relevant, and MCP servers that connect agents to external tools and data sources.
+
+_Update: When I first published this post, MCP servers were the main way to extend coding agents. Agent Skills have since replaced many of the MCP servers we were running - a small deterministic script inside a skill is often simpler and more reliable than a server doing the same job. MCP still has its place for external integrations and shared data sources, and the underlying principle hasn't changed: favour deterministic tools for deterministic outcomes._
 
 For example:
 
@@ -98,7 +103,7 @@ This tooling transforms AI from a code generator into a contextually aware devel
 | **Primary Approach**        | Creative experimentation through prompting          | Structured collaboration with AI as development peer             |
 | **Skills Required**         | Minimal technical background needed                 | Strong engineering fundamentals and system design skills         |
 | **Planning Phase**          | Iterative discovery purely through trial and error  | Upfront analysis, architecture design, and requirement mapping   |
-| **Tool Integration**        | Usually minimal                                     | MCP servers, documentation access, and development toolchains    |
+| **Tool Integration**        | Usually minimal                                     | Agent Skills, MCP tools, documentation access and toolchains     |
 | **Quality Assurance**       | Manual testing of immediate outputs                 | Automated testing, code review, and adherence to standards       |
 | **Business Alignment**      | Solutions may drift from actual requirements        | Explicitly designed for business needs and technical constraints |
 | **Code Maintainability**    | Often produces write-once, difficult-to-modify code | Emphasises readable, documented, and extensible solutions        |
@@ -108,13 +113,13 @@ This tooling transforms AI from a code generator into a contextually aware devel
 | **Time to Demo**            | Very fast for proof-of-concepts                     | Slightly higher initial investment, faster long-term iterations  |
 | **Production Readiness**    | Requires significant refactoring for production     | Built with production deployment and operations in mind          |
 
-**Key Insight**: The fundamental difference isn't about speed or AI capability—it's about treating development as either creative exploration or an engineering practice.
+**Key Insight**: The fundamental difference isn't about speed or AI capability-it's about treating development as either creative exploration or an engineering practice.
 
 ## The Enterprise Imperative
 
 As organisations increasingly rely on AI-assisted development, the choice between vibe and agentic coding becomes a strategic decision. Vibe coding might get you to a demo faster, but agentic coding gets you to sustainable, scalable solutions that can form the backbone of real businesses.
 
-The key is understanding that effective agentic coding isn't about replacing human developers—it's about augmenting human capabilities with AI agents that have the right tools, context, and constraints to deliver professional-grade results.
+The key is understanding that effective agentic coding isn't about replacing human developers-it's about augmenting human capabilities with AI agents that have the right tools, context, and constraints to deliver professional-grade results.
 
 ---
 
@@ -128,11 +133,11 @@ Instead of open-ended prompts like "build me a user authentication system," begi
 
 ### Build Your Agent's Toolkit
 
-Start by integrating two or three MCP servers that provide tooling that a good human engineer would use—perhaps access to your internal API documentation,your security scanning tools or access to your architectural decision records.
+Start with two or three Agent Skills or MCP servers that provide tooling a good human engineer would use - perhaps access to your internal API documentation, your security scanning tools or your architectural decision records.
 
 ### Implement Human Checkpoints
 
-Establish specific review gates in your workflow. After the planning phase, review the proposed architecture before implementation begins. After initial implementation, conduct a technical review focusing on maintainability and business alignment. These aren't bureaucratic hurdles—they're quality gates that ensure your AI partner stays on track.
+Establish specific review gates in your workflow. After the planning phase, review the proposed architecture before implementation begins. After initial implementation, conduct a technical review focusing on maintainability and business alignment. These aren't bureaucratic hurdles-they're quality gates that ensure your AI partner stays on track.
 
 ### Practice Iterative Refinement
 
@@ -148,6 +153,6 @@ As you develop successful agentic workflows and coding agent templates, document
 
 Vibe coding will always have its place for quick prototypes and creative exploration. But for production quality, maintainable solutions - agentic coding not only a great opportunity for acceleration - it can be sustainable.
 
-The future belongs to developers who can effectively collaborate with AI agents. The question isn't whether AI will change how we code—it's whether we'll evolve our practices to harness that change responsibly.
+The future belongs to developers who can effectively collaborate with AI agents. The question isn't whether AI will change how we code-it's whether we'll evolve our practices to harness that change responsibly.
 
 *See also - my [agentic coding workflow guide](https://smcleod.net/2025/04/my-plan-document-act-review-flow-for-agentic-software-development/) and [live demo recording](https://smcleod.net/2025/02/agentic-coding-live-demo-/-brownbag/).*
