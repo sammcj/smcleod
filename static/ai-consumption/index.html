@@ -1290,7 +1290,7 @@
       </div>
 
       <div class="highlight-box animate-on-scroll">
-        <strong>Water is local:</strong> ~2/3 of new US data centres since 2022 sit in high water-stress areas (Bloomberg/S&P Global), and facility-level water data remains largely undisclosed. The same facility can be benign in a wet region and a real problem in a dry one - where water is drawn matters more than how much. A concrete example of boundaries: Mistral discloses 45 mL per reply against Google's 0.26 mL; the 170x gap is methodology (Mistral counts electricity-generation water), not thirst.
+        <strong>Water is local:</strong> ~2/3 of new US data centres since 2022 sit in high water-stress areas (Bloomberg/S&P Global), and a June 2026 Guardian analysis found the same pattern in what's planned: 517 of 809 upcoming US facilities are on land that spent the past year in drought, drawn there by cheap land, tax breaks and less equipment corrosion. A large site can use up to 5 million gallons a day - the water use of a town of 50,000 people. The same facility can be benign in a wet region and a real problem in a dry one; where water is drawn matters more than how much, and facility-level water data remains largely undisclosed. Boundaries still rule the numbers, though: Mistral's 45 mL per reply versus Google's 0.26 mL is a 170x gap of methodology (Mistral counts electricity-generation water), not thirst.
       </div>
     </div>
   </section>
@@ -1645,7 +1645,7 @@
     "title": "AI Consumption in Context",
     "subtitle": "AI energy and water use compared with everyday activities, with measurement boundaries labelled",
     "lastUpdated": "2026-07-03",
-    "sources": "IEA, LBNL, EPA, USGS, USDA, ASCE, GCSAA/USGA, NGF, OpenAI, Google, Mistral, Epoch AI, Hugging Face AI Energy Score, ML.Energy, Pew Research Center, PJM/Monitoring Analytics, Morgan Stanley, MIT Technology Review, Harvard/UCLA Study"
+    "sources": "IEA, LBNL, EPA, USGS, USDA, ASCE, GCSAA/USGA, NGF, OpenAI, Google, Mistral, Epoch AI, Hugging Face AI Energy Score, ML.Energy, Pew Research Center, PJM/Monitoring Analytics, Morgan Stanley, The Guardian/Cleanview, MIT Technology Review, Harvard/UCLA Study"
   },
   "waterConsumption": {
     "unit": "litres/year",
@@ -1655,7 +1655,7 @@
       {
         "id": "global_network_losses",
         "label": "<u>Global</u> Water Network Losses",
-        "sublabel": "Modelled estimate, not a census - often misquoted as US-only",
+        "sublabel": "Modelled estimate, not a census",
         "value": 126054153000000,
         "displayValue": "~126 trillion",
         "color": "#dc2626",
@@ -1972,6 +1972,9 @@
     "locality": {
       "fact": "~2/3 of new US data centres built since 2022 are in high water-stress areas",
       "source": "Bloomberg / S&P Global",
+      "plannedBuilds": "517 of 809 planned US data centres are on land that was in drought throughout the preceding year - developers favour arid regions for cheap land, tax breaks and less equipment corrosion. A large site can draw up to 5 million gallons (~19 million litres) a day, the water use of a town of up to 50,000 people",
+      "plannedBuildsSource": "Guardian analysis of Cleanview and US Drought Monitor data, June 2026",
+      "plannedBuildsUrl": "https://www.theguardian.com/us-news/2026/jun/08/datacenter-ai-drought-water",
       "note": "Water is local: the same facility can be benign in a wet region and a real problem in a dry one. Quantity matters less than where it is drawn.",
       "operatorResponse": "Sam Altman said in Feb 2026 that OpenAI's data centres have largely moved off evaporative cooling (CNBC); facility-level water data remains largely undisclosed (AGU Advances, 2026)"
     }
@@ -2378,7 +2381,7 @@
       "title": "Water is Local",
       "fact": "~2/3 of new US data centres since 2022 are in high water-stress areas",
       "comparison": "The same facility can be benign in a wet region and a problem in a dry one",
-      "context": "Bloomberg / S&P Global. Facility-level water data remains largely undisclosed"
+      "context": "Bloomberg / S&P Global; a Jun 2026 Guardian analysis found 517 of 809 planned US facilities on drought-hit land. Facility-level water data remains largely undisclosed"
     },
     {
       "title": "Reasoning Costs Tokens",
