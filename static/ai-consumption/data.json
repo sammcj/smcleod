@@ -829,28 +829,34 @@
   ],
   "keyInsights": [
     {
-      "stat": "33x",
-      "description": "Gemini efficiency gain in 12 months (Google-reported)"
-    },
-    {
-      "stat": "25-30x",
-      "description": "More energy used by reasoning modes vs standard queries (measured)"
-    },
-    {
-      "stat": "227",
-      "description": "ChatGPT queries to equal 1 hour of Netflix streaming"
-    },
-    {
-      "stat": "~550x",
-      "description": "More energy for daily TV/streaming than typical daily ChatGPT use"
-    },
-    {
       "stat": "3-6x",
-      "description": "More water used by US golf courses than ALL global AI data centres"
+      "description": "More water used by US golf courses than ALL global AI data centres",
+      "tone": "good"
     },
     {
-      "stat": "49%",
-      "description": "US adults who have used AI chatbots (Pew, Feb 2026)"
+      "stat": "~11,700x",
+      "description": "More water lost to US household leaks (dripping taps, toilets) than ChatGPT's global cooling water",
+      "tone": "good"
+    },
+    {
+      "stat": "~35x",
+      "description": "More energy for 1 hour of big-screen TV than a 10-prompt ChatGPT conversation",
+      "tone": "good"
+    },
+    {
+      "stat": "~2,900x",
+      "description": "More energy for a 10-second AI video than a text query (estimate) - the real outlier",
+      "tone": "caution"
+    },
+    {
+      "stat": "2/3",
+      "description": "New US data centres built since 2022 sit in high water-stress areas - where matters more than how much",
+      "tone": "caution"
+    },
+    {
+      "stat": "33x",
+      "description": "Gemini efficiency gain in 12 months (Google-reported)",
+      "tone": "good"
     }
   ],
   "mythBusters": [

@@ -221,6 +221,19 @@
       position: relative;
     }
 
+    .hero-provenance {
+      position: absolute;
+      top: 96px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: min(1100px, calc(100% - 48px));
+      color: var(--text-muted);
+      font-size: 0.85rem;
+      line-height: 1.6;
+      text-align: center;
+      animation: fadeInUp 0.8s ease-out;
+    }
+
     .hero-badge {
       display: inline-flex;
       align-items: center;
@@ -260,11 +273,19 @@
 
     .hero-stats {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      grid-template-columns: repeat(6, 1fr);
       gap: 20px;
       width: 100%;
-      max-width: 1000px;
+      max-width: 1280px;
       animation: fadeInUp 0.8s ease-out 0.3s both;
+    }
+
+    /* Two balanced rows of three before dropping to the mobile 2-col layout */
+    @media (max-width: 1180px) {
+      .hero-stats {
+        grid-template-columns: repeat(3, 1fr);
+        max-width: 700px;
+      }
     }
 
     .stat-card {
@@ -288,6 +309,19 @@
       background: var(--gradient-purple);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    /* Tone colours: green = AI consumption smaller/improving, orange = genuine cost */
+    .stat-number.tone-good {
+      background: var(--gradient-green);
+      -webkit-background-clip: text;
+      background-clip: text;
+    }
+
+    .stat-number.tone-caution {
+      background: linear-gradient(135deg, #f97316 0%, #ef4444 100%);
+      -webkit-background-clip: text;
       background-clip: text;
     }
 
@@ -995,8 +1029,8 @@
           <a href="#efficiency">Efficiency</a>
           <a href="#myths">Claims</a>
           <a href="#perspectives">Context</a>
-          <a href="research.md">Research</a>
-          <a href="data.json">Data</a>
+          <a href="research.md" target="_blank" rel="noopener">Research</a>
+          <a href="data.json" target="_blank" rel="noopener">Data</a>
         </div>
         <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
           <svg id="darkIcon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -1020,6 +1054,9 @@
 
   <!-- Hero Section -->
   <section class="hero">
+    <p class="hero-provenance">
+      Data compiled from the IEA, LBNL, EPA, USGS, USDA, ASCE, GCSAA/USGA, OpenAI, Google, Mistral, Epoch AI, Hugging Face, ML.Energy, Pew Research, PJM, Harvard/UCLA, MIT Technology Review, and other sources (2024-2026). Last updated 3 July 2026.
+    </p>
     <div class="hero-badge">
       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
         <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
@@ -2479,28 +2516,34 @@
   ],
   "keyInsights": [
     {
-      "stat": "33x",
-      "description": "Gemini efficiency gain in 12 months (Google-reported)"
-    },
-    {
-      "stat": "25-30x",
-      "description": "More energy used by reasoning modes vs standard queries (measured)"
-    },
-    {
-      "stat": "227",
-      "description": "ChatGPT queries to equal 1 hour of Netflix streaming"
-    },
-    {
-      "stat": "~550x",
-      "description": "More energy for daily TV/streaming than typical daily ChatGPT use"
-    },
-    {
       "stat": "3-6x",
-      "description": "More water used by US golf courses than ALL global AI data centres"
+      "description": "More water used by US golf courses than ALL global AI data centres",
+      "tone": "good"
     },
     {
-      "stat": "49%",
-      "description": "US adults who have used AI chatbots (Pew, Feb 2026)"
+      "stat": "~11,700x",
+      "description": "More water lost to US household leaks (dripping taps, toilets) than ChatGPT's global cooling water",
+      "tone": "good"
+    },
+    {
+      "stat": "~35x",
+      "description": "More energy for 1 hour of big-screen TV than a 10-prompt ChatGPT conversation",
+      "tone": "good"
+    },
+    {
+      "stat": "~2,900x",
+      "description": "More energy for a 10-second AI video than a text query (estimate) - the real outlier",
+      "tone": "caution"
+    },
+    {
+      "stat": "2/3",
+      "description": "New US data centres built since 2022 sit in high water-stress areas - where matters more than how much",
+      "tone": "caution"
+    },
+    {
+      "stat": "33x",
+      "description": "Gemini efficiency gain in 12 months (Google-reported)",
+      "tone": "good"
     }
   ],
   "mythBusters": [
@@ -2597,7 +2640,7 @@
 
       container.innerHTML = stats.map(stat => `
         <div class="stat-card">
-          <div class="stat-number">${stat.stat}</div>
+          <div class="stat-number${stat.tone ? ' tone-' + stat.tone : ''}">${stat.stat}</div>
           <div class="stat-label">${stat.description}</div>
         </div>
       `).join('');
