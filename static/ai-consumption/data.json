@@ -3,7 +3,7 @@
     "title": "AI Consumption in Context",
     "subtitle": "AI energy and water use compared with everyday activities, with measurement boundaries labelled",
     "lastUpdated": "2026-07-03",
-    "sources": "IEA, LBNL, EPA, USGS, USDA, ASCE, GCSAA/USGA, NGF, OpenAI, Google, Mistral, Epoch AI, Hugging Face AI Energy Score, ML.Energy, Pew Research Center, PJM/Monitoring Analytics, Morgan Stanley, The Guardian/Cleanview, MIT Technology Review, Harvard/UCLA Study"
+    "sources": "IEA, LBNL, EPA, USGS, USDA, ASCE, GCSAA/USGA, NGF, OpenAI, Google, Mistral, Epoch AI, Meta, DeepSeek, AI2, Hugging Face AI Energy Score, ML.Energy, Pew Research Center, PJM/Monitoring Analytics, Morgan Stanley, The Guardian/Cleanview, MIT Technology Review, Harvard/UCLA Study"
   },
   "waterConsumption": {
     "unit": "litres/year",
@@ -152,7 +152,7 @@
   },
   "energyConsumption": {
     "unit": "kWh",
-    "scaleNote": "Bar lengths are drawn to scale (linear). Bars under 1 Wh are shown at the minimum visible width - at true scale a ChatGPT query's bar would be about 1/2,900th of the Sora bar.",
+    "scaleNote": "Bar lengths are drawn to scale (linear). Even so, the sub-1 Wh query bars are only a few pixels wide - at true scale a ChatGPT query is about 1/350th of an hour of big-screen TV. AI video generation is left off this chart because it would flatten everything else: a 10-second Sora 2 clip is an estimated ~1,000 Wh (1 kWh), roughly 2,900x a text query - see 'Energy Varies by AI Task Type' below.",
     "items": [
       {
         "id": "gemini_query",
@@ -238,17 +238,6 @@
         "sourceUrl": "https://www.rtings.com/tv/learn/led-oled-power-consumption-and-electricity-cost",
         "year": 2025,
         "notes": "2025 flagship OLEDs range ~110-165 W"
-      },
-      {
-        "id": "sora_video",
-        "label": "Sora 2 AI Video (10 seconds)",
-        "value": 1.0,
-        "displayValue": "~1,000 Wh (1 kWh)",
-        "color": "#f43f5e",
-        "source": "SemiAnalysis-derived estimate (no official figure)",
-        "sourceUrl": "https://huggingface.co/blog/jdelavande/text-to-video-energy-cost",
-        "year": 2025,
-        "notes": "~2,900x a text query; derived estimate. Measured open video models span 0.14-109 Wh per clip - an 800x range"
       }
     ],
     "comparisons": [
@@ -309,7 +298,13 @@
       }
     ],
     "disclosureGap": "Only Google (Gemini: 0.24 Wh, 0.26 mL, 0.03 g CO2e per median prompt) and Mistral (Large 2: 1.14 g CO2e, 45 mL per 400-token reply, Scope 2 included) publish audited per-model figures. OpenAI offers an aggregate CEO figure with no methodology; Anthropic, xAI and Meta publish nothing per-query as of mid-2026. Anthropic declined environmental disclosure in Stanford's Dec 2025 transparency index and has no sustainability report, though it joined the Frontier carbon-removal coalition (Jun 2026) and is hiring emissions-reporting staff.",
-    "newerNotGreener": "Newer models are not automatically more efficient: 8 of 14 comparable models used equal or more energy than their early-2025 predecessors (HF AI Energy Score v2). MoE architectures help - active-parameter count drives energy, with a measured 3.6x lower energy/token vs a similar-size dense model."
+    "newerNotGreener": "Newer models are not automatically more efficient: 8 of 14 comparable models used equal or more energy than their early-2025 predecessors (HF AI Energy Score v2). MoE architectures help - active-parameter count drives energy, with a measured 3.6x lower energy/token vs a similar-size dense model.",
+    "tokenEfficiency": {
+      "fixedCapability": "Reaching the same ~27% accuracy on FrontierMath took ~43 million output tokens with o4-mini (high effort, April 2025) and ~5 million with GPT-5.2 (low effort, December 2025) - about 9x fewer tokens, roughly 3x cheaper once per-token prices are counted, in eight months. Epoch AI puts the trend at roughly 5-10x cost reduction per year to reach a fixed capability level.",
+      "fixedCapabilitySource": "Epoch AI, Gradient Updates: How persistent is the inference cost burden?",
+      "fixedCapabilityUrl": "https://epoch.ai/gradient-updates/how-persistent-is-the-inference-cost-burden",
+      "effortControls": "Every major lab now ships a thinking dial - Anthropic's effort parameter with adaptive thinking, OpenAI's reasoning_effort and verbosity, Google's thinking_level, DeepSeek and Qwen thinking/fast modes - so reasoning token spend is increasingly a per-request choice rather than a model property. Anthropic claims Opus 4.5 at medium effort matched Sonnet 4.5's SWE-bench score with 76% fewer output tokens (vendor claim, not independently verified)."
+    }
   },
   "boundaries": {
     "title": "Why the Water Numbers Disagree",
@@ -556,12 +551,77 @@
         "notes": "Training cost over $100 million; ~25,000 A100 GPUs for 90-100 days"
       },
       {
+        "id": "gemini_ultra",
+        "label": "Gemini 1.0 Ultra Training",
+        "energyGWh": 70,
+        "energyDisplay": "~70 GWh",
+        "perUserWh": {
+          "users300M": 233.3,
+          "users900M": 77.8
+        },
+        "source": "Derived from Epoch AI models database (facility power x duration, average-draw basis)",
+        "sourceUrl": "https://epoch.ai/data/notable-ai-models",
+        "year": 2023,
+        "notes": "The only Gemini model with any published training-energy estimate - Google discloses nothing. Long superseded by Gemini 2 and 3, for which no credible estimate exists"
+      },
+      {
+        "id": "llama31_405b",
+        "label": "Llama 3.1 405B Training",
+        "parameters": "405 billion",
+        "energyGWh": 21.6,
+        "energyDisplay": "~21.6 GWh",
+        "carbonTonnes": 8930,
+        "perUserWh": {
+          "users300M": 72,
+          "users900M": 24
+        },
+        "source": "Derived from Meta's model card: 30.84M H100 GPU-hours x 700 W (GPU-only)",
+        "sourceUrl": "https://github.com/meta-llama/llama-models/blob/main/models/llama3_1/MODEL_CARD.md",
+        "year": 2024,
+        "notes": "Best-disclosed large run: Meta publishes GPU-hours and 8,930 tCO2e (location-based; offset to zero market-based). GPU-only energy - facility-level runs higher (Epoch estimates ~35-48 GWh)"
+      },
+      {
+        "id": "deepseek_v3",
+        "label": "DeepSeek-V3 Training",
+        "parameters": "671 billion (37B active)",
+        "energyGWh": 1.95,
+        "energyDisplay": "~1.95 GWh",
+        "perUserWh": {
+          "users300M": 6.5,
+          "users900M": 2.2
+        },
+        "source": "Derived from DeepSeek's technical report: 2.788M H800 GPU-hours x 700 W (GPU-only)",
+        "sourceUrl": "https://arxiv.org/abs/2412.19437",
+        "year": 2024,
+        "notes": "Roughly 25x less than GPT-4's estimated training energy - the efficiency outlier among frontier-class models. GPU-only; facility energy ~1.1-1.3x higher"
+      },
+      {
+        "id": "llama4_maverick",
+        "label": "Llama 4 Maverick Training",
+        "parameters": "400 billion (17B active, 128 experts)",
+        "energyGWh": 1.67,
+        "energyDisplay": "~1.67 GWh",
+        "carbonTonnes": 645,
+        "perUserWh": {
+          "users300M": 5.6,
+          "users900M": 1.9
+        },
+        "source": "Derived from Meta's model card: 2.38M H100 GPU-hours x 700 W (GPU-only)",
+        "sourceUrl": "https://github.com/meta-llama/llama-models/blob/main/models/llama4/MODEL_CARD.md",
+        "year": 2025,
+        "notes": "An eighth of Llama 3.1 405B's training energy a year earlier - mixture-of-experts efficiency. Scout used ~3.5 GWh (5.0M GPU-hours). GPU-only; 645 tCO2e location-based, offset to zero market-based"
+      },
+      {
         "id": "grok4",
         "label": "Grok 4 Training",
         "energyGWh": 310,
         "energyDisplay": "~310 GWh",
         "carbonTonnes": 154000,
         "waterLitres": 754000000,
+        "perUserWh": {
+          "users300M": 1033.3,
+          "users900M": 344.4
+        },
         "source": "Epoch AI (significant uncertainty flagged)",
         "sourceUrl": "https://epoch.ai/data-insights/grok-4-training-resources",
         "year": 2025,
@@ -578,7 +638,8 @@
       }
     ],
     "trend": "Frontier training runs now draw >100 MW; training power demand grows ~2.2x/year while hardware efficiency improves ~40%/year (Epoch AI). GW-scale announcements (Stargate, Colossus 2) are build-out CAPACITY targets, not measured consumption.",
-    "context": "Training is a one-time cost amortised across all users. Over a deployed model's lifetime, INFERENCE dominates: estimates range 60-90% of total footprint depending on boundary."
+    "context": "Training is a one-time cost amortised across all users. Over a deployed model's lifetime, INFERENCE dominates: estimates range 60-90% of total footprint depending on boundary.",
+    "chartNote": "Model vintages are forced by disclosure, not choice: after 2024 the frontier went dark. Grok 4 is the newest frontier-scale estimate anywhere; no credible training-energy figure exists for GPT-4.5, GPT-5, Gemini 2 or 3, or any Claude model. Figures also mix measurement boundaries: Grok 4 and Gemini 1.0 Ultra are Epoch AI facility-level estimates, while the Llama and DeepSeek figures are GPU-only, derived from developer-disclosed GPU-hours (facility energy runs roughly 1.3-2x higher)."
   },
   "chatgptStats": {
     "dailyQueries": {

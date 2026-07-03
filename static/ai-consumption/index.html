@@ -989,10 +989,10 @@
       <div class="nav-logo">AI Consumption Data</div>
       <div style="display: flex; align-items: center; gap: 24px;">
         <div class="nav-links">
-          <a href="#efficiency">Efficiency</a>
           <a href="#water">Water</a>
           <a href="#boundaries">Boundaries</a>
           <a href="#energy">Energy</a>
+          <a href="#efficiency">Efficiency</a>
           <a href="#myths">Claims</a>
           <a href="#perspectives">Context</a>
           <a href="research.md">Research</a>
@@ -1040,165 +1040,6 @@
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
         <path d="M12 5v14M5 12l7 7 7-7"/>
       </svg>
-    </div>
-  </section>
-
-  <!-- Efficiency Section -->
-  <section id="efficiency">
-    <div class="container">
-      <div class="section-header animate-on-scroll">
-        <span class="section-label">Efficiency Trends</span>
-        <h2 class="section-title">AI Efficiency is Improving</h2>
-        <p class="section-subtitle">
-          Google reports a 33x per-query energy reduction in 12 months, and inference cost per token fell ~50x/year - though reasoning models spend more tokens per query.
-        </p>
-      </div>
-
-      <div class="efficiency-showcase animate-on-scroll">
-        <div class="efficiency-card before">
-          <div class="efficiency-year">May 2024</div>
-          <div class="efficiency-value">~8 Wh</div>
-          <div class="efficiency-unit">per Gemini query</div>
-        </div>
-        <div class="efficiency-arrow">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <path d="M5 12h14M12 5l7 7-7 7"/>
-          </svg>
-          <span>33x</span>
-        </div>
-        <div class="efficiency-card after">
-          <div class="efficiency-year">May 2025</div>
-          <div class="efficiency-value">0.24 Wh</div>
-          <div class="efficiency-unit">per Gemini query</div>
-        </div>
-      </div>
-
-      <div class="highlight-box animate-on-scroll">
-        <strong>Technical factors:</strong> Newer accelerators (NVIDIA markets Blackwell as 10-50x more efficient than Hopper; independent teardown puts the real per-watt silicon gain at ~47%), mixture-of-experts architectures, and serving optimisations drive the gains. Caveats: Google's 33x figure is self-reported, and 8 of 14 comparable models measured in Dec 2025 used equal or more energy than their early-2025 predecessors - newer isn't automatically greener.
-      </div>
-
-      <div class="comparison-grid animate-on-scroll">
-        <div class="comparison-card" style="--card-accent: var(--gradient-green)">
-          <div class="card-icon" style="background: rgba(34, 197, 94, 0.1);">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#22c55e" stroke-width="2">
-              <polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/>
-              <polyline points="17 6 23 6 23 12"/>
-            </svg>
-          </div>
-          <h3 class="card-title">Energy Reduction</h3>
-          <div class="card-value text-gradient-green">33x</div>
-          <p class="card-unit">improvement in 12 months</p>
-          <p class="card-insight">Google Gemini reduced from ~8 Wh to 0.24 Wh per query through hardware and software optimisation (before-value derived from Google's 33x claim).</p>
-        </div>
-
-        <div class="comparison-card" style="--card-accent: var(--gradient-blue)">
-          <div class="card-icon" style="background: rgba(59, 130, 246, 0.1);">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#3b82f6" stroke-width="2">
-              <path d="M12 2a10 10 0 1 0 10 10H12V2z"/>
-            </svg>
-          </div>
-          <h3 class="card-title">Emissions Reduction</h3>
-          <div class="card-value text-gradient-blue">44x</div>
-          <p class="card-unit">lower CO₂ per query</p>
-          <p class="card-insight">From 1.32g to 0.03g CO₂e per query. Energy efficiency combined with cleaner energy sourcing.</p>
-        </div>
-
-        <div class="comparison-card" style="--card-accent: var(--gradient-purple)">
-          <div class="card-icon">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#8b5cf6" stroke-width="2">
-              <rect x="2" y="3" width="20" height="14" rx="2" ry="2"/>
-              <line x1="8" y1="21" x2="16" y2="21"/>
-              <line x1="12" y1="17" x2="12" y2="21"/>
-            </svg>
-          </div>
-          <h3 class="card-title">Cost per Token</h3>
-          <div class="card-value text-gradient">~50x/yr</div>
-          <p class="card-unit">inference price decline</p>
-          <p class="card-insight">Median across benchmarks (Epoch AI), expected to slow to 3-5x/year through 2027. MoE models measure 3.6x lower energy/token than similar-size dense models (ML.Energy).</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Big Number - Efficiency -->
-  <section class="big-number-section animate-on-scroll">
-    <div class="container">
-      <div class="big-number green">0.24 Wh</div>
-      <p class="big-number-label">
-        A single Google Gemini query uses <strong>0.24 watt-hours</strong> - equivalent to microwaving for 1 second, or running your fridge for 6 seconds. Still the latest official disclosure as of mid-2026.
-      </p>
-    </div>
-  </section>
-
-  <!-- Video vs Text Section -->
-  <section id="video-text">
-    <div class="container">
-      <div class="section-header animate-on-scroll">
-        <span class="section-label">Task Comparison</span>
-        <h2 class="section-title">Energy Varies by AI Task Type</h2>
-        <p class="section-subtitle">
-          Text queries, image generation, and video generation have very different energy requirements.
-        </p>
-      </div>
-
-      <div class="video-text-compare animate-on-scroll">
-        <div class="compare-item">
-          <div class="compare-icon">💬</div>
-          <div class="compare-label">Text Query</div>
-          <div class="compare-value text-gradient-green">0.34 Wh</div>
-        </div>
-        <div class="compare-item">
-          <div class="compare-icon">🖼️</div>
-          <div class="compare-label">Image Generation (measured)</div>
-          <div class="compare-value" style="color: var(--accent-orange)">0.1-4 Wh</div>
-        </div>
-        <div class="compare-item highlight">
-          <div class="compare-multiplier">~2,900x</div>
-          <div class="compare-icon">🎬</div>
-          <div class="compare-label">10-sec Video (Sora 2, estimate)</div>
-          <div class="compare-value" style="color: var(--accent-red)">~1,000 Wh</div>
-        </div>
-      </div>
-
-      <div class="highlight-box animate-on-scroll">
-        <strong>Note:</strong> Discussions of AI energy consumption often conflate different use cases. One 10-second AI video is estimated at ~2,900x the energy of a text query - though no official figure exists for closed video models, and measured open video models span 0.14-109 Wh per clip (an 800x range).
-      </div>
-    </div>
-  </section>
-
-  <!-- Reasoning Models Section -->
-  <section id="reasoning">
-    <div class="container">
-      <div class="section-header animate-on-scroll">
-        <span class="section-label">Measured in 2025-2026</span>
-        <h2 class="section-title">Reasoning Models Changed the Maths</h2>
-        <p class="section-subtitle">
-          "Thinking" modes answer with ~10x more output tokens. Two independent measured benchmarks put the energy cost at 25-30x a standard query on average.
-        </p>
-      </div>
-
-      <div class="video-text-compare animate-on-scroll">
-        <div class="compare-item">
-          <div class="compare-icon">💬</div>
-          <div class="compare-label">Standard Query</div>
-          <div class="compare-value text-gradient-green">0.24-0.34 Wh</div>
-        </div>
-        <div class="compare-item">
-          <div class="compare-icon">🧠</div>
-          <div class="compare-label">Reasoning Mode (average)</div>
-          <div class="compare-value" style="color: var(--accent-orange)">25-30x</div>
-        </div>
-        <div class="compare-item highlight">
-          <div class="compare-multiplier">extremes</div>
-          <div class="compare-icon">🔥</div>
-          <div class="compare-label">Same Model, Reasoning On vs Off</div>
-          <div class="compare-value" style="color: var(--accent-red)">150-700x</div>
-        </div>
-      </div>
-
-      <div class="highlight-box animate-on-scroll">
-        <strong>Why no frontier model comparison?</strong> Only Google (Gemini: 0.24 Wh per median prompt) and Mistral (Large 2: 1.14 g CO₂e per reply) publish audited per-model figures. OpenAI offers only an unaudited CEO figure with no methodology, and Anthropic, xAI and Meta disclose nothing per-query as of mid-2026 - so a GPT-5 vs Claude vs Gemini energy table would be guesswork. Anthropic declined environmental disclosure in Stanford's transparency index (Dec 2025) and has no sustainability report, though it joined the Frontier carbon-removal coalition in June 2026 and is hiring emissions-reporting staff. The measured data above comes from open models (Hugging Face AI Energy Score v2, ML.Energy v3).
-      </div>
     </div>
   </section>
 
@@ -1361,6 +1202,169 @@
 
       <div class="highlight-box animate-on-scroll">
         <strong>Methodology:</strong> TV/streaming hours from eMarketer/Nielsen (2025). ChatGPT queries from OpenAI data: 2.5B+ daily prompts / 900M weekly active users ≈ 2.8 queries/day. Energy: streaming at 77 Wh/hour (~72% of which is your TV, not the data centre), ChatGPT at 0.34 Wh/query. Even heavy users (22 queries/day ≈ 7.5 Wh) use ~70x less energy than average daily TV/streaming; reasoning-heavy use runs ~25-30x higher per query.
+      </div>
+    </div>
+  </section>
+
+  <!-- Big Number - Efficiency -->
+  <section class="big-number-section animate-on-scroll">
+    <div class="container">
+      <div class="big-number green">0.24 Wh</div>
+      <p class="big-number-label">
+        A single Google Gemini query uses <strong>0.24 watt-hours</strong> - equivalent to microwaving for 1 second, or running your fridge for 6 seconds. Still the latest official disclosure as of mid-2026.
+      </p>
+    </div>
+  </section>
+
+  <!-- Video vs Text Section -->
+  <section id="video-text">
+    <div class="container">
+      <div class="section-header animate-on-scroll">
+        <span class="section-label">Task Comparison</span>
+        <h2 class="section-title">Energy Varies by AI Task Type</h2>
+        <p class="section-subtitle">
+          Text queries, image generation, and video generation have very different energy requirements.
+        </p>
+      </div>
+
+      <div class="video-text-compare animate-on-scroll">
+        <div class="compare-item">
+          <div class="compare-icon">💬</div>
+          <div class="compare-label">Text Query</div>
+          <div class="compare-value text-gradient-green">0.34 Wh</div>
+        </div>
+        <div class="compare-item">
+          <div class="compare-icon">🖼️</div>
+          <div class="compare-label">Image Generation (measured)</div>
+          <div class="compare-value" style="color: var(--accent-orange)">0.1-4 Wh</div>
+        </div>
+        <div class="compare-item highlight">
+          <div class="compare-multiplier">~2,900x</div>
+          <div class="compare-icon">🎬</div>
+          <div class="compare-label">10-sec Video (Sora 2, estimate)</div>
+          <div class="compare-value" style="color: var(--accent-red)">~1,000 Wh</div>
+        </div>
+      </div>
+
+      <div class="highlight-box animate-on-scroll">
+        <strong>Note:</strong> Discussions of AI energy consumption often conflate different use cases. One 10-second AI video is estimated at ~2,900x the energy of a text query - though no official figure exists for closed video models, and measured open video models span 0.14-109 Wh per clip (an 800x range).
+      </div>
+    </div>
+  </section>
+
+  <!-- Reasoning Models Section -->
+  <section id="reasoning">
+    <div class="container">
+      <div class="section-header animate-on-scroll">
+        <span class="section-label">Measured in 2025-2026</span>
+        <h2 class="section-title">Reasoning Models Changed the Maths</h2>
+        <p class="section-subtitle">
+          "Thinking" modes answer with ~10x more output tokens. Two independent measured benchmarks put the energy cost at 25-30x a standard query on average - but the 2026 generation is pulling the token side of that multiplier down.
+        </p>
+      </div>
+
+      <div class="video-text-compare animate-on-scroll">
+        <div class="compare-item">
+          <div class="compare-icon">💬</div>
+          <div class="compare-label">Standard Query</div>
+          <div class="compare-value text-gradient-green">0.24-0.34 Wh</div>
+        </div>
+        <div class="compare-item">
+          <div class="compare-icon">🧠</div>
+          <div class="compare-label">Reasoning Mode (average)</div>
+          <div class="compare-value" style="color: var(--accent-orange)">25-30x</div>
+        </div>
+        <div class="compare-item highlight">
+          <div class="compare-multiplier">extremes</div>
+          <div class="compare-icon">🔥</div>
+          <div class="compare-label">Same Model, Reasoning On vs Off</div>
+          <div class="compare-value" style="color: var(--accent-red)">150-700x</div>
+        </div>
+      </div>
+
+      <div class="highlight-box animate-on-scroll">
+        <strong>The maths is moving again:</strong> reaching a <em>fixed</em> capability is getting cheap, fast. The same ~27% accuracy on FrontierMath took ~43 million output tokens with o4-mini in April 2025 but ~5 million with GPT-5.2 in December 2025 - about 9x fewer tokens (roughly 3x cheaper after per-token prices) in eight months, a trend <a href="https://epoch.ai/gradient-updates/how-persistent-is-the-inference-cost-burden" target="_blank" rel="noopener">Epoch AI</a> puts at 5-10x per year. And every major lab now ships a thinking dial (effort, reasoning_effort, thinking_level) plus adaptive thinking, making the ~10x token blow-up a per-request choice rather than a default - Anthropic claims Opus 4.5 matched its predecessor's SWE-bench score with 76% fewer output tokens (vendor claim). The catch: at the frontier those savings get spent on harder problems, so per-query token use keeps climbing even as tokens-per-fixed-task collapses.
+      </div>
+
+      <div class="highlight-box animate-on-scroll">
+        <strong>Why no frontier model comparison?</strong> Only Google (Gemini: 0.24 Wh per median prompt) and Mistral (Large 2: 1.14 g CO₂e per reply) publish audited per-model figures. OpenAI offers only an unaudited CEO figure with no methodology, and Anthropic, xAI and Meta disclose nothing per-query as of mid-2026 - so a GPT-5 vs Claude vs Gemini energy table would be guesswork. Anthropic declined environmental disclosure in Stanford's transparency index (Dec 2025) and has no sustainability report, though it joined the Frontier carbon-removal coalition in June 2026 and is hiring emissions-reporting staff. The measured data above comes from open models (Hugging Face AI Energy Score v2, ML.Energy v3).
+      </div>
+    </div>
+  </section>
+
+  <!-- Efficiency Section -->
+  <section id="efficiency">
+    <div class="container">
+      <div class="section-header animate-on-scroll">
+        <span class="section-label">Efficiency Trends</span>
+        <h2 class="section-title">AI Efficiency is Improving</h2>
+        <p class="section-subtitle">
+          Google reports a 33x per-query energy reduction in 12 months, and inference cost per token fell ~50x/year - though reasoning models spend more tokens per query.
+        </p>
+      </div>
+
+      <div class="efficiency-showcase animate-on-scroll">
+        <div class="efficiency-card before">
+          <div class="efficiency-year">May 2024</div>
+          <div class="efficiency-value">~8 Wh</div>
+          <div class="efficiency-unit">per Gemini query</div>
+        </div>
+        <div class="efficiency-arrow">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M5 12h14M12 5l7 7-7 7"/>
+          </svg>
+          <span>33x</span>
+        </div>
+        <div class="efficiency-card after">
+          <div class="efficiency-year">May 2025</div>
+          <div class="efficiency-value">0.24 Wh</div>
+          <div class="efficiency-unit">per Gemini query</div>
+        </div>
+      </div>
+
+      <div class="highlight-box animate-on-scroll">
+        <strong>Technical factors:</strong> Newer accelerators (NVIDIA markets Blackwell as 10-50x more efficient than Hopper; independent teardown puts the real per-watt silicon gain at ~47%), mixture-of-experts architectures, and serving optimisations drive the gains. Caveats: Google's 33x figure is self-reported, and 8 of 14 comparable models measured in Dec 2025 used equal or more energy than their early-2025 predecessors - newer isn't automatically greener.
+      </div>
+
+      <div class="comparison-grid animate-on-scroll">
+        <div class="comparison-card" style="--card-accent: var(--gradient-green)">
+          <div class="card-icon" style="background: rgba(34, 197, 94, 0.1);">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#22c55e" stroke-width="2">
+              <polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/>
+              <polyline points="17 6 23 6 23 12"/>
+            </svg>
+          </div>
+          <h3 class="card-title">Energy Reduction</h3>
+          <div class="card-value text-gradient-green">33x</div>
+          <p class="card-unit">improvement in 12 months</p>
+          <p class="card-insight">Google Gemini reduced from ~8 Wh to 0.24 Wh per query through hardware and software optimisation (before-value derived from Google's 33x claim).</p>
+        </div>
+
+        <div class="comparison-card" style="--card-accent: var(--gradient-blue)">
+          <div class="card-icon" style="background: rgba(59, 130, 246, 0.1);">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#3b82f6" stroke-width="2">
+              <path d="M12 2a10 10 0 1 0 10 10H12V2z"/>
+            </svg>
+          </div>
+          <h3 class="card-title">Emissions Reduction</h3>
+          <div class="card-value text-gradient-blue">44x</div>
+          <p class="card-unit">lower CO₂ per query</p>
+          <p class="card-insight">From 1.32g to 0.03g CO₂e per query. Energy efficiency combined with cleaner energy sourcing.</p>
+        </div>
+
+        <div class="comparison-card" style="--card-accent: var(--gradient-purple)">
+          <div class="card-icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#8b5cf6" stroke-width="2">
+              <rect x="2" y="3" width="20" height="14" rx="2" ry="2"/>
+              <line x1="8" y1="21" x2="16" y2="21"/>
+              <line x1="12" y1="17" x2="12" y2="21"/>
+            </svg>
+          </div>
+          <h3 class="card-title">Cost per Token</h3>
+          <div class="card-value text-gradient">~50x/yr</div>
+          <p class="card-unit">inference price decline</p>
+          <p class="card-insight">Median across benchmarks (Epoch AI), expected to slow to 3-5x/year through 2027. MoE models measure 3.6x lower energy/token than similar-size dense models (ML.Energy).</p>
+        </div>
       </div>
     </div>
   </section>
@@ -1549,6 +1553,7 @@
         <div class="chart-wrapper">
           <canvas id="trainingChart"></canvas>
         </div>
+        <p id="trainingChartNote" style="color: var(--text-muted); font-size: 0.85rem; margin-top: 12px;"></p>
       </div>
 
       <div class="comparison-grid animate-on-scroll">
@@ -1597,7 +1602,7 @@
       </div>
 
       <div class="highlight-box animate-on-scroll">
-        <strong>Frontier training in 2025-2026:</strong> The largest credibly-estimated run is Grok 4 at ~310 GWh (Epoch AI, ~6x GPT-4) - yet GPT-5 used <em>less</em> training compute than GPT-4.5, as OpenAI scaled post-training on a smaller base model. Frontier training is not monotonically growing. Beware GW-scale headlines (Stargate, Colossus 2): those are build-out capacity targets, not measured consumption.
+        <strong>Frontier training in 2025-2026:</strong> The largest credibly-estimated run is Grok 4 at ~310 GWh (Epoch AI, ~6x GPT-4) - yet GPT-5 used <em>less</em> training compute than GPT-4.5, as OpenAI scaled post-training on a smaller base model. Frontier training is not monotonically growing. Beware GW-scale headlines (Stargate, Colossus 2): those are build-out capacity targets, not measured consumption. Below the frontier, disclosure improves - and newer doesn't mean hungrier: Meta's GPU-hour disclosures put Llama 4 Maverick (2025) at ~1.7 GWh, an eighth of Llama 3.1 405B a year earlier; DeepSeek's technical report implies ~2 GWh for V3; and the only fully <em>measured</em> runs are small open models (BLOOM at 0.43 GWh; AI2's OLMo 3 series at ~1.9 GWh including facility overhead). Google has published no Gemini training figure and Anthropic none for Claude.
       </div>
     </div>
   </section>
@@ -1648,7 +1653,7 @@
     "title": "AI Consumption in Context",
     "subtitle": "AI energy and water use compared with everyday activities, with measurement boundaries labelled",
     "lastUpdated": "2026-07-03",
-    "sources": "IEA, LBNL, EPA, USGS, USDA, ASCE, GCSAA/USGA, NGF, OpenAI, Google, Mistral, Epoch AI, Hugging Face AI Energy Score, ML.Energy, Pew Research Center, PJM/Monitoring Analytics, Morgan Stanley, The Guardian/Cleanview, MIT Technology Review, Harvard/UCLA Study"
+    "sources": "IEA, LBNL, EPA, USGS, USDA, ASCE, GCSAA/USGA, NGF, OpenAI, Google, Mistral, Epoch AI, Meta, DeepSeek, AI2, Hugging Face AI Energy Score, ML.Energy, Pew Research Center, PJM/Monitoring Analytics, Morgan Stanley, The Guardian/Cleanview, MIT Technology Review, Harvard/UCLA Study"
   },
   "waterConsumption": {
     "unit": "litres/year",
@@ -1797,7 +1802,7 @@
   },
   "energyConsumption": {
     "unit": "kWh",
-    "scaleNote": "Bar lengths are drawn to scale (linear). Bars under 1 Wh are shown at the minimum visible width - at true scale a ChatGPT query's bar would be about 1/2,900th of the Sora bar.",
+    "scaleNote": "Bar lengths are drawn to scale (linear). Even so, the sub-1 Wh query bars are only a few pixels wide - at true scale a ChatGPT query is about 1/350th of an hour of big-screen TV. AI video generation is left off this chart because it would flatten everything else: a 10-second Sora 2 clip is an estimated ~1,000 Wh (1 kWh), roughly 2,900x a text query - see 'Energy Varies by AI Task Type' below.",
     "items": [
       {
         "id": "gemini_query",
@@ -1883,17 +1888,6 @@
         "sourceUrl": "https://www.rtings.com/tv/learn/led-oled-power-consumption-and-electricity-cost",
         "year": 2025,
         "notes": "2025 flagship OLEDs range ~110-165 W"
-      },
-      {
-        "id": "sora_video",
-        "label": "Sora 2 AI Video (10 seconds)",
-        "value": 1.0,
-        "displayValue": "~1,000 Wh (1 kWh)",
-        "color": "#f43f5e",
-        "source": "SemiAnalysis-derived estimate (no official figure)",
-        "sourceUrl": "https://huggingface.co/blog/jdelavande/text-to-video-energy-cost",
-        "year": 2025,
-        "notes": "~2,900x a text query; derived estimate. Measured open video models span 0.14-109 Wh per clip - an 800x range"
       }
     ],
     "comparisons": [
@@ -1954,7 +1948,13 @@
       }
     ],
     "disclosureGap": "Only Google (Gemini: 0.24 Wh, 0.26 mL, 0.03 g CO2e per median prompt) and Mistral (Large 2: 1.14 g CO2e, 45 mL per 400-token reply, Scope 2 included) publish audited per-model figures. OpenAI offers an aggregate CEO figure with no methodology; Anthropic, xAI and Meta publish nothing per-query as of mid-2026. Anthropic declined environmental disclosure in Stanford's Dec 2025 transparency index and has no sustainability report, though it joined the Frontier carbon-removal coalition (Jun 2026) and is hiring emissions-reporting staff.",
-    "newerNotGreener": "Newer models are not automatically more efficient: 8 of 14 comparable models used equal or more energy than their early-2025 predecessors (HF AI Energy Score v2). MoE architectures help - active-parameter count drives energy, with a measured 3.6x lower energy/token vs a similar-size dense model."
+    "newerNotGreener": "Newer models are not automatically more efficient: 8 of 14 comparable models used equal or more energy than their early-2025 predecessors (HF AI Energy Score v2). MoE architectures help - active-parameter count drives energy, with a measured 3.6x lower energy/token vs a similar-size dense model.",
+    "tokenEfficiency": {
+      "fixedCapability": "Reaching the same ~27% accuracy on FrontierMath took ~43 million output tokens with o4-mini (high effort, April 2025) and ~5 million with GPT-5.2 (low effort, December 2025) - about 9x fewer tokens, roughly 3x cheaper once per-token prices are counted, in eight months. Epoch AI puts the trend at roughly 5-10x cost reduction per year to reach a fixed capability level.",
+      "fixedCapabilitySource": "Epoch AI, Gradient Updates: How persistent is the inference cost burden?",
+      "fixedCapabilityUrl": "https://epoch.ai/gradient-updates/how-persistent-is-the-inference-cost-burden",
+      "effortControls": "Every major lab now ships a thinking dial - Anthropic's effort parameter with adaptive thinking, OpenAI's reasoning_effort and verbosity, Google's thinking_level, DeepSeek and Qwen thinking/fast modes - so reasoning token spend is increasingly a per-request choice rather than a model property. Anthropic claims Opus 4.5 at medium effort matched Sonnet 4.5's SWE-bench score with 76% fewer output tokens (vendor claim, not independently verified)."
+    }
   },
   "boundaries": {
     "title": "Why the Water Numbers Disagree",
@@ -2201,12 +2201,77 @@
         "notes": "Training cost over $100 million; ~25,000 A100 GPUs for 90-100 days"
       },
       {
+        "id": "gemini_ultra",
+        "label": "Gemini 1.0 Ultra Training",
+        "energyGWh": 70,
+        "energyDisplay": "~70 GWh",
+        "perUserWh": {
+          "users300M": 233.3,
+          "users900M": 77.8
+        },
+        "source": "Derived from Epoch AI models database (facility power x duration, average-draw basis)",
+        "sourceUrl": "https://epoch.ai/data/notable-ai-models",
+        "year": 2023,
+        "notes": "The only Gemini model with any published training-energy estimate - Google discloses nothing. Long superseded by Gemini 2 and 3, for which no credible estimate exists"
+      },
+      {
+        "id": "llama31_405b",
+        "label": "Llama 3.1 405B Training",
+        "parameters": "405 billion",
+        "energyGWh": 21.6,
+        "energyDisplay": "~21.6 GWh",
+        "carbonTonnes": 8930,
+        "perUserWh": {
+          "users300M": 72,
+          "users900M": 24
+        },
+        "source": "Derived from Meta's model card: 30.84M H100 GPU-hours x 700 W (GPU-only)",
+        "sourceUrl": "https://github.com/meta-llama/llama-models/blob/main/models/llama3_1/MODEL_CARD.md",
+        "year": 2024,
+        "notes": "Best-disclosed large run: Meta publishes GPU-hours and 8,930 tCO2e (location-based; offset to zero market-based). GPU-only energy - facility-level runs higher (Epoch estimates ~35-48 GWh)"
+      },
+      {
+        "id": "deepseek_v3",
+        "label": "DeepSeek-V3 Training",
+        "parameters": "671 billion (37B active)",
+        "energyGWh": 1.95,
+        "energyDisplay": "~1.95 GWh",
+        "perUserWh": {
+          "users300M": 6.5,
+          "users900M": 2.2
+        },
+        "source": "Derived from DeepSeek's technical report: 2.788M H800 GPU-hours x 700 W (GPU-only)",
+        "sourceUrl": "https://arxiv.org/abs/2412.19437",
+        "year": 2024,
+        "notes": "Roughly 25x less than GPT-4's estimated training energy - the efficiency outlier among frontier-class models. GPU-only; facility energy ~1.1-1.3x higher"
+      },
+      {
+        "id": "llama4_maverick",
+        "label": "Llama 4 Maverick Training",
+        "parameters": "400 billion (17B active, 128 experts)",
+        "energyGWh": 1.67,
+        "energyDisplay": "~1.67 GWh",
+        "carbonTonnes": 645,
+        "perUserWh": {
+          "users300M": 5.6,
+          "users900M": 1.9
+        },
+        "source": "Derived from Meta's model card: 2.38M H100 GPU-hours x 700 W (GPU-only)",
+        "sourceUrl": "https://github.com/meta-llama/llama-models/blob/main/models/llama4/MODEL_CARD.md",
+        "year": 2025,
+        "notes": "An eighth of Llama 3.1 405B's training energy a year earlier - mixture-of-experts efficiency. Scout used ~3.5 GWh (5.0M GPU-hours). GPU-only; 645 tCO2e location-based, offset to zero market-based"
+      },
+      {
         "id": "grok4",
         "label": "Grok 4 Training",
         "energyGWh": 310,
         "energyDisplay": "~310 GWh",
         "carbonTonnes": 154000,
         "waterLitres": 754000000,
+        "perUserWh": {
+          "users300M": 1033.3,
+          "users900M": 344.4
+        },
         "source": "Epoch AI (significant uncertainty flagged)",
         "sourceUrl": "https://epoch.ai/data-insights/grok-4-training-resources",
         "year": 2025,
@@ -2223,7 +2288,8 @@
       }
     ],
     "trend": "Frontier training runs now draw >100 MW; training power demand grows ~2.2x/year while hardware efficiency improves ~40%/year (Epoch AI). GW-scale announcements (Stargate, Colossus 2) are build-out CAPACITY targets, not measured consumption.",
-    "context": "Training is a one-time cost amortised across all users. Over a deployed model's lifetime, INFERENCE dominates: estimates range 60-90% of total footprint depending on boundary."
+    "context": "Training is a one-time cost amortised across all users. Over a deployed model's lifetime, INFERENCE dominates: estimates range 60-90% of total footprint depending on boundary.",
+    "chartNote": "Model vintages are forced by disclosure, not choice: after 2024 the frontier went dark. Grok 4 is the newest frontier-scale estimate anywhere; no credible training-energy figure exists for GPT-4.5, GPT-5, Gemini 2 or 3, or any Claude model. Figures also mix measurement boundaries: Grok 4 and Gemini 1.0 Ultra are Epoch AI facility-level estimates, while the Llama and DeepSeek figures are GPU-only, derived from developer-disclosed GPU-hours (facility energy runs roughly 1.3-2x higher)."
   },
   "chatgptStats": {
     "dailyQueries": {
@@ -2722,22 +2788,40 @@
     function renderTrainingChart() {
       const ctx = document.getElementById('trainingChart').getContext('2d');
 
+      // Wh per user = GWh x 1e9 / (millions x 1e6) = GWh x 1000 / millions
+      const usersMillions = [100, 200, 300, 400, 500, 600, 700, 800, 900];
+      const seriesDefs = [
+        { id: 'grok4', color: '#ef4444' },
+        { id: 'gemini_ultra', color: '#f59e0b' },
+        { id: 'gpt4', color: '#8b5cf6' },
+        { id: 'llama31_405b', color: '#06b6d4' },
+        { id: 'deepseek_v3', color: '#22c55e' },
+        { id: 'llama4_maverick', color: '#ec4899' }
+      ];
+      const datasets = seriesDefs.map(def => {
+        const model = appData.aiTraining.models.find(m => m.id === def.id);
+        return {
+          label: `${model.label.replace(' Training', '')} (${model.year}, ${model.energyDisplay})`,
+          data: usersMillions.map(n => +(model.energyGWh * 1000 / n).toFixed(1)),
+          borderColor: def.color,
+          backgroundColor: 'transparent',
+          fill: false,
+          tension: 0.4,
+          pointBackgroundColor: def.color,
+          pointBorderColor: '#fff',
+          pointBorderWidth: 1,
+          pointRadius: 3,
+          pointHoverRadius: 5
+        };
+      });
+
+      document.getElementById('trainingChartNote').textContent = appData.aiTraining.chartNote;
+
       new Chart(ctx, {
         type: 'line',
         data: {
-          labels: ['100M', '200M', '300M', '400M', '500M', '600M', '700M', '800M', '900M'],
-          datasets: [{
-            label: 'GPT-4 Training Energy per User (Wh)',
-            data: [500, 250, 166.7, 125, 100, 83.3, 71.4, 62.5, 55.6],
-            borderColor: '#8b5cf6',
-            backgroundColor: 'rgba(139, 92, 246, 0.1)',
-            fill: true,
-            tension: 0.4,
-            pointBackgroundColor: '#8b5cf6',
-            pointBorderColor: '#fff',
-            pointBorderWidth: 2,
-            pointRadius: 6
-          }]
+          labels: usersMillions.map(n => n + 'M'),
+          datasets: datasets
         },
         options: {
           responsive: true,
@@ -2760,7 +2844,7 @@
               padding: 12,
               callbacks: {
                 label: function(context) {
-                  return context.raw.toFixed(1) + ' Wh per user';
+                  return context.dataset.label.split(' (')[0] + ': ' + Number(context.raw).toLocaleString() + ' Wh per user';
                 }
               }
             }
