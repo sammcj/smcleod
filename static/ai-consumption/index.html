@@ -995,6 +995,8 @@
           <a href="#energy">Energy</a>
           <a href="#myths">Claims</a>
           <a href="#perspectives">Context</a>
+          <a href="research.md">Research</a>
+          <a href="data.json">Data</a>
         </div>
         <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
           <svg id="darkIcon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -1212,7 +1214,7 @@
       </div>
 
       <div class="chart-container animate-on-scroll">
-        <h3 class="chart-title">Annual Water Use (litres per year, log scale)</h3>
+        <h3 class="chart-title">Annual Water Use (litres per year, drawn to scale)</h3>
         <div class="bar-chart-container" id="waterBarChart">
           <div class="loading">Loading chart</div>
         </div>
@@ -1305,7 +1307,7 @@
       </div>
 
       <div class="chart-container animate-on-scroll">
-        <h3 class="chart-title">Energy Comparison (Watt-hours)</h3>
+        <h3 class="chart-title">Energy Comparison (Watt-hours, drawn to scale)</h3>
         <div class="bar-chart-container" id="energyBarChart">
           <div class="loading">Loading chart</div>
         </div>
@@ -1648,20 +1650,20 @@
   "waterConsumption": {
     "unit": "litres/year",
     "unitDisplay": "litres per year",
-    "scaleNote": "Chart uses a logarithmic scale. On a linear scale, ChatGPT's cooling-water bar would be invisible - less than 1/400,000th of the top bar.",
+    "scaleNote": "Bar lengths are drawn to scale (linear). The bottom three bars are shown at the minimum visible width - at true scale each would be thinner than a pixel, and ChatGPT's cooling-water bar would be less than 1/400,000th of the top bar.",
     "items": [
       {
         "id": "global_network_losses",
         "label": "<u>Global</u> Water Network Losses",
-        "sublabel": "All countries - often misquoted as US-only",
+        "sublabel": "Modelled estimate, not a census - often misquoted as US-only",
         "value": 126054153000000,
-        "displayValue": "126.1 trillion",
+        "displayValue": "~126 trillion",
         "color": "#dc2626",
         "icon": "pipe",
-        "source": "ASCE (citing global non-revenue water studies)",
+        "source": "Liemberger & Wyatt 2019 (IWA), cited by ASCE",
         "sourceUrl": "https://infrastructurereportcard.org/cat-item/drinking-water-infrastructure/",
         "year": 2025,
-        "notes": "Worldwide non-revenue water; frequently misattributed to the US alone. The US share is roughly 8.3 trillion litres - a reminder that a number's boundary matters as much as its size"
+        "notes": "Extrapolated from utility-reported non-revenue water rates (~346 million cubic metres/day) - no one meters every country's losses. Frequently misattributed to the US alone; the US share is roughly 8.3 trillion litres - a reminder that a number's boundary matters as much as its size"
       },
       {
         "id": "corn_irrigation",
@@ -1730,8 +1732,8 @@
       },
       {
         "id": "google_datacenters",
-        "label": "Google Data Centres + Offices",
-        "sublabel": "All Google operations <u>worldwide</u>, consumption",
+        "label": "Google Data Centres + Offices (<u>Global</u>)",
+        "sublabel": "All Google operations, consumption",
         "value": 30660000000,
         "displayValue": "30.7 billion",
         "color": "#4285f4",
@@ -1756,8 +1758,8 @@
       },
       {
         "id": "chatgpt_annual",
-        "label": "ChatGPT Cooling Water (Annual)",
-        "sublabel": "On-site cooling only, all queries <u>globally</u>",
+        "label": "ChatGPT Cooling Water (<u>Global</u>, Annual)",
+        "sublabel": "On-site cooling only, all queries",
         "value": 292000000,
         "displayValue": "292 million",
         "color": "#8b5cf6",
@@ -1792,6 +1794,7 @@
   },
   "energyConsumption": {
     "unit": "kWh",
+    "scaleNote": "Bar lengths are drawn to scale (linear). Bars under 1 Wh are shown at the minimum visible width - at true scale a ChatGPT query's bar would be about 1/2,900th of the Sora bar.",
     "items": [
       {
         "id": "gemini_query",
@@ -2529,25 +2532,28 @@
       // Sort items by value (largest to smallest)
       const sortedItems = [...items].sort((a, b) => b.value - a.value);
 
-      // Values span ~6 orders of magnitude, so bar widths use a log scale
-      const minLog = 8;    // 100 million litres
-      const maxLog = 14.2; // beyond the largest bar
-      const logWidth = v => Math.max(2, (Math.log10(v) - minLog) / (maxLog - minLog) * 100);
+      // Linear scale so bar length is true to the numbers; a px min-width
+      // keeps sub-pixel bars visible, flagged in their sublabel
+      const maxValue = sortedItems[0].value;
+      const linearWidth = v => v / maxValue * 100;
 
-      container.innerHTML = sortedItems.map(item => `
+      container.innerHTML = sortedItems.map(item => {
+        const pct = linearWidth(item.value);
+        const clamped = pct < 0.1;
+        return `
         <div class="bar-item">
           <div class="bar-header">
             <div>
               <div class="bar-label">${item.label}</div>
-              <div class="bar-sublabel">${item.sublabel}</div>
+              <div class="bar-sublabel">${item.sublabel}${clamped ? ' - bar drawn at minimum visible width' : ''}</div>
             </div>
             <div class="bar-value" style="color: ${item.color}">${item.displayValue}</div>
           </div>
           <div class="bar-track">
-            <div class="bar-fill" style="width: 0%; background: ${item.color};" data-width="${logWidth(item.value).toFixed(1)}%"></div>
+            <div class="bar-fill" style="width: 0%; min-width: 3px; background: ${item.color};" data-width="${pct.toFixed(4)}%"></div>
           </div>
         </div>
-      `).join('') + `
+      `}).join('') + `
         <div class="bar-sublabel" style="margin-top: 16px;">${appData.waterConsumption.scaleNote}</div>
       `;
 
@@ -2667,53 +2673,31 @@
       // Sort items by value (largest to smallest)
       const sortedItems = [...chartItems].sort((a, b) => b.value - a.value);
 
-      // Find max value among non-Sora items for linear scaling
-      const nonSoraItems = sortedItems.filter(i => i.id !== 'sora_video');
-      const maxNonSoraValue = Math.max(...nonSoraItems.map(i => i.value));
+      // Linear scale so bar length is true to the numbers; a px min-width
+      // keeps sub-pixel bars visible, flagged in their sublabel
+      const maxValue = sortedItems[0].value;
 
       container.innerHTML = sortedItems.map(item => {
-        const isSoraVideo = item.id === 'sora_video';
-        const valueInWh = item.value * 1000; // Convert kWh to Wh
-
-        if (isSoraVideo) {
-          // Use logarithmic scale for Sora only
-          // log10(1000) = 3.0, scale to make it clearly visible
-          // Map log value to percentage: log10(value) * 28 gives ~84% for 1000 Wh
-          const logPercentage = Math.log10(valueInWh) * 28;
-
-          return `
-            <div class="bar-item">
-              <div class="bar-header">
-                <div>
-                  <div class="bar-label">${item.label} <span style="font-size: 0.9em; color: #f59e0b;">(log scale)</span></div>
-                  ${item.notes ? `<div class="bar-sublabel">${item.notes}</div>` : ''}
-                </div>
-                <div class="bar-value" style="color: #f59e0b">${item.displayValue}</div>
-              </div>
-              <div class="bar-track">
-                <div class="bar-fill" style="width: 0%; background: linear-gradient(90deg, #f59e0b 0%, #d97706 100%);" data-width="${logPercentage}%"></div>
-              </div>
-            </div>
-          `;
-        } else {
-          // Linear scale for all other items relative to max non-Sora value
-          const percentage = (item.value / maxNonSoraValue) * 100;
-          return `
+        const pct = item.value / maxValue * 100;
+        const clamped = pct < 0.1;
+        const sublabel = [item.notes, clamped ? 'bar drawn at minimum visible width' : ''].filter(Boolean).join(' - ');
+        return `
             <div class="bar-item">
               <div class="bar-header">
                 <div>
                   <div class="bar-label">${item.label}</div>
-                  ${item.notes ? `<div class="bar-sublabel">${item.notes}</div>` : ''}
+                  ${sublabel ? `<div class="bar-sublabel">${sublabel}</div>` : ''}
                 </div>
                 <div class="bar-value" style="color: ${item.color}">${item.displayValue}</div>
               </div>
               <div class="bar-track">
-                <div class="bar-fill" style="width: 0%; background: ${item.color};" data-width="${percentage}%"></div>
+                <div class="bar-fill" style="width: 0%; min-width: 3px; background: ${item.color};" data-width="${pct.toFixed(4)}%"></div>
               </div>
             </div>
           `;
-        }
-      }).join('');
+      }).join('') + `
+        <div class="bar-sublabel" style="margin-top: 16px;">${appData.energyConsumption.scaleNote}</div>
+      `;
 
       // Animate bars
       setTimeout(() => {

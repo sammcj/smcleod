@@ -8,20 +8,20 @@
   "waterConsumption": {
     "unit": "litres/year",
     "unitDisplay": "litres per year",
-    "scaleNote": "Chart uses a logarithmic scale. On a linear scale, ChatGPT's cooling-water bar would be invisible - less than 1/400,000th of the top bar.",
+    "scaleNote": "Bar lengths are drawn to scale (linear). The bottom three bars are shown at the minimum visible width - at true scale each would be thinner than a pixel, and ChatGPT's cooling-water bar would be less than 1/400,000th of the top bar.",
     "items": [
       {
         "id": "global_network_losses",
         "label": "<u>Global</u> Water Network Losses",
-        "sublabel": "All countries - often misquoted as US-only",
+        "sublabel": "Modelled estimate, not a census - often misquoted as US-only",
         "value": 126054153000000,
-        "displayValue": "126.1 trillion",
+        "displayValue": "~126 trillion",
         "color": "#dc2626",
         "icon": "pipe",
-        "source": "ASCE (citing global non-revenue water studies)",
+        "source": "Liemberger & Wyatt 2019 (IWA), cited by ASCE",
         "sourceUrl": "https://infrastructurereportcard.org/cat-item/drinking-water-infrastructure/",
         "year": 2025,
-        "notes": "Worldwide non-revenue water; frequently misattributed to the US alone. The US share is roughly 8.3 trillion litres - a reminder that a number's boundary matters as much as its size"
+        "notes": "Extrapolated from utility-reported non-revenue water rates (~346 million cubic metres/day) - no one meters every country's losses. Frequently misattributed to the US alone; the US share is roughly 8.3 trillion litres - a reminder that a number's boundary matters as much as its size"
       },
       {
         "id": "corn_irrigation",
@@ -90,8 +90,8 @@
       },
       {
         "id": "google_datacenters",
-        "label": "Google Data Centres + Offices",
-        "sublabel": "All Google operations <u>worldwide</u>, consumption",
+        "label": "Google Data Centres + Offices (<u>Global</u>)",
+        "sublabel": "All Google operations, consumption",
         "value": 30660000000,
         "displayValue": "30.7 billion",
         "color": "#4285f4",
@@ -116,8 +116,8 @@
       },
       {
         "id": "chatgpt_annual",
-        "label": "ChatGPT Cooling Water (Annual)",
-        "sublabel": "On-site cooling only, all queries <u>globally</u>",
+        "label": "ChatGPT Cooling Water (<u>Global</u>, Annual)",
+        "sublabel": "On-site cooling only, all queries",
         "value": 292000000,
         "displayValue": "292 million",
         "color": "#8b5cf6",
@@ -152,6 +152,7 @@
   },
   "energyConsumption": {
     "unit": "kWh",
+    "scaleNote": "Bar lengths are drawn to scale (linear). Bars under 1 Wh are shown at the minimum visible width - at true scale a ChatGPT query's bar would be about 1/2,900th of the Sora bar.",
     "items": [
       {
         "id": "gemini_query",

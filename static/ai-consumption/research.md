@@ -368,6 +368,12 @@ Research conducted: 3 July 2026 via six parallel research agents, with load-bear
 - TV/streaming 6h45m/day confirmed (eMarketer 2025, reported as the peak year); 77 Wh/hr streaming confirmed; commuting 1,066 L/yr confirmed (EPA MY2024: 27.2 mpg); household leaks 3.41T L confirmed (EPA, with a noted internal EPA inconsistency: "nearly 1 trillion gallons" on its Fix-a-Leak page vs 900B on Statistics and Facts).
 - US residential outdoor watering: EPA's current figure is ~8B gallons/day (~11T L/yr), superseding the older 9B figure.
 
+### Post-publication refinements (3 July 2026)
+
+- Both bar charts (water and energy) now draw bar lengths on a linear scale, true to the numbers. The earlier log-scale widths preserved rank but destroyed proportion (Google's 30.7B litre bar rendered at ~45% of the 126T bar when it is 1/4,000th of it). Bars that would be thinner than a pixel are clamped to a minimum visible width and labelled as such; the energy chart's Sora-only log special case was removed.
+- The ~126 trillion litre global network losses figure is attributed to Liemberger & Wyatt 2019, "Quantifying the global non-revenue water problem", Water Supply ([DOI 10.2166/ws.2018.129](https://doi.org/10.2166/ws.2018.129)): a modelled estimate of ~346 million m³/day extrapolated from utility-reported non-revenue water rates, not a per-country measurement. The page now labels it "Modelled estimate, not a census" and displays "~126 trillion".
+- research.md and data.json are now linked from the page's header navigation, not only the footer.
+
 ## Framing credit
 
 The measurement-boundary framing (why honest numbers disagree by 1,000x; withdrawal vs consumption; water locality) was prompted by Hank Green's video ["Why is Everyone So Wrong About AI Water Use?"](https://youtu.be/H_c6MWk7PQc) (June 2026). His specific figures were independently verified: the boundary argument and locality thesis hold; his corn total and the "training is ~50%" claim did not survive verification and were replaced with primary-sourced figures.
