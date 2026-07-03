@@ -308,7 +308,7 @@
         "date": "2025"
       }
     ],
-    "disclosureGap": "Only Google (Gemini: 0.24 Wh, 0.26 mL, 0.03 g CO2e per median prompt) and Mistral (Large 2: 1.14 g CO2e, 45 mL per 400-token reply, Scope 2 included) publish audited per-model figures. OpenAI offers an aggregate CEO figure with no methodology; Anthropic, xAI and Meta publish nothing per-query as of mid-2026.",
+    "disclosureGap": "Only Google (Gemini: 0.24 Wh, 0.26 mL, 0.03 g CO2e per median prompt) and Mistral (Large 2: 1.14 g CO2e, 45 mL per 400-token reply, Scope 2 included) publish audited per-model figures. OpenAI offers an aggregate CEO figure with no methodology; Anthropic, xAI and Meta publish nothing per-query as of mid-2026. Anthropic declined environmental disclosure in Stanford's Dec 2025 transparency index and has no sustainability report, though it joined the Frontier carbon-removal coalition (Jun 2026) and is hiring emissions-reporting staff.",
     "newerNotGreener": "Newer models are not automatically more efficient: 8 of 14 comparable models used equal or more energy than their early-2025 predecessors (HF AI Energy Score v2). MoE architectures help - active-parameter count drives energy, with a measured 3.6x lower energy/token vs a similar-size dense model."
   },
   "boundaries": {
@@ -334,7 +334,7 @@
       "plannedBuildsSource": "Guardian analysis of Cleanview and US Drought Monitor data, June 2026",
       "plannedBuildsUrl": "https://www.theguardian.com/us-news/2026/jun/08/datacenter-ai-drought-water",
       "note": "Water is local: the same facility can be benign in a wet region and a real problem in a dry one. Quantity matters less than where it is drawn.",
-      "operatorResponse": "Sam Altman said in Feb 2026 that OpenAI's data centres have largely moved off evaporative cooling (CNBC); facility-level water data remains largely undisclosed (AGU Advances, 2026)"
+      "operatorResponse": "Sam Altman said in Feb 2026 that OpenAI's data centres have largely moved off evaporative cooling (CNBC); Project Rainier, the 2.2 GW AWS campus that trains Claude, is air-cooled ~98% of the year at an estimated PUE ~1.15, though AWS won't quantify operational water (MeasuredAI, from permits and utility filings); facility-level water data remains largely undisclosed (AGU Advances, 2026)"
     }
   },
   "videoVsText": {
@@ -758,6 +758,12 @@
       "fact": "One year of average US car commuting uses 1,066 litres of fuel",
       "comparison": "Produces approximately 2.5 tonnes of CO₂",
       "context": "69% of Americans drive alone to work"
+    },
+    {
+      "title": "Claude's Undisclosed Footprint",
+      "fact": "Anthropic holds ~40% of enterprise LLM API spend but publishes no query volume or per-query figures",
+      "comparison": "Only 6% consumer reach, yet the largest enterprise share - an API-shaped footprint",
+      "context": "Menlo Ventures (year-end 2025); Pew (Feb 2026). With no disclosed volume or per-query data, Claude's total footprint can't be independently estimated"
     }
   ],
   "keyInsights": [
