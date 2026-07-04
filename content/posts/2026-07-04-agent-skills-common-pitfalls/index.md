@@ -5,7 +5,7 @@ tags: ['ai', 'llm', 'agentic coding', 'agents', 'skills', 'claude', 'claude code
 author: 'Sam McLeod'
 showToc: true
 TocOpen: false
-draft: true
+draft: false
 hidemeta: false
 comments: false
 description: 'The top pitfalls I keep seeing when reviewing Agent Skills, and what to do instead'
