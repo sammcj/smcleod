@@ -71,3 +71,12 @@ If table styling needs adjustment:
 - **Shortcode**: `layouts/shortcodes/comparison-table.html` (calls partial)
 - **Partial**: `layouts/partials/comparison-table.html` (renders table from data)
 - **Page**: `content/agentic-coding-tools.md` (uses the shortcode)
+
+## Admonitions
+
+Example usage:
+
+> [!TIP]
+> thing to be in the callout here
+
+Detailed usage: `themes/github.com/KKKZOZ/hugo-admonitions/README.md`
