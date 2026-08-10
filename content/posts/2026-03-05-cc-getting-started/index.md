@@ -23,10 +23,10 @@ mermaid: false
 ---
 
 - **Configuration**
-  - [Agent rules](#agent-rules) - concise, scoped CLAUDE.md files that shape agent behaviour
   - [Sandboxing](#enable-sandboxing) - constrain file access and network connections
   - [Permissions](#configure-agent-permissions-allow-ask-deny) - pre-approve safe operations, hard-block dangerous ones
-  - [Hooks](#use-hooks-to-help-with-safety-and-automation) - run shell commands before/after tool calls as a safety net
+  - [Agent rules](#agent-rules) - concise, scoped CLAUDE.md files that shape agent behaviour
+  - [Recommended plugins & tools](#recommended-plugins-and-tools) - 3rd party tools that improve safety, context usage and code navigation
 - **Extend knowledge and capabilities**
   - [Skills](#lean-into-skills) - dynamic knowledge acquisition with progressive disclosure
   - [Language servers](#enable-language-servers-lsp) - give the agent go-to-definition, find-references, and type checking
@@ -205,11 +205,11 @@ Every MCP server you enable adds tool descriptions to the context. If you have 1
 - Don't load every MCP server for every project. Use project-level `.claude/settings.json` to scope servers to where they're actually needed.
 - For 99% of tasks [I only have one MCP server enabled](https://github.com/sammcj/mcp-devtools).
 
-### Use hooks to help with safety and automation
+### Recommended plugins and tools
 
-Hooks can run shell commands before or after tool calls. `PreToolUse` hooks can inspect and block commands before execution which can be used as a line of defence against unexpected behavior.
-
-- [claude-code-safety-net](https://github.com/kenryu42/claude-code-safety-net) is one I often recommend as a good starting point that aims to catch common dangerous patterns.
+- [cc-safety-net](https://ccsafetynet.com/) (hooks that try to catch some destructive commands).
+- [context-mode](https://github.com/mksglu/context-mode) which significantly reduces context usage.
+- [Graphify](https://github.com/Graphify-Labs/graphify) can be useful for creating graphs of code and LLM wikis providing them with semantic search and context.
 
 ---
 
