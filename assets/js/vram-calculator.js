@@ -14,6 +14,11 @@ const ARCH_PRESETS = [
   [8, { layers: 36, kvElemsPerToken: 2048 }],   // Qwen3-8B / Llama 3.1 8B
   [14, { layers: 40, kvElemsPerToken: 2048 }],  // Qwen3-14B
   [24, { layers: 40, kvElemsPerToken: 2048 }],  // Mistral Small 24B
+  // Qwen3.6-27B is hybrid: 64 blocks but only 16 full-attention (4 KV heads
+  // × 256 head_dim); the 48 linear-attention layers hold no per-token KV.
+  // `blocks` (total transformer blocks) sizes MTP weights when it differs
+  // from the KV-holding layer count.
+  [27, { layers: 16, kvElemsPerToken: 2048, blocks: 64 }],
   [32, { layers: 64, kvElemsPerToken: 2048 }],  // Qwen3-32B / Seed-OSS-36B
   [70, { layers: 80, kvElemsPerToken: 2048 }],  // Llama 3.x 70B / Qwen2.5-72B
   [110, { layers: 92, kvElemsPerToken: 2048 }], // GLM-4.x class
@@ -252,8 +257,12 @@ async function readModelParams(pathOrFile, { verbose = false } = {}) {
     '.attention.head_count',
     '.attention.head_count_kv',
     '.attention.key_length',
+    '.attention.sliding_window',
+    '.attention.sliding_window_pattern',
     '.block_count',
     '.embedding_length',
+    '.full_attention_interval',
+    '.nextn_predict_layers',
     'split.count',
   ];
 
@@ -276,13 +285,50 @@ async function readModelParams(pathOrFile, { verbose = false } = {}) {
     const type = typeVal;
 
     const matchedSuffix = suffixes.find(s => key.endsWith(s));
-    if (matchedSuffix) {
+    if (key === 'general.architecture' && type === GGUFType.STRING) {
+      params.architecture = await readString(source);
+    } else if (matchedSuffix) {
       if (matchedSuffix === '.attention.head_count' && (type === GGUFType.UINT32 || type === GGUFType.INT32)) {
         const value = await readU32(source); params.attention_heads = value; found.attention_heads = true;
-      } else if (matchedSuffix === '.attention.head_count_kv' && (type === GGUFType.UINT32 || type === GGUFType.INT32)) {
-        const value = await readU32(source); params.kv_heads = value; found.kv_heads = true;
+      } else if (matchedSuffix === '.attention.head_count_kv') {
+        if (type === GGUFType.UINT32 || type === GGUFType.INT32) {
+          const value = await readU32(source); params.kv_heads = value; found.kv_heads = true;
+        } else if (type === GGUFType.ARRAY) {
+          // Per-layer KV head counts; 0 entries are layers with no KV cache.
+          const elemType = await readU32(source);
+          const count = Number(await readU64(source));
+          if ((elemType === GGUFType.UINT32 || elemType === GGUFType.INT32) && count > 0 && count <= 4096) {
+            const arr = [];
+            for (let j = 0; j < count; j++) arr.push(await readU32(source));
+            params.kv_heads_array = arr;
+            params.kv_heads = arr.reduce((a, b) => Math.max(a, b), 0);
+            found.kv_heads = true;
+          } else {
+            for (let j = 0; j < count; j++) await skipValue(source, elemType);
+          }
+        } else { await skipValue(source, type); }
+      } else if (matchedSuffix === '.attention.sliding_window' && (type === GGUFType.UINT32 || type === GGUFType.INT32)) {
+        params.sliding_window = await readU32(source);
+      } else if (matchedSuffix === '.attention.sliding_window_pattern') {
+        if (type === GGUFType.UINT32 || type === GGUFType.INT32) {
+          params.swa_pattern_interval = await readU32(source);
+        } else if (type === GGUFType.ARRAY) {
+          // Bool per layer, true = sliding-window attention.
+          const elemType = await readU32(source);
+          const count = Number(await readU64(source));
+          if (elemType === GGUFType.BOOL && count > 0 && count <= 4096) {
+            const bytes = await readExact(source, count);
+            params.swa_layers = Array.from(bytes).filter(b => b !== 0).length;
+          } else {
+            for (let j = 0; j < count; j++) await skipValue(source, elemType);
+          }
+        } else { await skipValue(source, type); }
+      } else if (matchedSuffix === '.full_attention_interval' && (type === GGUFType.UINT32 || type === GGUFType.INT32)) {
+        params.full_attention_interval = await readU32(source);
       } else if (matchedSuffix === '.attention.key_length' && (type === GGUFType.UINT32 || type === GGUFType.INT32)) {
         const value = await readU32(source); params.key_length = value; found.key_length = true;
+      } else if (matchedSuffix === '.nextn_predict_layers' && (type === GGUFType.UINT32 || type === GGUFType.INT32)) {
+        const value = await readU32(source); params.nextn_layers = value;
       } else if (matchedSuffix === '.block_count' && (type === GGUFType.UINT32 || type === GGUFType.INT32)) {
         const value = await readU32(source); params.hidden_layers = value; found.hidden_layers = true;
       } else if (matchedSuffix === '.embedding_length') {
@@ -300,10 +346,9 @@ async function readModelParams(pathOrFile, { verbose = false } = {}) {
       } else { await skipValue(source, type); }
     } else { await skipValue(source, type); }
 
-    if (found.attention_heads && found.kv_heads && found.key_length && found.hidden_layers && found.hidden_size) {
-      if (isUrl) { source.setAbortFlag?.(); }
-      break;
-    }
+    // No early break on "all found" — optional keys like nextn_predict_layers
+    // can appear anywhere in the arch section; the tokenizer bail above stops
+    // us before the expensive vocab arrays regardless.
   }
 
   if (!found.kv_heads && found.attention_heads) { params.kv_heads = params.attention_heads; found.kv_heads = true; }
@@ -409,28 +454,79 @@ function extractQuantizationFromFilename(filename) {
   return null;
 }
 
-const calculateMemoryBreakdown = (config, ggufMetadata = null) => {
-  const { numParams, contextSize, bitsPerWeight, kvCacheType } = config;
+// Total KV cache elements for a GGUF-described model, accounting for hybrid
+// attention layouts: per-layer KV head arrays (0 = no KV on that layer),
+// sliding-window layers capped at their window, and linear-attention layers
+// (full_attention_interval) that hold no per-token KV at all.
+function ggufKvElements(meta, contextSize) {
+  const layers = meta.hidden_layers;
+  const headDim = meta.key_length || Math.round(meta.hidden_size / meta.attention_heads);
 
-  let numLayers, kvElemsPerToken, baseModelSize;
+  if (Array.isArray(meta.kv_heads_array)) {
+    const headSum = meta.kv_heads_array.reduce((a, b) => a + b, 0);
+    return contextSize * 2 * headDim * headSum;
+  }
+
+  const perLayer = 2 * meta.kv_heads * headDim;
+
+  // llama.cpp hardcodes Gemma 3's 5 local : 1 global pattern (every 6th layer
+  // is global); Gemma 3n/4 and gpt-oss write the pattern to metadata instead.
+  const pattern = meta.swa_pattern_interval ||
+    (meta.architecture === 'gemma3' ? 6 : 0);
+  if (meta.sliding_window > 0 && (meta.swa_layers != null || pattern > 1)) {
+    const swaLayers = meta.swa_layers != null
+      ? meta.swa_layers
+      : layers - Math.floor(layers / pattern);
+    const fullLayers = layers - swaLayers;
+    return (contextSize * fullLayers + Math.min(contextSize, meta.sliding_window) * swaLayers) * perLayer;
+  }
+
+  if (meta.full_attention_interval > 1) {
+    // floor() also absorbs MTP-inflated block counts on qwen35-style GGUFs.
+    return contextSize * Math.floor(layers / meta.full_attention_interval) * perLayer;
+  }
+
+  return contextSize * layers * perLayer;
+}
+
+const calculateMemoryBreakdown = (config, ggufMetadata = null, draftMetadata = null) => {
+  const { numParams, contextSize, bitsPerWeight, kvCacheType, mtpEnabled } = config;
+  const bytesPerElement = KV_CACHE_BYTES[kvCacheType] || 2.0;
+
+  let baseModelSize, totalBlocks, kvCacheSize, mtpKvElemsPerToken;
 
   if (ggufMetadata) {
-    // Use actual GGUF metadata. head_dim often differs from hidden/heads
-    // (e.g. Qwen3-32B: 5120/64 = 80 but head_dim is 128), so prefer key_length.
-    numLayers = ggufMetadata.hidden_layers;
+    baseModelSize = ggufMetadata.modelSizeBytes || (numParams * 1e9 * bitsPerWeight) / 8;
+    totalBlocks = ggufMetadata.hidden_layers;
+    kvCacheSize = ggufKvElements(ggufMetadata, contextSize) * bytesPerElement;
+    // head_dim often differs from hidden/heads (e.g. Qwen3-32B: 5120/64 = 80
+    // but head_dim is 128), so prefer key_length.
     const headDim = ggufMetadata.key_length ||
       Math.round(ggufMetadata.hidden_size / ggufMetadata.attention_heads);
-    kvElemsPerToken = 2 * ggufMetadata.kv_heads * headDim;
-    baseModelSize = ggufMetadata.modelSizeBytes || (numParams * 1e9 * bitsPerWeight) / 8;
+    mtpKvElemsPerToken = 2 * ggufMetadata.kv_heads * headDim;
   } else {
     baseModelSize = (numParams * 1e9 * bitsPerWeight) / 8;
     const arch = nearestArchPreset(numParams);
-    numLayers = arch.layers;
-    kvElemsPerToken = arch.kvElemsPerToken;
+    totalBlocks = arch.blocks || arch.layers;
+    kvCacheSize = contextSize * arch.layers * arch.kvElemsPerToken * bytesPerElement;
+    mtpKvElemsPerToken = arch.kvElemsPerToken;
   }
 
-  const bytesPerElement = KV_CACHE_BYTES[kvCacheType] || 2.0;
-  const kvCacheSize = contextSize * numLayers * kvElemsPerToken * bytesPerElement;
+  // MTP (nextn) modules are standard full-attention blocks with their own KV
+  // cache. GGUF file sizes already include their weights; formula mode adds
+  // one block's worth of parameters.
+  if (mtpEnabled) {
+    const mtpLayers = ggufMetadata ? (ggufMetadata.nextn_layers || 0) : 1;
+    kvCacheSize += contextSize * mtpLayers * mtpKvElemsPerToken * bytesPerElement;
+    if (!ggufMetadata) baseModelSize += baseModelSize / totalBlocks;
+  }
+
+  // DFlash-style speculative decoding uses a separate small draft model with
+  // its own weights and KV cache.
+  if (draftMetadata) {
+    kvCacheSize += ggufKvElements(draftMetadata, contextSize) * bytesPerElement;
+    baseModelSize += draftMetadata.modelSizeBytes || 0;
+  }
 
   return {
     modelSize: (baseModelSize + CUDA_SIZE + COMPUTE_BUFFER_SIZE) / (1024 * 1024 * 1024),
@@ -528,15 +624,18 @@ const MemoryBar = ({ label, modelMemory, kvCacheMemory, maxMemory, colors }) => 
 
 const VRAMCalculator = () => {
   const [config, setConfig] = React.useState({
-    numParams: 14,
-    contextSize: 65536,
-    bitsPerWeight: 4.83,
+    numParams: 27,
+    contextSize: 131072,
+    bitsPerWeight: 5.67,
+    mtpEnabled: true,
   });
 
   const [showAdvanced, setShowAdvanced] = React.useState(false);
 
-  const [ggufUrl, setGgufUrl] = React.useState('https://huggingface.co/unsloth/Qwen3-30B-A3B-128K-GGUF/resolve/main/Qwen3-30B-A3B-128K-UD-Q5_K_XL.gguf');
+  const [ggufUrl, setGgufUrl] = React.useState('https://huggingface.co/unsloth/Qwen3.6-27B-MTP-GGUF/resolve/main/Qwen3.6-27B-UD-Q5_K_XL.gguf');
   const [ggufMetadata, setGgufMetadata] = React.useState(null);
+  const [draftUrl, setDraftUrl] = React.useState('');
+  const [draftMetadata, setDraftMetadata] = React.useState(null);
   const [loadingStatus, setLoadingStatus] = React.useState('');
   const [errorMessage, setErrorMessage] = React.useState('');
   const [dynamicModelSizes, setDynamicModelSizes] = React.useState([]);
@@ -549,12 +648,12 @@ const VRAMCalculator = () => {
   });
 
   React.useEffect(() => {
-    const fp16 = calculateMemoryBreakdown({ ...config, kvCacheType: 'FP16' }, ggufMetadata);
-    const q8_0 = calculateMemoryBreakdown({ ...config, kvCacheType: 'Q8_0' }, ggufMetadata);
-    const q4_0 = calculateMemoryBreakdown({ ...config, kvCacheType: 'Q4_0' }, ggufMetadata);
+    const fp16 = calculateMemoryBreakdown({ ...config, kvCacheType: 'FP16' }, ggufMetadata, draftMetadata);
+    const q8_0 = calculateMemoryBreakdown({ ...config, kvCacheType: 'Q8_0' }, ggufMetadata, draftMetadata);
+    const q4_0 = calculateMemoryBreakdown({ ...config, kvCacheType: 'Q4_0' }, ggufMetadata, draftMetadata);
 
     setMemoryBreakdown({ fp16, q8_0, q4_0 });
-  }, [config, ggufMetadata]);
+  }, [config, ggufMetadata, draftMetadata]);
 
   const maxMemory = Math.max(
     memoryBreakdown.fp16.modelSize + memoryBreakdown.fp16.kvCacheSize,
@@ -612,7 +711,7 @@ const VRAMCalculator = () => {
         const roundedParams = Number(estimatedParams.toFixed(1));
 
         // Add to dynamic model sizes if not already in static list
-        const staticModelValues = [1.5, 3.8, 7, 8, 14, 22, 24, 32, 70, 72, 90, 110, 671];
+        const staticModelValues = [1.5, 3.8, 7, 8, 14, 22, 24, 27, 32, 70, 72, 90, 110, 671];
         if (!staticModelValues.includes(roundedParams) && !dynamicModelSizes.some(s => s[0] === roundedParams)) {
           setDynamicModelSizes(prev => [...prev, [roundedParams, `${roundedParams}B parameters (from GGUF)`]]);
         }
@@ -688,7 +787,7 @@ const VRAMCalculator = () => {
       const roundedParams = Number(estimatedParams.toFixed(1));
 
       // Add to dynamic model sizes if not already in static list
-      const staticModelValues = [1.5, 3.8, 7, 8, 14, 22, 24, 32, 70, 72, 90, 110, 671];
+      const staticModelValues = [1.5, 3.8, 7, 8, 14, 22, 24, 27, 32, 70, 72, 90, 110, 671];
       if (!staticModelValues.includes(roundedParams) && !dynamicModelSizes.some(s => s[0] === roundedParams)) {
         setDynamicModelSizes(prev => [...prev, [roundedParams, `${roundedParams}B parameters (from GGUF)`]]);
       }
@@ -708,14 +807,68 @@ const VRAMCalculator = () => {
     }
   };
 
+  const handleLoadDraftFromUrl = async () => {
+    setErrorMessage('');
+    setLoadingStatus('');
+
+    let url = draftUrl.trim();
+    if (!url) {
+      setErrorMessage('Please enter a draft model GGUF URL');
+      return;
+    }
+
+    const normalized = normalizeHuggingFaceUrl(url);
+    if (normalized !== url) {
+      setDraftUrl(normalized);
+      url = normalized;
+    }
+
+    setLoadingStatus('Loading draft model GGUF metadata...');
+
+    try {
+      const params = await readModelParams(url, { verbose: false });
+      if (!params) {
+        setErrorMessage('Failed to read draft model GGUF metadata. Ensure the URL points to a valid GGUF file.');
+        setLoadingStatus('');
+        return;
+      }
+
+      let sizeBytesTotal = await totalSplitSizeFromUrl(url, params, { verbose: false });
+      if (!sizeBytesTotal) {
+        const single = await getRemoteFileSize(url, { verbose: false });
+        if (single) sizeBytesTotal = single;
+      }
+
+      setDraftMetadata({
+        ...params,
+        modelSizeBytes: sizeBytesTotal || 0,
+        fileName: url.split('/').pop() || 'draft GGUF'
+      });
+
+      setLoadingStatus('Successfully loaded draft model metadata');
+      setTimeout(() => setLoadingStatus(''), 3000);
+    } catch (error) {
+      setErrorMessage(`Error loading draft model: ${error.message || 'Failed to load GGUF file'}`);
+      setLoadingStatus('');
+    }
+  };
+
   const handleClearMetadata = () => {
     setGgufMetadata(null);
-    setGgufUrl('https://huggingface.co/unsloth/Qwen3-30B-A3B-128K-GGUF/resolve/main/Qwen3-30B-A3B-128K-UD-Q5_K_XL.gguf');
+    setGgufUrl('https://huggingface.co/unsloth/Qwen3.6-27B-MTP-GGUF/resolve/main/Qwen3.6-27B-UD-Q5_K_XL.gguf');
     setErrorMessage('');
     setLoadingStatus('');
     setDynamicModelSizes([]);
     if (fileInputRef.current) fileInputRef.current.value = '';
   };
+
+  const handleClearDraftMetadata = () => {
+    setDraftMetadata(null);
+    setDraftUrl('');
+  };
+
+  // MTP needs nextn layers present in the GGUF; quantisers often strip them.
+  const mtpAvailable = !ggufMetadata || (ggufMetadata.nextn_layers || 0) > 0;
 
   const staticModelSizes = [
     [1.5, '1.5B parameters'],
@@ -725,6 +878,7 @@ const VRAMCalculator = () => {
     [14, '14B parameters'],
     [22, '22B parameters'],
     [24, '24B parameters'],
+    [27, '27B parameters'],
     [32, '32B parameters'],
     [70, '70B parameters'],
     [72, '72B parameters'],
@@ -838,11 +992,12 @@ const VRAMCalculator = () => {
       })
     ),
 
-    // GGUF Loader Section
-    React.createElement('div', {
+    // GGUF Loader Section (inputs shown in Advanced mode; loaded metadata
+    // stays visible so it's clear what the numbers are based on)
+    (showAdvanced || ggufMetadata || draftMetadata || loadingStatus || errorMessage) && React.createElement('div', {
       className: 'border border-gray-300 dark:border-gray-600 rounded-lg p-4 space-y-3 bg-gray-50 dark:bg-gray-750'
     },
-      React.createElement('div', { className: 'flex flex-col sm:flex-row gap-2' },
+      showAdvanced && React.createElement('div', { className: 'flex flex-col sm:flex-row gap-2' },
         React.createElement('div', { className: 'flex-1' },
           React.createElement('label', {
             className: 'text-sm font-medium text-gray-700 dark:text-gray-300 block mb-1'
@@ -876,6 +1031,45 @@ const VRAMCalculator = () => {
           })
         )
       ),
+      showAdvanced && React.createElement('div', { className: 'flex flex-col sm:flex-row gap-2' },
+        React.createElement('div', { className: 'flex-1' },
+          React.createElement('label', {
+            className: 'text-sm font-medium text-gray-700 dark:text-gray-300 block mb-1'
+          }, 'Draft model GGUF URL (optional, for DFlash / speculative decoding):'),
+          React.createElement('input', {
+            type: 'text',
+            value: draftUrl,
+            onChange: (e) => setDraftUrl(e.target.value),
+            placeholder: 'https://huggingface.co/.../draft-model.gguf',
+            className: 'w-full px-3 py-2 bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 dark:text-white',
+            onKeyPress: (e) => { if (e.key === 'Enter') handleLoadDraftFromUrl(); }
+          })
+        ),
+        React.createElement('button', {
+          onClick: handleLoadDraftFromUrl,
+          disabled: !draftUrl.trim() || loadingStatus !== '',
+          className: 'sm:self-end px-4 py-2 bg-blue-600 hover:bg-blue-700 disabled:bg-gray-400 text-white rounded-lg text-sm font-medium transition-colors'
+        }, 'Load')
+      ),
+      draftMetadata && React.createElement('div', {
+        className: 'flex items-start justify-between bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800 rounded-lg p-3'
+      },
+        React.createElement('div', { className: 'flex-1' },
+          React.createElement('div', {
+            className: 'text-sm font-semibold text-green-800 dark:text-green-300 flex items-center gap-2'
+          },
+            React.createElement('span', null, '✓'),
+            React.createElement('span', null, 'Draft model: ' + draftMetadata.fileName)
+          ),
+          React.createElement('div', {
+            className: 'text-xs text-green-700 dark:text-green-400 mt-1'
+          }, `${(draftMetadata.modelSizeBytes / (1024 * 1024 * 1024)).toFixed(1)} GiB, ${draftMetadata.hidden_layers} layers, ${draftMetadata.kv_heads} KV heads`)
+        ),
+        React.createElement('button', {
+          onClick: handleClearDraftMetadata,
+          className: 'text-green-800 dark:text-green-300 hover:text-green-600 dark:hover:text-green-400 text-sm font-medium ml-2'
+        }, 'Clear')
+      ),
       ggufMetadata && React.createElement('div', {
         className: 'flex items-start justify-between bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800 rounded-lg p-3'
       },
@@ -888,7 +1082,7 @@ const VRAMCalculator = () => {
           ),
           React.createElement('div', {
             className: 'text-xs text-green-700 dark:text-green-400 mt-1'
-          }, `${(ggufMetadata.modelSizeBytes / (1024 * 1024 * 1024)).toFixed(1)} GiB, ${ggufMetadata.hidden_layers} layers, ${ggufMetadata.hidden_size} hidden size, ${ggufMetadata.kv_heads} KV heads${ggufMetadata.key_length ? ` × ${ggufMetadata.key_length} head dim` : ''}${ggufMetadata.split_count > 1 ? `, ${ggufMetadata.split_count} splits` : ''}`)
+          }, `${(ggufMetadata.modelSizeBytes / (1024 * 1024 * 1024)).toFixed(1)} GiB, ${ggufMetadata.hidden_layers} layers, ${ggufMetadata.hidden_size} hidden size, ${ggufMetadata.kv_heads} KV heads${ggufMetadata.key_length ? ` × ${ggufMetadata.key_length} head dim` : ''}${ggufMetadata.nextn_layers > 0 ? `, ${ggufMetadata.nextn_layers} MTP layer${ggufMetadata.nextn_layers > 1 ? 's' : ''}` : ''}${ggufMetadata.split_count > 1 ? `, ${ggufMetadata.split_count} splits` : ''}`)
         ),
         React.createElement('button', {
           onClick: handleClearMetadata,
@@ -911,6 +1105,17 @@ const VRAMCalculator = () => {
       onChange: (e) => setConfig(prev => ({ ...prev, bitsPerWeight: Number(e.target.value) })),
       options: quantizationLevels
     }),
+
+    React.createElement('div', { className: 'flex items-center gap-3' },
+      React.createElement(ToggleButton, {
+        label: 'MTP speculative decoding',
+        value: config.mtpEnabled && mtpAvailable,
+        onChange: (value) => setConfig(prev => ({ ...prev, mtpEnabled: value }))
+      }),
+      !mtpAvailable && React.createElement('span', {
+        className: 'text-xs text-gray-500 dark:text-gray-400'
+      }, 'MTP layers were stripped from this GGUF at quantisation')
+    ),
 
     React.createElement('div', { className: 'space-y-6 mt-6' },
       React.createElement(MemoryBar, {
@@ -945,7 +1150,7 @@ const VRAMCalculator = () => {
       }),
       React.createElement('p', {
         className: 'text-xs text-gray-500 dark:text-gray-400'
-      }, 'K/V estimates assume full attention on every layer. Models using sliding-window, hybrid linear attention or MLA (e.g. Gemma 3, Qwen3-Next, DeepSeek) use less than shown. vLLM FP8 KV cache is roughly equivalent to Q8_0.')
+      }, 'Hybrid attention layouts (linear or sliding-window layers, e.g. Qwen3.6, Gemma 3, gpt-oss) are detected from GGUF metadata when loaded; the size presets assume typical current-generation architectures. vLLM FP8 KV cache is roughly equivalent to Q8_0.')
     )
   );
 };
