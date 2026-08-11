@@ -1,4 +1,34 @@
 const CUDA_SIZE = 500 * 1024 * 1024; // 500 MB base CUDA overhead
+const COMPUTE_BUFFER_SIZE = 1024 * 1024 * 1024; // ~1 GiB llama.cpp compute buffer allowance
+
+// Bytes per KV cache element. llama.cpp quantised cache types carry a per-block
+// scale: q8_0 = 34 bytes / 32 elements (8.5 bpw), q4_0 = 18 / 32 (4.5 bpw).
+const KV_CACHE_BYTES = { 'FP16': 2.0, 'Q8_0': 1.0625, 'Q4_0': 0.5625 };
+
+// Representative current-generation architectures used when no GGUF is loaded.
+// kvElemsPerToken = 2 (K+V) * n_kv_heads * head_dim per layer; nearly all
+// current dense/GQA models converge on 8 KV heads at head_dim 128 (= 2048).
+const ARCH_PRESETS = [
+  [1.5, { layers: 28, kvElemsPerToken: 2048 }], // Qwen3-1.7B
+  [4, { layers: 36, kvElemsPerToken: 2048 }],   // Qwen3-4B
+  [8, { layers: 36, kvElemsPerToken: 2048 }],   // Qwen3-8B / Llama 3.1 8B
+  [14, { layers: 40, kvElemsPerToken: 2048 }],  // Qwen3-14B
+  [24, { layers: 40, kvElemsPerToken: 2048 }],  // Mistral Small 24B
+  [32, { layers: 64, kvElemsPerToken: 2048 }],  // Qwen3-32B / Seed-OSS-36B
+  [70, { layers: 80, kvElemsPerToken: 2048 }],  // Llama 3.x 70B / Qwen2.5-72B
+  [110, { layers: 92, kvElemsPerToken: 2048 }], // GLM-4.x class
+  [671, { layers: 61, kvElemsPerToken: 576 }],  // DeepSeek V3/R1 (MLA compressed KV)
+];
+
+function nearestArchPreset(numParams) {
+  let best = ARCH_PRESETS[0][1];
+  let bestDiff = Infinity;
+  for (const [size, arch] of ARCH_PRESETS) {
+    const diff = Math.abs(Math.log(numParams / size));
+    if (diff < bestDiff) { bestDiff = diff; best = arch; }
+  }
+  return best;
+}
 
 // ===== GGUF Parsing Utilities =====
 const BUFFER_SIZE = 1 << 20; // 1 MiB
@@ -221,17 +251,25 @@ async function readModelParams(pathOrFile, { verbose = false } = {}) {
   const suffixes = [
     '.attention.head_count',
     '.attention.head_count_kv',
+    '.attention.key_length',
     '.block_count',
     '.embedding_length',
     'split.count',
   ];
 
   const params = {};
-  const found = { attention_heads: false, kv_heads: false, hidden_layers: false, hidden_size: false, split_count: false };
+  const found = { attention_heads: false, kv_heads: false, key_length: false, hidden_layers: false, hidden_size: false, split_count: false };
 
   for (let i = 0; i < metadataCount && !source.eof(); i++) {
     let key;
     try { key = await readString(source); } catch (e) { throw new Error(`Failed to read key: ${e.message}`); }
+
+    // Architecture keys always precede tokenizer data; bail before skipping
+    // through megabytes of vocab if we already have the essentials.
+    if (key.startsWith('tokenizer.') && found.attention_heads && found.hidden_layers && found.hidden_size) {
+      if (isUrl) { source.setAbortFlag?.(); }
+      break;
+    }
 
     const typeVal = await readU32(source);
     if (typeVal >= GGUFType.MAX_TYPE) throw new Error(`Invalid metadata type: ${typeVal} for key: ${key}`);
@@ -243,6 +281,8 @@ async function readModelParams(pathOrFile, { verbose = false } = {}) {
         const value = await readU32(source); params.attention_heads = value; found.attention_heads = true;
       } else if (matchedSuffix === '.attention.head_count_kv' && (type === GGUFType.UINT32 || type === GGUFType.INT32)) {
         const value = await readU32(source); params.kv_heads = value; found.kv_heads = true;
+      } else if (matchedSuffix === '.attention.key_length' && (type === GGUFType.UINT32 || type === GGUFType.INT32)) {
+        const value = await readU32(source); params.key_length = value; found.key_length = true;
       } else if (matchedSuffix === '.block_count' && (type === GGUFType.UINT32 || type === GGUFType.INT32)) {
         const value = await readU32(source); params.hidden_layers = value; found.hidden_layers = true;
       } else if (matchedSuffix === '.embedding_length') {
@@ -260,7 +300,7 @@ async function readModelParams(pathOrFile, { verbose = false } = {}) {
       } else { await skipValue(source, type); }
     } else { await skipValue(source, type); }
 
-    if (found.attention_heads && found.hidden_layers && found.hidden_size && (found.kv_heads || found.attention_heads)) {
+    if (found.attention_heads && found.kv_heads && found.key_length && found.hidden_layers && found.hidden_size) {
       if (isUrl) { source.setAbortFlag?.(); }
       break;
     }
@@ -372,30 +412,29 @@ function extractQuantizationFromFilename(filename) {
 const calculateMemoryBreakdown = (config, ggufMetadata = null) => {
   const { numParams, contextSize, bitsPerWeight, kvCacheType } = config;
 
-  let hiddenSize, numLayers, baseModelSize;
+  let numLayers, kvElemsPerToken, baseModelSize;
 
   if (ggufMetadata) {
-    // Use actual GGUF metadata
-    hiddenSize = ggufMetadata.hidden_size;
+    // Use actual GGUF metadata. head_dim often differs from hidden/heads
+    // (e.g. Qwen3-32B: 5120/64 = 80 but head_dim is 128), so prefer key_length.
     numLayers = ggufMetadata.hidden_layers;
+    const headDim = ggufMetadata.key_length ||
+      Math.round(ggufMetadata.hidden_size / ggufMetadata.attention_heads);
+    kvElemsPerToken = 2 * ggufMetadata.kv_heads * headDim;
     baseModelSize = ggufMetadata.modelSizeBytes || (numParams * 1e9 * bitsPerWeight) / 8;
   } else {
-    // Use formula-based estimation
     baseModelSize = (numParams * 1e9 * bitsPerWeight) / 8;
-    hiddenSize = Math.sqrt(numParams * 1e9 / 12);
-    numLayers = Math.round(numParams * 1e9 / (12 * hiddenSize * hiddenSize));
+    const arch = nearestArchPreset(numParams);
+    numLayers = arch.layers;
+    kvElemsPerToken = arch.kvElemsPerToken;
   }
 
-  let kvCacheBits = 16;
-  if (kvCacheType === 'Q8_0') kvCacheBits = 8;
-  if (kvCacheType === 'Q4_0') kvCacheBits = 4;
-
-  const kvCacheSize = contextSize * 2 * numLayers * hiddenSize * (kvCacheBits / 8);
-  const attentionOverhead = contextSize * hiddenSize * 3 * (bitsPerWeight / 8);
+  const bytesPerElement = KV_CACHE_BYTES[kvCacheType] || 2.0;
+  const kvCacheSize = contextSize * numLayers * kvElemsPerToken * bytesPerElement;
 
   return {
-    modelSize: (baseModelSize + CUDA_SIZE) / (1024 * 1024 * 1024),
-    kvCacheSize: (kvCacheSize + attentionOverhead) / (1024 * 1024 * 1024)
+    modelSize: (baseModelSize + CUDA_SIZE + COMPUTE_BUFFER_SIZE) / (1024 * 1024 * 1024),
+    kvCacheSize: kvCacheSize / (1024 * 1024 * 1024)
   };
 };
 
@@ -849,7 +888,7 @@ const VRAMCalculator = () => {
           ),
           React.createElement('div', {
             className: 'text-xs text-green-700 dark:text-green-400 mt-1'
-          }, `${(ggufMetadata.modelSizeBytes / (1024 * 1024 * 1024)).toFixed(1)} GiB, ${ggufMetadata.hidden_layers} layers, ${ggufMetadata.hidden_size} hidden size${ggufMetadata.split_count > 1 ? `, ${ggufMetadata.split_count} splits` : ''}`)
+          }, `${(ggufMetadata.modelSizeBytes / (1024 * 1024 * 1024)).toFixed(1)} GiB, ${ggufMetadata.hidden_layers} layers, ${ggufMetadata.hidden_size} hidden size, ${ggufMetadata.kv_heads} KV heads${ggufMetadata.key_length ? ` × ${ggufMetadata.key_length} head dim` : ''}${ggufMetadata.split_count > 1 ? `, ${ggufMetadata.split_count} splits` : ''}`)
         ),
         React.createElement('button', {
           onClick: handleClearMetadata,
@@ -875,7 +914,7 @@ const VRAMCalculator = () => {
 
     React.createElement('div', { className: 'space-y-6 mt-6' },
       React.createElement(MemoryBar, {
-        label: 'FP16 K/V Cache',
+        label: 'F16 K/V Cache (16 bpw)',
         modelMemory: memoryBreakdown.fp16.modelSize,
         kvCacheMemory: memoryBreakdown.fp16.kvCacheSize,
         maxMemory,
@@ -885,7 +924,7 @@ const VRAMCalculator = () => {
         }
       }),
       React.createElement(MemoryBar, {
-        label: 'Q8_0 K/V Cache',
+        label: 'Q8_0 K/V Cache (8.5 bpw)',
         modelMemory: memoryBreakdown.q8_0.modelSize,
         kvCacheMemory: memoryBreakdown.q8_0.kvCacheSize,
         maxMemory,
@@ -895,7 +934,7 @@ const VRAMCalculator = () => {
         }
       }),
       React.createElement(MemoryBar, {
-        label: 'Q4_0 K/V Cache',
+        label: 'Q4_0 K/V Cache (4.5 bpw)',
         modelMemory: memoryBreakdown.q4_0.modelSize,
         kvCacheMemory: memoryBreakdown.q4_0.kvCacheSize,
         maxMemory,
@@ -903,7 +942,10 @@ const VRAMCalculator = () => {
           model: 'bg-purple-600 dark:bg-purple-700',
           kvCache: 'bg-purple-400 dark:bg-purple-500'
         }
-      })
+      }),
+      React.createElement('p', {
+        className: 'text-xs text-gray-500 dark:text-gray-400'
+      }, 'K/V estimates assume full attention on every layer. Models using sliding-window, hybrid linear attention or MLA (e.g. Gemma 3, Qwen3-Next, DeepSeek) use less than shown. vLLM FP8 KV cache is roughly equivalent to Q8_0.')
     )
   );
 };
