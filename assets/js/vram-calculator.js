@@ -1,5 +1,9 @@
 const CUDA_SIZE = 500 * 1024 * 1024; // 500 MB base CUDA overhead
 const COMPUTE_BUFFER_SIZE = 1024 * 1024 * 1024; // ~1 GiB llama.cpp compute buffer allowance
+// llama.cpp runs MTP as its own full-context llama_context; beyond the MTP
+// layer's weights and KV, the duplicated embeddings and compute buffers
+// measured ~2 GiB on a 27B (PR #22673: 2.49 GiB total at 10k ctx).
+const MTP_OVERHEAD_SIZE = 2 * 1024 * 1024 * 1024;
 
 // Bytes per KV cache element. llama.cpp quantised cache types carry a per-block
 // scale: q8_0 = 34 bytes / 32 elements (8.5 bpw), q4_0 = 18 / 32 (4.5 bpw).
@@ -517,8 +521,11 @@ const calculateMemoryBreakdown = (config, ggufMetadata = null, draftMetadata = n
   // one block's worth of parameters.
   if (mtpEnabled) {
     const mtpLayers = ggufMetadata ? (ggufMetadata.nextn_layers || 0) : 1;
-    kvCacheSize += contextSize * mtpLayers * mtpKvElemsPerToken * bytesPerElement;
-    if (!ggufMetadata) baseModelSize += baseModelSize / totalBlocks;
+    if (mtpLayers > 0) {
+      kvCacheSize += contextSize * mtpLayers * mtpKvElemsPerToken * bytesPerElement;
+      baseModelSize += MTP_OVERHEAD_SIZE;
+      if (!ggufMetadata) baseModelSize += baseModelSize / totalBlocks;
+    }
   }
 
   // DFlash-style speculative decoding uses a separate small draft model with
@@ -1150,7 +1157,7 @@ const VRAMCalculator = () => {
       }),
       React.createElement('p', {
         className: 'text-xs text-gray-500 dark:text-gray-400'
-      }, 'Hybrid attention layouts (linear or sliding-window layers, e.g. Qwen3.6, Gemma 3, gpt-oss) are detected from GGUF metadata when loaded; the size presets assume typical current-generation architectures. vLLM FP8 KV cache is roughly equivalent to Q8_0.')
+      }, 'Hybrid attention layouts (linear or sliding-window layers, e.g. Qwen3.6, Gemma 3, gpt-oss) are detected from GGUF metadata when loaded; the size presets assume typical current-generation architectures. vLLM FP8 KV cache is roughly equivalent to Q8_0. MTP adds its layer weights, full-context KV and ~2 GiB of buffers; ngram lookup speculation uses host RAM only.')
     )
   );
 };
