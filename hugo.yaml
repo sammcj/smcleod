@@ -127,59 +127,105 @@ menu:
     - identifier: "Posts"
       pre: ""
       post: ""
-      name: "✍🏻 Posts"
+      name: "Posts"
       url: "/posts"
       title: ""
       weight: 1
+      params:
+        icon: "pen-line"
     - identifier: "categories"
       pre: ""
       post: ""
-      name: "🍱 Categories"
+      name: "Categories"
       url: "/categories/"
       title: ""
       weight: 2
+      params:
+        icon: "layout-grid"
     - identifier: "Agentic Coding Tools"
       pre: ""
       post: ""
-      name: "🤖 Agentic Coding Tools"
+      name: "Agentic Coding Tools"
       url: "/agentic-coding-tools/"
       title: "Rating Agentic Coding Tools"
       weight: 3
-    - identifier: "vRAM Estimator"
+      params:
+        icon: "bot"
+    - identifier: "tools"
       pre: ""
       post: ""
-      name: "🐏 vRAM Estimator"
-      url: "/vram-estimator/"
-      title: "Estimate the vRAM required for your VMs"
+      name: "Tools"
+      url: ""
+      title: "Tools"
       weight: 4
+      params:
+        icon: "wrench"
+    - identifier: "vRAM Estimator"
+      parent: "tools"
+      pre: ""
+      post: ""
+      name: "vRAM Estimator"
+      url: "/vram-estimator/"
+      title: "Estimate the vRAM required for your LLMs"
+      weight: 1
+      params:
+        icon: "memory-stick"
+    - identifier: "Tier List Generator"
+      parent: "tools"
+      pre: ""
+      post: ""
+      name: "Tier List Generator"
+      url: "/tiers.html"
+      title: "Create and share tier lists"
+      weight: 2
+      params:
+        icon: "trophy"
+    - identifier: "Quantisation Overview"
+      parent: "tools"
+      pre: ""
+      post: ""
+      name: "Quantisation Overview"
+      url: "/quantisation-dashboard.html"
+      title: "LLM quantisation overview"
+      weight: 3
+      params:
+        icon: "chart-column"
     - identifier: "links"
       pre: ""
       post: ""
-      name: "🔗 Links"
+      name: "Links"
       url: "/links/"
       title: "Links to software and services I use"
       weight: 5
+      params:
+        icon: "link"
     - identifier: "contact"
       pre: ""
       post: ""
-      name: "💬 Contact"
+      name: "Contact"
       url: "/contact/"
       title: "Contact me"
       weight: 6
+      params:
+        icon: "message-circle"
     - identifier: "about"
       pre: ""
       post: ""
-      name: "🤦🏻‍♂️ About"
+      name: "About"
       url: "/about/"
       title: "Sam McLeod"
       weight: 7
+      params:
+        icon: "user"
     - identifier: "Search"
       pre: ""
       post: ""
-      name: "🔎 Search"
+      name: "Search"
       url: "/search/"
       title: ""
       weight: 7
+      params:
+        icon: "search"
 # Read: https://github.com/adityatelange/hugo-PaperMod/wiki/FAQs#using-hugos-syntax-highlighter-chroma
 pygmentsUseClasses: true
 markup:

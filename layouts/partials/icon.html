@@ -1,0 +1,7 @@
+{{- /* Inline a Lucide SVG from assets/icons/. Icons use stroke="currentColor",
+       so they inherit the nav's light/dark colour with no extra rules. */ -}}
+{{- with resources.Get (printf "icons/%s.svg" .) -}}
+<span class="menu-icon" aria-hidden="true">{{ .Content | safeHTML }}</span>
+{{- else -}}
+{{- warnf "icon partial: assets/icons/%s.svg not found" . -}}
+{{- end -}}

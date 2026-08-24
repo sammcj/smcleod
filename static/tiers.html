@@ -1,0 +1,2574 @@
+<!doctype html>
+<html lang="en-AU">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Tier List Creator</title>
+<style>
+:root{
+  --font: ui-sans-serif, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --labelw: 92px;
+  --colmin: 190px;
+}
+*,*::before,*::after{box-sizing:border-box}
+html,body{height:100%}
+body{margin:0;font:14px/1.4 var(--font);background:var(--bg);color:var(--text);overflow:hidden;-webkit-text-size-adjust:100%}
+#root{display:flex;flex-direction:column;height:100%}
+
+button,select,input,textarea{font:inherit;color:var(--text)}
+button,select,input[type=text],input[type=search],input[type=number]{background:var(--btn);border:1px solid var(--border);border-radius:6px;padding:5px 9px}
+button{cursor:pointer;white-space:nowrap}
+button:hover:not(:disabled){background:var(--btn-hover)}
+button:disabled{opacity:.42;cursor:default}
+button:focus-visible,select:focus-visible,input:focus-visible{outline:2px solid var(--accent);outline-offset:1px}
+.accent{background:var(--accent);border-color:var(--accent);color:#fff}
+.accent:hover:not(:disabled){background:var(--accent-hover);border-color:var(--accent-hover)}
+.danger{color:var(--danger)}
+.icon{padding:4px 7px;line-height:1}
+
+.toolbar{flex:0 0 auto;display:flex;align-items:center;gap:8px;flex-wrap:wrap;padding:8px 12px;background:var(--panel);border-bottom:1px solid var(--border)}
+.title-input{font-size:16px;font-weight:650;background:transparent;border-color:transparent;min-width:200px;flex:0 1 320px}
+.title-input:hover{border-color:var(--border)}
+.spacer{flex:1 1 auto}
+.sep{width:1px;height:22px;background:var(--border);flex:0 0 auto}
+.add-item{display:flex;gap:6px;align-items:center}
+.add-item input{width:200px}
+
+.pop{position:relative}
+.pop-panel{position:absolute;top:calc(100% + 6px);right:0;min-width:250px;background:var(--panel);border:1px solid var(--border);border-radius:9px;padding:10px;z-index:600;box-shadow:0 14px 34px var(--shadow);display:none}
+.pop.open .pop-panel{display:block}
+.pop-panel.left{left:0;right:auto}
+.pop-panel .row{display:flex;align-items:center;justify-content:space-between;gap:10px;margin:7px 0}
+.pop-panel .row>label{color:var(--muted);font-size:13px}
+.pop-panel hr{border:none;border-top:1px solid var(--border);margin:9px 0}
+.pop-panel .full{width:100%;justify-content:center}
+
+.board-wrap{flex:1 1 auto;overflow:auto;position:relative;background:var(--bg)}
+.board{display:grid;align-content:start}
+.hcell{position:sticky;top:0;z-index:3;display:flex;align-items:center;gap:2px;min-height:40px;padding:4px 8px;background:var(--panel);border-bottom:1px solid var(--border);border-right:1px solid var(--border)}
+.hcell.corner{left:0;z-index:5;color:var(--muted);font-size:12px;justify-content:center}
+.hcell.cat{cursor:pointer}
+.hcell.cat .cat-name{flex:1 1 auto;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-weight:600}
+.hcell.cat .hbtn{opacity:0;transition:opacity .1s}
+.hcell.cat:hover .hbtn,.hcell.cat:focus-within .hbtn{opacity:1}
+.hcell.cat.focused{background:var(--focus-bg);box-shadow:inset 0 -3px 0 var(--accent)}
+.hbtn{background:transparent;border:none;color:var(--muted);padding:2px 5px;border-radius:5px;font-size:12px;line-height:1}
+.hbtn:hover{background:var(--btn-hover);color:var(--text)}
+
+.tier-label{position:sticky;left:0;z-index:2;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;font-weight:750;font-size:19px;border-bottom:1px solid var(--border);border-right:1px solid var(--border);padding:6px 5px;text-align:center;word-break:break-word;overflow:hidden}
+.tier-label .tbtns{position:absolute;right:2px;top:2px;bottom:2px;display:none;flex-direction:column;justify-content:space-between}
+.tier-label:hover .tbtns{display:flex}
+.tier-label .hbtn{color:inherit;opacity:.72;font-size:10px;padding:1px 3px}
+.tier-label .tname{flex:0 0 auto;max-width:100%;line-height:1.15}
+.tier-label .tdesc{flex:0 0 auto;max-width:100%;font-weight:500;line-height:1.3;opacity:.82;padding:0 2px}
+.tier-label .tdesc.empty{opacity:0;font-weight:400;font-style:italic}
+.tier-label:hover .tdesc.empty{opacity:.5}
+
+.cell{display:flex;flex-wrap:wrap;align-content:flex-start;gap:8px;padding:8px;background:var(--cell);border-bottom:1px solid var(--border);border-right:1px solid var(--border);min-height:var(--rowmin)}
+.cell.over{background:var(--drop)}
+.tray.over{background:var(--drop)}
+
+.card{position:relative;flex:0 0 auto;border-radius:8px;background:var(--card);border:1px solid var(--card-border);overflow:hidden;touch-action:none;user-select:none;-webkit-user-select:none;cursor:grab}
+.card.dragging{opacity:.28}
+.card .lines{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:0 6px;text-align:center}
+.card .ln{white-space:pre;overflow:hidden}
+.card img{position:absolute;display:block;image-rendering:auto}
+.card .cap{position:absolute;left:0;right:0;bottom:0;display:flex;align-items:center;justify-content:center;background:var(--cap-bg);color:var(--cap-fg);white-space:pre;overflow:hidden}
+.card .x{position:absolute;top:2px;right:2px;width:17px;height:17px;padding:0;border:none;border-radius:50%;background:rgba(20,20,20,.6);color:#fff;font-size:11px;line-height:17px;text-align:center;display:none}
+.card:hover .x{display:block}
+@media (hover:none){.card .x{display:block}}
+.card .x:hover{background:var(--danger)}
+.card.editing{cursor:text}
+.card input.rename{position:absolute;inset:4px;width:auto;padding:2px 4px;font-size:12px;text-align:center;border-radius:5px}
+
+.ghost{position:fixed;z-index:1000;pointer-events:none;transform:translate(-50%,-50%) rotate(2deg);opacity:.92;border-radius:8px;box-shadow:0 10px 30px rgba(0,0,0,.4)}
+.marker{flex:0 0 auto;width:4px;border-radius:2px;background:var(--accent);align-self:stretch}
+
+.tray{flex:0 0 auto;display:flex;flex-direction:column;background:var(--panel);border-top:1px solid var(--border);max-height:44vh}
+.tray-head{display:flex;align-items:center;gap:8px;flex-wrap:wrap;padding:7px 12px}
+.tray-head .muted{color:var(--muted);font-size:13px}
+.tray-strip{display:flex;flex-wrap:wrap;align-content:flex-start;gap:8px;padding:0 12px 10px;overflow-y:auto}
+.tray-item{display:flex;flex-direction:column;align-items:center;gap:3px}
+.dots{display:flex;gap:3px;height:7px}
+.dot{width:6px;height:6px;border-radius:50%;background:var(--dot-off);border:1px solid var(--dot-edge)}
+.dot.on{background:var(--dot-on);border-color:var(--dot-on)}
+.tray-empty{color:var(--muted);font-size:13px;padding:4px 12px 12px}
+
+.modal-back{position:fixed;inset:0;z-index:900;display:flex;align-items:center;justify-content:center;background:rgba(6,10,16,.5);padding:20px}
+.modal{background:var(--panel);border:1px solid var(--border);border-radius:11px;padding:16px 18px;box-shadow:0 24px 70px var(--shadow);max-width:min(560px,94vw);max-height:88vh;overflow:auto}
+.modal h2{margin:0 0 10px;font-size:16px}
+.modal .row{display:flex;align-items:center;gap:10px;margin:9px 0}
+.modal .row>label:first-child{width:110px;color:var(--muted);font-size:13px;flex:0 0 auto}
+.modal .actions{display:flex;justify-content:flex-end;gap:8px;margin-top:14px}
+.modal p{margin:6px 0;color:var(--muted);font-size:13px}
+
+.ctx{position:fixed;z-index:1100;min-width:190px;padding:4px;background:var(--panel);border:1px solid var(--border);border-radius:8px;box-shadow:0 14px 34px var(--shadow)}
+.ctx button{display:block;width:100%;text-align:left;background:transparent;border:none;padding:6px 9px;border-radius:5px}
+.ctx button:hover{background:var(--btn-hover)}
+
+.toasts{position:fixed;left:50%;bottom:16px;transform:translateX(-50%);z-index:1200;display:flex;flex-direction:column;align-items:center;gap:6px;pointer-events:none}
+.toast{max-width:70vw;padding:8px 14px;border-radius:8px;font-size:13px;background:var(--toast-bg);color:var(--toast-fg);box-shadow:0 8px 24px var(--shadow)}
+.toast.err{background:var(--danger);color:#fff}
+
+.selftest{padding:24px;overflow:auto;height:100%;font:13px/1.5 ui-monospace,SFMono-Regular,Menlo,Consolas,monospace}
+.selftest h1{font:600 18px var(--font);margin:0 0 12px}
+.selftest .pass{color:var(--ok)}
+.selftest .fail{color:var(--danger);font-weight:700}
+.selftest li{margin:2px 0}
+.visually-hidden{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+</style>
+<script id="core">
+"use strict";
+var Core = (function () {
+
+  var VERSION = 1;
+  var STORAGE_KEY = "tier-list-creator/v1";
+  var FONT_STACK = "ui-sans-serif, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif";
+  var FONT_FALLBACK = "sans-serif";
+
+  var MAX_EDGE = 512;
+  var MAX_FILE_BYTES = 20 * 1024 * 1024;
+  var WEBP_QUALITY = 0.85;
+  var JPEG_QUALITY = 0.92;
+  var ACCEPTED_TYPES = ["image/png", "image/jpeg", "image/svg+xml", "image/webp", "image/gif"];
+
+  var HISTORY_LIMIT = 50;
+  var COALESCE_MS = 500;
+  var AUTOSAVE_MS = 500;
+  var DRAG_THRESHOLD = 5;
+
+  var TINT_STRENGTH = 0.5;
+
+  var CARD_MIN = 56, CARD_MAX = 176, CARD_DEFAULT = 96;
+  var FONT_LADDER = [15, 14, 13, 12, 11, 10, 9];
+  var CARD_WIDTH_STEPS = [1, 1.3, 1.7, 2.1, 2.6];
+  var CARD_PAD = 6;
+  var CARD_RADIUS = 8;
+
+  var DEFAULT_PRESET = "sabcdef";
+
+  var TIER_PRESETS = [
+    { id: "sabcd", label: "S A B C D", tiers: ["S", "A", "B", "C", "D"] },
+    { id: "sabcdf", label: "S A B C D F", tiers: ["S", "A", "B", "C", "D", "F"] },
+    { id: "sabcdef", label: "S A B C D E F", tiers: ["S", "A", "B", "C", "D", "E", "F"] },
+    { id: "splus", label: "S+ S A B C D F", tiers: ["S+", "S", "A", "B", "C", "D", "F"] }
+  ];
+
+  var PALETTES = [
+    { id: "classic", label: "Classic", stops: ["#FF7F7F", "#FFBF7F", "#FFDF7F", "#FFFF7F", "#BFFF7F", "#7FFF7F", "#7FFFFF"] },
+    { id: "pastel", label: "Pastel", stops: ["#F58F8F", "#F7B579", "#F2D97C", "#CFE383", "#8FDCA0", "#7DD3CE", "#8FBCE8"] },
+    { id: "cbsafe", label: "Colourblind safe", stops: ["#FDE725", "#A5DB36", "#4AC16D", "#1FA187", "#277F8E", "#365C8D", "#46327E"] },
+    { id: "mono", label: "Mono", stops: ["#EDF1F5", "#D2DAE2", "#B2BFCC", "#93A4B5", "#74899E", "#586F86", "#3E566E"] }
+  ];
+
+  var THEMES = {
+    light: {
+      bg: "#eaeef3", panel: "#ffffff", text: "#131820", muted: "#59626f", border: "#d2d8df",
+      btn: "#f6f8fb", btnHover: "#e8edf3", accent: "#2762c4", accentHover: "#1f56b0",
+      focusBg: "#e4eeff", drop: "#d7e8ff", cell: "#f7f9fc",
+      card: "#ffffff", cardBorder: "#c5cdd7", capBg: "rgba(16,20,26,.68)", capFg: "#ffffff",
+      dotOn: "#2762c4", dotOff: "#ffffff", dotEdge: "#a7b2be",
+      toastBg: "#1b2230", toastFg: "#ffffff", danger: "#b8321f", ok: "#1f7a3d",
+      stamp: "#7d8794", shadow: "rgba(20,30,48,.22)"
+    },
+    dark: {
+      bg: "#11151b", panel: "#191e26", text: "#e8edf4", muted: "#9aa5b3", border: "#2b323d",
+      btn: "#222933", btnHover: "#2c3540", accent: "#5b93f0", accentHover: "#6ea1f5",
+      focusBg: "#1d2a3d", drop: "#1e3049", cell: "#161b22",
+      card: "#222933", cardBorder: "#39424f", capBg: "rgba(0,0,0,.7)", capFg: "#ffffff",
+      dotOn: "#5b93f0", dotOff: "#2b323d", dotEdge: "#4b5665",
+      toastBg: "#e8edf4", toastFg: "#11151b", danger: "#e0604d", ok: "#5fce8a",
+      stamp: "#6d7887", shadow: "rgba(0,0,0,.5)"
+    }
+  };
+
+  function clamp(n, lo, hi) { return n < lo ? lo : n > hi ? hi : n; }
+
+  function uid(prefix) {
+    var bytes = new Uint8Array(8);
+    if (typeof crypto !== "undefined" && crypto.getRandomValues) crypto.getRandomValues(bytes);
+    else for (var i = 0; i < 8; i++) bytes[i] = Math.floor(Math.random() * 256);
+    var out = "";
+    for (var j = 0; j < 8; j++) out += (bytes[j] + 256).toString(16).slice(1);
+    return prefix + "_" + out;
+  }
+
+  function hexToRgb(hex) {
+    var h = String(hex).replace("#", "");
+    if (h.length === 3) h = h[0] + h[0] + h[1] + h[1] + h[2] + h[2];
+    return [parseInt(h.slice(0, 2), 16), parseInt(h.slice(2, 4), 16), parseInt(h.slice(4, 6), 16)];
+  }
+  function rgbToHex(rgb) {
+    return "#" + rgb.map(function (v) {
+      var s = clamp(Math.round(v), 0, 255).toString(16);
+      return s.length === 1 ? "0" + s : s;
+    }).join("");
+  }
+  function mixHex(a, b, t) {
+    var ra = hexToRgb(a), rb = hexToRgb(b);
+    return rgbToHex([ra[0] + (rb[0] - ra[0]) * t, ra[1] + (rb[1] - ra[1]) * t, ra[2] + (rb[2] - ra[2]) * t]);
+  }
+  function ramp(stops, n) {
+    if (n <= 0) return [];
+    if (n === 1) return [stops[0]];
+    var out = [];
+    for (var i = 0; i < n; i++) {
+      var t = (i / (n - 1)) * (stops.length - 1);
+      var i0 = Math.floor(t), i1 = Math.min(stops.length - 1, i0 + 1);
+      out.push(mixHex(stops[i0], stops[i1], t - i0));
+    }
+    return out;
+  }
+  function relLuminance(hex) {
+    return hexToRgb(hex).map(function (v) {
+      var c = v / 255;
+      return c <= 0.03928 ? c / 12.92 : Math.pow((c + 0.055) / 1.055, 2.4);
+    }).reduce(function (a, c, i) { return a + c * [0.2126, 0.7152, 0.0722][i]; }, 0);
+  }
+  function contrastRatio(a, b) {
+    var la = relLuminance(a) + 0.05, lb = relLuminance(b) + 0.05;
+    return la > lb ? la / lb : lb / la;
+  }
+  function textOn(bg) {
+    return contrastRatio(bg, "#10141a") >= contrastRatio(bg, "#ffffff") ? "#10141a" : "#ffffff";
+  }
+  function paletteById(id) {
+    for (var i = 0; i < PALETTES.length; i++) if (PALETTES[i].id === id) return PALETTES[i];
+    return PALETTES[0];
+  }
+  function tintedCell(baseHex, tierColour) {
+    return mixHex(baseHex, tierColour, TINT_STRENGTH);
+  }
+
+  function tierColours(state) {
+    return ramp(paletteById(state.settings.palette).stops, state.tiers.length);
+  }
+
+  function defaultSettings() {
+    return {
+      theme: "system", palette: "classic", cardSize: CARD_DEFAULT,
+      showCaptions: true, tintRows: false, dateOnExport: true, hidePlacedInTray: true
+    };
+  }
+
+  function tiersFromPreset(presetId) {
+    var preset = null;
+    for (var i = 0; i < TIER_PRESETS.length; i++) {
+      if (TIER_PRESETS[i].id === presetId) preset = TIER_PRESETS[i];
+      else if (!preset && TIER_PRESETS[i].id === DEFAULT_PRESET) preset = TIER_PRESETS[i];
+    }
+    return preset.tiers.map(function (label) { return { id: uid("t"), label: label }; });
+  }
+
+  function emptyState() {
+    var cat = { id: uid("c"), label: "Overall" };
+    return {
+      version: VERSION,
+      title: "",
+      tiers: tiersFromPreset(DEFAULT_PRESET),
+      categories: [cat],
+      items: [],
+      assets: {},
+      placements: {},
+      focusedCategoryId: cat.id,
+      settings: defaultSettings()
+    };
+  }
+
+  function itemById(state, id) {
+    for (var i = 0; i < state.items.length; i++) if (state.items[i].id === id) return state.items[i];
+    return null;
+  }
+  function indexOfId(list, id) {
+    for (var i = 0; i < list.length; i++) if (list[i].id === id) return i;
+    return -1;
+  }
+  function cellItems(state, categoryId, tierId) {
+    var byCat = state.placements[categoryId];
+    if (!byCat || !byCat[tierId]) return [];
+    return byCat[tierId];
+  }
+  function tierOf(state, categoryId, itemId) {
+    var byCat = state.placements[categoryId];
+    if (!byCat) return null;
+    for (var tierId in byCat) if (byCat[tierId].indexOf(itemId) !== -1) return tierId;
+    return null;
+  }
+  function categoriesFor(state, itemId) {
+    return state.categories.filter(function (c) { return tierOf(state, c.id, itemId) !== null; }).map(function (c) { return c.id; });
+  }
+  function unplacedIn(state, categoryId) {
+    return state.items.filter(function (it) { return tierOf(state, categoryId, it.id) === null; });
+  }
+  function withPlacements(state, categoryId, byTier) {
+    var next = {};
+    for (var k in state.placements) next[k] = state.placements[k];
+    next[categoryId] = byTier;
+    return Object.assign({}, state, { placements: next });
+  }
+  function copyByTier(state, categoryId) {
+    var src = state.placements[categoryId] || {}, out = {};
+    for (var k in src) out[k] = src[k].slice();
+    return out;
+  }
+  function pruneEmpty(byTier) {
+    for (var k in byTier) if (!byTier[k].length) delete byTier[k];
+    return byTier;
+  }
+
+  function place(state, categoryId, tierId, itemId, index) {
+    var byTier = copyByTier(state, categoryId);
+    for (var k in byTier) {
+      var at = byTier[k].indexOf(itemId);
+      if (at !== -1) byTier[k].splice(at, 1);
+    }
+    if (!byTier[tierId]) byTier[tierId] = [];
+    var target = byTier[tierId];
+    var pos = index == null ? target.length : clamp(index, 0, target.length);
+    target.splice(pos, 0, itemId);
+    return withPlacements(state, categoryId, pruneEmpty(byTier));
+  }
+
+  function unplace(state, categoryId, itemId) {
+    if (tierOf(state, categoryId, itemId) === null) return state;
+    var byTier = copyByTier(state, categoryId);
+    for (var k in byTier) {
+      var at = byTier[k].indexOf(itemId);
+      if (at !== -1) byTier[k].splice(at, 1);
+    }
+    return withPlacements(state, categoryId, pruneEmpty(byTier));
+  }
+
+  function gcAssets(state) {
+    var used = {};
+    state.items.forEach(function (it) { if (it.assetId) used[it.assetId] = true; });
+    var assets = {}, changed = false;
+    for (var k in state.assets) {
+      if (used[k]) assets[k] = state.assets[k];
+      else changed = true;
+    }
+    return changed ? Object.assign({}, state, { assets: assets }) : state;
+  }
+
+  function addItems(state, specs) {
+    var made = specs.map(function (s) {
+      return { id: uid("i"), kind: s.kind || "text", label: s.label || "", assetId: s.assetId || undefined };
+    });
+    return { state: Object.assign({}, state, { items: state.items.concat(made) }), items: made };
+  }
+
+  function addAsset(state, asset) {
+    if (state.assets[asset.hash]) return state;
+    var assets = Object.assign({}, state.assets);
+    assets[asset.hash] = { dataUri: asset.dataUri, w: asset.w, h: asset.h, hash: asset.hash };
+    return Object.assign({}, state, { assets: assets });
+  }
+
+  function removeItem(state, itemId) {
+    var next = Object.assign({}, state, { items: state.items.filter(function (i) { return i.id !== itemId; }) });
+    var placements = {};
+    for (var cat in state.placements) {
+      var byTier = {};
+      for (var tier in state.placements[cat]) {
+        var arr = state.placements[cat][tier].filter(function (id) { return id !== itemId; });
+        if (arr.length) byTier[tier] = arr;
+      }
+      if (Object.keys(byTier).length) placements[cat] = byTier;
+    }
+    next.placements = placements;
+    return gcAssets(next);
+  }
+
+  function renameItem(state, itemId, label) {
+    return Object.assign({}, state, {
+      items: state.items.map(function (i) { return i.id === itemId ? Object.assign({}, i, { label: label }) : i; })
+    });
+  }
+
+  function setTitle(state, title) { return Object.assign({}, state, { title: title }); }
+
+  function setSetting(state, key, value) {
+    var settings = Object.assign({}, state.settings);
+    settings[key] = value;
+    return Object.assign({}, state, { settings: settings });
+  }
+
+  function setFocus(state, categoryId) {
+    if (categoryId === state.focusedCategoryId) return state;
+    if (indexOfId(state.categories, categoryId) === -1) return state;
+    return Object.assign({}, state, { focusedCategoryId: categoryId });
+  }
+
+  function addTier(state, label) {
+    return Object.assign({}, state, { tiers: state.tiers.concat([{ id: uid("t"), label: label || "New" }]) });
+  }
+
+  function renameTier(state, tierId, label) {
+    return Object.assign({}, state, {
+      tiers: state.tiers.map(function (t) { return t.id === tierId ? Object.assign({}, t, { label: label }) : t; })
+    });
+  }
+
+  function setTierDescription(state, tierId, text) {
+    var description = String(text == null ? "" : text).trim();
+    return Object.assign({}, state, {
+      tiers: state.tiers.map(function (t) {
+        if (t.id !== tierId) return t;
+        var next = { id: t.id, label: t.label };
+        if (description) next.description = description;
+        return next;
+      })
+    });
+  }
+
+  function moveTier(state, tierId, delta) {
+    var from = indexOfId(state.tiers, tierId);
+    var to = from + delta;
+    if (from === -1 || to < 0 || to >= state.tiers.length) return state;
+    var tiers = state.tiers.slice();
+    tiers.splice(to, 0, tiers.splice(from, 1)[0]);
+    return Object.assign({}, state, { tiers: tiers });
+  }
+
+  function removeTier(state, tierId) {
+    var idx = indexOfId(state.tiers, tierId);
+    if (idx === -1) return state;
+    var below = state.tiers[idx + 1] || null;
+    var tiers = state.tiers.filter(function (t) { return t.id !== tierId; });
+    var placements = {};
+    for (var cat in state.placements) {
+      var byTier = {}, orphans = [];
+      for (var tier in state.placements[cat]) {
+        if (tier === tierId) orphans = state.placements[cat][tier].slice();
+        else byTier[tier] = state.placements[cat][tier].slice();
+      }
+      if (orphans.length && below) byTier[below.id] = (byTier[below.id] || []).concat(orphans);
+      if (Object.keys(pruneEmpty(byTier)).length) placements[cat] = byTier;
+    }
+    return Object.assign({}, state, { tiers: tiers, placements: placements });
+  }
+
+  function applyTierPreset(state, presetId) {
+    var next = tiersFromPreset(presetId).map(function (t, i) {
+      var old = state.tiers[i];
+      return old && old.description ? { id: t.id, label: t.label, description: old.description } : t;
+    });
+    var placements = {};
+    for (var cat in state.placements) {
+      var byTier = {};
+      for (var tier in state.placements[cat]) {
+        var oldIdx = indexOfId(state.tiers, tier);
+        if (oldIdx === -1) continue;
+        var target = next[Math.min(oldIdx, next.length - 1)].id;
+        byTier[target] = (byTier[target] || []).concat(state.placements[cat][tier]);
+      }
+      if (Object.keys(pruneEmpty(byTier)).length) placements[cat] = byTier;
+    }
+    return Object.assign({}, state, { tiers: next, placements: placements });
+  }
+
+  function addCategory(state, label) {
+    var cat = { id: uid("c"), label: label || "New category" };
+    return Object.assign({}, state, { categories: state.categories.concat([cat]), focusedCategoryId: cat.id });
+  }
+
+  function renameCategory(state, categoryId, label) {
+    return Object.assign({}, state, {
+      categories: state.categories.map(function (c) { return c.id === categoryId ? Object.assign({}, c, { label: label }) : c; })
+    });
+  }
+
+  function moveCategory(state, categoryId, delta) {
+    var from = indexOfId(state.categories, categoryId);
+    var to = from + delta;
+    if (from === -1 || to < 0 || to >= state.categories.length) return state;
+    var categories = state.categories.slice();
+    categories.splice(to, 0, categories.splice(from, 1)[0]);
+    return Object.assign({}, state, { categories: categories });
+  }
+
+  function removeCategory(state, categoryId) {
+    var idx = indexOfId(state.categories, categoryId);
+    if (idx === -1 || state.categories.length <= 1) return state;
+    var categories = state.categories.filter(function (c) { return c.id !== categoryId; });
+    var placements = {};
+    for (var cat in state.placements) if (cat !== categoryId) placements[cat] = state.placements[cat];
+    var focus = state.focusedCategoryId;
+    if (focus === categoryId) focus = (categories[idx] || categories[categories.length - 1]).id;
+    return Object.assign({}, state, { categories: categories, placements: placements, focusedCategoryId: focus });
+  }
+
+  function validate(input) {
+    var warnings = [];
+    var s = (input && typeof input === "object") ? input : {};
+    if (s.version !== VERSION) warnings.push("State version " + JSON.stringify(s.version) + " read as version " + VERSION + ".");
+
+    var seen = {};
+    var tiers = Array.isArray(s.tiers) ? s.tiers.filter(function (t) {
+      if (!t || typeof t.id !== "string" || seen[t.id]) return false;
+      seen[t.id] = true;
+      return true;
+    }).map(function (t) {
+      var out = { id: t.id, label: String(t.label == null ? "" : t.label) };
+      var description = String(t.description == null ? "" : t.description).trim();
+      if (description) out.description = description;
+      return out;
+    }) : [];
+    if (!tiers.length) { tiers = tiersFromPreset(DEFAULT_PRESET); warnings.push("No usable tiers; restored the default preset."); }
+
+    seen = {};
+    var categories = Array.isArray(s.categories) ? s.categories.filter(function (c) {
+      if (!c || typeof c.id !== "string" || seen[c.id]) return false;
+      seen[c.id] = true;
+      return true;
+    }).map(function (c) { return { id: c.id, label: String(c.label == null ? "" : c.label) }; }) : [];
+    if (!categories.length) { categories = [{ id: uid("c"), label: "Overall" }]; warnings.push("No usable categories; created one."); }
+
+    seen = {};
+    var items = Array.isArray(s.items) ? s.items.filter(function (i) {
+      if (!i || typeof i.id !== "string" || seen[i.id]) return false;
+      seen[i.id] = true;
+      return true;
+    }).map(function (i) {
+      var kind = i.kind === "image" ? "image" : "text";
+      var out = { id: i.id, kind: kind, label: String(i.label == null ? "" : i.label) };
+      if (kind === "image" && typeof i.assetId === "string") out.assetId = i.assetId;
+      return out;
+    }) : [];
+
+    var assets = {};
+    var rawAssets = (s.assets && typeof s.assets === "object") ? s.assets : {};
+    for (var hash in rawAssets) {
+      var a = rawAssets[hash];
+      if (!a || typeof a.dataUri !== "string" || !/^data:image\//.test(a.dataUri)) { warnings.push("Dropped a malformed asset."); continue; }
+      assets[hash] = { dataUri: a.dataUri, w: Number(a.w) || 1, h: Number(a.h) || 1, hash: hash };
+    }
+    items = items.map(function (i) {
+      if (i.kind === "image" && !assets[i.assetId]) {
+        warnings.push("Item " + JSON.stringify(i.label) + " lost its image and became a text item.");
+        return { id: i.id, kind: "text", label: i.label };
+      }
+      return i;
+    });
+    var usedAssets = {};
+    items.forEach(function (i) { if (i.assetId) usedAssets[i.assetId] = true; });
+    for (var k in assets) if (!usedAssets[k]) { delete assets[k]; warnings.push("Dropped an unreferenced asset."); }
+
+    var tierIds = {}, catIds = {}, itemIds = {};
+    tiers.forEach(function (t) { tierIds[t.id] = true; });
+    categories.forEach(function (c) { catIds[c.id] = true; });
+    items.forEach(function (i) { itemIds[i.id] = true; });
+
+    var placements = {};
+    var raw = (s.placements && typeof s.placements === "object") ? s.placements : {};
+    for (var cat in raw) {
+      if (!catIds[cat]) { warnings.push("Dropped placements for an unknown category."); continue; }
+      var placed = {}, byTier = {};
+      for (var tier in raw[cat]) {
+        if (!tierIds[tier]) { warnings.push("Dropped placements for an unknown tier."); continue; }
+        var arr = Array.isArray(raw[cat][tier]) ? raw[cat][tier] : [];
+        var keep = [];
+        for (var n = 0; n < arr.length; n++) {
+          var id = arr[n];
+          if (!itemIds[id]) { warnings.push("Dropped a placement for an unknown item."); continue; }
+          if (placed[id]) { warnings.push("Item appeared twice in one category; kept the first placement."); continue; }
+          placed[id] = true;
+          keep.push(id);
+        }
+        if (keep.length) byTier[tier] = keep;
+      }
+      if (Object.keys(byTier).length) placements[cat] = byTier;
+    }
+
+    var settings = Object.assign(defaultSettings(), (s.settings && typeof s.settings === "object") ? s.settings : {});
+    if (["system", "light", "dark"].indexOf(settings.theme) === -1) settings.theme = "system";
+    if (settings.palette === "muted") settings.palette = "pastel";
+    if (indexOfId(PALETTES, settings.palette) === -1) settings.palette = "classic";
+    settings.cardSize = clamp(Math.round(Number(settings.cardSize) || CARD_DEFAULT), CARD_MIN, CARD_MAX);
+    settings.showCaptions = !!settings.showCaptions;
+    settings.tintRows = !!settings.tintRows;
+    settings.dateOnExport = !!settings.dateOnExport;
+    settings.hidePlacedInTray = !!settings.hidePlacedInTray;
+
+    var focus = s.focusedCategoryId;
+    if (!catIds[focus]) {
+      if (focus !== undefined) warnings.push("Focused category was missing; focused the first column.");
+      focus = categories[0].id;
+    }
+
+    return {
+      state: {
+        version: VERSION,
+        title: String(s.title == null ? "" : s.title),
+        tiers: tiers, categories: categories, items: items, assets: assets,
+        placements: placements, focusedCategoryId: focus, settings: settings
+      },
+      warnings: warnings
+    };
+  }
+
+  function newHistory(state) { return { stack: [state], index: 0, key: null, time: 0 }; }
+
+  function commit(history, state, opts) {
+    var o = opts || {};
+    var now = o.now || 0;
+    var key = o.key || null;
+    if (state === history.stack[history.index]) return history;
+    if (key && key === history.key && now - history.time < COALESCE_MS && history.index === history.stack.length - 1) {
+      var stack = history.stack.slice();
+      stack[history.index] = state;
+      return { stack: stack, index: history.index, key: key, time: now };
+    }
+    var trimmed = history.stack.slice(0, history.index + 1);
+    trimmed.push(state);
+    while (trimmed.length > HISTORY_LIMIT) trimmed.shift();
+    return { stack: trimmed, index: trimmed.length - 1, key: key, time: now };
+  }
+
+  function canUndo(history) { return history.index > 0; }
+  function canRedo(history) { return history.index < history.stack.length - 1; }
+  function undo(history) {
+    if (!canUndo(history)) return history;
+    return { stack: history.stack, index: history.index - 1, key: null, time: 0 };
+  }
+  function redo(history) {
+    if (!canRedo(history)) return history;
+    return { stack: history.stack, index: history.index + 1, key: null, time: 0 };
+  }
+  function current(history) { return history.stack[history.index]; }
+
+  var LAYOUT = {
+    pad: 18, titleGap: 12, headerH: 36, cellPad: 8, gap: 8,
+    labelColW: 92, minColW: 190, titleSize: 22, headerSize: 13, tierSize: 19, stampSize: 11,
+    tierDescSize: 11, tierDescGap: 5, tierDescPad: 8, labelColNoteMax: 136
+  };
+
+  function labelColumnWidth(state, measure) {
+    var m = measure || approxMeasure;
+    var base = Math.max(LAYOUT.labelColW, Math.round(clamp(state.settings.cardSize, CARD_MIN, CARD_MAX) * 0.95));
+    var widest = 0;
+    state.tiers.forEach(function (t) {
+      if (t.description) widest = Math.max(widest, m(t.description, LAYOUT.tierDescSize));
+    });
+    if (!widest) return base;
+    return Math.max(base, Math.min(LAYOUT.labelColNoteMax, Math.ceil(widest) + 2 * LAYOUT.tierDescPad));
+  }
+
+  function splitItemInput(raw) {
+    return String(raw == null ? "" : raw)
+      .split(/[\r\n,]+/)
+      .map(function (part) { return part.trim(); })
+      .filter(Boolean);
+  }
+
+  function approxMeasure(text, fontSize) { return String(text).length * fontSize * 0.53; }
+
+  function splitLongWord(word, maxW, fs, measure) {
+    var parts = [], cur = "";
+    for (var i = 0; i < word.length; i++) {
+      var ch = word[i];
+      if (cur && measure(cur + ch, fs) > maxW) { parts.push(cur); cur = ch; }
+      else cur += ch;
+    }
+    if (cur) parts.push(cur);
+    return parts.length ? parts : [word];
+  }
+
+  function wrapText(text, maxW, fs, measure) {
+    var raw = String(text == null ? "" : text).trim();
+    if (!raw) return [""];
+    var tokens = [];
+    raw.split(/\s+/).forEach(function (w) {
+      if (measure(w, fs) <= maxW) tokens.push({ t: w, brk: false });
+      else splitLongWord(w, maxW, fs, measure).forEach(function (p, i, all) { tokens.push({ t: p, brk: i < all.length - 1 }); });
+    });
+    var lines = [], cur = "";
+    tokens.forEach(function (tok) {
+      var cand = cur ? cur + " " + tok.t : tok.t;
+      if (!cur || measure(cand, fs) <= maxW) cur = cand;
+      else { lines.push(cur); cur = tok.t; }
+      if (tok.brk) { lines.push(cur); cur = ""; }
+    });
+    if (cur) lines.push(cur);
+    return lines.length ? lines : [""];
+  }
+
+  function ellipsize(text, maxW, fs, measure) {
+    var s = String(text == null ? "" : text);
+    if (measure(s, fs) <= maxW) return s;
+    while (s.length && measure(s + "…", fs) > maxW) s = s.slice(0, -1);
+    return s ? s + "…" : "…";
+  }
+
+  function cardMetrics(item, opts) {
+    if (!item) return null;
+    var measure = opts.measure || approxMeasure;
+    var h = clamp(Math.round(opts.size), CARD_MIN, CARD_MAX);
+    var asset = item.kind === "image" && item.assetId ? opts.assets[item.assetId] : null;
+
+    if (asset) {
+      var aspect = clamp(asset.w / asset.h, 0.68, 1.72);
+      var w = Math.round(h * aspect);
+      var capH = (opts.showCaptions && item.label) ? clamp(Math.round(h * 0.17), 12, 22) : 0;
+      var boxW = w - 4, boxH = h - 4 - capH;
+      var scale = Math.min(boxW / asset.w, boxH / asset.h);
+      var iw = Math.max(1, Math.round(asset.w * scale)), ih = Math.max(1, Math.round(asset.h * scale));
+      var cap = null;
+      if (capH) {
+        var cfs = clamp(Math.round(capH * 0.66), 8, 13);
+        cap = { h: capH, fontSize: cfs, text: ellipsize(item.label, w - 8, cfs, measure) };
+      }
+      return {
+        kind: "image", w: w, h: h, radius: CARD_RADIUS, assetId: item.assetId,
+        img: { x: 2 + Math.round((boxW - iw) / 2), y: 2 + Math.round((boxH - ih) / 2), w: iw, h: ih },
+        cap: cap
+      };
+    }
+
+    var label = item.label || (item.kind === "image" ? "(image)" : "");
+    var widths = CARD_WIDTH_STEPS.map(function (f) { return Math.round(h * f); });
+    for (var fi = 0; fi < FONT_LADDER.length; fi++) {
+      var fs = FONT_LADDER[fi];
+      var lineH = Math.round(fs * 1.25);
+      var maxLines = Math.floor((h - 2 * CARD_PAD) / lineH);
+      if (maxLines < 1) continue;
+      for (var wi = 0; wi < widths.length; wi++) {
+        var lines = wrapText(label, widths[wi] - 2 * CARD_PAD, fs, measure);
+        if (lines.length <= maxLines) return textCard(widths[wi], h, fs, lineH, lines);
+      }
+    }
+    var lastFs = FONT_LADDER[FONT_LADDER.length - 1];
+    var lastLineH = Math.round(lastFs * 1.25);
+    var lastW = widths[widths.length - 1];
+    var cap2 = Math.max(1, Math.floor((h - 2 * CARD_PAD) / lastLineH));
+    var ls = wrapText(label, lastW - 2 * CARD_PAD, lastFs, measure);
+    if (ls.length > cap2) {
+      ls = ls.slice(0, cap2);
+      ls[cap2 - 1] = ellipsize(ls[cap2 - 1] + "…", lastW - 2 * CARD_PAD, lastFs, measure);
+    }
+    return textCard(lastW, h, lastFs, lastLineH, ls);
+  }
+
+  function textCard(w, h, fontSize, lineH, lines) {
+    return {
+      kind: "text", w: w, h: h, radius: CARD_RADIUS,
+      fontSize: fontSize, lineH: lineH, lines: lines,
+      textTop: Math.round((h - lines.length * lineH) / 2)
+    };
+  }
+
+  function splitColour(colour) {
+    var m = /^rgba?\(([^)]+)\)$/.exec(String(colour).trim());
+    if (!m) return { hex: colour, opacity: 1 };
+    var parts = m[1].split(",").map(function (p) { return parseFloat(p); });
+    return { hex: rgbToHex([parts[0], parts[1], parts[2]]), opacity: parts.length > 3 ? parts[3] : 1 };
+  }
+
+  function layout(state, opts) {
+    var o = opts || {};
+    var measure = o.measure || approxMeasure;
+    var theme = THEMES[o.theme === "dark" ? "dark" : "light"];
+    var cats = state.categories.filter(function (c) { return !o.categoryId || c.id === o.categoryId; });
+    if (!cats.length) cats = state.categories.slice();
+    var tiers = state.tiers;
+    var colours = tierColours(state);
+    var size = clamp(state.settings.cardSize, CARD_MIN, CARD_MAX);
+    var mopts = { size: size, assets: state.assets, showCaptions: state.settings.showCaptions, measure: measure };
+
+    var cache = {};
+    function metric(id) {
+      if (!(id in cache)) cache[id] = cardMetrics(itemById(state, id), mopts);
+      return cache[id];
+    }
+
+    var widest = size;
+    cats.forEach(function (c) {
+      tiers.forEach(function (t) {
+        cellItems(state, c.id, t.id).forEach(function (id) {
+          var m = metric(id);
+          if (m && m.w > widest) widest = m.w;
+        });
+      });
+    });
+
+    var labelW = labelColumnWidth(state, measure);
+    var tierBlocks = tiers.map(function (t) {
+      var lines = wrapText(t.label, labelW - 12, LAYOUT.tierSize, measure);
+      var lh = Math.round(LAYOUT.tierSize * 1.15);
+      var desc = t.description ? wrapText(t.description, labelW - 10, LAYOUT.tierDescSize, measure) : [];
+      var dlh = Math.round(LAYOUT.tierDescSize * 1.3);
+      return {
+        lines: lines, lh: lh, desc: desc, dlh: dlh,
+        height: lines.length * lh + (desc.length ? LAYOUT.tierDescGap + desc.length * dlh : 0)
+      };
+    });
+    var colW = Math.max(LAYOUT.minColW, widest + 2 * LAYOUT.cellPad, Math.round(size * 3.2));
+    var minRowH = size + 2 * LAYOUT.cellPad;
+
+    function flow(ids) {
+      var x = LAYOUT.cellPad, y = LAYOUT.cellPad, rowH = 0, cards = [];
+      ids.forEach(function (id) {
+        var m = metric(id);
+        if (!m) return;
+        if (x > LAYOUT.cellPad && x + m.w > colW - LAYOUT.cellPad) { x = LAYOUT.cellPad; y += rowH + LAYOUT.gap; rowH = 0; }
+        cards.push({ x: x, y: y, m: m });
+        x += m.w + LAYOUT.gap;
+        if (m.h > rowH) rowH = m.h;
+      });
+      return { cards: cards, height: Math.max(minRowH, y + rowH + LAYOUT.cellPad) };
+    }
+
+    var grid = tiers.map(function (t, ti) {
+      var block = tierBlocks[ti];
+      var row = { tier: t, block: block, cells: [], height: Math.max(minRowH, block.height + 2 * LAYOUT.cellPad) };
+      cats.forEach(function (c) {
+        var cell = flow(cellItems(state, c.id, t.id));
+        row.cells.push(cell);
+        if (cell.height > row.height) row.height = cell.height;
+      });
+      return row;
+    });
+
+    var titleH = state.title ? LAYOUT.titleSize + LAYOUT.titleGap : 0;
+    var stamp = (o.includeDate && o.date) ? LAYOUT.stampSize + 12 : 0;
+    var gridTop = LAYOUT.pad + titleH;
+    var gridH = grid.reduce(function (a, r) { return a + r.height; }, 0);
+    var width = LAYOUT.pad * 2 + labelW + cats.length * colW;
+    var height = gridTop + LAYOUT.headerH + gridH + stamp + LAYOUT.pad;
+
+    var nodes = [];
+    var paper = o.transparent ? null : theme.panel;
+    var cellFill = o.transparent ? null : theme.cell;
+    function rect(x, y, w, h, fill, stroke, rx, opacity) {
+      nodes.push({ type: "rect", x: x, y: y, w: w, h: h, fill: fill, stroke: stroke || null, rx: rx || 0, opacity: opacity == null ? 1 : opacity });
+    }
+    function text(x, y, lines, fontSize, fill, anchor, weight, opacity, lineH) {
+      nodes.push({
+        type: "text", x: x, y: y, lines: [].concat(lines), fontSize: fontSize, fill: fill,
+        anchor: anchor || "start", weight: weight || 400, opacity: opacity == null ? 1 : opacity, lineH: lineH || Math.round(fontSize * 1.25)
+      });
+    }
+
+    if (!o.transparent) rect(0, 0, width, height, theme.bg);
+    if (state.title) text(LAYOUT.pad, LAYOUT.pad + Math.round(LAYOUT.titleSize * 0.82), state.title, LAYOUT.titleSize, theme.text, "start", 700);
+
+    rect(LAYOUT.pad, gridTop, labelW, LAYOUT.headerH, paper, theme.border);
+    cats.forEach(function (c, ci) {
+      var x = LAYOUT.pad + labelW + ci * colW;
+      rect(x, gridTop, colW, LAYOUT.headerH, paper, theme.border);
+      var line = ellipsize(c.label, colW - 16, LAYOUT.headerSize, measure);
+      text(x + colW / 2, gridTop + LAYOUT.headerH / 2 + LAYOUT.headerSize * 0.36, line, LAYOUT.headerSize, theme.text, "middle", 600);
+    });
+
+    var y = gridTop + LAYOUT.headerH;
+    grid.forEach(function (row, ri) {
+      var colour = colours[ri] || colours[colours.length - 1];
+      rect(LAYOUT.pad, y, labelW, row.height, colour, theme.border);
+      var ink = textOn(colour);
+      var block = row.block;
+      var blockTop = y + (row.height - block.height) / 2;
+      var cx = LAYOUT.pad + labelW / 2;
+      text(cx, blockTop + block.lh * 0.72, block.lines, LAYOUT.tierSize, ink, "middle", 750, 1, block.lh);
+      if (block.desc.length) {
+        text(cx, blockTop + block.lines.length * block.lh + LAYOUT.tierDescGap + block.dlh * 0.78,
+          block.desc, LAYOUT.tierDescSize, ink, "middle", 500, 0.78, block.dlh);
+      }
+
+      row.cells.forEach(function (cell, ci) {
+        var cx = LAYOUT.pad + labelW + ci * colW;
+        rect(cx, y, colW, row.height, cellFill, theme.border);
+        if (state.settings.tintRows) rect(cx, y, colW, row.height, colour, null, 0, TINT_STRENGTH);
+        cell.cards.forEach(function (c) {
+          var m = c.m, bx = cx + c.x, by = y + c.y;
+          rect(bx, by, m.w, m.h, theme.card, theme.cardBorder, m.radius);
+          if (m.kind === "image") {
+            nodes.push({
+              type: "image", x: bx + m.img.x, y: by + m.img.y, w: m.img.w, h: m.img.h,
+              assetId: m.assetId, clip: { x: bx, y: by, w: m.w, h: m.h, rx: m.radius }
+            });
+            if (m.cap) {
+              var cb = splitColour(theme.capBg);
+              rect(bx, by + m.h - m.cap.h, m.w, m.cap.h, cb.hex, null, 0, cb.opacity);
+              text(bx + m.w / 2, by + m.h - m.cap.h / 2 + m.cap.fontSize * 0.36, m.cap.text, m.cap.fontSize, theme.capFg, "middle", 500);
+            }
+          } else {
+            text(bx + m.w / 2, by + m.textTop + m.lineH * 0.72, m.lines, m.fontSize, theme.text, "middle", 500, 1, m.lineH);
+          }
+        });
+      });
+      y += row.height;
+    });
+
+    if (stamp) text(width - LAYOUT.pad, height - LAYOUT.pad + 2, o.date, LAYOUT.stampSize, theme.stamp, "end", 400);
+
+    return { width: width, height: height, nodes: nodes, background: o.transparent ? null : theme.bg };
+  }
+
+  function esc(s) {
+    return String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#39;");
+  }
+
+  function toSVG(doc, assets) {
+    var defs = [], body = [], clips = {}, clipN = 0;
+    doc.nodes.forEach(function (n) {
+      if (n.type === "rect") {
+        var attrs = 'x="' + n.x + '" y="' + n.y + '" width="' + n.w + '" height="' + n.h + '"';
+        if (n.rx) attrs += ' rx="' + n.rx + '"';
+        attrs += ' fill="' + (n.fill ? esc(n.fill) : "none") + '"';
+        if (n.opacity !== 1) attrs += ' fill-opacity="' + n.opacity + '"';
+        if (n.stroke) attrs += ' stroke="' + esc(n.stroke) + '" stroke-width="1"';
+        body.push("<rect " + attrs + "/>");
+      } else if (n.type === "text") {
+        var open = '<text x="' + n.x + '" y="' + n.y + '" font-family="' + esc(FONT_STACK + ", " + FONT_FALLBACK) +
+          '" font-size="' + n.fontSize + '" font-weight="' + n.weight + '" fill="' + esc(n.fill) + '" text-anchor="' + n.anchor + '"';
+        if (n.opacity !== 1) open += ' fill-opacity="' + n.opacity + '"';
+        open += ">";
+        var spans = n.lines.map(function (line, i) {
+          return '<tspan x="' + n.x + '" y="' + (n.y + i * n.lineH) + '">' + esc(line) + "</tspan>";
+        }).join("");
+        body.push(open + spans + "</text>");
+      } else if (n.type === "image") {
+        var href = (assets && assets[n.assetId]) ? assets[n.assetId].dataUri : "";
+        var clipAttr = "";
+        if (n.clip) {
+          var key = [n.clip.x, n.clip.y, n.clip.w, n.clip.h, n.clip.rx].join(",");
+          if (!clips[key]) {
+            clips[key] = "clip" + (clipN++);
+            defs.push('<clipPath id="' + clips[key] + '"><rect x="' + n.clip.x + '" y="' + n.clip.y +
+              '" width="' + n.clip.w + '" height="' + n.clip.h + '" rx="' + n.clip.rx + '"/></clipPath>');
+          }
+          clipAttr = ' clip-path="url(#' + clips[key] + ')"';
+        }
+        body.push('<image x="' + n.x + '" y="' + n.y + '" width="' + n.w + '" height="' + n.h +
+          '" preserveAspectRatio="none"' + clipAttr + ' href="' + esc(href) + '" xlink:href="' + esc(href) + '"/>');
+      }
+    });
+    return '<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="' + doc.width +
+      '" height="' + doc.height + '" viewBox="0 0 ' + doc.width + " " + doc.height + '">' +
+      (defs.length ? "<defs>" + defs.join("") + "</defs>" : "") + body.join("") + "</svg>";
+  }
+
+  function exportSVG(state, opts) {
+    return toSVG(layout(state, opts), state.assets);
+  }
+
+  function isoDate(d) {
+    var pad = function (n) { return (n < 10 ? "0" : "") + n; };
+    return d.getFullYear() + "-" + pad(d.getMonth() + 1) + "-" + pad(d.getDate());
+  }
+
+  function fixtureState() {
+    return validate({
+      version: 1,
+      title: "Fixture",
+      tiers: [{ id: "t1", label: "S" }, { id: "t2", label: "A" }, { id: "t3", label: "B" }],
+      categories: [{ id: "c1", label: "Graphics" }, { id: "c2", label: "Value" }],
+      items: [
+        { id: "i1", kind: "text", label: "Alpha" },
+        { id: "i2", kind: "text", label: "Beta" },
+        { id: "i3", kind: "image", label: "Gamma", assetId: "aaaa" }
+      ],
+      assets: { aaaa: { dataUri: "data:image/webp;base64,AAAA", w: 200, h: 100, hash: "aaaa" } },
+      placements: { c1: { t1: ["i1", "i3"], t2: ["i2"] }, c2: { t3: ["i1"] } },
+      focusedCategoryId: "c1",
+      settings: { theme: "light", palette: "classic", cardSize: 96, showCaptions: true, dateOnExport: true, hidePlacedInTray: true }
+    }).state;
+  }
+
+  function runSelfTests() {
+    var results = [];
+    function check(name, fn) {
+      try { fn(); results.push({ name: name, ok: true }); }
+      catch (e) { results.push({ name: name, ok: false, error: e && e.message ? e.message : String(e) }); }
+    }
+    function eq(a, b, msg) {
+      var sa = JSON.stringify(a), sb = JSON.stringify(b);
+      if (sa !== sb) throw new Error((msg || "not equal") + ": " + sa + " !== " + sb);
+    }
+    function ok(v, msg) { if (!v) throw new Error(msg || "expected truthy"); }
+
+    check("an item holds at most one tier per category", function () {
+      var s = fixtureState();
+      s = place(s, "c1", "t3", "i1", 0);
+      eq(cellItems(s, "c1", "t1"), ["i3"], "old tier still holds the item");
+      eq(cellItems(s, "c1", "t3"), ["i1"], "new tier");
+      eq(tierOf(s, "c2", "i1"), "t3", "other categories are untouched");
+    });
+
+    check("placing within the same tier reorders rather than duplicates", function () {
+      var s = fixtureState();
+      s = place(s, "c1", "t1", "i1", 2);
+      eq(cellItems(s, "c1", "t1"), ["i3", "i1"], "moved to the end");
+    });
+
+    check("an index counts the cell as it stands once the item is lifted out", function () {
+      var s = fixtureState();
+      s = place(s, "c1", "t1", "i2", 1);
+      eq(cellItems(s, "c1", "t1"), ["i1", "i2", "i3"], "inserted between the two residents");
+      s = place(s, "c1", "t1", "i1", 2);
+      eq(cellItems(s, "c1", "t1"), ["i2", "i3", "i1"], "moving right lands at the far end");
+      s = place(s, "c1", "t1", "i1", 1);
+      eq(cellItems(s, "c1", "t1"), ["i2", "i1", "i3"], "moving left lands before the third");
+    });
+
+    check("an item may sit in many categories at once", function () {
+      var s = fixtureState();
+      eq(categoriesFor(s, "i1").sort(), ["c1", "c2"]);
+      eq(categoriesFor(s, "i2"), ["c1"]);
+    });
+
+    check("unplacedIn drives the tray per column", function () {
+      var s = fixtureState();
+      eq(unplacedIn(s, "c1").map(function (i) { return i.id; }), []);
+      eq(unplacedIn(s, "c2").map(function (i) { return i.id; }), ["i2", "i3"]);
+    });
+
+    check("removing a tier reflows its items to the tier below", function () {
+      var s = removeTier(fixtureState(), "t1");
+      eq(s.tiers.map(function (t) { return t.id; }), ["t2", "t3"]);
+      eq(cellItems(s, "c1", "t2"), ["i2", "i1", "i3"], "items appended below");
+    });
+
+    check("removing the last tier sends its items to the tray", function () {
+      var s = removeTier(fixtureState(), "t3");
+      eq(tierOf(s, "c2", "i1"), null, "i1 is unplaced in c2");
+      eq(unplacedIn(s, "c2").map(function (i) { return i.id; }), ["i1", "i2", "i3"]);
+    });
+
+    check("a tier note is stored, trimmed, cleared and survives a preset change", function () {
+      var s = setTierDescription(fixtureState(), "t1", "  Best in class, highly recommend  ");
+      eq(s.tiers[0].description, "Best in class, highly recommend");
+      eq(s.tiers[1].description, undefined, "other tiers untouched");
+      eq(setTierDescription(s, "t1", "   ").tiers[0].description, undefined, "blank clears the note");
+      eq(applyTierPreset(s, "sabcd").tiers[0].description, "Best in class, highly recommend", "carried over by index");
+      eq(validate({ tiers: [{ id: "t1", label: "S", description: "  spaced  " }], categories: [{ id: "c1", label: "x" }] }).state.tiers[0].description, "spaced");
+    });
+
+    check("the label column widens to the note it has to hold, and no further", function () {
+      var plain = fixtureState();
+      var base = Math.max(LAYOUT.labelColW, Math.round(96 * 0.95));
+      eq(labelColumnWidth(plain, approxMeasure), base, "no notes, no extra width");
+
+      var brief = setTierDescription(plain, "t1", "Avoid");
+      eq(labelColumnWidth(brief, approxMeasure), base, "a note narrower than the column changes nothing");
+
+      var medium = setTierDescription(plain, "t1", "Would pick again");
+      var mw = labelColumnWidth(medium, approxMeasure);
+      ok(mw > base && mw < LAYOUT.labelColNoteMax, "a medium note widens part way: " + mw);
+      eq(mw, Math.ceil(approxMeasure("Would pick again", LAYOUT.tierDescSize)) + 2 * LAYOUT.tierDescPad);
+
+      var long = setTierDescription(plain, "t1", "Best in class, highly recommend without reservation of any kind");
+      eq(labelColumnWidth(long, approxMeasure), LAYOUT.labelColNoteMax, "a long note stops at the cap and wraps");
+      ok(labelColumnWidth(setTierDescription(long, "t1", ""), approxMeasure) === base, "and it narrows again");
+      ok(labelColumnWidth(setSetting(long, "cardSize", 176), approxMeasure) >= Math.round(176 * 0.95), "card size still sets the floor");
+    });
+
+    check("a tier note is drawn under the label and can set the row height", function () {
+      var note = "Best in class, highly recommend, no reservations at all, would happily stake my reputation on this one and several others besides";
+      var bare = validate(Object.assign({}, fixtureState(), { items: [], placements: {} })).state;
+      var noted = setTierDescription(bare, "t1", note);
+      var short = layout(bare, { theme: "light", measure: approxMeasure });
+      var tall = layout(noted, { theme: "light", measure: approxMeasure });
+      ok(tall.height > short.height, "an empty row grows to hold a long note");
+      ok(tall.width > short.width, "and the label column widens");
+
+      var texts = layout(setTierDescription(fixtureState(), "t1", "Highly recommend"), { theme: "light", measure: approxMeasure })
+        .nodes.filter(function (n) { return n.type === "text"; });
+      var labelNode = texts.filter(function (n) { return n.lines.join(" ") === "S"; })[0];
+      var noteNode = texts.filter(function (n) { return n.fontSize === LAYOUT.tierDescSize && n.opacity < 1; })[0];
+      ok(labelNode && noteNode, "both label and note emitted");
+      ok(noteNode.y > labelNode.y, "the note sits below the label");
+      eq(noteNode.x, labelNode.x, "both centred on the same axis");
+      eq(noteNode.lines.join(" "), "Highly recommend");
+      eq(texts.filter(function (n) { return n.fontSize === LAYOUT.tierDescSize && n.opacity < 1; }).length, 1, "only the noted tier gets one");
+    });
+
+    check("a fresh board opens on the default preset", function () {
+      eq(emptyState().tiers.map(function (t) { return t.label; }), ["S", "A", "B", "C", "D", "E", "F"]);
+      eq(tiersFromPreset("no such preset").map(function (t) { return t.label; }), ["S", "A", "B", "C", "D", "E", "F"], "an unknown id falls back to the default");
+      eq(validate({ tiers: [], categories: [{ id: "c1", label: "x" }] }).state.tiers.map(function (t) { return t.label; }), ["S", "A", "B", "C", "D", "E", "F"]);
+    });
+
+    check("a tier preset remaps existing placements by index", function () {
+      var s = applyTierPreset(fixtureState(), "sabcd");
+      eq(s.tiers.map(function (t) { return t.label; }), ["S", "A", "B", "C", "D"]);
+      eq(cellItems(s, "c1", s.tiers[0].id), ["i1", "i3"]);
+      eq(cellItems(s, "c2", s.tiers[2].id), ["i1"]);
+    });
+
+    check("focusing the column that already has focus changes nothing", function () {
+      var s = fixtureState();
+      ok(setFocus(s, "c1") === s, "same category returns the same state object");
+      ok(setFocus(s, "nope") === s, "an unknown category is ignored");
+      ok(setFocus(s, "c2") !== s, "a real change produces a new state");
+    });
+
+    check("removing the focused category moves focus and drops its placements", function () {
+      var s = removeCategory(fixtureState(), "c1");
+      eq(s.focusedCategoryId, "c2");
+      eq(s.placements.c1, undefined);
+      ok(indexOfId(s.categories, "c1") === -1, "category is gone");
+    });
+
+    check("the last category cannot be removed", function () {
+      var s = removeCategory(removeCategory(fixtureState(), "c1"), "c2");
+      eq(s.categories.length, 1);
+    });
+
+    check("assets dedupe by hash and are refcounted on delete", function () {
+      var s = fixtureState();
+      var added = addItems(s, [{ kind: "image", label: "Gamma copy", assetId: "aaaa" }]);
+      s = addAsset(added.state, { hash: "aaaa", dataUri: "data:image/webp;base64,DIFFERENT", w: 9, h: 9 });
+      eq(Object.keys(s.assets), ["aaaa"], "a repeat import stores one asset");
+      eq(s.assets.aaaa.dataUri, "data:image/webp;base64,AAAA", "the first copy wins");
+      s = removeItem(s, "i3");
+      ok(s.assets.aaaa, "asset survives while another item references it");
+      s = removeItem(s, added.items[0].id);
+      eq(Object.keys(s.assets), [], "asset is collected once nothing references it");
+    });
+
+    check("validate repairs duplicates, orphans and a dangling focus", function () {
+      var r = validate({
+        version: 0,
+        tiers: [{ id: "t1", label: "S" }, { id: "t1", label: "dupe" }],
+        categories: [{ id: "c1", label: "Only" }],
+        items: [{ id: "i1", kind: "text", label: "A" }, { id: "i2", kind: "image", label: "B", assetId: "missing" }],
+        assets: { unused: { dataUri: "data:image/png;base64,AA", w: 2, h: 2 } },
+        placements: { c1: { t1: ["i1", "i1", "ghost"], nope: ["i1"] }, gone: { t1: ["i1"] } },
+        focusedCategoryId: "vanished"
+      });
+      eq(r.state.tiers.length, 1, "duplicate tier id dropped");
+      eq(r.state.placements.c1.t1, ["i1"], "duplicate and unknown item ids dropped");
+      eq(r.state.placements.gone, undefined, "unknown category dropped");
+      eq(r.state.items[1].kind, "text", "image without an asset falls back to text");
+      eq(Object.keys(r.state.assets), [], "unreferenced asset dropped");
+      eq(r.state.focusedCategoryId, "c1", "focus repaired");
+      ok(r.warnings.length >= 6, "warnings reported: " + r.warnings.length);
+    });
+
+    check("history coalesces rapid edits under one key", function () {
+      var h = newHistory({ n: 0 });
+      h = commit(h, { n: 1 }, { key: "title", now: 1000 });
+      h = commit(h, { n: 2 }, { key: "title", now: 1200 });
+      h = commit(h, { n: 3 }, { key: "title", now: 1400 });
+      eq(h.stack.length, 2, "one entry for the burst");
+      eq(current(h), { n: 3 });
+      h = commit(h, { n: 4 }, { key: "title", now: 2600 });
+      eq(h.stack.length, 3, "a gap past the window starts a new entry");
+      h = commit(h, { n: 5 }, { key: null, now: 2700 });
+      h = commit(h, { n: 6 }, { key: null, now: 2750 });
+      eq(h.stack.length, 5, "unkeyed commits never coalesce");
+    });
+
+    check("undo and redo walk the stack and redo is dropped on a new commit", function () {
+      var h = newHistory({ n: 0 });
+      h = commit(h, { n: 1 }, { now: 1 });
+      h = commit(h, { n: 2 }, { now: 2 });
+      h = undo(h);
+      eq(current(h), { n: 1 });
+      ok(canRedo(h), "redo available");
+      h = redo(h);
+      eq(current(h), { n: 2 });
+      h = undo(h);
+      h = commit(h, { n: 9 }, { now: 3 });
+      ok(!canRedo(h), "redo dropped after a fresh commit");
+      eq(h.stack.map(function (s) { return s.n; }), [0, 1, 9]);
+    });
+
+    check("history is capped and drops the oldest entry", function () {
+      var h = newHistory({ n: 0 });
+      for (var i = 1; i <= HISTORY_LIMIT + 10; i++) h = commit(h, { n: i }, { now: i * 10000 });
+      eq(h.stack.length, HISTORY_LIMIT);
+      eq(h.stack[0], { n: HISTORY_LIMIT + 10 - HISTORY_LIMIT + 1 });
+      eq(current(h), { n: HISTORY_LIMIT + 10 });
+    });
+
+    check("a board saved with the old muted palette opens on pastel", function () {
+      var s = fixtureState();
+      s.settings.palette = "muted";
+      eq(validate(s).state.settings.palette, "pastel");
+      eq(validate(Object.assign({}, s, { settings: Object.assign({}, s.settings, { palette: "nonsense" }) })).state.settings.palette, "classic");
+    });
+
+    check("tinted rows lay the tier colour over the cell at half strength", function () {
+      var plain = fixtureState();
+      var tinted = setSetting(plain, "tintRows", true);
+      var colours = tierColours(plain);
+      var cellsOf = function (state, opts) {
+        return layout(state, Object.assign({ theme: "light", measure: approxMeasure }, opts || {}))
+          .nodes.filter(function (n) { return n.type === "rect" && n.opacity === TINT_STRENGTH; });
+      };
+      eq(cellsOf(plain).length, 0, "off by default");
+      eq(cellsOf(tinted).length, plain.tiers.length * plain.categories.length, "one tint per cell");
+      eq(cellsOf(tinted)[0].fill, colours[0], "the tint is the tier colour");
+      eq(cellsOf(tinted)[0].stroke, null, "the border is only drawn once, by the cell beneath");
+
+      var base = layout(tinted, { theme: "light", measure: approxMeasure })
+        .nodes.filter(function (n) { return n.type === "rect" && n.fill === THEMES.light.cell; });
+      ok(base.length > 0, "the cell still paints underneath, so the tint composites");
+      eq(cellsOf(tinted, { transparent: true })[0].fill, colours[0], "and a transparent sheet tints straight onto the backdrop");
+
+      eq(tintedCell("#000000", "#ffffff"), "#808080", "the DOM mix matches half opacity compositing");
+      eq(tintedCell(THEMES.dark.cell, colours[0]), mixHex(THEMES.dark.cell, colours[0], 0.5));
+      eq(validate(Object.assign({}, plain, { settings: Object.assign({}, plain.settings, { tintRows: "yes" }) })).state.settings.tintRows, true);
+    });
+
+    check("a tier ramp always spans the palette", function () {
+      eq(ramp(["#000000", "#ffffff"], 3), ["#000000", "#808080", "#ffffff"]);
+      eq(ramp(["#123456"], 1), ["#123456"]);
+      eq(ramp(paletteById("classic").stops, 6).length, 6);
+      eq(textOn("#FFFF7F"), "#10141a");
+      eq(textOn("#3E566E"), "#ffffff");
+    });
+
+    check("text wraps, breaks unbreakable words and ellipsizes", function () {
+      var m = approxMeasure;
+      eq(wrapText("one two three", 60, 12, m), ["one two", "three"]);
+      ok(wrapText("Supercalifragilisticexpialidocious", 60, 12, m).length > 1, "long word is broken");
+      wrapText("Supercalifragilisticexpialidocious", 60, 12, m).forEach(function (l) {
+        ok(m(l, 12) <= 60, "broken line fits: " + l);
+      });
+      ok(/…$/.test(ellipsize("a very long label indeed", 40, 12, m)), "ellipsis added");
+      ok(m(ellipsize("a very long label indeed", 40, 12, m), 12) <= 40, "ellipsised text fits");
+    });
+
+    check("card metrics stay inside the card box", function () {
+      var s = fixtureState();
+      var opts = { size: 96, assets: s.assets, showCaptions: true, measure: approxMeasure };
+      var t = cardMetrics(itemById(s, "i1"), opts);
+      eq(t.kind, "text");
+      ok(t.textTop >= 0, "text block fits vertically");
+      ok(t.lines.length * t.lineH <= t.h - 2 * CARD_PAD + 1, "lines fit the card height");
+      var img = cardMetrics(itemById(s, "i3"), opts);
+      eq(img.kind, "image");
+      eq(img.w, Math.round(96 * 1.72), "aspect is clamped");
+      ok(img.img.x >= 2 && img.img.y >= 2, "image is inset");
+      ok(img.img.y + img.img.h <= img.h - img.cap.h, "image clears the caption strip");
+    });
+
+    check("layout produces a stable board for the fixture", function () {
+      var doc = layout(fixtureState(), { theme: "light", includeDate: true, date: "2026-08-24", measure: approxMeasure });
+      ok(doc.width > 400 && doc.height > 200, "sensible canvas: " + doc.width + "x" + doc.height);
+      var rects = doc.nodes.filter(function (n) { return n.type === "rect"; }).length;
+      var images = doc.nodes.filter(function (n) { return n.type === "image"; });
+      eq(images.length, 1, "one image node");
+      ok(rects >= 1 + 3 + 3 + 6, "background, headers, tier labels and cells: " + rects);
+      var texts = doc.nodes.filter(function (n) { return n.type === "text"; });
+      ok(texts.some(function (t) { return t.lines.join(" ") === "Fixture"; }), "title emitted");
+      ok(texts.some(function (t) { return t.lines.join(" ") === "2026-08-24"; }), "date stamp emitted");
+      ok(texts.some(function (t) { return t.lines.join(" ") === "Graphics"; }), "category header emitted");
+    });
+
+    check("an item field splits on lines and on commas", function () {
+      eq(splitItemInput("test,helloworld, test two"), ["test", "helloworld", "test two"]);
+      eq(splitItemInput("one\ntwo\r\nthree"), ["one", "two", "three"]);
+      eq(splitItemInput("  padded ,, blanks ,\n\n, kept out "), ["padded", "blanks", "kept out"]);
+      eq(splitItemInput(""), []);
+      eq(splitItemInput("   "), []);
+      eq(splitItemInput("just one"), ["just one"]);
+    });
+
+    check("a transparent sheet drops the paper but keeps the board", function () {
+      var s = fixtureState();
+      var solid = layout(s, { theme: "light", measure: approxMeasure });
+      var clear = layout(s, { theme: "light", transparent: true, measure: approxMeasure });
+      eq(clear.width, solid.width, "geometry is untouched");
+      eq(clear.height, solid.height);
+      eq(clear.background, null, "no background colour to paint behind a raster");
+      eq(solid.background, THEMES.light.bg);
+
+      var filled = function (doc) { return doc.nodes.filter(function (n) { return n.type === "rect" && n.fill; }).length; };
+      ok(filled(clear) < filled(solid), "page, headers and cells stop painting");
+      var colours = tierColours(s);
+      ok(clear.nodes.some(function (n) { return n.type === "rect" && n.fill === colours[0]; }), "tier colours stay");
+      ok(clear.nodes.some(function (n) { return n.type === "rect" && n.fill === THEMES.light.card; }), "cards stay opaque so labels stay readable");
+
+      var svg = toSVG(clear, s.assets);
+      ok(svg.indexOf('fill="none"') !== -1, "cleared rects emit fill none, keeping their borders");
+      ok(svg.indexOf(THEMES.light.bg) === -1, "the page colour never appears");
+    });
+
+    check("SVG output is well formed and self contained", function () {
+      var s = fixtureState();
+      var svg = exportSVG(s, { theme: "light", includeDate: true, date: "2026-08-24", measure: approxMeasure });
+      ok(svg.indexOf('<svg xmlns="http://www.w3.org/2000/svg"') === 0, "svg root");
+      ok(svg.indexOf("</svg>") === svg.length - 6, "closes once");
+      ok(svg.indexOf("<foreignObject") === -1, "no foreignObject");
+      ok(svg.indexOf("<clipPath") !== -1, "rounded image is clipped");
+      ok(svg.indexOf("data:image/webp;base64,AAAA") !== -1, "image is embedded");
+      ok(!/(href|src)="(?!data:)[^"#]*:\/\//.test(svg.replace(/xmlns[^=]*="[^"]*"/g, "")), "no external references");
+      eq((svg.match(/<svg/g) || []).length, 1);
+      var open = (svg.match(/<text/g) || []).length, close = (svg.match(/<\/text>/g) || []).length;
+      eq(open, close, "text elements balance");
+    });
+
+    check("exporting one category narrows the sheet", function () {
+      var s = fixtureState();
+      var all = layout(s, { theme: "light", measure: approxMeasure });
+      var one = layout(s, { theme: "light", categoryId: "c2", measure: approxMeasure });
+      ok(one.width < all.width, "single category sheet is narrower");
+      eq(one.nodes.filter(function (n) { return n.type === "image"; }).length, 0, "c2 holds no image item");
+    });
+
+    check("the escaper neutralises markup in labels", function () {
+      var s = renameItem(fixtureState(), "i1", '</text><script>x</' + 'script>');
+      var svg = exportSVG(s, { theme: "light", measure: approxMeasure });
+      ok(svg.indexOf("<script") === -1, "no script element survives");
+      eq((svg.match(/<\/text>/g) || []).length, (svg.match(/<text /g) || []).length);
+    });
+
+    return results;
+  }
+
+  return {
+    VERSION: VERSION, STORAGE_KEY: STORAGE_KEY, FONT_STACK: FONT_STACK,
+    MAX_EDGE: MAX_EDGE, MAX_FILE_BYTES: MAX_FILE_BYTES, WEBP_QUALITY: WEBP_QUALITY, JPEG_QUALITY: JPEG_QUALITY,
+    ACCEPTED_TYPES: ACCEPTED_TYPES, AUTOSAVE_MS: AUTOSAVE_MS, DRAG_THRESHOLD: DRAG_THRESHOLD,
+    CARD_MIN: CARD_MIN, CARD_MAX: CARD_MAX, LAYOUT: LAYOUT,
+    TIER_PRESETS: TIER_PRESETS, PALETTES: PALETTES, THEMES: THEMES,
+    clamp: clamp, uid: uid, ramp: ramp, labelColumnWidth: labelColumnWidth, tintedCell: tintedCell,
+    TINT_STRENGTH: TINT_STRENGTH, textOn: textOn, splitColour: splitColour, paletteById: paletteById, tierColours: tierColours,
+    emptyState: emptyState, itemById: itemById, indexOfId: indexOfId, cellItems: cellItems, tierOf: tierOf,
+    categoriesFor: categoriesFor, unplacedIn: unplacedIn,
+    place: place, unplace: unplace, addItems: addItems, addAsset: addAsset, removeItem: removeItem, renameItem: renameItem,
+    setTitle: setTitle, setSetting: setSetting, setFocus: setFocus, gcAssets: gcAssets,
+    addTier: addTier, renameTier: renameTier, setTierDescription: setTierDescription, moveTier: moveTier, removeTier: removeTier, applyTierPreset: applyTierPreset,
+    addCategory: addCategory, renameCategory: renameCategory, moveCategory: moveCategory, removeCategory: removeCategory,
+    validate: validate,
+    newHistory: newHistory, commit: commit, undo: undo, redo: redo, canUndo: canUndo, canRedo: canRedo, current: current,
+    splitItemInput: splitItemInput, wrapText: wrapText, ellipsize: ellipsize, approxMeasure: approxMeasure, cardMetrics: cardMetrics,
+    layout: layout, toSVG: toSVG, exportSVG: exportSVG, isoDate: isoDate,
+    fixtureState: fixtureState, runSelfTests: runSelfTests
+  };
+})();
+</script>
+<script id="app">
+"use strict";
+(function () {
+
+  function themeCss() {
+    function block(selector, theme) {
+      var out = "";
+      for (var key in theme) out += "--" + key.replace(/[A-Z]/g, function (m) { return "-" + m.toLowerCase(); }) + ":" + theme[key] + ";";
+      return selector + "{" + out + "}";
+    }
+    return block(":root", Core.THEMES.light) +
+      "@media (prefers-color-scheme: dark){" + block(':root:not([data-theme="light"])', Core.THEMES.dark) + "}" +
+      block(':root[data-theme="dark"]', Core.THEMES.dark) +
+      block(':root[data-theme="light"]', Core.THEMES.light);
+  }
+  var tokens = document.createElement("style");
+  tokens.id = "theme-tokens";
+  tokens.textContent = themeCss();
+  document.head.appendChild(tokens);
+
+  var state = null, history = null, els = {}, filterText = "", drag = null, saveTimer = null, openPop = null, ctxMenu = null;
+  var storageOk = true, quotaWarned = false;
+  var measureCanvas = document.createElement("canvas").getContext("2d");
+
+  function measure(text, fontSize) {
+    measureCanvas.font = "500 " + fontSize + "px " + Core.FONT_STACK;
+    return measureCanvas.measureText(String(text)).width;
+  }
+  function metricOpts() {
+    return { size: state.settings.cardSize, assets: state.assets, showCaptions: state.settings.showCaptions, measure: measure };
+  }
+  function $(sel, root) { return (root || document).querySelector(sel); }
+  function el(tag, cls, text) {
+    var node = document.createElement(tag);
+    if (cls) node.className = cls;
+    if (text != null) node.textContent = text;
+    return node;
+  }
+  function iconButton(label, title, act, data) {
+    var b = el("button", "hbtn", label);
+    b.type = "button";
+    b.title = title;
+    b.setAttribute("aria-label", title);
+    b.dataset.act = act;
+    if (data) for (var k in data) b.dataset[k] = data[k];
+    return b;
+  }
+
+  function toast(message, kind) {
+    var node = el("div", "toast" + (kind === "err" ? " err" : ""), message);
+    els.toasts.appendChild(node);
+    setTimeout(function () { node.remove(); }, kind === "err" ? 6000 : 3200);
+  }
+
+  function setState(next, opts) {
+    if (!next || next === state) return;
+    history = Core.commit(history, next, { key: opts && opts.key, now: Date.now() });
+    state = Core.current(history);
+    render();
+    scheduleSave();
+  }
+  function resetState(next, clearHistory) {
+    state = next;
+    if (clearHistory) history = Core.newHistory(next);
+    else history = Core.commit(history, next, { now: Date.now() });
+    state = Core.current(history);
+    render();
+    scheduleSave();
+  }
+  function travel(nextHistory) {
+    if (nextHistory === history) return;
+    history = nextHistory;
+    state = Core.current(history);
+    render();
+    scheduleSave();
+  }
+
+  function scheduleSave() {
+    clearTimeout(saveTimer);
+    saveTimer = setTimeout(save, Core.AUTOSAVE_MS);
+  }
+  function save() {
+    if (!storageOk) return;
+    try {
+      localStorage.setItem(Core.STORAGE_KEY, JSON.stringify(state));
+    } catch (e) {
+      if (e && (e.name === "QuotaExceededError" || e.name === "NS_ERROR_DOM_QUOTA_REACHED")) {
+        if (!quotaWarned) {
+          quotaWarned = true;
+          toast("Browser storage is full, so this board is not being saved automatically. Save it to a file, or use fewer or smaller images.", "err");
+        }
+      } else {
+        storageOk = false;
+        toast("Browser storage is unavailable here, so this board is not being saved automatically. Use File then Save to keep a copy.", "err");
+      }
+    }
+  }
+
+  function cardEl(item, ctx) {
+    var m = Core.cardMetrics(item, metricOpts());
+    var node = el("div", "card");
+    node.dataset.item = item.id;
+    node.style.width = m.w + "px";
+    node.style.height = m.h + "px";
+    node.title = item.label || "";
+    if (ctx.categoryId) {
+      node.dataset.cat = ctx.categoryId;
+      node.dataset.tier = ctx.tierId;
+    }
+    if (m.kind === "image") {
+      var img = el("img");
+      img.src = state.assets[m.assetId].dataUri;
+      img.alt = item.label || "";
+      img.draggable = false;
+      img.style.left = m.img.x + "px";
+      img.style.top = m.img.y + "px";
+      img.style.width = m.img.w + "px";
+      img.style.height = m.img.h + "px";
+      node.appendChild(img);
+      if (m.cap) {
+        var cap = el("div", "cap", m.cap.text);
+        cap.style.height = m.cap.h + "px";
+        cap.style.fontSize = m.cap.fontSize + "px";
+        node.appendChild(cap);
+      }
+    } else {
+      var box = el("div", "lines");
+      box.style.fontSize = m.fontSize + "px";
+      box.style.lineHeight = m.lineH + "px";
+      box.style.fontWeight = "500";
+      m.lines.forEach(function (line) { box.appendChild(el("span", "ln", line)); });
+      node.appendChild(box);
+    }
+    var close = el("button", "x", "×");
+    close.type = "button";
+    if (ctx.categoryId) {
+      close.dataset.act = "unplace";
+      close.title = "Remove from this category";
+    } else {
+      close.dataset.act = "delete";
+      close.title = "Delete this item everywhere";
+    }
+    close.setAttribute("aria-label", close.title);
+    node.appendChild(close);
+    return node;
+  }
+
+  function renderBoard() {
+    var board = els.board;
+    var size = state.settings.cardSize;
+    var colMin = Math.max(Core.LAYOUT.minColW, Math.round(size * 3.2));
+    var labelW = Core.labelColumnWidth(state, measure);
+    board.style.setProperty("--colmin", colMin + "px");
+    board.style.setProperty("--labelw", labelW + "px");
+    board.style.setProperty("--rowmin", (size + 2 * Core.LAYOUT.cellPad) + "px");
+    board.style.gridTemplateColumns = "var(--labelw) repeat(" + state.categories.length + ", minmax(var(--colmin), 1fr))";
+    board.style.minWidth = (labelW + state.categories.length * colMin) + "px";
+
+    var frag = document.createDocumentFragment();
+    var corner = el("div", "hcell corner", "Tier");
+    frag.appendChild(corner);
+
+    state.categories.forEach(function (cat, ci) {
+      var head = el("div", "hcell cat" + (cat.id === state.focusedCategoryId ? " focused" : ""));
+      head.dataset.cat = cat.id;
+      head.dataset.act = "focus";
+      head.tabIndex = 0;
+      head.setAttribute("role", "button");
+      head.setAttribute("aria-pressed", cat.id === state.focusedCategoryId ? "true" : "false");
+      head.title = "Focus this column. Double click to rename.";
+      head.appendChild(el("span", "cat-name", cat.label));
+      if (ci > 0) head.appendChild(iconButton("‹", "Move column left", "cat-left", { cat: cat.id }));
+      if (ci < state.categories.length - 1) head.appendChild(iconButton("›", "Move column right", "cat-right", { cat: cat.id }));
+      if (state.categories.length > 1) head.appendChild(iconButton("×", "Remove column", "cat-remove", { cat: cat.id }));
+      frag.appendChild(head);
+    });
+
+    var colours = Core.tierColours(state);
+    state.tiers.forEach(function (tier, ti) {
+      var colour = colours[ti];
+      var label = el("div", "tier-label");
+      label.dataset.tier = tier.id;
+      label.style.background = colour;
+      label.style.color = Core.textOn(colour);
+      label.title = "Double click to rename";
+      label.appendChild(el("span", "tname", tier.label));
+      var note = el("div", "tdesc" + (tier.description ? "" : " empty"), tier.description || "add a note");
+      note.style.fontSize = Core.LAYOUT.tierDescSize + "px";
+      note.title = "Double click to " + (tier.description ? "edit this note" : "add a note");
+      label.appendChild(note);
+      var btns = el("div", "tbtns");
+      btns.appendChild(iconButton("▲", "Move tier up", "tier-up", { tier: tier.id }));
+      btns.appendChild(iconButton("×", "Remove tier", "tier-remove", { tier: tier.id }));
+      btns.appendChild(iconButton("▼", "Move tier down", "tier-down", { tier: tier.id }));
+      label.appendChild(btns);
+      frag.appendChild(label);
+
+      state.categories.forEach(function (cat) {
+        var cell = el("div", "cell");
+        cell.dataset.cat = cat.id;
+        cell.dataset.tier = tier.id;
+        if (state.settings.tintRows) cell.style.background = Core.tintedCell(Core.THEMES[resolvedTheme()].cell, colour);
+        Core.cellItems(state, cat.id, tier.id).forEach(function (id) {
+          var item = Core.itemById(state, id);
+          if (item) cell.appendChild(cardEl(item, { categoryId: cat.id, tierId: tier.id }));
+        });
+        frag.appendChild(cell);
+      });
+    });
+
+    board.textContent = "";
+    board.appendChild(frag);
+  }
+
+  function trayItems() {
+    var pool = state.settings.hidePlacedInTray ? Core.unplacedIn(state, state.focusedCategoryId) : state.items;
+    if (!filterText) return pool;
+    var needle = filterText.toLowerCase();
+    return pool.filter(function (i) { return (i.label || "").toLowerCase().indexOf(needle) !== -1; });
+  }
+
+  function renderTray() {
+    var strip = els.trayStrip;
+    var items = trayItems();
+    var frag = document.createDocumentFragment();
+    items.forEach(function (item) {
+      var wrap = el("div", "tray-item");
+      wrap.appendChild(cardEl(item, {}));
+      var dots = el("div", "dots");
+      var placed = Core.categoriesFor(state, item.id);
+      state.categories.forEach(function (cat) {
+        var dot = el("span", "dot" + (placed.indexOf(cat.id) !== -1 ? " on" : ""));
+        dot.title = cat.label + (placed.indexOf(cat.id) !== -1 ? ": placed" : ": not placed");
+        dots.appendChild(dot);
+      });
+      wrap.appendChild(dots);
+      frag.appendChild(wrap);
+    });
+    strip.textContent = "";
+    if (!items.length) {
+      var msg = state.items.length
+        ? (filterText ? "No items match that filter." : "Every item is placed in this column.")
+        : "No items yet. Type one above, or drop images anywhere.";
+      strip.appendChild(el("div", "tray-empty", msg));
+    } else {
+      strip.appendChild(frag);
+    }
+    var cat = state.categories.filter(function (c) { return c.id === state.focusedCategoryId; })[0];
+    els.trayCount.textContent = items.length + (items.length === 1 ? " item" : " items");
+    els.trayFocus.textContent = state.settings.hidePlacedInTray && cat ? "unplaced in " + cat.label : "all items";
+  }
+
+  function renderChrome() {
+    if (document.activeElement !== els.title) els.title.value = state.title;
+    if (state.settings.theme === "system") document.documentElement.removeAttribute("data-theme");
+    else document.documentElement.dataset.theme = state.settings.theme;
+    els.undo.disabled = !Core.canUndo(history);
+    els.redo.disabled = !Core.canRedo(history);
+    els.theme.value = state.settings.theme;
+    els.palette.value = state.settings.palette;
+    els.cardSize.value = state.settings.cardSize;
+    els.cardSizeOut.textContent = state.settings.cardSize + "px";
+    els.captions.checked = state.settings.showCaptions;
+    els.tintRows.checked = state.settings.tintRows;
+    els.hidePlaced.checked = state.settings.hidePlacedInTray;
+  }
+
+  function render() {
+    renderChrome();
+    renderBoard();
+    renderTray();
+  }
+
+  function closePop() {
+    if (openPop) openPop.classList.remove("open");
+    openPop = null;
+  }
+  function closeCtx() {
+    if (ctxMenu) ctxMenu.remove();
+    ctxMenu = null;
+  }
+  function showContextMenu(x, y, entries) {
+    closeCtx();
+    var menu = el("div", "ctx");
+    entries.forEach(function (entry) {
+      var b = el("button", entry.danger ? "danger" : null, entry.label);
+      b.type = "button";
+      b.addEventListener("click", function () { closeCtx(); entry.run(); });
+      menu.appendChild(b);
+    });
+    document.body.appendChild(menu);
+    var r = menu.getBoundingClientRect();
+    menu.style.left = Math.min(x, window.innerWidth - r.width - 8) + "px";
+    menu.style.top = Math.min(y, window.innerHeight - r.height - 8) + "px";
+    ctxMenu = menu;
+  }
+
+  function modal(build) {
+    return new Promise(function (resolve) {
+      var back = el("div", "modal-back");
+      var box = el("div", "modal");
+      var settled = false;
+      function close(value) {
+        if (settled) return;
+        settled = true;
+        back.remove();
+        document.removeEventListener("keydown", onKey, true);
+        resolve(value);
+      }
+      function onKey(e) {
+        if (e.key === "Escape") { e.stopPropagation(); close(null); }
+      }
+      back.addEventListener("pointerdown", function (e) { if (e.target === back) close(null); });
+      document.addEventListener("keydown", onKey, true);
+      build(box, close);
+      back.appendChild(box);
+      document.body.appendChild(back);
+      var focusable = box.querySelector("input, select, button");
+      if (focusable) focusable.focus();
+    });
+  }
+
+  function confirmDialog(title, message, confirmLabel) {
+    return modal(function (box, close) {
+      box.appendChild(el("h2", null, title));
+      box.appendChild(el("p", null, message));
+      var actions = el("div", "actions");
+      var cancel = el("button", null, "Cancel");
+      cancel.type = "button";
+      cancel.addEventListener("click", function () { close(false); });
+      var go = el("button", "accent", confirmLabel);
+      go.type = "button";
+      go.addEventListener("click", function () { close(true); });
+      actions.appendChild(cancel);
+      actions.appendChild(go);
+      box.appendChild(actions);
+    });
+  }
+
+  function inlineRename(node, currentLabel, apply) {
+    var hidden = [];
+    Array.prototype.forEach.call(node.children, function (child) {
+      hidden.push([child, child.style.display]);
+      child.style.display = "none";
+    });
+    var ownText = hidden.length ? null : node.textContent;
+    if (ownText !== null) node.textContent = "";
+    var input = el("input");
+    input.type = "text";
+    input.value = currentLabel;
+    input.style.width = "100%";
+    input.style.minWidth = "0";
+    input.style.fontSize = "13px";
+    input.style.textAlign = "center";
+    input.style.color = "var(--text)";
+    input.style.background = "var(--btn)";
+    node.appendChild(input);
+    input.focus();
+    input.select();
+    var settled = false;
+    function finish(commitIt) {
+      if (settled) return;
+      settled = true;
+      var value = input.value;
+      input.remove();
+      hidden.forEach(function (pair) { pair[0].style.display = pair[1]; });
+      if (ownText !== null) node.textContent = ownText;
+      if (commitIt && value !== currentLabel) apply(value);
+    }
+    input.addEventListener("keydown", function (e) {
+      e.stopPropagation();
+      if (e.key === "Enter") { e.preventDefault(); finish(true); }
+      else if (e.key === "Escape") { e.preventDefault(); finish(false); }
+    });
+    input.addEventListener("blur", function () { finish(true); });
+    ["pointerdown", "click", "dblclick"].forEach(function (type) {
+      input.addEventListener(type, function (e) { e.stopPropagation(); });
+    });
+  }
+
+  function liveCard(itemId, categoryId) {
+    var all = document.querySelectorAll('.card[data-item="' + itemId + '"]');
+    for (var i = 0; i < all.length; i++) if ((all[i].dataset.cat || "") === (categoryId || "")) return all[i];
+    return null;
+  }
+
+  function beginCardRename(node, itemId) {
+    var item = Core.itemById(state, itemId);
+    if (!item) return;
+    node.classList.add("editing");
+    var input = el("input", "rename");
+    input.type = "text";
+    input.value = item.label;
+    node.appendChild(input);
+    input.focus();
+    input.select();
+    var settled = false;
+    function finish(commitIt) {
+      if (settled) return;
+      settled = true;
+      var value = input.value;
+      input.remove();
+      node.classList.remove("editing");
+      if (commitIt && value !== item.label) setState(Core.renameItem(state, itemId, value));
+    }
+    input.addEventListener("keydown", function (e) {
+      e.stopPropagation();
+      if (e.key === "Enter") { e.preventDefault(); finish(true); }
+      else if (e.key === "Escape") { e.preventDefault(); finish(false); }
+    });
+    input.addEventListener("blur", function () { finish(true); });
+    ["pointerdown", "click", "dblclick"].forEach(function (type) {
+      input.addEventListener(type, function (e) { e.stopPropagation(); });
+    });
+  }
+
+  function cardsIn(container, exclude) {
+    return Array.prototype.filter.call(container.children, function (c) {
+      return c.classList.contains("card") && c !== exclude;
+    });
+  }
+
+  function insertionIndex(container, x, y, exclude) {
+    var cards = cardsIn(container, exclude);
+    if (!cards.length) return 0;
+    var rows = [];
+    cards.forEach(function (card, i) {
+      var r = card.getBoundingClientRect();
+      var row = rows[rows.length - 1];
+      if (!row || r.top > row.top + row.height * 0.5) rows.push({ top: r.top, bottom: r.bottom, height: r.height, items: [{ i: i, r: r }] });
+      else { row.items.push({ i: i, r: r }); row.bottom = Math.max(row.bottom, r.bottom); }
+    });
+    var target = rows[rows.length - 1];
+    for (var k = 0; k < rows.length; k++) if (y <= rows[k].bottom) { target = rows[k]; break; }
+    for (var j = 0; j < target.items.length; j++) {
+      var it = target.items[j];
+      if (x < it.r.left + it.r.width / 2) return it.i;
+    }
+    return target.items[target.items.length - 1].i + 1;
+  }
+
+  function clearDropHints() {
+    Array.prototype.forEach.call(document.querySelectorAll(".cell.over, .tray.over"), function (n) { n.classList.remove("over"); });
+    var marker = $(".marker");
+    if (marker) marker.remove();
+  }
+
+  function hitTest(x, y) {
+    var node = document.elementFromPoint(x, y);
+    if (!node) return null;
+    var cell = node.closest ? node.closest(".cell") : null;
+    if (cell) return { kind: "cell", el: cell, cat: cell.dataset.cat, tier: cell.dataset.tier };
+    var tray = node.closest ? node.closest(".tray") : null;
+    if (tray) return { kind: "tray", el: tray };
+    return null;
+  }
+
+  function autoScrollTick() {
+    if (!drag || !drag.active) return;
+    var wrap = els.boardWrap, r = wrap.getBoundingClientRect(), margin = 60, speed = 20;
+    var dx = 0, dy = 0;
+    if (drag.y < r.top + margin) dy = -speed * Core.clamp((r.top + margin - drag.y) / margin, 0, 1);
+    else if (drag.y > r.bottom - margin) dy = speed * Core.clamp((drag.y - r.bottom + margin) / margin, 0, 1);
+    if (drag.x < r.left + margin) dx = -speed * Core.clamp((r.left + margin - drag.x) / margin, 0, 1);
+    else if (drag.x > r.right - margin) dx = speed * Core.clamp((drag.x - r.right + margin) / margin, 0, 1);
+    if (dx || dy) wrap.scrollBy(dx, dy);
+    drag.raf = requestAnimationFrame(autoScrollTick);
+  }
+
+  function startDrag() {
+    drag.active = true;
+    drag.node.classList.add("dragging");
+    var ghost = drag.node.cloneNode(true);
+    ghost.className = "card ghost";
+    ghost.style.width = drag.node.style.width;
+    ghost.style.height = drag.node.style.height;
+    var x = ghost.querySelector(".x");
+    if (x) x.remove();
+    document.body.appendChild(ghost);
+    drag.ghost = ghost;
+    moveGhost();
+    drag.raf = requestAnimationFrame(autoScrollTick);
+  }
+
+  function moveGhost() {
+    drag.ghost.style.left = drag.x + "px";
+    drag.ghost.style.top = drag.y + "px";
+  }
+
+  function updateDropTarget() {
+    clearDropHints();
+    var hit = hitTest(drag.x, drag.y);
+    drag.target = null;
+    if (!hit) return;
+    if (hit.kind === "cell") {
+      hit.el.classList.add("over");
+      var index = insertionIndex(hit.el, drag.x, drag.y, drag.node);
+      var marker = el("div", "marker");
+      marker.style.minHeight = state.settings.cardSize + "px";
+      var cards = cardsIn(hit.el, drag.node);
+      if (index >= cards.length) hit.el.appendChild(marker);
+      else hit.el.insertBefore(marker, cards[index]);
+      drag.target = { kind: "cell", cat: hit.cat, tier: hit.tier, index: index };
+    } else if (hit.kind === "tray" && drag.from) {
+      hit.el.classList.add("over");
+      drag.target = { kind: "tray" };
+    }
+  }
+
+  function endDrag(commitIt) {
+    if (!drag) return;
+    if (drag.raf) cancelAnimationFrame(drag.raf);
+    if (drag.ghost) drag.ghost.remove();
+    drag.node.classList.remove("dragging");
+    clearDropHints();
+    var d = drag;
+    drag = null;
+    if (!d.active) return;
+    if (!commitIt || !d.target) { render(); return; }
+    var next = state;
+    if (d.target.kind === "cell") {
+      var before = JSON.stringify(state.placements[d.target.cat] || {});
+      next = Core.place(state, d.target.cat, d.target.tier, d.id, d.target.index);
+      var moved = JSON.stringify(next.placements[d.target.cat] || {}) !== before;
+      if (!moved && d.target.cat === state.focusedCategoryId) { render(); return; }
+      if (d.target.cat !== state.focusedCategoryId) next = Core.setFocus(next, d.target.cat);
+    } else if (d.target.kind === "tray" && d.from) {
+      next = Core.unplace(state, d.from, d.id);
+    }
+    if (next === state) render();
+    else setState(next);
+  }
+
+  function onPointerDown(e) {
+    if (e.pointerType === "mouse" && e.button !== 0) return;
+    var node = e.target.closest && e.target.closest(".card");
+    if (!node || !node.dataset.item) return;
+    if (e.target.closest("button, input")) return;
+    if (node.classList.contains("editing")) return;
+    drag = {
+      id: node.dataset.item, node: node,
+      from: node.dataset.cat || null, fromTier: node.dataset.tier || null,
+      startX: e.clientX, startY: e.clientY, x: e.clientX, y: e.clientY,
+      active: false, ghost: null, target: null, raf: 0, pointerId: e.pointerId
+    };
+    node.setPointerCapture(e.pointerId);
+    node.addEventListener("pointermove", onPointerMove);
+    node.addEventListener("pointerup", onPointerUp);
+    node.addEventListener("pointercancel", onPointerCancel);
+  }
+
+  function onPointerMove(e) {
+    if (!drag || e.pointerId !== drag.pointerId) return;
+    drag.x = e.clientX;
+    drag.y = e.clientY;
+    if (!drag.active) {
+      var dx = drag.x - drag.startX, dy = drag.y - drag.startY;
+      if (Math.sqrt(dx * dx + dy * dy) < Core.DRAG_THRESHOLD) return;
+      startDrag();
+    }
+    e.preventDefault();
+    moveGhost();
+    updateDropTarget();
+  }
+
+  function detach(node) {
+    node.removeEventListener("pointermove", onPointerMove);
+    node.removeEventListener("pointerup", onPointerUp);
+    node.removeEventListener("pointercancel", onPointerCancel);
+  }
+  function onPointerUp(e) {
+    if (!drag || e.pointerId !== drag.pointerId) return;
+    detach(drag.node);
+    endDrag(true);
+  }
+  function onPointerCancel(e) {
+    if (!drag || e.pointerId !== drag.pointerId) return;
+    detach(drag.node);
+    endDrag(false);
+  }
+
+  function resolvedTheme() {
+    if (state.settings.theme === "dark") return "dark";
+    if (state.settings.theme === "light") return "light";
+    return window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+  }
+
+  function readAsDataUri(blob) {
+    return new Promise(function (resolve, reject) {
+      var reader = new FileReader();
+      reader.onload = function () { resolve(reader.result); };
+      reader.onerror = function () { reject(new Error("Could not read the encoded image.")); };
+      reader.readAsDataURL(blob);
+    });
+  }
+
+  function decodeViaElement(file) {
+    return new Promise(function (resolve, reject) {
+      var url = URL.createObjectURL(file);
+      var img = new Image();
+      img.onload = function () {
+        var w = img.naturalWidth, h = img.naturalHeight;
+        if (!w || !h) { w = h = Core.MAX_EDGE; img.width = w; img.height = h; }
+        resolve({ source: img, w: w, h: h, url: url });
+      };
+      img.onerror = function () { URL.revokeObjectURL(url); reject(new Error("Could not decode " + file.name + ".")); };
+      img.src = url;
+    });
+  }
+
+  function decodeImage(file) {
+    if (file.type !== "image/svg+xml" && typeof createImageBitmap === "function") {
+      return createImageBitmap(file).then(function (bitmap) {
+        return { source: bitmap, w: bitmap.width, h: bitmap.height };
+      }, function () { return decodeViaElement(file); });
+    }
+    return decodeViaElement(file);
+  }
+
+  function encodeCanvas(canvas, background) {
+    return new Promise(function (resolve, reject) {
+      if (!canvas.toBlob) { reject(new Error("This browser cannot encode canvas images.")); return; }
+      canvas.toBlob(function (blob) {
+        if (blob && blob.type === "image/webp") { resolve(blob); return; }
+        var flat = document.createElement("canvas");
+        flat.width = canvas.width;
+        flat.height = canvas.height;
+        var ctx = flat.getContext("2d");
+        ctx.fillStyle = background;
+        ctx.fillRect(0, 0, flat.width, flat.height);
+        ctx.drawImage(canvas, 0, 0);
+        flat.toBlob(function (jpeg) {
+          if (jpeg) resolve(jpeg); else reject(new Error("Could not encode the image."));
+        }, "image/jpeg", Core.JPEG_QUALITY);
+      }, "image/webp", Core.WEBP_QUALITY);
+    });
+  }
+
+  function fnv1a(buffer) {
+    var bytes = new Uint8Array(buffer), a = 0x811c9dc5, b = 0x01000193;
+    for (var i = 0; i < bytes.length; i++) {
+      a = Math.imul(a ^ bytes[i], 16777619) >>> 0;
+      b = Math.imul((b + bytes[i]) >>> 0, 2654435761) >>> 0;
+      b = (b ^ (b >>> 13)) >>> 0;
+    }
+    return ("0000000" + a.toString(16)).slice(-8) + ("0000000" + b.toString(16)).slice(-8);
+  }
+
+  function hashBytes(buffer) {
+    if (window.crypto && crypto.subtle && crypto.subtle.digest) {
+      return crypto.subtle.digest("SHA-256", buffer).then(function (digest) {
+        var bytes = new Uint8Array(digest), out = "";
+        for (var i = 0; i < 8; i++) out += (bytes[i] + 256).toString(16).slice(1);
+        return out;
+      }, function () { return fnv1a(buffer); });
+    }
+    return Promise.resolve(fnv1a(buffer));
+  }
+
+  function processImage(file, background) {
+    return decodeImage(file).then(function (decoded) {
+      var scale = Math.min(1, Core.MAX_EDGE / Math.max(decoded.w, decoded.h));
+      var w = Math.max(1, Math.round(decoded.w * scale));
+      var h = Math.max(1, Math.round(decoded.h * scale));
+      var canvas = document.createElement("canvas");
+      canvas.width = w;
+      canvas.height = h;
+      var ctx = canvas.getContext("2d");
+      ctx.imageSmoothingQuality = "high";
+      ctx.drawImage(decoded.source, 0, 0, w, h);
+      if (decoded.url) URL.revokeObjectURL(decoded.url);
+      if (decoded.source.close) decoded.source.close();
+      return encodeCanvas(canvas, background).then(function (blob) {
+        return blob.arrayBuffer().then(function (buffer) {
+          return hashBytes(buffer).then(function (hash) {
+            return readAsDataUri(blob).then(function (dataUri) {
+              return { hash: hash, dataUri: dataUri, w: w, h: h, label: file.name.replace(/\.[^.]+$/, "") };
+            });
+          });
+        });
+      });
+    });
+  }
+
+  function importFiles(fileList, target) {
+    var files = Array.prototype.slice.call(fileList || []);
+    var accepted = files.filter(function (f) {
+      if (Core.ACCEPTED_TYPES.indexOf(f.type) === -1) {
+        toast(f.name + ": " + (f.type || "unknown type") + " is not an accepted image format.", "err");
+        return false;
+      }
+      if (f.size > Core.MAX_FILE_BYTES) {
+        toast(f.name + " is larger than the 20MB limit.", "err");
+        return false;
+      }
+      return true;
+    });
+    if (!accepted.length) return;
+    var background = Core.THEMES[resolvedTheme()].panel;
+    Promise.all(accepted.map(function (f) {
+      return processImage(f, background).then(null, function (e) { toast(e.message, "err"); return null; });
+    })).then(function (results) {
+      var good = results.filter(Boolean);
+      if (!good.length) return;
+      var next = state, reused = 0, specs = [];
+      good.forEach(function (r) {
+        if (next.assets[r.hash]) reused++;
+        next = Core.addAsset(next, r);
+        specs.push({ kind: "image", label: r.label, assetId: r.hash });
+      });
+      var added = Core.addItems(next, specs);
+      next = added.state;
+      if (target) {
+        added.items.forEach(function (item) { next = Core.place(next, target.cat, target.tier, item.id, null); });
+        next = Core.setFocus(next, target.cat);
+      }
+      setState(next);
+      toast(good.length + (good.length === 1 ? " image added" : " images added") +
+        (reused ? ", " + reused + " reused an image already on the board" : "") + ".");
+    });
+  }
+
+  function addTextItems(raw, target) {
+    var lines = Core.splitItemInput(raw);
+    if (!lines.length) return;
+    var added = Core.addItems(state, lines.map(function (label) { return { kind: "text", label: label }; }));
+    var next = added.state;
+    if (target) {
+      added.items.forEach(function (item) { next = Core.place(next, target.cat, target.tier, item.id, null); });
+      next = Core.setFocus(next, target.cat);
+    }
+    setState(next);
+  }
+
+  function slug() {
+    var base = (state.title || "tier-list").toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
+    return base || "tier-list";
+  }
+
+  function download(blob, filename) {
+    var url = URL.createObjectURL(blob);
+    var link = el("a");
+    link.href = url;
+    link.download = filename;
+    document.body.appendChild(link);
+    link.click();
+    link.remove();
+    setTimeout(function () { URL.revokeObjectURL(url); }, 4000);
+  }
+
+  function rasterise(svg, doc, scale, type, quality, background) {
+    return new Promise(function (resolve, reject) {
+      var img = new Image();
+      img.onload = function () {
+        var canvas = document.createElement("canvas");
+        canvas.width = Math.round(doc.width * scale);
+        canvas.height = Math.round(doc.height * scale);
+        var ctx = canvas.getContext("2d");
+        if (background) { ctx.fillStyle = background; ctx.fillRect(0, 0, canvas.width, canvas.height); }
+        ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+        canvas.toBlob(function (blob) {
+          if (blob) resolve(blob); else reject(new Error("Could not encode the export."));
+        }, type, quality);
+      };
+      img.onerror = function () { reject(new Error("Could not rasterise the board.")); };
+      img.src = "data:image/svg+xml;charset=utf-8," + encodeURIComponent(svg);
+    });
+  }
+
+  function exportBoard(o) {
+    var date = Core.isoDate(new Date());
+    var doc = Core.layout(state, {
+      theme: o.theme, includeDate: o.includeDate, date: date,
+      categoryId: o.categoryId, transparent: o.transparent, measure: measure
+    });
+    var svg = Core.toSVG(doc, state.assets);
+    var base = slug() + "-" + date;
+    if (o.format === "svg") {
+      download(new Blob([svg], { type: "image/svg+xml;charset=utf-8" }), base + ".svg");
+      return Promise.resolve();
+    }
+    var jpeg = o.format === "jpeg";
+    return rasterise(svg, doc, o.scale, jpeg ? "image/jpeg" : "image/png",
+      jpeg ? Core.JPEG_QUALITY : undefined, jpeg ? (doc.background || Core.THEMES[o.theme === "dark" ? "dark" : "light"].bg) : null)
+      .then(function (blob) { download(blob, base + (jpeg ? ".jpg" : ".png")); });
+  }
+
+  function selectRow(box, labelText, options, value) {
+    var row = el("div", "row");
+    row.appendChild(el("label", null, labelText));
+    var select = el("select");
+    options.forEach(function (o) {
+      var opt = el("option", null, o.label);
+      opt.value = o.value;
+      select.appendChild(opt);
+    });
+    select.value = value;
+    row.appendChild(select);
+    box.appendChild(row);
+    return select;
+  }
+
+  function exportDialog() {
+    return modal(function (box, close) {
+      box.appendChild(el("h2", null, "Export"));
+      var format = selectRow(box, "Format", [
+        { value: "png", label: "PNG" }, { value: "svg", label: "SVG" }, { value: "jpeg", label: "JPEG" }
+      ], "png");
+      var scale = selectRow(box, "Raster scale", [
+        { value: "1", label: "1x" }, { value: "2", label: "2x" }, { value: "3", label: "3x" }
+      ], "2");
+      var theme = selectRow(box, "Theme", [
+        { value: resolvedTheme(), label: "Current (" + resolvedTheme() + ")" }, { value: "light", label: "Light, for printing" }
+      ], resolvedTheme());
+      var scope = selectRow(box, "Sheet", [{ value: "", label: "Whole board" }].concat(
+        state.categories.map(function (c) { return { value: c.id, label: c.label }; })
+      ), "");
+      var background = selectRow(box, "Background", [
+        { value: "solid", label: "Solid" }, { value: "transparent", label: "Transparent" }
+      ], "solid");
+
+      var dateRow = el("div", "row");
+      var dateLabel = el("label", null, "Date stamp");
+      dateLabel.htmlFor = "export-date";
+      dateLabel.setAttribute("for", "export-date");
+      var dateBox = el("input");
+      dateBox.type = "checkbox";
+      dateBox.id = "export-date";
+      dateBox.checked = state.settings.dateOnExport;
+      dateBox.title = "Today's date, small and low contrast, in the bottom corner";
+      dateRow.appendChild(dateLabel);
+      dateRow.appendChild(dateBox);
+      box.appendChild(dateRow);
+
+      var note = el("p", null, "");
+      box.appendChild(note);
+      function refresh() {
+        scale.disabled = format.value === "svg";
+        background.disabled = format.value === "jpeg";
+        if (background.disabled) background.value = "solid";
+        var doc = Core.layout(state, {
+          theme: theme.value, includeDate: dateBox.checked, date: "0000-00-00",
+          categoryId: scope.value || null, transparent: background.value === "transparent", measure: measure
+        });
+        var factor = format.value === "svg" ? 1 : Number(scale.value);
+        note.textContent = "Output " + Math.round(doc.width * factor) + " by " + Math.round(doc.height * factor) + " pixels.";
+      }
+      [format, scale, theme, scope, background].forEach(function (n) { n.addEventListener("change", refresh); });
+      dateBox.addEventListener("change", refresh);
+      refresh();
+
+      var actions = el("div", "actions");
+      var cancel = el("button", null, "Cancel");
+      cancel.type = "button";
+      cancel.addEventListener("click", function () { close(null); });
+      var go = el("button", "accent", "Export");
+      go.type = "button";
+      go.addEventListener("click", function () {
+        var opts = {
+          format: format.value, scale: Number(scale.value), theme: theme.value,
+          includeDate: dateBox.checked, categoryId: scope.value || null,
+          transparent: background.value === "transparent" && format.value !== "jpeg"
+        };
+        close(null);
+        if (opts.includeDate !== state.settings.dateOnExport) setState(Core.setSetting(state, "dateOnExport", opts.includeDate));
+        exportBoard(opts).then(null, function (e) { toast(e.message, "err"); });
+      });
+      actions.appendChild(cancel);
+      actions.appendChild(go);
+      box.appendChild(actions);
+    });
+  }
+
+  function saveToFile() {
+    download(new Blob([JSON.stringify(state)], { type: "application/json" }), slug() + ".tierlist.json");
+  }
+
+  function loadFromFile(file) {
+    file.text().then(function (text) {
+      var parsed;
+      try { parsed = JSON.parse(text); }
+      catch (e) { toast("That file is not valid JSON.", "err"); return; }
+      var result = Core.validate(parsed);
+      resetState(result.state, true);
+      if (result.warnings.length) {
+        toast("Loaded with " + result.warnings.length + " repair" + (result.warnings.length === 1 ? "" : "s") + ": " + result.warnings[0], "err");
+      } else {
+        toast("Loaded " + (result.state.title || file.name) + ".");
+      }
+    }, function () { toast("Could not read that file.", "err"); });
+  }
+
+  var ACTIONS = {
+    focus: function (node) { setState(Core.setFocus(state, node.dataset.cat)); },
+    "cat-left": function (node) { setState(Core.moveCategory(state, node.dataset.cat, -1)); },
+    "cat-right": function (node) { setState(Core.moveCategory(state, node.dataset.cat, 1)); },
+    "cat-remove": function (node) {
+      var cat = state.categories.filter(function (c) { return c.id === node.dataset.cat; })[0];
+      if (!cat) return;
+      var placed = state.items.filter(function (i) { return Core.tierOf(state, cat.id, i.id) !== null; }).length;
+      confirmDialog("Remove " + cat.label + "?",
+        placed ? "Its " + placed + " placement" + (placed === 1 ? "" : "s") + " will be discarded. Undo brings the column back."
+          : "The column is empty. Undo brings it back.",
+        "Remove column").then(function (yes) {
+          if (yes) setState(Core.removeCategory(state, cat.id));
+        });
+    },
+    "tier-up": function (node) { setState(Core.moveTier(state, node.dataset.tier, -1)); },
+    "tier-down": function (node) { setState(Core.moveTier(state, node.dataset.tier, 1)); },
+    "tier-remove": function (node) {
+      if (state.tiers.length <= 1) { toast("A board needs at least one tier.", "err"); return; }
+      setState(Core.removeTier(state, node.dataset.tier));
+    },
+    unplace: function (node) {
+      var card = node.closest(".card");
+      setState(Core.unplace(state, card.dataset.cat, card.dataset.item));
+    },
+    "delete": function (node) {
+      var card = node.closest(".card");
+      setState(Core.removeItem(state, card.dataset.item));
+    },
+    "add-tier": function () { setState(Core.addTier(state, "New")); },
+    "add-category": function () { setState(Core.addCategory(state, "Category " + (state.categories.length + 1))); },
+    "save-file": function () { closePop(); saveToFile(); },
+    "load-file": function () { closePop(); els.fileJson.click(); },
+    "new-board": function () {
+      closePop();
+      confirmDialog("Start a new board?", "The current board is replaced. Undo brings it back, and browser storage keeps only the newest board.", "New board")
+        .then(function (yes) { if (yes) resetState(Core.emptyState(), false); });
+    }
+  };
+
+  function wire() {
+    document.addEventListener("click", function (e) {
+      var popButton = e.target.closest("[data-pop]");
+      if (popButton) {
+        var pop = document.getElementById(popButton.dataset.pop);
+        var wasOpen = pop.classList.contains("open");
+        closePop();
+        if (!wasOpen) { pop.classList.add("open"); openPop = pop; }
+        return;
+      }
+      if (!e.target.closest(".pop-panel")) closePop();
+      if (!e.target.closest(".ctx")) closeCtx();
+      var node = e.target.closest("[data-act]");
+      if (node && ACTIONS[node.dataset.act]) {
+        e.preventDefault();
+        ACTIONS[node.dataset.act](node);
+      }
+    });
+
+    document.addEventListener("dblclick", function (e) {
+      var card = e.target.closest(".card");
+      if (card && card.dataset.item) {
+        var live = liveCard(card.dataset.item, card.dataset.cat);
+        if (live) beginCardRename(live, live.dataset.item);
+        return;
+      }
+      var head = e.target.closest(".hcell.cat");
+      if (head) {
+        var catId = head.dataset.cat;
+        var cat = state.categories.filter(function (c) { return c.id === catId; })[0];
+        var liveHead = els.board.querySelector('.hcell.cat[data-cat="' + catId + '"]');
+        if (cat && liveHead) inlineRename(liveHead, cat.label, function (label) { setState(Core.renameCategory(state, catId, label)); });
+        return;
+      }
+      var tier = e.target.closest(".tier-label");
+      if (tier) {
+        var tierId = tier.dataset.tier;
+        var t = state.tiers.filter(function (x) { return x.id === tierId; })[0];
+        var liveTier = els.board.querySelector('.tier-label[data-tier="' + tierId + '"]');
+        if (!t || !liveTier) return;
+        if (e.target.closest(".tdesc")) {
+          inlineRename(liveTier.querySelector(".tdesc"), t.description || "", function (text) {
+            setState(Core.setTierDescription(state, tierId, text));
+          });
+        } else {
+          inlineRename(liveTier.querySelector(".tname"), t.label, function (label) {
+            setState(Core.renameTier(state, tierId, label));
+          });
+        }
+      }
+    });
+
+    document.addEventListener("contextmenu", function (e) {
+      var card = e.target.closest(".card");
+      if (!card || !card.dataset.item) return;
+      e.preventDefault();
+      var itemId = card.dataset.item, catId = card.dataset.cat;
+      var entries = [{ label: "Rename", run: function () { beginCardRename(card, itemId); } }];
+      if (catId) entries.push({ label: "Remove from this category", run: function () { setState(Core.unplace(state, catId, itemId)); } });
+      entries.push({ label: "Delete everywhere", danger: true, run: function () { setState(Core.removeItem(state, itemId)); } });
+      showContextMenu(e.clientX, e.clientY, entries);
+    });
+
+    document.addEventListener("keydown", function (e) {
+      if (e.key === "Escape") {
+        if (drag) { detach(drag.node); endDrag(false); e.preventDefault(); }
+        closePop();
+        closeCtx();
+        return;
+      }
+      if ((e.key === "Enter" || e.key === " ") && e.target.dataset && e.target.dataset.act === "focus") {
+        e.preventDefault();
+        ACTIONS.focus(e.target);
+        return;
+      }
+      if (!(e.metaKey || e.ctrlKey)) return;
+      var typing = e.target.closest && e.target.closest("input, textarea, select");
+      if (typing) return;
+      var key = e.key.toLowerCase();
+      if (key === "z" && !e.shiftKey) { e.preventDefault(); travel(Core.undo(history)); }
+      else if ((key === "z" && e.shiftKey) || key === "y") { e.preventDefault(); travel(Core.redo(history)); }
+    });
+
+    document.addEventListener("paste", function (e) {
+      if (e.target.closest && e.target.closest("input, textarea")) return;
+      var data = e.clipboardData;
+      if (!data) return;
+      if (data.files && data.files.length) { e.preventDefault(); importFiles(data.files, null); return; }
+      var text = data.getData("text/plain");
+      if (text && text.trim()) { e.preventDefault(); addTextItems(text, null); }
+    });
+
+    function carriesFiles(e) {
+      return e.dataTransfer && Array.prototype.indexOf.call(e.dataTransfer.types || [], "Files") !== -1;
+    }
+    ["dragenter", "dragover"].forEach(function (type) {
+      document.addEventListener(type, function (e) {
+        if (!carriesFiles(e)) return;
+        e.preventDefault();
+        e.dataTransfer.dropEffect = "copy";
+        clearDropHints();
+        var cell = e.target.closest && e.target.closest(".cell");
+        if (cell) { cell.classList.add("over"); return; }
+        var tray = e.target.closest && e.target.closest(".tray");
+        if (tray) tray.classList.add("over");
+      });
+    });
+    document.addEventListener("dragleave", function (e) { if (!e.relatedTarget) clearDropHints(); });
+    document.addEventListener("drop", function (e) {
+      if (!carriesFiles(e)) return;
+      e.preventDefault();
+      clearDropHints();
+      var cell = e.target.closest && e.target.closest(".cell");
+      importFiles(e.dataTransfer.files, cell ? { cat: cell.dataset.cat, tier: cell.dataset.tier } : null);
+    });
+
+    els.board.addEventListener("pointerdown", onPointerDown);
+    els.trayStrip.addEventListener("pointerdown", onPointerDown);
+
+    els.title.addEventListener("input", function () { setState(Core.setTitle(state, els.title.value), { key: "title" }); });
+    els.addText.addEventListener("keydown", function (e) {
+      if (e.key !== "Enter") return;
+      e.preventDefault();
+      addTextItems(els.addText.value, null);
+      els.addText.value = "";
+    });
+    els.addButton.addEventListener("click", function () {
+      addTextItems(els.addText.value, null);
+      els.addText.value = "";
+      els.addText.focus();
+    });
+    els.importButton.addEventListener("click", function () { els.fileImages.click(); });
+    els.fileImages.addEventListener("change", function () {
+      importFiles(els.fileImages.files, null);
+      els.fileImages.value = "";
+    });
+    els.fileJson.addEventListener("change", function () {
+      if (els.fileJson.files[0]) loadFromFile(els.fileJson.files[0]);
+      els.fileJson.value = "";
+    });
+    els.undo.addEventListener("click", function () { travel(Core.undo(history)); });
+    els.redo.addEventListener("click", function () { travel(Core.redo(history)); });
+    els.exportButton.addEventListener("click", function () { closePop(); exportDialog(); });
+
+    els.theme.addEventListener("change", function () { setState(Core.setSetting(state, "theme", els.theme.value)); });
+    els.palette.addEventListener("change", function () { setState(Core.setSetting(state, "palette", els.palette.value)); });
+    els.cardSize.addEventListener("input", function () {
+      setState(Core.setSetting(state, "cardSize", Number(els.cardSize.value)), { key: "cardSize" });
+    });
+    els.captions.addEventListener("change", function () { setState(Core.setSetting(state, "showCaptions", els.captions.checked)); });
+    els.tintRows.addEventListener("change", function () { setState(Core.setSetting(state, "tintRows", els.tintRows.checked)); });
+    els.hidePlaced.addEventListener("change", function () { setState(Core.setSetting(state, "hidePlacedInTray", els.hidePlaced.checked)); });
+    els.preset.addEventListener("change", function () {
+      if (!els.preset.value) return;
+      setState(Core.applyTierPreset(state, els.preset.value));
+      els.preset.value = "";
+    });
+    els.trayFilter.addEventListener("input", function () {
+      filterText = els.trayFilter.value.trim();
+      renderTray();
+    });
+    window.addEventListener("beforeunload", function () {
+      clearTimeout(saveTimer);
+      save();
+    });
+  }
+
+  function renderSelfTests() {
+    var results = Core.runSelfTests();
+    var failed = results.filter(function (r) { return !r.ok; }).length;
+    document.body.textContent = "";
+    var wrap = el("div", "selftest");
+    wrap.appendChild(el("h1", null, "Self tests: " + (results.length - failed) + " of " + results.length + " passed"));
+    var list = el("ul");
+    results.forEach(function (r) {
+      var li = el("li");
+      li.appendChild(el("span", r.ok ? "pass" : "fail", r.ok ? "PASS  " : "FAIL  "));
+      li.appendChild(document.createTextNode(r.name + (r.ok ? "" : " — " + r.error)));
+      list.appendChild(li);
+    });
+    wrap.appendChild(list);
+    document.body.appendChild(wrap);
+    document.title = (failed ? failed + " failed" : "All passed") + " — self tests";
+  }
+
+  function boot() {
+    if (/(^|[?&])selftest=1(&|$)/.test(location.search)) { renderSelfTests(); return; }
+    els = {
+      root: $("#root"), board: $("#board"), boardWrap: $("#board-wrap"),
+      tray: $("#tray"), trayStrip: $("#tray-strip"), trayCount: $("#tray-count"), trayFocus: $("#tray-focus"),
+      trayFilter: $("#tray-filter"), hidePlaced: $("#hide-placed"),
+      title: $("#title"), addText: $("#add-text"), addButton: $("#add-btn"), importButton: $("#import-btn"),
+      undo: $("#undo"), redo: $("#redo"), exportButton: $("#export-btn"),
+      theme: $("#theme"), palette: $("#palette"), preset: $("#preset"),
+      cardSize: $("#card-size"), cardSizeOut: $("#card-size-out"), captions: $("#captions"), tintRows: $("#tint-rows"),
+      fileImages: $("#file-images"), fileJson: $("#file-json"), toasts: $("#toasts")
+    };
+    Core.PALETTES.forEach(function (p) {
+      var opt = el("option", null, p.label);
+      opt.value = p.id;
+      els.palette.appendChild(opt);
+    });
+    Core.TIER_PRESETS.forEach(function (p) {
+      var opt = el("option", null, p.label);
+      opt.value = p.id;
+      els.preset.appendChild(opt);
+    });
+    els.cardSize.min = Core.CARD_MIN;
+    els.cardSize.max = Core.CARD_MAX;
+
+    var initial = Core.emptyState(), warnings = [], stored = null;
+    try { stored = localStorage.getItem(Core.STORAGE_KEY); }
+    catch (e) { storageOk = false; }
+    if (stored) {
+      try {
+        var result = Core.validate(JSON.parse(stored));
+        initial = result.state;
+        warnings = result.warnings;
+      } catch (e) {
+        warnings = ["The saved board could not be read, so this is a fresh one."];
+      }
+    }
+    state = initial;
+    history = Core.newHistory(initial);
+    wire();
+    render();
+    if (warnings.length) toast("Restored the saved board with " + warnings.length + " repair" + (warnings.length === 1 ? "" : "s") + ": " + warnings[0], "err");
+  }
+
+  if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", boot);
+  else boot();
+})();
+</script>
+</head>
+<body>
+<div id="root">
+  <div class="toolbar">
+    <div class="pop" id="pop-file">
+      <button type="button" data-pop="pop-file">File ▾</button>
+      <div class="pop-panel left">
+        <div class="row"><button class="full" type="button" data-act="new-board">New board</button></div>
+        <div class="row"><button class="full" type="button" data-act="load-file">Load a .json file…</button></div>
+        <div class="row"><button class="full" type="button" data-act="save-file">Save to a .tierlist.json file</button></div>
+        <hr>
+        <div class="row"><button id="export-btn" class="full accent" type="button">Export…</button></div>
+      </div>
+    </div>
+    <div class="pop" id="pop-board">
+      <button type="button" data-pop="pop-board">Board ▾</button>
+      <div class="pop-panel left">
+        <div class="row"><label for="theme">Theme</label>
+          <select id="theme"><option value="system">System</option><option value="light">Light</option><option value="dark">Dark</option></select>
+        </div>
+        <div class="row"><label for="palette">Tier palette</label><select id="palette"></select></div>
+        <div class="row"><label for="preset">Tier preset</label>
+          <select id="preset"><option value="">Apply a preset…</option></select>
+        </div>
+        <div class="row"><label for="card-size">Card size</label>
+          <span><input id="card-size" type="range" step="4"> <span id="card-size-out"></span></span>
+        </div>
+        <div class="row"><label for="captions">Image captions</label><input id="captions" type="checkbox"></div>
+        <div class="row"><label for="tint-rows">Tint tier rows</label><input id="tint-rows" type="checkbox"></div>
+      </div>
+    </div>
+    <span class="sep"></span>
+    <input id="title" class="title-input" type="text" placeholder="Untitled tier list" aria-label="Board title" autocomplete="off">
+    <span class="sep"></span>
+    <div class="add-item">
+      <input id="add-text" type="text" placeholder="Add item, or CSV" aria-label="Add an item" autocomplete="off">
+      <button id="add-btn" type="button">Add Item</button>
+    </div>
+    <button id="import-btn" type="button">Add Image</button>
+    <span class="sep"></span>
+    <button type="button" data-act="add-tier">Add Tier</button>
+    <button type="button" data-act="add-category">Add Category</button>
+    <span class="spacer"></span>
+    <button id="undo" class="icon" type="button" title="Undo (Ctrl+Z)" aria-label="Undo">↶</button>
+    <button id="redo" class="icon" type="button" title="Redo (Ctrl+Shift+Z)" aria-label="Redo">↷</button>
+  </div>
+
+  <div class="board-wrap" id="board-wrap"><div class="board" id="board"></div></div>
+
+  <div class="tray" id="tray">
+    <div class="tray-head">
+      <strong>Tray</strong>
+      <span class="muted" id="tray-count"></span>
+      <span class="muted" id="tray-focus"></span>
+      <input id="tray-filter" type="search" placeholder="Filter" aria-label="Filter the tray" autocomplete="off">
+      <label><input id="hide-placed" type="checkbox"> Hide placed items</label>
+    </div>
+    <div class="tray-strip" id="tray-strip"></div>
+  </div>
+</div>
+<div class="toasts" id="toasts"></div>
+<input id="file-images" class="visually-hidden" type="file" accept="image/png,image/jpeg,image/svg+xml,image/webp,image/gif" multiple aria-hidden="true" tabindex="-1">
+<input id="file-json" class="visually-hidden" type="file" accept=".json,application/json" aria-hidden="true" tabindex="-1">
+</body>
+</html>
