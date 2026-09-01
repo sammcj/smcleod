@@ -25,7 +25,7 @@ mermaid: false
 I write and review a _lot_ of [Agent](https://code.claude.com/docs/en/skills) [Skills](https://agentskills.io), and find myself frequently pushing back in reviews, as many authors assume they're writing "_just another markdown prompt_" without considering that they're actually working with one component of an agentic system.
 
 The **TLDR** of my feedback is usually along the lines of:
-> 1. The description's _only_ job is to tell the agent when the skill should be triggered.
+> 1. The descriptions _only_ job is to tell the agent when the skill should be triggered.
 > 2. Keep the description as terse as possible while still triggering.
 > 3. The SKILL.md should be lean with detail pushed to reference files.
 > 4. Put repeatable work in scripts rather than relying on model inference.
@@ -49,7 +49,7 @@ The primer works alongside the official Anthropic skill-creator skill and aims t
 
 ### 1. Descriptions written as summaries
 
-The description's only job is telling the agent when to load the skill. Summarising the contents invites the agent to act on the summary and skip the skill.
+The descriptions only job is telling the agent when to load the skill. Summarising the contents invites the agent to act on the summary and skip the skill.
 
 - Roughly 30-55 words, imperative, naming the specific triggers.
 - The description should only contain information that is specific to knowing when to trigger the skill.
