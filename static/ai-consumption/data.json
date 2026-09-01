@@ -2,13 +2,13 @@
   "metadata": {
     "title": "AI Consumption in Context",
     "subtitle": "AI energy and water use compared with everyday activities, with measurement boundaries labelled",
-    "lastUpdated": "2026-07-03",
-    "sources": "IEA, LBNL, EPA, USGS, USDA, ASCE, GCSAA/USGA, NGF, OpenAI, Google, Mistral, Epoch AI, Meta, DeepSeek, AI2, Hugging Face AI Energy Score, ML.Energy, Pew Research Center, PJM/Monitoring Analytics, Morgan Stanley, The Guardian/Cleanview, MIT Technology Review, Harvard/UCLA Study"
+    "lastUpdated": "2026-09-02",
+    "sources": "IEA, LBNL, EPA, USGS, USDA, ASCE, GCSAA/USGA, NGF, OpenAI, Google, Mistral, Epoch AI, Meta, DeepSeek, AI2, Hugging Face AI Energy Score, ML.Energy, Pew Research Center, PJM/Monitoring Analytics, Morgan Stanley, Cornell (Nature Sustainability), UT Austin Bureau of Economic Geology, Microsoft, The Guardian/Cleanview, MIT Technology Review, Harvard/UCLA Study"
   },
   "waterConsumption": {
     "unit": "litres/year",
     "unitDisplay": "litres per year",
-    "scaleNote": "Bar lengths are drawn to scale (linear). The bottom three bars are shown at the minimum visible width - at true scale each would be thinner than a pixel, and ChatGPT's cooling-water bar would be less than 1/400,000th of the top bar.",
+    "scaleNote": "Bar lengths are drawn to scale (linear). The bottom four bars are shown at the minimum visible width - at true scale each would be thinner than a pixel, and ChatGPT's cooling-water bar would be less than 1/400,000th of the top bar.",
     "items": [
       {
         "id": "global_network_losses",
@@ -87,6 +87,19 @@
         "sourceUrl": "https://spectrum.ieee.org/ai-water-usage",
         "year": 2025,
         "notes": "Wide uncertainty band; counts on-site cooling plus water consumed generating the electricity. Morgan Stanley projects ~1,068 billion L/yr by 2028 on this boundary"
+      },
+      {
+        "id": "us_datacenters_onsite",
+        "label": "All US Data Centres, On-site Cooling",
+        "sublabel": "Scope 1 only; every workload, not just AI",
+        "value": 66000000000,
+        "displayValue": "66 billion",
+        "color": "#c084fc",
+        "icon": "datacenter",
+        "source": "LBNL 2024 US Data Center Energy Usage Report",
+        "sourceUrl": "https://escholarship.org/uc/item/32d6m0d1",
+        "year": 2023,
+        "notes": "Under 1% of US water consumption. Same on-site boundary as the ChatGPT bar; excludes the water behind electricity generation"
       },
       {
         "id": "google_datacenters",
@@ -319,6 +332,12 @@
         "figure": "~1,068 billion litres/year by 2028",
         "source": "Morgan Stanley Research (Sep 2025); range 637-1,485B",
         "boundary": "All AI data centres, cooling + power-generation + chip-fab water, projected 2028 (~11x 2024)"
+      },
+      "peerReviewed": {
+        "figure": "731-1,125 billion litres/year by 2030 (US only)",
+        "source": "You et al., Cornell, Nature Sustainability (2025)",
+        "sourceUrl": "https://www.nature.com/articles/s41893-025-01681-y",
+        "boundary": "US AI servers, on-site cooling + power-generation water (Scope 1+2, no chip fab), depending on buildout scale. Upper bound is roughly New York City's annual drinking water supply"
       }
     },
     "withdrawalVsConsumption": "US thermoelectric power plants account for 41% of total water withdrawals (34% of freshwater withdrawals, USGS) - but only ~3-4% of that is consumed (evaporated); the rest returns to the source. Counting withdrawals as 'use' inflates any electricity-linked water figure ~25x.",
@@ -328,8 +347,12 @@
       "plannedBuilds": "517 of 809 planned US data centres are on land that was in drought throughout the preceding year - developers favour arid regions for cheap land, tax breaks and less equipment corrosion. A large site can draw up to 5 million gallons (~19 million litres) a day, the water use of a town of up to 50,000 people",
       "plannedBuildsSource": "Guardian analysis of Cleanview and US Drought Monitor data, June 2026",
       "plannedBuildsUrl": "https://www.theguardian.com/us-news/2026/jun/08/datacenter-ai-drought-water",
+      "sitingSwing": "Best vs worst distribution of US AI servers across states moves the 2030 water footprint by -52% to +354% (You et al., Nature Sustainability 2025)",
+      "texas": "Data centres drew ~0.75% of Texas water withdrawals in 2025 (43.5 billion gallons incl. power generation); projected 3-5% by 2030-2040 at 40-60 GW or 5-9% at 70-110 GW. Withdrawals, not consumption",
+      "texasSource": "UT Austin Bureau of Economic Geology, Water Requirements for Data Centers white paper (2025)",
+      "texasSourceUrl": "https://compass.beg.utexas.edu/files/publications/Water_Requirements_for_DC_White_Paper.pdf",
       "note": "Water is local: the same facility can be benign in a wet region and a real problem in a dry one. Quantity matters less than where it is drawn.",
-      "operatorResponse": "Sam Altman said in Feb 2026 that OpenAI's data centres have largely moved off evaporative cooling (CNBC); Project Rainier, the 2.2 GW AWS campus that trains Claude, is air-cooled ~98% of the year at an estimated PUE ~1.15, though AWS won't quantify operational water (MeasuredAI, from permits and utility filings); facility-level water data remains largely undisclosed (AGU Advances, 2026)"
+      "operatorResponse": "Sam Altman said in Feb 2026 that OpenAI's data centres have largely moved off evaporative cooling (CNBC); Project Rainier, the 2.2 GW AWS campus that trains Claude, is air-cooled ~98% of the year at an estimated PUE ~1.15, though AWS won't quantify operational water (MeasuredAI, from permits and utility filings); all new Microsoft designs since Aug 2024 use closed-loop chip-level cooling that evaporates no water (pilots in Phoenix and Wisconsin in 2026; fleet WUE 0.30 L/kWh in FY2024 vs 0.49 in 2021); Google aims to replenish 120% of the freshwater its data centres consume by 2030; facility-level water data remains largely undisclosed (AGU Advances, 2026)"
     }
   },
   "videoVsText": {

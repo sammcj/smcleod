@@ -2,6 +2,7 @@
 
 Research conducted: 28 November 2025
 Updated: 3 July 2026 - see "July 2026 Update" at the end of this document for corrections and new data. Where the two conflict, the July 2026 section supersedes the original notes below.
+Updated: 2 September 2026 - see "September 2026 Update" (Knowable Magazine review) at the end of this document.
 All data sources from 2024-2025 unless otherwise noted.
 
 ---
@@ -441,3 +442,16 @@ Three parallel research passes: leaderboard measurements, lab-official claims, a
 The measurement-boundary framing (why honest numbers disagree by 1,000x; withdrawal vs consumption; water locality) was prompted by Hank Green's video ["Why is Everyone So Wrong About AI Water Use?"](https://youtu.be/H_c6MWk7PQc) (June 2026). His specific figures were independently verified: the boundary argument and locality thesis hold; his corn total and the "training is ~50%" claim did not survive verification and were replaced with primary-sourced figures.
 
 **Update completed:** 3 July 2026
+
+## September 2026 Update
+
+Trigger: Knowable Magazine, ["How much of a problem is AI's water use?"](https://knowablemagazine.org/content/article/technology/2026/how-much-water-do-ai-data-centers-use) (Katarina Zimmer, 24 Aug 2026), reviewed against this page with three of its cited sources read in full. No corrections were needed; the article and this page agree on the 0.26 mL Gemini figure, the origin and obsolescence of the 500 mL claim (Ren's GPT-4 short-email estimate, power-generation water included), locality over aggregate volume, and the state of company disclosure. Four additions and one supporting figure followed.
+
+- **Peer-reviewed US projection** ([You et al., Nature Sustainability 2025](https://www.nature.com/articles/s41893-025-01681-y), Cornell): US AI servers 731-1,125 million m³/yr (= billion L) by 2030 depending on buildout, Scope 1 on-site cooling + Scope 2 power-generation water, no chip fab. Upper bound roughly New York City's annual drinking water supply. Added as a third bookend (`boundaries.bookends.peerReviewed`) and to the Big Number card; corroborates Morgan Stanley's ~1,068B global 2028 figure from an academic source on a slightly narrower boundary. Same paper: best-practice WUE improvement cuts the water footprint ~29-32%; combined best practices cut it 86%; industry-average PUE 1.58 / WUE 1.8 are the reference points.
+- **Siting swing** (same paper): best vs worst distribution of AI servers across US states moves the 2030 water footprint by -52% to +354%. Added to the Water is local box as the number behind "where matters more than how much".
+- **US on-site baseline**: all US data centre cooling consumed 66 billion L in 2023, under 1% of national consumption (LBNL 2024 US Data Center Energy Usage Report, as cited by Knowable). Added as a water bar (`us_datacenters_onsite`) on the same on-site boundary as the ChatGPT bar. The LBNL escholarship page returned 403 during this pass, so the figure is taken from Knowable's citation, not re-read at source; the report's 2028 direct-water projection was not added for that reason.
+- **Texas** ([UT Austin Bureau of Economic Geology white paper](https://compass.beg.utexas.edu/files/publications/Water_Requirements_for_DC_White_Paper.pdf), 2025): data centres ~0.75% of statewide water withdrawals in 2025 (43.5B gallons, direct + power-generation), projected 3-5% by 2030-2040 at 40-60 GW or 5-9% at 70-110 GW. Withdrawals, not consumption; the paper's own grid figures give ~0.96 gal/kWh consumed vs ~87 gal/kWh withdrawn for grid-connected data centres, which is the withdrawal-vs-consumption gap in one number. Knowable's "3 to 9 percent by 2040" paraphrase is the high-capacity band.
+- **Operator responses** ([Microsoft, Dec 2024](https://www.microsoft.com/en-us/microsoft-cloud/blog/2024/12/09/sustainable-by-design-next-generation-datacenters-consume-zero-water-for-cooling/)): all new data centre designs since Aug 2024 use closed-loop chip-level cooling with zero evaporative water; pilots in Phoenix and Mt Pleasant, Wisconsin in 2026, sites online from late 2027; claimed avoidance >125M L/yr per data centre; fleet WUE 0.30 L/kWh in FY2024 vs 0.49 in 2021. Google targets replenishing 120% of freshwater consumed by 2030 (cited by Knowable; Google water stewardship portfolio page not re-read). Both added to the operator-response text.
+- Not read: the Masanet et al. 2025 review "The water use of data center workloads" (ScienceDirect returned 400). Knowable's framing from it (siting, local energy mix, climate and design decide the number) matches the page's existing position.
+
+**Update completed:** 2 September 2026
