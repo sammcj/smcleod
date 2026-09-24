@@ -61,6 +61,18 @@ test('the retired Minimal dock reads as the default, and start-up clears it', ()
   assert.equal(root.dataset.dock, 'panel');
 });
 
+test('the retired Woodblock look reads as the defaults, and start-up clears it', () => {
+  mem.set('deskbar:deco', '"woodblock"');
+  mem.set('deskbar:wall', '"woodblock"');
+  assert.equal(get('deco'), 'haiku');
+  assert.equal(get('wall'), 'rings');
+  Object.assign(root.dataset, { deco: 'woodblock', wall: 'woodblock' });
+  initSettings();
+  assert.equal(root.dataset.deco, undefined);
+  assert.equal(root.dataset.wall, undefined);
+  assert.equal(mem.size, 0, 'nothing left stored');
+});
+
 test('a choice is stored and shown on <html>; the default removes both', () => {
   set('palette', 'xfce');
   set('readerWidth', 'wide');
