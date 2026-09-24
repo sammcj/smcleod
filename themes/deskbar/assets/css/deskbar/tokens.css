@@ -1,6 +1,6 @@
-/* Design tokens. light-dark() follows the OS scheme until the visitor picks one (data-theme on <html>). */
+/* Design tokens. Light unless the visitor picks dark, or auto to follow the OS (data-theme on <html>). */
 :root {
-  color-scheme: light dark;
+  color-scheme: light;
   --panel-h: 30px; --tab-h: 24px; --dock-h: 72px;
   --ui: 'Noto Sans', system-ui, sans-serif;
   --serif: 'Source Serif 4', Georgia, serif;
@@ -22,7 +22,7 @@
   --wall-ring: light-dark(rgba(255,255,255,.05), rgba(255,255,255,.035));
   --wall-1: light-dark(#45709e, #243a55); --wall-2: light-dark(#2b4b72, #172739); --wall-3: light-dark(#1b304c, #0e1826);
 }
-[data-theme=light] { color-scheme: light; }
+[data-theme=auto] { color-scheme: light dark; }
 [data-theme=dark] { color-scheme: dark; }
 
 *, *::before, *::after { box-sizing: border-box; }

@@ -410,3 +410,16 @@ test('no JS: pages are plain readable documents', async () => {
   await shot(page, 'n1-nojs-post');
   await ctx.close();
 });
+
+test('light by default, even on a dark OS; auto follows the OS', async () => {
+  const page = await open(desktop, '/', null, { colorScheme: 'dark' });
+  const scheme = () => page.evaluate(() => [getComputedStyle(document.documentElement).colorScheme, window.deskbar.settings.shown()]);
+  assert.deepEqual(await scheme(), ['light', 'light']);
+  await page.evaluate(() => window.deskbar.settings.set('theme', 'auto'));
+  assert.deepEqual(await scheme(), ['light dark', 'dark']);
+  await page.reload();
+  await page.waitForSelector('html.wm-ready');
+  assert.deepEqual(await scheme(), ['light dark', 'dark'], 'auto is stored');
+  assert.deepEqual(page.errors, []);
+  await page.context().close();
+});

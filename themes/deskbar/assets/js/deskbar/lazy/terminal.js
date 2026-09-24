@@ -366,7 +366,7 @@ function create(v) {
       say(new Date().toLocaleString('en-AU', { timeZone, dateStyle: 'full', timeStyle: 'long' }));
     },
     theme(say, [t]) {
-      if (t !== 'light' && t !== 'dark') {
+      if (!['light', 'dark', 'auto'].includes(t)) {
         const now = window.deskbar.settings.shown();
         return say(`The theme is ${now}. Switch with `, btn(`theme ${now === 'dark' ? 'light' : 'dark'}`), '.');
       }

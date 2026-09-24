@@ -13,6 +13,8 @@ useBrowser();
 const seed = () => {
   localStorage.setItem('deskbar:deco', '"platinum"');
   localStorage.setItem('deskbar:wall', '"platinum"');
+  // follow the browser's scheme, which the dark-mode tests set
+  localStorage.setItem('deskbar:theme', '"auto"');
 };
 const css = (loc, prop, pseudo = null) => loc.first().evaluate((el, [p, ps]) => getComputedStyle(el, ps)[p], [prop, pseudo]);
 const box = loc => loc.first().boundingBox();

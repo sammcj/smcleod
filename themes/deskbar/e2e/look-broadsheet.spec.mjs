@@ -81,7 +81,7 @@ test('Broadsheet: slab title bars, ink-ruled windows on hard shadows, a masthead
 
 test('Broadsheet: a night edition in dark mode, the ink turned cream', async t => {
   if (!(await needs(t, '/posts/'))) return;
-  const page = await openLook(desktop, '/posts/', { colorScheme: 'dark' });
+  const page = await open(desktop, '/posts/', seed({ ...LOOK, theme: 'auto' }), { colorScheme: 'dark' });
   const w = win(page, 'tracker');
   await w.locator('.pc').first().waitFor();
   assert.ok(hard((await css(w.locator('.frame'), ['boxShadow'])).boxShadow, 7, CREAM), 'cream shadows on black newsprint');

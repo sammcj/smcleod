@@ -2,16 +2,17 @@
 // The panel's theme button and the reader's A-/A+ and width buttons change them here, and the Control panel and the
 // Terminal (lazy/) through window.deskbar.settings: { get, set, on, shown }.
 import { store } from './lib/store.js';
+import { isDark } from './lib/scheme.js';
 
 // Reader measure; reader.css maps each to a width
 export const WIDTHS = ['narrow', 'normal', 'wide'];
 export const nextWidth = w => WIDTHS[(WIDTHS.indexOf(w) + 1) % WIDTHS.length];
 
 // The <html> data attribute each setting shows as. A default is stored as nothing and leaves its attribute off, so
-// the core CSS applies alone and head.html has no extra stylesheet to load. theme auto follows the OS.
+// the core CSS applies alone and head.html has no extra stylesheet to load. The default theme is light; auto follows the OS.
 const ATTR = { theme: 'theme', palette: 'palette', deco: 'deco', wall: 'wall', dock: 'dock', readerWidth: 'rdWidth', readerFont: 'rdFont' };
 export const DEFAULT = {
-  theme: 'auto', palette: 'haiku', deco: 'haiku', wall: 'rings', dock: 'glass', readerWidth: 'normal', readerFont: 'serif', textSize: 18,
+  theme: 'light', palette: 'haiku', deco: 'haiku', wall: 'rings', dock: 'glass', readerWidth: 'normal', readerFont: 'serif', textSize: 18,
 };
 const subs = new Set();
 // Choices the theme no longer offers, which visitors may still have stored
@@ -40,8 +41,8 @@ export function set(k, v) {
 // on(fn(key, value)) returns a function that stops listening
 export const on = fn => (subs.add(fn), () => subs.delete(fn));
 
-// The theme on screen: the chosen one, or the system's while following it (no data-theme)
-export const shown = () => document.documentElement.dataset.theme || (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+// The theme on screen: the chosen one, or the system's while following it (auto)
+export const shown = () => (isDark() ? 'dark' : 'light');
 
 const setTheme = t => set('theme', t ?? (shown() === 'dark' ? 'light' : 'dark'));
 
