@@ -1,0 +1,15 @@
+:where(:root)[data-palette=beos] {
+  --panel: linear-gradient(light-dark(#e8e8e8, #5c5c5c), light-dark(#cdcdcd, #474747));
+  --panel-fg: light-dark(#1f1f1f, #f2f2f2); --panel-hover: light-dark(rgba(0,0,0,.08), rgba(255,255,255,.1));
+  --frame: light-dark(#d8d8d8, #474747); --frame-hi: light-dark(#fff, #636363);
+  --frame-lo: light-dark(#969696, #2e2e2e); --frame-dk: light-dark(#505050, #141414);
+  --tab-dim: light-dark(#f3df8a, #a08d45); --tab-in: light-dark(#e2e2e2, #5c5c5c);
+  --tab-in-lo: light-dark(#a8a8a8, #3a3a3a); --tab-in-fg: light-dark(#404040, #e0e0e0);
+  --accent: #336698; --link: light-dark(#2c5b8a, #86b0dc);
+  --wall-1: light-dark(#3d73a6, #28496b); --wall-2: light-dark(#336698, #1f3c5a); --wall-3: light-dark(#2a557f, #172e46);
+  --wall-glow: rgba(255,255,255,.06);
+}
+/* its panel is light in light mode, so pressed and minimised states need lighter shading than the core's */
+:root[data-palette=beos] .pb:focus-visible { outline-color: var(--accent); }
+:root[data-palette=beos] :is(.task.on, #menuBtn.open) { background: light-dark(rgba(0,0,0,.14), rgba(0,0,0,.35)); }
+:root[data-palette=beos] .task.min { opacity: .8; }

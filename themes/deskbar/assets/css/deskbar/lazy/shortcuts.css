@@ -1,0 +1,18 @@
+/* The ? key's shortcut list (lazy/shortcuts.js). It borrows Spotlight's tab and frame classes so looks style both,
+   but Spotlight's stylesheet may not have loaded, so the base rules for them are repeated here. */
+.shortcuts { width: min(560px, calc(100vw - 32px)); max-width: none; max-height: none; margin: 10vh auto auto; padding: 0; border: 0; background: none; color: var(--fg); overflow: visible; font: 13px/1.4 var(--ui); }
+.shortcuts::backdrop { background: rgba(8, 12, 18, .42); }
+.shortcuts .sp-tab { display: inline-flex; align-items: center; height: var(--tab-h); padding: 0 16px 0 10px; background: var(--tab); color: #1f1f1f; border: 1px solid var(--frame-dk); border-bottom: 0; box-shadow: inset 1px 1px 0 var(--tab-hi), inset -1px 0 0 var(--tab-lo); font-size: 12px; font-weight: 700; }
+.shortcuts .sp-frame { position: relative; display: block; max-height: min(620px, 80vh); overflow: auto; overscroll-behavior: contain; padding: 4px 18px 14px; background: var(--content); border: 1px solid var(--frame-dk); box-shadow: inset 0 0 0 5px var(--frame), 0 24px 64px rgba(0,0,0,.5); }
+.sk-close { position: absolute; top: 12px; right: 14px; padding: 4px 7px; border: 1px solid var(--frame-lo); border-bottom-width: 2px; border-radius: 4px; background: var(--side); color: var(--muted); font: 600 11px/1 var(--ui); cursor: pointer; }
+.sk-close:hover { color: var(--fg); }
+.shortcuts h2 { margin: 14px 0 6px; color: var(--muted); font-size: 10.5px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; }
+/* one key column width for every group, so the descriptions line up down the list */
+.shortcuts dl { display: grid; grid-template-columns: 124px 1fr; gap: 6px 16px; align-items: baseline; margin: 0; }
+.shortcuts dt { display: flex; gap: 4px; justify-content: flex-end; }
+.shortcuts dd { margin: 0; }
+.shortcuts kbd { min-width: 22px; padding: 2px 6px; border: 1px solid var(--frame-lo); border-bottom-width: 2px; border-radius: 4px; background: var(--side); color: var(--fg); font: 600 11px/1.3 var(--ui); text-align: center; }
+@media (max-width: 767px), (max-height: 500px) and (pointer: coarse) {
+  .shortcuts { margin: auto auto 0; width: 100%; }
+  .shortcuts .sp-frame { max-height: 85vh; padding-bottom: max(14px, env(safe-area-inset-bottom)); }
+}

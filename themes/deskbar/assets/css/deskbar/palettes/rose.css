@@ -1,0 +1,16 @@
+/* Rosé: after Rosé Pine's Dawn and Moon. Dusty rose tabs on parchment or plum frames, a pine panel in both modes,
+   mauve text and gold in the wallpaper. */
+:where(:root)[data-palette=rose] {
+  --panel: linear-gradient(light-dark(#2f7189, #27495a), light-dark(#245c72, #1c3745)); --panel-fg: light-dark(#f4fbfd, #e0def4);
+  --frame: light-dark(#f2e9e1, #2a273f); --frame-hi: light-dark(#fffaf3, #44415a);
+  --frame-lo: light-dark(#c7b9b2, #1a1828); --frame-dk: light-dark(#7f7085, #0d0c15);
+  --tab: light-dark(#e9a8a6, #e19795); --tab-hi: light-dark(#f7d6d3, #f0c1bf); --tab-lo: light-dark(#b6706f, #a15f5f);
+  --tab-dim: light-dark(#f1cdc9, #b98b8d); --tab-in: light-dark(#ece3dc, #393552);
+  --tab-in-lo: light-dark(#c3b7b0, #24223a); --tab-in-fg: light-dark(#575279, #d6d2ec);
+  --content: light-dark(#fffaf3, #232136); --fg: light-dark(#4a4568, #e0def4); --muted: light-dark(#66627e, #b1adc9);
+  --line: light-dark(#e6ddd6, #3b3855); --side: light-dark(#f8f1ea, #2a273f); --read-bg: light-dark(#faf4ed, #1f1d30);
+  --code-bg: light-dark(#f2e9e1, #2c2942);
+  --accent: light-dark(#286983, #367691); --link: light-dark(#286983, #9ccfd8); --ctl: #3d1f25;
+  --wall-1: light-dark(#dcaab2, #4a4266); --wall-2: light-dark(#b98aa0, #34304e); --wall-3: light-dark(#7a6289, #1f1c31);
+  --wall-glow: light-dark(rgba(234,157,52,.28), rgba(246,193,119,.12));
+}

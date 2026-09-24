@@ -1,7 +1,8 @@
 // Chiptunes (`window: chiptunes`): a small media player for the playlist that layouts/chiptunes.html renders from
 // data/chiptunes.yaml. A track is either song data synthesised live with WebAudio (no audio files at all) or an
-// audio file hosted elsewhere. Nothing plays until the visitor presses Play, and the audio context is only created
-// then, so the browser's autoplay rules never block it. Closing the window stops the audio.
+// audio file hosted elsewhere. Opening the player plays the first track once the visitor has pressed something on
+// the page, which browsers require before sound; a page loaded straight into the player waits for Play. The audio
+// context is only created then. Closing the window stops the audio.
 //
 // Song data (JSON): { bpm, steps, channels: { <name>: channel }, patterns: { <name>: { <channel>: line } }, order }
 // - steps: steps per beat (4 = sixteenth notes). A line is space-separated steps, or an array of them (one per bar).
@@ -255,7 +256,7 @@ export function mount(v, page, { fresh }) {
 
   function ensureContext() {
     if (ctx) return;
-    // created inside the click that asked for sound, which is what browsers require
+    // created after a press on the page (Play, or opening the player), which is what browsers require
     ctx = new AudioContext();
     master = ctx.createGain();
     scope = ctx.createAnalyser();
@@ -416,4 +417,9 @@ export function mount(v, page, { fresh }) {
   if (tracks.length) select(0, false);
   else note();
   render();
+  if (tracks.length && navigator.userActivation?.hasBeenActive) {
+    play();
+    // a browser that still holds the context back (Safari may, outside the press itself) leaves it to Play
+    setTimeout(() => { if (playing && ctx?.state !== 'running') pause(); }, 600);
+  }
 }

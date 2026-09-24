@@ -1,0 +1,18 @@
+/* Synthwave: neon pink tabs and a dark violet panel; lavender frames in light mode, deep indigo ones and cyan links
+   in dark. The whole look, with its sun and grid, is looks/synthwave.css. */
+:where(:root)[data-palette=synthwave] {
+  --panel: linear-gradient(#3a1d6b, #24104a); --panel-fg: #f5eeff; --panel-hover: rgba(255,255,255,.12);
+  --frame: light-dark(#e6def5, #2a1f4a); --frame-hi: light-dark(#f8f5fd, #43356e);
+  --frame-lo: light-dark(#a99bc6, #181030); --frame-dk: light-dark(#5e4f82, #0b0619);
+  --tab: light-dark(#ff8fcb, #ff4fae); --tab-hi: light-dark(#ffd3ea, #ff9ad2); --tab-lo: light-dark(#d9589e, #b0266f);
+  --tab-dim: light-dark(#ffc4e3, #cf6ea6); --tab-in: light-dark(#ece6f7, #3a2d5e);
+  --tab-in-lo: light-dark(#b9aed0, #251b40); --tab-in-fg: light-dark(#453d5c, #d8cff0);
+  --content: light-dark(#fff, #1b1433); --fg: light-dark(#1f1a2e, #ece6ff); --muted: light-dark(#5b5270, #b6a8dc);
+  --line: light-dark(#e2dcee, #33295a); --side: light-dark(#f3eff9, #211942); --read-bg: light-dark(#fdfbff, #171030);
+  --code-bg: light-dark(#f3eef9, #251c45);
+  --accent: light-dark(#b0246f, #c2267a); --link: light-dark(#0a6e8c, #6fe3ff); --ctl: #3a0a26;
+  --wall-1: light-dark(#6a3fb5, #2e1760); --wall-2: light-dark(#4a2590, #1f0f45); --wall-3: light-dark(#2f1466, #12072c);
+  --wall-glow: light-dark(rgba(255,62,165,.3), rgba(255,62,165,.18)); --wall-line: rgba(255,120,200,.16);
+}
+/* the core's olive label text is too dim on the pink tab colour */
+:root[data-palette=synthwave] .ticker-h { color: var(--ctl); }

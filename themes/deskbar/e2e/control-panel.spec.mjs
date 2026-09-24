@@ -153,7 +153,8 @@ test('each palette, decorator and wallpaper applies', async t => {
   await ready(page);
   await pick(page, 'theme', 'light');
   const tabs = { haiku: 'rgb(255, 203, 0)', beos: 'rgb(255, 203, 0)', xfce: 'rgb(163, 189, 223)', sage: 'rgb(181, 207, 156)',
-    snow: 'rgb(188, 215, 251)', mint: 'rgb(174, 232, 211)', peach: 'rgb(255, 207, 186)', synthwave: 'rgb(255, 143, 203)' };
+    snow: 'rgb(188, 215, 251)', mint: 'rgb(174, 232, 211)', peach: 'rgb(255, 207, 186)', synthwave: 'rgb(255, 143, 203)',
+    rose: 'rgb(233, 168, 166)', ember: 'rgb(245, 160, 74)', solar: 'rgb(213, 164, 28)', lagoon: 'rgb(255, 138, 112)' };
   const panels = new Set();
   for (const [p, tab] of Object.entries(tabs)) {
     await pick(page, 'palette', p);

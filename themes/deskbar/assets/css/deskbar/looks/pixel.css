@@ -1,0 +1,208 @@
+/* Pixel: modern pixel art, after Celeste's and Eastward's menus, Stardew Valley's hotbar and Eboy's skies. Every
+   edge is an ink ring two pixels thick with one corner pixel knocked out (a border-image, so the ring follows any
+   box), bevels are two-pixel lines, gradients are ordered dithers, and the chrome is set in Pixelify Sans while the
+   reader keeps its own face. The wallpaper is a dithered sky over tiling hills with pines: a day scene in light mode
+   and a dusk with twinkling stars in dark, each built from SVG drawn on an integer grid and scaled crisp. Loaded as
+   look-pixel (lazy.html). */
+@font-face { font-family: 'Pixelify Sans'; font-display: swap; font-weight: 400 700; src: url(../../../fonts/pixelify-sans/pixelify-sans-variable.woff2) format('woff2'); }
+
+/* the scene's art, day first, for the wallpaper and the Control panel's thumbnails whatever window style is on */
+:root:is([data-deco=pixel], [data-wall=pixel]), .cp-deco.pixel, .cp-wp.pixel {
+  --pk-top: #3a8adf; --pk-stars: none;
+  --pk-sky: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='4' height='220' shape-rendering='crispEdges'%3E%3Cpath fill='%232f7fd8' d='M0 0h4v18h-4zM1 18h1v1h-1zM3 18h1v1h-1zM0 19h1v1h-1zM2 19h1v1h-1zM1 20h1v1h-1zM3 20h1v1h-1zM0 21h1v1h-1zM2 21h1v1h-1z'/%3E%3Cpath fill='%233f8fe0' d='M0 18h1v1h-1zM2 18h1v1h-1zM1 19h1v1h-1zM3 19h1v1h-1zM0 20h1v1h-1zM2 20h1v1h-1zM1 21h1v1h-1zM3 21h1v1h-1zM0 22h4v16h-4zM1 38h1v1h-1zM3 38h1v1h-1zM0 39h1v1h-1zM2 39h1v1h-1zM1 40h1v1h-1zM3 40h1v1h-1zM0 41h1v1h-1zM2 41h1v1h-1z'/%3E%3Cpath fill='%2356a3ea' d='M0 38h1v1h-1zM2 38h1v1h-1zM1 39h1v1h-1zM3 39h1v1h-1zM0 40h1v1h-1zM2 40h1v1h-1zM1 41h1v1h-1zM3 41h1v1h-1zM0 42h4v16h-4zM1 58h1v1h-1zM3 58h1v1h-1zM0 59h1v1h-1zM2 59h1v1h-1zM1 60h1v1h-1zM3 60h1v1h-1zM0 61h1v1h-1zM2 61h1v1h-1z'/%3E%3Cpath fill='%2370b6f0' d='M0 58h1v1h-1zM2 58h1v1h-1zM1 59h1v1h-1zM3 59h1v1h-1zM0 60h1v1h-1zM2 60h1v1h-1zM1 61h1v1h-1zM3 61h1v1h-1zM0 62h4v16h-4zM1 78h1v1h-1zM3 78h1v1h-1zM0 79h1v1h-1zM2 79h1v1h-1zM1 80h1v1h-1zM3 80h1v1h-1zM0 81h1v1h-1zM2 81h1v1h-1z'/%3E%3Cpath fill='%238cc8f4' d='M0 78h1v1h-1zM2 78h1v1h-1zM1 79h1v1h-1zM3 79h1v1h-1zM0 80h1v1h-1zM2 80h1v1h-1zM1 81h1v1h-1zM3 81h1v1h-1zM0 82h4v16h-4zM1 98h1v1h-1zM3 98h1v1h-1zM0 99h1v1h-1zM2 99h1v1h-1zM1 100h1v1h-1zM3 100h1v1h-1zM0 101h1v1h-1zM2 101h1v1h-1z'/%3E%3Cpath fill='%23a8d8f7' d='M0 98h1v1h-1zM2 98h1v1h-1zM1 99h1v1h-1zM3 99h1v1h-1zM0 100h1v1h-1zM2 100h1v1h-1zM1 101h1v1h-1zM3 101h1v1h-1zM0 102h4v14h-4zM1 116h1v1h-1zM3 116h1v1h-1zM0 117h1v1h-1zM2 117h1v1h-1zM1 118h1v1h-1zM3 118h1v1h-1zM0 119h1v1h-1zM2 119h1v1h-1z'/%3E%3Cpath fill='%23c6e6fa' d='M0 116h1v1h-1zM2 116h1v1h-1zM1 117h1v1h-1zM3 117h1v1h-1zM0 118h1v1h-1zM2 118h1v1h-1zM1 119h1v1h-1zM3 119h1v1h-1zM0 120h4v14h-4zM1 134h1v1h-1zM3 134h1v1h-1zM0 135h1v1h-1zM2 135h1v1h-1zM1 136h1v1h-1zM3 136h1v1h-1zM0 137h1v1h-1zM2 137h1v1h-1z'/%3E%3Cpath fill='%23e2f0fb' d='M0 134h1v1h-1zM2 134h1v1h-1zM1 135h1v1h-1zM3 135h1v1h-1zM0 136h1v1h-1zM2 136h1v1h-1zM1 137h1v1h-1zM3 137h1v1h-1zM0 138h4v12h-4zM1 150h1v1h-1zM3 150h1v1h-1zM0 151h1v1h-1zM2 151h1v1h-1zM1 152h1v1h-1zM3 152h1v1h-1zM0 153h1v1h-1zM2 153h1v1h-1z'/%3E%3Cpath fill='%23f3e6cb' d='M0 150h1v1h-1zM2 150h1v1h-1zM1 151h1v1h-1zM3 151h1v1h-1zM0 152h1v1h-1zM2 152h1v1h-1zM1 153h1v1h-1zM3 153h1v1h-1zM0 154h4v66h-4z'/%3E%3C/svg%3E");
+  --pk-hills: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='256' height='96' shape-rendering='crispEdges'%3E%3Cpath fill='%238fb8db' d='M0 96V31h1v-1h3v1h1v1h2v2h1v1h1v1h1v1h1v1h6v-1h1v-1h2v-1h1v-1h2v-1h3v1h3v1h2v1h2v1h6v1h2v1h2v1h1v1h1v2h1v1h1v1h1v1h1v1h1v1h3v-1h2v-1h1v-2h1v-1h1v-1h1v-2h1v-1h1v-2h1v-1h1v-1h2v-1h8v-1h3v-1h7v1h1v1h2v1h1v1h1v1h5v-1h2v-1h1v-1h1v-1h1v-1h1v-1h5v1h1v1h1v1h1v2h1v1h1v2h1v1h1v1h1v1h1v2h2v1h1v1h1v1h1v1h2v1h1v1h1v1h1v2h1v1h1v1h1v1h1v1h2v1h3v-1h1v-1h2v-2h1v-1h1v-1h1v-1h1v-1h6v1h1v1h2v1h1v1h2v1h3v-1h3v-1h2v-1h2v-1h6v-1h2v-1h2v-1h1v-1h1v-2h1v-1h1v-1h1v-1h1v-1h1v-1h3v1h2v1h1v2h1v1h1v1h1v2h1v1h1v2h1v1h1v1h2v1h8v1h3v1h7v-1h1v-1h2v-1h1v-1h1v-1h5v1h2v1h1v1h1v1h1v1h1v1h5v-1h1v-1h1v-1h1v-2h1v-1h1v-2h1v-1h1v-1h1v-1h1v-2h2v-1h1v-1h1v-1h1v-1h2v-1h1v-1h1v-1h1v-2h1v-1h1v-1h1v-1h1v-1h1V96z'/%3E%3Cpath fill='%23a4dc8a' d='M0 96V58h4v1h4v1h3v1h3v1h3v1h3v1h28v1h3v1h2v1h2v1h1v1h2v1h1v1h2v1h1v1h2v1h1v1h2v1h2v1h2v1h3v1h8v-1h4v-1h3v-1h2v-1h3v-1h3v-1h6v-1h9v1h7v-1h6v-1h2v-1h2v-1h2v-1h2v-1h2v-1h1v-1h2v-1h1v-1h2v-1h1v-1h2v-1h2v-1h3v-1h11v1h3v1h3v1h3v1h3v1h4v1h8v-1h5v-1h5v-1h11v1h4v1h3v1h2v1h3v1h3v1h5v1h3v-1h5v-1h3v-1h2v-1h2v-1h2v-1h2v-1h2v-1h3v-1h3v-1h4V96z'/%3E%3Cpath fill='%2379c26a' d='M0 96V59h4v1h4v1h3v1h3v1h3v1h3v1h28v1h3v1h2v1h2v1h1v1h2v1h1v1h2v1h1v1h2v1h1v1h2v1h2v1h2v1h3v1h8v-1h4v-1h3v-1h2v-1h3v-1h3v-1h6v-1h9v1h7v-1h6v-1h2v-1h2v-1h2v-1h2v-1h2v-1h1v-1h2v-1h1v-1h2v-1h1v-1h2v-1h2v-1h3v-1h11v1h3v1h3v1h3v1h3v1h4v1h8v-1h5v-1h5v-1h11v1h4v1h3v1h2v1h3v1h3v1h5v1h3v-1h5v-1h3v-1h2v-1h2v-1h2v-1h2v-1h2v-1h3v-1h3v-1h4V96z'/%3E%3Cpath fill='%233f9a4b' d='M0 96V84h5v1h6v1h4v1h4v1h7v1h4v-1h5v-1h3v-1h3v-1h2v-1h3v-1h2v-1h3v-1h3v-1h25v-1h15v1h7v1h7v1h8v-1h5v-1h3v-1h2v-1h3v-1h3v-1h3v-1h4v-1h12v1h7v1h8v1h8v1h5v1h3v1h3v1h3v1h3v1h4v1h14v-1h4v-1h4v-1h5v-1h10v1h6v1h6v1h8v1h4V96z'/%3E%3Cpath fill='%2325683a' d='M16 80h1v1h-1zM15 81h3v1h-3zM15 82h3v1h-3zM14 83h5v1h-5zM15 84h3v1h-3zM14 85h5v1h-5zM16 86h1v1h-1zM35 80h1v1h-1zM34 81h3v1h-3zM34 82h3v1h-3zM33 83h5v1h-5zM34 84h3v1h-3zM33 85h5v1h-5zM35 86h1v1h-1zM72 73h1v1h-1zM71 74h3v1h-3zM71 75h3v1h-3zM70 76h5v1h-5zM71 77h3v1h-3zM70 78h5v1h-5zM72 79h1v1h-1zM94 73h1v1h-1zM93 74h3v1h-3zM93 75h3v1h-3zM92 76h5v1h-5zM93 77h3v1h-3zM92 78h5v1h-5zM94 79h1v1h-1zM123 73h1v1h-1zM122 74h3v1h-3zM122 75h3v1h-3zM121 76h5v1h-5zM122 77h3v1h-3zM121 78h5v1h-5zM123 79h1v1h-1zM152 68h1v1h-1zM151 69h3v1h-3zM151 70h3v1h-3zM150 71h5v1h-5zM151 72h3v1h-3zM150 73h5v1h-5zM152 74h1v1h-1zM178 71h1v1h-1zM177 72h3v1h-3zM177 73h3v1h-3zM176 74h5v1h-5zM177 75h3v1h-3zM176 76h5v1h-5zM178 77h1v1h-1zM207 77h1v1h-1zM206 78h3v1h-3zM206 79h3v1h-3zM205 80h5v1h-5zM206 81h3v1h-3zM205 82h5v1h-5zM207 83h1v1h-1zM233 74h1v1h-1zM232 75h3v1h-3zM232 76h3v1h-3zM231 77h5v1h-5zM232 78h3v1h-3zM231 79h5v1h-5zM233 80h1v1h-1z'/%3E%3C/svg%3E");
+  --pk-orb: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' shape-rendering='crispEdges'%3E%3Cpath fill='%23ffcf4c' d='M5 1h6v1h-6zM4 2h8v1h-8zM3 3h2v1h-2zM8 3h5v1h-5zM2 4h2v1h-2zM9 4h5v1h-5zM1 5h2v3h-2zM10 5h5v3h-5zM1 8h3v1h-3zM9 8h6v1h-6zM1 9h4v1h-4zM8 9h7v1h-7zM1 10h14v1h-14zM2 11h12v1h-12zM3 12h10v1h-10zM4 13h8v1h-8zM5 14h6v1h-6z'/%3E%3Cpath fill='%23fff0a0' d='M5 3h3v1h-3zM4 4h5v1h-5zM3 5h7v3h-7zM4 8h5v1h-5zM5 9h3v1h-3z'/%3E%3C/svg%3E");
+  --pk-clouds: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='192' height='40' shape-rendering='crispEdges'%3E%3Cpath fill='%23ffffff' d='M26 3h8v2h-8zM22 5h18v3h-18zM22 8h28v1h-28zM12 9h38v1h-38zM12 10h40v2h-40zM8 12h46v2h-46zM172 12h6v2h-6zM10 14h42v1h-42zM168 14h14v2h-14zM170 16h10v1h-10zM128 18h4v2h-4zM124 20h12v3h-12zM116 23h20v1h-20zM116 24h24v2h-24zM112 26h30v2h-30zM114 28h26v1h-26z'/%3E%3Cpath fill='%23cfe3f6' d='M8 14h2v1h-2zM52 14h2v1h-2zM8 15h46v2h-46zM168 16h2v1h-2zM180 16h2v1h-2zM10 17h42v1h-42zM170 17h10v1h-10zM112 28h2v1h-2zM140 28h2v1h-2zM112 29h30v1h-30zM114 30h26v1h-26z'/%3E%3C/svg%3E");
+  --pk-n-sky: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='4' height='220' shape-rendering='crispEdges'%3E%3Cpath fill='%230b0a1f' d='M0 0h4v18h-4zM1 18h1v1h-1zM3 18h1v1h-1zM0 19h1v1h-1zM2 19h1v1h-1zM1 20h1v1h-1zM3 20h1v1h-1zM0 21h1v1h-1zM2 21h1v1h-1z'/%3E%3Cpath fill='%23120f2e' d='M0 18h1v1h-1zM2 18h1v1h-1zM1 19h1v1h-1zM3 19h1v1h-1zM0 20h1v1h-1zM2 20h1v1h-1zM1 21h1v1h-1zM3 21h1v1h-1zM0 22h4v16h-4zM1 38h1v1h-1zM3 38h1v1h-1zM0 39h1v1h-1zM2 39h1v1h-1zM1 40h1v1h-1zM3 40h1v1h-1zM0 41h1v1h-1zM2 41h1v1h-1z'/%3E%3Cpath fill='%231a1540' d='M0 38h1v1h-1zM2 38h1v1h-1zM1 39h1v1h-1zM3 39h1v1h-1zM0 40h1v1h-1zM2 40h1v1h-1zM1 41h1v1h-1zM3 41h1v1h-1zM0 42h4v16h-4zM1 58h1v1h-1zM3 58h1v1h-1zM0 59h1v1h-1zM2 59h1v1h-1zM1 60h1v1h-1zM3 60h1v1h-1zM0 61h1v1h-1zM2 61h1v1h-1z'/%3E%3Cpath fill='%23261c52' d='M0 58h1v1h-1zM2 58h1v1h-1zM1 59h1v1h-1zM3 59h1v1h-1zM0 60h1v1h-1zM2 60h1v1h-1zM1 61h1v1h-1zM3 61h1v1h-1zM0 62h4v14h-4zM1 76h1v1h-1zM3 76h1v1h-1zM0 77h1v1h-1zM2 77h1v1h-1zM1 78h1v1h-1zM3 78h1v1h-1zM0 79h1v1h-1zM2 79h1v1h-1z'/%3E%3Cpath fill='%233a2460' d='M0 76h1v1h-1zM2 76h1v1h-1zM1 77h1v1h-1zM3 77h1v1h-1zM0 78h1v1h-1zM2 78h1v1h-1zM1 79h1v1h-1zM3 79h1v1h-1zM0 80h4v14h-4zM1 94h1v1h-1zM3 94h1v1h-1zM0 95h1v1h-1zM2 95h1v1h-1zM1 96h1v1h-1zM3 96h1v1h-1zM0 97h1v1h-1zM2 97h1v1h-1z'/%3E%3Cpath fill='%23582d63' d='M0 94h1v1h-1zM2 94h1v1h-1zM1 95h1v1h-1zM3 95h1v1h-1zM0 96h1v1h-1zM2 96h1v1h-1zM1 97h1v1h-1zM3 97h1v1h-1zM0 98h4v12h-4zM1 110h1v1h-1zM3 110h1v1h-1zM0 111h1v1h-1zM2 111h1v1h-1zM1 112h1v1h-1zM3 112h1v1h-1zM0 113h1v1h-1zM2 113h1v1h-1z'/%3E%3Cpath fill='%237d3b5e' d='M0 110h1v1h-1zM2 110h1v1h-1zM1 111h1v1h-1zM3 111h1v1h-1zM0 112h1v1h-1zM2 112h1v1h-1zM1 113h1v1h-1zM3 113h1v1h-1zM0 114h4v12h-4zM1 126h1v1h-1zM3 126h1v1h-1zM0 127h1v1h-1zM2 127h1v1h-1zM1 128h1v1h-1zM3 128h1v1h-1zM0 129h1v1h-1zM2 129h1v1h-1z'/%3E%3Cpath fill='%23b0504f' d='M0 126h1v1h-1zM2 126h1v1h-1zM1 127h1v1h-1zM3 127h1v1h-1zM0 128h1v1h-1zM2 128h1v1h-1zM1 129h1v1h-1zM3 129h1v1h-1zM0 130h4v10h-4zM1 140h1v1h-1zM3 140h1v1h-1zM0 141h1v1h-1zM2 141h1v1h-1zM1 142h1v1h-1zM3 142h1v1h-1zM0 143h1v1h-1zM2 143h1v1h-1z'/%3E%3Cpath fill='%23e08a55' d='M0 140h1v1h-1zM2 140h1v1h-1zM1 141h1v1h-1zM3 141h1v1h-1zM0 142h1v1h-1zM2 142h1v1h-1zM1 143h1v1h-1zM3 143h1v1h-1zM0 144h4v10h-4zM1 154h1v1h-1zM3 154h1v1h-1zM0 155h1v1h-1zM2 155h1v1h-1zM1 156h1v1h-1zM3 156h1v1h-1zM0 157h1v1h-1zM2 157h1v1h-1z'/%3E%3Cpath fill='%23f5b263' d='M0 154h1v1h-1zM2 154h1v1h-1zM1 155h1v1h-1zM3 155h1v1h-1zM0 156h1v1h-1zM2 156h1v1h-1zM1 157h1v1h-1zM3 157h1v1h-1zM0 158h4v62h-4z'/%3E%3C/svg%3E");
+  --pk-n-hills: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='256' height='96' shape-rendering='crispEdges'%3E%3Cpath fill='%233a2c5e' d='M0 96V31h1v-1h3v1h1v1h2v2h1v1h1v1h1v1h1v1h6v-1h1v-1h2v-1h1v-1h2v-1h3v1h3v1h2v1h2v1h6v1h2v1h2v1h1v1h1v2h1v1h1v1h1v1h1v1h1v1h3v-1h2v-1h1v-2h1v-1h1v-1h1v-2h1v-1h1v-2h1v-1h1v-1h2v-1h8v-1h3v-1h7v1h1v1h2v1h1v1h1v1h5v-1h2v-1h1v-1h1v-1h1v-1h1v-1h5v1h1v1h1v1h1v2h1v1h1v2h1v1h1v1h1v1h1v2h2v1h1v1h1v1h1v1h2v1h1v1h1v1h1v2h1v1h1v1h1v1h1v1h2v1h3v-1h1v-1h2v-2h1v-1h1v-1h1v-1h1v-1h6v1h1v1h2v1h1v1h2v1h3v-1h3v-1h2v-1h2v-1h6v-1h2v-1h2v-1h1v-1h1v-2h1v-1h1v-1h1v-1h1v-1h1v-1h3v1h2v1h1v2h1v1h1v1h1v2h1v1h1v2h1v1h1v1h2v1h8v1h3v1h7v-1h1v-1h2v-1h1v-1h1v-1h5v1h2v1h1v1h1v1h1v1h1v1h5v-1h1v-1h1v-1h1v-2h1v-1h1v-2h1v-1h1v-1h1v-1h1v-2h2v-1h1v-1h1v-1h1v-1h2v-1h1v-1h1v-1h1v-2h1v-1h1v-1h1v-1h1v-1h1V96z'/%3E%3Cpath fill='%23372f63' d='M0 96V58h4v1h4v1h3v1h3v1h3v1h3v1h28v1h3v1h2v1h2v1h1v1h2v1h1v1h2v1h1v1h2v1h1v1h2v1h2v1h2v1h3v1h8v-1h4v-1h3v-1h2v-1h3v-1h3v-1h6v-1h9v1h7v-1h6v-1h2v-1h2v-1h2v-1h2v-1h2v-1h1v-1h2v-1h1v-1h2v-1h1v-1h2v-1h2v-1h3v-1h11v1h3v1h3v1h3v1h3v1h4v1h8v-1h5v-1h5v-1h11v1h4v1h3v1h2v1h3v1h3v1h5v1h3v-1h5v-1h3v-1h2v-1h2v-1h2v-1h2v-1h2v-1h3v-1h3v-1h4V96z'/%3E%3Cpath fill='%23241f48' d='M0 96V59h4v1h4v1h3v1h3v1h3v1h3v1h28v1h3v1h2v1h2v1h1v1h2v1h1v1h2v1h1v1h2v1h1v1h2v1h2v1h2v1h3v1h8v-1h4v-1h3v-1h2v-1h3v-1h3v-1h6v-1h9v1h7v-1h6v-1h2v-1h2v-1h2v-1h2v-1h2v-1h1v-1h2v-1h1v-1h2v-1h1v-1h2v-1h2v-1h3v-1h11v1h3v1h3v1h3v1h3v1h4v1h8v-1h5v-1h5v-1h11v1h4v1h3v1h2v1h3v1h3v1h5v1h3v-1h5v-1h3v-1h2v-1h2v-1h2v-1h2v-1h2v-1h3v-1h3v-1h4V96z'/%3E%3Cpath fill='%23161334' d='M0 96V84h5v1h6v1h4v1h4v1h7v1h4v-1h5v-1h3v-1h3v-1h2v-1h3v-1h2v-1h3v-1h3v-1h25v-1h15v1h7v1h7v1h8v-1h5v-1h3v-1h2v-1h3v-1h3v-1h3v-1h4v-1h12v1h7v1h8v1h8v1h5v1h3v1h3v1h3v1h3v1h4v1h14v-1h4v-1h4v-1h5v-1h10v1h6v1h6v1h8v1h4V96z'/%3E%3Cpath fill='%230d0b22' d='M16 80h1v1h-1zM15 81h3v1h-3zM15 82h3v1h-3zM14 83h5v1h-5zM15 84h3v1h-3zM14 85h5v1h-5zM16 86h1v1h-1zM35 80h1v1h-1zM34 81h3v1h-3zM34 82h3v1h-3zM33 83h5v1h-5zM34 84h3v1h-3zM33 85h5v1h-5zM35 86h1v1h-1zM72 73h1v1h-1zM71 74h3v1h-3zM71 75h3v1h-3zM70 76h5v1h-5zM71 77h3v1h-3zM70 78h5v1h-5zM72 79h1v1h-1zM94 73h1v1h-1zM93 74h3v1h-3zM93 75h3v1h-3zM92 76h5v1h-5zM93 77h3v1h-3zM92 78h5v1h-5zM94 79h1v1h-1zM123 73h1v1h-1zM122 74h3v1h-3zM122 75h3v1h-3zM121 76h5v1h-5zM122 77h3v1h-3zM121 78h5v1h-5zM123 79h1v1h-1zM152 68h1v1h-1zM151 69h3v1h-3zM151 70h3v1h-3zM150 71h5v1h-5zM151 72h3v1h-3zM150 73h5v1h-5zM152 74h1v1h-1zM178 71h1v1h-1zM177 72h3v1h-3zM177 73h3v1h-3zM176 74h5v1h-5zM177 75h3v1h-3zM176 76h5v1h-5zM178 77h1v1h-1zM207 77h1v1h-1zM206 78h3v1h-3zM206 79h3v1h-3zM205 80h5v1h-5zM206 81h3v1h-3zM205 82h5v1h-5zM207 83h1v1h-1zM233 74h1v1h-1zM232 75h3v1h-3zM232 76h3v1h-3zM231 77h5v1h-5zM232 78h3v1h-3zM231 79h5v1h-5zM233 80h1v1h-1z'/%3E%3C/svg%3E");
+  --pk-n-orb: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' shape-rendering='crispEdges'%3E%3Cpath fill='%23f4eedc' d='M5 1h2v1h-2zM4 2h2v1h-2zM3 3h3v1h-3zM2 4h3v1h-3zM1 5h4v2h-4zM1 7h2v1h-2zM4 7h1v1h-1zM1 8h5v2h-5zM1 10h4v1h-4zM6 10h1v1h-1zM2 11h3v1h-3zM6 11h3v1h-3zM13 11h1v1h-1zM3 12h5v1h-5zM9 12h4v1h-4zM4 13h8v1h-8zM5 14h6v1h-6z'/%3E%3Cpath fill='%23d4cdb6' d='M3 7h1v1h-1zM5 10h1v2h-1zM8 12h1v1h-1z'/%3E%3C/svg%3E");
+  --pk-n-clouds: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='192' height='40' shape-rendering='crispEdges'%3E%3Cpath fill='%23332c5e' d='M26 3h8v2h-8zM22 5h18v3h-18zM22 8h28v1h-28zM12 9h38v1h-38zM12 10h40v2h-40zM8 12h46v2h-46zM172 12h6v2h-6zM10 14h42v1h-42zM168 14h14v2h-14zM170 16h10v1h-10zM128 18h4v2h-4zM124 20h12v3h-12zM116 23h20v1h-20zM116 24h24v2h-24zM112 26h30v2h-30zM114 28h26v1h-26z'/%3E%3Cpath fill='%23231e45' d='M8 14h2v1h-2zM52 14h2v1h-2zM8 15h46v2h-46zM168 16h2v1h-2zM180 16h2v1h-2zM10 17h42v1h-42zM170 17h10v1h-10zM112 28h2v1h-2zM140 28h2v1h-2zM112 29h30v1h-30zM114 30h26v1h-26z'/%3E%3C/svg%3E");
+  --pk-n-stars: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='256' height='64' shape-rendering='crispEdges'%3E%3Cpath fill='%23f4f1ff' d='M119 4h1v1h-1zM183 4h1v1h-1zM5 6h1v1h-1zM69 6h1v1h-1zM197 6h1v1h-1zM44 8h1v1h-1zM172 8h1v1h-1zM236 8h1v1h-1zM26 12h1v1h-1zM218 12h1v1h-1zM78 17h1v1h-1zM206 17h1v1h-1zM175 21h1v1h-1zM47 22h1v1h-1zM174 22h3v1h-3zM175 23h1v1h-1zM139 30h1v1h-1zM33 36h1v1h-1zM97 36h1v1h-1zM58 41h1v1h-1zM122 41h1v1h-1zM66 46h1v1h-1zM130 46h1v1h-1zM194 46h1v1h-1zM103 51h1v1h-1zM167 51h1v1h-1zM148 58h1v1h-1zM212 58h1v1h-1z'/%3E%3Cpath fill='%237e83c4' d='M133 6h1v1h-1zM108 8h1v1h-1zM90 12h1v1h-1zM14 17h1v1h-1zM142 17h1v1h-1zM239 22h1v1h-1zM75 30h1v1h-1zM203 30h1v1h-1zM161 36h1v1h-1zM225 36h1v1h-1zM250 41h1v1h-1zM2 46h1v1h-1zM39 51h1v1h-1zM20 58h1v1h-1zM84 58h1v1h-1z'/%3E%3C/svg%3E");
+}
+/* night swaps the art in, since light-dark() takes colours only; auto follows the browser */
+:root[data-theme=dark]:is([data-deco=pixel], [data-wall=pixel]), :root[data-theme=dark] :is(.cp-deco.pixel, .cp-wp.pixel) { --pk-top: #0b0a1f; --pk-sky: var(--pk-n-sky); --pk-hills: var(--pk-n-hills); --pk-orb: var(--pk-n-orb); --pk-clouds: var(--pk-n-clouds); --pk-stars: var(--pk-n-stars); }
+@media (prefers-color-scheme: dark) {
+  :root[data-theme=auto]:is([data-deco=pixel], [data-wall=pixel]), :root[data-theme=auto] :is(.cp-deco.pixel, .cp-wp.pixel) { --pk-top: #0b0a1f; --pk-sky: var(--pk-n-sky); --pk-hills: var(--pk-n-hills); --pk-orb: var(--pk-n-orb); --pk-clouds: var(--pk-n-clouds); --pk-stars: var(--pk-n-stars); }
+}
+
+:root[data-deco=pixel] {
+  --pk-ink: #1c1a2e; --pk-cream: #f5ead0; --pk-sun: #ffcd4d; --pk-amber: #e8a52e; --pk-coral: #ef7d57;
+  --pk-shadow: light-dark(rgba(28,26,46,.4), rgba(5,4,14,.7)); --pk-font: 'Pixelify Sans', var(--ui);
+  --pk-ring: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='6' height='6' shape-rendering='crispEdges'%3E%3Cpath fill='%231c1a2e' d='M2 0h2v2h2v2H4v2H2V4H0V2h2z'/%3E%3C/svg%3E");
+  --pk-dither: repeating-conic-gradient(var(--pk-sun) 0 25%, var(--pk-amber) 0 50%) 0 0 / 4px 4px;
+  --tab-h: 30px; --dock-h: 76px; --ctl: var(--pk-ink);
+  --panel: light-dark(#2a2748, #14122a); --panel-fg: var(--pk-cream); --panel-hover: rgba(255,255,255,.14);
+  --frame: light-dark(#f1e4c6, #3a3560); --frame-hi: light-dark(#fff9ea, #5b5591); --frame-lo: light-dark(#c8b58f, #24203f); --frame-dk: var(--pk-ink);
+  --tab: var(--pk-sun); --tab-hi: #ffe79a; --tab-lo: var(--pk-amber); --tab-dim: light-dark(#f0d98d, #b58f3f);
+  --tab-in: light-dark(#e2d3ad, #2c2850); --tab-in-lo: light-dark(#b6a279, #1d1a36); --tab-in-fg: light-dark(#4a4335, #cfc8ea);
+  --content: light-dark(#fffaef, #22203a); --fg: light-dark(#252235, #ece7f6); --muted: light-dark(#5b5669, #b5aecb);
+  --line: light-dark(#d9cbaa, #3d385f); --side: light-dark(#f6ecd4, #2a2747); --zebra: light-dark(rgba(28,26,46,.035), rgba(255,255,255,.03));
+  --accent: light-dark(#1e7368, #23796e); --accent-fg: #fff; --link: light-dark(#1e7368, #7fd9ca);
+  --read-bg: light-dark(#fcf6e8, #1e1c33); --read-fg: light-dark(#2a2735, #e4dff0); --code-bg: light-dark(#f1e7cf, #2a2745);
+  --wall-1: light-dark(#5ea6ec, #28204f); --wall-2: light-dark(#79c26a, #241f48); --wall-3: light-dark(#3f9a4b, #161334);
+  accent-color: var(--accent); scrollbar-color: var(--frame-lo) var(--content);
+}
+:root[data-deco=pixel] ::selection { background: var(--pk-sun); color: var(--pk-ink); }
+
+/* Windows: the title bar spans the frame and joins it, so the two read as one box in one ring. The bar is sun yellow
+   dithered down to amber, the frame a bevelled slab, and both throw one hard shadow. Tabs paint before the frame, so
+   a tab's shadow shows only beside it, where it runs on into the frame's. */
+:root[data-deco=pixel] .win .frame { padding: 4px; border: 2px solid transparent; border-top: 0; border-image: var(--pk-ring) 2; background: var(--frame) padding-box; box-shadow: inset 2px 0 0 var(--frame-hi), inset -2px -2px 0 var(--frame-lo), 4px 4px 0 var(--pk-shadow); }
+:root[data-deco=pixel] .win.active .frame { box-shadow: inset 2px 0 0 var(--frame-hi), inset -2px -2px 0 var(--frame-lo), 6px 6px 0 var(--pk-shadow); }
+:root[data-deco=pixel] .views { border-width: 2px; border-color: var(--frame-lo) var(--frame-hi) var(--frame-hi) var(--frame-lo); }
+:root[data-deco=pixel] .win .tabs:not(.multi) .tab { left: 0 !important; right: 0; }
+:root[data-deco=pixel] .win :is(.tab, .th) { gap: 4px; padding: 0 4px 0 10px; border: 2px solid transparent; border-bottom: 0; border-image: var(--pk-ring) 2; background: var(--tab-in) padding-box; color: var(--tab-in-fg); box-shadow: inset 2px 2px 0 var(--frame-hi), 4px 4px 0 var(--pk-shadow); }
+:root[data-deco=pixel] .win .th { background: var(--frame) padding-box; }
+:root[data-deco=pixel] .win.active :is(.tab, .th) { box-shadow: inset 2px 2px 0 var(--frame-hi), 6px 6px 0 var(--pk-shadow); }
+:root[data-deco=pixel] .win.active .tab { color: var(--pk-ink); background: linear-gradient(var(--pk-sun) 0 16px, transparent 16px 22px, var(--pk-amber) 22px) padding-box, var(--pk-dither) padding-box var(--pk-sun); box-shadow: inset 2px 2px 0 var(--tab-hi), 6px 6px 0 var(--pk-shadow); }
+:root[data-deco=pixel] .win.active .tab:not(.on) { background: var(--tab-dim) padding-box; box-shadow: inset 2px 2px 0 var(--tab-hi), 6px 6px 0 var(--pk-shadow); }
+:root[data-deco=pixel] .tabs.multi .tab { margin-right: -2px; }
+:root[data-deco=pixel] .th::before { margin: 9px 8px 9px 0; background: repeating-conic-gradient(var(--frame-lo) 0 25%, transparent 0 50%) 0 0 / 4px 4px; }
+:root[data-deco=pixel] .tab .tt { font: 700 15px/1 var(--pk-font); }
+:root[data-deco=pixel] .win:not(.active) .tab .tt { font-weight: 400; }
+:root[data-deco=pixel] .tabs:not(.multi) .tt { max-width: none; }
+/* controls are keycaps: a ring, a lit face and a two-pixel foot, each with a pixel glyph; pressing sinks the cap */
+:root[data-deco=pixel] .win .ctl { width: 18px; height: 18px; border: 2px solid transparent; border-image: var(--pk-ring) 2; border-radius: 0; opacity: 1; color: var(--pk-ink); background: var(--frame-hi) padding-box; box-shadow: inset 0 -2px 0 var(--frame-lo); transition: none; }
+:root[data-deco=pixel] .win .ctl::before { content: ''; width: 10px; height: 10px; margin-bottom: 2px; background: currentColor; -webkit-mask: var(--pk-glyph) center / 10px 10px no-repeat; mask: var(--pk-glyph) center / 10px 10px no-repeat; }
+:root[data-deco=pixel] .win .ctl.close { --pk-glyph: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 5 5'%3E%3Cpath d='M0 0h1v1H0zM4 0h1v1H4zM1 1h1v1H1zM3 1h1v1H3zM2 2h1v1H2zM1 3h1v1H1zM3 3h1v1H3zM0 4h1v1H0zM4 4h1v1H4z'/%3E%3C/svg%3E"); }
+:root[data-deco=pixel] .win .ctl.min { --pk-glyph: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 5 5'%3E%3Cpath d='M0 3h5v1H0z'/%3E%3C/svg%3E"); }
+:root[data-deco=pixel] .win .ctl.max { --pk-glyph: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 5 5'%3E%3Cpath fill-rule='evenodd' d='M0 0h5v5H0zM1 1v3h3V1z'/%3E%3C/svg%3E"); }
+:root[data-deco=pixel] .win .ctl svg { display: none; }
+:root[data-deco=pixel] .win .ctl:hover { background: var(--pk-sun) padding-box; }
+:root[data-deco=pixel] .win .ctl.close:hover { color: #fff; background: var(--pk-coral) padding-box; }
+:root[data-deco=pixel] .win .ctl:active { box-shadow: none; }
+:root[data-deco=pixel] .win .ctl:active::before { margin: 2px 0 0; }
+:root[data-deco=pixel] .win:not(.active) .ctl { color: var(--tab-in-fg); background: var(--frame) padding-box; }
+:root[data-deco=pixel] .grip { background: repeating-conic-gradient(var(--frame-lo) 0 25%, transparent 0 50%) 0 0 / 4px 4px; clip-path: polygon(100% 0, 100% 100%, 0 100%); }
+:root[data-deco=pixel] .sizer { border: 2px solid transparent; border-image: var(--pk-ring) 2; border-radius: 0; background: var(--pk-sun) padding-box; color: var(--pk-ink); box-shadow: none; font: 12px var(--pk-font); }
+:root[data-deco=pixel] .win.peek .frame { outline: 2px solid var(--pk-coral); }
+:root[data-deco=pixel] #snapPreview { border: 2px solid var(--pk-sun); border-radius: 0; background: repeating-conic-gradient(rgba(255,205,77,.45) 0 25%, transparent 0 50%) 0 0 / 8px 8px; }
+:root[data-deco=pixel] #divider::after { border-radius: 0; background: var(--pk-sun); box-shadow: 0 0 0 2px var(--pk-ink); }
+
+/* toolbars, buttons and fields: keycaps and ringed boxes, pressed caps sink onto their foot */
+:root[data-deco=pixel] :is(.toolbar, .status, .list th) { border-color: var(--frame-lo); border-width: 2px; }
+:root[data-deco=pixel] .status { color: var(--fg); }
+:root[data-deco=pixel] :is(.tb, .seg) { border: 2px solid transparent; border-image: var(--pk-ring) 2; border-radius: 0; font: 13px var(--pk-font); }
+:root[data-deco=pixel] :is(.tb, .seg):not(:where(.on, :active, [aria-expanded=true], [aria-pressed=true])) { background: var(--frame-hi) padding-box; box-shadow: inset 0 -2px 0 var(--frame-lo); }
+:root[data-deco=pixel] :is(.tb, .seg):is(.on, :active, [aria-expanded=true], [aria-pressed=true]) { background-clip: padding-box; box-shadow: none; }
+:root[data-deco=pixel] :is(.tb, .seg):active { translate: 0 2px; }
+:root[data-deco=pixel] .seg + .seg { border-left: 0; }
+:root[data-deco=pixel] :is(input:not([type=checkbox], [type=radio], [type=range], .sp-q, .mail-row *), select, textarea) { border: 2px solid transparent; border-image: var(--pk-ring) 2; border-radius: 0; background: var(--content) padding-box; }
+:root[data-deco=pixel] :is(input:not(.sp-q), select, textarea):focus { outline: 2px solid var(--pk-coral); outline-offset: 0; }
+:root[data-deco=pixel] :is(.cp-opt, .cp-art, .cp-sample) { border-radius: 0 !important; }
+:root[data-deco=pixel] :is(.cp-nav, .places, .mn-cats) { border-right: 2px solid var(--line); }
+:root[data-deco=pixel] :is(.sp-close, .sk-close, .sp-keys kbd, .shortcuts kbd, .rd .copy) { border: 2px solid transparent; border-image: var(--pk-ring) 2; border-radius: 0; background: var(--content) padding-box; box-shadow: inset 0 -2px 0 var(--frame-lo); font-family: var(--pk-font); font-weight: 400; }
+
+/* the top bar: navy under a cream pixel face, a heart before the Menu, and lit-up sun keys for what is open */
+:root[data-deco=pixel] #panel { gap: 2px; border-bottom: 2px solid var(--frame-lo); box-shadow: inset 0 2px 0 rgba(255,255,255,.08); font: 400 15px var(--pk-font); }
+:root[data-deco=pixel] #panel :is(.pb, .task) { border-radius: 0; }
+:root[data-deco=pixel] #menuBtn { font-weight: 700; }
+:root[data-deco=pixel] #menuBtn::before { content: ''; width: 14px; height: 14px; flex: none; background: var(--pk-coral); -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 7 7'%3E%3Cpath d='M1 0h2v1H1zM4 0h2v1H4zM0 1h7v3H0zM1 4h5v1H1zM2 5h3v1H2zM3 6h1v1H3z'/%3E%3C/svg%3E") center / 14px 14px no-repeat; mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 7 7'%3E%3Cpath d='M1 0h2v1H1zM4 0h2v1H4zM0 1h7v3H0zM1 4h5v1H1zM2 5h3v1H2zM3 6h1v1H3z'/%3E%3C/svg%3E") center / 14px 14px no-repeat; }
+:root[data-deco=pixel] :is(#menuBtn.open, #panelHome:is(:active, .on), .task.on) { color: var(--pk-ink); background: var(--pk-sun); border-color: var(--pk-sun); box-shadow: none; }
+:root[data-deco=pixel] :is(#menuBtn.open, .task.on) .ico { filter: none; }
+:root[data-deco=pixel] .task.min { opacity: .7; font-style: normal; }
+:root[data-deco=pixel] .pb:focus-visible { outline-color: var(--pk-coral); }
+:root[data-deco=pixel] #winsBtn b { border-radius: 0; color: var(--pk-ink); background: var(--pk-sun); font: 700 12px/16px var(--pk-font); box-shadow: 0 0 0 2px var(--pk-ink); }
+
+/* Menu, context menu, search and the shortcut list: ringed sheets with a hard shadow, like an RPG's dialogue box */
+:root[data-deco=pixel] :is(#menu, .ctx, .sp-frame, .recent-list, .ctx-note) { border: 2px solid transparent; border-image: var(--pk-ring) 2; border-radius: 0; background: var(--content) padding-box; box-shadow: inset 2px 2px 0 var(--frame-hi), 6px 6px 0 var(--pk-shadow); }
+:root[data-deco=pixel] :is(.sp-frame, .recent-list) { background: var(--frame) padding-box; }
+:root[data-deco=pixel] .ctx { box-shadow: 4px 4px 0 var(--pk-shadow); }
+:root[data-deco=pixel] .ctx-note { color: var(--pk-cream); background: var(--pk-ink) padding-box; box-shadow: 4px 4px 0 var(--pk-shadow); font-family: var(--pk-font); }
+:root[data-deco=pixel] .mn-head { border-bottom: 2px solid var(--pk-ink); }
+:root[data-deco=pixel] :is(.mn-sec h3, .mn-res h3, .places h2, .sp-gh, .shortcuts h2, .rd-related-h, .folder-h, .pv-year) { font: 400 13px var(--pk-font); letter-spacing: 0; text-transform: none; }
+:root[data-deco=pixel] :is(.mn-cats button, .mn-app, .sw-open, .sp-t b) { font-family: var(--pk-font); font-weight: 400; }
+:root[data-deco=pixel] .ctx-sep { height: 2px; background: var(--line); }
+:root[data-deco=pixel] .sp-tab { padding: 0 14px 0 10px; border: 2px solid transparent; border-bottom: 0; border-image: var(--pk-ring) 2; color: var(--pk-ink); background: linear-gradient(var(--pk-sun) 0 16px, transparent 16px 22px, var(--pk-amber) 22px) padding-box, var(--pk-dither) padding-box var(--pk-sun); box-shadow: inset 2px 2px 0 var(--tab-hi), 6px 6px 0 var(--pk-shadow); font: 700 15px var(--pk-font); }
+:root[data-deco=pixel] :is(.sp-field, .sp-list) { border-width: 2px; border-color: var(--frame-lo) var(--frame-hi) var(--frame-hi) var(--frame-lo); }
+:root[data-deco=pixel] .sp-field:focus-within { border-color: var(--pk-coral); box-shadow: none; }
+
+/* Dock: a hotbar. Slots recessed into a ringed slab, Home on a sun slot, a running app lit with a coral rim and a
+   square pip. Phones (chrome.css) keep the same slots at touch size. */
+.wm[data-deco=pixel] #dock { bottom: 10px; gap: 4px; padding: 4px; border: 2px solid transparent; border-image: var(--pk-ring) 2; border-radius: 0; background: var(--frame) padding-box; box-shadow: inset 2px 2px 0 var(--frame-hi), inset -2px -2px 0 var(--frame-lo), 6px 6px 0 var(--pk-shadow); backdrop-filter: none; -webkit-backdrop-filter: none; }
+:root[data-deco=pixel] #dock .dk, :root[data-deco=pixel] #dock #homeBtn, :root[data-deco=pixel] #dock #winsBtn { width: 46px; height: 46px; margin: 0; border-radius: 0; color: var(--fg); background: var(--side); box-shadow: inset 2px 2px 0 var(--frame-lo), inset -2px -2px 0 var(--frame-hi); }
+:root[data-deco=pixel] #dock :is(.dk, #homeBtn, #winsBtn) .ico { width: 30px; height: 30px; }
+:root[data-deco=pixel] #dock :is(.dk, #homeBtn, #winsBtn):hover { background: var(--tab-hi); }
+:root[data-deco=pixel] #dock #homeBtn { background: var(--pk-sun); box-shadow: inset 2px 2px 0 var(--pk-amber), inset -2px -2px 0 var(--tab-hi); }
+:root[data-deco=pixel] #dock :is(#homeBtn.on, #homeBtn:active, #winsBtn:active) { background: var(--pk-amber); }
+:root[data-deco=pixel] #dock #homeBtn::after, :root[data-deco=pixel] #dock #winsBtn::before { content: none; }
+:root[data-deco=pixel] #dock .dk.run { box-shadow: inset 0 0 0 2px var(--pk-coral); }
+:root[data-deco=pixel] #dock .dk.run::after { bottom: 4px; width: 4px; height: 4px; margin-left: -2px; border-radius: 0; background: var(--pk-coral); }
+:root[data-deco=pixel] #dock #winsBtn b { top: 2px; right: 2px; min-width: 16px; }
+:root[data-deco=pixel] #dock .lbl { font-family: var(--pk-font); }
+
+/* desktop icons carry ink captions; the switcher and the phone home screen are the same tabs and slabs */
+:root[data-deco=pixel] .dicon span { padding: 2px 6px; color: var(--pk-cream); background: var(--pk-ink); border-radius: 0; text-shadow: none; font: 13px/1.2 var(--pk-font); }
+:root[data-deco=pixel] .dicon .ico { filter: drop-shadow(2px 2px 0 var(--pk-shadow)); }
+:root[data-deco=pixel] #desk::after { font: 700 52px/1 var(--pk-font); letter-spacing: 0; color: light-dark(rgba(28,26,46,.14), rgba(245,234,208,.12)); }
+:root[data-deco=pixel] #recent h2 { padding: 4px 12px; color: var(--pk-ink); background: var(--pk-sun); border: 2px solid transparent; border-bottom: 0; border-image: var(--pk-ring) 2; font: 700 14px var(--pk-font); }
+:root[data-deco=pixel] .sw-tab { height: 32px; padding: 0 4px 0 8px; border: 2px solid transparent; border-bottom: 0; border-image: var(--pk-ring) 2; background: var(--tab-in) padding-box; box-shadow: inset 2px 2px 0 var(--frame-hi); filter: drop-shadow(4px 4px 0 var(--pk-shadow)); }
+:root[data-deco=pixel] .sw-tab::after { left: -2px; height: 8px; border: 2px solid transparent; border-image: var(--pk-ring) 2; background: var(--frame) padding-box; box-shadow: inset 2px 2px 0 var(--frame-hi); }
+:root[data-deco=pixel] .sw-tab.on { color: var(--pk-ink); background: linear-gradient(var(--pk-sun) 0 18px, transparent 18px 24px, var(--pk-amber) 24px) padding-box, var(--pk-dither) padding-box var(--pk-sun); box-shadow: inset 2px 2px 0 var(--tab-hi); }
+:root[data-deco=pixel] .sw-tab:not(.on):hover { background: var(--tab-dim) padding-box; }
+:root[data-deco=pixel] .sw-tab.min { border-bottom-width: 2px; }
+:root[data-deco=pixel] .sw-tab .ctl { border-radius: 0; }
+:root[data-deco=pixel] :is(.sw-link, .sw-empty) { color: var(--pk-cream); background: var(--pk-ink) padding-box; border: 2px solid transparent; border-image: var(--pk-ring) 2; border-radius: 0; box-shadow: 3px 3px 0 var(--pk-shadow); font: 12px var(--pk-font); }
+:root[data-deco=pixel] .sw-link:hover { background: var(--panel) padding-box; }
+:root[data-deco=pixel] .sw-link.done { color: var(--pk-sun); }
+
+/* Tracker: cards with a two-pixel foot, year headings in the pixel face, a sun edge on the open post */
+:root[data-deco=pixel] .pv-year { background: var(--frame); border-bottom: 2px solid var(--frame-lo); }
+:root[data-deco=pixel] .pc { border: 2px solid var(--line); border-radius: 0; box-shadow: 0 2px 0 var(--line); }
+:root[data-deco=pixel] .pc:hover { border-color: var(--pk-ink); box-shadow: 2px 2px 0 var(--pk-ink); }
+:root[data-deco=pixel] .pc.open { border-color: var(--pk-amber); box-shadow: inset 4px 0 0 var(--pk-sun), 0 2px 0 var(--pk-amber); }
+:root[data-deco=pixel] :is(.tg, .pc-img, .gi-img, .ph, .sp-thumb, .gi-t, .row, .folder a, .cp-nav a) { border-radius: 0; }
+:root[data-deco=pixel] .list th { font-family: var(--pk-font); font-weight: 400; }
+
+/* The reader: a pixel headline and kicker over the ordinary reading face; furniture squared off and ringed */
+:root[data-deco=pixel] .rd header h1 { margin: .25em 0 .4em; font: 700 2.3em/1.1 var(--pk-font); letter-spacing: 0; text-wrap: balance; }
+:root[data-deco=pixel] .rd h2 { font-family: var(--pk-font); font-weight: 600; font-size: 1.45em; border-bottom: 0; background: repeating-linear-gradient(90deg, var(--pk-sun) 0 6px, transparent 6px 10px) 0 100% / 100% 3px no-repeat; }
+:root[data-deco=pixel] .rd .meta { font: 14px var(--pk-font); letter-spacing: 0; text-transform: none; }
+:root[data-deco=pixel] .rd :is(img, video, code, pre, .copy, .admonition[class], .highlight > div.chroma, .tool-frame) { border-radius: 0; }
+:root[data-deco=pixel] .rd img.cover { border: 2px solid var(--pk-ink); box-shadow: 4px 4px 0 var(--pk-shadow); }
+:root[data-deco=pixel] .rd :is(pre, .highlight > div.chroma) { border: 2px solid var(--line); border-left: 4px solid var(--pk-sun); }
+:root[data-deco=pixel] .rd .highlight pre, :root[data-deco=pixel] .rd .lntable pre, :root[data-deco=pixel] .rd pre.mermaid.drawn { border: 0; }
+:root[data-deco=pixel] .rd blockquote { border-left: 4px solid var(--pk-sun); }
+:root[data-deco=pixel] .rd hr { height: 2px; border: 0; background: repeating-linear-gradient(90deg, var(--line) 0 4px, transparent 4px 8px); }
+:root[data-deco=pixel] .rd :is(th, td) { border-color: var(--line); }
+:root[data-deco=pixel] .rd th { background: var(--frame); }
+:root[data-deco=pixel] .rd .admonition[class] { border: 2px solid var(--line); border-left: 4px solid var(--adm-type-color); }
+:root[data-deco=pixel] .rd .chip { padding: 2px 8px; border: 2px solid transparent; border-image: var(--pk-ring) 2; border-radius: 0; background: var(--content) padding-box; color: var(--fg); box-shadow: 2px 2px 0 var(--pk-shadow); font: 12px var(--pk-font); }
+:root[data-deco=pixel] .rd .chip:hover { color: var(--pk-ink); background: var(--pk-sun) padding-box; }
+:root[data-deco=pixel] .rd-pager a { border: 2px solid transparent; border-image: var(--pk-ring) 2; border-radius: 0; background: var(--content) padding-box; box-shadow: inset 0 -2px 0 var(--frame-lo), 3px 3px 0 var(--pk-shadow); font-family: var(--pk-font); }
+:root[data-deco=pixel] .rd-pager a:hover { background: var(--pk-sun) padding-box; color: var(--pk-ink); }
+
+/* Wallpaper. One art pixel is --px on screen. The body stacks the sun or moon, the hills tile and a four-pixel sky
+   strip, all anchored to the bottom so the horizon holds whatever the height. ::before is the star tile: four frames
+   of the same stars at different brightness, stepped one frame along each beat so they twinkle in place. ::after is
+   the cloud tile, drifting one art pixel a step. Both stop under reduced motion, where tokens.css halts every
+   animation. By day the star layer draws nothing. */
+.wm[data-wall=pixel] { --px: 5px; }
+.wm[data-wall=pixel] body { background: var(--pk-orb) right 14% top 32% / calc(16 * var(--px)) calc(16 * var(--px)) no-repeat, var(--pk-hills) 0 100% / calc(256 * var(--px)) calc(96 * var(--px)) repeat-x, var(--pk-sky) 0 100% / calc(4 * var(--px)) calc(220 * var(--px)) repeat-x var(--pk-top); }
+.wm[data-wall=pixel] body::before, .wm[data-wall=pixel] body::after { content: ''; position: fixed; z-index: -1; top: var(--panel-h); pointer-events: none; }
+.wm[data-wall=pixel] body::before { left: 0; right: calc(-256 * var(--px)); height: 60vh; background: var(--pk-stars) 0 0 / calc(256 * var(--px)) calc(64 * var(--px)); -webkit-mask: linear-gradient(#000 45%, transparent); mask: linear-gradient(#000 45%, transparent); animation: pk-twinkle 3.2s steps(4) infinite; }
+.wm[data-wall=pixel] body::after { top: calc(var(--panel-h) + 2vh); left: calc(-192 * var(--px)); right: 0; height: calc(40 * var(--px)); background: var(--pk-clouds) 0 0 / calc(192 * var(--px)) calc(40 * var(--px)) repeat-x; animation: pk-drift 160s steps(192) infinite; }
+@keyframes pk-twinkle { to { translate: calc(-256 * var(--px)) 0; } }
+@keyframes pk-drift { to { translate: calc(192 * var(--px)) 0; } }
+@media (min-width: 2200px) { .wm[data-wall=pixel] { --px: 7px; } }
+
+/* Control panel thumbnails: the scene at a third of a pixel, and a ringed window on it */
+.cp-deco.pixel, .cp-wp.pixel { background: var(--pk-orb) 82% 22% / 5px 5px no-repeat, var(--pk-hills) 0 100% / 77px 29px repeat-x, var(--pk-sky) 0 100% / 1.2px 66px repeat-x var(--pk-top); }
+.cp-deco.pixel::before { top: 7px; width: 36px; height: 10px; background: #ffcd4d; border: 1px solid #1c1a2e; border-bottom: 0; box-shadow: none; }
+.cp-deco.pixel::after { top: 16px; background: light-dark(#f1e4c6, #3a3560); border: 1px solid #1c1a2e; box-shadow: inset 1px 1px 0 light-dark(#fff9ea, #5b5591), 3px 3px 0 rgba(12,10,28,.55); }
+
+/* Phones (the same query as windows.css): one full-screen window under a sun bar with an ink rule, touch-sized
+   keycaps, and the hotbar at finger size. The scene anchors to the first screen rather than the page's end. */
+@media (max-width: 767px), (max-height: 500px) and (pointer: coarse) {
+  :root[data-deco=pixel] { --tab-h: 44px; }
+  :root[data-deco=pixel] .win .frame { border: 0; }
+  :root[data-deco=pixel] .win :is(.tab, .th) { border-width: 0 0 2px; border-style: solid; box-shadow: none !important; }
+  :root[data-deco=pixel] .win .ctl { width: 40px; height: 36px; }
+  :root[data-deco=pixel] .win .ctl::before { width: 15px; height: 15px; -webkit-mask-size: 15px 15px; mask-size: 15px 15px; }
+  :root[data-deco=pixel] .tab .tt { font-size: 17px; }
+  :root[data-deco=pixel] #dock .dk { width: 48px; height: 48px; }
+  :root[data-deco=pixel] #dock .dk .ico { width: 32px; height: 32px; }
+  .wm[data-deco=pixel] #dock { gap: 4px; bottom: 8px; }
+  .wm[data-wall=pixel] { --px: 4px; }
+  .wm[data-wall=pixel] body { background-position: right 10% top 12%, 0 calc(100lvh - 96 * var(--px)), 0 calc(100lvh - 220 * var(--px)); }
+}

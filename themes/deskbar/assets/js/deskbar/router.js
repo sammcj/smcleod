@@ -175,7 +175,7 @@ const sameDoc = r => handlers.hash?.(r);
 // Tracker's arrow keys use both, so the reader follows the selection like a mail client's preview pane.
 // opts.into: the key of a post window of its own (reader.js) that a link was pressed in, or that steps back or forward.
 // That window shows the page, even one another window shows at this address, and its history entry keeps the key
-// so Back and Forward return there.
+// so Back and Forward return there. A folder window's key does the same for a folder (apps/index.js).
 export async function go(href, hint, opts) {
   const asked = routeFor(href, location.href);
   if (!asked) { location.assign(href); return; }
@@ -246,7 +246,7 @@ function onClick(e) {
   const r = routeFor(a.getAttribute('href'), location.href);
   if (!r) return;
   e.preventDefault();
-  go(r.href, null, { into: a.closest('.view[data-key^="post:"]')?.dataset.key });
+  go(r.href, null, { into: a.closest('.view:is([data-key^="post:"], [data-key^="folder:"])')?.dataset.key });
 }
 
 async function onPopState() {

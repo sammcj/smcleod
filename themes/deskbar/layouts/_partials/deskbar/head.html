@@ -48,9 +48,10 @@ d.classList.add('wm');setTimeout(()=>{if(!d.classList.contains('wm-ready'))d.cla
 {{- /* A palette, decorator, wallpaper, dock style or reader font other than the default needs the Control panel's
        stylesheet, written in so it blocks rendering like any parsed <link>. It goes after the stylesheets above, where
        loader.js appends it when the app opens, so equal-specificity rules resolve the same way in both cases. A window
-       style or wallpaper that is a whole look (css/deskbar/looks/) adds that look's stylesheet after it. */}}
+       style or wallpaper that is a whole look (css/deskbar/looks/) adds that look's stylesheet after it, and a palette
+       (css/deskbar/palettes/) its own before it. */}}
 <script>
-(()=>{const d=document.documentElement.dataset;if(d.palette||d.deco||d.wall||d.dock||d.rdFont)try{const l=JSON.parse(document.getElementById('deskbar-lazy').textContent),w=u=>u&&document.write('<link rel=stylesheet href="'+u+'">');w(l['control-panel'].css);for(const k of new Set([d.deco,d.wall]))w(l['look-'+k]?.css)}catch{}})();
+(()=>{const d=document.documentElement.dataset;if(d.palette||d.deco||d.wall||d.dock||d.rdFont)try{const l=JSON.parse(document.getElementById('deskbar-lazy').textContent),w=u=>u&&document.write('<link rel=stylesheet href="'+u+'">');w(l['palette-'+d.palette]?.css);w(l['control-panel'].css);for(const k of new Set([d.deco,d.wall]))w(l['look-'+k]?.css)}catch{}})();
 </script>
 {{- with site.Home.OutputFormats.Get "deskbar" }}
 <link rel="preload" href="{{ .RelPermalink }}" as="fetch" crossorigin="anonymous">

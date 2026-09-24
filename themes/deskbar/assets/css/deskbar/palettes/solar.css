@@ -1,0 +1,18 @@
+/* Solar: after Solarized. Mustard tabs on base2 or base02 frames, a base03 panel and desk in both modes, blue links
+   in light and cyan-blue ones in dark. The body text is a shade darker than Solarized's own so it holds 4.5:1. */
+:where(:root)[data-palette=solar] {
+  --panel: linear-gradient(#0d4452, #002b36); --panel-fg: #b9c6c6;
+  --frame: light-dark(#eee8d5, #073642); --frame-hi: light-dark(#fdf6e3, #1f4d5a);
+  --frame-lo: light-dark(#b8b09a, #00212a); --frame-dk: light-dark(#6c6858, #001016);
+  --tab: light-dark(#d5a41c, #b58900); --tab-hi: light-dark(#f0d47a, #dab24a); --tab-lo: light-dark(#987000, #7a5c00);
+  --tab-dim: light-dark(#e7c86e, #a68f4a); --tab-in: light-dark(#e7e0cb, #0b3d4a);
+  --tab-in-lo: light-dark(#b9b199, #002028); --tab-in-fg: light-dark(#4f5b5e, #a9b8b8);
+  --content: light-dark(#fdf6e3, #002b36); --fg: light-dark(#1e3d45, #b3c0c0); --muted: light-dark(#52686f, #8ea0a0);
+  --line: light-dark(#e2dbc4, #14424e); --side: light-dark(#f4eed9, #073642); --read-bg: light-dark(#fbf3dd, #00252e);
+  --code-bg: light-dark(#eee8d5, #073642);
+  --accent: light-dark(#1a68a0, #2276b6); --link: light-dark(#1a68a0, #5cb8e6); --ctl: #002b36;
+  --wall-1: light-dark(#1b5a6b, #0e4655); --wall-2: light-dark(#0b3d4a, #00323f); --wall-3: light-dark(#002b36, #001b22);
+  --wall-glow: light-dark(rgba(181,137,0,.3), rgba(181,137,0,.16));
+}
+/* as for Synthwave: the olive label text falls short on mustard and coral in dark */
+:root[data-palette=solar] .ticker-h { color: var(--ctl); }

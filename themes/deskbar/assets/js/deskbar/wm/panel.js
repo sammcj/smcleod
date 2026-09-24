@@ -1,8 +1,8 @@
 // Top panel: task buttons for every window, the window switcher (D30; it also copies a layout link), dock running
 // dots and the clock
 import { S, on } from './state.js';
-import { h, ico, $, copyText } from '../lib/dom.js';
-import { focus, minimise, closeWin, activeView, transition, morph } from './windows.js';
+import { h, ico, $, copyText, plainClick } from '../lib/dom.js';
+import { focus, focusView, minimise, closeWin, activeView, transition, morph } from './windows.js';
 import { encodeLayout, layoutHref } from './layout.js';
 import { currentPath } from '../router.js';
 
@@ -137,6 +137,16 @@ export function initPanel() {
   // and on a desktop or dock icon it lands on the page root mid-transition (which flashes a selection), or opens the
   // icon again. Only the second press of a real double-click (detail 2) is swallowed, so quick single clicks still count.
   for (const el of document.querySelectorAll('#icons, #dock')) el.addEventListener('click', e => { if (e.detail === 1 && e.target.closest('a, button')) swallowRepeat(e, ev => ev.detail > 1); }, true);
+  // a dock item shows and hides its window, as a task button does: in front it minimises, minimised it comes back
+  // with the item's tab in front. Otherwise (behind others, or a background tab) the router raises it as for any link.
+  $('#dock')?.addEventListener('click', e => {
+    const path = e.target.closest('.dk')?.getAttribute('href');
+    const w = path && plainClick(e) && S.wins.filter(w => w.views.some(v => v.home === path)).sort((a, b) => b.z - a.z)[0];
+    const v = w?.views.find(x => x.home === path);
+    if (!v || !(w.min || (w === S.focused && activeView(w) === v))) return;
+    e.preventDefault();
+    morph([w], () => (w.min ? focusView(v) : minimise(w)));
+  });
   switcher.addEventListener('beforetoggle', e => { if (e.newState === 'open') drawSwitcher(true); else S.wins.forEach(w => peek(w, false)); });
   on('refresh', () => {
     renderTasks();

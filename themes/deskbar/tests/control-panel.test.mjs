@@ -100,7 +100,7 @@ function prePaint(stored) {
   const doc = {
     documentElement: html,
     write: s => written.push(s),
-    getElementById: id => (id === 'deskbar-lazy' ? { textContent: JSON.stringify({ 'control-panel': { js: '/a.js', css: '/a.css' }, 'look-demo': { css: '/demo.css' } }) } : null),
+    getElementById: id => (id === 'deskbar-lazy' ? { textContent: JSON.stringify({ 'control-panel': { js: '/a.js', css: '/a.css' }, 'look-demo': { css: '/demo.css' }, 'palette-demo': { css: '/pal.css' } }) } : null),
   };
   const ls = { getItem: k => (k.slice(8) in stored ? JSON.stringify(stored[k.slice(8)]) : null) };
   new Function('document', 'localStorage', 'setTimeout', src)(doc, ls, () => {});
@@ -127,11 +127,12 @@ test('before first paint, stored settings are applied and the stylesheet is link
   }
 });
 
-test("before first paint, a whole look's stylesheet follows the Control panel's, once, for its window style or wallpaper", () => {
+test("before first paint, a whole look's stylesheet follows the Control panel's, once, and a palette's comes before it", () => {
   const link = h => `<link rel=stylesheet href="${h}">`;
   assert.deepEqual(prePaint({ deco: 'demo', wall: 'demo' }).written, [link('/a.css'), link('/demo.css')]);
   assert.deepEqual(prePaint({ wall: 'demo' }).written, [link('/a.css'), link('/demo.css')], 'its wallpaper under another style');
   assert.deepEqual(prePaint({ deco: 'liquid', wall: 'liquid' }).written, [link('/a.css')], 'Liquid Ass has no stylesheet of its own');
+  assert.deepEqual(prePaint({ palette: 'demo', deco: 'demo' }).written, [link('/pal.css'), link('/a.css'), link('/demo.css')]);
 });
 
 test('Liquid Ass: a window style with a wallpaper of its own, shown before first paint, with fallbacks', () => {
@@ -179,9 +180,10 @@ test('every choice offered is a valid setting with styles behind it', () => {
     for (const [v] of opts) {
       set(key, v);
       assert.equal(get(key), v, `${key}=${v} round-trips`);
-      // a whole look's window style and wallpaper are in its own stylesheet
-      const own = (key === 'deco' || key === 'wall') && existsSync(new URL(`../assets/css/deskbar/looks/${v}.css`, import.meta.url));
-      if (attr[key] && v !== DEFAULT[key]) assert.ok((own ? read(`../assets/css/deskbar/looks/${v}.css`) : css).includes(`[${attr[key]}=${v}]`), `${key}=${v} has styles`);
+      // a whole look's window style and wallpaper are in its own stylesheet, as is each palette
+      const dir = key === 'palette' ? 'palettes' : (key === 'deco' || key === 'wall') && 'looks';
+      const own = dir && existsSync(new URL(`../assets/css/deskbar/${dir}/${v}.css`, import.meta.url));
+      if (attr[key] && v !== DEFAULT[key]) assert.ok((own ? read(`../assets/css/deskbar/${dir}/${v}.css`) : css).includes(`[${attr[key]}=${v}]`), `${key}=${v} has styles`);
     }
   }
   const dock = groups.find(g => g[0] === 'dock');

@@ -1,0 +1,11 @@
+:where(:root)[data-palette=xfce] {
+  --panel: linear-gradient(#4c5a6d, #394555); --panel-fg: #eef2f7;
+  --frame: light-dark(#d9dde3, #3f454d); --frame-hi: light-dark(#f7f9fb, #5b636d);
+  --frame-lo: light-dark(#929aa6, #262b31); --frame-dk: light-dark(#4d5663, #111418);
+  --tab: light-dark(#a3bddf, #8aa8d2); --tab-hi: light-dark(#d9e5f4, #b9cdea); --tab-lo: light-dark(#6d88ad, #56729a);
+  --tab-dim: light-dark(#c6d5ea, #7189ab); --tab-in: light-dark(#dfe3e8, #4a525c);
+  --tab-in-lo: light-dark(#aab2bd, #30363d); --tab-in-fg: light-dark(#454b53, #d5dbe3);
+  --accent: #3f6aa3; --link: light-dark(#33609a, #8db3e8); --ctl: #1f3350;
+  --wall-1: light-dark(#5b7ea6, #2a3f5a); --wall-2: light-dark(#3f6189, #1d2d42); --wall-3: light-dark(#2a4466, #121d2c);
+  --wall-glow: light-dark(rgba(170,205,255,.16), rgba(170,205,255,.08));
+}
