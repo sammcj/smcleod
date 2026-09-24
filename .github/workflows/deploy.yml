@@ -112,14 +112,16 @@ jobs:
         run: make check
 
       # Browser and accessibility tests: the theme's Playwright specs, first on its example site, whose fixtures
-      # cover cases no real page has, then on this build
+      # cover cases no real page has, then on this build. Scheduled runs only refresh the feeds, so they skip them.
       - name: Browser tests on the theme's example site
+        if: github.event_name != 'schedule'
         working-directory: themes/deskbar
         run: |
           npx playwright install --with-deps chromium
           make e2e
 
       - name: Browser tests on this site
+        if: github.event_name != 'schedule'
         working-directory: themes/deskbar
         run: make e2e SITE_DIR="$GITHUB_WORKSPACE/public"
         env:
