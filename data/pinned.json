@@ -1,0 +1,50 @@
+[
+  {
+    "name": "mcp-devtools",
+    "url": "https://github.com/sammcj/mcp-devtools",
+    "description": "A modular MCP server that provides commonly used developer tools for AI coding agents",
+    "meta": [
+      "Go"
+    ]
+  },
+  {
+    "name": "agentic-coding",
+    "url": "https://github.com/sammcj/agentic-coding",
+    "description": "Agentic Coding Rules, Templates etc...",
+    "meta": [
+      "Python"
+    ]
+  },
+  {
+    "name": "NVApi",
+    "url": "https://github.com/sammcj/NVApi",
+    "description": "A lightweight API that returns Nvidia GPU utilisation information.",
+    "meta": [
+      "C"
+    ]
+  },
+  {
+    "name": "force-hidpi",
+    "url": "https://github.com/sammcj/force-hidpi",
+    "description": "Virtual display for macOS to work around the M4/M5 Apple Silicon regression with 4k external displays not running in HiDPI mode",
+    "meta": [
+      "Swift"
+    ]
+  },
+  {
+    "name": "gollama",
+    "url": "https://github.com/sammcj/gollama",
+    "description": "Go manage your Ollama models",
+    "meta": [
+      "Go"
+    ]
+  },
+  {
+    "name": "ingest",
+    "url": "https://github.com/sammcj/ingest",
+    "description": "Parse files (e.g. code repos) and websites to clipboard or a file for ingestions by AI / LLMs",
+    "meta": [
+      "Go"
+    ]
+  }
+]

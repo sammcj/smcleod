@@ -38,6 +38,8 @@
 {{- else }}
 {{- $pages = $pctx.Pages }}
 {{- end }}
+{{- /* drop norss pages before the limit so they don't use up item slots */}}
+{{- $pages = where $pages "Params.norss" "!=" true }}
 {{- $limit := site.Config.Services.RSS.Limit }}
 {{- if ge $limit 1 }}
 {{- $pages = $pages | first $limit }}
@@ -56,7 +58,10 @@
     </image>
     {{- end }}
     <generator>Hugo -- {{ hugo.Version }}</generator>
-    <language>{{ site.Language.LanguageCode }}</language>{{ with $authorEmail }}
+    {{- /* Locale replaced LanguageCode in 0.158; branch so older Hugo still builds */}}
+    {{- $lang := "" }}
+    {{- if ge hugo.Version "0.158.0" }}{{ $lang = site.Language.Locale }}{{ else }}{{ $lang = site.LanguageCode }}{{ end }}
+    <language>{{ $lang | default site.Language.Lang }}</language>{{ with $authorEmail }}
     <managingEditor>{{.}}{{ with $authorName }} ({{ . }}){{ end }}</managingEditor>{{ end }}{{ with $authorEmail }}
     <webMaster>{{ . }}{{ with $authorName }} ({{ . }}){{ end }}</webMaster>{{ end }}{{ with site.Copyright }}
     <copyright>{{ . | markdownify | plainify | strings.TrimPrefix "© " }}</copyright>{{ end }}{{ if not .Date.IsZero }}
@@ -73,8 +78,9 @@
       {{- with $authorEmail }}<author>{{ . }}{{ with $authorName }} ({{ . }}){{ end }}</author>{{ end }}
       <guid>{{ .Permalink }}</guid>
       <description>{{ with .Description | html }}{{ . }}{{ else }}{{ .Summary | html }}{{ end -}}</description>
-      {{- if and site.Params.ShowFullTextinRSS .Content }}
-      <content:encoded>{{ (printf "<![CDATA[%s]]>" .Content) | safeHTML }}</content:encoded>
+      {{- /* full text is opt-in, as with PaperMod's template the live feed used */}}
+      {{- with and site.Params.ShowFullTextinRSS .Content }}
+      <content:encoded>{{ (printf "<![CDATA[%s]]>" (replace . "]]>" "]]]]><![CDATA[>")) | safeHTML }}</content:encoded>
       {{- end }}
     </item>
     {{- end }}

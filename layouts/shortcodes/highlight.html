@@ -1,4 +1,4 @@
-
-{{- $color := .Get "color" -}} {{- $style := "" -}} {{- if $color -}} {{- $style = printf "background-color: %s" $color -}} {{- end -}}
-
-<mark style=>{{ .Inner | markdownify | safeHTML }}</mark>
+{{- /* Highlighted text: {{< highlight color="#ffd" >}}text{{< /highlight >}}. Overrides Hugo's built-in
+       highlight (code) shortcode; fenced code blocks cover that. */ -}}
+{{- $color := .Get "color" -}}
+<mark{{ with $color }} style="background-color: {{ . | safeCSS }}"{{ end }}>{{ .Inner | .Page.RenderString }}</mark>

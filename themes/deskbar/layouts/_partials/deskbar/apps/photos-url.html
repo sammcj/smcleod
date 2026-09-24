@@ -1,0 +1,7 @@
+{{- /* The Photos app page's address (layout: photos or window: photos), or "" when the site has none. baseof.html
+       publishes it on <html data-photos> for the in-post lightbox and "View photos" chip (apps/gallery.js). */ -}}
+{{- $url := "" -}}
+{{- range site.Pages -}}
+  {{- if and (not $url) (or (eq .Layout "photos") (eq .Params.window "photos")) }}{{ $url = .RelPermalink }}{{ end -}}
+{{- end -}}
+{{- return $url -}}

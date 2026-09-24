@@ -1,6 +1,10 @@
 ---
+url: "/2025/02/agentic-coding-live-demo-/-brownbag/"  # keeps the live URL: Hugo 0.166 no longer keeps "/" from the title in :title slugs
 title: "Agentic Coding - Live Demo / Brownbag"
 date: 2025-02-07T01:00:01+10:00
+thumbnail: thumbnail.png
+images: ["thumbnail.png"]
+thumbnailIcon: thumbnail-icon.svg
 tags: ["ai","llm","tech","deepseek","llama","anthropic","aws","cline","roo code","programming","brownbag"]
 author: "Sam McLeod"
 showToc: false

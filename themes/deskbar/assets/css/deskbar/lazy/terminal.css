@@ -1,0 +1,30 @@
+/* Terminal app (lazy/terminal.js): xfce4-terminal's Tango palette, dark in either desktop theme */
+.app-terminal { --t-bg: #1f1c1a; --t-fg: #e6e0d4; --t-dim: #a39a8c; background: var(--t-bg); container-type: inline-size; }
+.term { flex: 1; min-height: 0; overflow: auto; padding: 8px 10px; background: var(--t-bg); color: var(--t-fg); font: 13px/1.5 var(--mono); user-select: text; -webkit-user-select: text; overscroll-behavior: contain; }
+.term-out .ln { white-space: pre-wrap; overflow-wrap: anywhere; }
+.term .c-g { color: #8ae234; } .term .c-b { color: #729fcf; } .term .c-y { color: #fce94f; } .term .c-r { color: #ef6b6b; }
+.term .c-c { color: #34e2e2; } .term .c-d { color: var(--t-dim); }
+.term mark { background: #c4a000; color: var(--t-bg); }
+.term .tl { padding: 0; border: 0; background: none; color: #729fcf; font: inherit; text-decoration: underline dotted; text-underline-offset: 3px; cursor: pointer; }
+.term .tl:hover, .term .tl:focus-visible { color: #fce94f; }
+.term .tl:focus-visible, .term-chip:focus-visible { outline: 2px solid #fce94f; outline-offset: 1px; }
+.term .cmdn { display: inline-block; min-width: 22ch; }
+.term .cols { display: flex; flex-wrap: wrap; gap: 0 2ch; }
+.term .t-row { display: grid; grid-template-columns: 12ch 1fr; }
+@container (max-width: 440px) { .term .t-row { grid-template-columns: 1fr; } }
+/* the caret and a faint band mark the focused prompt, as a terminal would, instead of a field outline */
+.term-line { display: flex; margin: 0 -4px; padding: 0 4px; border-radius: 2px; white-space: pre; }
+.term-line:focus-within { background: rgba(255, 255, 255, .06); }
+.term .term-in { flex: 1; min-width: 4ch; padding: 0; border: 0; outline: 0; background: none; color: inherit; font: inherit; caret-color: #fce94f; }
+.term .nf { display: flex; flex-wrap: wrap; gap: 4px 3ch; }
+.term .sw { display: inline-flex; }
+.term .sw i { width: 2.5ch; height: 1.1em; }
+.term .sw i:nth-child(1) { background: #2e3436; } .term .sw i:nth-child(2) { background: #cc0000; }
+.term .sw i:nth-child(3) { background: #4e9a06; } .term .sw i:nth-child(4) { background: #c4a000; }
+.term .sw i:nth-child(5) { background: #3465a4; } .term .sw i:nth-child(6) { background: #75507b; }
+.term .sw i:nth-child(7) { background: #06989a; } .term .sw i:nth-child(8) { background: #d3d7cf; }
+.term-chips { flex: none; display: flex; gap: 6px; padding: 6px; overflow-x: auto; background: var(--content); border-top: 1px solid var(--line); scrollbar-width: thin; }
+.term-chip { flex: none; min-height: 30px; padding: 3px 11px; border: 1px solid var(--line); border-radius: 15px; background: var(--content); color: var(--fg); font: 12px var(--mono); cursor: pointer; -webkit-tap-highlight-color: transparent; }
+.term-chip:hover { border-color: var(--accent); color: var(--accent); }
+/* 16px stops iOS zooming into the field when it takes focus */
+@media (pointer: coarse) { .term .term-in { font-size: 16px; } .term-chip { min-height: 36px; } }

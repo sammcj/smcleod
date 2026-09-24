@@ -1,0 +1,41 @@
+{{- /* Resolves a post's images. "thumb" is front matter `thumbnail` (a page resource name), else the cover; "full" is
+       the reader-sized cover. `cover` is a string or PaperMod-style {image: ...}. Values are trimmed and "./"
+       stripped because older posts carry both. Posts with neither get generated art (thumb-art.html) in the index.
+       "icon" is front matter `thumbnailIcon` (a page resource, used as is), the list-row icon in place of generated art. */ -}}
+{{- $p := . -}}
+{{- $cover := "" -}}
+{{- $hidden := false -}}
+{{- with $p.Params.cover -}}
+  {{- if reflect.IsMap . -}}
+    {{- $cover = .image | default "" -}}
+    {{- $hidden = or .hidden .hiddenInSingle -}}
+  {{- else -}}
+    {{- $cover = . -}}
+  {{- end -}}
+{{- end -}}
+{{- $clean := dict -}}
+{{- range $k, $v := dict "thumb" ($p.Params.thumbnail | default $cover) "full" $cover -}}
+  {{- $clean = merge $clean (dict $k (strings.TrimPrefix "./" (strings.TrimSpace (string $v)))) -}}
+{{- end -}}
+{{- $out := dict "thumb" "" "full" "" -}}
+{{- range $k, $src := $clean -}}
+  {{- $url := "" -}}
+  {{- if or (hasPrefix $src "http://") (hasPrefix $src "https://") -}}
+    {{- $url = $src -}}
+  {{- else if $src -}}
+    {{- with or ($p.Resources.Get $src) (resources.Get $src) -}}
+      {{- $url = .RelPermalink -}}
+      {{- /* animated GIFs and SVGs pass through untouched. Thumbs are 2x the largest tile (the 88x66 icon view). A
+             `thumbnail` is made for the purpose, so it keeps its centre; smart cropping on a plain ground drifts. */ -}}
+      {{- if in (slice "jpeg" "png" "webp") .MediaType.SubType -}}
+        {{- if eq $k "thumb" }}{{ $url = (.Fill (printf "176x132 %s" (cond (isset $p.Params "thumbnail") "center" "smart"))).RelPermalink }}{{ else if gt .Width 1400 }}{{ $url = (.Resize "1400x").RelPermalink }}{{ end -}}
+      {{- end -}}
+    {{- else -}}
+      {{- $url = $src | relURL -}}
+    {{- end -}}
+  {{- end -}}
+  {{- $out = merge $out (dict $k $url) -}}
+{{- end -}}
+{{- $icon := "" -}}
+{{- with $p.Params.thumbnailIcon }}{{ with $p.Resources.Get (strings.TrimPrefix "./" (strings.TrimSpace .)) }}{{ $icon = .RelPermalink }}{{ end }}{{ end -}}
+{{- return merge $out (dict "hidden" $hidden "icon" $icon) -}}

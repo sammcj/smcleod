@@ -1,0 +1,12 @@
+{{- /* Spotlight search button (D28), shown when the site publishes the search index (home.deskbarsearch.json).
+       The overlay's code, its stylesheet and the index are separate files the shell loads on first open
+       (spotlight-trigger.js), so they cost the page nothing until someone searches. The index URL carries the
+       site's last change so a new build is fetched rather than a cached copy. */ -}}
+{{- with site.Home.OutputFormats.Get "deskbarsearch" -}}
+{{- $index := printf "%s?v=%d" .RelPermalink site.Lastmod.Unix -}}
+{{- $js := resources.Get "js/deskbar/spotlight.js" | js.Build (dict "format" "esm" "minify" true "target" "es2022" "targetPath" "js/deskbar-spotlight.js") | fingerprint -}}
+{{- $css := resources.Get "css/deskbar/spotlight.css" | minify | fingerprint -}}
+<button id="searchBtn" class="pb" type="button" title="Search (Ctrl+K or /)" aria-label="Search the site" aria-haspopup="dialog" aria-keyshortcuts="Control+K Meta+K /" data-shell data-index="{{ $index }}" data-module="{{ $js.RelPermalink }}" data-css="{{ $css.RelPermalink }}">
+  <svg class="ico" viewBox="0 0 18 18" aria-hidden="true"><circle cx="7.5" cy="7.5" r="5" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="m11.3 11.3 4.6 4.6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+</button>
+{{- end -}}

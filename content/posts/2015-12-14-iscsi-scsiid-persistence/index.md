@@ -1,4 +1,5 @@
 ---
+url: "/2015/12/iscsi-scsi-id-/-serial-persistence/"  # keeps the live URL: Hugo 0.166 no longer keeps "/" from the title in :title slugs
 author: "Sam McLeod"
 readingTime: true
 categories: [ Tech ]

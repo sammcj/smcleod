@@ -1,6 +1,9 @@
 ---
 title: 'Measuring Model Quantisation Quality with KL Divergence'
 date: 2026-04-28T01:00:00+10:00
+thumbnail: thumbnail.png
+images: ["thumbnail.png"]
+thumbnailIcon: thumbnail-icon.svg
 tags: ['ai', 'llm', 'mlx', 'quantisation', 'qwen']
 author: 'Sam McLeod'
 showToc: true

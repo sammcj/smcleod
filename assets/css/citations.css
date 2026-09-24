@@ -1,129 +1,15 @@
-/* Sidenote/Citation styles */
-.sidenote,
-.marginnote {
-    float: right;
-    clear: right;
-    margin-right: -60%; /* Adjust based on theme's main content width and desired margin */
-    width: 50%; /* Adjust based on theme's main content width */
-    margin-top: 0;
-    margin-bottom: 1rem;
-    font-size: 0.8rem;
-    line-height: 1.4;
-    vertical-align: baseline;
-    position: relative;
-}
+/* cite-inline, bibentry and bibliography shortcodes. Loaded by the shortcodes themselves, once per page,
+   and coloured with the deskbar theme's tokens. */
+.citation-inline { font: 600 .72em var(--ui); line-height: 0; margin: 0 1px; position: relative; }
+.citation-inline a { text-decoration: none; padding: 0 1px; }
+.citation-inline a::before { content: '['; }
+.citation-inline a::after { content: ']'; }
+.citation-inline a:hover { text-decoration: underline; }
 
-.sidenote-number {
-    /* Can be used for numbering if needed, or hidden */
-     display: none;
-}
+.citation-tooltip { display: none; position: absolute; bottom: 1.8em; left: 50%; transform: translateX(-50%); z-index: 10; width: max-content; max-width: 300px; padding: .5rem .8rem; background: var(--content); color: var(--fg); border: 1px solid var(--line); border-radius: 4px; box-shadow: 0 2px 6px rgba(0,0,0,.2); font: 400 13px/1.4 var(--ui); text-align: left; white-space: normal; }
+.citation-inline:hover .citation-tooltip, .citation-inline:focus-within .citation-tooltip { display: block; }
+.citation-tooltip p { margin: 0; }
 
-.citation-link {
-    color: var(--primary);
-    text-decoration: none;
-    padding: 0 1px;
-}
-
-.citation-link:hover {
-    text-decoration: underline;
-}
-
-/* Inline Citation styles */
-.citation-inline {
-  font-size: 0.75em;
-  vertical-align: super;
-  line-height: 1;
-  margin: 0 1px; /* Small spacing around the number */
-}
-
-.citation-inline a {
-  color: var(--primary);
-  text-decoration: none;
-  padding: 0 1px;
-  border: none; /* Ensure no default link borders interfere */
-}
-
-.citation-inline a:hover {
-  text-decoration: underline;
-}
-
-/* Tooltip styles */
-.citation-tooltip {
-  display: none; /* Hidden by default */
-  position: absolute;
-  bottom: 1.8em; /* Position above the superscript */
-  left: 50%;
-  transform: translateX(-50%);
-  background-color: var(--code-bg); /* Use theme's code background */
-  color: var(--content); /* Use theme's content color */
-  border: 1px solid var(--border);
-  border-radius: 4px;
-  padding: 0.5rem 0.8rem;
-  font-size: 0.85rem; /* Slightly smaller than main text */
-  line-height: 1.4;
-  width: max-content; /* Adjust width based on content */
-  max-width: 300px; /* Prevent it from becoming too wide */
-  z-index: 10;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.2);
-  text-align: left;
-  white-space: normal; /* Allow text wrapping */
-}
-
-/* Tooltip paragraph styling */
-.citation-tooltip p {
-  margin: 0 !important; /* Override theme defaults if necessary */
-  text-indent: 0 !important; /* Override bibentry indent */
-}
-
-/* Tooltip link styling */
-.citation-tooltip a {
-  color: var(--primary); /* Ensure links inside tooltip are styled */
-  text-decoration: underline;
-}
-
-/* Visible state for tooltip */
-.citation-tooltip.tooltip-visible {
-  display: block;
-}
-
-/* Ensure the parent sup has relative positioning */
-.citation-inline.has-tooltip {
-  position: relative;
-}
-
-
-/* Responsive adjustments for smaller screens - Hide sidenotes */
-@media (max-width: 768px) { /* Adjusted breakpoint for typical mobile devices */
-    .sidenote,
-    .marginnote {
-        display: none; /* Hide sidenotes completely on smaller screens */
-    }
-}
-
-/* Bibliography styles */
-.bibliography {
-  margin-top: 2rem;
-  border-top: 1px solid var(--border);
-  padding-top: 1rem;
-}
-
-.bibentry {
-  margin-bottom: 1rem;
-  padding-left: 2rem;
-  text-indent: -2rem;
-  font-size: 0.9em;
-  line-height: 1.5;
-}
-
-.bibentry p {
-  margin: 0;
-}
-
-/* Academic styling */
-.bibentry em, .bibentry i {
-  font-style: italic;
-}
-
-.bibentry strong, .bibentry b {
-  font-weight: bold;
-}
+.bibliography { margin-top: 2.5em; border-top: 1px solid var(--line); }
+.bibentry { margin-bottom: .8em; padding-left: 2rem; text-indent: -2rem; font-size: .88em; line-height: 1.5; scroll-margin-top: 16px; }
+.bibentry p { margin: 0; }

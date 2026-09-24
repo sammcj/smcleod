@@ -1,1 +1,2 @@
+{{- with resources.Get "css/skills-matrix.css" | minify | fingerprint }}<link rel="stylesheet" href="{{ .RelPermalink }}">{{ end }}
 {{ partial "skills-matrix.html" . }}

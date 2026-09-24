@@ -1,0 +1,11 @@
+{{- /* resources.GetRemote with its errors caught: { res, err }. res is the resource, or empty; err says why for the
+       caller's warning. Responses are cached like any GetRemote call (caches.getresource.maxAge). */ -}}
+{{- /* a hung server would otherwise hold the build for the default two minutes; the option arrived in 0.157 */ -}}
+{{- $opts := dict -}}
+{{- if ge hugo.Version "0.157.0" }}{{ $opts = dict "timeout" "20s" }}{{ end -}}
+{{- $res := "" -}}
+{{- $err := "" -}}
+{{- with try (resources.GetRemote . $opts) -}}
+  {{- with .Err }}{{ $err = printf "%v" . }}{{ else with .Value }}{{ $res = . }}{{ else }}{{ $err = "empty response" }}{{ end -}}
+{{- end -}}
+{{- return dict "res" $res "err" $err -}}

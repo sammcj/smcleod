@@ -1,12 +1,17 @@
 baseURL: https://smcleod.net
 locale: en-GB
 title: smcleod.net
-theme: ["PaperMod"] #"hugo-admonitions"
 gitRepo: "https://github.com/sammcj/smcleod/tree/main"
 extended: true
 module:
   imports:
+    - path: github.com/sammcj/smcleod/deskbar
     - path: github.com/KKKZOZ/hugo-admonitions
+  # A mount replaces the default for its target, so static is listed again. The theme concept sheet from the
+  # redesign is published as /design/theme-concepts.html, linked from About this desktop.
+  mounts:
+    - { source: static, target: static }
+    - { source: spikes, target: static/design, files: [theme-concepts.html] }
 pagination.pagerSize: 150
 enableEmoji: true
 enableGitInfo: true
@@ -19,108 +24,117 @@ minify:
   disableXML: true
   minifyOutput: true
 
+# resources.GetRemote responses (the Feeds app's feeds, remote images) are refetched after this, so local builds see
+# new posts. The default keeps the first copy for ever. CI starts with an empty cache on every run.
+caches:
+  getresource:
+    maxAge: 6h
+
 params:
-  ignoreLogs: ['warning-partial-superfluous-prefix']
-  env: production # to enable google analytics, opengraph, twitter-cards and schema.
-  title: smcleod.net
-  timeZone: Australia/Melbourne
-  copyright: Sam McLeod
+  deskbar:
+    timeZone: Australia/Melbourne
+    # minutes without input before the screen saver starts (never over a reader window); 0 turns it off
+    screensaver: { minutes: 1 }
+    # Feeds app: subscriptions are assets/feeds.opml (a NetNewsWire export as is); exclude drops feeds by xmlUrl
+    feeds:
+      perFeed: 5
+      exclude: ["https://hnrss.org/replies?id=smcleod"]
+    favicon: /favicon-32x32.png
+    stylesheets:
+      - "https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&family=Noto+Sans:wght@400;600;700&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&display=swap"
+    icons:
+      - { name: Posts, url: /posts/, icon: folder }
+      - { page: /photos }
+      - { page: /tools }
+      - { page: /favourites }
+      - { page: /projects }
+      - { name: About, url: /about/, icon: person }
+      - { page: /control-panel }
+      - { page: /chiptunes }
+      - { name: smcleod.net on GitHub, url: "https://github.com/sammcj/smcleod", icon: globe }
+    dock:
+      - { page: /tools }
+      - { name: Posts, url: /posts/, icon: folder }
+      - { page: /photos }
+      - { name: About, url: /about/, icon: person }
+      - { page: /control-panel }
+      - { name: GitHub, url: "https://github.com/sammcj", icon: git }
+    # Panel tray; RSS is added after these
+    tray:
+      - { name: About, url: /about/, icon: person }
+      - { name: GitHub, url: "https://github.com/sammcj/", icon: github }
+      - { name: LinkedIn, url: "https://www.linkedin.com/in/sammcj/", icon: linkedin }
+    # Generated thumbnail emblem (the theme's data/deskbar/emblems.yaml) by tag or category; the first matching rule
+    # wins, so specific subjects come before broad ones. Posts with a bespoke cover set thumbnailIcon instead.
+    thumbRules:
+      - { emblem: car, keywords: [cars, car, bmw, automotive] }
+      - { emblem: camera, keywords: [photos, photography] }
+      - { emblem: record, keywords: [music, gigs, audio] }
+      - { emblem: house, keywords: [homeassistant, home assistant, iot, esp32, co2] }
+      - { emblem: plug, keywords: [mcp] }
+      - { emblem: windows, keywords: [agentic coding, agentic-coding, agentic, agents, cline, roo code, claude code, claude-code, vibe coding, vibecoding, skills] }
+      - { emblem: gpu, keywords: [gpu, nvidia, cuda, vram] }
+      - { emblem: padlock, keywords: [security, privacy, security-privacy] }
+      - { emblem: palette, keywords: [art, stablediffusion] }
+      - { emblem: container, keywords: [docker, containers, kubernetes, k8s, xen, xcp-ng, virtualisation] }
+      - { emblem: disk, keywords: [storage, san, ssd, nas, zfs, iscsi, nvme, ceph, drbd, glusterfs] }
+      - { emblem: screen, keywords: [talk, talks, slides, presentation, keynote, brownbag, video] }
+      - { emblem: briefcase, keywords: [jobs] }
+      - { emblem: chart, keywords: [data, dashboard, monitoring, benchmarking, finance, budgeting] }
+      - { emblem: branch, keywords: [git, github, gitlab] }
+      - { emblem: terminal, keywords: [zsh, bash, shell, scripting, cli] }
+      - { emblem: code, keywords: [programming, code, coding, golang, go, javascript, typescript, python, rust, yaml, markdown, software development] }
+      - { emblem: neural, keywords: [ai, llm, llms, ml, machinelearning, machine-learning, ollama, claude, anthropic, llama, gguf, quantisation, inference] }
+      - { emblem: globe, keywords: [networking, network, dns, vpn] }
+      - { emblem: laptop, keywords: [apple, mac, macos, osx, macbook, ios] }
+      - { emblem: server, keywords: [linux, fedora, centos, systemd] }
+      - { emblem: chip, keywords: [hardware, cpu, electronics] }
+      - { emblem: board, keywords: [devops, agile, kanban, delivery, cicd, ci, estimating] }
+      - { emblem: briefcase, keywords: [career, work, enterprise] }
+      - { emblem: chat, keywords: [culture, leadership, communication, values, remotework, sales, marketing] }
+      - { emblem: window, keywords: [software, bestof, tools] }
+    # Menu groups after the built-in Writing group. `page` entries are left out until the page exists, and a
+    # group's own page is its app (Applications and Photos link there once built). A group's `icon` (else its page's,
+    # else a folder) shows beside its name.
+    menu:
+      - name: Applications
+        page: /tools
+        items:
+          - { page: /agentic-coding-tools }
+          - { page: /vram-estimator }
+          - { page: /tools/tiers }
+          - { page: /tools/quantisation-dashboard }
+          - { page: /tools/ai-consumption }
+          - { page: /terminal }
+          - { page: /screensaver }
+          - { page: /sketch }
+          - { page: /chiptunes }
+          - { page: /feeds }
+      - name: Photos
+        page: /photos
+      - name: Pages
+        items:
+          - { page: /about, icon: person }
+          - { page: /cv, icon: doc }
+          - { page: /contact }
+          - { page: /favourites }
+          - { page: /projects }
+          - { page: /gigs, icon: image }
+          - { page: /cars, icon: image }
+          - { page: /quotes, icon: doc }
+          - { page: /llm-faq, icon: doc }
+      - name: System
+        icon: control-panel
+        items:
+          - { page: /control-panel }
+          - { page: /about-desktop }
+  # description, author and images feed the RSS template and Hugo's embedded opengraph/twitter cards.
   description: "The personal blog of Sam McLeod."
-  keywords: [Blog, Portfolio, AI, DevOps, Platform Engineering, Melbourne, Sam McLeod, Tech]
   author: Sam McLeod
-  # author: ["Me", "You"] # multiple authors
   images: ["/logo-painted-350.svg"]
-  DateFormat: "January 2, 2006"
-  defaultTheme: auto # dark, light
-  disableThemeToggle: false
-  math: true
-  sass:
-    transpiler: 'dartsass'
-
-  ShowReadingTime: true
-  ShowShareButtons: false
-  ShowPostNavLinks: true
-  ShowBreadCrumbs: true
-  ShowCodeCopyButtons: true
-  ShowWordCount: true
-  ShowRssButtonInSectionTermList: true
-  UseHugoToc: true
-  disableSpecial1stPost: false
-  disableScrollToTop: false
-  comments: false
-  hidemeta: false
-  hideSummary: false
-  showtoc: true
-  tocopen: true
-
   social:
     github: "sammcj"
     linkedin: "sammcj"
-
-  socialIcons:
-    - name: github
-      url: "https://github.com/sammcj/"
-      icon: github
-    - name: linkedin
-      url: "https://www.linkedin.com/in/sammcj/"
-      icon: linkedin
-
-  assets:
-    # disableHLJS: true # to disable highlight.js
-    disableFingerprinting: true
-    favicon: "favicon-256x256.png"
-    favicon16x16: "favicon-16x16.png"
-    favicon32x32: "favicon-32x32.png"
-    apple_touch_icon: "apple-touch-icon.png"
-    safari_pinned_tab: "safari-pinned-tab.svg"
-
-  label:
-    text: "Home"
-    icon: /apple-touch-icon.png
-    iconHeight: 35
-
-  # profile-mode
-  profileMode:
-    enabled: false # needs to be explicitly set
-    title: ExampleSite
-    subtitle: "This is subtitle"
-    imageUrl: "<img location>"
-    imageWidth: 120
-    imageHeight: 120
-    imageTitle: my image
-    buttons:
-      - name: Posts
-        url: posts
-      - name: Tags
-        url: tags
-
-  # home-info mode
-  homeInfoParams:
-    Title: "smcleod.net \U0001F44B"
-    Content: "The personal blog of Sam McLeod. I write about AI, DevOps, Platform Engineering, and other geeky topics."
-
-
-  cover:
-    hidden: fa # hide everywhere but not in structured data
-    hiddenInList: false # hide on list pages and home
-    hiddenInSingle: true # hide on single page
-
-  editPost:
-    URL: "https://github.com/sammcj/smcleod/edit/main/content"
-    Text: "Suggest Change" # edit text
-    appendFilePath: true # to append file path to Edit link
-
-  # for search
-  # https://fusejs.io/api/options.html
-  fuseOpts:
-    isCaseSensitive: false
-    shouldSort: true
-    location: 0
-    distance: 1000
-    threshold: 0.4
-    minMatchCharLength: 0
-    limit: 10 # refer: https://www.fusejs.io/api/methods.html#search
-    keys: ["title", "permalink", "summary", "content"]
 
 menu:
   main:
@@ -175,7 +189,7 @@ menu:
       pre: ""
       post: ""
       name: "Tier List Generator"
-      url: "/tiers.html"
+      url: "/tools/tiers/"
       title: "Create and share tier lists"
       weight: 2
       params:
@@ -185,7 +199,7 @@ menu:
       pre: ""
       post: ""
       name: "Quantisation Overview"
-      url: "/quantisation-dashboard.html"
+      url: "/tools/quantisation-dashboard/"
       title: "LLM quantisation overview"
       weight: 3
       params:
@@ -226,8 +240,6 @@ menu:
       weight: 7
       params:
         icon: "search"
-# Read: https://github.com/adityatelange/hugo-PaperMod/wiki/FAQs#using-hugos-syntax-highlighter-chroma
-pygmentsUseClasses: true
 markup:
   highlight:
     noClasses: false
@@ -269,14 +281,15 @@ privacy:
   youtube:
     privacyEnhanced: false
 
-outputFormats:
-  markdown:
-    mediaType: "text/plain"
-    isPlainText: true
-    isHTML: false
+# The theme defines the "markdown" output format (index.md beside index.html) for the reader's "Copy as markdown"
+cascade:
+  - target:
+      path: /posts/**
+      kind: page
+    outputs: ["HTML", "markdown"]
 
 outputs:
-  home: ["HTML", "RSS", "JSON"]
+  home: ["HTML", "RSS", "deskbar", "deskbarsearch"]
   page: ["HTML"]
   section: ["HTML", "RSS"]
   taxonomy: ["HTML", "RSS"]

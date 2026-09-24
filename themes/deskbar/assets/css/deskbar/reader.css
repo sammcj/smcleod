@@ -1,0 +1,62 @@
+/* Article typography. Shared by the reader window and the plain no-JS page. */
+/* Reader width setting (reader.js); ch resolves in the article's own font. Normal suits a 75% reader window on a
+   large screen; narrow and wide keep their ratio to it. */
+:root { --rd-measure: 86ch; }
+[data-rd-width=narrow] { --rd-measure: 74ch; }
+[data-rd-width=wide] { --rd-measure: 106ch; }
+.rd { max-width: calc(var(--rd-measure) + 56px); margin: 0 auto; padding: 36px 28px 96px; font: var(--rd-size)/1.68 var(--serif); color: var(--read-fg); user-select: text; -webkit-user-select: text; }
+.rd h1, .rd h2, .rd h3, .rd h4 { font-family: var(--ui); line-height: 1.25; color: var(--fg); }
+.rd header h1 { font-size: 1.85em; margin: .2em 0 .4em; letter-spacing: -.01em; }
+.rd h2 { font-size: 1.3em; margin: 2em 0 .5em; padding-bottom: .25em; border-bottom: 2px solid var(--tab); }
+.rd h3 { font-size: 1.08em; margin: 1.6em 0 .4em; }
+.rd .meta { font: 600 13px var(--ui); color: var(--muted); text-transform: uppercase; letter-spacing: .05em; margin: 0; }
+.rd .lede { font-size: 1.12em; font-style: italic; color: var(--muted); margin: 0 0 .8em; }
+.rd a { color: var(--link); text-underline-offset: 2px; }
+.rd img, .rd video { max-width: 100%; height: auto; border-radius: 3px; }
+.rd img.cover { display: block; margin: 12px 0 8px; border: 1px solid var(--line); }
+.rd hr { border: 0; border-top: 1px solid var(--line); margin: 2em 0; }
+.rd code { font: .84em var(--mono); background: var(--code-bg); padding: .1em .35em; border-radius: 3px; }
+.rd blockquote { margin: 1.2em 0; padding: .2em 1em; border-left: 3px solid var(--line); color: var(--muted); }
+.rd li { margin: .3em 0; }
+.rd table { border-collapse: collapse; margin: 1.2em 0; font: .82em/1.45 var(--ui); display: block; overflow-x: auto; }
+.rd th, .rd td { border: 1px solid var(--line); padding: 5px 9px; text-align: left; vertical-align: top; }
+.rd th { background: var(--code-bg); }
+.rd figure { margin: 1.4em 0; }
+.rd figcaption { font: 13px var(--ui); color: var(--muted); margin-top: .4em; }
+.chips { display: flex; flex-wrap: wrap; gap: 6px; margin: .6em 0; }
+.rd .chip { font: 12px var(--ui); padding: 2px 10px; border-radius: 11px; background: var(--code-bg); border: 1px solid var(--line); color: var(--fg); text-decoration: none; }
+.rd .chip:hover { border-color: var(--accent); color: var(--link); }
+
+/* D12 heading links */
+.hlink { margin-left: .4em; font-weight: 400; color: var(--muted) !important; text-decoration: none; opacity: 0; transition: opacity .15s; }
+.rd :is(h2, h3, h4):hover .hlink, .rd .show-link .hlink, .hlink:focus { opacity: 1; }
+.hlink.copied::after { content: ' link copied'; font: 12px var(--ui); color: var(--link); }
+.rd :is(h2, h3, h4)[id] { scroll-margin-top: 12px; }
+/* no-JS phones can't tap to reveal, so the link stays faintly visible there */
+@media (hover: none) { html:not(.wm-ready) .hlink { opacity: .55; } }
+
+/* post lists and pager (no-JS navigation, list pages) */
+.plist { list-style: none; padding: 0; font-family: var(--ui); font-size: .9em; }
+.plist li { display: flex; gap: 12px; justify-content: space-between; align-items: baseline; padding: 5px 0; border-bottom: 1px solid var(--line); }
+.plist time, .plist small { flex: none; color: var(--muted); font-size: .85em; font-variant-numeric: tabular-nums; }
+.rd-pager { display: flex; gap: 12px; justify-content: space-between; margin-top: 3em; font: 15px/1.35 var(--ui); }
+.rd-pager a { flex: 1; max-width: 48%; padding: 10px 14px; border: 1px solid var(--line); border-radius: 4px; text-decoration: none; }
+.rd-pager a[rel=next] { text-align: right; margin-left: auto; }
+.rd-pager small { display: block; color: var(--muted); text-transform: uppercase; font-size: 11px; letter-spacing: .05em; }
+
+/* Reader window */
+.reader { background: var(--read-bg); color: var(--read-fg); }
+.reader .toolbar select { width: 100%; max-width: 220px; }
+/* the contents menu gives way first when the toolbar is narrow */
+.toc { display: flex; flex: 0 1 220px; min-width: 60px; }
+.toc:empty { display: none; }
+/* the measure is wider than a phone screen, so the width setting does nothing there */
+@media (max-width: 767px), (max-height: 500px) and (pointer: coarse) { .tb.width { display: none; } }
+/* a size container so wide content (content.css) can measure the window rather than the viewport */
+.rd-scroll { flex: 1; overflow: auto; -webkit-overflow-scrolling: touch; container-type: inline-size; }
+/* Long URLs and inline code wrap rather than widen the post, so a vertical swipe never drifts sideways. break-word
+   (not anywhere) leaves min-content alone, so tables keep scrolling inside the measure instead of squashing words. */
+.rd-body { overflow-wrap: break-word; }
+.rd-host > .rd { padding-top: 28px; }
+/* the shell focuses the heading after a page swap so screen readers start there; it is not an input */
+.rd h1[tabindex="-1"]:focus { outline: none; }

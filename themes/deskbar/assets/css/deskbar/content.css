@@ -1,0 +1,109 @@
+/* Rendered markdown inside .rd: code, diagrams, admonitions, footnotes, wide content and related posts.
+   Shared by the reader window and the plain no-JS page. Colours follow the scheme through light-dark(). */
+
+/* Code. Chroma emits classes (markup.highlight.noClasses = false), mapped here onto a small palette. */
+:root {
+  --hl-kw: light-dark(#94297f, #e39bd8); --hl-str: light-dark(#2c6e14, #a6d189); --hl-com: light-dark(#6b695e, #9a978a);
+  --hl-num: light-dark(#a04b00, #f2a766); --hl-fn: light-dark(#1f55a8, #8ab4f0); --hl-type: light-dark(#0a6a73, #6fd0d6);
+  --hl-bi: light-dark(#80520a, #e5c07b); --hl-var: light-dark(#a8322d, #f28b82);
+  --hl-mark: light-dark(rgba(255,203,0,.25), rgba(255,203,0,.14));
+}
+.rd pre { position: relative; margin: 1.2em 0; background: var(--code-bg); border: 1px solid var(--line); border-left: 3px solid var(--tab); border-radius: 3px; padding: 12px 14px; overflow: auto; font-size: 13.5px; line-height: 1.55; tab-size: 4; }
+.rd pre code { background: none; padding: 0; font-size: inherit; }
+.rd .highlight { position: relative; margin: 1.2em 0; }
+.rd .highlight pre { margin: 0; }
+/* line numbers in a table (lineNumbersInTable): one frame around both columns */
+.rd .highlight > div.chroma { background: var(--code-bg); border: 1px solid var(--line); border-left: 3px solid var(--tab); border-radius: 3px; overflow: auto; }
+.rd table.lntable { display: table; margin: 0; font: inherit; border-spacing: 0; }
+.rd .lntable td { border: 0; padding: 0; }
+.rd .lntable pre { border: 0; border-radius: 0; background: none; }
+.rd .lntd:first-child pre { padding-right: 4px; }
+.rd .chroma .lnt, .rd .chroma .ln { color: var(--muted); user-select: none; -webkit-user-select: none; margin-right: .8em; }
+.rd .chroma .hl { display: block; background: var(--hl-mark); }
+.chroma :is(.k, .kd, .kn, .kp, .kr, .ow, .cp, .cpf) { color: var(--hl-kw); }
+.chroma :is(.s, .sa, .sb, .sc, .dl, .sd, .s2, .se, .sh, .si, .sx, .sr, .s1, .ss) { color: var(--hl-str); }
+.chroma :is(.c, .ch, .cm, .c1, .cs) { color: var(--hl-com); font-style: italic; }
+.chroma :is(.m, .mb, .mf, .mh, .mi, .il, .mo, .kc) { color: var(--hl-num); }
+.chroma :is(.nf, .fm, .nd) { color: var(--hl-fn); }
+.chroma :is(.nc, .nn, .kt, .nt, .ne) { color: var(--hl-type); }
+.chroma :is(.nb, .bp, .na, .no) { color: var(--hl-bi); }
+.chroma :is(.nv, .vc, .vg, .vi, .vm, .nl, .err, .gd) { color: var(--hl-var); }
+.chroma .gi { color: var(--hl-str); }
+.chroma :is(.gh, .gu) { color: var(--hl-fn); font-weight: 600; }
+.chroma .ge { font-style: italic; }
+.chroma .gs { font-weight: 700; }
+
+/* copy button (content/code.js): shown on hover, always on touch screens */
+.rd .has-copy { position: relative; }
+.rd .copy { position: absolute; top: 6px; right: 6px; z-index: 1; font: 11px/1 var(--ui); padding: 4px 8px; border: 1px solid var(--line); border-radius: 3px; background: var(--read-bg); color: var(--muted); opacity: 0; transition: opacity .15s; }
+.rd .has-copy:hover .copy, .rd .copy:focus-visible { opacity: 1; }
+.rd .copy:hover { color: var(--link); border-color: var(--accent); }
+@media (hover: none) { .rd .copy { opacity: .9; } }
+
+/* Mermaid: the source reads as code until content/mermaid.js swaps in the diagram */
+.rd pre.mermaid.drawn { background: none; border: 0; padding: 0; text-align: center; overflow-x: auto; font-family: var(--ui); }
+.rd pre.mermaid svg { max-width: 100%; height: auto; }
+mjx-container[display="true"] { overflow-x: auto; overflow-y: hidden; }
+
+/* Admonitions from the hugo-admonitions module. Its stylesheet loads after the theme's, so these rules use
+   an extra [class] for specificity, and its colour variables are reset on .rd to follow the theme. */
+.rd {
+  --adm-bg: transparent; --adm-text: var(--read-fg); --adm-code-bg: var(--code-bg); --adm-code-text: var(--read-fg); --adm-blockquote-border: var(--line);
+  --adm-note: light-dark(#3467b8, #7ea8ea); --adm-info: light-dark(#136f8a, #6cc4dc); --adm-abstract: var(--adm-info); --adm-memo: var(--adm-note);
+  --adm-tip: light-dark(#2a722a, #7cc47f); --adm-success: var(--adm-tip); --adm-idea: var(--adm-tip); --adm-goal: var(--adm-tip); --adm-conclusion: var(--adm-tip);
+  --adm-warning: light-dark(#9a5b00, #efb45c); --adm-question: var(--adm-warning); --adm-notify: var(--adm-warning); --adm-task: var(--adm-warning);
+  --adm-caution: light-dark(#b3261e, #f28b82); --adm-danger: var(--adm-caution); --adm-error: var(--adm-caution);
+  --adm-important: light-dark(#7b3fb8, #c4a0f2); --adm-example: var(--adm-important); --adm-experiment: var(--adm-important); --adm-code: var(--adm-important);
+  --adm-quote: var(--muted);
+}
+.rd .admonition[class] { margin: 1.4em 0; border: 1px solid var(--line); border-left: 3px solid var(--adm-type-color); border-radius: 3px; box-shadow: none; background: color-mix(in srgb, var(--adm-type-color) 7%, var(--read-bg)); }
+.rd .admonition-header[class] { padding: 8px 14px 0; background: none; font: 700 12px/1.4 var(--ui); text-transform: uppercase; letter-spacing: .06em; color: var(--adm-type-color); }
+.rd .admonition-content[class] { padding: 4px 14px 10px; background: none; color: inherit; font-size: .94em; }
+.rd .admonition--headless .admonition-content[class] { padding-top: 10px; }
+
+/* GitHub gists (.gist markup, or a gist shortcode's iframe.gist-frame) only come light, and a frame's colours can't
+   be restyled from outside, so dark mode inverts them. The half turn of hue keeps syntax colours near their own. */
+[data-theme=dark] :is(.gist, .gist-frame) { filter: invert(.88) hue-rotate(180deg); }
+@media (prefers-color-scheme: dark) { :root:not([data-theme]) :is(.gist, .gist-frame) { filter: invert(.88) hue-rotate(180deg); } }
+
+/* Footnotes (goldmark) */
+.rd sup { line-height: 0; }
+.rd .footnote-ref { font: 600 .72em var(--ui); text-decoration: none; padding: 0 .15em; }
+.rd .footnotes { margin-top: 3em; font-size: .86em; color: var(--muted); }
+.rd .footnotes hr { margin: 0 0 1em; width: 30%; }
+.rd .footnotes li { margin: .45em 0; }
+.rd .footnotes p { margin: 0; }
+.rd .footnote-backref { text-decoration: none; margin-left: .3em; }
+.rd :is([id^="fn:"], [id^="fnref:"]) { scroll-margin-top: 16px; }
+
+/* Definition lists */
+.rd dt { font: 600 .92em var(--ui); color: var(--fg); margin-top: .9em; }
+.rd dd { margin: .2em 0 0 1.4em; }
+
+/* Tables: zebra rows; wide ones scroll inside the measure */
+.rd tbody tr:nth-child(even) { background: var(--zebra); }
+.rd thead th { position: sticky; top: 0; }
+
+/* Images and figures */
+.rd p > img:only-child, .rd figure img { display: block; margin: 0 auto; }
+.rd figure { text-align: center; }
+.rd :is(figcaption, .image-caption) { font: 13px/1.4 var(--ui); color: var(--muted); margin-top: .4em; text-align: center; }
+
+/* Blockquotes */
+.rd blockquote { border-left-color: var(--tab-dim); }
+.rd blockquote p { margin: .5em 0; }
+
+/* wide-table / wide-image shortcodes break out of the measure, centred on it. cqw is the reader window's
+   width (.rd-scroll is a container); on the plain page it falls back to the viewport. */
+.rd { --rd-wide: min(100cqw - 32px, 1240px); }
+.rd :is(.wide-content, .wide-table, img.wide-image) { width: var(--rd-wide); max-width: none; margin-left: calc(50% - var(--rd-wide) / 2); }
+.rd img.wide-image { display: block; }
+.rd .wide-content table { margin-inline: auto; }
+
+/* Related posts (D25, D27): inline at the end of a post; with JS on the desktop the reader shows them as a ticker instead */
+.rd-related { margin-top: 3em; padding: 12px 16px 10px; border: 1px solid var(--line); border-radius: 4px; background: var(--code-bg); font: 14px/1.4 var(--ui); }
+.rd .rd-related-h { margin: 0 0 6px; padding: 0; border: 0; font-size: 11px; text-transform: uppercase; letter-spacing: .06em; color: var(--muted); }
+.rd-related ul { list-style: none; margin: 0; padding: 0; }
+.rd-related li { display: flex; justify-content: space-between; gap: 12px; align-items: baseline; margin: 0; padding: 5px 0; border-top: 1px solid var(--line); }
+.rd-related li:first-child { border-top: 0; }
+.rd-related time { flex: none; color: var(--muted); font-size: 12px; font-variant-numeric: tabular-nums; }

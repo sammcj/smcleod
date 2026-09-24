@@ -1,0 +1,5 @@
+{{- /* An unmarshalled feed's entries as a list: Atom entries, RSS 2.0 channel items or RSS 1.0 items. A feed with one
+       entry unmarshals it to a map rather than a list. */ -}}
+{{- $raw := .entry | default (.channel | default dict).item | default .item | default slice -}}
+{{- if reflect.IsMap $raw }}{{ $raw = slice $raw }}{{ end -}}
+{{- return $raw -}}

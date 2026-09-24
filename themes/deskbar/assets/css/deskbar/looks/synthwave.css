@@ -1,0 +1,91 @@
+/* Synthwave: an 80s outrun night. Indigo windows edged in neon magenta, sunset tabs set in Space Grotesk capitals,
+   a glowing glass dock, and a striped sun setting over a perspective grid. The neon stays on the chrome: window
+   content is near-white on deep indigo with no glow, for long reads. Dark only. */
+@font-face { font-family: 'Space Grotesk'; font-display: swap; font-weight: 700; src: url(../../../fonts/space-grotesk/space-grotesk-700-normal.woff2) format('woff2'); }
+
+:root[data-deco=synthwave] {
+  color-scheme: dark;
+  --sw-pink: #ff3ea5; --sw-cyan: #6fe3ff; --sw-ink: #1a0b3a; --sw-edge: #4a3580;
+  --sw-head: 'Space Grotesk', var(--ui);
+  --sw-glow: 0 0 6px rgba(255,62,165,.55), 0 0 18px rgba(255,62,165,.3);
+  --panel: linear-gradient(#2a1356, #1a0b3a); --panel-fg: #f5eeff; --panel-hover: rgba(255,255,255,.12);
+  --frame: #211546; --frame-hi: #3b2a70; --frame-lo: #120a2a; --frame-dk: #0a0418;
+  --tab: var(--sw-pink); --tab-hi: #ff9ad2; --tab-lo: #b0266f; --tab-dim: #e07ab8;
+  --tab-in: #2a1b52; --tab-in-lo: #1a0f38; --tab-in-fg: #cfc3f2; --ctl: var(--sw-ink);
+  --content: #160e2c; --side: #1c1236; --fg: #ece6ff; --muted: #b6a8dc; --line: #3a2a66; --zebra: rgba(255,255,255,.035);
+  --accent: #c2267a; --accent-fg: #fff; --link: var(--sw-cyan);
+  --read-bg: #140c28; --read-fg: #e4ddf5; --code-bg: #22173f;
+  --wall-1: #3a1a6e; --wall-2: #25104f; --wall-3: #140833; --wall-glow: rgba(255,62,165,.2); --wall-line: rgba(255,62,165,.18);
+}
+:root[data-deco=synthwave] ::selection { background: var(--sw-pink); color: var(--sw-ink); }
+:root[data-deco=synthwave] :focus-visible { outline-color: var(--sw-cyan); }
+:root[data-deco=synthwave] #themeBtn { display: none; }
+:root[data-deco=synthwave] .ticker-h { color: var(--sw-ink); }
+@supports selector(::-webkit-scrollbar) {
+  html[data-deco=synthwave] ::-webkit-scrollbar { width: 12px; height: 12px; background: var(--side); }
+  html[data-deco=synthwave] ::-webkit-scrollbar-thumb { border: 3px solid var(--side); border-radius: 6px; background: linear-gradient(var(--sw-pink), #7b3fe4); }
+  html[data-deco=synthwave] ::-webkit-scrollbar-corner { background: var(--side); }
+}
+@supports not selector(::-webkit-scrollbar) {
+  :root[data-deco=synthwave] { scrollbar-color: #b0266f var(--side); }
+}
+
+/* the top bar sits on a neon rule */
+:root[data-deco=synthwave] #panel { border-bottom: 1px solid var(--sw-pink); box-shadow: 0 1px 10px rgba(255,62,165,.45); }
+
+/* Windows: indigo frames with rounded corners, a magenta edge and glow when focused, and a sunset tab */
+:root[data-deco=synthwave] .win .frame { padding: 4px; border: 1px solid var(--sw-edge); border-radius: 0 6px 6px; box-shadow: 0 10px 30px rgba(0,0,0,.55); }
+:root[data-deco=synthwave] .win.active .frame { border-color: var(--sw-pink); box-shadow: var(--sw-glow), 0 16px 40px rgba(0,0,0,.6); }
+:root[data-deco=synthwave] .views { border: 1px solid var(--line); border-radius: 0 3px 3px; overflow: hidden; }
+:root[data-deco=synthwave] .win :is(.tab, .th) { border: 1px solid var(--sw-edge); border-bottom: 0; border-radius: 6px 6px 0 0; box-shadow: none; }
+:root[data-deco=synthwave] .win.active .tab { color: var(--sw-ink); background: linear-gradient(90deg, var(--sw-pink), #ff7a8a); border-color: var(--sw-pink); box-shadow: 0 -2px 12px rgba(255,62,165,.45); }
+:root[data-deco=synthwave] .win.active .tab:not(.on) { background: var(--tab-dim); }
+:root[data-deco=synthwave] .tab .tt { font-family: var(--sw-head); font-size: 11.5px; letter-spacing: .08em; text-transform: uppercase; }
+:root[data-deco=synthwave] .win .ctl:hover { background: rgba(26,11,58,.2); }
+:root[data-deco=synthwave] .win .ctl.close:hover { color: #fff; background: var(--sw-ink); }
+:root[data-deco=synthwave] .th::before { background: radial-gradient(circle, var(--sw-edge) 1.1px, transparent 1.6px) 0 0 / 5px 5px; }
+:root[data-deco=synthwave] .sizer { border-color: var(--sw-pink); border-radius: 4px; box-shadow: none; }
+:root[data-deco=synthwave] #snapPreview { background: rgba(255,62,165,.1); border: 1px solid var(--sw-pink); border-radius: 6px; box-shadow: var(--sw-glow); }
+
+/* controls light up cyan under the pointer; pressed ones take the magenta accent */
+:root[data-deco=synthwave] :is(.tb, .seg, select, textarea, input:not([type=checkbox], [type=radio], [type=range])) { border-color: var(--sw-edge); }
+:root[data-deco=synthwave] :is(.tb, .seg):hover { border-color: var(--sw-cyan); }
+:root[data-deco=synthwave] :is(.tb:active, .seg.on, .tb[aria-pressed=true], .tb[aria-expanded=true]) { color: #fff; background: var(--accent); border-color: var(--sw-pink); }
+
+/* menus and popups: glowing edges */
+:root[data-deco=synthwave] :is(#menu, .ctx, .sp-frame, .recent-list) { border: 1px solid var(--sw-pink); box-shadow: var(--sw-glow), 0 14px 36px rgba(0,0,0,.6); }
+
+/* the dock: dark glass with a neon rim, and cyan lamps under running apps */
+.wm[data-deco=synthwave] #dock { background: rgba(20,8,48,.72); border-color: rgba(255,62,165,.6); border-radius: 12px; box-shadow: var(--sw-glow), 0 8px 24px rgba(0,0,0,.5); }
+.wm[data-deco=synthwave] #dock .dk.run::after { background: var(--sw-cyan); box-shadow: 0 0 6px var(--sw-cyan); }
+.wm[data-deco=synthwave] #dock #homeBtn.on { background: rgba(255,62,165,.25); box-shadow: inset 0 0 0 1px var(--sw-pink); }
+
+:root[data-deco=synthwave] .dicon span { background: rgba(16,6,40,.7); text-shadow: 0 0 6px rgba(255,62,165,.6); }
+
+/* Post text keeps the reader's font, unlit; headings take the neon */
+:root[data-deco=synthwave] .rd :is(h1, h2, h3) { font-family: var(--sw-head); letter-spacing: -.01em; }
+:root[data-deco=synthwave] .rd h1 { color: #ff8fcb; text-shadow: 0 0 14px rgba(255,62,165,.45); }
+:root[data-deco=synthwave] .rd h2 { color: var(--sw-cyan); border-bottom: 1px solid; border-image: linear-gradient(90deg, var(--sw-pink), transparent) 1; }
+
+/* Wallpaper: a night sky over a neon floor. The body's layers are the horizon line and its glow, the floor, which
+   hides the stars below the horizon, the stars (tiles of four sizes, so they don't line up) and the sky. ::before is
+   the sun, striped by a mask and cut at the horizon, and ::after the grid, drawn flat and tipped back in perspective
+   from the horizon, fading as it recedes. Both sit behind everything and never take the pointer. */
+.wm[data-wall=synthwave] body, .cp-wp.synthwave, .cp-deco.synthwave { --st: radial-gradient(circle 1.2px, rgba(255,255,255,.85) 40%, transparent); background: linear-gradient(transparent calc(60% - 1px), #ff8ad0 0 calc(60% + 1px), transparent 0), radial-gradient(ellipse 70% 30% at 50% 60%, rgba(255,62,165,.45), transparent 70%), linear-gradient(transparent 60%, #16072f 0, #10052a), var(--st) 37px 11px / 211px 163px, var(--st) 101px 67px / 293px 227px, var(--st) 5px 29px / 373px 181px, radial-gradient(circle 1px, rgba(255,255,255,.5) 40%, transparent) 150px 90px / 157px 283px, linear-gradient(#0b0420, #1c0b3f 30%, #3d1462 50%, #6c1a6c 60%); }
+.wm[data-wall=synthwave] body::before, .wm[data-wall=synthwave] body::after { content: ''; position: fixed; z-index: -1; pointer-events: none; }
+.wm[data-wall=synthwave] body::before { --d: min(46vh, 60vw); left: calc(50% - var(--d) / 2); top: calc(60% - var(--d) * .78); width: var(--d); height: var(--d); border-radius: 50%; background: linear-gradient(#ffe45e 10%, #ff9e4a 38%, #ff4f8b 60%, #e8339f 78%); mask: linear-gradient(#000 48%, transparent 0 50%, #000 0 56%, transparent 0 59%, #000 0 64%, transparent 0 68%, #000 0 72%, transparent 0 75.5%, #000 0 78%, transparent 0); }
+.wm[data-wall=synthwave] body::after { left: -20%; right: -20%; top: 60%; height: 26.5vh; transform-origin: 50% 0; transform: perspective(30vh) rotateX(76deg); background: linear-gradient(rgba(255,62,165,.85) 2px, transparent 0) 0 0 / 100% 3vh, linear-gradient(90deg, transparent calc(50% - 1px), rgba(255,62,165,.85) 0 calc(50% + 1px), transparent 0) 50% 0 / 4vw 100%; mask: linear-gradient(transparent, #000 40%); }
+.wm[data-wall=synthwave] #desk::after { font: italic 700 46px/1 'Space Grotesk', var(--ui); color: transparent; -webkit-text-stroke: 1px rgba(111,227,255,.4); }
+
+/* Control panel thumbnails: the sun over a fan of floor lines, and a glowing window */
+.cp-wp.synthwave::before, .cp-deco.synthwave::before { content: ''; position: absolute; }
+.cp-wp.synthwave::after { content: ''; position: absolute; inset: 60% 0 0; background: repeating-conic-gradient(from 90deg at 50% 0, rgba(255,62,165,.8) 0 1.5deg, transparent 0 15deg), linear-gradient(rgba(255,62,165,.8) 1px, transparent 0) 0 3px / 100% 7px; }
+.cp-wp.synthwave::before { left: 24px; top: 5px; width: 28px; height: 28px; border-radius: 50%; background: linear-gradient(#ffe45e 10%, #ff4f8b 60%); mask: linear-gradient(#000 55%, transparent 0 62%, #000 0 70%, transparent 0 77%, #000 0 83%, transparent 0); }
+.cp-deco.synthwave::before { background: linear-gradient(90deg, #ff3ea5, #ff7a8a); border: 0; border-radius: 3px 3px 0 0; box-shadow: 0 0 5px rgba(255,62,165,.7); }
+.cp-deco.synthwave::after { background: #211546; border: 1px solid #ff3ea5; border-radius: 0 3px 3px; box-shadow: 0 0 6px rgba(255,62,165,.6); }
+
+/* Phones (the same query as windows.css): the title bar spans the full-screen window, so it loses its corners */
+@media (max-width: 767px), (max-height: 500px) and (pointer: coarse) {
+  :root[data-deco=synthwave] :is(.win .frame, .views, .win .tab) { border-radius: 0; }
+  :root[data-deco=synthwave] .win.active .frame { box-shadow: none; }
+}

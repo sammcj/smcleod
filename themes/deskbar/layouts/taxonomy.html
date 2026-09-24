@@ -1,0 +1,12 @@
+{{- define "main" }}
+<article class="rd">
+  <header>
+    <h1>{{ .Title }}</h1>
+  </header>
+  <ul class="plist">
+    {{- range .Data.Terms.ByCount }}
+    <li><a href="{{ .Page.RelPermalink }}">{{ .Page.LinkTitle }}</a> <small>{{ .Count }}</small></li>
+    {{- end }}
+  </ul>
+</article>
+{{- end }}

@@ -1,2 +1,2 @@
-{{- $scriptArr := (.Page.Scratch.Get "this").scriptArr | default slice -}}
-{{- $scriptArr | append (trim .Inner "\n") | .Page.Scratch.SetInMap "this" "scriptArr" -}}
+{{- /* Inline page script. The deskbar shell re-runs content scripts when a page is routed into a window. */ -}}
+<script>{{ trim .Inner "\n" | safeJS }}</script>

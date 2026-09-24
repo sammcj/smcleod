@@ -1,0 +1,56 @@
+/* Feeds (lazy/feeds.js): feeds, items and a preview side by side. Container queries fold it to two panes, with a
+   feed menu in the toolbar, then to one pane at a time, so it works snapped to a quarter and full screen on phones. */
+.app-feeds { container-type: inline-size; }
+.fd { flex: 1; min-height: 0; display: grid; grid-template-columns: 190px minmax(250px, 36%) minmax(0, 1fr); }
+.fd-side { overflow: auto; background: var(--side); border-right: 1px solid var(--line); padding: 6px 0 16px; }
+.fd-feed { display: flex; gap: 6px; width: 100%; padding: 4px 12px; text-align: left; }
+.fd-feed:first-child { font-weight: 600; margin-bottom: 4px; }
+.fd-feed span { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.fd-feed small { color: var(--muted); font-variant-numeric: tabular-nums; }
+.fd-feed:hover { background: var(--zebra); }
+.fd-feed[aria-current] { background: var(--accent); color: var(--accent-fg); }
+.fd-feed[aria-current] small { color: inherit; }
+/* a feed that failed to fetch in this build has no items at all */
+.fd-feed.off:not([aria-current]) { color: var(--muted); font-style: italic; }
+.fd-sel { display: none; min-width: 0; max-width: 62%; }
+.fd-list { overflow: auto; border-right: 1px solid var(--line); background: var(--content); }
+.fd-list > :nth-child(even) { background: var(--zebra); }
+.fd-row { position: relative; display: grid; gap: 2px; width: 100%; padding: 7px 12px 8px 24px; text-align: left; }
+.fd-row:hover { background: color-mix(in srgb, var(--accent) 9%, transparent); }
+.fd-t { display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; line-height: 1.3; }
+.fd-s, .fd-m span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.fd-s { font-size: 12px; color: var(--muted); }
+.fd-m { display: flex; justify-content: space-between; gap: 10px; font-size: 11px; color: var(--muted); }
+.fd-m time { flex: none; font-variant-numeric: tabular-nums; }
+/* unread: bold with a dot, as mail and feed readers mark them */
+.unread .fd-t { font-weight: 700; }
+.unread::before { content: ''; position: absolute; left: 9px; top: 12px; width: 8px; height: 8px; border-radius: 50%; background: var(--link); }
+.fd-row[aria-current] { background: var(--accent); color: var(--accent-fg); }
+.fd-row[aria-current] :is(.fd-s, .fd-m) { color: inherit; }
+.fd-pane { overflow: auto; padding: 18px 26px 28px; background: var(--read-bg); color: var(--read-fg); }
+.fd-pane header { margin-bottom: 14px; padding-bottom: 10px; border-bottom: 1px solid var(--line); }
+.fd-src { margin: 0; font-size: 12px; font-weight: 600; color: var(--link); }
+.fd-pane h2 { margin: 4px 0 6px; font: 600 22px/1.25 var(--serif); outline: 0; }
+.fd-when { margin: 0; font-size: 12px; color: var(--muted); }
+.fd-sum { max-width: 66ch; margin: 0 0 18px; font: 16px/1.6 var(--serif); overflow-wrap: break-word; }
+.fd-none { color: var(--muted); font-style: italic; }
+.fd-open { height: 30px; padding: 0 14px; background: var(--accent); border-color: color-mix(in srgb, var(--accent) 70%, #000); color: var(--accent-fg); font-weight: 600; }
+.fd-back { display: none; gap: 7px; margin-bottom: 12px; }
+.fd-back::before { content: ''; width: 6px; height: 6px; border: solid currentColor; border-width: 0 0 1.6px 1.6px; transform: rotate(45deg); }
+.fd-empty { margin: 0; padding: 24px 16px; color: var(--muted); text-align: center; }
+@container (max-width: 759px) {
+  .fd { grid-template-columns: minmax(220px, 44%) minmax(0, 1fr); }
+  .fd-side { display: none; }
+  .fd-sel { display: block; }
+}
+@container (max-width: 519px) {
+  .fd { grid-template-columns: minmax(0, 1fr); }
+  .fd[data-show=list] .fd-pane, .fd[data-show=item] .fd-list { display: none; }
+  .fd-list { border-right: 0; }
+  .fd-back { display: inline-flex; }
+  .fd-pane { padding: 12px 16px 24px; }
+}
+@media (pointer: coarse) {
+  .fd-feed { padding: 9px 12px; }
+  .fd-row { padding-block: 10px 11px; }
+}

@@ -1,0 +1,33 @@
+{{- /* The photos a page shows, in content order, as [{ src, thumb?, caption, w?, h? }]. SVGs and data: URIs are
+       icons and diagrams rather than photos, so they are skipped; the in-post gallery script (apps/gallery.js)
+       uses the same rule. A linked image whose link points at an image file is a thumbnail of that file. Images
+       from the page bundle get a generated thumbnail; anything else is used as it is. */ -}}
+{{- $p := . -}}
+{{- $items := slice -}}
+{{- $scheme := `^([a-zA-Z][a-zA-Z0-9+.-]*:|/)` -}}
+{{- range findRESubmatch `(?s)(?:<a\s[^>]*?href="([^"]*)"[^>]*>\s*)?(<img\s[^>]*>)` $p.Content -}}
+  {{- $href := index . 1 | htmlUnescape -}}
+  {{- $tag := index . 2 -}}
+  {{- $src := "" -}}
+  {{- with findRESubmatch `\ssrc="([^"]*)"` $tag 1 }}{{ $src = index (index . 0) 1 | htmlUnescape }}{{ end -}}
+  {{- if and $src (not (findRE `(?i)^data:|\.svg([?#]|$)` $src)) -}}
+    {{- $alt := "" -}}
+    {{- with findRESubmatch `\salt="([^"]*)"` $tag 1 }}{{ $alt = index (index . 0) 1 | htmlUnescape }}{{ end -}}
+    {{- $item := dict "caption" $alt -}}
+    {{- /* a render hook may already have made bundle paths absolute */ -}}
+    {{- $local := strings.TrimPrefix "./" (strings.TrimPrefix $p.RelPermalink $src) -}}
+    {{- $res := cond (findRE $scheme $local) nil ($p.Resources.Get $local) -}}
+    {{- if and $res (eq $res.MediaType.MainType "image") -}}
+      {{- $item = merge $item (dict "src" $res.RelPermalink "w" $res.Width "h" $res.Height) -}}
+      {{- with try ($res.Fill "480x360 q75") }}{{ with .Value }}{{ $item = merge $item (dict "thumb" .RelPermalink) }}{{ end }}{{ end -}}
+    {{- else -}}
+      {{- $u := cond (findRE $scheme $src) $src (printf "%s%s" $p.RelPermalink $local) -}}
+      {{- $item = merge $item (dict "src" $u) -}}
+      {{- if findRE `(?i)\.(jpe?g|png|gif|webp|avif)([?#].*)?$` $href -}}
+        {{- $item = merge $item (dict "src" $href "thumb" $u) -}}
+      {{- end -}}
+    {{- end -}}
+    {{- $items = $items | append $item -}}
+  {{- end -}}
+{{- end -}}
+{{- return $items -}}

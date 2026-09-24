@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" data-ground="#6c8175 #38483f">
+<!-- two GPUs joined by a bridge. Rendered by scripts/render-thumbs.mjs. -->
+<defs><style>.o{stroke-width:1.1}.t{stroke-width:.66}.o3{stroke-width:5.2}.o5{stroke-width:7.2}</style>
+<linearGradient id="gf" x2="0.4" y2="1"><stop stop-color="#66717a"/><stop offset="1" stop-color="#2f363c"/></linearGradient><linearGradient id="gs" x2="0" y2="1"><stop stop-color="#454e55"/><stop offset="1" stop-color="#1f2428"/></linearGradient><linearGradient id="gt" x2="1" y2="0"><stop stop-color="#98a2a9"/><stop offset="1" stop-color="#6e7880"/></linearGradient><radialGradient id="fan" cx="0.38" cy="0.35" r="0.75"><stop stop-color="#3c454b"/><stop offset="1" stop-color="#0e1214"/></radialGradient><linearGradient id="br" x2="1" y2="0"><stop stop-color="#ffd760"/><stop offset="1" stop-color="#e3950b"/></linearGradient><linearGradient id="io" x2="1" y2="0"><stop stop-color="#eef1f3"/><stop offset="1" stop-color="#9aa3a9"/></linearGradient></defs>
+<g transform="translate(-1.5 -2.5)">
+<g stroke="#171c20" class="o" stroke-linejoin="round">
+<path d="M49 12l5 -4v17l-5 4z" fill="url(#gs)"/>
+<path d="M11 12l5 -4h38l-5 4z" fill="url(#gt)"/>
+<rect x="25.439999999999998" y="31.6" width="15.959999999999999" height="2.2" fill="#d9a441" class="t"/>
+<rect x="11" y="29" width="38" height="2.6" fill="#3f7c4c"/>
+<rect x="11" y="12" width="38" height="17" fill="url(#gf)"/>
+<circle cx="21.26" cy="20.5" r="6.4" fill="url(#fan)"/><circle cx="39.120000000000005" cy="20.5" r="6.4" fill="url(#fan)"/>
+<circle cx="21.26" cy="20.5" r="2" fill="#9aa4ab" class="t"/><circle cx="39.120000000000005" cy="20.5" r="2" fill="#9aa4ab" class="t"/>
+<path d="M6 9h5v25h-5z" fill="url(#io)" stroke="#3f474d"/></g>
+<g class="d" stroke="#6d7880" stroke-width=".6" fill="none"><circle cx="21.26" cy="20.5" r="4.224"/><circle cx="39.120000000000005" cy="20.5" r="4.224"/></g>
+<path d="M8.5 13v4M8.5 20v4" stroke="#3f474d" stroke-width="1.1" stroke-linecap="round"/>
+<path class="d" d="M11.8 28V12.8H48" stroke="#fff" stroke-opacity=".25" stroke-width=".8" fill="none"/><g stroke="#171c20" class="o" stroke-linejoin="round">
+<path d="M49 38l5 -4v17l-5 4z" fill="url(#gs)"/>
+<path d="M11 38l5 -4h38l-5 4z" fill="url(#gt)"/>
+<rect x="25.439999999999998" y="57.6" width="15.959999999999999" height="2.2" fill="#d9a441" class="t"/>
+<rect x="11" y="55" width="38" height="2.6" fill="#3f7c4c"/>
+<rect x="11" y="38" width="38" height="17" fill="url(#gf)"/>
+<circle cx="21.26" cy="46.5" r="6.4" fill="url(#fan)"/><circle cx="39.120000000000005" cy="46.5" r="6.4" fill="url(#fan)"/>
+<circle cx="21.26" cy="46.5" r="2" fill="#9aa4ab" class="t"/><circle cx="39.120000000000005" cy="46.5" r="2" fill="#9aa4ab" class="t"/>
+<path d="M6 35h5v25h-5z" fill="url(#io)" stroke="#3f474d"/></g>
+<g class="d" stroke="#6d7880" stroke-width=".6" fill="none"><circle cx="21.26" cy="46.5" r="4.224"/><circle cx="39.120000000000005" cy="46.5" r="4.224"/></g>
+<path d="M8.5 39v4M8.5 46v4" stroke="#3f474d" stroke-width="1.1" stroke-linecap="round"/>
+<path class="d" d="M11.8 54V38.8H48" stroke="#fff" stroke-opacity=".25" stroke-width=".8" fill="none"/>
+<g stroke="#7d5205" class="o" stroke-linejoin="round"><path d="M57 16l4-3v30l-4 3z" fill="#b87808"/><path d="M51 16l4-3h6l-4 3z" fill="#ffe9a6"/>
+<rect x="51" y="16" width="6" height="30" fill="url(#br)"/></g></g>
+</svg>

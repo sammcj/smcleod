@@ -1,0 +1,17 @@
+/* Document mode: no JS (or the shell failed to load). A plain readable page with a header and footer nav. */
+html:not(.wm) body { background: var(--read-bg); color: var(--read-fg); }
+html:not(.wm) [data-shell] { display: none !important; }
+html:not(.wm) #panel { position: sticky; top: 0; z-index: 1; }
+html:not(.wm) #dock { display: flex; flex-wrap: wrap; justify-content: center; gap: 4px 18px; padding: 18px 12px 28px; border-top: 1px solid var(--line); font-size: 14px; }
+html:not(.wm) .dk { display: inline-flex; align-items: center; gap: 6px; color: var(--link); text-decoration: none; }
+
+/* Desktop mode before the shell has taken over the page content */
+.wm, .wm body { height: 100%; overflow: hidden; }
+/* iOS 26 Safari draws the page behind its floating toolbar only when the page reaches under it and no fixed element
+   sits on the bottom edge; otherwise it fills that strip with the root colour. So the wallpaper runs to the large
+   viewport, the dock is absolute (chrome.css; its bottom offsets still measure from the small viewport, the initial containing
+   block) and the root colour, which fills the home indicator strip, is the wallpaper's darkest. */
+.wm { background-color: var(--wall-3); }
+/* the root colour keeps the wallpaper on the body, so the body isolates to keep looks' z-index: -1 layers above it */
+.wm body { height: 100lvh; isolation: isolate; }
+.wm #content { display: none; }

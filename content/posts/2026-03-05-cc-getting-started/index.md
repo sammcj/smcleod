@@ -1,6 +1,9 @@
 ---
 title: 'The advice I find myself repeating every time someone asks how to get started with Claude Code'
 date: 2026-03-05T01:00:00+10:00
+thumbnail: thumbnail.png
+images: ["thumbnail.png"]
+thumbnailIcon: thumbnail-icon.svg
 tags: ['ai', 'claude', 'agentic-coding', 'claude-code', 'tips', 'productivity']
 author: 'Sam McLeod'
 showToc: true

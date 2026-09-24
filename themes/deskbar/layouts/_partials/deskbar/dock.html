@@ -1,0 +1,10 @@
+{{- /* Bottom launcher. Without JS it doubles as a footer nav with text labels. */ -}}
+<nav id="dock" aria-label="Launcher">
+  {{- /* Home again (as in the panel); phones hide this one, since their dock hides behind windows */ -}}
+  {{- partial "deskbar/home-btn.html" "homeBtn" }}
+  {{- range site.Params.deskbar.dock }}{{ partial "deskbar/launcher-link.html" (dict "item" . "class" "dk") }}{{ end }}
+  {{- /* Window switcher, shell only. main.js moves it into the panel on phones. */}}
+  <button id="winsBtn" class="pb" type="button" title="Open windows" aria-label="Open windows" data-shell>
+    <svg class="ico" aria-hidden="true"><use href="#i-windows"/></svg><b id="winsN"></b>
+  </button>
+</nav>

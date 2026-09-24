@@ -1,5 +1,5 @@
 {{ $containerId := "perplexity-chart" }}
-<div id="{{ $containerId }}" class="w-full min-h-[400px]"></div>
+<div id="{{ $containerId }}" style="width: 100%; min-height: 400px; font: 13px var(--ui, sans-serif);"></div>
 
 <!-- Load required dependencies -->
 {{ with resources.Get "js/prop-types.min.js" }}

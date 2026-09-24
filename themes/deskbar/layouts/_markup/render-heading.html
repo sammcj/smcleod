@@ -1,0 +1,5 @@
+{{- /* D12: every heading is linkable. The shell turns the # into a copy-link button. */ -}}
+<h{{ .Level }} id="{{ .Anchor }}"{{ with .Attributes.class }} class="{{ . }}"{{ end }}>
+  {{- .Text -}}
+  {{- if ge .Level 2 }}<a class="hlink" href="#{{ .Anchor }}" aria-label="Link to this section" title="Copy link to this section">#</a>{{ end -}}
+</h{{ .Level }}>

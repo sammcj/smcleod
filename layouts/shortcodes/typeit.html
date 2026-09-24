@@ -1,39 +1,48 @@
-{{- $content := trim .Inner "\n" -}}
-{{- $classList := slice -}}
-{{- with .Get "class" -}}
-    {{- $classList = $classList | append . -}}
-{{- end -}}
-{{- $tag := .Get "tag" | default "div" -}}
-
-{{- if .Get "code" -}}
-    {{- /* highlight code content without line number */ -}}
-    {{- $content = highlight $content (.Get "code") "lineNos=false, noClasses=false" -}}
-    {{- /* delete outer label */ -}}
-    {{- $content = replaceRE `.*<code[^<>]*>(?s)(.*)</code>.*` "$1" $content -}}
-    {{- if .Get "code-link" -}}
-        {{- /* parsing code links */ -}}
-        {{- $content = replaceRE `(<span[^<>]*>)([^<>]*)\[([^<>]+)\]\(([^<>]+)\)([^<>]*)(</span>)` "$1$2$6<a href=\"$4\">$3</a>$1$5$6" $content -}}
-    {{- end -}}
-    {{- /* split multiline string */ -}}
-    {{- $content = split $content "\n" -}}
-    {{- $classList = $classList | append "highlight" -}}
-{{- else -}}
-    {{- $content = $content | .Page.RenderString -}}
-{{- end -}}
-
-{{- /* trim the newline */ -}}
-{{- $id := dict "Content" $content "Scratch" .Page.Scratch | partial "function/id.html" -}}
-{{- $key := .Get "group" | string | default $id -}}
-{{- $typeitMap := (.Page.Scratch.Get "this").typeitMap | default dict -}}
-{{- $group := index $typeitMap $key -}}
-{{- $group = $group | default slice | append $id -}}
-{{- dict $key $group | merge $typeitMap | .Page.Scratch.SetInMap "this" "typeitMap" -}}
-
-{{- $attrs := printf `id="%v"` $id -}}
-{{- with $classList -}}
-    {{- $attrs = delimit $classList " " | printf `%v class="%v"` $attrs -}}
-{{- end -}}
-
-<div class="typeit">
-    {{- printf `<%v %v></%v>` $tag $attrs $tag | safeHTML -}}
-</div>
+{{- /* Text that types itself out once scrolled into view (quote attributions). The text is in the page, so
+       it reads without JS or with reduced motion; the script only animates it. group= and tag= from the old
+       TypeIt shortcode are accepted and ignored. The script is emitted once per page and only touches
+       elements it has not seen, so it is safe to run again when the page is routed into a window. */ -}}
+<div class="typeit{{ with .Get "class" }} {{ . }}{{ end }}">{{ trim .Inner "\n" | .Page.RenderString }}</div>
+{{- if not (.Page.Store.Get "typeit") }}
+{{- .Page.Store.Set "typeit" true }}
+<style>
+.typeit { font: .88em/1.6 var(--mono, monospace); color: var(--muted, inherit); }
+.typeit.typing::after { content: ''; display: inline-block; width: .5em; height: 1em; margin-left: 2px; vertical-align: -.12em; background: currentColor; animation: typeit-caret .8s steps(1) infinite; }
+@keyframes typeit-caret { 50% { opacity: 0; } }
+</style>
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  if (matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  // blanked up front so the text doesn't flash in full before typing starts
+  const jobs = new Map();
+  const prepare = el => {
+    const walk = document.createTreeWalker(el, NodeFilter.SHOW_TEXT), nodes = [];
+    while (walk.nextNode()) nodes.push([walk.currentNode, walk.currentNode.data]);
+    el.style.minHeight = el.offsetHeight + 'px';
+    nodes.forEach(([n]) => { n.data = ''; });
+    jobs.set(el, nodes);
+  };
+  const type = el => {
+    const nodes = jobs.get(el);
+    el.classList.add('typing');
+    let i = 0, j = 0;
+    const tick = () => {
+      if (!el.isConnected) return;
+      while (i < nodes.length && j >= nodes[i][1].length) { i++; j = 0; }
+      if (i >= nodes.length) { el.classList.remove('typing'); el.style.minHeight = ''; return; }
+      nodes[i][0].data = nodes[i][1].slice(0, ++j);
+      setTimeout(tick, 28 + Math.random() * 40);
+    };
+    tick();
+  };
+  const io = new IntersectionObserver(entries => {
+    for (const e of entries) if (e.isIntersecting) { io.unobserve(e.target); type(e.target); }
+  });
+  for (const el of document.querySelectorAll('.typeit:not([data-typeit])')) {
+    el.dataset.typeit = '';
+    prepare(el);
+    io.observe(el);
+  }
+});
+</script>
+{{- end }}

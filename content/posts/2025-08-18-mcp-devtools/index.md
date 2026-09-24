@@ -1,6 +1,9 @@
 ---
 title: "MCP DevTools"
 date: 2025-08-18T01:10:00+10:00
+thumbnail: thumbnail.png
+images: ["thumbnail.png"]
+thumbnailIcon: thumbnail-icon.svg
 tags: ["ai", "llm", "tech", "coding", "cline", "claude", "agentic", "agentic coding", "mcp", "security"]
 author: "Sam McLeod"
 showToc: true

@@ -1,4 +1,5 @@
 ---
+url: "/2024/10/generating-diagrams-with-with-ai-/-llms/"  # keeps the live URL: Hugo 0.166 no longer keeps "/" from the title in :title slugs
 title: "Generating Diagrams with with AI / LLMs"
 date: 2024-10-08T01:00:10+00:00
 tags: ["ai", "tools", "llm", "tech", "diagrams", "automation", "mermaid"]

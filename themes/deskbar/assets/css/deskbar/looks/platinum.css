@@ -1,0 +1,165 @@
+/* Mac OS 9 Platinum: grey bevels, pinstriped title bars with the close box on the left and the zoom and windowshade
+   boxes on the right, lavender scroll thumbs, a menu bar under the rainbow apple, white-boxed icon labels and the
+   Control Strip as the dock. Dark mode keeps the bevels in darker greys. Loaded as look-platinum (lazy.html). */
+/* Chicago, as ChicagoFLF (public domain), for the menus and title bars where Mac OS 9 set Charcoal or Chicago */
+@font-face { font-family: 'Chicago FLF'; font-display: swap; src: url(../../../fonts/chicago-flf/chicago-flf.woff2) format('woff2'); }
+:root[data-deco=platinum] {
+  --ui: Geneva, 'Noto Sans', system-ui, sans-serif;
+  --p-chrome: Charcoal, 'Chicago FLF', Geneva, 'Noto Sans', system-ui, sans-serif;
+  --tab-h: 22px; --dock-h: 52px;
+  --frame: light-dark(#ddd, #444449); --frame-hi: light-dark(#fff, #66666c);
+  --frame-lo: light-dark(#999, #28282c); --frame-dk: light-dark(#000, #0a0a0c);
+  --panel: light-dark(#ddd, #3c3c41); --panel-fg: light-dark(#000, #eee); --panel-hover: light-dark(rgba(0,0,0,.08), rgba(255,255,255,.1));
+  --tab: light-dark(#bbbbf5, #a4a4ec); --tab-hi: light-dark(#e4e4ff, #c4c4f4); --tab-lo: light-dark(#5555bb, #9d9df0);
+  --tab-dim: light-dark(#d6d6f5, #6a6aa8); --tab-in: var(--frame); --tab-in-lo: var(--frame-lo); --tab-in-fg: light-dark(#5c5c5c, #bdbdbd);
+  --content: light-dark(#fff, #242428); --fg: light-dark(#000, #ececec); --muted: light-dark(#555, #b4b4b4);
+  --line: light-dark(#ccc, #3c3c42); --side: light-dark(#eee, #2e2e33); --ctl: var(--fg);
+  --accent: light-dark(#3333a0, #5050b8); --link: light-dark(#3333a0, #aab0ff);
+  --read-bg: light-dark(#fff, #1e1e21); --read-fg: light-dark(#111, #e0e0e0); --code-bg: light-dark(#eee, #2c2c31);
+  --wall-1: #6f6cc0; --wall-2: #4d4a9e; --wall-3: #3c3a86; --wall-glow: rgba(255,255,255,.08); --wall-ring: rgba(255,255,255,.04);
+  --p-menu: light-dark(#eee, #36363b);
+  --p-stripe: repeating-linear-gradient(var(--frame-hi) 0 1px, var(--frame-lo) 1px 2px);
+  --p-bevel: inset 1px 1px var(--frame-hi), inset -1px -1px var(--frame-lo);
+  --p-btn: linear-gradient(light-dark(#f6f6f6, #606066), light-dark(#d2d2d2, #48484e));
+  --p-shadow: 1px 1px 0 rgba(0,0,0,.45);
+  accent-color: var(--accent);
+}
+:root[data-deco=platinum] ::selection { background: #ccf; color: #000; }
+/* the menu bar's rounded top corners, as on a Mac screen */
+.wm[data-deco=platinum]::before { content: ''; position: fixed; inset: 0 0 auto; height: 8px; z-index: 2147483647; pointer-events: none; background: radial-gradient(circle at 100% 100%, transparent 7px, #000 7.5px) 0 0 / 8px 8px no-repeat, radial-gradient(circle at 0 100%, transparent 7px, #000 7.5px) 100% 0 / 8px 8px no-repeat; }
+
+/* Windows: the title bar spans the frame; its pinstripes stop short of the boxes and the centred title */
+:root[data-deco=platinum] .win .frame { padding: 0 5px 5px; border-top: 0; box-shadow: inset 1px 0 var(--frame-hi), inset -1px -1px var(--frame-lo), var(--p-shadow); }
+:root[data-deco=platinum] .win .tabs:not(.multi) .tab { left: 0 !important; right: 0; }
+:root[data-deco=platinum] .win :is(.tab, .th), :root[data-deco=platinum] .win .tabs.multi { gap: 0; padding: 0 3px; font-family: var(--p-chrome); color: var(--tab-in-fg); background: var(--frame); border: 1px solid var(--frame-dk); border-bottom: 0; box-shadow: inset 1px 1px var(--frame-hi), inset -1px 0 var(--frame-lo), var(--p-shadow); }
+:root[data-deco=platinum] .win.active :is(.tab, .th) { color: var(--fg); }
+:root[data-deco=platinum] .win.active :is(.tabs:not(.multi) .tab, .th) { background: var(--p-stripe) 50% 50% / calc(100% - 8px) 12px no-repeat, var(--frame); }
+:root[data-deco=platinum] .tab .tt { flex: 0 1 auto; margin: 0 auto; padding: 0 7px; max-width: none; background: var(--frame); font-size: 12px; font-weight: 400; text-align: center; }
+:root[data-deco=platinum] .win:not(.active) .tt { background: none; }
+:root[data-deco=platinum] .tab.sliding { background: var(--tab-hi) !important; }
+/* stacked tabs are Appearance-style tab controls in the title bar, the handle after them pinstriped */
+:root[data-deco=platinum] .win .tabs.multi { padding: 3px 3px 0; }
+:root[data-deco=platinum] .win .tabs.multi :is(.tab, .th) { height: auto; }
+:root[data-deco=platinum] .win .tabs.multi .tab { padding: 0 1px 0 0; box-shadow: inset 1px 1px var(--frame-hi); border-radius: 4px 4px 0 0; background: var(--p-btn); }
+:root[data-deco=platinum] .win .tabs.multi .tab.on { z-index: 1; margin-bottom: -1px; background: var(--frame); }
+:root[data-deco=platinum] .win .tabs.multi .th { padding: 0; border: 0; box-shadow: none; }
+:root[data-deco=platinum] .th::before { margin: 0; background: none; }
+:root[data-deco=platinum] .win .tabs.multi .tt { background: none; }
+/* The boxes: close on the left, zoom (maximise) and windowshade (minimise) on the right. The button keeps its hit
+   area; the box and its mark are drawn inside it. Inactive windows show theirs only under the pointer. */
+:root[data-deco=platinum] .ctl { width: 20px; height: 20px; border-radius: 0; background: var(--frame); color: var(--fg); opacity: 1; }
+:root[data-deco=platinum] .ctl:hover { background: var(--frame); }
+:root[data-deco=platinum] .ctl svg { display: none; }
+:root[data-deco=platinum] .ctl::before, :root[data-deco=platinum] .ctl::after { content: ''; grid-area: 1 / 1; }
+:root[data-deco=platinum] .ctl::before { width: 13px; height: 13px; border: 1px solid light-dark(#333, #000); background: linear-gradient(135deg, light-dark(#fff, #8a8a90), light-dark(#ccc, #606066) 60%, light-dark(#aaa, #4a4a50)); box-shadow: var(--p-bevel); }
+:root[data-deco=platinum] .ctl:active::before { background: linear-gradient(135deg, #555, #888); box-shadow: inset 1px 1px #333; }
+:root[data-deco=platinum] .ctl.max::after { width: 6px; height: 6px; translate: -2px -2px; border: 1px solid currentColor; }
+:root[data-deco=platinum] .ctl.min::after { width: 9px; height: 4px; border-block: 1px solid currentColor; }
+:root[data-deco=platinum] .win .ctl.close { order: -1; margin-right: 2px; }
+:root[data-deco=platinum] .win .ctl.min { order: 2; }
+:root[data-deco=platinum] .win .ctl.max { order: 1; margin-left: 2px; }
+:root[data-deco=platinum] .win:not(.active) :is(.tab, .th):not(:hover, :focus-within) .ctl { visibility: hidden; }
+/* the grow box's ridges */
+:root[data-deco=platinum] .grip { background: linear-gradient(135deg, transparent 44%, var(--frame-hi) 44% 50%, var(--frame-lo) 50% 56%, transparent 56% 64%, var(--frame-hi) 64% 70%, var(--frame-lo) 70% 76%, transparent 76%); }
+:root[data-deco=platinum] #snapPreview { background: rgba(204,204,255,.2); border: 2px solid rgba(0,0,0,.55); border-radius: 0; }
+
+/* Controls: push buttons with a bevel, square fields with a lavender focus ring */
+:root[data-deco=platinum] :is(.toolbar, .status) { box-shadow: inset 0 1px var(--frame-hi); }
+:root[data-deco=platinum] :is(.tb, .seg) { border-color: var(--frame-dk); }
+:root[data-deco=platinum] .tb { border-radius: 4px; }
+:root[data-deco=platinum] :is(.tb, .seg):not(:where(.on, :active, [aria-expanded=true], [aria-pressed=true])) { color: var(--fg); background: var(--p-btn); box-shadow: var(--p-bevel); }
+:root[data-deco=platinum] :is(input:not([type=checkbox], [type=radio], [type=range]), select) { border-radius: 0; border-color: var(--frame-lo); box-shadow: inset 1px 1px light-dark(rgba(0,0,0,.2), rgba(0,0,0,.5)); }
+:root[data-deco=platinum] :is(input, select):focus { outline-color: light-dark(#6f6fd6, #8f8fe8); outline-offset: 0; }
+
+/* Scroll bars: lavender thumbs with a grip, an arrow at each end. Fine pointers only; touch keeps its own. Scoped by
+   html rather than :root, under which Chrome ignores the scroll bar pseudo-classes (:vertical, :decrement). */
+@media (pointer: fine) {
+  @supports selector(::-webkit-scrollbar) {
+    html[data-deco=platinum] ::-webkit-scrollbar { width: 16px; height: 16px; background: light-dark(#eee, #2c2c30); }
+    html[data-deco=platinum] ::-webkit-scrollbar-track { box-shadow: inset 1px 1px 2px rgba(0,0,0,.3); }
+    html[data-deco=platinum] ::-webkit-scrollbar-thumb { border: 1px solid #000; background: repeating-linear-gradient(#eef 0 1px, #558 1px 2px) 50% 50% / 8px 7px no-repeat, linear-gradient(90deg, #e4e4ff, #aaf 55%, #88d); box-shadow: inset 1px 1px #eef, inset -1px -1px #66b; }
+    html[data-deco=platinum] ::-webkit-scrollbar-thumb:horizontal { background: repeating-linear-gradient(90deg, #eef 0 1px, #558 1px 2px) 50% 50% / 7px 8px no-repeat, linear-gradient(#e4e4ff, #aaf 55%, #88d); }
+    html[data-deco=platinum] ::-webkit-scrollbar-button { display: block; width: 16px; height: 16px; border: 1px solid #000; box-shadow: var(--p-bevel); }
+    html[data-deco=platinum] ::-webkit-scrollbar-button:start:increment, html[data-deco=platinum] ::-webkit-scrollbar-button:end:decrement { display: none; }
+    html[data-deco=platinum] ::-webkit-scrollbar-button:vertical:decrement { background: conic-gradient(from 135deg at 50% 0, var(--fg) 90deg, transparent 0) 50% 50% / 8px 4px no-repeat, var(--p-btn); }
+    html[data-deco=platinum] ::-webkit-scrollbar-button:vertical:increment { background: conic-gradient(from -45deg at 50% 100%, var(--fg) 90deg, transparent 0) 50% 50% / 8px 4px no-repeat, var(--p-btn); }
+    html[data-deco=platinum] ::-webkit-scrollbar-button:horizontal:decrement { background: conic-gradient(from 45deg at 0 50%, var(--fg) 90deg, transparent 0) 50% 50% / 4px 8px no-repeat, var(--p-btn); }
+    html[data-deco=platinum] ::-webkit-scrollbar-button:horizontal:increment { background: conic-gradient(from 225deg at 100% 50%, var(--fg) 90deg, transparent 0) 50% 50% / 4px 8px no-repeat, var(--p-btn); }
+    html[data-deco=platinum] ::-webkit-scrollbar-corner { background: var(--frame); }
+  }
+  @supports not selector(::-webkit-scrollbar) {
+    :root[data-deco=platinum] { scrollbar-color: #99e light-dark(#eee, #2c2c30); }
+  }
+}
+
+/* The menu bar: flat Platinum grey, the rainbow apple for the Menu, titles highlighted as they are picked */
+:root[data-deco=platinum] #panel { gap: 0; padding: 0 0 0 10px; font-family: var(--p-chrome); border-bottom-color: var(--frame-dk); box-shadow: inset 0 1px var(--frame-hi), inset 0 -1px var(--frame-lo); }
+:root[data-deco=platinum] #panel :is(.pb, .task) { height: 100%; border: 0; border-radius: 0; }
+:root[data-deco=platinum] #tasks { align-self: stretch; }
+:root[data-deco=platinum] .pb:focus-visible { outline-color: var(--accent); }
+:root[data-deco=platinum] :is(.task.on, #menuBtn.open, #panel #panelHome.on, .pb:active) { color: #fff; background: var(--accent); box-shadow: none; }
+:root[data-deco=platinum] .task.min { opacity: .75; }
+:root[data-deco=platinum] #menuBtn { order: -1; padding: 0 12px; }
+:root[data-deco=platinum] #menuBtn > * { display: none; }
+:root[data-deco=platinum] #menuBtn::before { content: ''; width: 14px; height: 17px; background: linear-gradient(#5ebd3e 22%, #ffb900 0 38%, #f78200 0 52%, #e23838 0 67%, #973999 0 82%, #009cdf 0); mask: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 14 17'><path d='M9.6.3c.1 1.1-.3 2.1-1 2.8-.6.7-1.6 1.2-2.5 1.1-.1-1 .4-2 1-2.7C7.7.8 8.8.3 9.6.3zm3.2 12.3c-.4.9-.6 1.3-1.1 2.1-.7 1.1-1.7 2.4-2.9 2.4-1.1 0-1.4-.7-2.8-.7s-1.8.7-2.9.7c-1.2 0-2.2-1.2-2.9-2.3C-.7 11.7-.9 8.1.3 6.2c.9-1.3 2.3-2.1 3.6-2.1s2.2.7 3.3.7c1.1 0 1.7-.7 3.3-.7 1.2 0 2.4.6 3.3 1.7-2.9 1.6-2.4 5.7.1 6.8z'/></svg>") 0 0 / 100% 100%; }
+/* the clock sits apart, as the Application menu did */
+:root[data-deco=platinum] #clock { align-self: stretch; line-height: calc(var(--panel-h) - 1px); padding: 0 12px; border-left: 1px solid var(--frame-lo); box-shadow: inset 1px 0 var(--frame-hi); }
+
+/* Menus: square, a hard shadow, the highlight in the accent */
+:root[data-deco=platinum] :is(#menu, .ctx) { background: var(--p-menu); border: 1px solid var(--frame-dk); border-radius: 0; box-shadow: 2px 2px 0 rgba(0,0,0,.35); }
+:root[data-deco=platinum] #menu { top: calc(var(--panel-h) - 1px); }
+:root[data-deco=platinum] :is(#menu, .ctx) { font-family: var(--p-chrome); }
+:root[data-deco=platinum] .mn-head { background: var(--frame); box-shadow: var(--p-bevel); }
+:root[data-deco=platinum] .mn-cats { font-family: var(--p-chrome); }
+:root[data-deco=platinum] .mn-cats button { font-weight: 400; }
+
+/* Window switcher: each window windowshaded to its title bar */
+:root[data-deco=platinum] .sw-tab { width: var(--sw-w); color: var(--tab-in-fg); background: var(--frame); border-color: var(--frame-dk); box-shadow: var(--p-bevel); font-family: var(--p-chrome); filter: drop-shadow(var(--p-shadow)); }
+:root[data-deco=platinum] .sw-tab.on { color: var(--fg); background: var(--p-stripe) 50% 50% / calc(100% - 8px) 12px no-repeat, var(--frame); }
+:root[data-deco=platinum] .sw-tab:not(.on):hover { color: var(--fg); background: color-mix(in srgb, var(--accent) 20%, var(--frame)); }
+:root[data-deco=platinum] .sw-open { padding: 0 7px; background: var(--frame); font-weight: 400; }
+:root[data-deco=platinum] .sw-tab .ctl { margin-left: auto; }
+:root[data-deco=platinum] :is(.sw-link, .sw-empty) { color: var(--panel-fg); background: var(--panel); border-color: var(--frame-dk); border-radius: 0; box-shadow: var(--p-shadow); }
+:root[data-deco=platinum] .sw-link.done { color: var(--link); }
+:root[data-deco=platinum] .sw-link:hover { color: #fff; background: var(--accent); }
+:root[data-deco=platinum] .sw-link:focus-visible { outline-color: var(--accent); }
+
+/* Desktop: black on white icon labels, inverted when picked; the phone's recent list under a title bar */
+:root[data-deco=platinum] .dicon .ico { filter: none; }
+:root[data-deco=platinum] .dicon span { color: #000; background: #fff; font-size: 11px; padding: 0 3px; border-radius: 0; text-shadow: none; }
+:root[data-deco=platinum] .dicon:is(:hover, :focus-visible) span { color: #fff; background: #000; }
+:root[data-deco=platinum] #recent h2 { color: var(--fg); background: var(--frame); border-color: var(--frame-dk); box-shadow: inset 1px 1px var(--frame-hi); font: 400 13px var(--p-chrome); }
+:root[data-deco=platinum] .recent-list { box-shadow: var(--p-bevel), var(--p-shadow); }
+
+/* The Control Strip: a grey bar from the left edge, modules between grooves, ended by a ridged tab */
+.wm[data-deco=platinum] #dock { left: 0; bottom: 10px; transform: none; gap: 0; padding: 2px 16px 2px 2px; background: var(--frame); border: 1px solid var(--frame-dk); border-left: 0; border-radius: 0 9px 9px 0; box-shadow: inset 0 1px var(--frame-hi), inset 0 -1px var(--frame-lo), var(--p-shadow); backdrop-filter: none; -webkit-backdrop-filter: none; }
+.wm[data-deco=platinum] #dock::after { content: ''; position: absolute; right: 3px; top: 7px; bottom: 7px; width: 7px; background: repeating-linear-gradient(90deg, var(--frame-lo) 0 1px, var(--frame-hi) 1px 2px, transparent 2px 3px); }
+.wm[data-deco=platinum] :is(.dk, #dock #homeBtn, #dock #winsBtn) { width: 38px; height: 32px; margin: 0; border-radius: 0; color: var(--fg); border-right: 1px solid var(--frame-lo); box-shadow: 1px 0 var(--frame-hi); }
+.wm[data-deco=platinum] :is(.dk, #dock #homeBtn, #dock #winsBtn) .ico { width: 24px; height: 24px; }
+.wm[data-deco=platinum] :is(.dk, #dock #homeBtn, #dock #winsBtn):hover { background: color-mix(in srgb, var(--accent) 18%, var(--frame)); }
+.wm[data-deco=platinum] :is(.dk, #dock #homeBtn, #dock #winsBtn):active, .wm[data-deco=platinum]:has(#switcher:popover-open) #dock #winsBtn, .wm[data-deco=platinum] #dock #homeBtn.on { background: var(--frame-lo); box-shadow: inset 1px 1px 2px rgba(0,0,0,.4); }
+.wm[data-deco=platinum] :is(#dock #homeBtn::after, #dock #winsBtn::before) { content: none; }
+.wm[data-deco=platinum] .dk.run::after { bottom: 1px; width: 4px; height: 4px; margin-left: -2px; background: var(--accent); }
+
+/* Control panel thumbnails, in Platinum's own colours whatever the current look */
+.wm[data-wall=platinum] body, .cp-wp.platinum, .cp-deco.platinum { background: radial-gradient(3px 3px at 25% 25%, rgba(255,255,255,.09) 50%, transparent 51%) 0 0 / 8px 8px, repeating-linear-gradient(45deg, rgba(0,0,0,.07) 0 2px, transparent 2px 5px), linear-gradient(170deg, light-dark(#6f6cc0, #4f4c98), light-dark(#4d4a9e, #37347a) 55%, light-dark(#3c3a86, #282660)); }
+.cp-deco.platinum::before { width: 52px; border-color: #000; background: linear-gradient(#ddd 0 0) 50% 0 / 16px 100% no-repeat, linear-gradient(#ddd 0 0) 4px 2px / 3px 3px no-repeat, linear-gradient(#333 0 0) 3px 1px / 5px 5px no-repeat, repeating-linear-gradient(#fff 0 1px, #999 1px 2px) 0 1px / 100% 6px no-repeat, #ddd; box-shadow: none; }
+.cp-deco.platinum::after { border-color: #000; border-top: 0; background: linear-gradient(#aaf 0 0) 100% 3px / 4px 8px no-repeat, linear-gradient(#fff 0 0) 3px 0 / calc(100% - 6px) calc(100% - 3px) no-repeat, #ddd; box-shadow: 1px 1px 0 rgba(0,0,0,.5); }
+
+/* Phones (the same query as windows.css): one full-screen window, so the frame drops its sides; touch-sized boxes */
+@media (max-width: 767px), (max-height: 500px) and (pointer: coarse) {
+  :root[data-deco=platinum] { --tab-h: 44px; --dock-h: 64px; }
+  .wm[data-deco=platinum]::before { content: none; }
+  :root[data-deco=platinum] .win .frame { padding: 0; border-inline: 0; }
+  :root[data-deco=platinum] .win :is(.tab, .th), :root[data-deco=platinum] .win .tabs.multi { border-inline: 0; }
+  :root[data-deco=platinum] .tab .tt { font-size: 15px; }
+  :root[data-deco=platinum] .ctl { width: 44px; height: 40px; }
+  :root[data-deco=platinum] .ctl::before { width: 20px; height: 20px; }
+  :root[data-deco=platinum] .ctl.max::after { width: 9px; height: 9px; translate: -3px -3px; }
+  :root[data-deco=platinum] .ctl.min::after { width: 13px; height: 6px; }
+  :root[data-deco=platinum] #menuBtn { padding: 0 14px; }
+  /* the Control Strip keeps to the left edge, as on the desktop */
+  .wm[data-deco=platinum] #dock { bottom: 6px; margin-left: 0; }
+  .wm[data-deco=platinum] :is(.dk, #dock #homeBtn, #dock #winsBtn) { width: 44px; height: 44px; }
+  .wm[data-deco=platinum] :is(.dk, #dock #homeBtn, #dock #winsBtn) .ico { width: 30px; height: 30px; }
+}

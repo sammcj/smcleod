@@ -1,6 +1,9 @@
 ---
 title: "Agentic Coding Workflow & Cline Demo"
 date: 2025-06-20T01:10:00+10:00
+thumbnail: thumbnail.png
+images: ["thumbnail.png"]
+thumbnailIcon: thumbnail-icon.svg
 tags: ["ai", "llm", "tech", "ollama", "coding", "cline", "agentic", "tutorials", "agentic coding", "demo", "video"]
 author: "Sam McLeod"
 showToc: true

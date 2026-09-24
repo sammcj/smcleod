@@ -1,0 +1,35 @@
+{{- define "main" }}
+{{- $sections := site.Params.deskbar.readerSections | default (slice "posts") }}
+{{- $post := in $sections .Section }}
+{{- $album := "" }}
+{{- if $post }}{{ $album = partial "deskbar/apps/post-album.html" . }}{{ end }}
+{{- /* data-md: the page's markdown output (page.markdown.md), which the reader's "Copy as markdown" fetches */}}
+<article class="rd"{{ if .Params.math }} data-math{{ end }}{{ with $album }} data-album="{{ . }}"{{ end }}{{ with .OutputFormats.Get "markdown" }} data-md="{{ .RelPermalink }}"{{ end }}>
+  <header>
+    {{- if $post }}
+    <p class="meta"><time datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date.Format "2 Jan 2006" }}</time> · {{ .ReadingTime }} min read</p>
+    {{- end }}
+    <h1>{{ .Title }}</h1>
+    {{- with .Description }}
+    <p class="lede">{{ . }}</p>
+    {{- end }}
+    {{- with .GetTerms "tags" }}
+    <p class="chips">{{ range . }}<a class="chip" href="{{ .RelPermalink }}">{{ .Data.Term }}</a>{{ end }}</p>
+    {{- end }}
+    {{- $cover := partial "deskbar/cover.html" . }}
+    {{- if and $post $cover.full (not $cover.hidden) }}
+    <img class="cover" src="{{ $cover.full }}" alt="" decoding="async">
+    {{- end }}
+  </header>
+  <div class="rd-body">
+    {{- .Content }}
+  </div>
+  {{- if $post }}
+  {{- partial "deskbar/content/related.html" . }}
+  <nav class="rd-pager" aria-label="More posts">
+    {{- with .PrevInSection }}<a rel="prev" href="{{ .RelPermalink }}"><small>Older</small>{{ .Title }}</a>{{ end }}
+    {{- with .NextInSection }}<a rel="next" href="{{ .RelPermalink }}"><small>Newer</small>{{ .Title }}</a>{{ end }}
+  </nav>
+  {{- end }}
+</article>
+{{- end }}

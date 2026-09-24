@@ -1,0 +1,18 @@
+{{- /* The id of a post's Photos album, or "" when it has none (D26). A post named by a { type: post } album in
+       data/albums.yaml has that album. Any other post gets one of its own only by opting in, with the gallery
+       shortcode or front matter `photos: true`: posts with several images are more often screenshots and
+       diagrams than photos. albums.html builds the albums and page.html marks the post for its "View photos" chip. */ -}}
+{{- $p := . -}}
+{{- $slug := path.Base $p.RelPermalink -}}
+{{- $id := "" -}}
+{{- /* hugo.Data replaced site.Data in 0.156; branch so older Hugo still builds */ -}}
+{{- $listed := slice -}}
+{{- if ge hugo.Version "0.156.0" }}{{ $listed = hugo.Data.albums }}{{ else }}{{ $listed = site.Data.albums }}{{ end -}}
+{{- range $listed -}}
+  {{- $s := .source | default dict -}}
+  {{- if and (not $id) (eq $s.type "post") (or (eq $s.slug $slug) (and $p.File (eq $p.File.ContentBaseName $s.slug))) -}}
+    {{- $id = string .id -}}
+  {{- end -}}
+{{- end -}}
+{{- if and (not $id) (or $p.Params.photos ($p.HasShortcode "gallery")) }}{{ $id = $slug }}{{ end -}}
+{{- return $id -}}

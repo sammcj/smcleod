@@ -1,0 +1,125 @@
+baseURL = "https://example.org/"
+locale = "en-AU"
+title = "deskbar demo"
+
+[module]
+  [[module.imports]]
+    path = "github.com/sammcj/smcleod/deskbar"
+  # GitHub-style > [!NOTE] callouts; the theme restyles them (content.css)
+  [[module.imports]]
+    path = "github.com/KKKZOZ/hugo-admonitions"
+
+[outputs]
+  home = ["html", "rss", "deskbar", "deskbarsearch"]
+
+# Each post's markdown at index.md, for the reader's "Copy as markdown" (the theme's markdown output format)
+[[cascade]]
+  outputs = ["html", "markdown"]
+  [cascade.target]
+    path = "/posts/**"
+    kind = "page"
+
+[permalinks]
+  posts = "/:year/:month/:slug/"
+  # term pages outside their taxonomy's list page (/categories/), which Tracker must still find
+  categories = "/blog/category/:slug/"
+
+[taxonomies]
+  tag = "tags"
+  series = "series"
+  category = "categories"
+
+[params]
+  description = "A small site showing the deskbar theme."
+
+[params.deskbar]
+  timeZone = "Australia/Melbourne"
+  # minutes without input before the screen saver starts (never over a reader window); 0 turns it off
+  screensaver = { minutes = 5 }
+  # Feeds app (layout: feeds): items kept per feed and summary length. Subscriptions: assets/feeds.opml,
+  # less any whose xmlUrl is in exclude
+  feeds = { perFeed = 5, summaryChars = 280, exclude = ["feeds/excluded.xml"] }
+
+  [[params.deskbar.icons]]
+    name = "Posts"
+    url = "/posts/"
+    icon = "folder"
+  [[params.deskbar.icons]]
+    name = "About"
+    url = "/about/"
+    icon = "person"
+  [[params.deskbar.icons]]
+    page = "/links"
+
+  [[params.deskbar.dock]]
+    name = "Posts"
+    url = "/posts/"
+    icon = "folder"
+  [[params.deskbar.dock]]
+    name = "About"
+    url = "/about/"
+    icon = "person"
+  [[params.deskbar.dock]]
+    page = "/control-panel"
+  [[params.deskbar.dock]]
+    name = "Source"
+    url = "https://github.com/sammcj/smcleod/tree/main/themes/deskbar"
+    icon = "git"
+
+  # Menu groups after the built-in Writing group. A group's page or url is its app, which Tracker links to.
+  # Entries naming a page that does not exist are left out; a group without its app lists its entries in Tracker.
+  # A group's icon (else its page's, else a folder) shows beside its name in the menu.
+  [[params.deskbar.menu]]
+    name = "Tools"
+    page = "/tools"
+    [[params.deskbar.menu.items]]
+      page = "/tools/demo"
+    [[params.deskbar.menu.items]]
+      page = "/colours"
+  [[params.deskbar.menu]]
+    name = "Photos"
+    page = "/photos"
+  [[params.deskbar.menu]]
+    name = "Pages"
+    [[params.deskbar.menu.items]]
+      page = "/about"
+    [[params.deskbar.menu.items]]
+      page = "/contact"
+    [[params.deskbar.menu.items]]
+      page = "/page-scripts"
+    [[params.deskbar.menu.items]]
+      page = "/links"
+    [[params.deskbar.menu.items]]
+      page = "/projects"
+    [[params.deskbar.menu.items]]
+      page = "/videos"
+    [[params.deskbar.menu.items]]
+      name = "Theme source"
+      url = "https://github.com/sammcj/smcleod/tree/main/themes/deskbar"
+      icon = "git"
+  [[params.deskbar.menu]]
+    name = "Applications"
+    icon = "apps"
+    [[params.deskbar.menu.items]]
+      page = "/terminal"
+    [[params.deskbar.menu.items]]
+      page = "/screensaver"
+    [[params.deskbar.menu.items]]
+      page = "/sketch"
+    [[params.deskbar.menu.items]]
+      page = "/chiptunes"
+    [[params.deskbar.menu.items]]
+      page = "/feeds"
+  [[params.deskbar.menu]]
+    name = "System"
+    icon = "control-panel"
+    [[params.deskbar.menu.items]]
+      page = "/control-panel"
+    [[params.deskbar.menu.items]]
+      page = "/about-desktop"
+
+# Panel tray links (params.deskbar.tray takes the same shape)
+[[params.socialIcons]]
+  name = "github"
+  url = "https://github.com/sammcj/smcleod/tree/main/themes/deskbar"
+  icon = "github"

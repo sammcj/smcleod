@@ -1,26 +1,30 @@
-{{ $data := site.Data.agentic_tools_comparison }}
+{{- /* hugo.Data replaced site.Data in 0.156; branch so older Hugo still builds */}}
+{{ $data := dict }}
+{{ if ge hugo.Version "0.156.0" }}{{ $data = hugo.Data.agentic_tools_comparison }}{{ else }}{{ $data = site.Data.agentic_tools_comparison }}{{ end }}
 
-<div class="comparison-table-wrapper wide-table">
+{{- /* The wrapper scrolls both ways so the header row and feature column can stay pinned. Tooltips are in title
+       for no-JS visitors; comparison-table-tooltips.js swaps them for popovers with clickable links. */}}
+<div class="comparison-table-wrapper" tabindex="0" role="region" aria-label="Agentic coding tools comparison">
   <table class="comparison-table">
     <thead>
       <tr>
-        <th class="feature-column"></th>
+        <th class="feature-column" scope="col"><span class="visually-hidden">Feature</span></th>
         {{ range $tool := $data.tools }}
           {{ $headerHighlight := $tool.header_highlight | default 0 }}
-          <th class="tool-avg-{{ $headerHighlight }}">{{ $tool.name }}</th>
+          <th class="tool-avg-{{ $headerHighlight }}" scope="col">{{ $tool.name }}</th>
         {{ end }}
       </tr>
     </thead>
     <tbody>
       {{ range $category := $data.categories }}
         <tr class="category-row">
-          <td colspan="{{ add (len $data.tools) 1 }}" class="category-name">
-            {{ $category.name }}
-          </td>
+          <th colspan="{{ add (len $data.tools) 1 }}" class="category-name" scope="colgroup">
+            <span>{{ $category.name }}</span>
+          </th>
         </tr>
         {{ range $feature := $category.features }}
           <tr>
-            <td class="feature-name">{{ $feature.name }}</td>
+            <th class="feature-name" scope="row">{{ $feature.name }}</th>
             {{ range $tool := $data.tools }}
               {{ $value := index $feature $tool.id }}
               {{ $highlightKey := printf "%s_highlight" $tool.id }}
@@ -42,19 +46,14 @@
                 {{ $displayText = $value }}
               {{ end }}
 
-              {{ if $cellUrl }}
-                <td class="highlight-{{ $highlightLevel }} has-cell-link{{ if $tooltip }} has-tooltip{{ end }}"
-                    {{ if $tooltip }}data-tooltip="{{ $tooltip }}"{{ end }}>
-                  <a href="{{ $cellUrl }}" target="_blank" rel="noopener noreferrer" class="cell-link">
-                    {{ $displayText }}
-                  </a>
-                </td>
-              {{ else }}
-                <td class="highlight-{{ $highlightLevel }}{{ if $tooltip }} has-tooltip{{ end }}"
-                    {{ if $tooltip }}data-tooltip="{{ $tooltip }}"{{ end }}>
+              <td class="highlight-{{ $highlightLevel }}{{ if $cellUrl }} has-cell-link{{ end }}{{ if $tooltip }} has-tooltip{{ end }}"
+                  {{- with $tooltip }} data-tooltip="{{ . }}" title="{{ . }}"{{ end }}>
+                {{- if $cellUrl -}}
+                  <a href="{{ $cellUrl }}" target="_blank" rel="noopener noreferrer" class="cell-link">{{ $displayText }}</a>
+                {{- else -}}
                   {{ $displayText }}
-                </td>
-              {{ end }}
+                {{- end -}}
+              </td>
             {{ end }}
           </tr>
         {{ end }}
@@ -63,11 +62,6 @@
   </table>
 </div>
 
-{{ $js := resources.Get "js/comparison-table-tooltips.js" }}
-{{ if $js }}
-  <script src="{{ $js.RelPermalink }}"></script>
-{{ else }}
-  <script>
-    console.error('Failed to load comparison-table-tooltips.js');
-  </script>
-{{ end }}
+{{- with resources.Get "js/comparison-table-tooltips.js" | minify | fingerprint }}
+<script src="{{ .RelPermalink }}" integrity="{{ .Data.Integrity }}"></script>
+{{- end }}

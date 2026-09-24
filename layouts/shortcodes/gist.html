@@ -1,1 +1,8 @@
-<script src="https://gist.github.com/{{ index .Params 0 }}/{{ index .Params 1 }}.js{{if len .Params | eq 3 }}?file={{ index .Params 2 }}{{end}}"></script>
+{{- /* GitHub's gist embed uses document.write, which would wipe the page if it ran in routed content, so it
+       runs inside its own srcdoc frame. The frame is same-origin, so it grows to fit once the gist loads. */ -}}
+{{- $user := .Get 0 }}{{ $id := .Get 1 }}{{ $file := .Get 2 }}
+{{- $src := printf "https://gist.github.com/%s/%s.js" $user $id }}{{ with $file }}{{ $src = printf "%s?file=%s" $src . }}{{ end }}
+{{- $doc := printf `<base target="_blank"><style>body{margin:0}.gist .gist-file{margin:0!important}</style><script src="%s"></script>` $src }}
+<iframe class="gist-frame" title="Gist {{ $user }}/{{ $id }}" loading="lazy" style="width: 100%; min-height: 120px; border: 0;" srcdoc="{{ $doc }}"
+  onload="try{this.style.height=this.contentDocument.documentElement.scrollHeight+'px'}catch(e){}"></iframe>
+<p class="gist-link"><a href="https://gist.github.com/{{ $user }}/{{ $id }}">View gist {{ $user }}/{{ $id }} on GitHub</a></p>

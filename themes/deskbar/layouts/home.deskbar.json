@@ -1,0 +1,77 @@
+{{- /* Post index for the shell (Tracker and the phone home screen). Kept small: no content, one thumbnail per post (its own
+       image or generated art) and a mini icon for list rows (front matter thumbnailIcon or generated art). */ -}}
+{{- $sections := site.Params.deskbar.readerSections | default (slice "posts") -}}
+{{- $taxes := slice "tags" "series" "categories" -}}
+{{- $posts := slice -}}
+{{- range (where site.RegularPages "Section" "in" $sections).ByDate.Reverse -}}
+  {{- $p := . -}}
+  {{- $c := partial "deskbar/cover.html" $p -}}
+  {{- $thumb := $c.thumb -}}
+  {{- $mini := $c.icon -}}
+  {{- /* an if rather than default: default would render (and publish) art for every post */ -}}
+  {{- if not $thumb }}{{ $thumb = partial "deskbar/thumb-art.html" (dict "page" $p "variant" "card") }}{{ end -}}
+  {{- if not $mini }}{{ $mini = partial "deskbar/thumb-art.html" (dict "page" $p "variant" "mini") }}{{ end -}}
+  {{- $terms := dict -}}
+  {{- range $taxes -}}
+    {{- $names := slice -}}
+    {{- range $p.GetTerms . }}{{ $names = $names | append .Data.Term }}{{ end -}}
+    {{- $terms = merge $terms (dict . $names) -}}
+  {{- end -}}
+  {{- $desc := $p.Description | default ($p.Summary | plainify | htmlUnescape | strings.TrimSpace | truncate 200) -}}
+  {{- $posts = $posts | append (dict
+    "title" $p.Title
+    "url" $p.RelPermalink
+    "date" ($p.Date.Format "2006-01-02")
+    "tags" $terms.tags
+    "series" $terms.series
+    "categories" $terms.categories
+    "description" $desc
+    "cover" $thumb
+    "mini" $mini
+    "images" (len ($p.Resources.ByType "image"))
+    "readingTime" $p.ReadingTime
+    "words" $p.WordCount
+  ) -}}
+{{- end -}}
+{{- $pages := slice -}}
+{{- range where site.RegularPages "Section" "not in" $sections -}}
+  {{- if not .Params.deskbarHidden -}}
+    {{- $pages = $pages | append (dict "title" .Title "url" .RelPermalink "icon" (.Params.icon | default "doc")) -}}
+  {{- end -}}
+{{- end -}}
+{{- /* document titles of the list pages Tracker shows without fetching them (router hints) */ -}}
+{{- $docTitles := dict -}}
+{{- $taxonomies := dict -}}
+{{- $taxURLs := dict -}}
+{{- range $taxes -}}
+  {{- $list := slice -}}
+  {{- with index site.Taxonomies . -}}
+    {{- range .ByCount -}}
+      {{- $list = $list | append (dict "name" .Page.Data.Term "url" .Page.RelPermalink "count" .Count) -}}
+      {{- $docTitles = merge $docTitles (dict .Page.RelPermalink (partial "deskbar/doc-title.html" .Page)) -}}
+    {{- end -}}
+  {{- end -}}
+  {{- $taxonomies = merge $taxonomies (dict . $list) -}}
+  {{- /* each taxonomy's list page; term permalinks (e.g. /blog/category/:slug/) need not sit under it */ -}}
+  {{- /* a content section can share the name (smcleod.net has content/series/), so check the page kind */ -}}
+  {{- $tax := . -}}
+  {{- with site.GetPage (printf "/%s" .) -}}
+    {{- if eq .Kind "taxonomy" -}}
+      {{- $taxURLs = merge $taxURLs (dict $tax .RelPermalink) -}}
+      {{- $docTitles = merge $docTitles (dict .RelPermalink (partial "deskbar/doc-title.html" .)) -}}
+    {{- end -}}
+  {{- end -}}
+{{- end -}}
+{{- $sectionURL := "" -}}
+{{- with site.GetPage (index $sections 0) -}}
+  {{- $sectionURL = .RelPermalink -}}
+  {{- $docTitles = merge $docTitles (dict .RelPermalink (partial "deskbar/doc-title.html" .)) -}}
+{{- end -}}
+{{- /* standalone tool files and the tool pages that frame them (layout: tool, frame: /tiers.html), so a link to the
+       file opens its tool window (router.js) */ -}}
+{{- $frames := dict -}}
+{{- range site.Pages -}}
+  {{- $p := . -}}
+  {{- with .Params.frame }}{{ $frames = merge $frames (dict (. | relURL) $p.RelPermalink) }}{{ end -}}
+{{- end -}}
+{{- dict "version" 1 "sectionURL" $sectionURL "posts" $posts "pages" $pages "taxonomies" $taxonomies "taxonomyURLs" $taxURLs "frames" $frames "docTitles" $docTitles | jsonify -}}

@@ -1,7 +1,7 @@
 /* Skill / capability matrix - rendered on /about/ */
 
 .skills-matrix {
-  --skill-empty: rgba(127, 127, 127, 0.18);
+  --skill-empty: light-dark(rgba(127, 127, 127, 0.18), rgba(200, 200, 200, 0.12));
   --skill-l1: rgba(180, 175, 140, 0.55);
   --skill-l2: rgba(214, 187, 130, 0.65);
   --skill-l3: rgba(228, 156, 100, 0.75);
@@ -130,36 +130,15 @@
   );
   height: var(--skill-segment-h);
   border-radius: 2px;
-  background-color: rgba(127, 127, 127, 0.12);
-  background-image: repeating-linear-gradient(
-    -45deg,
-    rgba(127, 127, 127, 0.45) 0,
-    rgba(127, 127, 127, 0.45) 2px,
-    transparent 2px,
-    transparent 5px
-  );
+  --hatch: light-dark(rgba(127, 127, 127, 0.45), rgba(200, 200, 200, 0.35));
+  background-color: light-dark(rgba(127, 127, 127, 0.12), rgba(200, 200, 200, 0.08));
+  background-image: repeating-linear-gradient(-45deg, var(--hatch) 0, var(--hatch) 2px, transparent 2px, transparent 5px);
 }
 
+/* light-dark() follows the site's light/dark toggle as well as the OS setting */
 .skill-row--avoid .skill-label {
-  color: rgba(127, 127, 127, 0.8);
+  color: light-dark(rgba(127, 127, 127, 0.8), rgba(200, 200, 200, 0.7));
   font-style: italic;
-}
-
-@media (prefers-color-scheme: dark) {
-  .skill-bar--avoid {
-    background-color: rgba(200, 200, 200, 0.08);
-    background-image: repeating-linear-gradient(
-      -45deg,
-      rgba(200, 200, 200, 0.35) 0,
-      rgba(200, 200, 200, 0.35) 2px,
-      transparent 2px,
-      transparent 5px
-    );
-  }
-
-  .skill-row--avoid .skill-label {
-    color: rgba(200, 200, 200, 0.7);
-  }
 }
 
 .skill-note {
@@ -193,11 +172,5 @@
 
   .skills-legend {
     gap: 0.75rem 1rem;
-  }
-}
-
-@media (prefers-color-scheme: dark) {
-  .skills-matrix {
-    --skill-empty: rgba(200, 200, 200, 0.12);
   }
 }

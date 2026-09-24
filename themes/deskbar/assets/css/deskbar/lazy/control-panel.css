@@ -1,0 +1,397 @@
+/* The Control panel (lazy/control-panel.js) and every non-default look it offers. head.html links this stylesheet
+   before first paint when a stored palette, decorator, wallpaper, dock style or reader font needs it, after the core
+   stylesheet, as loader.js does when the app opens. Each rule carries an attribute selector to outrank the core rule
+   it replaces. */
+
+/* Palettes. Tokens as in tokens.css; text stays at 4.5:1 or better in light and dark. */
+:root[data-palette=beos] {
+  --panel: linear-gradient(light-dark(#e8e8e8, #5c5c5c), light-dark(#cdcdcd, #474747));
+  --panel-fg: light-dark(#1f1f1f, #f2f2f2); --panel-hover: light-dark(rgba(0,0,0,.08), rgba(255,255,255,.1));
+  --frame: light-dark(#d8d8d8, #474747); --frame-hi: light-dark(#fff, #636363);
+  --frame-lo: light-dark(#969696, #2e2e2e); --frame-dk: light-dark(#505050, #141414);
+  --tab-dim: light-dark(#f3df8a, #a08d45); --tab-in: light-dark(#e2e2e2, #5c5c5c);
+  --tab-in-lo: light-dark(#a8a8a8, #3a3a3a); --tab-in-fg: light-dark(#404040, #e0e0e0);
+  --accent: #336698; --link: light-dark(#2c5b8a, #86b0dc);
+  --wall-1: light-dark(#3d73a6, #28496b); --wall-2: light-dark(#336698, #1f3c5a); --wall-3: light-dark(#2a557f, #172e46);
+  --wall-glow: rgba(255,255,255,.06);
+}
+/* its panel is light in light mode, so pressed and minimised states need lighter shading than the core's */
+:root[data-palette=beos] .pb:focus-visible { outline-color: var(--accent); }
+:root[data-palette=beos] :is(.task.on, #menuBtn.open) { background: light-dark(rgba(0,0,0,.14), rgba(0,0,0,.35)); }
+:root[data-palette=beos] .task.min { opacity: .8; }
+:root[data-palette=xfce] {
+  --panel: linear-gradient(#4c5a6d, #394555); --panel-fg: #eef2f7;
+  --frame: light-dark(#d9dde3, #3f454d); --frame-hi: light-dark(#f7f9fb, #5b636d);
+  --frame-lo: light-dark(#929aa6, #262b31); --frame-dk: light-dark(#4d5663, #111418);
+  --tab: light-dark(#a3bddf, #8aa8d2); --tab-hi: light-dark(#d9e5f4, #b9cdea); --tab-lo: light-dark(#6d88ad, #56729a);
+  --tab-dim: light-dark(#c6d5ea, #7189ab); --tab-in: light-dark(#dfe3e8, #4a525c);
+  --tab-in-lo: light-dark(#aab2bd, #30363d); --tab-in-fg: light-dark(#454b53, #d5dbe3);
+  --accent: #3f6aa3; --link: light-dark(#33609a, #8db3e8); --ctl: #1f3350;
+  --wall-1: light-dark(#5b7ea6, #2a3f5a); --wall-2: light-dark(#3f6189, #1d2d42); --wall-3: light-dark(#2a4466, #121d2c);
+  --wall-glow: light-dark(rgba(170,205,255,.16), rgba(170,205,255,.08));
+}
+:root[data-palette=sage] {
+  --panel: linear-gradient(#4c5448, #3a4137); --panel-fg: #eef1ea;
+  --frame: light-dark(#d9dbd3, #45483f); --frame-hi: light-dark(#f8f9f5, #62665a);
+  --frame-lo: light-dark(#959a8c, #2b2d27); --frame-dk: light-dark(#50554a, #141511);
+  --tab: light-dark(#b5cf9c, #9dbb82); --tab-hi: light-dark(#e2eed6, #c3d9ae); --tab-lo: light-dark(#789560, #5f7a49);
+  --tab-dim: light-dark(#cfdfc0, #80966b); --tab-in: light-dark(#e0e2da, #50544a);
+  --tab-in-lo: light-dark(#adb2a4, #33362f); --tab-in-fg: light-dark(#474b41, #dcdfd4);
+  --accent: #4b7a3f; --link: light-dark(#3d6b31, #a3c98f); --ctl: #28391c;
+  --wall-1: light-dark(#6c8a5f, #34472f); --wall-2: light-dark(#4d6a43, #26351f); --wall-3: light-dark(#33482e, #182214);
+  --wall-glow: light-dark(rgba(255,214,120,.14), rgba(255,214,120,.07));
+}
+/* Snow, Mint and Peach: near-white frames and panel with one clear colour, in place of the grey. Dark mode keeps the
+   hue in deep tinted neutrals. */
+:root[data-palette=snow] {
+  --panel: linear-gradient(light-dark(#fff, #253043), light-dark(#edf2f9, #1c2535)); --panel-fg: light-dark(#18212e, #edf2f9);
+  --panel-hover: light-dark(rgba(31,111,235,.09), rgba(255,255,255,.1));
+  --frame: light-dark(#f2f5f9, #232c3a); --frame-hi: light-dark(#fff, #36435a);
+  --frame-lo: light-dark(#c2ccd9, #151b25); --frame-dk: light-dark(#8593a8, #0a0e14);
+  --tab: light-dark(#bcd7fb, #8db8f2); --tab-hi: light-dark(#e6f0fe, #bcd6fa); --tab-lo: light-dark(#7ea5dc, #5a86c4);
+  --tab-dim: light-dark(#dae7f9, #7392bd); --tab-in: light-dark(#eef1f6, #2d3747);
+  --tab-in-lo: light-dark(#c7d0dc, #1c2330); --tab-in-fg: light-dark(#475264, #cad4e3);
+  --content: light-dark(#fff, #19202b); --fg: light-dark(#141c28, #e5eaf1); --muted: light-dark(#536072, #a8b4c5);
+  --line: light-dark(#e0e6ee, #2c3645); --side: light-dark(#f5f8fc, #1f2733); --read-bg: light-dark(#fff, #171d27);
+  --code-bg: light-dark(#f2f5fa, #222b38);
+  --accent: light-dark(#1f6feb, #2d6fd9); --link: light-dark(#1a5fd0, #82b1ff); --ctl: #173866;
+  --wall-1: light-dark(#a9cbf2, #203553); --wall-2: light-dark(#7eaee8, #182a42); --wall-3: light-dark(#5a93db, #0f1c2e);
+  --wall-glow: light-dark(rgba(255,255,255,.3), rgba(140,190,255,.08)); --wall-ring: light-dark(rgba(255,255,255,.14), rgba(255,255,255,.035));
+}
+:root[data-palette=mint] {
+  --panel: linear-gradient(light-dark(#fff, #20302c), light-dark(#ecf6f2, #182521)); --panel-fg: light-dark(#14231e, #ebf5f1);
+  --panel-hover: light-dark(rgba(13,122,95,.09), rgba(255,255,255,.1));
+  --frame: light-dark(#f1f7f4, #202b28); --frame-hi: light-dark(#fff, #33443f);
+  --frame-lo: light-dark(#bdd0c8, #131a18); --frame-dk: light-dark(#7c998d, #090d0c);
+  --tab: light-dark(#aee8d3, #86d3b7); --tab-hi: light-dark(#e0f7ee, #b8ebd8); --tab-lo: light-dark(#63b797, #4f9d80);
+  --tab-dim: light-dark(#d2efe3, #5f9a85); --tab-in: light-dark(#ecf3f0, #2a3733);
+  --tab-in-lo: light-dark(#c3d4cd, #1a2320); --tab-in-fg: light-dark(#435850, #c6d9d1);
+  --content: light-dark(#fff, #17201d); --fg: light-dark(#13201b, #e3eee9); --muted: light-dark(#4f645c, #a4bbb2);
+  --line: light-dark(#dde9e4, #2a3632); --side: light-dark(#f4faf7, #1d2724); --read-bg: light-dark(#fff, #151d1a);
+  --code-bg: light-dark(#eff6f3, #202b27);
+  --accent: light-dark(#0d7a5f, #117a60); --link: light-dark(#0b6e55, #74d6b3); --ctl: #0f3d30;
+  --wall-1: light-dark(#8fd9bf, #1d4038); --wall-2: light-dark(#5cc3a1, #16332c); --wall-3: light-dark(#34a582, #0e231e);
+  --wall-glow: light-dark(rgba(255,255,255,.3), rgba(120,230,190,.08)); --wall-ring: light-dark(rgba(255,255,255,.14), rgba(255,255,255,.035));
+}
+:root[data-palette=peach] {
+  --panel: linear-gradient(light-dark(#fff, #33282a), light-dark(#fbf0ea, #281f20)); --panel-fg: light-dark(#2a1a14, #f8eeea);
+  --panel-hover: light-dark(rgba(194,65,12,.08), rgba(255,255,255,.1));
+  --frame: light-dark(#fbf6f3, #2d2526); --frame-hi: light-dark(#fff, #463a3b);
+  --frame-lo: light-dark(#dbc9c0, #1b1516); --frame-dk: light-dark(#a88d80, #0e0a0b);
+  --tab: light-dark(#ffcfba, #f5ad8d); --tab-hi: light-dark(#ffece3, #fdd2bd); --tab-lo: light-dark(#e28f6b, #c9785a);
+  --tab-dim: light-dark(#fde2d6, #bb866f); --tab-in: light-dark(#f6efeb, #3a3032);
+  --tab-in-lo: light-dark(#dccdc6, #241d1e); --tab-in-fg: light-dark(#5e4b43, #e0d0ca);
+  --content: light-dark(#fff, #221c1d); --fg: light-dark(#231815, #f0e8e5); --muted: light-dark(#6a5750, #c2b1ab);
+  --line: light-dark(#efe4de, #3a3032); --side: light-dark(#fdf8f5, #2a2324); --read-bg: light-dark(#fffdfb, #1f191a);
+  --code-bg: light-dark(#fbf1ec, #2d2527);
+  --accent: light-dark(#c2410c, #b8400f); --link: light-dark(#b13a0a, #ffab85); --ctl: #5a1f08;
+  --wall-1: light-dark(#fbc3a8, #4d2c24); --wall-2: light-dark(#f59e7e, #3c221c); --wall-3: light-dark(#e57f5f, #2a1713);
+  --wall-glow: light-dark(rgba(255,255,255,.3), rgba(255,170,130,.08)); --wall-ring: light-dark(rgba(255,255,255,.14), rgba(255,255,255,.035));
+}
+/* Synthwave: neon pink tabs and a dark violet panel; lavender frames in light mode, deep indigo ones and cyan links
+   in dark. The whole look, with its sun and grid, is looks/synthwave.css. */
+:root[data-palette=synthwave] {
+  --panel: linear-gradient(#3a1d6b, #24104a); --panel-fg: #f5eeff; --panel-hover: rgba(255,255,255,.12);
+  --frame: light-dark(#e6def5, #2a1f4a); --frame-hi: light-dark(#f8f5fd, #43356e);
+  --frame-lo: light-dark(#a99bc6, #181030); --frame-dk: light-dark(#5e4f82, #0b0619);
+  --tab: light-dark(#ff8fcb, #ff4fae); --tab-hi: light-dark(#ffd3ea, #ff9ad2); --tab-lo: light-dark(#d9589e, #b0266f);
+  --tab-dim: light-dark(#ffc4e3, #cf6ea6); --tab-in: light-dark(#ece6f7, #3a2d5e);
+  --tab-in-lo: light-dark(#b9aed0, #251b40); --tab-in-fg: light-dark(#453d5c, #d8cff0);
+  --content: light-dark(#fff, #1b1433); --fg: light-dark(#1f1a2e, #ece6ff); --muted: light-dark(#5b5270, #b6a8dc);
+  --line: light-dark(#e2dcee, #33295a); --side: light-dark(#f3eff9, #211942); --read-bg: light-dark(#fdfbff, #171030);
+  --code-bg: light-dark(#f3eef9, #251c45);
+  --accent: light-dark(#b0246f, #c2267a); --link: light-dark(#0a6e8c, #6fe3ff); --ctl: #3a0a26;
+  --wall-1: light-dark(#6a3fb5, #2e1760); --wall-2: light-dark(#4a2590, #1f0f45); --wall-3: light-dark(#2f1466, #12072c);
+  --wall-glow: light-dark(rgba(255,62,165,.3), rgba(255,62,165,.18)); --wall-line: rgba(255,120,200,.16);
+}
+/* the core's olive label text is too dim on the pink tab colour */
+:root[data-palette=synthwave] .ticker-h { color: var(--ctl); }
+/* the light palettes' panel is light in light mode, so its borders, pressed and minimised states and the window
+   switcher's links (panel text on a panel-coloured chip) swap the core's dark-panel shading */
+:root:is([data-palette=snow], [data-palette=mint], [data-palette=peach]) #panel { border-bottom-color: light-dark(rgba(0,0,0,.12), #0b0f14); box-shadow: 0 1px 0 light-dark(#fff, rgba(255,255,255,.06)) inset; }
+:root:is([data-palette=snow], [data-palette=mint], [data-palette=peach]) :is(.pb, #menuBtn):focus-visible { outline-color: var(--accent); }
+:root:is([data-palette=snow], [data-palette=mint], [data-palette=peach]) :is(.task.on, #menuBtn.open) { background: light-dark(rgba(0,0,0,.08), rgba(0,0,0,.35)); border-color: light-dark(rgba(0,0,0,.1), rgba(0,0,0,.4)); box-shadow: inset 0 1px 2px light-dark(rgba(0,0,0,.1), rgba(0,0,0,.4)); }
+:root:is([data-palette=snow], [data-palette=mint], [data-palette=peach]) .task.min { opacity: .8; }
+:root:is([data-palette=snow], [data-palette=mint], [data-palette=peach]) #panel #panelHome:is(.on, :active) { background: light-dark(rgba(0,0,0,.1), rgba(0,0,0,.38)); box-shadow: inset 0 1px 2px light-dark(rgba(0,0,0,.12), rgba(0,0,0,.5)); }
+:root:is([data-palette=beos], [data-palette=snow], [data-palette=mint], [data-palette=peach]) :is(.sw-link, .sw-empty) { background: var(--panel); border-color: light-dark(rgba(0,0,0,.14), rgba(255,255,255,.14)); }
+:root:is([data-palette=beos], [data-palette=snow], [data-palette=mint], [data-palette=peach]) .sw-link:hover { background: linear-gradient(var(--panel-hover), var(--panel-hover)), var(--panel); }
+
+/* a tab being slid is drawn in Haiku yellow in the core CSS; window controls take the palette's --ctl */
+:root[data-palette] .tab.sliding { background: var(--tab-hi) !important; }
+
+/* BeOS decorator: square tabs with the close box at the left, bevelled boxes for controls, a hard drop shadow */
+[data-deco=beos] .tab { padding: 0 3px; gap: 4px; }
+[data-deco=beos] .ctl { width: 15px; height: 15px; border: 1px solid var(--tab-lo); border-radius: 0; background: linear-gradient(135deg, var(--tab-hi), var(--tab)); box-shadow: inset 1px 1px 0 rgba(255,255,255,.6); }
+[data-deco=beos] .ctl svg { width: 7px; height: 7px; }
+[data-deco=beos] .ctl.close { order: -1; margin-right: 3px; }
+[data-deco=beos] .win:not(.active) .ctl { border-color: var(--tab-in-lo); background: var(--tab-in); }
+[data-deco=beos] .frame, [data-deco=beos] .win.active .frame { padding: 3px; box-shadow: inset 1px 1px 0 var(--frame-hi), inset -1px -1px 0 var(--frame-lo), 3px 3px 0 rgba(0,0,0,.3); }
+[data-deco=beos] .win:not(.active) .frame { box-shadow: inset 1px 1px 0 var(--frame-hi), inset -1px -1px 0 var(--frame-lo), 2px 2px 0 rgba(0,0,0,.18); }
+
+/* Flat decorator: no bevels, rounded corners and a soft shadow */
+[data-deco=flat] :is(.tab, .th), [data-deco=flat] .win.active .tab { border: 0; border-radius: 7px 7px 0 0; padding-left: 10px; box-shadow: none; }
+[data-deco=flat] .tabs.multi .tab { margin-right: 2px; }
+[data-deco=flat] .ctl { border-radius: 50%; }
+[data-deco=flat] .frame, [data-deco=flat] .win.active .frame { padding: 0; border: 1px solid var(--frame-lo); border-radius: 0 7px 7px 7px; box-shadow: 0 6px 18px rgba(0,0,0,.18); }
+[data-deco=flat] .win.active .frame { border-color: var(--tab-lo); box-shadow: 0 16px 40px rgba(0,0,0,.36); }
+[data-deco=flat] .views { border: 0; border-radius: 0 7px 7px 7px; overflow: hidden; }
+/* pressed and toggled buttons keep their colour; :where holds the weight at two classes, under apps' own state rules */
+[data-deco=flat] :is(.tb, .seg):not(:where(.on, :active, [aria-expanded=true], [aria-pressed=true])) { background: var(--content); }
+/* Phones (the same query as windows.css) */
+@media (max-width: 767px), (max-height: 500px) and (pointer: coarse) {
+  [data-deco=flat] :is(.tab, .frame, .views) { border-radius: 0 !important; }
+  /* phone windows fill the screen with touch-sized controls (windows.css), which the BeOS sizes above would undo */
+  [data-deco=beos] .ctl { width: 32px; height: 32px; }
+  [data-deco=beos] .ctl svg { width: 13px; height: 13px; }
+  [data-deco=beos] .frame, [data-deco=beos] .win.active .frame { padding: 0; }
+}
+
+/* Liquid Ass: a spoof of Apple's Liquid Glass. Every surface is frosted glass with a shiny rim, blurred and
+   saturated far past taste, no two corners share a radius, shadows pile up, everything is padded even more than
+   Apple pads it, the window buttons are traffic lights on the left, and buttons wobble like jelly. Choosing it in the
+   Control panel also picks its wallpaper and the glass dock.
+   Clear is the same glass without the joke: even corners, the usual padding, one soft shadow and no wobble.
+   In both, text sits on content at 88% or more, so it keeps its contrast whatever shows through. */
+:root:is([data-deco=liquid], [data-deco=clear]) {
+  --lq-blur: blur(26px) saturate(260%) brightness(1.08);
+  --lq-rim: light-dark(rgba(255,255,255,.85), rgba(255,255,255,.4));
+  --lq-shine: inset 2px 2px 1px var(--lq-rim), inset -2px -3px 2px light-dark(rgba(255,255,255,.35), rgba(255,255,255,.12)), inset 0 0 22px light-dark(rgba(255,255,255,.35), rgba(255,255,255,.08));
+  --frame: light-dark(rgba(255,255,255,.3), rgba(42,46,58,.38)); --frame-hi: var(--lq-rim);
+  --frame-lo: light-dark(rgba(0,0,0,.14), rgba(0,0,0,.4)); --frame-dk: var(--lq-rim);
+  --content: light-dark(rgba(255,255,255,.88), rgba(38,40,46,.88)); --side: light-dark(rgba(242,242,247,.9), rgba(30,32,38,.9));
+  --panel: light-dark(rgba(255,255,255,.55), rgba(18,20,28,.66)); --panel-fg: light-dark(#141414, #f5f5f5);
+  --panel-hover: light-dark(rgba(0,0,0,.08), rgba(255,255,255,.14));
+}
+:root[data-deco=clear] {
+  --lq-blur: blur(22px) saturate(170%);
+  --lq-rim: light-dark(rgba(255,255,255,.7), rgba(255,255,255,.28));
+  --lq-shine: inset 1px 1px 0 var(--lq-rim), inset 0 0 14px light-dark(rgba(255,255,255,.22), rgba(255,255,255,.05));
+}
+:root:is([data-deco=liquid], [data-deco=clear]) :is(#panel, .win .frame, #menu, .ctx, .recent-list) { backdrop-filter: var(--lq-blur); -webkit-backdrop-filter: var(--lq-blur); }
+:root:is([data-deco=liquid], [data-deco=clear]) #panel { border-bottom: 1px solid var(--lq-rim); box-shadow: inset 0 -1px 0 rgba(255,255,255,.3), 0 10px 30px rgba(0,0,0,.28); }
+:root[data-deco=clear] #panel { box-shadow: inset 0 -1px 0 rgba(255,255,255,.2), 0 4px 16px rgba(0,0,0,.16); }
+/* dark text on a light panel fades too far at the core's minimised opacity */
+:root:is([data-deco=liquid], [data-deco=clear]) .task.min { opacity: .8; }
+:root:is([data-deco=liquid], [data-deco=clear]) :is(.task.on, #menuBtn.open, .home-btn.on) { background: light-dark(rgba(255,255,255,.6), rgba(255,255,255,.16)); border-color: var(--lq-rim); border-radius: 12px 7px 14px 9px; box-shadow: var(--lq-shine); }
+:root:is([data-deco=liquid], [data-deco=clear]) .win .frame { background: var(--frame) linear-gradient(160deg, rgba(255,255,255,.5), transparent 26% 74%, rgba(255,255,255,.22)); border: 1px solid var(--lq-rim); }
+:root:is([data-deco=liquid], [data-deco=clear]) .views { border: 1px solid light-dark(rgba(255,255,255,.7), rgba(255,255,255,.18)); overflow: hidden; }
+:root[data-deco=liquid] .win .frame { padding: 14px; padding-top: 26px; border-radius: 48px 20px 64px 30px;
+  box-shadow: var(--lq-shine), 0 2px 4px rgba(0,0,0,.18), 0 12px 24px rgba(0,0,0,.22), 0 30px 60px rgba(0,0,0,.26), 0 60px 110px rgba(40,0,90,.3); }
+:root[data-deco=liquid] .win.active .frame { box-shadow: var(--lq-shine), 0 0 0 1px rgba(255,255,255,.25), 0 2px 4px rgba(0,0,0,.2), 0 14px 28px rgba(0,0,0,.28), 0 40px 80px rgba(0,0,0,.34), 0 80px 160px rgba(90,0,160,.38), 0 0 90px rgba(255,90,200,.3); }
+:root[data-deco=liquid] .views { border-radius: 38px 12px 54px 21px; }
+:root[data-deco=liquid] .grip { right: 18px; bottom: 18px; }
+:root[data-deco=clear] .win .frame { padding: 5px; border-radius: 12px; box-shadow: var(--lq-shine), 0 6px 20px rgba(0,0,0,.2); }
+:root[data-deco=clear] .win.active .frame { box-shadow: var(--lq-shine), 0 10px 32px rgba(0,0,0,.3); }
+:root[data-deco=clear] .views { border-radius: 8px; }
+/* the tab is glass too, with the palette's tab colour showing through as a tint. Liquid Ass floats it as a pill on
+   the frame's rim, clear of its big corner curves; Clear joins it to the frame's top edge */
+:root:is([data-deco=liquid], [data-deco=clear]) .win :is(.tab, .th) { gap: 0; padding: 0 12px 0 5px; border: 1px solid var(--lq-rim); color: light-dark(#333, #ddd); background: light-dark(rgba(255,255,255,.72), rgba(40,42,50,.76)); box-shadow: var(--lq-shine); backdrop-filter: var(--lq-blur); -webkit-backdrop-filter: var(--lq-blur); }
+:root:is([data-deco=liquid], [data-deco=clear]) .win.active .tab { color: #1f1f1f; background: linear-gradient(rgba(255,255,255,.55), rgba(255,255,255,.05)), color-mix(in srgb, var(--tab) 70%, transparent); }
+:root:is([data-deco=liquid], [data-deco=clear]) .tabs.multi .tab { margin-right: 4px; }
+:root[data-deco=liquid] .tab .tt { margin-left: 5px; }
+:root[data-deco=liquid] .win .tabs { left: 34px; right: 34px; bottom: calc(100% - 13px); z-index: 1; }
+:root[data-deco=liquid] .win :is(.tab, .th) { bottom: 0; border-radius: 17px 24px 13px 20px; box-shadow: var(--lq-shine), 0 6px 14px rgba(0,0,0,.25); }
+:root[data-deco=clear] .win .tabs.multi { left: 12px; right: 12px; }
+:root[data-deco=clear] .win :is(.tab, .th) { border-bottom: 0; border-radius: 9px 9px 0 0; }
+/* Liquid Glass pads everything generously, so Liquid Ass pads it a little more */
+:root[data-deco=liquid] .toolbar { gap: 10px; padding: 10px 18px; }
+:root[data-deco=liquid] .tb { height: 32px; padding: 0 16px; }
+:root[data-deco=liquid] :is(input:not([type=checkbox], [type=radio], [type=range]), select) { min-height: 32px; padding-inline: 14px; }
+:root[data-deco=liquid] .mn-it { padding: 8px 22px; }
+:root[data-deco=liquid] .ctx-it { min-height: 36px; padding-inline: 22px; }
+/* titles refract a little, as anything seen through this much glass would */
+:root[data-deco=liquid] .tab .tt { text-shadow: -1px 0 rgba(255,0,140,.35), 1px 0 rgba(0,190,255,.35); }
+/* traffic lights, with a glint, on the left where Apple keeps them; their marks show on hover */
+:root[data-deco=liquid] .win .ctl, :root[data-deco=liquid] .win .ctl:hover { --lq-c: #ff5f57; width: 22px; height: 22px; border-radius: 50%; opacity: 1; color: rgba(0,0,0,.6); background: radial-gradient(circle at 40% 35%, rgba(255,255,255,.85) 0 1.5px, transparent 2.5px), radial-gradient(circle, var(--lq-c) 0 6px, rgba(0,0,0,.28) 6.5px, transparent 7.5px); }
+:root[data-deco=liquid] .win .ctl.close { order: -3; }
+:root[data-deco=liquid] .win .ctl.min { order: -2; --lq-c: #febc2e; }
+:root[data-deco=liquid] .win .ctl.max { order: -1; --lq-c: #28c840; }
+:root[data-deco=liquid] .win:not(.active) .ctl { --lq-c: rgba(140,140,150,.6); }
+:root[data-deco=liquid] .ctl svg { width: 7px; height: 7px; opacity: 0; }
+:root[data-deco=liquid] :is(.tab:hover, .tab:focus-within) .ctl svg { opacity: 1; }
+/* Clear: a window on its own has its tab across the whole top, a title bar joined to the frame, so the window is one
+   pane of glass. Its controls sit together at the right end as one glass capsule of thin marks: close turns red under
+   the pointer, the others take the accent. Stacked windows keep their tabs, each with its own capsule. */
+:root[data-deco=clear] .win .frame { border-top: 0; border-top-left-radius: 0; border-top-right-radius: 0; }
+:root[data-deco=clear] .win .tabs:not(.multi) .tab { left: 0 !important; right: 0; border-radius: 12px 12px 0 0; }
+:root[data-deco=clear] .win .tab { padding: 0 3px 0 12px; }
+:root[data-deco=clear] .tab .tt { max-width: none; }
+:root[data-deco=clear] .win .ctl { width: 28px; height: 18px; margin-left: -1px; border: 1px solid var(--lq-rim); border-radius: 0; color: light-dark(#2b2f36, #e8eaf0); background: light-dark(rgba(255,255,255,.45), rgba(255,255,255,.1)); box-shadow: inset 0 1px 0 light-dark(rgba(255,255,255,.8), rgba(255,255,255,.15)); }
+:root[data-deco=clear] .win .ctl svg { width: 9px; height: 9px; }
+:root[data-deco=clear] .win :is(.ctl.min, .tt + .ctl.close) { margin-left: 0; border-top-left-radius: 9px; border-bottom-left-radius: 9px; }
+:root[data-deco=clear] .win :is(.ctl.close, .th .ctl.max) { border-top-right-radius: 9px; border-bottom-right-radius: 9px; }
+:root[data-deco=clear] .win .ctl:hover { color: #fff; background: color-mix(in srgb, var(--accent) 85%, transparent); }
+:root[data-deco=clear] .win .ctl.close:hover { background: #e5484d; }
+:root[data-deco=clear] .win:not(.active) .ctl { opacity: .55; }
+:root:is([data-deco=liquid], [data-deco=clear]) :is(.tb, .seg, input, select) { border-color: var(--lq-rim); }
+:root:is([data-deco=liquid], [data-deco=clear]) :is(.tb, .seg):not(:where(.on, :active, [aria-expanded=true], [aria-pressed=true])) { background: linear-gradient(light-dark(rgba(255,255,255,.85), rgba(255,255,255,.2)), light-dark(rgba(255,255,255,.35), rgba(255,255,255,.04))); }
+:root:is([data-deco=liquid], [data-deco=clear]) .mn-head { background: transparent; border-bottom-color: var(--lq-rim); }
+:root:is([data-deco=liquid], [data-deco=clear]) :is(#menu, .ctx, #recent h2, #desk .recent-list) { border-color: var(--lq-rim); }
+:root[data-deco=liquid] .tb { border-radius: 20px 7px 22px 12px; box-shadow: inset 0 1px 1px var(--lq-rim), 0 3px 8px rgba(0,0,0,.18); }
+:root[data-deco=liquid] :is(input, select) { border-radius: 14px 7px 16px 10px; }
+:root[data-deco=liquid] :not(.seg-opts) > .cp-opt { border-radius: 18px 8px 22px 12px; }
+:root[data-deco=liquid] .cp-art { border-radius: 14px 6px 16px 9px; }
+:root[data-deco=liquid] .seg:first-child { border-radius: 14px 0 0 9px; }
+:root[data-deco=liquid] .seg:last-child { border-radius: 0 11px 16px 0; }
+:root[data-deco=liquid] #menu { top: calc(var(--panel-h) + 6px); border-style: solid; border-width: 1px; border-radius: 26px 12px 34px 18px; box-shadow: var(--lq-shine), 0 20px 50px rgba(0,0,0,.4), 0 50px 120px rgba(90,0,160,.35); }
+:root[data-deco=liquid] .ctx { border-radius: 18px 10px 22px 14px; box-shadow: var(--lq-shine), 0 14px 40px rgba(0,0,0,.4); }
+:root[data-deco=liquid] #recent h2 { border-radius: 14px 19px 0 0; }
+:root[data-deco=liquid] #desk .recent-list { border-radius: 0 28px 34px 22px; box-shadow: var(--lq-shine), 0 20px 50px rgba(0,0,0,.35); }
+:root[data-deco=clear] :is(.task.on, #menuBtn.open, .home-btn.on) { border-radius: 7px; }
+:root[data-deco=clear] :is(.tb, input, select) { border-radius: 7px; }
+:root[data-deco=clear] .tb { box-shadow: inset 0 1px 1px var(--lq-rim); }
+:root[data-deco=clear] :not(.seg-opts) > .cp-opt { border-radius: 10px; }
+:root[data-deco=clear] .cp-art { border-radius: 7px; }
+:root[data-deco=clear] .seg:first-child { border-radius: 7px 0 0 7px; }
+:root[data-deco=clear] .seg:last-child { border-radius: 0 7px 7px 0; }
+:root[data-deco=clear] #menu { top: calc(var(--panel-h) + 4px); border-style: solid; border-width: 1px; border-radius: 12px; box-shadow: var(--lq-shine), 0 12px 32px rgba(0,0,0,.3); }
+:root[data-deco=clear] .ctx { border-radius: 10px; box-shadow: var(--lq-shine), 0 10px 28px rgba(0,0,0,.3); }
+:root[data-deco=clear] #recent h2 { border-radius: 9px 9px 0 0; }
+:root[data-deco=clear] #desk .recent-list { border-radius: 0 12px 12px 12px; box-shadow: var(--lq-shine), 0 10px 28px rgba(0,0,0,.25); }
+/* the glass dock goes glassier, and its launchers swell under the pointer */
+.wm[data-deco=liquid]:not([data-dock]) #dock { padding: 12px 20px; background: light-dark(rgba(255,255,255,.18), rgba(255,255,255,.07)); border: 1px solid var(--lq-rim); border-radius: 30px 46px 24px 54px; backdrop-filter: blur(34px) saturate(340%) brightness(1.15); -webkit-backdrop-filter: blur(34px) saturate(340%) brightness(1.15); box-shadow: var(--lq-shine), 0 10px 20px rgba(0,0,0,.25), 0 40px 80px rgba(0,0,0,.35), 0 0 120px rgba(255,120,220,.4); }
+.wm[data-deco=liquid]:not([data-dock]) :is(.dk, #dock #homeBtn, #dock #winsBtn) { border-radius: 16px 12px 18px 10px; }
+.wm[data-deco=liquid]:not([data-dock]) :is(.dk, #dock #homeBtn, #dock #winsBtn) .ico { transition: transform .25s cubic-bezier(.3, 1.8, .5, 1); }
+.wm[data-deco=liquid]:not([data-dock]) :is(.dk, #dock #homeBtn, #dock #winsBtn):hover .ico { transform: translateY(-8px) scale(1.35); }
+@keyframes lq-jelly { 25% { transform: scale(1.16, .84); } 45% { transform: scale(.88, 1.12); } 62% { transform: scale(1.06, .94); } 80% { transform: scale(.98, 1.02); } }
+@media (prefers-reduced-motion: no-preference) {
+  :root[data-deco=liquid] :is(.tb, .seg, .ctl, .pb, .dk, .cp-opt):hover { animation: lq-jelly .6s ease-out; }
+}
+/* without backdrop blur, see-through glass would be unreadable, so it frosts over instead */
+@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+  :root:is([data-deco=liquid], [data-deco=clear]) { --frame: light-dark(rgba(240,241,246,.94), rgba(42,46,58,.95)); --panel: light-dark(rgba(246,247,250,.95), rgba(24,26,34,.96)); --content: light-dark(#fff, #26282b); }
+  :root:is([data-deco=liquid], [data-deco=clear]) .win .tab { background: light-dark(#f3f3f6, #34363e); }
+  .wm[data-deco=liquid]:not([data-dock]) #dock { background: light-dark(rgba(236,236,244,.92), rgba(40,42,52,.94)); }
+}
+@media (max-width: 767px), (max-height: 500px) and (pointer: coarse) {
+  :root:is([data-deco=liquid], [data-deco=clear]) .win .frame { padding: 0; }
+  :root:is([data-deco=liquid], [data-deco=clear]) .win .tabs { left: 0; right: 0; bottom: 100%; z-index: auto; }
+  :root[data-deco=liquid] .win .frame { border-radius: 0 0 38px 30px; }
+  :root[data-deco=liquid] .views { border-radius: 0 0 36px 28px; }
+  :root[data-deco=liquid] .win .tab { bottom: 3px; }
+  :root[data-deco=clear] :is(.win .frame, .views) { border-radius: 0; }
+  :root[data-deco=clear] .win .tabs:not(.multi) .tab { border-radius: 0; }
+  :root[data-deco=clear] .win .ctl { width: 44px; height: 30px; }
+  :root[data-deco=liquid] .win .ctl, :root[data-deco=liquid] .win .ctl:hover { width: 32px; height: 32px; background: radial-gradient(circle at 42% 36%, rgba(255,255,255,.85) 0 2px, transparent 3px), radial-gradient(circle, var(--lq-c) 0 8px, rgba(0,0,0,.28) 8.5px, transparent 9.5px); }
+  :root[data-deco=liquid] .ctl svg { width: 9px; height: 9px; }
+}
+
+/* Wallpapers, each drawn from the palette's --wall tokens. .cp-wp is the app's thumbnail of each. */
+:root { --wall-line: rgba(255,255,255,.08); }
+.cp-wp { background: radial-gradient(60% 60% at 80% 110%, var(--wall-glow), transparent 62%), repeating-radial-gradient(circle at 80% 118%, var(--wall-ring) 0 1px, transparent 1px 8px), linear-gradient(165deg, var(--wall-1) 0%, var(--wall-2) 46%, var(--wall-3) 100%); }
+.wm[data-wall=plain] body, .cp-wp.plain { background: var(--wall-2); }
+.wm[data-wall=grid] body, .cp-wp.grid { background: linear-gradient(var(--wall-line) 1px, transparent 1px) 0 0 / 32px 32px, linear-gradient(90deg, var(--wall-line) 1px, transparent 1px) 0 0 / 32px 32px, linear-gradient(165deg, var(--wall-1), var(--wall-3)); }
+.wm[data-wall=dots] body, .cp-wp.dots { background: radial-gradient(var(--wall-line) 1.5px, transparent 2px) 0 0 / 20px 20px, radial-gradient(90% 70% at 20% 0%, var(--wall-1), transparent), var(--wall-3); }
+/* Liquid Ass's own (its colours, not the palette's): bright blobs, so the glass has something to smear */
+.wm[data-wall=liquid] body, .cp-wp.liquid, .cp-deco.liquid { background: radial-gradient(38% 46% at 18% 28%, light-dark(#ff7eb6, #a02c66) 0 30%, transparent 70%), radial-gradient(40% 50% at 82% 22%, light-dark(#7ee0ff, #1b6f96) 0 25%, transparent 70%), radial-gradient(45% 50% at 66% 84%, light-dark(#ffd36e, #9a6a10) 0 25%, transparent 70%), radial-gradient(40% 45% at 26% 88%, light-dark(#a88bff, #4f30ad) 0 25%, transparent 70%), linear-gradient(140deg, light-dark(#6d5dfc, #211858), light-dark(#2ec5c5, #0a3645)); }
+/* Clear's own: saturated colour swept into bands, with two fine light arcs, so its glass has something vivid behind
+   it without Liquid Ass's blur of blobs */
+.wm[data-wall=clear] body, .cp-wp.clear, .cp-deco.clear { background: radial-gradient(110% 85% at 105% -25%, transparent 62%, light-dark(rgba(255,255,255,.16), rgba(255,255,255,.08)) 62.6%, transparent 65%), radial-gradient(140% 95% at 50% 135%, transparent 57%, light-dark(rgba(255,255,255,.34), rgba(255,255,255,.16)) 57.5%, transparent 59.5%), radial-gradient(130% 80% at 38% 140%, transparent 61%, light-dark(rgba(255,255,255,.22), rgba(255,255,255,.1)) 61.4%, transparent 63%), radial-gradient(70% 60% at 12% 8%, light-dark(rgba(140,190,255,.6), rgba(70,120,220,.4)), transparent 70%), radial-gradient(55% 50% at 92% 96%, light-dark(rgba(45,215,205,.55), rgba(10,140,150,.45)), transparent 70%), radial-gradient(45% 40% at 18% 92%, light-dark(rgba(125,95,255,.5), rgba(80,50,190,.45)), transparent 70%), linear-gradient(160deg, light-dark(#10297a, #070f35) 0%, light-dark(#2150c4, #10286b) 48%, light-dark(#0f86b8, #064a70) 100%); }
+/* what the phone page fades into past its end (chrome.css): the wallpaper's lower edge */
+.wm[data-wall=clear] { --wall-3: light-dark(#1560a0, #07365a); }
+.wm[data-wall=hills] body, .cp-wp.hills { background: radial-gradient(70% 38% at 18% 100%, var(--wall-3) 99%, transparent 100%), radial-gradient(80% 48% at 88% 100%, color-mix(in srgb, var(--wall-3) 55%, var(--wall-2)) 99%, transparent 100%), radial-gradient(110% 58% at 45% 100%, var(--wall-2) 99%, transparent 100%), radial-gradient(circle at 74% 34%, var(--wall-glow) 0 5%, transparent 5.2% 30%), linear-gradient(var(--wall-1), color-mix(in srgb, var(--wall-1) 70%, var(--wall-2))); }
+
+/* Dock styles, whatever the palette. deskRect (wm/windows.js) measures the dock, so windows stop above each. */
+/* Deskbar: Haiku's solid grey bar, bevelled and square on the screen edge, Home on a yellow tab */
+.wm[data-dock=deskbar] #dock { bottom: 0; gap: 2px; padding: 3px 4px; padding-bottom: max(3px, env(safe-area-inset-bottom)); background: var(--frame); border: 1px solid var(--frame-dk); border-bottom: 0; border-radius: 0; box-shadow: inset 1px 1px 0 var(--frame-hi), inset -1px 0 0 var(--frame-lo), 0 -2px 10px rgba(0,0,0,.25); backdrop-filter: none; -webkit-backdrop-filter: none; }
+.wm[data-dock=deskbar] :is(.dk, #dock #homeBtn, #dock #winsBtn) { border-radius: 0; }
+.wm[data-dock=deskbar] :is(.dk, #dock #winsBtn):hover { background: var(--frame-hi); }
+.wm[data-dock=deskbar] #dock #homeBtn { background: linear-gradient(var(--tab-hi), var(--tab)); box-shadow: inset 0 0 0 1px var(--tab-lo); }
+.wm[data-dock=deskbar] :is(#dock #homeBtn::after, #dock #winsBtn::before) { background: var(--frame-lo); box-shadow: 1px 0 0 var(--frame-hi); }
+/* Panel: an XFCE panel strip along the bottom edge in the palette's panel colours, launchers from the left and the
+   window switcher at the far end */
+.wm[data-dock=panel] #dock { left: 0; right: 0; bottom: 0; transform: none; gap: 2px; padding: 2px 6px; padding-bottom: max(2px, env(safe-area-inset-bottom)); color: var(--panel-fg); background: var(--panel); border: 0; border-top: 1px solid #1d1f22; border-radius: 0; box-shadow: inset 0 1px 0 rgba(255,255,255,.06); backdrop-filter: none; -webkit-backdrop-filter: none; }
+.wm[data-dock=panel] :is(.dk, #dock #homeBtn, #dock #winsBtn) { width: 40px; height: 40px; border-radius: 3px; }
+.wm[data-dock=panel] :is(.dk, #dock #homeBtn, #dock #winsBtn) .ico { width: 28px; height: 28px; }
+.wm[data-dock=panel] :is(.dk, #dock #homeBtn, #dock #winsBtn):hover { background: var(--panel-hover); }
+.wm[data-dock=panel] #dock #winsBtn { margin-left: auto; }
+.wm[data-dock=panel] :is(#dock #homeBtn::after, #dock #winsBtn::before) { background: color-mix(in srgb, var(--panel-fg) 25%, transparent); }
+
+/* Reader fonts. Atkinson Hyperlegible is self-hosted (static/fonts, SIL OFL). A browser fetches a face only once text
+   uses its family, which only the chosen font's rule does. */
+@font-face { font-family: 'Atkinson Hyperlegible'; font-display: swap; src: url(../../../fonts/atkinson-hyperlegible/AtkinsonHyperlegible-Regular.woff2) format('woff2'); }
+@font-face { font-family: 'Atkinson Hyperlegible'; font-display: swap; font-style: italic; src: url(../../../fonts/atkinson-hyperlegible/AtkinsonHyperlegible-Italic.woff2) format('woff2'); }
+@font-face { font-family: 'Atkinson Hyperlegible'; font-display: swap; font-weight: 700; src: url(../../../fonts/atkinson-hyperlegible/AtkinsonHyperlegible-Bold.woff2) format('woff2'); }
+@font-face { font-family: 'Atkinson Hyperlegible'; font-display: swap; font-weight: 700; font-style: italic; src: url(../../../fonts/atkinson-hyperlegible/AtkinsonHyperlegible-BoldItalic.woff2) format('woff2'); }
+:root[data-rd-font=sans] { --rd-font: var(--ui); }
+:root[data-rd-font=atkinson] { --rd-font: 'Atkinson Hyperlegible', var(--ui); }
+:root[data-rd-font=mono] { --rd-font: var(--mono); }
+:root[data-rd-font] :is(.rd, .cp-sample) { font-family: var(--rd-font); }
+
+/* The app: the list of panes beside the pane showing, after Haiku's Preferences, stacked in a narrow window */
+.app-control-panel { container-type: inline-size; }
+.cp-body { flex: 1; min-height: 0; display: flex; }
+.cp-nav { flex: none; width: 150px; display: flex; flex-direction: column; gap: 2px; padding: 10px 6px; background: var(--side); border-right: 1px solid var(--line); overflow: auto; }
+.cp-nav a { display: flex; align-items: center; gap: 8px; min-height: 36px; padding: 4px 8px; border-radius: 4px; color: var(--fg); text-decoration: none; }
+.cp-nav a:hover { background: color-mix(in srgb, var(--fg) 8%, transparent); }
+.cp-nav a[aria-current] { background: var(--accent); color: var(--accent-fg); }
+.cp-nav .ico { width: 24px; height: 24px; }
+.cp { flex: 1; min-width: 0; overflow: auto; padding: 14px 18px; background: var(--content); color: var(--fg); }
+@container (max-width: 480px) {
+  .cp-body { flex-direction: column; }
+  .cp-nav { width: auto; flex-direction: row; padding: 6px; border-right: 0; border-bottom: 1px solid var(--line); }
+  .cp-nav a { flex: 1; justify-content: center; }
+  .cp { padding: 12px 14px; }
+}
+.cp-set { margin: 0 0 16px; padding: 0; border: 0; min-width: 0; }
+/* a group a whole look sets itself (LOOKS in control-panel.js) */
+.cp-set:disabled .cp-opts { opacity: .45; }
+.cp-set:disabled .cp-opt { cursor: not-allowed; }
+.cp-set legend, .cp-lbl { display: block; padding: 0; margin: 0 0 6px; font-weight: 700; }
+.cp-row { display: flex; flex-wrap: wrap; gap: 8px 18px; }
+.cp-row .cp-set { margin-bottom: 0; }
+.cp-opts { display: flex; flex-wrap: wrap; gap: 8px; }
+.cp-opt { position: relative; display: grid; justify-items: center; gap: 4px; padding: 5px 5px 3px; border: 1px solid var(--line); border-radius: 4px; background: var(--content); font-size: 12px; cursor: pointer; }
+.cp-opt:hover { border-color: var(--frame-lo); }
+.cp-opt:has(:checked) { border-color: var(--accent); box-shadow: inset 0 0 0 1px var(--accent); background: color-mix(in srgb, var(--accent) 10%, var(--content)); }
+.cp-opt:has(:checked) > span:last-child::before { content: '✓ ' / ''; }
+.cp-opt:has(:focus-visible) { outline: 2px solid var(--accent); outline-offset: 2px; }
+.cp-opts.seg-opts { gap: 0; }
+.seg-opts .cp-opt { padding: 4px 12px; border-radius: 0; margin-right: -1px; }
+.seg-opts .cp-opt:first-child { border-radius: 4px 0 0 4px; }
+.seg-opts .cp-opt:last-child { border-radius: 0 4px 4px 0; }
+.seg-opts .cp-opt:has(:checked) { z-index: 1; }
+/* the radio stays in the page for keyboard and screen readers; the card shows its state */
+.cp-in { position: absolute; inset: 0; z-index: 1; margin: 0; opacity: 0; cursor: pointer; }
+.cp-art { position: relative; display: block; width: 76px; height: 48px; border-radius: 3px; overflow: hidden; box-shadow: inset 0 0 0 1px rgba(0,0,0,.2); }
+/* palette swatch: a window (tab and frame) on the desktop colour */
+.cp-sw { background: linear-gradient(var(--a) 0 0) 10px 10px / 30px 7px no-repeat, linear-gradient(var(--b) 0 0) 10px 17px / 56px 24px no-repeat, var(--c); }
+/* decorator: a small window in each style */
+.cp-deco { background: var(--wall-2); }
+.cp-deco::before, .cp-deco::after { content: ''; position: absolute; left: 12px; }
+.cp-deco::before { top: 8px; width: 32px; height: 9px; background: var(--tab); border: 1px solid var(--frame-dk); border-bottom: 0; box-shadow: inset 1px 1px 0 var(--tab-hi); }
+.cp-deco::after { top: 17px; width: 52px; height: 24px; background: var(--frame); border: 1px solid var(--frame-dk); box-shadow: inset 1px 1px 0 var(--frame-hi), 0 3px 6px rgba(0,0,0,.35); }
+.cp-deco.beos::before { background: linear-gradient(var(--tab-lo) 0 0) 2px 2px / 5px 5px no-repeat, var(--tab); }
+.cp-deco.beos::after { box-shadow: inset 1px 1px 0 var(--frame-hi), 2px 2px 0 rgba(0,0,0,.35); }
+.cp-deco.flat::before { border: 0; border-radius: 4px 4px 0 0; box-shadow: none; }
+.cp-deco.flat::after { border-color: var(--frame-lo); border-radius: 0 4px 4px 4px; box-shadow: 0 4px 10px rgba(0,0,0,.4); }
+.cp-deco.liquid::before { top: 5px; height: 11px; border: 1px solid rgba(255,255,255,.85); border-radius: 6px 8px 4px 5px; background: radial-gradient(circle at 5px 4.5px, #ff5f57 0 2px, transparent 2.5px), radial-gradient(circle at 11px 4.5px, #febc2e 0 2px, transparent 2.5px), radial-gradient(circle at 17px 4.5px, #28c840 0 2px, transparent 2.5px), rgba(255,255,255,.55); box-shadow: none; }
+.cp-deco.liquid::after { border-color: rgba(255,255,255,.85); border-radius: 12px 6px 14px 9px; background: rgba(255,255,255,.35); box-shadow: inset 1px 1px 1px #fff, 0 6px 12px rgba(0,0,0,.35), 0 0 14px rgba(255,120,220,.6); }
+.cp-deco.clear::before { top: 7px; height: 10px; left: 14px; border: 1px solid rgba(255,255,255,.75); border-bottom: 0; border-radius: 4px 4px 0 0; background: radial-gradient(circle at 5px 5px, #ff5f57 0 2px, transparent 2.5px), radial-gradient(circle at 11px 5px, #febc2e 0 2px, transparent 2.5px), radial-gradient(circle at 17px 5px, #28c840 0 2px, transparent 2.5px), rgba(255,255,255,.5); box-shadow: none; }
+.cp-deco.clear::after { border-color: rgba(255,255,255,.75); border-radius: 5px; background: rgba(255,255,255,.35); box-shadow: inset 1px 1px 0 rgba(255,255,255,.8), 0 4px 10px rgba(0,0,0,.3); }
+.cp-size { display: flex; align-items: center; gap: 10px; }
+.cp-size input { width: 180px; accent-color: var(--accent); padding: 0; border: 0; background: none; }
+.cp-size span { min-width: 4ch; font-variant-numeric: tabular-nums; }
+.cp-sample { margin: 8px 0 0; padding: 8px 12px; max-width: 46ch; font: var(--rd-size)/1.5 var(--serif); color: var(--read-fg); background: var(--read-bg); border: 1px solid var(--line); border-radius: 3px; }
+.cp-test { margin-top: 10px; }
+.cp-foot { justify-content: space-between; border-top: 1px solid var(--frame-lo); border-bottom: 0; }
+.cp-foot output { color: var(--fg); font-size: 12px; }
+/* dock style: a strip of launchers on the desktop colour */
+.cp-dk { background: var(--wall-2); --ic: repeating-linear-gradient(90deg, #ffcb00 0 6px, transparent 6px 9px, #6fa0e6 9px 15px, transparent 15px 18px); }
+.cp-dk::before { content: ''; position: absolute; left: 50%; bottom: 5px; width: 50px; height: 12px; padding: 2px 3px; transform: translateX(-50%); background: var(--ic) content-box, rgba(42,44,48,.9); border: 1px solid rgba(255,255,255,.25); border-radius: 3px; }
+.cp-dk.deskbar::before { bottom: 0; width: 56px; border-color: var(--frame-dk); border-bottom: 0; border-radius: 0; background: var(--ic) content-box, var(--frame); box-shadow: inset 1px 1px 0 var(--frame-hi); }
+/* screen saver: leaves on the dark screen, or a sheep (frame 3 of the sheet, at 1x) by a window on a dimmed desktop */
+.cp-sv.leaves { background: radial-gradient(4px 2.5px at 18px 12px, #8cc152 90%, transparent), radial-gradient(2.5px 4px at 50px 20px, #5e9e3f 90%, transparent), radial-gradient(4px 2.5px at 32px 34px, #d9822b 90%, transparent), radial-gradient(2.5px 4px at 62px 38px, #a4c639 90%, transparent), radial-gradient(ellipse at 50% 35%, #1d3a24, #040604 80%); }
+.cp-sv.sheep { background: linear-gradient(#475569 0 0) 4px 20px / 30px 28px no-repeat, #1c2330; }
+.cp-sv.sheep::before { content: ''; position: absolute; left: 32px; bottom: 0; width: 40px; height: 40px; background: url(../../../vendor/esheep/gsheep-purple.png) 0 0 / 320px 160px; image-rendering: pixelated; }
+.cp-dk.panel::before { left: 0; bottom: 0; width: 100%; height: 10px; padding: 2px 4px; transform: none; border: 0; border-top: 1px solid #1d1f22; border-radius: 0; background: var(--ic) content-box, var(--panel); }
+/* Phones (the same query as windows.css): every control a finger uses is at least 44px tall, and the dock, which
+   holds launchers only there, fits six across */
+@media (max-width: 767px), (max-height: 500px) and (pointer: coarse) {
+  .cp-nav a, .seg-opts .cp-opt { min-height: 44px; }
+  .seg-opts .cp-opt { align-content: center; }
+  .cp-body .tb, .cp-foot .tb { height: 44px; }
+  .cp-size input { height: 44px; }
+  .wm[data-dock=panel] :is(.dk, #dock #homeBtn, #dock #winsBtn) { width: 44px; height: 44px; }
+  .wm[data-dock=panel] :is(.dk, #dock #homeBtn, #dock #winsBtn) .ico { width: 32px; height: 32px; }
+}

@@ -1,0 +1,24 @@
+{{- define "main" }}
+{{- $sections := site.Params.deskbar.readerSections | default (slice "posts") }}
+{{- $posts := (where site.RegularPages "Section" "in" $sections).ByDate.Reverse }}
+<article class="rd">
+  <header>
+    <h1>{{ site.Title }}</h1>
+    {{- with site.Params.description }}
+    <p class="lede">{{ . }}</p>
+    {{- end }}
+  </header>
+  {{- with .Content }}
+  <div class="rd-body">{{ . }}</div>
+  {{- end }}
+  <h2>Recent posts</h2>
+  <ul class="plist">
+    {{- range first 10 $posts }}
+    <li><a href="{{ .RelPermalink }}">{{ .Title }}</a> <time datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date.Format "2 Jan 2006" }}</time></li>
+    {{- end }}
+  </ul>
+  {{- with site.GetPage (index $sections 0) }}
+  <p><a href="{{ .RelPermalink }}">All {{ len $posts }} posts</a></p>
+  {{- end }}
+</article>
+{{- end }}

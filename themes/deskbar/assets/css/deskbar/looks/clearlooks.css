@@ -1,0 +1,155 @@
+/* GNOME 2 Clearlooks: two light panels, Metacity's blue title bars, Clearlooks' soft bevelled buttons, Tango colours
+   and Vera-style type. The bottom panel is the dock, holding Show desktop, the window list and a workspace pager.
+   Dark mode follows GNOME 2's custom colour schemes: the same shapes in dark greys. White title text sits on blues
+   dark enough for 4.5:1 below the sheen at the top of the bar. */
+:root[data-deco=clearlooks] {
+  --ui: 'DejaVu Sans', 'Bitstream Vera Sans', Verdana, 'Noto Sans', system-ui, sans-serif;
+  --mono: 'DejaVu Sans Mono', 'Bitstream Vera Sans Mono', 'JetBrains Mono', ui-monospace, monospace;
+  --panel: linear-gradient(light-dark(#f4f3f1, #4b4c4a), light-dark(#dedbd6, #3a3b39));
+  --panel-fg: light-dark(#1a1a1a, #eeeeec); --panel-hover: light-dark(rgba(0,0,0,.07), rgba(255,255,255,.1));
+  --frame: light-dark(#edeceb, #3c3d3b); --frame-hi: light-dark(#fff, #555753);
+  --frame-lo: light-dark(#a8a5a0, #262725); --frame-dk: light-dark(#6b6862, #151615);
+  --tab: light-dark(#8fb0dc, #7fa3d6); --tab-hi: light-dark(#c4d6ef, #a9c3e8); --tab-lo: light-dark(#34598c, #a9c4ea);
+  --tab-dim: light-dark(#b7cbe8, #93b0da); --tab-in: light-dark(#e4e1dd, #454644);
+  --tab-in-lo: light-dark(#a8a5a0, #2a2b29); --tab-in-fg: light-dark(#5d5a55, #c8c8c4); --ctl: #fff;
+  --content: light-dark(#fff, #262726); --fg: light-dark(#101010, #e8e8e6); --muted: light-dark(#555753, #b9b9b5);
+  --line: light-dark(#d3d0cc, #3e3f3d); --zebra: light-dark(rgba(0,0,0,.035), rgba(255,255,255,.03)); --side: light-dark(#f7f6f5, #2f302e);
+  --accent: light-dark(#3465a4, #3b6fbf); --accent-fg: #fff; --link: light-dark(#204a87, #8cb4e8);
+  --read-bg: light-dark(#fff, #20211f); --read-fg: light-dark(#1c1c1c, #dededa); --code-bg: light-dark(#f3f2f0, #2c2d2b);
+  --wall-1: light-dark(#3d6ea8, #2b5186); --wall-2: light-dark(#20457a, #173561); --wall-3: light-dark(#173463, #0f2548);
+  --wall-glow: rgba(140,190,255,.2);
+  --cl-title: linear-gradient(light-dark(#89aadb, #6f90c4), light-dark(#4c78b9, #3f67a5) 30%, light-dark(#4873b5, #3b62a0) 49%, light-dark(#3e68a8, #30568f) 50%, light-dark(#4570b0, #375d97));
+  --cl-title-in: linear-gradient(light-dark(#f3f1ee, #4f504d), light-dark(#e1ded9, #3e3f3c));
+  --cl-bd: light-dark(#2f5690, #1b3358); --cl-bd-in: light-dark(#9d9a95, #1e1f1d);
+  --cl-btn: linear-gradient(light-dark(#fff, #5a5b58), light-dark(#e7e4e0, #464744));
+  --cl-btn-hov: linear-gradient(light-dark(#fff, #666764), light-dark(#f2f0ed, #50514e));
+  --cl-sunk: linear-gradient(light-dark(#d2cfca, #2e2f2d), light-dark(#e2dfda, #383937));
+  --cl-btn-b: light-dark(#8e8b86, #1e1f1d); --cl-hi: light-dark(#fff, rgba(255,255,255,.1));
+  --cl-sel: linear-gradient(#4a76b8, #3465a4);
+  accent-color: var(--accent);
+}
+
+/* The wallpaper: GNOME 2's blue gradient with a faint foot. Its own colours, as it can be picked with any look. */
+.wm[data-wall=clearlooks] body, .cp-wp.clearlooks, .cp-deco.clearlooks {
+  --cl-wall: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 18' fill='%23fff' fill-opacity='.07'%3E%3Cellipse cx='9' cy='12' rx='5.2' ry='5.6'/%3E%3Ccircle cx='3.2' cy='6.2' r='1.6'/%3E%3Ccircle cx='5.8' cy='3.6' r='1.7'/%3E%3Ccircle cx='9.2' cy='2.4' r='1.8'/%3E%3Ccircle cx='12.8' cy='3.4' r='1.9'/%3E%3C/svg%3E") right 8% center / auto 44% no-repeat, radial-gradient(120% 70% at 20% 110%, rgba(140,190,255,.35), transparent 60%), radial-gradient(90% 60% at 90% -10%, rgba(255,255,255,.18), transparent 60%), linear-gradient(160deg, light-dark(#3d6ea8, #2b5186), light-dark(#20457a, #173561) 60%, light-dark(#173463, #0f2548));
+  background: var(--cl-wall);
+}
+.wm[data-wall=clearlooks] body { background-size: auto min(44vh, 60vw, 420px), auto, auto, auto; background-attachment: fixed; }
+/* thumbnails: two grey panels, and a window under a blue title bar */
+.cp-deco.clearlooks { background: linear-gradient(#e8e6e2 0 0) top / 100% 4px no-repeat, linear-gradient(#e8e6e2 0 0) bottom / 100% 5px no-repeat, var(--cl-wall); }
+.cp-deco.clearlooks::before { top: 9px; width: 52px; height: 8px; border: 1px solid #2f5690; border-bottom: 0; border-radius: 3px 3px 0 0; background: linear-gradient(#89aadb, #4873b5 49%, #3e68a8 50%); box-shadow: none; }
+.cp-deco.clearlooks::after { top: 17px; height: 22px; border: 1px solid #2f5690; border-top: 0; background: linear-gradient(#e6e3df 0 0) top / 100% 4px no-repeat, #fff; box-shadow: 0 3px 6px rgba(0,0,0,.35); }
+
+/* Metacity windows: a title bar the width of the window, rounded at the top, over a thin frame in the window colour */
+:root[data-deco=clearlooks] .win :is(.tab, .th) { gap: 3px; padding: 0 3px 0 8px; color: var(--tab-in-fg); background: var(--cl-title-in); border: 1px solid var(--cl-bd-in); border-bottom: 0; border-radius: 5px 5px 0 0; box-shadow: inset 0 1px var(--cl-hi), 0 -1px 5px rgba(0,0,0,.12); text-shadow: none; }
+:root[data-deco=clearlooks] .win.active :is(.tab.on, .th) { color: #fff; background: var(--cl-title); border-color: var(--cl-bd); box-shadow: inset 0 1px rgba(255,255,255,.35), 0 -1px 8px rgba(0,0,0,.2); text-shadow: 0 1px 1px rgba(0,0,0,.45); }
+:root[data-deco=clearlooks] .win.active .tab:not(.on) { color: #15233a; background: linear-gradient(light-dark(#cddcf1, #b3c9ea), light-dark(#aac2e5, #93b0da)); border-color: var(--cl-bd); }
+:root[data-deco=clearlooks] .win .tabs:not(.multi) .tab { left: 0 !important; right: 0; }
+:root[data-deco=clearlooks] .tab .tt { max-width: none; font-weight: 700; }
+:root[data-deco=clearlooks] .tab.sliding { background: var(--cl-title) !important; }
+/* a stack of windows is one title bar cut into segments, the blank end its handle */
+:root[data-deco=clearlooks] .tabs.multi :is(.tab, .th) { border-radius: 0; }
+:root[data-deco=clearlooks] .tabs.multi .tab:first-child { border-top-left-radius: 5px; }
+:root[data-deco=clearlooks] .tabs.multi .th { border-top-right-radius: 5px; }
+:root[data-deco=clearlooks] .win.active .th::before { background: radial-gradient(circle at 2px 2px, rgba(255,255,255,.4) 1.1px, transparent 1.6px) 1px 1px / 5px 5px, radial-gradient(circle at 2px 2px, rgba(0,0,0,.3) 1.1px, transparent 1.6px) 0 0 / 5px 5px; }
+:root[data-deco=clearlooks] :is(.win, .sw-tab) .ctl { width: 21px; height: 19px; border: 1px solid rgba(20,40,80,.5); border-radius: 3px; background: linear-gradient(rgba(255,255,255,.3), rgba(255,255,255,.06)); opacity: 1; }
+:root[data-deco=clearlooks] .ctl svg { width: 9px; height: 9px; filter: drop-shadow(0 1px 0 rgba(0,0,0,.3)); }
+:root[data-deco=clearlooks] :is(.win, .sw-tab) .ctl:hover { background: linear-gradient(rgba(255,255,255,.55), rgba(255,255,255,.18)); }
+:root[data-deco=clearlooks] :is(.win, .sw-tab) .ctl.close:hover { color: #fff; background: linear-gradient(#ef2929, #cc0000); border-color: #a40000; }
+:root[data-deco=clearlooks] :is(.win:not(.active), .win.active .tab:not(.on), .sw-tab:not(.on)) .ctl { color: inherit; border-color: light-dark(rgba(0,0,0,.22), rgba(0,0,0,.45)); background: var(--cl-btn); }
+:root[data-deco=clearlooks] :is(.win:not(.active), .win.active .tab:not(.on), .sw-tab:not(.on)) .ctl svg { filter: none; }
+:root[data-deco=clearlooks] .win .frame { padding: 0 3px 3px; background: var(--frame); border: 1px solid var(--cl-bd-in); border-top: 0; border-radius: 0; box-shadow: inset 1px 0 var(--cl-hi), 0 3px 10px rgba(0,0,0,.25); }
+:root[data-deco=clearlooks] .win.active .frame { border-color: var(--cl-bd); box-shadow: inset 1px 0 var(--cl-hi), 0 6px 20px rgba(0,0,0,.4); }
+:root[data-deco=clearlooks] .views { border: 1px solid var(--frame-lo); }
+/* GTK's resize grip: a triangle of dots */
+:root[data-deco=clearlooks] .grip { background: radial-gradient(circle, var(--frame-dk) 1px, transparent 1.4px) 0 0 / 4px 4px; clip-path: polygon(100% 15%, 100% 100%, 15% 100%); }
+
+/* Clearlooks widgets. :where keeps pressed and toggled buttons under apps' own state rules, as the Flat style does. */
+:root[data-deco=clearlooks] .toolbar { background: linear-gradient(light-dark(#f7f6f5, #454644), light-dark(#e6e3df, #3a3b39)); border-bottom-color: var(--frame-lo); }
+:root[data-deco=clearlooks] :is(.tb, .seg) { border-color: var(--cl-btn-b); }
+:root[data-deco=clearlooks] :is(.tb, .seg):not(:where(.on, :active, [aria-expanded=true], [aria-pressed=true])) { background: var(--cl-btn); box-shadow: inset 0 1px var(--cl-hi); }
+:root[data-deco=clearlooks] :is(.tb, .seg):not(:where(.on, :active, [aria-expanded=true], [aria-pressed=true], :disabled)):hover { background: var(--cl-btn-hov); }
+:root[data-deco=clearlooks] :where(.tb:active, .seg.on) { color: var(--fg); background: var(--cl-sunk); box-shadow: inset 0 1px 2px rgba(0,0,0,.3); }
+/* entries, at the core's weight so fields that draw their own borders keep them */
+:where(:root[data-deco=clearlooks]) :is(input:where(:not([type=checkbox], [type=radio], [type=range])), select) { border-color: light-dark(#8e8b86, #6a6b68); box-shadow: inset 0 1px 2px rgba(0,0,0,.12); }
+:root[data-deco=clearlooks] :is(.pv-year, .list th) { background: var(--cl-btn); }
+:root[data-deco=clearlooks] .places h2 { text-transform: none; letter-spacing: 0; font-size: 12px; }
+@media (pointer: fine) {
+  :root[data-deco=clearlooks] ::-webkit-scrollbar { width: 14px; height: 14px; background: light-dark(#dedbd6, #333432); }
+  :root[data-deco=clearlooks] ::-webkit-scrollbar-corner { background: light-dark(#dedbd6, #333432); }
+  :root[data-deco=clearlooks] ::-webkit-scrollbar-thumb { border: 1px solid var(--cl-btn-b); border-radius: 3px; background: repeating-linear-gradient(light-dark(#9d9a95, #252624) 0 1px, transparent 1px 2px) center / 6px 5px no-repeat, linear-gradient(90deg, light-dark(#fbfaf9, #5f605d), light-dark(#e2dfdb, #4a4b48)); }
+  :root[data-deco=clearlooks] ::-webkit-scrollbar-thumb:horizontal { background: repeating-linear-gradient(90deg, light-dark(#9d9a95, #252624) 0 1px, transparent 1px 2px) center / 5px 6px no-repeat, linear-gradient(light-dark(#fbfaf9, #5f605d), light-dark(#e2dfdb, #4a4b48)); }
+}
+@supports not selector(::-webkit-scrollbar) { :root[data-deco=clearlooks] { scrollbar-color: light-dark(#bcb9b4, #5f605d) light-dark(#dedbd6, #333432); } }
+
+/* The top panel: the foot menu at the left, notification area and clock at the right */
+:root[data-deco=clearlooks] #panel { border-bottom: 1px solid light-dark(#a8a5a0, #1a1b19); box-shadow: inset 0 -1px light-dark(#faf9f8, rgba(255,255,255,.05)); }
+:root[data-deco=clearlooks] .pb:hover { background: var(--cl-btn-hov); box-shadow: inset 0 0 0 1px light-dark(#b1aea9, #262725); }
+:root[data-deco=clearlooks] :is(.pb, .sw-link):focus-visible { outline-color: var(--accent); }
+:root[data-deco=clearlooks] #menuBtn { font-weight: 400; }
+:root[data-deco=clearlooks] #menuBtn .ico { display: none; }
+:root[data-deco=clearlooks] #menuBtn::before { content: ''; width: 16px; height: 18px; background: currentColor; mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 18'%3E%3Cellipse cx='9' cy='12' rx='5.2' ry='5.6'/%3E%3Ccircle cx='3.2' cy='6.2' r='1.6'/%3E%3Ccircle cx='5.8' cy='3.6' r='1.7'/%3E%3Ccircle cx='9.2' cy='2.4' r='1.8'/%3E%3Ccircle cx='12.8' cy='3.4' r='1.9'/%3E%3C/svg%3E") center / contain no-repeat; }
+:root[data-deco=clearlooks] :is(#menuBtn.open, .task.on, .home-btn.on, .home-btn:active) { color: var(--panel-fg); background: var(--cl-sunk); border-color: var(--cl-btn-b); box-shadow: inset 0 1px 2px rgba(0,0,0,.25), inset 0 0 0 1px var(--cl-btn-b); }
+/* window list buttons, a minimised window's title in brackets as GNOME showed it */
+:root[data-deco=clearlooks] .task { border-color: light-dark(#b1aea9, #262725); background: var(--cl-btn); box-shadow: inset 0 1px var(--cl-hi); }
+:root[data-deco=clearlooks] .task:hover { background: var(--cl-btn-hov); }
+:root[data-deco=clearlooks] .task.min { opacity: 1; font-style: normal; color: var(--muted); }
+:root[data-deco=clearlooks] .task.min span::before { content: '['; }
+:root[data-deco=clearlooks] .task.min span::after { content: ']'; }
+
+/* The bottom panel: Show desktop, the window list, launchers and the workspace pager */
+:root[data-deco=clearlooks][data-dock=panel] #dock { padding-inline: 4px; border-top: 1px solid light-dark(#a8a5a0, #1a1b19); box-shadow: inset 0 1px light-dark(#fff, rgba(255,255,255,.06)); }
+:root[data-deco=clearlooks][data-dock=panel] :is(.dk, #dock #homeBtn, #dock #winsBtn):hover { background: var(--cl-btn-hov); box-shadow: inset 0 0 0 1px light-dark(#b1aea9, #262725); }
+:root[data-deco=clearlooks][data-dock=panel] :is(#dock #homeBtn.on, #dock #homeBtn:active), .wm[data-deco=clearlooks]:has(#switcher:popover-open) #dock #winsBtn { background: var(--cl-sunk); box-shadow: inset 0 1px 2px rgba(0,0,0,.25), inset 0 0 0 1px var(--cl-btn-b); }
+:root[data-deco=clearlooks][data-dock=panel] #dock #homeBtn .ico { background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 18 16'%3E%3Crect x='.5' y='1.5' width='17' height='13' rx='1.5' fill='%23729fcf' stroke='%23204a87'/%3E%3Crect x='2.5' y='3.5' width='13' height='9' fill='%233465a4'/%3E%3C/svg%3E") center / 80% no-repeat; }
+:root[data-deco=clearlooks][data-dock=panel] #dock #homeBtn .ico use { display: none; }
+:root[data-deco=clearlooks][data-dock=panel] #dock #winsBtn { width: 96px; }
+:root[data-deco=clearlooks][data-dock=panel] #dock #winsBtn .ico { display: none; }
+/* four workspaces, the first current; the open-window count is a small window in it */
+:root[data-deco=clearlooks][data-dock=panel] #dock #winsBtn::after { content: ''; position: absolute; inset: 4px 3px; border: 1px solid #6b6862; background: linear-gradient(90deg, #6f93c8 0 25%, #6b6862 0 calc(25% + 1px), #8d9ab0 0 50%, #6b6862 0 calc(50% + 1px), #8d9ab0 0 75%, #6b6862 0 calc(75% + 1px), #8d9ab0 0); box-shadow: inset 0 0 0 1px rgba(255,255,255,.3); }
+:root[data-deco=clearlooks][data-dock=panel] #dock #winsBtn b { z-index: 1; top: 8px; left: 7px; right: auto; min-width: 14px; padding: 0 2px; border-radius: 0; font-size: 9px; line-height: 10px; color: #1a1a1a; background: #fff; box-shadow: 0 0 0 1px #204a87; }
+@media (pointer: fine) {
+  :root[data-deco=clearlooks][data-dock=panel] :is(.dk, #dock #homeBtn, #dock #winsBtn) { height: 28px; }
+  :root[data-deco=clearlooks][data-dock=panel] :is(.dk, #dock #homeBtn) { width: 30px; }
+  :root[data-deco=clearlooks][data-dock=panel] :is(.dk, #dock #homeBtn) .ico { width: 22px; height: 22px; }
+  :root[data-deco=clearlooks][data-dock=panel] #dock #winsBtn b { top: 7px; }
+}
+/* On a desktop with a mouse the window list moves from the top panel into the bottom one, between Show desktop and
+   the launchers, which pack to the right. The right edge leaves room for about seven launchers and the pager. The
+   panel is lifted over the dock so its window list is drawn on it. */
+@media (pointer: fine) { @media not ((max-width: 767px) or ((max-height: 500px) and (pointer: coarse))) {
+  .wm[data-deco=clearlooks][data-dock=panel] #panel { z-index: 100001; }
+  .wm[data-deco=clearlooks][data-dock=panel] #tasks { position: fixed; left: 46px; right: 300px; bottom: 0; height: 32px; margin: 0; align-items: center; }
+  .wm[data-deco=clearlooks][data-dock=panel] .task { flex: 0 1 200px; min-width: 0; }
+  .wm[data-deco=clearlooks][data-dock=panel] #dock #homeBtn { margin-right: auto; }
+  .wm[data-deco=clearlooks][data-dock=panel] #dock #winsBtn { margin-left: 7px; }
+} }
+
+/* Menus: GTK's with Clearlooks' blue selection */
+:root[data-deco=clearlooks] :is(#menu, .ctx) { border-color: var(--cl-btn-b); border-radius: 0; box-shadow: 0 4px 14px rgba(0,0,0,.35); }
+:root[data-deco=clearlooks] .mn-head { background: linear-gradient(light-dark(#f7f6f5, #454644), light-dark(#e6e3df, #3a3b39)); border-bottom-color: var(--frame-lo); }
+:root[data-deco=clearlooks] :is(.mn-it:hover, .mn-it:focus-visible, .ctx-it:hover, .ctx-it:focus-visible, .mn-cats button.on, .places button.on) { color: #fff; background: var(--cl-sel); box-shadow: inset 0 0 0 1px #204a87; }
+
+/* Window switcher: each window a rolled-up Metacity title bar */
+:root[data-deco=clearlooks] .sw-tab { color: var(--tab-in-fg); background: var(--cl-title-in); border-color: var(--cl-bd-in); border-radius: 5px 5px 0 0; box-shadow: inset 0 1px var(--cl-hi); }
+:root[data-deco=clearlooks] .sw-tab.on { color: #fff; background: var(--cl-title); border-color: var(--cl-bd); text-shadow: 0 1px 1px rgba(0,0,0,.45); }
+:root[data-deco=clearlooks] .sw-tab:not(.on):hover { color: #15233a; background: linear-gradient(light-dark(#cddcf1, #b3c9ea), light-dark(#aac2e5, #93b0da)); }
+:root[data-deco=clearlooks] .sw-tab::after { border-color: inherit; border-top: 0; box-shadow: inset 1px 0 var(--cl-hi); }
+:root[data-deco=clearlooks] :is(.sw-link, .sw-empty) { background: var(--panel); border-color: var(--cl-btn-b); }
+:root[data-deco=clearlooks] .sw-link:hover { background: var(--cl-btn-hov); }
+:root[data-deco=clearlooks] .sw-link.done { color: var(--link); }
+
+/* Other title bars: the phone home screen's Recent posts and Spotlight */
+:root[data-deco=clearlooks] :is(#recent h2, .sp-tab) { color: #fff; background: var(--cl-title); border-color: var(--cl-bd); border-radius: 5px 5px 0 0; box-shadow: inset 0 1px rgba(255,255,255,.35); text-shadow: 0 1px 1px rgba(0,0,0,.45); }
+:root[data-deco=clearlooks] .sp-tab { display: flex; }
+:root[data-deco=clearlooks] :is(.sp-frame, #desk .recent-list) { border-color: var(--cl-bd); border-top: 0; }
+:root[data-deco=clearlooks] .dicon span { border-radius: 4px; }
+
+/* Phones: a full-screen window is maximised, so its title bar is square, with touch-sized buttons */
+@media (max-width: 767px), (max-height: 500px) and (pointer: coarse) {
+  :root[data-deco=clearlooks] .win :is(.tab, .th) { border-radius: 0; border-inline: 0; }
+  :root[data-deco=clearlooks] .win .frame { padding: 0; border: 0; }
+  :root[data-deco=clearlooks] .views { border: 0; }
+  :root[data-deco=clearlooks] :is(.win, .sw-tab) .ctl { width: 40px; height: 30px; }
+  :root[data-deco=clearlooks] .ctl svg { width: 12px; height: 12px; }
+}

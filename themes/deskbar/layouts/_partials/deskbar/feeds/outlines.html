@@ -1,0 +1,13 @@
+{{- /* OPML <outline> elements, unmarshalled, to a flat list of { name, url, site }. Feed readers export folders as
+       outlines holding outlines, and one child unmarshals to a map rather than a list, so both shapes recurse. */ -}}
+{{- $out := slice -}}
+{{- $list := . -}}
+{{- if reflect.IsMap . }}{{ $list = slice . }}{{ end -}}
+{{- range $list -}}
+  {{- $o := . -}}
+  {{- with index $o "-xmlUrl" -}}
+    {{- $out = $out | append (dict "url" (strings.TrimSpace .) "name" (index $o "-title" | default (index $o "-text") | default "") "site" (index $o "-htmlUrl" | default "")) -}}
+  {{- end -}}
+  {{- with $o.outline }}{{ $out = $out | append (partial "deskbar/feeds/outlines.html" .) }}{{ end -}}
+{{- end -}}
+{{- return $out -}}

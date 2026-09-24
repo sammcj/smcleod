@@ -1,0 +1,1072 @@
+<!doctype html>
+<html lang="en-AU">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>smcleod.net - Tracker Workbench</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Literata:ital,opsz,wght@0,7..72,400;0,7..72,600;1,7..72,400&family=Noto+Sans:wght@400;600;700&display=swap">
+<style>
+:root{
+  --ink:#2a2118; --ink2:#5d5346; --line:#2a2118;
+  --chrome:#e2ddd1; --chrome-hi:#f7f4ed; --chrome-lo:#b3aa98; --chrome-dk:#8c8373;
+  --tab:#ffd04a; --tab2:#efa817; --tab-in:#e3dfd3; --tab-in2:#cbc4b3;
+  --paper:#fbf8f1; --teal:#1f7d86; --teal-d:#155a61; --rust:#c2582a;
+  --tabH:28px; --btn:17px; --bar:172px; --fs:1;
+  --ui:"Noto Sans",system-ui,sans-serif; --read:"Literata",Georgia,serif; --mono:"JetBrains Mono",ui-monospace,monospace;
+}
+@media (pointer:coarse){:root{--tabH:38px;--btn:24px}}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+html,body{margin:0;height:100%;overflow:hidden}
+body{font:13px/1.4 var(--ui);color:var(--ink);background:#1b3a40;-webkit-font-smoothing:antialiased;user-select:none;-webkit-user-select:none;touch-action:manipulation}
+button{font:inherit;color:inherit;cursor:pointer}
+use{fill:none}
+a{color:var(--teal-d)}
+
+/* Desktop: a teal cutting mat under a dusk glow */
+#desk{position:fixed;inset:0;overflow:hidden;background:
+  radial-gradient(110% 55% at 25% 110%,rgba(238,150,72,.45),transparent 62%),
+  repeating-linear-gradient(0deg,rgba(255,255,255,.06) 0 1px,transparent 1px 160px),
+  repeating-linear-gradient(90deg,rgba(255,255,255,.06) 0 1px,transparent 1px 160px),
+  repeating-linear-gradient(0deg,rgba(255,255,255,.028) 0 1px,transparent 1px 32px),
+  repeating-linear-gradient(90deg,rgba(255,255,255,.028) 0 1px,transparent 1px 32px),
+  linear-gradient(168deg,#215459 0%,#1c3d48 48%,#2c2742 100%)}
+.icons{position:absolute;left:12px;top:12px;display:flex;flex-direction:column;gap:4px;z-index:1}
+.dicon{width:92px;padding:6px 4px;border:0;background:none;display:flex;flex-direction:column;align-items:center;gap:5px;border-radius:6px}
+.dicon svg,.dicon img{width:48px;height:48px;filter:drop-shadow(0 2px 2px rgba(0,0,0,.4))}
+.dicon img{object-fit:cover;border:2px solid var(--line);border-radius:3px;background:#fff;width:44px;height:40px;margin:4px 0}
+.dicon span{color:#fff;font-weight:600;font-size:12px;line-height:1.25;text-shadow:0 1px 2px #000,0 0 6px rgba(0,0,0,.6);padding:1px 6px;border-radius:3px}
+.dicon:hover span{background:rgba(0,0,0,.3)}
+.dicon:active span{background:var(--teal);text-shadow:none}
+
+/* Replicants (desktop widgets) */
+.rep{position:absolute;width:300px;z-index:2;background:linear-gradient(var(--chrome-hi),var(--chrome));border:1px solid var(--line);border-radius:4px;box-shadow:inset 1px 1px 0 #fff,inset -1px -1px 0 var(--chrome-lo),0 10px 24px rgba(0,0,0,.35)}
+.rep h3{margin:0;padding:6px 10px;font-size:10.5px;letter-spacing:.09em;text-transform:uppercase;color:var(--ink2);border-bottom:1px solid var(--chrome-lo);display:flex;justify-content:space-between;gap:8px}
+.rep h3 span{font-weight:400;letter-spacing:0;text-transform:none}
+.grab{position:absolute;right:2px;bottom:2px;width:16px;height:16px;cursor:move;touch-action:none;opacity:.7}
+.grab:hover{opacity:1}
+.grab svg{width:16px;height:16px;display:block}
+.lp-card{display:block;width:100%;padding:0;border:0;background:none;text-align:left}
+.lp-cover{display:grid;place-items:center;height:92px;background:#2b2622 center/cover no-repeat;border-bottom:1px solid var(--chrome-lo)}
+.lp-cover.none{background:linear-gradient(135deg,#2d5f66,#2c2742)}
+.lp-cover svg{width:56px;height:56px;filter:drop-shadow(0 3px 3px rgba(0,0,0,.5))}
+.lp-body{display:block;padding:9px 12px 4px}
+.lp-body small{color:var(--ink2);font-size:11.5px}
+.lp-body strong{display:block;font:600 16px/1.3 var(--read);margin:2px 0 5px}
+.lp-body span{display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden;color:var(--ink2);font-size:12.5px}
+.lp-card:hover strong{color:var(--teal-d);text-decoration:underline}
+.lp-nav{display:flex;gap:6px;padding:6px 26px 8px 12px}
+.xb{display:inline-flex;align-items:center;gap:6px;min-height:28px;padding:3px 11px;border:1px solid var(--chrome-dk);border-radius:3px;background:linear-gradient(#fdfcf9,#e0d9cb);box-shadow:inset 0 1px 0 #fff;font-size:12px;text-decoration:none;color:var(--ink)}
+.xb:hover{background:linear-gradient(#fffdf6,#ece5d4);border-color:#6f6656}
+.xb:active{background:linear-gradient(#d8d1c2,#ece6d9);box-shadow:inset 0 1px 2px rgba(0,0,0,.2)}
+.xb svg{width:16px;height:16px}
+.kpis{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;padding:8px 10px 6px}
+.kpis div{background:#171b1a;border:1px solid #000;border-radius:3px;padding:4px 7px;box-shadow:inset 0 1px 3px rgba(0,0,0,.6)}
+.kpis b{display:block;font:700 17px var(--mono);color:#9ff0b0}
+.kpis span{font-size:10.5px;color:#a9b6ae}
+.spark{display:block;width:calc(100% - 20px);height:72px;margin:0 10px;background:#141816;border:1px solid #000;border-radius:3px}
+.spark line{stroke:#2a3431;stroke-width:1}
+.spark .bar{fill:url(#gBar)}
+.spark .bar.cur{fill:var(--tab)}
+.spark g{cursor:pointer}
+.spark g:hover .bar{fill:#ffe07a}
+.axis{display:flex;justify-content:space-between;margin:2px 12px 0;font:10.5px var(--mono);color:var(--ink2)}
+.ro{margin:4px 10px 6px;font-size:12px;min-height:17px}
+.tops{padding:0 10px 22px;display:grid;gap:2px}
+.tops button{display:grid;grid-template-columns:78px 1fr 28px;align-items:center;gap:8px;border:0;background:none;padding:3px 2px;border-radius:3px;text-align:left;font-size:12px;min-height:24px}
+.tops button:hover{background:rgba(31,125,134,.12)}
+.tops i{height:7px;border-radius:4px;background:linear-gradient(90deg,var(--teal),#5cc3bb);box-shadow:inset 0 0 0 1px rgba(0,0,0,.25)}
+.tops b{text-align:right;font:12px var(--mono)}
+.note{background:linear-gradient(#fff6b8,#f7e27e);border-color:#6b5a1c;transform:rotate(-1.2deg)}
+.note h3{border-color:#d4bd5a;color:#6b5a1c}
+.note button{display:block;width:100%;border:0;background:none;text-align:left;padding:10px 14px 22px}
+.note q{display:block;font:italic 400 15px/1.5 var(--read);quotes:none}
+.note cite{display:block;margin-top:6px;font:600 12px var(--ui);font-style:normal;color:#6b5a1c}
+
+/* Deskbar */
+#deskbar{position:fixed;top:0;right:0;width:var(--bar);z-index:9000;background:var(--chrome);border:1px solid var(--line);border-top:0;border-right:0;border-bottom-left-radius:4px;box-shadow:0 6px 18px rgba(0,0,0,.45)}
+.leaf{display:flex;align-items:center;gap:8px;width:100%;height:42px;padding:0 10px;border:0;border-bottom:1px solid var(--chrome-lo);background:linear-gradient(#fdfbf6,#dcd5c7);font-weight:700;font-size:14px;box-shadow:inset 0 1px 0 #fff}
+.leaf svg{width:28px;height:28px;filter:drop-shadow(0 1px 1px rgba(0,0,0,.35))}
+.leaf[aria-expanded=true]{background:linear-gradient(#3a9aa3,var(--teal));color:#fff}
+.tray{display:flex;align-items:center;justify-content:space-between;gap:6px;margin:4px;padding:2px 4px 2px 8px;border:1px solid var(--chrome-lo);border-radius:3px;background:linear-gradient(#d6cfc1,#e7e2d8);box-shadow:inset 0 1px 2px rgba(0,0,0,.15)}
+.tz{font-size:10.5px;color:var(--ink2);letter-spacing:.05em;text-transform:uppercase}
+#clock{border:0;background:none;padding:3px 4px;font:600 12.5px var(--ui);font-variant-numeric:tabular-nums;min-height:24px}
+.teams{padding:2px 0 6px}
+.team-h{display:flex;align-items:center;gap:6px;padding:6px 8px 2px;font-weight:700;font-size:12px}
+.team-h svg{width:18px;height:18px}
+.team-w{display:block;width:100%;border:0;background:none;padding:4px 8px 4px 32px;min-height:26px;text-align:left;font-size:12px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.team-w:hover{background:rgba(255,255,255,.6)}
+.team-w.on{background:linear-gradient(#fff4c8,#ffe08a);box-shadow:inset 0 0 0 1px #d6a526}
+.team-w.min{color:var(--ink2);font-style:italic}
+.none{margin:6px 10px;color:var(--ink2);font-size:12px}
+#menu{position:fixed;top:42px;right:0;width:250px;z-index:9001;background:linear-gradient(90deg,var(--chrome-hi),var(--chrome));border:1px solid var(--line);box-shadow:0 10px 24px rgba(0,0,0,.4);padding:4px 0;max-height:calc(100dvh - 50px);overflow:auto}
+.mi{display:flex;align-items:center;gap:10px;width:100%;min-height:34px;padding:5px 12px;border:0;background:none;text-align:left;text-decoration:none;color:inherit}
+.mi svg{width:22px;height:22px;flex:none}
+.mi:hover{background:linear-gradient(#3a9aa3,var(--teal));color:#fff}
+.mh{padding:9px 12px 3px;font-size:10.5px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--ink2);border-top:1px solid var(--chrome-lo);margin-top:4px}
+.mob{display:none}
+
+/* XFCE-style dock with intelligent hiding */
+#dock{position:fixed;left:0;right:0;bottom:0;margin:0 auto;width:max-content;z-index:8999;display:flex;align-items:flex-end;gap:4px;padding:6px 10px 9px;background:linear-gradient(rgba(62,54,47,.93),rgba(33,29,26,.96));border:1px solid rgba(0,0,0,.6);border-bottom:0;border-radius:10px 10px 0 0;box-shadow:0 -4px 20px rgba(0,0,0,.35),inset 0 1px 0 rgba(255,255,255,.14);transition:transform .25s ease}
+#dock.hid{transform:translateY(calc(100% + 2px))}
+.dk{position:relative;display:grid;place-items:center;width:54px;height:54px;border:0;border-radius:8px;background:none;transition:transform .16s ease,background .16s}
+.dk svg{width:42px;height:42px;filter:drop-shadow(0 2px 2px rgba(0,0,0,.5))}
+.dk:hover{transform:translateY(-5px);background:rgba(255,255,255,.08)}
+.dk:active{transform:translateY(-1px) scale(.92)}
+.dk .lbl{position:absolute;bottom:calc(100% + 8px);left:50%;transform:translateX(-50%);padding:3px 8px;border-radius:4px;background:#1e1a17;color:#f3eee4;font-size:12px;white-space:nowrap;opacity:0;pointer-events:none;transition:opacity .12s}
+.dk:hover .lbl{opacity:1}
+.dk.run::after{content:"";position:absolute;bottom:-5px;left:50%;width:16px;height:3px;margin-left:-8px;border-radius:2px;background:var(--tab);box-shadow:0 0 6px rgba(255,208,74,.7)}
+.dsep{width:1px;align-self:stretch;margin:6px 4px;background:rgba(255,255,255,.14)}
+@media (hover:none){.dk:hover{transform:none;background:none}.dk:hover .lbl{opacity:0}}
+#grip{position:fixed;left:0;right:0;bottom:0;margin:0 auto;width:140px;height:16px;z-index:8998;border:0;background:none;padding:0}
+#grip::before{content:"";display:block;width:60px;height:5px;margin:6px auto 0;border-radius:3px;background:rgba(255,255,255,.5);box-shadow:0 0 0 1px rgba(0,0,0,.35)}
+@media (pointer:coarse){#grip{height:30px}#grip::before{margin-top:18px}}
+
+/* Windows: Haiku yellow tab over a warm Clearlooks frame */
+.win{position:absolute;display:flex;flex-direction:column}
+.win.new{animation:pop .16s ease-out}
+@keyframes pop{from{opacity:0;transform:scale(.97) translateY(6px)}}
+.win.min{display:none}
+.tab{align-self:flex-start;max-width:100%;min-width:150px;height:var(--tabH);display:flex;align-items:center;gap:8px;padding:0 6px;margin-bottom:-1px;position:relative;z-index:1;background:linear-gradient(#ffe383,var(--tab) 48%,var(--tab2));border:1px solid var(--line);border-bottom:0;border-radius:4px 4px 0 0;box-shadow:inset 1px 1px 0 rgba(255,255,255,.75);touch-action:none;cursor:default}
+.win:not(.focus) .tab{background:linear-gradient(#f1eee6,var(--tab-in) 50%,var(--tab-in2));color:var(--ink2)}
+.ttl{flex:1 1 auto;min-width:0;padding:0 6px 0 2px;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.wb{position:relative;flex:none;width:var(--btn);height:var(--btn);padding:0;border:1px solid var(--line);border-radius:2px;background:linear-gradient(135deg,#fff,#ece3c8 55%,#c7b78b)}
+.win:not(.focus) .wb{background:linear-gradient(135deg,#fff,#e6e1d5 55%,#bdb5a4)}
+.wb::before{content:"";position:absolute;inset:-6px}
+.wb:active{background:linear-gradient(135deg,#c7b78b,#ece3c8)}
+.mini::after{content:"";position:absolute;left:3px;right:3px;bottom:3px;height:2px;background:var(--line)}
+.zoom::after{content:"";position:absolute;left:2px;top:2px;width:48%;height:48%;border:1px solid var(--line);background:linear-gradient(135deg,#fff,#d9cfae)}
+.frame{flex:1;min-height:0;display:flex;flex-direction:column;position:relative;padding:4px;border:1px solid var(--line);border-radius:0 3px 3px 3px;background:linear-gradient(var(--chrome-hi),var(--chrome));box-shadow:inset 1px 1px 0 #fff,inset -1px -1px 0 var(--chrome-lo),0 14px 32px rgba(0,0,0,.42)}
+.body{flex:1;min-height:0;display:flex;flex-direction:column;overflow:hidden;background:#fff;border:1px solid var(--chrome-dk);container-type:inline-size}
+.knob{position:absolute;right:1px;bottom:1px;width:16px;height:16px;cursor:nwse-resize;touch-action:none;background:linear-gradient(135deg,transparent 0 44%,var(--chrome-dk) 44% 52%,transparent 52% 62%,var(--chrome-dk) 62% 70%,transparent 70% 80%,var(--chrome-dk) 80% 88%,transparent 88%)}
+.knob::before{content:"";position:absolute;inset:-8px}
+.win.shaded{height:auto!important}
+.win.shaded .frame{flex:none;height:9px;padding:0}
+.win.shaded .body,.win.shaded .knob{display:none}
+
+/* Tracker (post browser) */
+.tbar{display:flex;gap:6px;align-items:center;padding:6px;background:linear-gradient(#f6f3ec,#e2dcd0);border-bottom:1px solid var(--chrome-lo)}
+.srch{flex:1;min-width:0;height:32px;padding:0 10px;border:1px solid var(--chrome-dk);border-radius:3px;font:inherit;background:#fff;box-shadow:inset 0 1px 2px rgba(0,0,0,.15);user-select:text}
+.srch:focus{outline:2px solid var(--teal);outline-offset:-1px}
+.cols,.row{display:grid;grid-template-columns:1fr 96px 190px;align-items:center;gap:10px}
+.cols{padding:0 10px;background:linear-gradient(#fbfaf6,#e6e1d6);border-bottom:1px solid var(--chrome-lo);font-size:12px}
+.cols button{border:0;background:none;padding:5px 0;text-align:left;font-weight:600}
+.cols button.on::after{content:" \25BE"}
+.cols button.on.up::after{content:" \25B4"}
+.rows{flex:1;min-height:0;overflow:auto}
+.row{width:100%;min-height:38px;padding:4px 10px;border:0;border-bottom:1px solid #f0ece3;background:none;text-align:left}
+.row:nth-child(even){background:#faf8f3}
+.row:hover{background:#fff3c4}
+.nm{display:flex;align-items:center;gap:8px;min-width:0}
+.nm svg{width:22px;height:22px;flex:none}
+.nm span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.dt{color:var(--ink2);font-variant-numeric:tabular-nums}
+.tg{color:var(--ink2);font-size:11.5px;overflow:hidden;white-space:nowrap;text-overflow:ellipsis}
+.stat{flex:none;padding:3px 10px;font-size:11.5px;color:var(--ink2);background:var(--chrome);border-top:1px solid var(--chrome-lo)}
+@container (max-width:540px){.cols,.row{grid-template-columns:1fr 86px}.tg{display:none}}
+
+/* Reader */
+.rbar{position:relative;flex:none;display:flex;align-items:center;gap:4px;padding:4px 6px;background:linear-gradient(#f6f3ec,#e0dace);border-bottom:1px solid var(--chrome-lo)}
+.rbar .sp{flex:1}
+.prog{position:absolute;left:0;bottom:-1px;height:2px;width:0;background:var(--teal)}
+.read{flex:1;min-height:0;overflow:auto;background:var(--paper);user-select:text;-webkit-user-select:text}
+.art{max-width:70ch;margin:0 auto;padding:30px 28px 72px;font:400 calc(1.07rem * var(--fs))/1.72 var(--read);color:#2b2620}
+.art h1{font:600 2.05em/1.18 var(--read);margin:.2em 0 .3em;letter-spacing:-.01em}
+.art h2{font:700 1.3em/1.3 var(--ui);margin:2em 0 .5em}
+.art h3{font:700 1.08em/1.35 var(--ui);margin:1.6em 0 .4em}
+.meta{font:13px var(--ui);color:var(--ink2);margin:0 0 10px}
+.tags{display:flex;flex-wrap:wrap;gap:5px;margin-bottom:26px}
+.tags button{border:1px solid #d3c9b4;background:#f3ede0;border-radius:11px;padding:2px 10px;font:12px var(--ui);min-height:26px}
+.tags button:hover{background:#fff3c4;border-color:#d6a526}
+.cover{display:block;width:100%;max-height:340px;object-fit:cover;border-radius:6px;border:1px solid #d6cdb9;margin-bottom:18px}
+.lede{font-size:1.15em;color:#3b342b}
+.go{display:inline-block;margin-top:.6em;padding:9px 16px;border-radius:4px;border:1px solid var(--teal-d);background:linear-gradient(#2e939c,var(--teal));color:#fff;font:600 14px var(--ui);text-decoration:none;box-shadow:inset 0 1px 0 rgba(255,255,255,.25)}
+.art a:not(.go){color:var(--teal-d);text-underline-offset:2px}
+.art pre{background:#26221f;color:#efe9dd;padding:14px 16px;border-radius:6px;border:1px solid #000;overflow:auto;font:13px/1.55 var(--mono)}
+.art code{font:.86em var(--mono);background:#efe8d8;padding:.1em .35em;border-radius:3px}
+.art pre code{background:none;padding:0;font-size:inherit}
+.art img{max-width:100%;height:auto;border-radius:6px;border:1px solid #d6cdb9;cursor:zoom-in}
+.art table{display:block;overflow-x:auto;border-collapse:collapse;margin:1.2em 0;font:13px var(--ui)}
+.art th,.art td{padding:4px 10px;border-bottom:1px solid #e3dccb;text-align:left;white-space:nowrap}
+.art th{background:#efe8d8}
+.art blockquote{margin:1.2em 0;padding:.6em 1em;border-left:4px solid #d8cfbb;background:#f4efe3;border-radius:0 6px 6px 0}
+.art blockquote p{margin:.3em 0}
+.art .callout-tip{border-color:var(--teal);background:#e5f1ef}
+.art .callout-example{border-color:var(--rust);background:#f8ece3}
+.art hr{border:0;border-top:1px solid #ddd3bf;margin:2em 0}
+.art li{margin:.25em 0}
+
+/* Terminal (xfce4-terminal, Tango palette) */
+.term{flex:1;min-height:0;overflow:auto;padding:8px 10px;background:#1f1c1a;color:#e6e0d4;font:13px/1.5 var(--mono);user-select:text;-webkit-user-select:text}
+.ln{white-space:pre-wrap;word-break:break-word}
+.c-g{color:#8ae234}.c-b{color:#729fcf}.c-y{color:#fce94f}.c-r{color:#ef2929}.c-m{color:#ad7fa8}.c-c{color:#34e2e2}.c-d{color:#8a8277}
+.tl{color:#729fcf;cursor:pointer;text-decoration:underline dotted;text-underline-offset:3px}
+.tl:hover{color:#fce94f}
+.term mark{background:#c4a000;color:#1f1c1a}
+.cmdn{display:inline-block;min-width:16ch}
+.pl{display:flex;gap:8px}
+.pl input{flex:1;min-width:0;padding:0;border:0;outline:0;background:none;color:inherit;font:inherit;caret-color:#fce94f}
+.nf{display:flex;flex-wrap:wrap;gap:6px 20px}
+.nf pre{margin:0;font:inherit}
+.sw{display:inline-block;width:2ch;height:1em;vertical-align:middle}
+.chips{flex:none;display:flex;gap:6px;padding:6px;overflow-x:auto;background:linear-gradient(#efebe2,#dcd6c9);border-top:1px solid var(--chrome-lo)}
+.chip{flex:none;min-height:30px;padding:3px 11px;border:1px solid var(--chrome-dk);border-radius:15px;background:linear-gradient(#fff,#e4ddd0);font:12px var(--mono);box-shadow:inset 0 1px 0 #fff}
+.chip:hover{border-color:var(--teal);color:var(--teal-d)}
+@media (pointer:coarse){.pl input,.srch{font-size:16px}}
+
+/* About and ShowImage */
+.about{flex:1;min-height:0;display:flex;overflow:auto;background:var(--paper);user-select:text;-webkit-user-select:text}
+.aside{flex:none;width:58px;display:flex;flex-direction:column;align-items:center;gap:12px;padding:14px 0;background:linear-gradient(var(--teal),#2c2742);border-right:1px solid var(--line)}
+.aside svg{width:36px;height:36px}
+.aside b{writing-mode:vertical-rl;transform:rotate(180deg);color:rgba(255,255,255,.9);font:700 20px var(--ui);letter-spacing:.14em}
+.amain{padding:18px 24px 30px;max-width:68ch;font-size:14px;line-height:1.6}
+.who{display:flex;gap:14px;align-items:center}
+.who img{width:88px;height:88px;border-radius:6px;border:2px solid var(--line)}
+.who h2{margin:0;font:600 24px var(--read)}
+.who p{margin:2px 0 0;color:var(--ink2)}
+.amain h3{margin:18px 0 4px;font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink2)}
+.amain ul{margin:0;padding-left:18px}
+.energy{display:grid;grid-template-columns:1fr 1fr;gap:4px 20px}
+@container (max-width:520px){.energy{grid-template-columns:1fr}}
+.lnk{border:0;background:none;padding:0;color:var(--teal-d);text-decoration:underline;font:inherit}
+.alinks{display:flex;flex-wrap:wrap;gap:6px;margin-top:18px}
+.view{flex:1;min-height:0;display:grid;place-items:center;background:#2a2622;padding:8px}
+.view img{max-width:100%;max-height:100%;object-fit:contain;box-shadow:0 4px 18px rgba(0,0,0,.5)}
+
+/* Phone: Deskbar becomes a top strip, windows go full screen */
+@media (max-width:767px){
+  #deskbar{left:0;width:auto;display:flex;align-items:center;border-left:0;border-radius:0}
+  .leaf{width:auto;height:46px;border-bottom:0;border-right:1px solid var(--chrome-lo)}
+  .tray{margin:0 6px 0 auto}
+  #deskbar>.teams{display:none}
+  #menu{top:46px;left:0;right:0;width:auto;max-height:calc(100dvh - 46px)}
+  .mob{display:block}
+  #desk{top:46px;overflow-y:auto}
+  .icons{position:static;flex-direction:row;flex-wrap:wrap;justify-content:space-around;padding:10px 6px}
+  .rep{position:relative!important;left:auto!important;top:auto!important;width:auto;margin:0 14px 16px}
+  .reps{padding-bottom:110px}
+  .grab{display:none}
+  .win{position:fixed!important;left:0!important;top:46px!important;width:100%!important;height:calc(100dvh - 46px)!important}
+  .win.shaded{height:auto!important}
+  .win:not(.focus){visibility:hidden}
+  .frame{border-radius:0;padding:2px;border-left:0;border-right:0}
+  .knob,.zoom{display:none}
+  .art{padding:20px 18px 64px}
+}
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+<defs>
+  <linearGradient id="gY" x2="0" y2="1"><stop stop-color="#ffe58a"/><stop offset="1" stop-color="#f0a312"/></linearGradient>
+  <linearGradient id="gYd" x2="0" y2="1"><stop stop-color="#f6c14a"/><stop offset="1" stop-color="#c47a0c"/></linearGradient>
+  <linearGradient id="gP" x2="1" y2="1"><stop stop-color="#fff"/><stop offset="1" stop-color="#d6cdb8"/></linearGradient>
+  <linearGradient id="gT" x2="0" y2="1"><stop stop-color="#8fe0d6"/><stop offset="1" stop-color="#17727b"/></linearGradient>
+  <linearGradient id="gS" x2="0" y2="1"><stop stop-color="#4a585e"/><stop offset="1" stop-color="#101517"/></linearGradient>
+  <linearGradient id="gG" x2="0" y2="1"><stop stop-color="#fbf8f1"/><stop offset="1" stop-color="#a39b8a"/></linearGradient>
+  <linearGradient id="gR" x2="1" y2="1"><stop stop-color="#ffb27a"/><stop offset="1" stop-color="#b4471a"/></linearGradient>
+  <linearGradient id="gL" x2="1" y2="1"><stop stop-color="#c8f07e"/><stop offset="1" stop-color="#2b8547"/></linearGradient>
+  <linearGradient id="gK" x2="0" y2="1"><stop stop-color="#ffdcb4"/><stop offset="1" stop-color="#d48a4f"/></linearGradient>
+  <linearGradient id="gBar" x2="0" y2="1"><stop stop-color="#a6f5b6"/><stop offset="1" stop-color="#1f9a8f"/></linearGradient>
+  <radialGradient id="gB" cx=".35" cy=".3" r=".85"><stop stop-color="#eaf8ff"/><stop offset="1" stop-color="#4c9cc6"/></radialGradient>
+</defs>
+<symbol id="i-folder" viewBox="0 0 48 48"><path d="M5 13a3 3 0 0 1 3-3h10l4 4h18a3 3 0 0 1 3 3v4H5z" fill="url(#gYd)" stroke="#2a2118" stroke-width="2.5" stroke-linejoin="round"/><path d="M3.5 20h41l-3.2 18.6A3 3 0 0 1 38.3 41H9.7a3 3 0 0 1-3-2.4z" fill="url(#gY)" stroke="#2a2118" stroke-width="2.5" stroke-linejoin="round"/><path d="M8 24h32" stroke="#fff" stroke-opacity=".7" stroke-width="2" stroke-linecap="round"/></symbol>
+<symbol id="i-doc" viewBox="0 0 48 48"><path d="M10 4h19l9 9v31H10z" fill="url(#gP)" stroke="#2a2118" stroke-width="2.5" stroke-linejoin="round"/><path d="M29 4v9h9" fill="#cbc2ad" stroke="#2a2118" stroke-width="2.2" stroke-linejoin="round"/><path d="M15 20h17M15 26h17M15 32h11" stroke="#8a8170" stroke-width="2.4" stroke-linecap="round"/><path d="M28 34l6 6" stroke="url(#gR)" stroke-width="5" stroke-linecap="round"/></symbol>
+<symbol id="i-term" viewBox="0 0 48 48"><path d="M16 38l-3 5h22l-3-5" fill="url(#gG)" stroke="#2a2118" stroke-width="2.2" stroke-linejoin="round"/><rect x="3" y="6" width="42" height="33" rx="4" fill="url(#gG)" stroke="#2a2118" stroke-width="2.5"/><rect x="7.5" y="10.5" width="33" height="23" rx="1.5" fill="url(#gS)" stroke="#2a2118" stroke-width="1.8"/><path d="M12 16l5 4-5 4" stroke="#8ae234" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/><path d="M20 27h8" stroke="#e8e4da" stroke-width="2.6" stroke-linecap="round"/></symbol>
+<symbol id="i-search" viewBox="0 0 48 48"><path d="M29 29l12 12" stroke="#2a2118" stroke-width="9" stroke-linecap="round"/><path d="M29 29l12 12" stroke="url(#gR)" stroke-width="4.8" stroke-linecap="round"/><circle cx="19" cy="19" r="13" fill="url(#gB)" stroke="#2a2118" stroke-width="3"/><path d="M11 17a9 9 0 0 1 7-7" stroke="#fff" stroke-width="3" stroke-linecap="round" opacity=".85"/></symbol>
+<symbol id="i-person" viewBox="0 0 48 48"><path d="M7 44c0-10 7.5-16 17-16s17 6 17 16z" fill="url(#gT)" stroke="#2a2118" stroke-width="2.5" stroke-linejoin="round"/><circle cx="24" cy="16" r="10" fill="url(#gK)" stroke="#2a2118" stroke-width="2.5"/><path d="M18 12a7 7 0 0 1 5-3" stroke="#fff" stroke-width="2.4" stroke-linecap="round" opacity=".7"/></symbol>
+<symbol id="i-image" viewBox="0 0 48 48"><rect x="4" y="8" width="40" height="32" rx="3" fill="url(#gP)" stroke="#2a2118" stroke-width="2.5"/><rect x="9" y="13" width="30" height="22" fill="url(#gB)" stroke="#2a2118" stroke-width="1.6"/><path d="M9 35l9-11 6 7 4-4 11 8z" fill="url(#gL)" stroke="#2a2118" stroke-width="1.6" stroke-linejoin="round"/><circle cx="31" cy="19" r="3.4" fill="url(#gY)" stroke="#2a2118" stroke-width="1.4"/></symbol>
+<symbol id="i-globe" viewBox="0 0 48 48"><circle cx="24" cy="24" r="19" fill="url(#gB)" stroke="#2a2118" stroke-width="2.5"/><path d="M5 24h38M24 5c-8 6-8 32 0 38M24 5c8 6 8 32 0 38M9 14h30M9 34h30" stroke="#2a2118" stroke-width="1.6" opacity=".6"/><path d="M13 13a14 14 0 0 1 9-5" stroke="#fff" stroke-width="2.6" stroke-linecap="round" opacity=".85"/></symbol>
+<symbol id="i-leaf" viewBox="0 0 48 48"><path d="M7 41C7 20 20 7 43 5c0 23-13 36-32 36z" fill="url(#gL)" stroke="#2a2118" stroke-width="2.6" stroke-linejoin="round"/><path d="M7 41L31 17M19 29h8M24 24v-7" stroke="#2a2118" stroke-width="2" stroke-linecap="round"/><path d="M16 16c5-5 12-7 19-8" stroke="#fff" stroke-width="2.4" stroke-linecap="round" opacity=".6"/></symbol>
+<symbol id="i-grab" viewBox="0 0 16 16"><rect x="1" y="1" width="14" height="14" rx="2" fill="url(#gY)" stroke="#2a2118" stroke-width="1.4"/><path d="M5 5h.01M8 5h.01M11 5h.01M5 8h.01M8 8h.01M11 8h.01M5 11h.01M8 11h.01M11 11h.01" stroke="#2a2118" stroke-width="1.8" stroke-linecap="round"/></symbol>
+</svg>
+
+<main id="desk">
+  <nav class="icons" aria-label="Desktop">
+    <button class="dicon" data-open="posts"><svg><use href="#i-folder"/></svg><span>Posts</span></button>
+    <button class="dicon" data-open="about"><svg><use href="#i-person"/></svg><span>About Sam</span></button>
+    <button class="dicon" data-open="term"><svg><use href="#i-term"/></svg><span>Terminal</span></button>
+    <button class="dicon" data-open="piper"><img src="../static/piper.jpg" alt=""><span>piper.jpg</span></button>
+  </nav>
+  <div class="reps">
+    <section class="rep" id="r-latest"><h3>Latest posts <span id="lp-n"></span></h3><div id="lp"></div><i class="grab" title="Drag"><svg><use href="#i-grab"/></svg></i></section>
+    <section class="rep" id="r-pulse"><h3>Pulse <span>posts per year</span></h3><div id="pulse"></div><i class="grab" title="Drag"><svg><use href="#i-grab"/></svg></i></section>
+    <section class="rep note" id="r-quote"><h3>Quotes and musings <span>tap for another</span></h3><button id="quote"></button><i class="grab" title="Drag"><svg><use href="#i-grab"/></svg></i></section>
+  </div>
+</main>
+
+<aside id="deskbar" aria-label="Deskbar">
+  <button class="leaf" id="leaf" aria-expanded="false" aria-controls="menu"><svg><use href="#i-leaf"/></svg>smcleod</button>
+  <div class="tray"><span class="tz">Melbourne</span><button id="clock" title="Melbourne time. Tap for the date."></button></div>
+  <div class="teams" id="teams"></div>
+</aside>
+<div id="menu" hidden>
+  <button class="mi" data-open="about"><svg><use href="#i-person"/></svg>About Sam McLeod</button>
+  <button class="mi" data-open="posts"><svg><use href="#i-folder"/></svg>Posts</button>
+  <button class="mi" data-open="find"><svg><use href="#i-search"/></svg>Find posts</button>
+  <button class="mi" data-open="term"><svg><use href="#i-term"/></svg>Terminal</button>
+  <button class="mi" data-open="piper"><svg><use href="#i-image"/></svg>Piper</button>
+  <div class="mob"><div class="mh">Open windows</div><div class="teams" id="mteams"></div></div>
+  <div class="mh">On smcleod.net</div>
+  <a class="mi" href="https://smcleod.net/" target="_blank" rel="noopener"><svg><use href="#i-globe"/></svg>The current site</a>
+  <a class="mi" href="https://smcleod.net/vram-estimator/" target="_blank" rel="noopener"><svg><use href="#i-globe"/></svg>LLM vRAM estimator</a>
+  <a class="mi" href="https://smcleod.net/agentic-coding-tools/" target="_blank" rel="noopener"><svg><use href="#i-globe"/></svg>Agentic coding tools</a>
+  <a class="mi" href="https://smcleod.net/quantisation-dashboard.html" target="_blank" rel="noopener"><svg><use href="#i-globe"/></svg>Quantisation dashboard</a>
+  <a class="mi" href="https://smcleod.net/llm-faq/" target="_blank" rel="noopener"><svg><use href="#i-globe"/></svg>LLM FAQ</a>
+  <a class="mi" href="https://smcleod.net/cv/" target="_blank" rel="noopener"><svg><use href="#i-globe"/></svg>CV</a>
+  <div class="mh">Elsewhere</div>
+  <a class="mi" href="https://github.com/sammcj" target="_blank" rel="noopener"><svg><use href="#i-globe"/></svg>GitHub</a>
+  <a class="mi" href="https://www.linkedin.com/in/sammcj" target="_blank" rel="noopener"><svg><use href="#i-globe"/></svg>LinkedIn</a>
+</div>
+
+<nav id="dock" aria-label="Dock">
+  <button class="dk" data-open="posts" data-app="posts"><svg><use href="#i-folder"/></svg><span class="lbl">Posts</span></button>
+  <button class="dk" data-open="find"><svg><use href="#i-search"/></svg><span class="lbl">Find posts</span></button>
+  <button class="dk" data-open="term" data-app="term"><svg><use href="#i-term"/></svg><span class="lbl">Terminal</span></button>
+  <button class="dk" data-open="about" data-app="about"><svg><use href="#i-person"/></svg><span class="lbl">About</span></button>
+  <button class="dk" data-open="piper" data-app="view"><svg><use href="#i-image"/></svg><span class="lbl">ShowImage</span></button>
+  <span class="dsep"></span>
+  <a class="dk" href="https://smcleod.net/" target="_blank" rel="noopener"><svg><use href="#i-globe"/></svg><span class="lbl">smcleod.net</span></a>
+</nav>
+<button id="grip" aria-label="Show dock" hidden></button>
+
+<template id="about-tpl">
+<div class="about"><div class="aside"><svg><use href="#i-leaf"/></svg><b>smcleod.net</b></div><div class="amain">
+  <div class="who"><img src="../static/profilephoto/apple-touch-icon.png" alt="Sam McLeod"><div><h2>Sam McLeod</h2><p>AI Engineering Principal at <a href="https://mantelgroup.com.au" target="_blank" rel="noopener">Mantel</a><br>Melbourne, Australia</p></div></div>
+  <p>AI engineer, open source contributor and music geek based in Melbourne, Australia. Around twenty years in tech across platform engineering and technical leadership, with the last five focused heavily on LLMs and AI.</p>
+  <p>This site is where I write about engineering, share things I've learned, and occasionally ramble about music or hi-fi.</p>
+  <h3>Outside of work</h3>
+  <ul><li>Discovering new music, especially digging into niche subgenres for the hidden gems</li><li>Going to gigs</li><li>HiFi (yes, lots of gear)</li><li>Walking in nature, usually with new music in my ears</li><li>AI and LLM tooling, development, and performance engineering</li><li>Sci-fi, speculative fiction, and biographies, mostly via audiobook</li><li>Film and TV, especially sci-fi and British comedy</li><li>Hardware and software engineering, IoT, home automation</li><li>Cats, especially <button class="lnk" data-open="piper">Piper</button></li><li>Road trips and automotive engineering</li></ul>
+  <div class="energy">
+    <div><h3>Things that give me energy</h3><ul><li>Remote work and remote-first organisations</li><li>Building high performance platform and software delivery teams and team culture</li><li>Open communication</li><li>Music collection and discovery</li><li>Adenosine triphosphate</li></ul></div>
+    <div><h3>Things that drain my energy</h3><ul><li>Working from an office</li><li>Bureaucracy</li><li>Disempowered teams</li><li>Slow feedback loops</li></ul></div>
+  </div>
+  <div class="alinks"><a class="xb" href="https://www.github.com/sammcj" target="_blank" rel="noopener">GitHub</a><a class="xb" href="https://www.linkedin.com/in/sammcj" target="_blank" rel="noopener">LinkedIn</a><a class="xb" href="https://smcleod.net/cv/" target="_blank" rel="noopener">CV</a><a class="xb" href="https://www.reddit.com/r/LocalLLaMA/" target="_blank" rel="noopener">/r/LocalLLaMA</a><a class="xb" href="https://buymeacoffee.com/sam.mcleod" target="_blank" rel="noopener">Buy me a coffee</a></div>
+</div></div>
+</template>
+
+<template id="b-2026-07-04-agent-skills-common-pitfalls">
+<p>I write and review a <em>lot</em> of <a target="_blank" rel="noopener" href="https://code.claude.com/docs/en/skills">Agent</a> <a target="_blank" rel="noopener" href="https://agentskills.io">Skills</a>, and find myself frequently pushing back in reviews, as many authors assume they&#39;re writing &quot;<em>just another markdown prompt</em>&quot; without considering that they&#39;re actually working with one component of an agentic system.</p>
+<p>The <strong>TLDR</strong> of my feedback is usually along the lines of:</p><blockquote><ol><li>The descriptions <em>only</em> job is to tell the agent when the skill should be triggered.</li><li>Keep the description as terse as possible while still triggering.</li><li>The SKILL.md should be lean with detail pushed to reference files.</li><li>Put repeatable work in scripts rather than relying on model inference.</li></ol></blockquote>
+<hr>
+<h2>Skill Creator Primer</h2>
+<p>I recommend teams use or create their own version of my <a target="_blank" rel="noopener" href="https://github.com/sammcj/agentic-coding/blob/main/Skills/skill-creator-primer/SKILL.md">skill-creator-primer</a> skill.</p>
+<p>The primer works alongside the official Anthropic skill-creator skill and aims to catch common pitfalls and align with best practices.</p>
+<blockquote class="callout callout-tip"><p><strong class="callout-t">Proactively use the primer</strong><br>While the primer should activate passively when working with skills, to get the most out of it ask your agent to use it to review your work:</p>
+<p><em>&quot;First please activate your skill creator primer skill.</em>
+<em>Then, I want you to look at my coworkers PR: <URL to PR or branch></em>
+<em>and conduct a critical review.&quot;</em></p></blockquote>
+<h2>The top five pitfalls</h2>
+<h3>1. Descriptions written as summaries</h3>
+<p>The descriptions only job is telling the agent when to load the skill. Summarising the contents invites the agent to act on the summary and skip the skill.</p><ul><li>Roughly 30-55 words, imperative, naming the specific triggers.</li><li>The description should only contain information that is specific to knowing when to trigger the skill.</li><li>Some agents under-trigger, so be slightly assertive while keeping it tight.</li><li>Unsure it fires? Write a handful of trigger evals: realistic prompts labelled should/shouldn&#39;t trigger.</li></ul>
+<blockquote class="callout callout-example"><p><strong class="callout-t">Example:</strong><br>description: &#39;You MUST use this skill whenever the user mentions dashboards, monitoring or metrics.&#39;</p></blockquote>
+<blockquote class="callout callout-tip"><p><strong class="callout-t">If your skill doesn&#39;t need to be triggered by an agent</strong><br>Set <code>disable-model-invocation: true</code> in the frontmatter so its description isn&#39;t loaded into every session</p></blockquote>
+<h3>2. No progressive disclosure</h3>
+<p>The main <code>SKILL.md</code> should inline only what every use of the skill needs, regardless of the situation.
+Practising progressive disclosure keeps skills lean, reusable and composable.</p>
+<p>Other bundled information such as handling for specific scenarios goes in <code>references/&lt;file&gt;.md</code> behind a pointer that says when to read it, e.g:</p>
+<blockquote class="callout callout-example"><p><strong class="callout-t">Example:</strong><br>&quot;Step 3: If working on frontend codebase you must first read &#39;references/frontend.md&#39;&quot;</p></blockquote>
+<h3>3. Making the model do a script&#39;s job</h3>
+<p>If a step is often repeated, deterministic or requires a high degree of accuracy, bundle a small script.</p><ul><li>A script is faster, should provide the same result every run and is testable.</li><li>Favour using Python and its stdlib where possible.</li><li>If you <em>need</em> to add dependencies use <a target="_blank" rel="noopener" href="https://peps.python.org/pep-0723/">PEP-723</a> inline metadata.</li><li>Instruct the agent to run with <code>uv run scripts/my-script.py &lt;args&gt;</code>.</li></ul>
+<h3>4. Too much content, too many skills</h3>
+<p>Skills are for agents, not humans. Terse wins. The deletion test: cut a line and ask whether the agent&#39;s behaviour would change. If not, it stays cut.</p>
+<p>The same can be true for having too many skills (without good reason to do so) - especially if the descriptions aren&#39;t tight, focused or well differentiated. Favour one skill with progressive disclosure (references for each scenario) over lots of smaller but related skills.</p>
+<h3>5. Stepped workflows with no structure</h3>
+<p>For workflows that must be followed within a skill:</p><ul><li>Instruct the agent to track each step.</li><li>Number the steps.</li><li>Trigger a review after all steps are complete.</li></ul>
+<blockquote class="callout callout-example"><p><strong class="callout-t">Example:</strong><br>Create and track a task / TODO for each step:</p><ol><li>Do x</li><li>Do y</li><li>Do z</li></ol>
+<p>Once all steps are completed conduct a critical review of the work and make any necessary corrections.</p></blockquote>
+<p>Agents drift and finish early on long procedures; a visible checklist stops that. The same is true if your skill instructs the agent to task sub-agents with their own workflows.</p>
+<h2>General tips</h2><ul><li>Don&#39;t wrap text in markdown - manual line breaks mean more lines for the agent to read in.</li><li>For reference files over ~100 lines, add a simple TOC near the top (but not in the main <code>SKILL.md</code>).</li><li>If your skill is very complex, add an <code>AGENTS.md</code> / <code>CLAUDE.md</code> in its root to help you and others maintain it.</li><li>A single entry point for interacting with your software project (<code>make lint</code>, <code>make test</code>, <code>make build</code>, <code>make run</code>, etc.) makes it easy for agents and skills to do the right thing everywhere.</li></ul>
+<h2>A note on Agent Skills vs Custom Agents</h2><ul><li>Custom Agents:<ul><li>Can be thought of as a &quot;persona&quot;, think as if you were asked to put yourself in someone else&#39;s shoes.</li><li>May include workflows / ways of working but keep it light and instead have them use skills.</li><li>Good for adversarial tasks as they get their own context and world view.</li><li>Operate within their own context (usually).</li></ul></li><li>For knowledge, detailed workflows, helper tools etc., favour Skills over Custom Agents.</li><li>Skills are powerful as they&#39;re composable and often portable.</li><li>If you need a custom agent and want it to be read-only, set <code>permissionsMode: plan</code> in its frontmatter.</li><li>There&#39;s no need to create a custom agent for normal development tasks - that&#39;s what the main / general agent is for.</li></ul>
+<h2>Review signals</h2>
+<p>Quick tells that a skill wasn&#39;t reviewed carefully:</p><ul><li>Descriptions that have information not specific to knowing when to trigger the skill.</li><li>Descriptions that are more than 1-3 tight sentences - if it looks like a paragraph, it probably hasn&#39;t been thought through.</li><li>Overly verbose, long form prose in the body of the skill or resources.</li><li>Getting agents to do the work of scripts, have them write and drive the scripts instead.</li><li><em>&quot;When to use&quot;</em> in the body - if the agent is reading that, it&#39;s too late. It&#39;s also a sign the author may not have understood what they were creating.</li></ul>
+<h2>Security tips</h2>
+<p>Treat third party skills as you would any other software or library obtained from the internet - don&#39;t blindly install them without first reviewing their content.</p><ul><li>Skills can include both prompts (<code>SKILL.md</code>, references) and scripts, review the markdown for malicious or risky instructions that could mislead the agent.</li><li>If the skill contains scripts, consider running dependency and SAST scanning tools (e.g. SonarQube) across the content.</li><li>When writing scripts within skills, aim to use the standard library where possible.</li><li>Apply the principle of least privilege in the frontmatter configuration - does the skill really need web search or write tools?</li><li>Where possible, run your agentic coding tool in a sandbox.</li></ul>
+</template>
+<template id="b-2025-08-26-mcp-tool-disabling">
+<p><strong>TLDR</strong>: If you&#39;re building MCP servers, let users disable individual tools. It&#39;s simple to implement and your context window will thank you.</p>
+<p><img loading="lazy" src="../content/posts/2025-08-26-mcp-tool-disabling/tool-context-usage.png" alt="alt text"></p>
+<p>Agents often don&#39;t need <em>every</em> tool a MCP server provides. Allowing individual tools to be disabled can not just vastly improve token usage, it aids with tool use reliability, the quality of the model&#39;s output and your security posture.</p><ul><li><strong>Optimises context use</strong> by reducing token count when running many MCP servers</li><li><strong>Reduces <a target="_blank" rel="noopener" href="https://research.trychroma.com/context-rot">context rot</a></strong> - we know that model performance grows increasingly unreliable as input length grows and that irrelevant information acts as distractors that degrade performance</li><li><strong>Improves security posture</strong> by reducing attack surface - disable risky operations in production while keeping read-only tools available</li><li><strong>Enables finer-grained control</strong> over tool access for organisational compliance</li></ul>
+<p>Want the AWS Terraform server but you don&#39;t use Terragrunt? Disable the Terragrunt tool (save 1.1k tokens). Want web search but not video and maps search? Disable the maps and video tools.</p>
+<h2>The Problem is Real</h2>
+<p>MCP servers add invaluable capabilities to LLMs and agents, however - unchecked the impact of their many tools quickly becomes apparent.</p>
+<p>The numbers are worse than you think:</p>
+<table><thead>
+<tr><th>MCP Server</th><th>Tool Name</th><th>Tokens</th></tr>
+</thead><tbody><tr><td><strong>AWS Terraform</strong></td><td></td><td><strong>6.4k</strong> (7 tools)</td></tr>
+<tr><td></td><td>ExecuteTerragruntCommand</td><td>1.1k</td></tr>
+<tr><td></td><td>SearchAwsccProviderDocs</td><td>1.1k</td></tr>
+<tr><td></td><td>SearchAwsProviderDocs</td><td>905</td></tr>
+<tr><td></td><td>SearchUserProvidedModule</td><td>894</td></tr>
+<tr><td></td><td>RunCheckovScan</td><td>806</td></tr>
+<tr><td></td><td>SearchSpecificAwsIaModules</td><td>849</td></tr>
+<tr><td></td><td>ExecuteTerraformCommand</td><td>743</td></tr>
+<tr><td><strong>AWS Cost Explorer</strong></td><td></td><td><strong>9.1k</strong> (7 tools)</td></tr>
+<tr><td></td><td>get_cost_and_usage</td><td>2.2k</td></tr>
+<tr><td></td><td>get_cost_comparison_drivers</td><td>1.9k</td></tr>
+<tr><td></td><td>get_cost_and_usage_comparisons</td><td>1.5k</td></tr>
+<tr><td></td><td>get_cost_forecast</td><td>1.4k</td></tr>
+<tr><td></td><td>get_dimension_values</td><td>910</td></tr>
+<tr><td></td><td>get_tag_values</td><td>699</td></tr>
+<tr><td></td><td>get_today_date</td><td>469</td></tr>
+<tr><td><strong>Playwright</strong></td><td></td><td><strong>9.7k</strong>  (21 tools)</td></tr>
+<tr><td></td><td>browser_take_screenshot</td><td>631</td></tr>
+<tr><td></td><td>browser_fill_form</td><td>593</td></tr>
+<tr><td></td><td>browser_type</td><td>545</td></tr>
+<tr><td></td><td>browser_click</td><td>516</td></tr>
+<tr><td></td><td>browser_select_option</td><td>501</td></tr>
+<tr><td></td><td><em>...plus 16 more tools</em></td><td><em>390-469</em></td></tr>
+<tr><td><strong>Markdownify</strong></td><td>pptx-to-markdown</td><td><strong>4.0k</strong> (10 tools)</td></tr>
+<tr><td></td><td></td><td>406</td></tr>
+<tr><td></td><td>bing-search-to-markdown</td><td>405</td></tr>
+<tr><td></td><td>audio-to-markdown</td><td>404</td></tr>
+<tr><td></td><td>docx-to-markdown</td><td>403</td></tr>
+<tr><td></td><td>image-to-markdown</td><td>402</td></tr>
+<tr><td></td><td><em>...plus 5 more tools</em></td><td><em>394-400</em></td></tr>
+<tr><td><strong>ShadCN UI</strong></td><td>get_directory_structure</td><td><strong>3.0k</strong> (7 tools)</td></tr>
+<tr><td></td><td></td><td>478</td></tr>
+<tr><td></td><td>get_component_demo</td><td>427</td></tr>
+<tr><td></td><td>get_component</td><td>422</td></tr>
+<tr><td></td><td>get_component_metadata</td><td>422</td></tr>
+<tr><td></td><td>list_blocks</td><td>405</td></tr>
+<tr><td></td><td><em>...plus 2 more tools</em></td><td><em>376-467</em></td></tr>
+</tbody></table>
+<p><strong>That&#39;s over 32k tokens <em>just for tool descriptions &amp; annotations</em> - before you&#39;ve written a line of code.</strong></p>
+<p>Individual tools range from lightweight (387 tokens for basic memory operations) to massive (2.7k tokens for AWS&#39;s documentation generator). The AWS Cost Explorer&#39;s <code>get_cost_and_usage</code> tool alone burns 2.2k tokens describing parameters you might never use.</p>
+<p>Fortunately, implementing selective tool disabling is straightforward and the benefits are immediate.</p>
+<h2>Implementation Advice</h2>
+<p>Start simple. The conditional registration approach requires minimal code and covers most use cases. If you need runtime flexibility later, you can always refactor to a registry pattern.</p><ul><li><strong>Parse once</strong>: Process environment variables at startup, not per-request</li><li><strong>Normalise input</strong>: Handle whitespace, case variations, and naming conventions (<code>underscore_tool</code> vs <code>hyphen-tool</code>)</li><li><strong>Use map lookups</strong>: <code>O(1)</code> performance with <code>map[string]bool</code> over slice iteration</li><li><strong>Case insensitivity</strong>: Match both <code>ToolName</code> and <code>toolname</code></li><li><strong>Whitespace</strong>: <code>&quot; tool1 , tool2 &quot;</code> should be equivalent to <code>&quot;tool1,tool2&quot;</code></li><li><strong>Empty strings</strong>: <code>DISABLED_TOOLS=&quot;,tool1,,tool2,&quot;</code> should work</li><li><strong>Non-existent tools</strong>: Disabling <code>&quot;non-existent_tool&quot;</code> shouldn&#39;t break anything</li><li><strong>Fail gracefully</strong>: Invalid tool names shouldn&#39;t crash your server</li></ul>
+<h2>Example Implementation Approaches</h2>
+<p>I&#39;ve implemented tool disabling in both my <a target="_blank" rel="noopener" href="https://github.com/sammcj/mcp-devtools">mcp-devtools server</a> with a registry based approach,and recently raised a <a target="_blank" rel="noopener" href="https://github.com/awslabs/mcp/pull/1178">PR to AWS&#39;s MCP servers</a> with a simpler conditional utility. Both work well and take slightly different approaches.</p>
+<h3>Simple Conditional Registration</h3>
+<p>In my <a target="_blank" rel="noopener" href="https://github.com/awslabs/mcp/pull/1178">PR</a> to AWS&#39;s MCP servers, I used straightforward conditional registration. Here&#39;s the pattern:</p>
+<pre><code class="language-python">from awslabs.common.config import tool_enabled
+if tool_enabled(&#39;ExecuteTerraformCommand&#39;):
+    @mcp.tool(name=&#39;ExecuteTerraformCommand&#39;)
+    async def execute_terraform_command(...):
+        # existing implementation unchanged
+</code></pre>
+<p>The utility function parses a comma-separated environment variable:</p>
+<pre><code class="language-python">def disabled_tools() -&gt; Set[str]:
+    disabled_tools = os.environ.get(&#39;DISABLED_TOOLS&#39;, &#39;&#39;)
+    if not disabled_tools:
+        return set()
+    return {tool.strip() for tool in disabled_tools.split(&#39;,&#39;) if tool.strip()}
+def tool_enabled(tool_name: str) -&gt; bool:
+    return tool_name not in disabled_tools()
+</code></pre>
+<p>Configuration is simple:</p>
+<pre><code class="language-json">{
+  &quot;env&quot;: {
+    &quot;DISABLED_TOOLS&quot;: &quot;ExecuteTerraformCommand,RunCheckovScan&quot;
+  }
+}
+</code></pre>
+<h3>Registry-Based Runtime Filtering</h3>
+<p>My <a target="_blank" rel="noopener" href="https://github.com/sammcj/mcp-devtools">MCP DevTools</a> server uses a more sophisticated approach with runtime filtering:</p>
+<pre><code class="language-go">// Tools register normally during init
+func init() {
+    registry.Register(&amp;ThinkTool{})
+}
+// But filtering happens at retrieval
+func GetTool(name string) (tools.Tool, bool) {
+    if disabledFunctions[name] {
+        return nil, false
+    }
+    return toolRegistry[name], true
+}
+</code></pre>
+<p>This approach allows for more complex filtering logic and better separation of concerns. The trade-off is slightly more implementation complexity.</p>
+<h2>Just Do It</h2>
+<p>Having a pattern for selective tool disabling is something I now add to all MCP servers that I develop and recommend to others. The implementation effort is minimal, but the user value - and performance improvement - is significant.</p>
+<p>If you&#39;re maintaining an MCP server, add this feature. Your users are already thinking about their token budgets and context quality - help them optimise both.</p>
+<hr>
+<h2>Appendix - A Note On The Worst Offender: Github</h2>
+<p>GitHub&#39;s MCP server is a masterclass in context pollution.</p>
+<p>Where other servers hover around 3-10k tokens, <strong>The GitHub MCP consumes a staggering 46k tokens across 91 different tools</strong> that cannot be individually enabled or disabled. GitHub alone consumes nearly a quarter of Claude Sonnet / Opus 4&#39;s context window - before you even write a single line of code.</p><blockquote>
+<p><em>For comparison - <a target="_blank" rel="noopener" href="https://github.com/sammcj/mcp-devtools">MCP-DevTools</a> provides the most useful GitHub functionality in just 1.6k tokens with a single tool.</em></p></blockquote>
+<p>Github&#39;s MCP fails to:</p><ul><li>Group functionality into broader tools (e.g. <code>list_issues</code>, <code>search_issues</code>, <code>update_issue</code> could be a single <code>issue_management</code> tool).</li><li>Keep tool description and parameter annotations concise.</li><li>Provide any mechanism to only enable individual tools.</li></ul>
+<p><img loading="lazy" src="../content/posts/2025-08-26-mcp-tool-disabling/github-dafaq.png" alt="Github&#39;s Horrible MCP Server"></p>
+</template>
+
+<script>
+// [bundle, date, title, tags, description, path on smcleod.net, cover file]. Generated from content/posts front matter (drafts excluded).
+const IDX = [
+["2026-07-04-agent-skills-common-pitfalls","2026-07-04","Writing and Reviewing Agent Skills - Common Pitfalls","ai,llm,agentic coding,agents,skills,claude,claude code","The top pitfalls I keep seeing when reviewing Agent Skills, and what to do instead","/2026/07/writing-and-reviewing-agent-skills-common-pitfalls/",""],
+["2026-04-27-measuring-quantisation-quality-kld","2026-04-28","Measuring Model Quantisation Quality with KL Divergence","ai,llm,mlx,quantisation,qwen","Using KL divergence to rank MLX quantisations of Qwen 3.6 (27B dense and 35B-A3B MoE)","/2026/04/measuring-model-quantisation-quality-with-kl-divergence/","qwen3.6-quality.png"],
+["2026-03-30-apple-silion-4k-limitations","2026-03-29","New Apple Silicon M4 & M5 HiDPI Limitation on 4K External Displays","apple,4k,monitor,software,hardware,bugs","A regression in external display support on Apple Silicon M4/M5 generation chips prevents full HiDPI modes on 4K monitors, limiting users to either blurry non-HiDPI or reduced workspace HiDPI.","/2026/03/apple-silicon-4k-limitations/",""],
+["2026-03-05-cc-getting-started","2026-03-05","The advice I find myself repeating every time someone asks how to get started with Claude Code","ai,claude,agentic coding,claude code,tips,productivity","I spend a lot of my time helping people who are getting started with Claude Code. These are the key things I find myself repeating.","/2026/03/the-advice-i-find-myself-repeating-every-time-someone-asks-how-to-get-started-with-claude-code/",""],
+["2026-02-26-unlocking-nvidia-p2p","2026-02-25","Patching NVIDIA's driver and vLLM to enable P2P on consumer GPUs","ai,llm,tech,vllm,llama.cpp,gguf,awq,cuda","NVIDIA artificially restricts peer-to-peer (P2P) GPU communication to their enterprise cards. Turns out this is a software limitation, not a hardware one. I patched my drivers to remove it, hacked vLLM to take...","/2026/02/patching-nvidias-driver-and-vllm-to-enable-p2p-on-consumer-gpus/",""],
+["2025-11-20-the-role-bridging-problem","2025-11-20","The Role Bridging Problem","ai,llm,tech,agentic coding,mcp,learning,software engineering","An observation on functional correctness without domain quality.","/2025/11/the-role-bridging-problem/","facade-of-competence-jpeg-2260.jpg"],
+["2025-08-26-mcp-tool-disabling","2025-08-26","Stop Polluting Context - Let Users Disable Individual MCP Tools","ai,llm,tech,mcp,cline,claude,agentic,agentic coding","If you're building MCP servers, you should be adding the ability to disable individual tools.","/2025/08/stop-polluting-context-let-users-disable-individual-mcp-tools/","tool-context-usage.png"],
+["2025-08-18-mcp-devtools","2025-08-18","MCP DevTools","ai,llm,tech,coding,cline,claude,agentic,agentic coding","A single, modular MCP server for AI coding agents.","/2025/08/mcp-devtools/","sec-arch.png"],
+["2025-07-16-agentic-coding-adoption-cost-cycle","2025-07-16","Agentic Coding Adoption Cost Cycle","ai,llm,tech,coding,cline,agentic,agentic coding","The two common themes I see with engineers adopting agentic coding tools","/2025/07/agentic-coding-adoption-cost-cycle/","agentic-coding-adoption-cost-cycle.png"],
+["2025-06-20-agentic-coding-workflow-demo","2025-06-20","Agentic Coding Workflow & Cline Demo","ai,llm,tech,ollama,coding,cline,agentic,tutorials","Recording of a demo and Q&A session on my Agentic Coding workflow and Cline use.","/2025/06/agentic-coding-workflow-cline-demo/",""],
+["2025-06-06-vibe-coding-vs-agentic-coding","2025-06-06","Vibe Coding vs Agentic Coding","ai,llm,tech,ollama,coding,cline,agentic,tutorials","From Creative Exploration to Production Quality","/2025/06/vibe-coding-vs-agentic-coding/",""],
+["2025-04-28-agentic-coding-dev-flow","2025-04-28","My Plan, Document, Act, Review flow for Agentic Software Development","ai,llm,tech,coding,agentic,agentic coding,agents,skills","An overview of my Setup, Plan, Act, Review & Iterate workflow for agentic software development.","/2025/04/my-plan-document-act-review-flow-for-agentic-software-development/","setup-plan-act-iterate.svg"],
+["2025-04-25-llm-sampling-guide","2025-04-25","LLM Sampling Parameters Guide","ai,llm,tech,ollama,coding,sampling,inference,tutorials","A practical guide to LLM sampling parameters for Ollama, llama.cpp, and MLX","/2025/04/llm-sampling-parameters-guide/","sampling-methods-comparison.png"],
+["2025-04-16-getting-started-with-agentic-systems","2025-04-16","Getting Started with Agentic Systems - Developer Learning Paths","ai,llm,tech,agentic,coding,learning,engineering,tutorials","A curated learning path for engineers looking to gain practical experience with AI and agentic systems.","/2025/04/getting-started-with-agentic-systems-developer-learning-paths/","generative-agent-state-diagram.png"],
+["2025-04-03-the-cost-of-not-doing-agentic-coding","2025-04-03","The Cost of Agentic Coding","ai,llm,tech,agentic,coding,vibecoding","The cost of not leveraging agentic coding is likely far greater than you think.","/2025/04/the-cost-of-agentic-coding/","productivity-flywheel.svg"],
+["2025-03-23-the-democratisation-paradox","2025-03-23","The Democratisation Paradox: What History Teaches Us About AI","ai,llm,tech,culture,art,economics,capitalism,history","The Democratisation Paradox: What History Teaches Us About AI.","/2025/03/the-democratisation-paradox-what-history-teaches-us-about-ai/",""],
+["2025-03-20-prompt-caching","2025-03-20","The effects of prompt caching on Agentic coding","ai,llm,tech,anthropic,aws,cline,programming,vertex","What is prompt caching and why is it so important for Agentic coding?","/2025/03/the-effects-of-prompt-caching-on-agentic-coding/","cline-1.png"],
+["2025-02-07-agentic-coding-demo","2025-02-07","Agentic Coding - Live Demo / Brownbag","ai,llm,tech,deepseek,llama,anthropic,aws,cline","Video recording of a brownbag presentation / live demo I ran on Agentic Coding using Cline/Roo Code","/2025/02/agentic-coding-live-demo-/-brownbag/",""],
+["2024-12-04-bringing-kv-context-quantisation-to-ollama","2024-12-04","Bringing K/V Context Quantisation to Ollama","ai,llm,tech,ollama,llama,quantisation","K/V context cache quantisation has been added to Ollama. This enables significant reductions in VRAM usage, allowing users to realise the potential of expanded context sizes and run larger models at their existing...","/2024/12/bringing-k/v-context-quantisation-to-ollama/","llm-vram-components.svg"],
+["2024-11-30-will-ai-take-my-job","2024-11-29","Will AI Take My Job?","ai,llm,tech,jobs,capitalism,profit,automation,work","It's probably not so much AI itself you have to fear.","/2024/11/will-ai-take-my-job/",""],
+["2024-10-09-diagram-gen","2024-10-08","Generating Diagrams with with AI / LLMs","ai,tools,llm,tech,diagrams,automation,mermaid","Generating diagrams with AI / LLMs","/2024/10/generating-diagrams-with-with-ai-/-llms/","diagram-gen.png"],
+["2024-07-28-ingest","2024-07-29","Ingest: Streamlining Content Preparation for LLMs","ai,tools,llm,tech,cli,golang,automation","A CLI tool for parsing directories into LLM-friendly markdown","/2024/07/ingest-streamlining-content-preparation-for-llms/",""],
+["2024-07-20-parameter-playground","2024-07-20","LLM Parameter Playground","ai,tools,llm,tech,playground,parameters,inference","A web app to explore the effects of different inference parameters on LLMs.","/2024/07/llm-parameter-playground/","parameter-playground.webp"],
+["2024-07-18-code-chaos-copilots","2024-07-18","Code, Chaos, and Copilots (AI/LLM Talk July 2024)","ai,tools,quantisation,llm,gguf,talk,tech,keynote","Integrating AI into Daily Development","/2024/07/code-chaos-and-copilots-ai/llm-talk-july-2024/","code-chaos-copilots-screenshot.png"],
+["2024-07-17-llm-quantisation","2024-07-17","Understanding AI/LLM Quantisation Through Interactive Visualisations","ai,tools,quantisation,llm,gguf,dashboard","AI/LLM Quantisation Visualised","/2024/07/understanding-ai/llm-quantisation-through-interactive-visualisations/","quant-neural.png"],
+["2024-07-03-ai-tools","2024-07-03","Rating AI Tools","ai,tools,ratings","Subjective ratings of the notable AI tools I've tried.","/2024/07/rating-ai-tools/",""],
+["2024-06-01-gollama","2024-06-01","Gollama: Ollama Model Manager","markdown,go,golang,ollama,ai,llm,lmstudio","Gollama is a Go-based client for Ollama for managing models.","/2024/06/gollama-ollama-model-manager/","gollama-v1.0.0.jpg"],
+["2024-05-23-confuddlement","2024-05-23","Confuddlement: Download Confluence Spaces as Markdown, Summarise with Ollama","confluence,markdown,go,golang,ollama,ai,llm","Download Confluence Spaces as Markdown, Summarise with Ollama","/2024/05/confuddlement-download-confluence-spaces-as-markdown-summarise-with-ollama/",""],
+["2024-05-18-nvapi","2024-05-18","NVApi - Nvidia GPU Monitoring API","ai,nvidia,gpu,monitoring,api,go,golang","Nvidia GPU Monitoring API","/2024/05/nvapi-nvidia-gpu-monitoring-api/",""],
+["2024-03-22-superprompter","2024-03-22","SuperPrompter - Supercharge your text prompts for AI/LLM image generation","tech,llm,ai,code","","/2024/03/superprompter-supercharge-your-text-prompts-for-ai/llm-image-generation/","superprompter-screenshot.jpg"],
+["2024-03-21-llamalink","2024-03-21","Llamalink - Ollama to LM Studio LLM Model Linker","tech,llm,ai,code","This is a simple command-line tool that allows you to easily link Ollama models to LM Studio's directory structure. It simplifies the process of symlinking Ollama models to LM Studio, making it convenient to use the...","/2024/03/llamalink-ollama-to-lm-studio-llm-model-linker/","llamalink-screenshot.jpg"],
+["2023-11-20-whisper-assistant","2023-11-20","Open source, locally hosted AI powered Siri replacement","tech,llm,ai,homeassistant,willow,esp32,iot","Using an ESP32 S3 Box 3 with Willow, Home Assistant and Large Language Models (LLMs) create a locally hosted, offline, AI powered Siri / Alexa replacement.","/2023/11/open-source-locally-hosted-ai-powered-siri-replacement/",""],
+["2023-11-14-makefile-fun","2023-11-14","Fun with Makefiles - Dynamic Menu Generation","linux,programming","This reusable snippet will generate a menu of targets from the Makefile. It will use `fzf` if it is installed, otherwise it will use a numbered menu.","/2023/11/fun-with-makefiles-dynamic-menu-generation/","makefile-menu.png"],
+["2023-11-14-mba-washing","2023-11-13","MBA Washing","tech,culture,devops","\"MBA Washing\" refers to the phenomenon where individuals or companies, often with a strong theoretical or academic background but limited recent practical experience, adopt and reinterpret industry-specific...","/2023/11/mba-washing/",""],
+["2023-10-30-sdxl-lora-training","2023-10-30","SDXL LoRA Training","tech,talk,slides,ai,ml,art,stablediffusion","A talk I gave to some peers on creating your own SDXL LoRA models from my tinkering around over the last few weeks.","/2023/10/sdxl-lora-training/",""],
+["2023-07-09-amd-pstate-driver-fedora","2023-07-09","Fixing AMD CPU Scaling on Fedora","linux,performance","Enabling the new AMD P-State Driver on Fedora with Kernel 6.4","/2023/07/fixing-amd-cpu-scaling-on-fedora/",""],
+["2023-05-28-git-wrapper","2023-05-29","Defaulting git clone to shallow (depth=1)","git,scripting,zsh,bash,shell","","/2023/05/defaulting-git-clone-to-shallow-depth1/",""],
+["2023-05-26-nps-spam","2023-05-26","How likely would you be to block a company from asking you to rate everything they do?","sales,marketing,customer experience","NPS Surveys are corporate spam","/2023/05/how-likely-would-you-be-to-block-a-company-from-asking-you-to-rate-everything-they-do/","i-dont-use-nps-1.jpg"],
+["2023-04-28-estimating","2023-04-28","Escaping the Time Trap: Why Estimating Effort, Not Time, Leads to Greater Success","estimating,delivery,kanban,agile,devops","Effort is non-linear and multi-dimensional. Time (with relation to delivery) is linear and one-dimensional","/2023/04/escaping-the-time-trap-why-estimating-effort-not-time-leads-to-greater-success/","time-based-estimates.png"],
+["2023-11-26-llm-intro","2023-01-26","Introduction to AI and Large Language Models (LLMs)","tech,llm,ai,wip,devops","A high level intro to LLMs that I'm writing for a few friends that are new to the concept. It is far from complete, definitely contains some errors and is a work in progress.","/2023/01/introduction-to-ai-and-large-language-models-llms/",""],
+["2023-01-05-open-budgeting","2023-01-05","Open Budgeting - Subscriptions & Licences","budgeting,finance,money,subscriptions,licenses,open budgeting,software,saas","Publicly documenting my subscription and license expenses","/2023/01/open-budgeting-subscriptions-licences/","money-au.jpg"],
+["2022-12-31-delivery-wins","2022-12-31","Energy, Sustainability and Deployment Frequency","delivery,health,wins,devops,agile,leadership,management","","/2022/12/energy-sustainability-and-deployment-frequency/","wins.jpg"],
+["2022-11-18-shell-config-part-two","2022-11-18","Zsh Configuration and Plugins - Part Two","zsh,bash,scripting,linux,macos","My Z-Shell configuration, scripts and hacks","/2022/11/zsh-configuration-and-plugins-part-two/","zsh-part-two.gif"],
+["2022-11-05-shell-config-part-one","2022-11-06","Zsh Configuration and Plugins - Part One","zsh,bash,scripting,linux,macos","My Z-Shell configuration, scripts and hacks","/2022/11/zsh-configuration-and-plugins-part-one/","colour_vertical_icon_wbg_wide.png"],
+["2022-11-06-yaml-anchors-aliases","2022-11-06","YAML Anchors and Aliases","yaml,dry","Using YAML Anchors and Aliases to make config files more DRY","/2022/11/yaml-anchors-and-aliases/","Official_YAML_Logo.png"],
+["2022-11-08-github-actions-not-so-reusable","2022-11-06","Github Not-So-Reusable Actions","github,ci,yaml,dry","Github Actions Reusable Workflows vs Composite Actions","/2022/11/github-not-so-reusable-actions/","./old-man-yells-at-github-actions.png"],
+["2022-10-31-contributing-to-open-source","2022-10-30","Encourage Your Peers To Contribute To Open Source","culture,opensource,git,leadership,values","","/2022/10/encourage-your-peers-to-contribute-to-open-source/",""],
+["2022-10-20-make-work-visible-dms","2022-10-20","Making Work Visible - Avoid DMs","work,communication,culture,tech,direct messages,remotework","","/2022/10/making-work-visible-avoid-dms/",""],
+["2022-10-19-apps-of-2022","2022-10-19","The Best Of - 2022 Edition","bestof,software","","/2022/10/the-best-of-2022-edition/",""],
+["2022-08-23-were-not-deploying-frequently-enough","2022-08-23","It's 2022 and we're (still) not deploying enough","devops,software development,agile,enterprise","","/2022/08/its-2022-and-were-still-not-deploying-enough/",""],
+["2022-07-08-dalle-2","2022-07-08","DALL·E 2 - Selected works","art,machinelearning,humour","","/2022/07/dalle-2-selected-works/",""],
+["2022-06-13-beginner-harp-practice","2022-06-13","Beginner Harmonica Practice Exercises","music","","/2022/06/beginner-harmonica-practice-exercises/",""],
+["2022-05-17-firefox-addons-2022","2022-05-17","Firefox Addons for 2022","software","","/2022/05/firefox-addons-for-2022/",""],
+["2021-07-22-goodbye-evernote-hello-bear","2021-07-22","Goodbye Evernote, Hello Bear","software","","/2021/07/goodbye-evernote-hello-bear/",""],
+["2021-07-11-silvia-upgrade","2021-07-11","Rancilio Silvia Upgrade","coffee,hardware","","/2021/07/rancilio-silvia-upgrade/",""],
+["2020-11-18-team-charter","2020-11-18","DevOps Team Charter","devops","","/2020/11/devops-team-charter/",""],
+["2020-11-08-ferrari-f12","2020-11-08","Ferrari F12 Berlinetta","photos,cars","","/2020/11/ferrari-f12-berlinetta/",""],
+["2020-10-10-apps-of-2020","2020-10-10","The Best Of - 2020 Edition","bestof,software","","/2020/10/the-best-of-2020-edition/",""],
+["2020-10-08-rip-jimothy","2020-10-08","Rest in Peace Jimothy","photos","","/2020/10/rest-in-peace-jimothy/",""],
+["2019-08-08-camels-and-unicorns","2019-08-08","Camels Dressed As Unicorns","tech,devops,career","","/2019/08/camels-dressed-as-unicorns/",""],
+["2019-08-06-new-opportunities","2019-08-06","Looking For New Opportunities","tech,devops,career","","/2019/08/looking-for-new-opportunities/",""],
+["2019-06-29-leaving-infoxchange","2019-06-29","Leaving Infoxchange","tech,devops,career","","/2019/06/leaving-infoxchange/",""],
+["2019-02-05-hello-xcp-ng","2019-02-05","Goodbye XenSever - Hello XCP-ng","tech,software","","/2019/02/goodbye-xensever-hello-xcp-ng/",""],
+["2018-12-20-otago-trip-mustang-2018","2018-12-20","New Zealand Otago Trip in a 2019 Mustang GT","cars,photos","","/2018/12/new-zealand-otago-trip-in-a-2019-mustang-gt/",""],
+["2018-07-30-background-youtube-dl","2018-07-30","Run youtube-dl (or similar) in the background","tech,software","","/2018/07/run-youtube-dl-or-similar-in-the-background/",""],
+["2018-07-16-disable-scroll-zoom-ff","2018-07-16","Disabling scroll-wheel zoom in Firefox","tech,software","","/2018/07/disabling-scroll-wheel-zoom-in-firefox/",""],
+["2018-04-11-highlands","2018-04-11","Highlands Festival of Speed 2018","cars,photos","","/2018/04/highlands-festival-of-speed-2018/",""],
+["2018-03-20-oss-flash-storage-update","2018-03-20","Flash Storage and SSD Failure Rate Update (March 2018)","tech,storage,hardware","","/2018/03/flash-storage-and-ssd-failure-rate-update-march-2018/",""],
+["2018-01-17-theory-of-constraints","2018-01-17","Theory of constraints","devops","","/2018/01/theory-of-constraints/",""],
+["2017-12-28-album-picks-2017","2017-12-28","Top album picks for 2017","music","","/2017/12/top-album-picks-for-2017/",""],
+["2017-12-27-hp-4951","2017-12-27","HP 4951C Protocol Analyser","tech,hardware","","/2017/12/hp-4951c-protocol-analyser/",""],
+["2017-11-14-getting-started-with-gluster","2017-11-14","Talk - Clustered, Distributed File and Volume Storage with GlusterFS","tech,storage,talk,slides","","/2017/11/talk-clustered-distributed-file-and-volume-storage-with-glusterfs/",""],
+["2017-10-25-sublime-syntax-topline","2017-10-25","Applying syntax in Sublime based on the first file line","tech","","/2017/10/applying-syntax-in-sublime-based-on-the-first-file-line/",""],
+["2017-10-13-Drop-Broadcom","2017-10-13","Broadcom, Or How I Learned To Start Worrying And Drop The Packet","tech,networking,hardware","","/2017/10/broadcom-or-how-i-learned-to-start-worrying-and-drop-the-packet/",""],
+["2017-09-25-GlusterFS-3-12-1","2017-09-25","GlusterFS","tech,storage,software","","/2017/09/glusterfs/",""],
+["2017-09-22-return-of-the-rss","2017-09-22","Return Of The RSS","tech,software","","/2017/09/return-of-the-rss/",""],
+["2016-12-21-co2-logger","2016-12-21","MH-Z19 CO2 sensor reader, logger and visualiser","health,iot,co2","","/2016/12/mh-z19-co2-sensor-reader-logger-and-visualiser/",""],
+["2016-08-06-winter-wonder-land","2016-08-06","Castle Hill Winter Trip 2016 Photos","photos,cars","Castle Hill Winter Trip 2016 [Photos]","/2016/08/castle-hill-winter-trip-2016-photos/",""],
+["2016-07-11-lets-try-android-in-2016","2016-07-11","The State of Android in 2016 & The OnePlus 3 Phone","tech,hardware","","/2016/07/the-state-of-android-in-2016-the-oneplus-3-phone/",""],
+["2016-07-04-update-rcd-stonith-design","2016-07-04","Update Delayed Serial STONITH Design","tech,storage,hardware","","/2016/07/update-delayed-serial-stonith-design/",""],
+["2016-05-23-convert-sql-ascii-to-utf8","2016-05-23","Online Conversion from SQL_ASCII to UTF8 in PostgreSQL","tech,software,data","","/2016/05/online-conversion-from-sql_ascii-to-utf8-in-postgresql/",""],
+["2016-05-23-monitor-systemd-nagios","2016-05-23","Monitoring SystemD Units With Nagios","tech,software","","/2016/05/monitoring-systemd-units-with-nagios/",""],
+["2016-05-03-speeding-up-rsync","2016-05-03","Speeding Up rsync","tech,software,networking","","/2016/05/speeding-up-rsync/",""],
+["2016-04-29-benchmarking-io","2016-04-29","Benchmarking IO with FIO","tech,storage","","/2016/04/benchmarking-io-with-fio/",""],
+["2016-02-04-mirror-gitlab-to-github","2016-02-04","Mirroring a Gitlab project to Github","tech,software","","/2016/02/mirroring-a-gitlab-project-to-github/",""],
+["2016-01-29-askizzy","2016-01-29","AskIzzy","tech","","/2016/01/askizzy/",""],
+["2016-01-18-fix-xenserver-sr-with-corrupt-metadata","2016-01-18","Fix XenServer SR with corrupt or invalid metadata","tech,storage,xen","","/2016/01/fix-xenserver-sr-with-corrupt-or-invalid-metadata/",""],
+["2015-12-14-iscsi-scsiid-persistence","2015-12-14","iSCSI SCSI-ID / Serial Persistence","tech,storage","","/2015/12/iscsi-scsi-id-/-serial-persistence/",""],
+["2015-11-09-intro-to-pacemaker-and-corosync","2015-11-09","How to cluster and failover (almost) anything - An intro to Pacemaker and Corosync","tech,storage,clustering","","/2015/11/how-to-cluster-and-failover-almost-anything-an-intro-to-pacemaker-and-corosync/",""],
+["2015-10-07-san-intro-talk","2015-10-07","SAN Intro","tech,storage,clustering,talk,slides,hardware","","/2015/10/san-intro/",""],
+["2015-09-22-replacing-junos-pulse-with-openconnect","2015-09-22","Replacing Junos Pulse with OpenConnect","tech,networking","","/2015/09/replacing-junos-pulse-with-openconnect/",""],
+["2015-09-13-ssd-storage-two-months-in-prod","2015-09-13","SSD Storage - Two Months In Production","tech,storage,hardware","","/2015/09/ssd-storage-two-months-in-production/",""],
+["2015-09-01-os-x-software-update-channels","2015-09-01","OS X Software Update Channels For Betas","tech","","/2015/09/os-x-software-update-channels-for-betas/",""],
+["2015-07-24-scsi-benchmarking","2015-07-24","iSCSI Benchmarking","tech,storage,hardware","","/2015/07/iscsi-benchmarking/",""],
+["2015-07-21-rcd-stonith","2015-07-21","Delayed Serial STONITH","tech,storage,hardware","","/2015/07/delayed-serial-stonith/",""],
+["2015-07-12-video-cluster-failover-demo","2015-07-12","Video - Cluster Failover Performance Demo","tech,storage,hardware,slides,talks","","/2015/07/video-cluster-failover-performance-demo/",""],
+["2015-07-07-centos-7-and-ha","2015-07-07","CentOS 7 and HA","tech,storage,clustering","","/2015/07/centos-7-and-ha/",""],
+["2015-06-17-ssd-storage-cluster---diagram","2015-06-17","SSD Storage Cluster - Update and Diagram","tech,storage,hardware","","/2015/06/ssd-storage-cluster-update-and-diagram/",""],
+["2015-05-14-video-storage-cluster-failover-demo","2015-05-14","Video - Storage Cluster Failover Demo","tech,storage,hardware,slides,talks","","/2015/05/video-storage-cluster-failover-demo/",""],
+["2015-04-15-talk-high-perf-sds-ictalk","2015-04-15","Talk - High Performance Software Defined Storage","tech,storage,talk,hardware,slides","","/2015/04/talk-high-performance-software-defined-storage/",""],
+["2015-03-15-kernel-ci","2015-03-15","Continuous integration for the Linux Kernel - Built within Docker","tech,devops,cicd","","/2015/03/continuous-integration-for-the-linux-kernel-built-within-docker/",""],
+["2015-02-26-xen-orchestra-docker-image","2015-02-26","Xen Orchestra Docker Image","tech,xen","","/2015/02/xen-orchestra-docker-image/",""],
+["2015-02-23-delete-known-governmentlinked-certificate-authorities-in-os-x","2015-02-23","Delete Government-Linked Certificate Authorities in OSX","tech,security,privacy","","/2015/02/delete-government-linked-certificate-authorities-in-osx/",""],
+["2015-02-16-building-a-high-performance-ssd-san","2015-02-16","Building a high performance SSD SAN - Part 1","tech,storage,hardware","","/2015/02/building-a-high-performance-ssd-san-part-1/",""],
+["2015-02-15-directattach-ssd-storage--performance--comparisons","2015-02-15","Direct-Attach SSD Storage - Performance & Comparisons","tech,storage,hardware","","/2015/02/direct-attach-ssd-storage-performance-comparisons/",""],
+["2015-02-15-search--a-journey-of-delivery-on-a-budget","2015-02-15","Search - A Journey of Delivery on a Budget","tech,clustering,devops,career","","/2015/02/search-a-journey-of-delivery-on-a-budget/",""],
+["2015-02-15-talk-24-months","2015-02-15","Talk - 24 Months","talk,tech,devops,career","","/2015/02/talk-24-months/",""],
+["2015-02-15-the-best-of--2014-edition","2015-02-15","The Best Of - 2014 Edition","tech,software,bestof","","/2015/02/the-best-of-2014-edition/",""],
+["2015-02-15-xenserver-ssds--vm-storage-performance","2015-02-15","XenServer, SSDs & VM Storage Performance","tech,storage,hardware,xen","","/2015/02/xenserver-ssds-vm-storage-performance/",""],
+["2010-06-10-e36-bmw-manual-conversion","2010-06-10","BMW E36 328i Manual Conversion Programming","cars","","/2010/06/bmw-e36-328i-manual-conversion-programming/",""]
+];
+const POSTS = IDX.map(([id, date, title, tags, desc, url, cover]) => ({
+  id, date, title, desc, slug: id.replace(/^\d{4}-\d{2}-\d{2}-/, ''), tags: tags ? tags.split(',') : [],
+  url: 'https://smcleod.net' + url, cover: cover ? `../content/posts/${id}/${cover}` : ''
+}));
+const bySlug = Object.fromEntries(POSTS.map(p => [p.slug, p]));
+const TZ = 'Australia/Melbourne';
+const QUOTES = [
+  ['It is the struggle itself that is most important. We must strive to be more than we are. It does not matter that we will never reach our own ultimate Goal. The effort yields its own rewards.', 'Data'],
+  ['What I cannot create - I do not understand.', 'Richard P. Feynman'],
+  ["Do you want a voice? If you do, you better bloody well go out and get it because it's not going to be handed to you on a plate.", 'Roger Waters']
+];
+const APPS = { posts: ['Tracker', 'folder'], reader: ['Reader', 'doc'], term: ['Terminal', 'term'], about: ['About', 'person'], view: ['ShowImage', 'image'] };
+
+const $ = (s, r = document) => r.querySelector(s);
+const esc = s => String(s).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+const ico = n => `<svg aria-hidden="true"><use href="#i-${n}"/></svg>`;
+const mq = matchMedia('(max-width: 767px)');
+const mobile = () => mq.matches;
+const coarse = () => matchMedia('(pointer: coarse)').matches;
+const fmtDate = d => new Date(d + 'T12:00:00').toLocaleDateString('en-AU', { day: 'numeric', month: 'long', year: 'numeric' });
+
+// Archive stats, all derived from IDX
+const years = {}, tagCount = {};
+POSTS.forEach(p => {
+  const y = p.date.slice(0, 4); years[y] = (years[y] || 0) + 1;
+  p.tags.forEach(t => tagCount[t] = (tagCount[t] || 0) + 1);
+});
+const Y0 = +POSTS.at(-1).date.slice(0, 4), Y1 = +POSTS[0].date.slice(0, 4);
+const topTags = Object.entries(tagCount).sort((a, b) => b[1] - a[1]).slice(0, 4);
+
+// ---------- Window manager ----------
+const desk = $('#desk'), wins = new Map();
+let zTop = 10, focused = null, seq = 0;
+const BAR = 172;
+
+function workArea() { return { w: innerWidth - (mobile() ? 0 : BAR + 12), h: innerHeight }; }
+function cascade(ww, hh) {
+  const a = workArea(), n = seq++ % 6;
+  ww = Math.min(ww, a.w - 20); hh = Math.min(hh, a.h - 40);
+  return { x: Math.max(8, Math.min(120 + n * 30, a.w - ww)), y: Math.max(8, Math.min(22 + n * 30, a.h - hh - 16)), w: ww, h: hh };
+}
+function bigRect() {
+  const a = workArea(), ww = Math.min(a.w - 40, 1040);
+  return { x: Math.max(20, Math.round((a.w - ww) / 2)), y: 10, w: ww, h: a.h - 28 };
+}
+function setRect(w, r) { Object.assign(w.el.style, { left: r.x + 'px', top: r.y + 'px', width: r.w + 'px', height: r.h + 'px' }); }
+function getRect(w) { const s = w.el.style; return { x: parseFloat(s.left), y: parseFloat(s.top), w: parseFloat(s.width), h: parseFloat(s.height) }; }
+
+// Pointer-driven drag that works identically for mouse, pen and touch
+function drag(e, move, end) {
+  e.preventDefault();
+  const t = e.currentTarget, sx = e.clientX, sy = e.clientY;
+  t.setPointerCapture(e.pointerId);
+  const mv = ev => move(ev.clientX - sx, ev.clientY - sy);
+  const up = ev => {
+    t.removeEventListener('pointermove', mv); t.removeEventListener('pointerup', up); t.removeEventListener('pointercancel', up);
+    if (end) end(ev.type === 'pointercancel');
+  };
+  t.addEventListener('pointermove', mv); t.addEventListener('pointerup', up); t.addEventListener('pointercancel', up);
+}
+
+function openWin(o) {
+  let w = wins.get(o.id);
+  if (w) { restore(w); return w; }
+  const el = document.createElement('div');
+  el.className = 'win new';
+  el.innerHTML = `<div class="tab"><button class="wb close" aria-label="Close"></button><span class="ttl"></span><button class="wb mini" aria-label="Minimise"></button><button class="wb zoom" aria-label="Zoom"></button></div><div class="frame"><div class="body"></div><div class="knob"></div></div>`;
+  $('.ttl', el).textContent = o.title;
+  w = { id: o.id, app: o.app, title: o.title, el, body: $('.body', el), min: false, prev: null };
+  setRect(w, o.rect || cascade(o.w || 560, o.h || 440));
+  desk.appendChild(el);
+  wins.set(o.id, w);
+  o.build(w.body, w);
+  wire(w);
+  focus(w);
+  el.addEventListener('animationend', () => el.classList.remove('new'), { once: true });
+  return w;
+}
+
+function wire(w) {
+  const el = w.el, tab = $('.tab', el);
+  el.addEventListener('pointerdown', () => focused !== w && focus(w), true);
+  $('.close', el).onclick = () => closeWin(w);
+  $('.mini', el).onclick = () => minimise(w);
+  $('.zoom', el).onclick = () => zoom(w);
+  let lastTap = 0;
+  tab.addEventListener('pointerdown', e => {
+    if (e.target.closest('button') || e.button > 0) return;
+    const r = getRect(w);
+    let moved = false;
+    drag(e, (dx, dy) => {
+      if (!moved && Math.hypot(dx, dy) < 5) return;
+      moved = true;
+      if (mobile()) return;
+      setRect(w, { ...r, x: Math.min(Math.max(r.x + dx, 60 - r.w), innerWidth - 80), y: Math.min(Math.max(r.y + dy, 0), innerHeight - 40) });
+      updateDock();
+    }, cancelled => {
+      if (moved || cancelled) return;
+      // Double-tap on the yellow tab rolls the window up (window shade)
+      const now = Date.now();
+      if (now - lastTap < 350) { lastTap = 0; el.classList.toggle('shaded'); updateDock(); } else lastTap = now;
+    });
+  });
+  $('.knob', el).addEventListener('pointerdown', e => {
+    const r = getRect(w);
+    drag(e, (dx, dy) => { setRect(w, { ...r, w: Math.max(280, r.w + dx), h: Math.max(180, r.h + dy) }); updateDock(); });
+  });
+}
+
+function topWin() { return [...wins.values()].filter(x => !x.min).sort((a, b) => b.el.style.zIndex - a.el.style.zIndex)[0] || null; }
+function focus(w) {
+  if (focused && focused !== w) focused.el.classList.remove('focus');
+  focused = w;
+  if (w) { w.el.style.zIndex = ++zTop; w.el.classList.add('focus'); }
+  sync();
+}
+function closeWin(w) {
+  w.el.remove();
+  wins.delete(w.id);
+  if (w.id === 'post:' + decodeURIComponent(location.hash.slice(1))) history.replaceState(null, '', location.pathname);
+  if (focused === w) { focused = null; focus(topWin()); } else sync();
+}
+function minimise(w) {
+  if (w.min) return;
+  w.min = true;
+  const b = w.el.getBoundingClientRect();
+  const tx = mobile() ? 0 : innerWidth - BAR / 2 - (b.left + b.width / 2), ty = (mobile() ? innerHeight : 60) - (b.top + b.height / 2);
+  w.el.animate([{ transform: 'none', opacity: 1 }, { transform: `translate(${tx}px,${ty}px) scale(.12)`, opacity: 0 }], { duration: 220, easing: 'ease-in' })
+    .finished.then(() => {
+      if (!w.min) return;
+      w.el.classList.add('min');
+      if (focused === w) { w.el.classList.remove('focus'); focused = null; focus(topWin()); } else sync();
+    });
+}
+function restore(w) {
+  if (w.min) { w.min = false; w.el.classList.remove('min'); w.el.classList.add('new'); w.el.addEventListener('animationend', () => w.el.classList.remove('new'), { once: true }); }
+  focus(w);
+}
+function zoom(w) {
+  if (w.prev) { setRect(w, w.prev); w.prev = null; } else { w.prev = getRect(w); setRect(w, bigRect()); }
+  updateDock();
+}
+function sync() { renderTeams(); updateDock(); }
+
+// ---------- Deskbar ----------
+function renderTeams() {
+  const groups = {};
+  for (const w of wins.values()) (groups[w.app] ??= []).push(w);
+  const html = Object.entries(groups).map(([app, ws]) =>
+    `<div class="team-h">${ico(APPS[app][1])}${APPS[app][0]}</div>` +
+    ws.map(w => `<button class="team-w${w === focused ? ' on' : ''}${w.min ? ' min' : ''}" data-w="${esc(w.id)}" title="${esc(w.title)}">${esc(w.title)}</button>`).join('')
+  ).join('') || '<p class="none">No windows open</p>';
+  $('#teams').innerHTML = html;
+  $('#mteams').innerHTML = html;
+}
+function teamClick(id) {
+  const w = wins.get(id);
+  if (!w) return;
+  if (w.min) restore(w);
+  else if (w === focused && !mobile()) minimise(w);
+  else focus(w);
+}
+const menu = $('#menu'), leaf = $('#leaf');
+function setMenu(open) { menu.hidden = !open; leaf.setAttribute('aria-expanded', open); }
+leaf.onclick = () => setMenu(menu.hidden);
+
+const clock = $('#clock');
+let showDate = false;
+function tick() {
+  const d = new Date();
+  clock.textContent = showDate
+    ? d.toLocaleDateString('en-AU', { timeZone: TZ, weekday: 'short', day: 'numeric', month: 'short' })
+    : d.toLocaleTimeString('en-AU', { timeZone: TZ, hour: 'numeric', minute: '2-digit' });
+}
+clock.onclick = () => { showDate = !showDate; tick(); };
+
+// ---------- Dock: hides only when a window overlaps it (XFCE "intelligently") ----------
+const dock = $('#dock'), grip = $('#grip');
+let peek = false, peekT;
+function updateDock() {
+  const l = dock.offsetLeft, t = dock.offsetTop, r = l + dock.offsetWidth, b = t + dock.offsetHeight;
+  const over = [...wins.values()].some(w => {
+    if (w.min) return false;
+    const q = w.el.getBoundingClientRect();
+    return q.left < r && q.right > l && q.top < b && q.bottom > t;
+  });
+  dock.classList.toggle('hid', over && !peek);
+  grip.hidden = !(over && !peek);
+  dock.querySelectorAll('[data-app]').forEach(d => d.classList.toggle('run', [...wins.values()].some(w => w.app === d.dataset.app)));
+}
+const setPeek = v => { clearTimeout(peekT); peek = v; updateDock(); };
+grip.addEventListener('pointerenter', e => e.pointerType === 'mouse' && setPeek(true));
+grip.onclick = () => setPeek(true);
+dock.addEventListener('pointerenter', () => clearTimeout(peekT));
+dock.addEventListener('pointerleave', e => { if (peek && e.pointerType === 'mouse') peekT = setTimeout(() => setPeek(false), 600); });
+
+// ---------- Apps ----------
+const launch = {
+  posts: () => openPosts(),
+  find: () => openPosts(null, true),
+  term: openTerm,
+  about: () => openWin({ id: 'about', app: 'about', title: 'About Sam McLeod', w: 640, h: 620, build: b => b.appendChild($('#about-tpl').content.cloneNode(true)) }),
+  piper: () => openViewer('../static/piper.jpg', 'piper.jpg')
+};
+
+function matches(p, q) {
+  const hay = `${p.title} ${p.desc} ${p.tags.join(' ')} ${p.date}`.toLowerCase();
+  return q.toLowerCase().split(/\s+/).filter(Boolean).every(t => hay.includes(t));
+}
+
+function openPosts(q, focusSearch) {
+  const w = openWin({
+    id: 'posts', app: 'posts', title: 'Posts', w: 640, h: 520, build: (b, w) => {
+      b.innerHTML = `<div class="tbar"><input class="srch" type="search" placeholder="Search ${POSTS.length} posts by title, tag or year" aria-label="Search posts"></div>
+        <div class="cols"><button data-s="title">Name</button><button data-s="date">Date</button><span class="tg">Tags</span></div><div class="rows"></div><div class="stat"></div>`;
+      w.sort = { k: 'date', dir: -1 };
+      $('.srch', b).oninput = () => renderRows(w);
+      $('.cols', b).onclick = e => {
+        const k = e.target.dataset.s;
+        if (!k) return;
+        w.sort = { k, dir: w.sort.k === k ? -w.sort.dir : (k === 'date' ? -1 : 1) };
+        renderRows(w);
+      };
+    }
+  });
+  const inp = $('.srch', w.body);
+  if (q != null) inp.value = q;
+  renderRows(w);
+  if (focusSearch) inp.focus();
+}
+function renderRows(w) {
+  const q = $('.srch', w.body).value, { k, dir } = w.sort;
+  const list = POSTS.filter(p => matches(p, q)).sort((a, b) => a[k].localeCompare(b[k]) * dir);
+  $('.rows', w.body).innerHTML = list.map(p =>
+    `<button class="row" data-p="${esc(p.slug)}"><span class="nm">${ico('doc')}<span>${esc(p.title)}</span></span><span class="dt">${p.date}</span><span class="tg">${esc(p.tags.join(', '))}</span></button>`
+  ).join('') || '<p class="none">No posts match that search.</p>';
+  w.body.querySelectorAll('.cols button').forEach(c => { c.classList.toggle('on', c.dataset.s === k); c.classList.toggle('up', dir > 0); });
+  $('.stat', w.body).textContent = `${list.length} of ${POSTS.length} posts`;
+}
+
+function setFs(d) {
+  const fs = Math.min(1.4, Math.max(.85, (+localStorage.getItem('fs') || 1) + d));
+  localStorage.setItem('fs', fs);
+  document.documentElement.style.setProperty('--fs', fs);
+}
+
+function openPost(slug) {
+  const p = bySlug[slug];
+  if (!p) return;
+  const tpl = document.getElementById('b-' + p.id);
+  const words = tpl ? tpl.content.textContent.trim().split(/\s+/).length : 0;
+  history.replaceState(null, '', '#' + encodeURIComponent(slug));
+  openWin({
+    id: 'post:' + slug, app: 'reader', title: p.title, rect: bigRect(), build: b => {
+      b.innerHTML = `<div class="rbar"><button class="xb" data-fs="-0.08" aria-label="Smaller text">A-</button><button class="xb" data-fs="0.08" aria-label="Larger text">A+</button><span class="sp"></span><a class="xb" href="${p.url}" target="_blank" rel="noopener">${ico('globe')}View on smcleod.net</a><i class="prog"></i></div>
+        <div class="read"><article class="art"><header>${!tpl && p.cover ? `<img class="cover" src="${p.cover}" alt="">` : ''}<h1>${esc(p.title)}</h1>
+        <p class="meta">${fmtDate(p.date)}${words ? ` · ${Math.ceil(words / 230)} min read` : ''}</p>
+        <div class="tags">${p.tags.map(t => `<button data-q="${esc(t)}">${esc(t)}</button>`).join('')}</div></header><div class="content"></div></article></div>`;
+      const content = $('.content', b), read = $('.read', b), prog = $('.prog', b);
+      if (tpl) content.appendChild(tpl.content.cloneNode(true));
+      else content.innerHTML = `<p class="lede">${esc(p.desc || 'No summary for this one, the post speaks for itself.')}</p><p><a class="go" href="${p.url}" target="_blank" rel="noopener">Read the full post on smcleod.net</a></p>`;
+      read.onscroll = () => { prog.style.width = (read.scrollTop / Math.max(1, read.scrollHeight - read.clientHeight) * 100) + '%'; };
+      b.addEventListener('click', e => {
+        if (e.target.dataset.fs) setFs(+e.target.dataset.fs);
+        const img = e.target.closest('.content img');
+        if (img) openViewer(img.src, img.alt || 'image');
+      });
+    }
+  });
+}
+
+function openViewer(src, name) {
+  openWin({
+    id: 'view:' + src, app: 'view', title: name, w: 700, h: 560, build: b => {
+      b.innerHTML = `<div class="view"><img alt="${esc(name)}"></div><div class="stat">Loading ${esc(name)}</div>`;
+      const img = $('img', b), st = $('.stat', b);
+      img.onload = () => st.textContent = `${name}  ·  ${img.naturalWidth} x ${img.naturalHeight}`;
+      img.onerror = () => st.textContent = `Could not load ${name}`;
+      img.src = src;
+    }
+  });
+}
+
+// ---------- Terminal ----------
+const PS1 = '<span class="c-g">sam@smcleod</span>:<span class="c-b">~</span>$';
+const CHIPS = ['help', 'ls', 'ls posts', 'whoami', 'neofetch', 'cat ' + POSTS[0].slug, 'grep mcp', 'grep quantisation', 'date', 'clear'];
+const tl = (cmd, label, cls = '') => `<span class="tl ${cls}" data-cmd="${esc(cmd)}">${esc(label)}</span>`;
+const CAT = [String.raw`    /\_/\  `, String.raw`   ( o.o ) `, String.raw`    > ^ <  `, String.raw`   /     \ `, String.raw`  (|     |)`, String.raw`   \_____/ `];
+
+function openTerm() {
+  openWin({
+    id: 'term', app: 'term', title: 'sam@smcleod: ~', w: 700, h: 460, build: (b, w) => {
+      b.innerHTML = `<div class="term"><div class="out"></div><label class="pl"><span>${PS1}</span><input aria-label="Command" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false"></label></div>
+        <div class="chips">${CHIPS.map(c => `<button class="chip" data-cmd="${esc(c)}">${esc(c)}</button>`).join('')}</div>`;
+      const T = { out: $('.out', b), inp: $('input', b), scr: $('.term', b), hist: [], hi: 0, w };
+      out(T, `<span class="c-d">smcleod.net tty1. Tap a command below or type one.</span> ${tl('help', 'help')} <span class="c-d">lists them all.</span>`);
+      T.inp.addEventListener('keydown', e => {
+        if (e.key === 'Enter') { run(T, T.inp.value); T.inp.value = ''; }
+        else if (e.key === 'ArrowUp' || e.key === 'ArrowDown') {
+          e.preventDefault();
+          T.hi = Math.max(0, Math.min(T.hist.length, T.hi + (e.key === 'ArrowUp' ? -1 : 1)));
+          T.inp.value = T.hist[T.hi] || '';
+        }
+      });
+      b.addEventListener('click', e => {
+        const c = e.target.closest('[data-cmd]');
+        if (c) run(T, c.dataset.cmd);
+        else if (!coarse() && !getSelection().toString()) T.inp.focus();
+      });
+      if (!coarse()) T.inp.focus();
+    }
+  });
+}
+const out = (T, html) => T.out.insertAdjacentHTML('beforeend', `<div class="ln">${html}</div>`);
+function run(T, raw) {
+  const cmd = raw.trim();
+  out(T, `${PS1} ${esc(cmd)}`);
+  if (cmd) {
+    T.hist.push(cmd); T.hi = T.hist.length;
+    const [c, ...rest] = cmd.split(/\s+/);
+    const f = CMDS[c];
+    if (f) f(T, rest.join(' ')); else out(T, `<span class="c-r">${esc(c)}: command not found.</span> Try ${tl('help', 'help')}.`);
+  }
+  T.scr.scrollTop = T.scr.scrollHeight;
+}
+const CMDS = {
+  help: T => out(T, [['ls [posts]', 'list files, or every post'], ['cat <slug>', 'open a post in the reader'], ['grep <term>', 'search titles, descriptions and tags'], ['find <term>', 'show matches in Tracker'], ['whoami', 'who owns this machine'], ['neofetch', 'system facts'], ['date', 'the time in Melbourne'], ['clear', 'clear the screen'], ['exit', 'close the terminal']]
+    .map(([a, d]) => `  <span class="c-y cmdn">${esc(a)}</span>${d}`).join('\n')),
+  ls: (T, a) => {
+    if (!a) return out(T, `${tl('ls posts', 'posts/', 'c-b')}  ${tl('cat about.txt', 'about.txt')}  ${tl('cat piper.jpg', 'piper.jpg', 'c-m')}`);
+    if (/^posts\/?$/.test(a)) return out(T, `<span class="c-d">${POSTS.length} posts, newest first. Tap one to open it.</span>\n` + POSTS.map(p => `<span class="c-d">${p.date}</span>  ${tl('cat ' + p.slug, p.slug)}`).join('\n'));
+    out(T, `ls: cannot access '${esc(a)}': No such file or directory`);
+  },
+  cat: (T, a) => {
+    if (!a) return out(T, `usage: cat &lt;slug&gt;  (try ${tl('ls posts', 'ls posts')})`);
+    a = a.replace(/^posts\//, '').toLowerCase();
+    if (a === 'about.txt') { launch.about(); return out(T, 'Opened about.txt in About.'); }
+    if (a === 'piper.jpg') { launch.piper(); return out(T, 'cat: piper.jpg: binary file. Opened it in ShowImage instead.'); }
+    const exact = POSTS.filter(p => p.slug.toLowerCase() === a || p.id.toLowerCase() === a);
+    const pre = POSTS.filter(p => p.slug.toLowerCase().startsWith(a));
+    const hits = exact.length ? exact : pre.length ? pre : POSTS.filter(p => p.slug.toLowerCase().includes(a));
+    if (hits.length === 1) { openPost(hits[0].slug); return out(T, `Opening <span class="c-c">${esc(hits[0].title)}</span>`); }
+    if (hits.length > 1) return out(T, `cat: '${esc(a)}' matches ${hits.length} posts:\n` + hits.slice(0, 15).map(p => '  ' + tl('cat ' + p.slug, p.slug)).join('\n'));
+    out(T, `cat: ${esc(a)}: No such file or directory. Try ${tl('grep ' + a, 'grep ' + a)}.`);
+  },
+  grep: (T, a) => {
+    if (!a) return out(T, 'usage: grep &lt;term&gt;');
+    const hits = POSTS.filter(p => matches(p, a));
+    const re = new RegExp('(' + esc(a.split(/\s+/)[0]).replace(/[.*+?^${}()|[\]\\]/g, '\\$&') + ')', 'ig');
+    out(T, `<span class="c-d">${hits.length} match${hits.length === 1 ? '' : 'es'} for '${esc(a)}'</span>\n` + hits.slice(0, 25).map(p =>
+      `<span class="c-d">${p.date}</span>  ${tl('cat ' + p.slug, p.slug)}\n            ${esc(p.title).replace(re, '<mark>$1</mark>')}`).join('\n') +
+      (hits.length > 25 ? `\n<span class="c-d">...and ${hits.length - 25} more.</span> ${tl('find ' + a, 'find ' + a)}` : ''));
+  },
+  find: (T, a) => { openPosts(a || ''); out(T, `Showing matches for '${esc(a)}' in Tracker.`); },
+  whoami: T => out(T, `sam\n<span class="c-d">Sam McLeod. AI engineer, open source contributor and music geek based in Melbourne, Australia.</span>`),
+  neofetch: T => {
+    const facts = [
+      `<span class="c-g">sam</span>@<span class="c-g">smcleod.net</span>`, '-----------------',
+      ['Role', 'AI Engineering Principal, Mantel'], ['Location', 'Melbourne, Australia'], ['Uptime', 'around 20 years in tech'],
+      ['Focus', 'LLMs and AI, the last five years'], ['Background', 'platform engineering, technical leadership'],
+      ['Posts', `${POSTS.length} (${Y0} to ${Y1})`], ['Top tags', topTags.slice(0, 4).map(t => t[0]).join(', ')],
+      ['Interests', 'music, gigs, HiFi, cats (Piper), road trips'], ['Energy', 'remote work, open communication'], ''
+    ].map(f => Array.isArray(f) ? `<span class="c-y">${f[0]}</span>: ${esc(f[1])}` : f).join('\n');
+    const sw = ['#2e3436', '#cc0000', '#4e9a06', '#c4a000', '#3465a4', '#75507b', '#06989a', '#d3d7cf'].map(c => `<span class="sw" style="background:${c}"></span>`).join('');
+    out(T, `<div class="nf"><pre class="c-y">${esc(CAT.join('\n'))}</pre><div>${facts}\n${sw}</div></div>`);
+  },
+  date: T => out(T, new Date().toLocaleString('en-AU', { timeZone: TZ, dateStyle: 'full', timeStyle: 'long' })),
+  clear: T => { T.out.innerHTML = ''; },
+  exit: T => closeWin(T.w),
+  sudo: T => out(T, 'sam is not in the sudoers file. This incident will be reported.')
+};
+
+// ---------- Desktop replicants ----------
+let li = 0;
+const LN = 5;
+function renderLatest() {
+  const p = POSTS[li];
+  $('#lp-n').textContent = `${li + 1} of ${LN}`;
+  $('#lp').innerHTML = `<button class="lp-card" data-p="${esc(p.slug)}">${p.cover ? `<span class="lp-cover" style="background-image:url('${p.cover}')"></span>` : `<span class="lp-cover none">${ico('doc')}</span>`}
+    <span class="lp-body"><small>${fmtDate(p.date)}</small><strong>${esc(p.title)}</strong><span>${esc(p.desc)}</span></span></button>
+    <nav class="lp-nav"><button class="xb" data-lp="-1"${li ? '' : ' disabled'}>Newer</button><button class="xb" data-lp="1"${li < LN - 1 ? '' : ' disabled'}>Older</button></nav>`;
+}
+function renderPulse() {
+  const ys = [];
+  for (let y = Y0; y <= Y1; y++) ys.push([y, years[y] || 0]);
+  const max = Math.max(...ys.map(v => v[1])), W = 280, H = 84, bw = W / ys.length;
+  const peak = ys.find(v => v[1] === max);
+  const days = Math.floor((Date.now() - new Date(POSTS[0].date + 'T12:00:00')) / 864e5);
+  const bars = ys.map(([y, n], i) => {
+    const h = n ? Math.max(3, n / max * (H - 10)) : 1;
+    return `<g data-q="${y}" data-n="${n}"><rect x="${i * bw}" width="${bw}" height="${H}" fill="transparent"/><rect class="bar${y === Y1 ? ' cur' : ''}" x="${i * bw + 2}" y="${H - h}" width="${bw - 4}" height="${h}" rx="1.5"/></g>`;
+  }).join('');
+  const grid = [.25, .5, .75].map(f => `<line x1="0" x2="${W}" y1="${H * f}" y2="${H * f}"/>`).join('');
+  $('#pulse').innerHTML = `<div class="kpis"><div><b>${POSTS.length}</b><span>posts</span></div><div><b>${Y1 - Y0 + 1}</b><span>years</span></div><div><b>${days}d</b><span>since last post</span></div></div>
+    <svg class="spark" viewBox="0 0 ${W} ${H}" preserveAspectRatio="none" role="img" aria-label="Posts per year ${Y0} to ${Y1}">${grid}${bars}</svg>
+    <div class="axis"><span>${Y0}</span><span>${Y1}</span></div><div class="ro"></div>
+    <div class="tops">${topTags.map(([t, n]) => `<button data-q="${esc(t)}"><span>${esc(t)}</span><i style="width:${n / topTags[0][1] * 100}%"></i><b>${n}</b></button>`).join('')}</div>`;
+  const ro = $('#pulse .ro'), def = `Busiest year <b>${peak[0]}</b> with ${peak[1]} posts. Tap a bar to list.`;
+  ro.innerHTML = def;
+  const svg = $('#pulse .spark');
+  svg.addEventListener('pointerover', e => { const g = e.target.closest('g'); if (g) ro.innerHTML = `<b>${g.dataset.q}</b>: ${g.dataset.n} post${g.dataset.n === '1' ? '' : 's'}`; });
+  svg.addEventListener('pointerleave', () => { ro.innerHTML = def; });
+}
+let qi = 0;
+function renderQuote() { const [q, who] = QUOTES[qi]; $('#quote').innerHTML = `<q>${esc(q)}</q><cite>${esc(who)}</cite>`; }
+$('#quote').onclick = () => { qi = (qi + 1) % QUOTES.length; renderQuote(); };
+
+function layoutReps() {
+  if (mobile()) return;
+  // Stack widgets beside the Deskbar, wrapping to a new column leftwards when one would run off the bottom
+  let x = innerWidth - BAR - 24 - 300, y = 12;
+  document.querySelectorAll('.rep').forEach(r => {
+    if (y > 12 && y + r.offsetHeight > innerHeight - 16) { x -= 318; y = 12; }
+    if (!r.dataset.moved) { r.style.left = Math.max(120, x) + 'px'; r.style.top = y + 'px'; }
+    y += r.offsetHeight + 18;
+  });
+}
+document.querySelectorAll('.rep .grab').forEach(g => g.addEventListener('pointerdown', e => {
+  if (mobile()) return;
+  const rep = g.parentElement, x = rep.offsetLeft, y = rep.offsetTop;
+  rep.dataset.moved = 1;
+  drag(e, (dx, dy) => {
+    rep.style.left = Math.min(Math.max(x + dx, 0), innerWidth - 60) + 'px';
+    rep.style.top = Math.min(Math.max(y + dy, 0), innerHeight - 40) + 'px';
+  });
+}));
+
+// ---------- Global wiring ----------
+document.addEventListener('click', e => {
+  const t = e.target.closest('[data-open],[data-p],[data-q],[data-w],[data-lp]');
+  if (!t) return;
+  const d = t.dataset;
+  if (d.open) launch[d.open]();
+  else if (d.p) openPost(d.p);
+  else if (d.q) openPosts(d.q);
+  else if (d.w) teamClick(d.w);
+  else if (d.lp) { li = Math.min(LN - 1, Math.max(0, li + +d.lp)); renderLatest(); }
+  setMenu(false);
+  if (t.closest('#dock')) setPeek(false);
+});
+document.addEventListener('pointerdown', e => {
+  if (!menu.hidden && !e.target.closest('#menu,#leaf')) setMenu(false);
+  if (peek && !e.target.closest('#dock,#grip')) setPeek(false);
+});
+addEventListener('resize', () => {
+  if (!mobile()) wins.forEach(w => { const r = getRect(w); setRect(w, { ...r, x: Math.min(r.x, innerWidth - 80), y: Math.min(r.y, innerHeight - 40) }); });
+  layoutReps();
+  updateDock();
+});
+
+document.documentElement.style.setProperty('--fs', +localStorage.getItem('fs') || 1);
+tick();
+setInterval(tick, 10000);
+renderLatest();
+renderPulse();
+renderQuote();
+renderTeams();
+layoutReps();
+document.fonts.ready.then(layoutReps);
+const start = decodeURIComponent(location.hash.slice(1));
+if (bySlug[start]) openPost(start);
+else if (!mobile()) openPosts();
+updateDock();
+</script>
+</body>
+</html>

@@ -15,8 +15,27 @@ REGISTRY ?= ghcr.io
 DOCKER_REPO ?= $(REGISTRY)/sammcj/smcleod
 USERNAME ?= sammcj
 TOKEN ?= $(shell echo $$GITHUB_TOKEN)
+HUGO ?= hugo
+HUGO_PORT ?= 1313
+PUBLIC ?= public
 
 # Tasks
+
+.PHONY: serve site-build check test thumbs
+serve: ## Run the Hugo dev server
+	$(HUGO) server --port $(HUGO_PORT)
+
+site-build: ## Build the site into $(PUBLIC)
+	$(HUGO) --gc --minify -d "$(PUBLIC)"
+
+check: ## Check the built site: posts, aliases, RSS, internal links, key pages (CHECK_ARGS=--strict ignores the known broken links)
+	HUGO_BIN="$(HUGO)" node scripts/check-site.mjs $(CHECK_ARGS) "$(PUBLIC)"
+
+test: ## Run the unit tests (vRAM estimator)
+	node --test 'tests/*.test.mjs'
+
+thumbs: ## Render bespoke post thumbnails from assets/thumbnails-src (THUMBS=<bundle> for one; CHROMIUM_PATH optional; uses the theme's Playwright and pngquant)
+	node scripts/render-thumbs.mjs $(THUMBS)
 
 hugo: ## Run hugo
 	@echo 'running hugo'

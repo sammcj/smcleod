@@ -1,0 +1,5 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><title>Demo tool</title>
+<style>body{font:16px system-ui;margin:2em;background:#fbfaf6;color:#222}output{font-weight:700}</style></head>
+<body><h1>Demo tool</h1><p><label>Words <input id="w" value="three small words"></label></p><p>Count: <output id="n">3</output></p>
+<script>w.oninput=()=>{n.textContent=w.value.trim().split(/\s+/).filter(Boolean).length}</script></body></html>

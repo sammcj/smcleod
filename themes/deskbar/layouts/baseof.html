@@ -1,0 +1,21 @@
+<!doctype html>
+{{- $w := partial "deskbar/window.html" . }}
+{{- /* Locale replaced LanguageCode in 0.158; branch so older Hugo (CI pins 0.152) still builds */}}
+{{- $lang := "" }}
+{{- if ge hugo.Version "0.158.0" }}{{ $lang = site.Language.Locale }}{{ else }}{{ $lang = site.LanguageCode }}{{ end }}
+<html lang="{{ $lang | default "en" }}" data-index="{{ with site.Home.OutputFormats.Get "deskbar" }}{{ .RelPermalink }}{{ end }}" data-photos="{{ partialCached "deskbar/apps/photos-url.html" site }}" data-saver="{{ with site.Params.deskbar.screensaver }}{{ if isset . "minutes" }}{{ .minutes }}{{ else }}5{{ end }}{{ else }}5{{ end }}">
+<head>
+  {{- partial "deskbar/head.html" . }}
+  {{- partial "hooks/head-end.html" . }}
+</head>
+<body>
+  {{- partial "deskbar/panel.html" . }}
+  {{- partial "deskbar/desk.html" . }}
+  <main id="content" data-window="{{ $w.kind }}" data-title="{{ $w.title }}" data-slug="{{ $w.slug }}" data-place="{{ $w.place }}" data-icon="{{ $w.icon }}"{{ with .Params.windowWidth }} data-width="{{ . }}"{{ end }}{{ with .Params.windowHeight }} data-height="{{ . }}"{{ end }}>
+    {{- block "main" . }}{{ end }}
+  </main>
+  {{- partial "deskbar/dock.html" . }}
+  {{- partial "deskbar/icons.html" . }}
+  {{- partial "hooks/body-end.html" . }}
+</body>
+</html>

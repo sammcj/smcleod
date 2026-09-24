@@ -1,0 +1,42 @@
+/* The Photos window and the lightbox (lazy/photos.js). The grid its page shows without JS is in apps.css. */
+.app-photos { container-type: inline-size; }
+.app-photos .toolbar b { margin-left: 4px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.app-photos .toolbar small { flex: none; color: var(--muted); }
+.ph-body { flex: 1; display: flex; min-height: 0; }
+.albums { width: 230px; flex: none; overflow: auto; background: var(--side); border-right: 1px solid var(--line); padding: 4px 0 10px; }
+.albums h2 { margin: 10px 12px 4px; font-size: 11px; text-transform: uppercase; letter-spacing: .06em; color: var(--muted); }
+.al { display: flex; align-items: center; gap: 8px; padding: 5px 10px; font-size: 12.5px; color: var(--fg); text-decoration: none; }
+.al img { width: 40px; height: 30px; flex: none; object-fit: cover; border-radius: 2px; background: var(--content); }
+.al span { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.al small { color: var(--muted); font-variant-numeric: tabular-nums; }
+.al:hover { background: var(--zebra); }
+.al.on { background: var(--accent); color: var(--accent-fg); }
+.al.on small { color: inherit; }
+.album-sel { display: none; min-width: 0; max-width: 60%; }
+.ph-main { flex: 1; overflow: auto; }
+.ph-empty { grid-column: 1 / -1; color: var(--muted); padding: 20px; text-align: center; }
+@container (max-width: 560px) {
+  .albums { display: none; }
+  .album-sel { display: block; }
+  .app-photos .toolbar b { display: none; }
+  .ph-grid { grid-template-columns: repeat(auto-fill, minmax(104px, 1fr)); gap: 4px; padding: 6px; }
+}
+
+/* Lightbox, in the Photos window and over pages with galleries */
+.lightbox { position: absolute; inset: 0; z-index: 3; display: grid; place-items: center; background: rgba(10,10,12,.95); color: #eee; touch-action: none; outline: none; }
+.lightbox > img { max-width: calc(100% - 120px); max-height: calc(100% - 90px); object-fit: contain; user-select: none; -webkit-user-drag: none; }
+.lb-nav { position: absolute; top: 50%; width: 48px; height: 64px; margin-top: -32px; display: grid; place-items: center; background: rgba(255,255,255,.12); border-radius: 4px; color: #fff; }
+.lb-nav:hover { background: rgba(255,255,255,.22); }
+.lb-nav svg { width: 22px; height: 22px; }
+.lb-prev { left: 10px; }
+.lb-next { right: 10px; }
+.lb-bar { position: absolute; inset: auto 0 0; display: flex; align-items: center; gap: 12px; padding: 10px 14px; background: linear-gradient(transparent, rgba(0,0,0,.7)); }
+.lb-cap { flex: 1; margin: 0; font: 13px/1.4 var(--ui); }
+.lb-n { font: 12px var(--ui); font-variant-numeric: tabular-nums; color: #bbb; }
+.lb-close { width: 36px; height: 36px; display: grid; place-items: center; border-radius: 4px; color: #fff; }
+.lb-close:hover { background: rgba(255,255,255,.15); }
+.lb-close svg { width: 14px; height: 14px; }
+@media (max-width: 767px), (max-height: 500px) and (pointer: coarse) {
+  .lightbox > img { max-width: 100%; max-height: calc(100% - 110px); }
+  .lb-nav { top: auto; bottom: 56px; margin: 0; width: 44px; height: 44px; }
+}

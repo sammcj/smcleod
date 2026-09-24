@@ -1,0 +1,89 @@
+{{- /* Photos albums (D15), resolved at build time into
+         [{ id, title, post?, slug?, auto?, items: [{ src, thumb?, caption, w?, h? }] }]
+       Albums are listed in the site's data/albums.yaml as { id, title, source, exclude?, pin? }. exclude lists photo
+       numbers (1-based, in source order) to leave out; pin: true puts the album first, where Photos opens. source is one of
+         { type: post, slug }                        the photos a post shows (slug or bundle directory name)
+         { type: folder, path }                      image files in assets/<path> (with thumbnails) or static/<path>
+         { type: urls, items: [{ src, caption }] }   external images, hotlinked
+       A reader-section post that opts in (D26, see post-album.html) and shows at least one photo also gets an album
+       of its own (auto), named by its slug, unless a listed album already covers it. */ -}}
+{{- $sections := site.Params.deskbar.readerSections | default (slice "posts") -}}
+{{- $posts := (where site.RegularPages "Section" "in" $sections).ByDate.Reverse -}}
+{{- $imageFile := `(?i)\.(jpe?g|png|gif|webp|avif)$` -}}
+{{- $albums := slice -}}
+{{- $pinned := slice -}}
+{{- $taken := slice -}}
+
+{{- /* hugo.Data replaced site.Data in 0.156; branch so older Hugo still builds */ -}}
+{{- $listed := slice -}}
+{{- if ge hugo.Version "0.156.0" }}{{ $listed = hugo.Data.albums }}{{ else }}{{ $listed = site.Data.albums }}{{ end -}}
+{{- range $listed -}}
+  {{- $a := . -}}
+  {{- $s := $a.source | default dict -}}
+  {{- $album := dict "id" (string $a.id) "title" ($a.title | default $a.id) -}}
+  {{- $items := slice -}}
+  {{- if eq $s.type "post" -}}
+    {{- range $posts -}}
+      {{- $slug := path.Base .RelPermalink -}}
+      {{- if or (eq $slug $s.slug) (and .File (eq .File.ContentBaseName $s.slug)) -}}
+        {{- $items = partial "deskbar/apps/post-images.html" . -}}
+        {{- $album = merge $album (dict "post" .RelPermalink "slug" $slug) -}}
+        {{- $taken = $taken | append $slug -}}
+      {{- end -}}
+    {{- end -}}
+  {{- else if eq $s.type "folder" -}}
+    {{- $dir := strings.Trim (string $s.path) "/" -}}
+    {{- range sort (resources.Match (printf "%s/*" $dir)) "Name" -}}
+      {{- if eq .MediaType.MainType "image" -}}
+        {{- $name := path.Base .Name -}}
+        {{- $item := dict "src" .RelPermalink "caption" (replaceRE `[_-]+` " " (strings.TrimSuffix (path.Ext $name) $name)) -}}
+        {{- if ne .MediaType.SubType "svg" -}}
+          {{- $item = merge $item (dict "w" .Width "h" .Height) -}}
+          {{- with try (.Fill "480x360 q75") }}{{ with .Value }}{{ $item = merge $item (dict "thumb" .RelPermalink) }}{{ end }}{{ end -}}
+        {{- end -}}
+        {{- $items = $items | append $item -}}
+      {{- end -}}
+    {{- end -}}
+    {{- if and (not $items) (os.FileExists (printf "static/%s" $dir)) -}}
+      {{- range os.ReadDir (printf "static/%s" $dir) -}}
+        {{- if and (not .IsDir) (findRE $imageFile .Name) -}}
+          {{- $caption := replaceRE `[_-]+` " " (strings.TrimSuffix (path.Ext .Name) .Name) -}}
+          {{- $items = $items | append (dict "src" (printf "%s/%s" $dir .Name | relURL) "caption" $caption) -}}
+        {{- end -}}
+      {{- end -}}
+    {{- end -}}
+  {{- else if eq $s.type "urls" -}}
+    {{- range $s.items -}}
+      {{- if .src -}}
+        {{- $item := dict "src" .src "caption" (.caption | default "") -}}
+        {{- with .thumb }}{{ $item = merge $item (dict "thumb" .) }}{{ end -}}
+        {{- $items = $items | append $item -}}
+      {{- end -}}
+    {{- end -}}
+  {{- end -}}
+  {{- with $a.exclude -}}
+    {{- $kept := slice -}}
+    {{- range $i, $it := $items }}{{ if not (in $a.exclude (add $i 1)) }}{{ $kept = $kept | append $it }}{{ end }}{{ end -}}
+    {{- $items = $kept -}}
+  {{- end -}}
+  {{- if $items -}}
+    {{- $one := merge $album (dict "items" $items) -}}
+    {{- if $a.pin }}{{ $pinned = $pinned | append $one }}{{ else }}{{ $albums = $albums | append $one }}{{ end -}}
+    {{- $taken = $taken | append $album.id -}}
+  {{- else -}}
+    {{- warnf "deskbar: album %q has no images (source %v)" $album.id $s -}}
+  {{- end -}}
+{{- end -}}
+
+{{- range $posts -}}
+  {{- $slug := path.Base .RelPermalink -}}
+  {{- if and (not (in $taken $slug)) (eq (partial "deskbar/apps/post-album.html" .) $slug) -}}
+    {{- $items := partial "deskbar/apps/post-images.html" . -}}
+    {{- if $items -}}
+      {{- $albums = $albums | append (dict "id" $slug "title" .Title "post" .RelPermalink "slug" $slug "auto" true "items" $items) -}}
+    {{- end -}}
+  {{- end -}}
+{{- end -}}
+{{- /* item by item: appending a whole list to one that has changed type nests it rather than merging */ -}}
+{{- range $albums }}{{ $pinned = $pinned | append . }}{{ end -}}
+{{- return $pinned -}}

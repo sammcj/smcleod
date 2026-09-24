@@ -1,0 +1,12 @@
+{{- /* The page URL among an unmarshalled feed's <link> elements. RSS gives a string, Atom an href attribute, and
+       namespaces are dropped, so an RSS channel's <atom:link rel="self"> lands in the same list. Self, enclosure and
+       other rels point elsewhere, so only a plain link or rel="alternate" counts. */ -}}
+{{- $u := "" -}}
+{{- if reflect.IsSlice . -}}
+  {{- range . }}{{ if not $u }}{{ $u = partial "deskbar/feeds/link.html" . }}{{ end }}{{ end -}}
+{{- else if reflect.IsMap . -}}
+  {{- if in (slice "" "alternate") (index . "-rel" | default "") }}{{ $u = index . "-href" | default "" }}{{ end -}}
+{{- else if eq (printf "%T" .) "string" -}}
+  {{- $u = . -}}
+{{- end -}}
+{{- return strings.TrimSpace $u -}}

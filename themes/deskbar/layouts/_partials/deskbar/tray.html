@@ -1,0 +1,12 @@
+{{- /* Tray links: params.deskbar.tray, else the PaperMod-style params.socialIcons most sites already have, then RSS */ -}}
+{{- range site.Params.deskbar.tray | default site.Params.socialIcons -}}
+  {{- $icon := lower (.icon | default "") -}}
+  {{- $name := .title | default (index (dict "github" "GitHub" "linkedin" "LinkedIn") $icon) | default (.name | humanize) -}}
+  {{- /* Site-relative links (e.g. /about/) stay in the shell so the router opens them as windows */ -}}
+  {{- $host := (urls.Parse .url).Host -}}
+  {{- $internal := or (not $host) (eq $host (urls.Parse site.BaseURL).Host) -}}
+<a class="pb tr" href="{{ .url }}"{{ if not $internal }} target="_blank" rel="noopener me"{{ end }} title="{{ $name }}" aria-label="{{ $name }}"><svg class="ico" aria-hidden="true"><use href="#t-{{ cond (in (slice "github" "linkedin" "person") $icon) $icon "link" }}"/></svg></a>
+{{- end -}}
+{{- with site.Home.OutputFormats.Get "rss" -}}
+<a class="pb tr" href="{{ .RelPermalink }}" title="RSS feed" aria-label="RSS feed"><svg class="ico" aria-hidden="true"><use href="#t-rss"/></svg></a>
+{{- end -}}

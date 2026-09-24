@@ -1,0 +1,49 @@
+/* Spotlight search (D28): a Haiku window, yellow tab over a bevelled frame, centred over the desktop. Phones get a
+   full-screen sheet. Loaded with the overlay on first open, so it is not part of the shell's size budget. */
+.spotlight { width: min(660px, calc(100vw - 32px)); max-width: none; max-height: none; margin: 11vh auto auto; padding: 0; border: 0; background: none; color: var(--fg); overflow: visible; font: 13px/1.4 var(--ui); }
+.spotlight::backdrop { background: rgba(8, 12, 18, .42); }
+.sp-tab { display: inline-flex; align-items: center; height: var(--tab-h); padding: 0 16px 0 10px; background: var(--tab); color: #1f1f1f; border: 1px solid var(--frame-dk); border-bottom: 0; box-shadow: inset 1px 1px 0 var(--tab-hi), inset -1px 0 0 var(--tab-lo); font-size: 12px; font-weight: 700; }
+.sp-frame { display: flex; flex-direction: column; max-height: min(580px, 78vh); padding: 6px; background: var(--frame); border: 1px solid var(--frame-dk); box-shadow: inset 1px 1px 0 var(--frame-hi), inset -1px -1px 0 var(--frame-lo), 0 24px 64px rgba(0,0,0,.5); }
+.sp-field { flex: none; display: flex; align-items: center; gap: 10px; height: 54px; padding: 0 8px 0 14px; background: var(--content); border: 1px solid; border-color: var(--frame-lo) var(--frame-hi) var(--frame-hi) var(--frame-lo); }
+.sp-field:focus-within { border-color: var(--accent); box-shadow: 0 0 0 1px var(--accent); }
+.sp-lens svg { display: block; width: 22px; height: 22px; color: var(--muted); }
+.spotlight .sp-q { flex: 1; min-width: 0; height: 100%; padding: 0; border: 0; background: none; font-size: 21px; outline: none; }
+.sp-close { flex: none; padding: 4px 7px; border: 1px solid var(--frame-lo); border-bottom-width: 2px; border-radius: 4px; background: var(--side); color: var(--muted); font-size: 11px; font-weight: 600; line-height: 1; }
+.sp-close:hover { color: var(--fg); }
+.sp-cancel { display: none; }
+
+.sp-list { display: none; min-height: 0; overflow: auto; overscroll-behavior: contain; margin-top: 6px; background: var(--content); border: 1px solid; border-color: var(--frame-lo) var(--frame-hi) var(--frame-hi) var(--frame-lo); }
+.spotlight.has-results .sp-list { display: block; }
+.sp-gh { position: sticky; top: 0; z-index: 1; padding: 5px 12px 4px; background: var(--side); border-block: 1px solid var(--line); border-top-color: transparent; color: var(--muted); font-size: 10.5px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; }
+.sp-opt { display: flex; align-items: center; gap: 12px; padding: 7px 12px; color: var(--fg); text-decoration: none; }
+.sp-opt.on { background: var(--accent); color: var(--accent-fg); }
+.sp-ico { width: 24px; height: 24px; margin-inline: 6px; }
+.sp-thumb { flex: none; width: 36px; height: 27px; object-fit: cover; border: 1px solid var(--line); background: var(--side); }
+.sp-t { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 1px; }
+.sp-t b { overflow: hidden; font-size: 14px; font-weight: 600; text-overflow: ellipsis; white-space: nowrap; }
+.sp-t small { overflow: hidden; color: var(--muted); font-size: 12px; text-overflow: ellipsis; white-space: nowrap; }
+.sp-meta { flex: none; color: var(--muted); font-size: 11.5px; font-variant-numeric: tabular-nums; }
+.sp-opt.on :is(small, .sp-meta) { color: inherit; }
+.spotlight mark { border-radius: 2px; background: light-dark(rgba(255,203,0,.5), rgba(255,203,0,.3)); color: var(--fg); }
+/* darkening, not lightening, keeps white text at 4.5:1 or better */
+.sp-opt.on mark { background: rgba(0,0,0,.3); color: inherit; }
+.sp-status { margin: 0; padding: 10px 8px 2px; color: var(--muted); }
+.sp-status:empty { display: none; }
+.has-results .sp-status { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); }
+.sp-keys { display: flex; align-items: center; gap: 4px; margin: 6px 2px 0; color: var(--muted); font-size: 11px; }
+.sp-keys kbd { margin-left: 8px; padding: 1px 5px; border: 1px solid var(--frame-lo); border-bottom-width: 2px; border-radius: 3px; background: var(--content); color: var(--fg); font: 600 10.5px/1.3 var(--ui); }
+.sp-keys kbd + kbd { margin-left: 0; }
+@media (pointer: coarse) { .sp-keys { display: none; } }
+
+@media (max-width: 767px), (max-height: 500px) and (pointer: coarse) {
+  .spotlight { width: 100%; height: 100%; margin: 0; }
+  .sp-tab, .sp-esc { display: none; }
+  .sp-frame { height: 100%; max-height: none; padding: max(8px, env(safe-area-inset-top)) 8px max(8px, env(safe-area-inset-bottom)); border: 0; box-shadow: none; }
+  .sp-field { height: 48px; padding-left: 12px; }
+  /* 16px or more stops iOS zooming into the field */
+  .spotlight .sp-q { font-size: 18px; }
+  .sp-cancel { display: inline; }
+  .sp-close { padding: 8px 4px 8px 8px; border: 0; background: none; color: var(--link); font-size: 15px; font-weight: 600; }
+  .sp-opt { min-height: 52px; padding: 8px 12px; }
+  .sp-keys { display: none; }
+}

@@ -1,0 +1,62 @@
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>{{ partial "deskbar/doc-title.html" . }}</title>
+{{- $desc := .Description | default site.Params.description }}
+{{- if and (not .Description) (eq .Kind "page") }}{{ $desc = .Summary | plainify | htmlUnescape | truncate 160 }}{{ end }}
+<meta name="description" content="{{ $desc }}">
+<meta name="color-scheme" content="light dark">
+{{- /* also shown by the About this desktop app; a module replaced with a local path is marked as such */}}
+{{- $gen := printf "Hugo %s" hugo.Version }}
+{{- range hugo.Deps }}
+  {{- if strings.HasSuffix .Path "/deskbar" }}
+    {{- $gen = printf "%s, deskbar %s" $gen (.Version | default "(no version)") }}
+    {{- with .Replace }}{{ $gen = printf "%s (local)" $gen }}{{ end }}
+  {{- end }}
+{{- end }}
+<meta name="generator" content="{{ $gen }}">
+<link rel="canonical" href="{{ .Permalink }}">
+{{- with .OutputFormats.Get "rss" }}
+<link rel="alternate" type="application/rss+xml" href="{{ .RelPermalink }}" title="{{ site.Title }}">
+{{- end }}
+{{- with site.Params.deskbar.favicon }}
+<link rel="icon" href="{{ . | relURL }}">
+{{- end }}
+{{- partial "opengraph.html" . }}
+{{- partial "twitter_cards.html" . }}
+{{- /* Visitor settings (settings.js) apply before first paint. The wm class switches CSS into desktop mode; it is
+       dropped again if the shell script fails to load, leaving a plain readable page. */}}
+{{- with partialCached "deskbar/lazy.html" site }}
+<script type="application/json" id="deskbar-lazy">{{ . | jsonify | safeJS }}</script>
+{{- end }}
+<script>
+(()=>{const d=document.documentElement,g=k=>{try{return JSON.parse(localStorage.getItem('deskbar:'+k))}catch{return null}};
+const t=g('theme'),s=g('textSize');if(t)d.dataset.theme=t;if(s)d.style.setProperty('--rd-size',s+'px');
+const w=g('readerWidth'),f=g('readerFont');if(w)d.dataset.rdWidth=w;if(f)d.dataset.rdFont=f;
+for(const k of['palette','deco','wall','dock']){const v=g(k);if(v)d.dataset[k]=v}
+d.classList.add('wm');setTimeout(()=>{if(!d.classList.contains('wm-ready'))d.classList.remove('wm')},8000)})();
+</script>
+{{- $css := slice }}
+{{- range slice "tokens" "reader" "content" "nojs" "chrome" "windows" "tracker" "nav" "apps" }}
+  {{- $css = $css | append (resources.Get (printf "css/deskbar/%s.css" .)) }}
+{{- end }}
+{{- with $css | resources.Concat "css/deskbar.css" | minify | fingerprint }}
+<link rel="stylesheet" href="{{ .RelPermalink }}" integrity="{{ .Data.Integrity }}">
+{{- end }}
+{{- range site.Params.deskbar.stylesheets }}
+<link rel="stylesheet" href="{{ . }}">
+{{- end }}
+{{- /* A palette, decorator, wallpaper, dock style or reader font other than the default needs the Control panel's
+       stylesheet, written in so it blocks rendering like any parsed <link>. It goes after the stylesheets above, where
+       loader.js appends it when the app opens, so equal-specificity rules resolve the same way in both cases. A window
+       style or wallpaper that is a whole look (css/deskbar/looks/) adds that look's stylesheet after it. */}}
+<script>
+(()=>{const d=document.documentElement.dataset;if(d.palette||d.deco||d.wall||d.dock||d.rdFont)try{const l=JSON.parse(document.getElementById('deskbar-lazy').textContent),w=u=>u&&document.write('<link rel=stylesheet href="'+u+'">');w(l['control-panel'].css);for(const k of new Set([d.deco,d.wall]))w(l['look-'+k]?.css)}catch{}})();
+</script>
+{{- with site.Home.OutputFormats.Get "deskbar" }}
+<link rel="preload" href="{{ .RelPermalink }}" as="fetch" crossorigin="anonymous">
+{{- end }}
+{{- with resources.Get "js/deskbar/main.js" }}
+  {{- with . | js.Build (dict "format" "esm" "minify" true "target" "es2022" "targetPath" "js/deskbar.js") | fingerprint }}
+<script type="module" src="{{ .RelPermalink }}" integrity="{{ .Data.Integrity }}" onerror="document.documentElement.classList.remove('wm')"></script>
+  {{- end }}
+{{- end }}

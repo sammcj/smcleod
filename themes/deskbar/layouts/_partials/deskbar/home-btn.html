@@ -1,0 +1,4 @@
+{{- /* Show desktop / Home toggle (D24), in the panel after the Menu and in the dock. home.js drives every .home-btn. */ -}}
+<a id="{{ . }}" class="pb home-btn" href="{{ site.Home.RelPermalink }}" title="Home" aria-label="Home, {{ site.Title }}" data-doc-title="{{ partial "deskbar/doc-title.html" site.Home }}">
+  <svg class="ico" aria-hidden="true"><use href="#i-home"/></svg><span>{{ site.Title }}</span>
+</a>

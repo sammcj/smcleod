@@ -1,0 +1,254 @@
+# Software and services listed in the Favourite Tools folder (/links/), in display order, grouped by category.
+# icon: a file under static/img/apps/. Leave it out for a generated monogram tile.
+- name: Ghostty
+  url: https://ghostty.org
+  icon: /img/apps/ghostty.png
+  description: Fast, native terminal emulator
+  category: Software
+- name: Jellyfin
+  url: https://jellyfin.org
+  icon: /img/apps/jellyfin.png
+  description: Home media streaming
+  category: Software
+- name: pfSense
+  url: https://www.pfsense.org
+  icon: /img/apps/pfsense.png
+  description: Routing, firewall, VPN and network management
+  category: Software
+
+- name: Claude Code
+  url: https://www.claude.com/product/claude-code
+  icon: /img/apps/claude-code.png
+  description: One of the best agentic coding tools
+  category: AI / LLM
+- name: InvokeAI
+  url: https://invoke.ai
+  icon: /img/apps/invokeai.png
+  description: AI image generation and editing
+  category: AI / LLM
+- name: Llama.cpp
+  url: https://github.com/ggml-org/llama.cpp
+  icon: /img/apps/llama-cpp.png
+  description: LLM model server
+  category: AI / LLM
+- name: LlamaSwap
+  url: https://github.com/mostlygeek/llama-swap
+  icon: /img/apps/llama-swap.png
+  description: Automatic llama.cpp model serving and swapping
+  category: AI / LLM
+- name: LM Studio
+  url: https://lmstudio.ai
+  icon: /img/apps/lm-studio.png
+  description: macOS LLM model manager and inference tool
+  category: AI / LLM
+- name: Msty Studio
+  url: https://msty.ai
+  icon: /img/apps/msty-studio.png
+  description: Desktop workspace for local and hosted LLMs
+  category: AI / LLM
+- name: Open WebUI
+  url: https://github.com/open-webui/open-webui
+  icon: /img/apps/open-webui.png
+  description: Web interface for LLMs
+  category: AI / LLM
+- name: Pi Coding Agent
+  url: https://pi.dev
+  icon: /img/apps/pi-coding-agent.png
+  description: Minimal, extensible terminal coding agent
+  category: AI / LLM
+
+- name: Amphetamine
+  url: https://apps.apple.com/us/app/amphetamine/id937984704?mt=12
+  icon: /img/apps/amphetamine.png
+  description: Keep your Mac awake
+  category: macOS / iOS
+- name: BetterTouchTool
+  url: https://folivora.ai/
+  icon: /img/apps/bettertouchtool.png
+  description: macOS automation and customisation
+  category: macOS / iOS
+- name: Brew
+  url: https://brew.sh/
+  icon: /img/apps/brew.png
+  description: Package manager
+  category: macOS / iOS
+- name: Bumpr
+  url: https://www.getbumpr.com
+  icon: /img/apps/bumpr.png
+  description: Choose the browser by app or link
+  category: macOS / iOS
+- name: Cotypist
+  url: https://cotypist.app
+  icon: /img/apps/cotypist.png
+  description: Autocomplete in any app, run locally
+  category: macOS / iOS
+- name: DaisyDisk
+  url: https://daisydiskapp.com/
+  icon: /img/apps/daisydisk.png
+  description: Disk usage inspector
+  category: macOS / iOS
+- name: Feeeed
+  url: https://feeeed.nateparrott.com/
+  icon: /img/apps/feeeed.png
+  description: Excellent RSS client with a lot of smarts
+  category: macOS / iOS
+- name: force-hidpi
+  url: https://github.com/sammcj/force-hidpi
+  description: Full 4K HiDPI on external displays with M4/M5 Macs
+  category: macOS / iOS
+- name: GoodLinks
+  url: https://goodlinks.app
+  icon: /img/apps/goodlinks.png
+  description: Save links and read them later
+  category: macOS / iOS
+- name: HandBrake
+  url: https://handbrake.fr
+  icon: /img/apps/handbrake.png
+  description: Video encoding
+  category: macOS / iOS
+- name: ImageOptim
+  url: https://imageoptim.com
+  icon: /img/apps/imageoptim.png
+  description: Image compression
+  category: macOS / iOS
+- name: LaunchControl
+  url: https://www.soma-zone.com/LaunchControl/
+  icon: /img/apps/launchcontrol.png
+  description: Manage launchd
+  category: macOS / iOS
+- name: Little Snitch
+  url: https://www.obdev.at/products/littlesnitch/index.html
+  icon: /img/apps/little-snitch.png
+  description: Firewall
+  category: macOS / iOS
+- name: MarkEdit
+  url: https://github.com/MarkEdit-app/MarkEdit
+  icon: /img/apps/markedit.png
+  description: Lightweight markdown editor
+  category: macOS / iOS
+- name: mas
+  url: https://github.com/mas-cli/mas
+  icon: /img/apps/mas.png
+  description: Mac App Store CLI integrated with brew
+  category: macOS / iOS
+- name: MeetingBar
+  url: https://apps.apple.com/au/app/meetingbar/id1532419400?mt=12
+  icon: /img/apps/meetingbar.png
+  description: Calendar integration
+  category: macOS / iOS
+- name: Micro Snitch
+  url: https://obdev.at/products/microsnitch/index.html
+  icon: /img/apps/micro-snitch.png
+  description: Notifications for active mic and webcam
+  category: macOS / iOS
+- name: MusicHarbor
+  url: https://apps.apple.com/au/app/musicharbor-track-new-music/id1440405750
+  icon: /img/apps/musicharbor.png
+  description: Track new and upcoming music releases
+  category: macOS / iOS
+- name: NetNewsWire
+  url: https://netnewswire.com
+  icon: /img/apps/netnewswire.png
+  description: Open source RSS reader
+  category: macOS / iOS
+- name: OnyX
+  url: https://titanium-software.fr/en/onyx.html
+  icon: /img/apps/onyx.png
+  description: macOS customisation
+  category: macOS / iOS
+- name: OrbStack
+  url: https://orbstack.dev
+  icon: /img/apps/orbstack.png
+  description: Lightweight Docker containers and Linux VMs
+  category: macOS / iOS
+- name: Parcel
+  url: https://apps.apple.com/au/app/parcel/id375589283
+  icon: /img/apps/parcel.png
+  description: Track parcels (also for macOS)
+  category: macOS / iOS
+- name: Pixelmator Pro
+  url: https://www.pixelmator.com/pro/
+  icon: /img/apps/pixelmator-pro.png
+  description: Image editing
+  category: macOS / iOS
+- name: Prompt
+  url: https://panic.com/prompt/
+  icon: /img/apps/prompt.png
+  description: Mobile SSH client
+  category: macOS / iOS
+- name: Put
+  url: https://github.com/sammcj/put
+  icon: /img/apps/put.png
+  description: Save and restore window positions and layouts
+  category: macOS / iOS
+- name: Radio Silence
+  url: https://radiosilenceapp.com
+  icon: /img/apps/radio-silence.png
+  description: Firewall
+  category: macOS / iOS
+- name: Shottr
+  url: https://shottr.cc/
+  icon: /img/apps/shottr.png
+  description: Better screenshots
+  category: macOS / iOS
+- name: Stay
+  url: https://cordlessdog.com/stay/
+  icon: /img/apps/stay.png
+  description: Keep app windows where you want them
+  category: macOS / iOS
+- name: Things
+  url: https://culturedcode.com/things/
+  icon: /img/apps/things.png
+  description: Lists and GTD
+  category: macOS / iOS
+- name: VirtualBuddy
+  url: https://github.com/insidegui/VirtualBuddy
+  icon: /img/apps/virtualbuddy.png
+  description: macOS virtual machines on Apple Silicon
+  category: macOS / iOS
+
+- name: Fastmail
+  url: https://www.fastmail.com
+  icon: /img/apps/fastmail.png
+  description: Email
+  category: Services
+- name: Kagi
+  url: https://kagi.com
+  icon: /img/apps/kagi.png
+  description: Premium search engine
+  category: Services
+
+- name: Awesome RSS
+  url: https://addons.mozilla.org/en-GB/firefox/addon/awesome-rss
+  icon: /img/apps/awesome-rss.png
+  description: An RSS button in the address bar
+  category: Browser extensions
+- name: Bypass Paywalls Clean
+  url: https://gitflic.ru/project/magnolia1234/bypass-paywalls-chrome-clean
+  description: Read news sites past their paywalls
+  category: Browser extensions
+- name: Copy PlainText
+  url: https://addons.mozilla.org/en-GB/firefox/addon/copy-plaintext
+  icon: /img/apps/copy-plaintext.png
+  description: Copy text without its formatting
+  category: Browser extensions
+- name: LLMFeeder
+  url: https://github.com/jatinkrmalik/LLMFeeder
+  icon: /img/apps/llmfeeder.png
+  description: Copies web pages as markdown for LLMs
+  category: Browser extensions
+- name: Refined GitHub
+  url: https://github.com/refined-github/refined-github
+  icon: /img/apps/refined-github.png
+  description: Improve GitHub
+  category: Browser extensions
+- name: SponsorBlock
+  url: https://addons.mozilla.org/en-GB/firefox/addon/sponsorblock
+  icon: /img/apps/sponsorblock.png
+  description: Skip sponsorships on YouTube
+  category: Browser extensions
+- name: uBlock Origin
+  url: https://addons.mozilla.org/en-US/firefox/addon/ublock-origin/
+  icon: /img/apps/ublock-origin.png
+  description: Browser ad blocking and privacy
+  category: Browser extensions

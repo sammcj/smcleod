@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- RSS 2.0 fixture for the Feeds app (assets/feeds.opml). Covers markup in summaries, a relative link, a long summary,
+     dc:date, more items than perFeed keeps, and an undated item, which is dropped. -->
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:dc="http://purl.org/dc/elements/1.1/">
+  <channel>
+    <title>Example News</title>
+    <link>https://news.example.org/</link>
+    <atom:link href="https://news.example.org/feed.xml" rel="self" type="application/rss+xml"/>
+    <description>News for the deskbar demo</description>
+    <item>
+      <title>Haiku R1/beta6 released</title>
+      <link>https://news.example.org/2026/09/haiku-beta6/</link>
+      <pubDate>Sun, 20 Sep 2026 10:00:00 +0000</pubDate>
+      <description><![CDATA[<p>Release <b>notes</b> &amp; downloads.</p><script>document.title = 'pwned'</script>]]></description>
+    </item>
+    <item>
+      <title>Markup is shown as text</title>
+      <link>https://news.example.org/2026/09/markup/</link>
+      <pubDate>Fri, 18 Sep 2026 12:00:00 GMT</pubDate>
+      <description><![CDATA[<p>Write &lt;img src=x onerror=alert(1)&gt; in a post.</p><img src="x" onerror="alert(1)">]]></description>
+    </item>
+    <item>
+      <title>A relative link</title>
+      <link>/2026/09/relative/</link>
+      <pubDate>Mon, 14 Sep 2026 08:00:00 +0000</pubDate>
+      <description>Links without a host resolve against the feed's site.</description>
+    </item>
+    <item>
+      <title>A long summary</title>
+      <link>https://news.example.org/2026/09/long/</link>
+      <pubDate>Thu, 10 Sep 2026 08:00:00 +0000</pubDate>
+      <description>This summary runs well past the length the Feeds app keeps, so the build cuts it at a word boundary and adds three dots. The quick brown fox jumps over the lazy dog, and then does it again, and again, because a fixture needs words. Packing a lot of words into one paragraph like this is how feeds that send the whole article look. The end of this sentence should never reach the page at all.</description>
+    </item>
+    <item>
+      <title>Kernel notes</title>
+      <link>https://news.example.org/2026/09/kernel/</link>
+      <dc:date>2026-09-05T08:00:00Z</dc:date>
+      <description>Dated with dc:date rather than pubDate.</description>
+    </item>
+    <item>
+      <title>Oldest news</title>
+      <link>https://news.example.org/2026/08/oldest/</link>
+      <pubDate>Sat, 01 Aug 2026 08:00:00 +0000</pubDate>
+      <description>Past the example site's perFeed of 5, so it is left out.</description>
+    </item>
+    <item>
+      <title>An undated item</title>
+      <link>https://news.example.org/undated/</link>
+      <description>No date, so it can't be placed in time and is left out.</description>
+    </item>
+  </channel>
+</rss>

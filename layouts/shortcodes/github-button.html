@@ -1,3 +1,4 @@
+{{- /* Static GitHub link styled as a button. The buttons.js widget is not loaded, so there are no live counts. */ -}}
 {{ $user := .Get "user" | default .Site.Params.HugoShortcodes.Github.User | default "sammcj" }}
 {{ $repo := .Get "repo" | default .Site.Params.HugoShortcodes.Github.Repository | default "smcleod" }}
 
@@ -67,7 +68,7 @@
 {{ end }}
 
 <a
-class="github-button"
+class="github-button" style="display: inline-block; padding: 0 .55em; border: 1px solid var(--line, #ccc); border-radius: 3px; font: 12px/1.9 var(--ui, sans-serif); text-decoration: none; vertical-align: .1em;"
 href="https://github.com/{{$href}}"
 data-icon="octicon-{{$data_icon}}"
 aria-label="{{$aria_label}}"
@@ -75,5 +76,5 @@ aria-label="{{$aria_label}}"
 {{if eq "true" (.Get "dark")}}data-color-scheme="dark"{{ end }}
 {{if eq "true" (.Get "large")}}data-size="large"{{ end }}
 >
-{{$button_text}}
+{{ $button_text }} on GitHub
 </a>

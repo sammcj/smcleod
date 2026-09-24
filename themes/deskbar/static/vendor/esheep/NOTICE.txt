@@ -1,0 +1,19 @@
+gsheep-purple.png: sprites for the Sheep screen saver (assets/js/deskbar/lazy/sheep.js)
+
+Source: gSheep Purple ("Patsu"), version 8.0, by Oliver B. (https://github.com/OliverPets), from the eSheep desktop pet
+project by Adriano Petrucci:
+  https://github.com/Adrianotiger/desktopPet/tree/master/Pets/purple_sheep
+  (also in the fork https://github.com/DimAlus/eSheep/tree/master/Pets/purple_sheep)
+
+eSheep was created by Tatsutoshi Nomura. The original eSheep 64 sprites in the same project are credited to LiL_Stenly
+(spritedatabase.net).
+
+Licence: GPL-3.0 (https://www.gnu.org/licenses/gpl-3.0.html), the licence of the project's web player,
+https://github.com/Adrianotiger/web-esheep. The desktopPet repository itself carries no licence file.
+
+Changes: 26 of the pet's 40x40 frames were cut out of the sprite sheet in animations.xml, unchanged, and packed 8 to a
+row in this order (the pet's own frame numbers):
+  3 2 192 6 7 8 9 10 / 78 79 80 0 1 58 59 60 / 61 23 24 133 46 48 47 49 / 13 12
+The PNG was then re-encoded with pngquant (lossless at 15 colours).
+
+This file is distributed alongside the theme and is not covered by the theme's MIT licence.

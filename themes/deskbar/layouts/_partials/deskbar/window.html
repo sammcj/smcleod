@@ -1,0 +1,31 @@
+{{- /* Which window the shell loads this page into. Returned as a dict and written to <main> data attributes. */ -}}
+{{- $sections := site.Params.deskbar.readerSections | default (slice "posts") -}}
+{{- $kind := "page" -}}
+{{- $place := "" -}}
+{{- $icon := .Params.icon | default "doc" -}}
+{{- $title := .Title -}}
+{{- if .IsHome -}}
+  {{- $kind = "home" -}}
+  {{- $title = site.Title -}}
+{{- else if eq .Kind "page" -}}
+  {{- if in $sections .Section }}{{ $kind = "reader" }}{{ end -}}
+{{- else if eq .Kind "section" -}}
+  {{- $kind = "tracker" -}}
+  {{- $icon = .Params.icon | default "folder" -}}
+  {{- $place = cond (in $sections .Section) "all" "pages" -}}
+{{- else if eq .Kind "term" -}}
+  {{- $kind = "tracker" -}}
+  {{- $icon = "folder" -}}
+  {{- $place = printf "%s:%s" .Data.Plural .Data.Term -}}
+{{- else if eq .Kind "taxonomy" -}}
+  {{- $kind = "tracker" -}}
+  {{- $icon = "folder" -}}
+  {{- /* the shell's index carries tags, series and categories (home.deskbar.json); others show all posts */ -}}
+  {{- $place = cond (in (slice "tags" "series" "categories") .Data.Plural) (printf "tax:%s" .Data.Plural) "all" -}}
+{{- end -}}
+{{- /* front matter can send a page to any app registered in assets/js/deskbar/apps/ */ -}}
+{{- $kind = .Params.window | default $kind -}}
+{{- if eq .Kind "404" }}{{ $title = "Not found" }}{{ end -}}
+{{- $slug := "" -}}
+{{- if not .IsHome }}{{ $slug = path.Base (strings.TrimSuffix "/" .RelPermalink) }}{{ end -}}
+{{- return dict "kind" $kind "place" $place "icon" $icon "title" $title "slug" $slug -}}

@@ -1,0 +1,3 @@
+{{- /* Diagrams render client side (content/mermaid.js loads Mermaid only when a page has one).
+       Without JS the source stays readable as preformatted text. */ -}}
+<pre class="mermaid">{{ .Inner | htmlEscape | safeHTML }}</pre>

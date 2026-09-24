@@ -1,0 +1,154 @@
+/* Desktop chrome: XFCE top panel, bottom dock, desktop icons, the phone home screen, popups */
+#panel { height: var(--panel-h); display: flex; align-items: center; gap: 4px; padding: 0 6px; background: var(--panel); color: var(--panel-fg); border-bottom: 1px solid #1d1f22; box-shadow: 0 1px 0 rgba(255,255,255,.06) inset; }
+.pb { display: flex; align-items: center; gap: 6px; height: 24px; padding: 0 8px; border-radius: 3px; white-space: nowrap; color: inherit; text-decoration: none; }
+.pb:hover { background: var(--panel-hover); }
+.pb:focus-visible { outline: 2px solid var(--tab); outline-offset: -2px; }
+/* In the panel Home is a menu bar item like Menu, with a groove setting both apart from the window list */
+#panelHome { position: relative; margin-right: 9px; font-weight: 700; }
+#panelHome::after { content: ''; position: absolute; right: -6px; top: 3px; bottom: 3px; width: 1px; background: currentColor; opacity: .25; }
+:is(#homeBtn, #panelHome):is(:active, .on) { background: rgba(0,0,0,.38); box-shadow: inset 0 1px 2px rgba(0,0,0,.5); }
+/* In the dock Home is an icon like its neighbours, set apart by a divider, as XFCE's Show desktop is */
+.wm #dock #homeBtn { position: relative; width: 46px; height: 46px; padding: 0; margin-right: 7px; justify-content: center; border-radius: 6px; border: 0; background: none; color: #fff; }
+.wm #dock #homeBtn::after { content: ''; position: absolute; right: -6px; top: 8px; bottom: 8px; width: 1px; background: rgba(255,255,255,.18); }
+.wm #dock #homeBtn:hover { background: rgba(255,255,255,.12); }
+.wm #dock #homeBtn.on, .wm #dock #homeBtn:active { background: rgba(0,0,0,.4); box-shadow: inset 0 1px 3px rgba(0,0,0,.55); }
+.wm #dock #homeBtn .ico { width: 30px; height: 30px; }
+.wm #dock #homeBtn span { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); }
+#tasks { display: flex; gap: 3px; min-width: 0; overflow: hidden; margin-left: 8px; }
+.task { display: flex; align-items: center; gap: 6px; height: 24px; max-width: 210px; padding: 0 8px; border-radius: 3px; border: 1px solid transparent; }
+.task span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.task:hover { background: var(--panel-hover); }
+.task.on { background: rgba(0,0,0,.35); border-color: rgba(0,0,0,.4); box-shadow: inset 0 1px 2px rgba(0,0,0,.4); }
+.task.min { opacity: .6; font-style: italic; }
+.task .ico { width: 16px; height: 16px; }
+#winsBtn { display: none; }
+.wm #winsBtn { display: flex; }
+#winsBtn b { background: var(--tab); color: #222; border-radius: 8px; padding: 0 6px; font-size: 11px; }
+#winsBtn b:empty { display: none; }
+/* In the dock the switcher closes the row, set apart by a divider like Home, with its count as a badge */
+.wm #dock #winsBtn { position: relative; width: 46px; height: 46px; padding: 0; margin-left: 7px; justify-content: center; border-radius: 6px; color: #fff; }
+.wm #dock #winsBtn::before { content: ''; position: absolute; left: -6px; top: 8px; bottom: 8px; width: 1px; background: rgba(255,255,255,.18); }
+.wm #dock #winsBtn:hover { background: rgba(255,255,255,.12); }
+.wm #dock #winsBtn .ico { width: 34px; height: 34px; }
+.wm #dock #winsBtn b { position: absolute; top: 1px; right: 1px; min-width: 18px; line-height: 16px; text-align: center; box-shadow: 0 0 0 1px rgba(0,0,0,.45); }
+#clock { padding: 0 8px; white-space: nowrap; font-variant-numeric: tabular-nums; }
+#clock b { font-weight: 600; margin-left: 6px; }
+
+.wm body { background: radial-gradient(1100px 650px at 80% 110%, var(--wall-glow), transparent 62%), repeating-radial-gradient(circle at 80% 118%, var(--wall-ring) 0 1px, transparent 1px 36px), linear-gradient(165deg, var(--wall-1) 0%, var(--wall-2) 46%, var(--wall-3) 100%); user-select: none; -webkit-user-select: none; }
+/* a long-press opens the shell's context menu (context-menu-trigger.js); post text keeps iOS's own */
+.wm body { -webkit-touch-callout: none; }
+.rd, .lightbox { -webkit-touch-callout: default; }
+.wm #panel { position: fixed; inset: 0 0 auto 0; z-index: 100000; }
+.wm .dragging, .wm .dragging * { cursor: grabbing !important; }
+.wm .dragging iframe { pointer-events: none; }
+
+#dock .lbl { font-size: 13px; }
+/* absolute rather than fixed, for iOS Safari (nojs.css): the initial containing block is the small viewport */
+.wm #dock { position: absolute; bottom: 8px; left: 50%; transform: translateX(-50%); z-index: 100000; display: flex; gap: 4px; padding: 5px 6px; background: rgba(42,44,48,.88); border: 1px solid rgba(255,255,255,.12); border-radius: 8px; box-shadow: 0 6px 20px rgba(0,0,0,.35); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); }
+.wm .dk { position: relative; width: 46px; height: 46px; display: grid; place-items: center; border-radius: 6px; }
+.wm .dk .lbl { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); }
+.wm .dk:hover { background: rgba(255,255,255,.12); }
+.wm .dk .ico { width: 34px; height: 34px; }
+.dk.run::after { content: ''; position: absolute; bottom: 1px; left: 50%; width: 5px; height: 5px; margin-left: -2.5px; border-radius: 50%; background: var(--tab); }
+
+#desk { position: fixed; inset: var(--panel-h) 0 0 0; }
+#desk::after { content: attr(data-name); position: absolute; right: 36px; bottom: calc(var(--dock-h) + 20px); font: 700 46px/1 var(--ui); letter-spacing: -1px; color: rgba(255,255,255,.07); pointer-events: none; }
+/* the column wraps into another before it reaches the dock; windows open right of the last one (iconsRight) */
+#icons { position: absolute; top: 16px; left: 10px; display: flex; flex-flow: column wrap; align-content: flex-start; gap: 2px; max-height: calc(100% - 16px - var(--dock-h) - 24px); z-index: 1; }
+.dicon { width: 92px; display: flex; flex-direction: column; align-items: center; gap: 4px; padding: 4px 2px; border-radius: 4px; text-decoration: none; }
+button.dicon { background: none; border: 0; font: inherit; color: inherit; cursor: pointer; }
+.dicon .ico { width: 42px; height: 42px; filter: drop-shadow(0 2px 2px rgba(0,0,0,.35)); }
+/* the backing keeps white labels at 4.5:1 over any wallpaper, not just the default gradient */
+.dicon span { color: #fff; font-size: 12px; text-align: center; padding: 1px 5px; border-radius: 2px; background: rgba(8,14,24,.55); text-shadow: 0 1px 2px #000; }
+/* short laptop screens: a tighter column so the last icon clears the dock, at the same width so nothing beside it moves */
+@media (max-height: 800px) { #icons { top: 10px; gap: 2px; max-height: calc(100% - 10px - var(--dock-h) - 24px); } .dicon { padding: 3px 2px; gap: 2px; } .dicon .ico { width: 34px; height: 34px; } }
+#snapPreview { position: absolute; z-index: 99980; background: rgba(52,103,184,.22); border: 2px solid rgba(120,170,240,.85); border-radius: 4px; pointer-events: none; transition: all .12s ease-out; }
+#divider { position: absolute; top: 0; width: 14px; z-index: 99970; cursor: col-resize; touch-action: none; }
+#divider::after { content: ''; position: absolute; left: 5px; top: 50%; width: 4px; height: 56px; margin-top: -28px; border-radius: 2px; background: var(--tab); box-shadow: 0 0 0 1px rgba(0,0,0,.45); }
+#divider:hover::after, .dragging #divider::after { height: 96px; margin-top: -48px; }
+
+/* Recent posts (phone-home.js): the phone home screen (D17), Tracker's cards in a panel on the desk under a Haiku tab of
+   its own, placed in the phone block below. The desktop has the Posts window instead (D36). */
+#desk > #recent { display: none; position: absolute; flex-direction: column; z-index: 1; }
+#recent h2 { align-self: flex-start; cursor: default; user-select: none; margin: 0; padding: 2px 10px; font-size: 12px; background: var(--tab); color: #1f1f1f; border: 1px solid var(--frame-dk); border-bottom: 0; }
+.recent-list { display: grid; gap: 4px; min-height: 0; overflow: auto; padding: 4px; background: var(--frame); border: 1px solid var(--frame-dk); box-shadow: inset 1px 1px 0 var(--frame-hi), 0 8px 24px rgba(0,0,0,.3); }
+
+/* Window switcher (D30): each window's own Haiku tab, floating in a column that rolls out of the Windows button.
+   Each open window is drawn shaded, rolled up to its tab over a sliver of frame; minimised ones are the bare tab.
+   A native popover, so the UA's box and centring are undone; wm/panel.js sets the edges from the button. */
+#switcher { --sw-w: 250px; position: fixed; inset: auto; margin: 0; padding: 6px 14px 12px 8px; border: 0; background: none; color: inherit; z-index: 100001; flex-direction: column-reverse; align-items: flex-start; gap: 5px; width: calc(var(--sw-w) + 22px); max-height: calc(100vh - var(--panel-h) - var(--dock-h) - 20px); overflow: hidden auto; overscroll-behavior: contain; scrollbar-width: thin; }
+#switcher:popover-open { display: flex; }
+#switcher.down { flex-direction: column; max-height: calc(100vh - var(--panel-h) - 16px); }
+.sw-tab { position: relative; flex: none; display: flex; align-items: center; gap: 2px; max-width: 100%; height: 30px; margin-bottom: 7px; padding: 0 3px 0 7px; background: var(--tab-in); color: var(--tab-in-fg); border: 1px solid var(--frame-dk); border-bottom: 0; box-shadow: inset 1px 1px 0 rgba(255,255,255,.35), inset -1px 0 0 var(--tab-in-lo); filter: drop-shadow(0 4px 7px rgba(0,0,0,.5)); }
+.sw-tab::after { content: ''; position: absolute; left: -1px; top: 100%; width: var(--sw-w); height: 7px; background: var(--frame); border: 1px solid var(--frame-dk); box-shadow: inset 1px 1px 0 var(--frame-hi), inset -1px -1px 0 var(--frame-lo); pointer-events: none; }
+.sw-tab.on { background: var(--tab); color: #1f1f1f; box-shadow: inset 1px 1px 0 var(--tab-hi), inset -1px 0 0 var(--tab-lo); }
+.sw-tab:not(.on):hover { background: var(--tab-dim); color: #1f1f1f; }
+.sw-tab:not(.on) .ctl { color: inherit; }
+/* minimised windows are off screen, so they lose the frame and fade their icon, as in the panel task list */
+.sw-tab.min { margin-bottom: 0; border-bottom: 1px solid var(--frame-dk); filter: drop-shadow(0 2px 3px rgba(0,0,0,.3)); }
+.sw-tab.min::after { content: none; }
+.sw-tab.min .sw-open { font-style: italic; font-weight: 600; }
+.sw-tab.min .sw-open .ico { opacity: .45; }
+.sw-open { display: flex; align-items: center; gap: 7px; min-width: 0; height: 100%; padding-right: 10px; font-size: 12px; font-weight: 700; text-align: left; }
+.sw-open .ico { width: 16px; height: 16px; }
+.sw-open span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.sw-open small { font-size: 11px; font-weight: 600; }
+.sw-link, .sw-empty { flex: none; display: flex; align-items: center; gap: 6px; height: 24px; margin: 3px 0; padding: 0 10px 0 8px; font-size: 11px; color: var(--panel-fg); background: rgba(42,44,48,.94); border: 1px solid rgba(255,255,255,.14); border-radius: 3px; box-shadow: 0 4px 12px rgba(0,0,0,.35); }
+.sw-link svg { width: 14px; height: 14px; }
+.sw-link:hover { background: #484b50; }
+.sw-link.done { color: var(--tab); }
+.sw-link:focus-visible { outline-color: var(--tab); }
+@keyframes sw-roll { from { opacity: 0; translate: 0 var(--dy, 12px); } }
+#switcher.roll > * { animation: sw-roll .2s cubic-bezier(.2, .8, .3, 1) calc(var(--i, 0) * 24ms) both; }
+#switcher.down { --dy: -12px; }
+/* the button stays pressed while its column is out */
+.wm:has(#switcher:popover-open) #winsBtn { background: rgba(0,0,0,.4); box-shadow: inset 0 1px 3px rgba(0,0,0,.55); }
+/* hovering or focusing a tab lifts its window over the rest */
+.win.peek { z-index: 99990 !important; }
+.win.peek .frame { outline: 2px solid var(--tab); }
+.empty { padding: 12px; color: var(--muted); }
+
+@media (pointer: coarse) {
+  :root { --panel-h: 40px; }
+  .pb { height: 34px; }
+  .sw-tab { height: 42px; }
+  .sw-open { font-size: 13px; }
+  .sw-link { height: 34px; }
+}
+@media (max-width: 400px) { #clock { display: none; } }
+/* D17 phone mode; the same query as PHONE in wm/windows.js */
+@media (max-width: 767px), (max-height: 500px) and (pointer: coarse) {
+  :root { --dock-h: 64px; }
+  .wm #tasks, .wm #clock .cd, #icons { display: none; }
+  /* The page itself scrolls, as any site does, rather than a box inside a fixed desktop: mobile browsers flow a
+     scrolling page under their toolbars and shrink them as it scrolls, where a fixed layout stops short of them. The
+     home screen or the one open window is the page's content (windows.css); wm/windows.js keeps each one's place. */
+  html.wm, html.wm body { height: auto; min-height: 100lvh; overflow: visible; }
+  /* keeps #desk's top margin inside the body rather than pushing the body down by it */
+  html.wm body { display: flow-root; }
+  #desk { position: relative; inset: auto; min-height: calc(100lvh - var(--panel-h) - var(--dock-h) - 6px); margin-top: var(--panel-h); }
+  .wm.has-win #desk { min-height: calc(100lvh - var(--panel-h)); }
+  /* Past the page's end a browser fills in the root colour (nojs.css), so the wallpaper fades into it and a window
+     sets it to its own paper */
+  #desk::after { display: block; z-index: -1; content: ''; inset: auto 0 calc(-1 * var(--dock-h) - 6px); height: 160px; background: linear-gradient(transparent, var(--wall-3)); }
+  .wm.has-win #desk::after { display: none; }
+  html.wm.has-win { background-color: var(--content); }
+  html.wm.has-win:has(.win.active .view:not([hidden]) :is(.rd-scroll, .tool-body, .about-body)) { background-color: var(--read-bg); }
+  #desk > #recent { display: flex; position: static; margin: 12px 10px 0; padding-bottom: 12px; }
+  /* Tracker's list (phone-home.js) on its paper */
+  .recent-list { display: block; overflow: visible; padding: 0; }
+  .recent-list .pv { background: var(--content); }
+  /* Sticky rather than fixed: it stays just above the browser's toolbar, and the page still runs on beneath it */
+  .wm #dock { position: sticky; left: auto; right: auto; bottom: 6px; transform: none; margin: 0 auto 6px; width: fit-content; }
+  .wm:is([data-dock=panel], [data-dock=deskbar]) #dock { width: auto; margin: 0; bottom: 0; }
+  /* D17: a full-screen window owns the screen; Home and the Windows switcher in the panel stay reachable */
+  .wm.has-win #dock, .wm.has-win #desk > #recent { display: none; }
+  /* Home is first in the panel, and the dock's copy stays out, as does the switcher until main.js moves it up */
+  #panel #panelHome { order: -2; }
+  #dock :is(#homeBtn, #winsBtn) { display: none !important; }
+  /* full width, like the tab of a phone's full-screen window, and touch sized */
+  #switcher { --sw-w: min(300px, calc(100vw - 30px)); }
+  .sw-tab { width: 100%; height: 42px; }
+  .sw-open { flex: 1; font-size: 13px; }
+  .wm .dk { width: 44px; height: 44px; }
+}

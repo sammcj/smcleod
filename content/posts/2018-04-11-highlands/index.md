@@ -130,8 +130,6 @@ The cars
 [![](https://raw.githubusercontent.com/sammcj/highlands-festival-of-speed/master/photos_small/IMG_3019.jpg)](https://raw.githubusercontent.com/sammcj/highlands-festival-of-speed/master/photos/IMG_3019.jpg)
 [![](https://raw.githubusercontent.com/sammcj/highlands-festival-of-speed/master/photos_small/IMG_3024.jpg)](https://raw.githubusercontent.com/sammcj/highlands-festival-of-speed/master/photos/IMG_3024.jpg)
 [![](https://raw.githubusercontent.com/sammcj/highlands-festival-of-speed/master/photos_small/IMG_3026.jpg)](https://raw.githubusercontent.com/sammcj/highlands-festival-of-speed/master/photos/IMG_3026.jpg)
-[![](https://raw.githubusercontent.com/sammcj/highlands-festival-of-speed/master/photos_small/IMG_2073.jpg)](https://raw.githubusercontent.com/sammcj/highlands-festival-of-speed/master/photos/IMG_2073.jpg)
-[![](https://raw.githubusercontent.com/sammcj/highlands-festival-of-speed/master/photos_small/IMG_3034.jpg)](https://raw.githubusercontent.com/sammcj/highlands-festival-of-speed/master/photos/IMG_3034.jpg)
 
 <div id="listings"></div>
 

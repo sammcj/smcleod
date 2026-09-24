@@ -18,6 +18,7 @@ tags:
 - tech
 - storage
 - hardware
+photos: true
 title: Building a high performance SSD SAN - Part 1
 ---
 

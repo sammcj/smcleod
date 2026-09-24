@@ -6,6 +6,7 @@ norss: true
 comments: false
 showDate: false
 hiddenFromHomePage: true
+deskbarHidden: true # keeps it out of Tracker and Spotlight
 toc: false
 keywords: [""]
 tags: [""]

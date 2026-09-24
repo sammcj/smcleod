@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" data-ground="#76708a #433d54">
+<!-- an external display, one half of the circle smooth and the other pixelated. Rendered by scripts/render-thumbs.mjs. -->
+<defs><style>.o{stroke-width:1.1}.t{stroke-width:.66}.o3{stroke-width:5.2}.o5{stroke-width:7.2}</style>
+<linearGradient id="bez" x2="0.3" y2="1"><stop stop-color="#3f464c"/><stop offset="1" stop-color="#15191c"/></linearGradient><linearGradient id="wal" x2="0.3" y2="1"><stop stop-color="#6f93c4"/><stop offset="0.6" stop-color="#3e5f95"/><stop offset="1" stop-color="#2b3f6b"/></linearGradient><linearGradient id="alu" x2="0" y2="1"><stop stop-color="#f1f3f4"/><stop offset="1" stop-color="#a3abb1"/></linearGradient><linearGradient id="nk" x2="1" y2="0"><stop stop-color="#e3e6e8"/><stop offset="1" stop-color="#8d969c"/></linearGradient></defs>
+<g transform="translate(-1 -1.1) scale(0.991)">
+<ellipse cx="32" cy="56.5" rx="13" ry="2.6" fill="url(#alu)" stroke="#3c444a" class="o"/>
+<path d="M28.5 41h7v14.5h-7z" fill="url(#nk)" stroke="#3c444a" class="o"/>
+<g stroke="#0b0d0e" class="o" stroke-linejoin="round">
+<path d="M4 8L6.5 6L62.5 6L60 8Z" fill="#6a747c"/>
+<path d="M60 8L62.5 6L62.5 42L60 44Z" fill="#0d1012"/>
+<rect x="4" y="8" width="56" height="36" fill="url(#bez)"/></g>
+<rect x="6.5" y="10.5" width="51" height="31" fill="url(#wal)" stroke="#0b0d0e" class="t"/>
+<path d="M32 15A10.5 10.5 0 0 0 32 36Z" fill="#f4f6f8"/><path d="M32 15H39V18.5H42.5V22H42.5V25.5H42.5V29H42.5V32.5H39V36H32Z" fill="#f4f6f8"/>
+<path d="M32 11.5v29" stroke="#f4f6f8" stroke-opacity=".4" stroke-width=".8" stroke-dasharray="1.5 1.5"/>
+<path class="d" d="M7.5 40.5V11.5H56.5" stroke="#fff" stroke-opacity=".25" stroke-width=".8" fill="none"/></g>
+</svg>

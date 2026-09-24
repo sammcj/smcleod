@@ -1,0 +1,8 @@
+.about-body { flex: 1; overflow: auto; background: var(--read-bg); }
+.about-body .rd { max-width: none; padding: 20px 24px 32px; font-size: 15px; }
+.about-body .rd h1 { font-size: 1.5em; margin-top: 0; }
+.about-facts { display: grid; grid-template-columns: max-content 1fr; gap: 4px 16px; margin: 0 0 1.4em; padding: 10px 14px; border: 1px solid var(--line); border-radius: 3px; background: var(--content); color: var(--fg); font: 13px/1.5 var(--ui); }
+.about-facts :is(dt, dd) { margin: 0; font: inherit; }
+.about-facts dt { color: var(--muted); }
+.about-facts ul { margin: 0; padding: 0; list-style: none; }
+.about-facts small { color: var(--muted); }

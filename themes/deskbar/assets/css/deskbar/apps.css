@@ -1,0 +1,52 @@
+/* Apps: the pages behind Photos, tools, folders and Mail, styled for no-JS visitors too, and photos in posts.
+   Apps loaded on first open keep their window styles in lazy/<name>.css. */
+
+/* Photos: the album grid of its page, and photos in posts */
+.ph-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 6px; padding: 10px; margin: 0; list-style: none; }
+.ph { display: block; aspect-ratio: 4 / 3; overflow: hidden; border-radius: 3px; background: var(--side); border: 1px solid var(--line); }
+.ph img { width: 100%; height: 100%; object-fit: cover; display: block; border-radius: 0; transition: transform .2s; }
+.ph:hover img { transform: scale(1.04); }
+.photos-doc .ph-grid { padding: 0; }
+.ph-index { columns: 16em; font: 15px/1.6 var(--ui); padding-left: 1.2em; }
+.ph-index small { color: var(--muted); }
+
+.rd img.zoom { cursor: zoom-in; }
+.rd [data-gallery] { display: flex; flex-wrap: wrap; gap: 8px; margin: 1.2em 0; }
+.rd [data-gallery] > p { display: contents; }
+.rd [data-gallery] img { height: 180px; width: auto; object-fit: cover; }
+.rd .photos-chip { background: var(--tab); color: #1f1f1f; border-color: var(--tab-lo); }
+.rd .photos-chip:hover { color: #1f1f1f; border-color: var(--fg); }
+
+/* Tools: pages full width, embedded tools filling the window */
+.tool-body { flex: 1; overflow: auto; background: var(--read-bg); }
+.tool-body .rd { max-width: none; padding: 24px 28px 48px; }
+.app-tool.framed iframe { flex: 1; width: 100%; border: 0; background: #fff; }
+.tool-doc .tool-frame { width: 100%; height: 75vh; border: 1px solid var(--line); border-radius: 3px; background: #fff; }
+.tool-open { font: 14px var(--ui); }
+/* In the shell tools stay in their window (maximise for more room); the direct link is for document mode only */
+.wm .tool-open { display: none; }
+
+/* Folders: an icon grid */
+.folder { display: grid; grid-template-columns: repeat(auto-fill, minmax(104px, 1fr)); gap: 8px; margin: 0; padding: 0; list-style: none; font: 12.5px/1.3 var(--ui); }
+.folder a { display: flex; flex-direction: column; align-items: center; gap: 6px; padding: 10px 6px; border-radius: 4px; color: var(--fg); text-align: center; text-decoration: none; }
+.folder a:hover { background: var(--zebra); }
+.folder .ico { width: 40px; height: 40px; }
+.folder-body { flex: 1; overflow: auto; }
+.folder-body .rd { max-width: none; padding: 12px; font: 13px/1.4 var(--ui); }
+.folder-body .rd > header h1 { display: none; }
+.folder-body .lede { font-size: 12.5px; margin: 2px 4px 12px; }
+
+/* Mail: .mail-form is the markup a site's contact form uses; the window is in lazy/mail.css */
+.mail-form { display: flex; flex-direction: column; font: 14px var(--ui); color: var(--fg); }
+.mail-row { display: flex; align-items: center; gap: 10px; margin: 0; padding: 6px 0; border-bottom: 1px solid var(--line); }
+.mail-l { flex: none; width: 4.5em; color: var(--muted); font-size: 13px; }
+.mail-row input { flex: 1; min-width: 0; border-color: transparent; background: transparent; }
+.mail-row input:hover { border-color: var(--line); }
+.mail-msg-l { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); }
+.mail-form textarea { min-height: 14em; margin-top: 10px; padding: 8px; font: inherit; color: var(--fg); background: var(--content); border: 1px solid var(--line); border-radius: 3px; resize: vertical; }
+.mail-form textarea:focus { outline: 2px solid var(--accent); outline-offset: -1px; }
+.mail-send button { padding: 6px 18px; border: 1px solid var(--frame-lo); border-radius: 3px; background: linear-gradient(var(--frame-hi), var(--frame)); }
+
+/* An app window while its code loads, or if it fails to (loader.js) */
+.lazy-note { margin: auto; padding: 16px; max-width: 36ch; color: var(--muted); font: 13px/1.5 var(--ui); text-align: center; }
+.lazy-note[role=alert] { color: var(--fg); }

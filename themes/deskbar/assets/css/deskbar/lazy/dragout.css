@@ -1,0 +1,13 @@
+/* D32 (lazy/dragout.js): the chip that follows a post dragged out of Tracker, and Tracker's selection.
+   The chip is a small Haiku tab: yellow, square-bottomed, with a hard shadow. */
+.dragout { position: fixed; left: 0; top: 0; z-index: 2147483000; pointer-events: none; display: flex; align-items: center; gap: 8px; max-width: 280px; padding: 4px 10px 4px 4px; background: linear-gradient(var(--tab-hi), var(--tab)); color: #1f1f1f; border: 1px solid var(--tab-lo); border-radius: 4px 4px 0 0; box-shadow: 3px 3px 0 rgb(0 0 0 / .22); font: 600 12px/1.3 var(--ui); }
+.dragout img { flex: none; width: 40px; height: 30px; object-fit: cover; border: 1px solid var(--tab-lo); background: var(--content); }
+.dragout svg { flex: none; width: 20px; height: 20px; margin-left: 4px; }
+.dragout span { overflow: hidden; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; }
+.dragout b { flex: none; min-width: 20px; padding: 0 6px; border-radius: 10px; background: var(--accent); color: var(--accent-fg); text-align: center; font-size: 11px; line-height: 20px; }
+/* over the list it came from, or off the desk: dropping here opens nothing */
+.dragout.no { opacity: .5; filter: grayscale(1); }
+
+.tk-main .sel, .tk-main tr.sel td { background: color-mix(in srgb, var(--accent) 20%, var(--content)) !important; }
+.tk-main .sel { outline: 1px solid var(--accent); outline-offset: -1px; }
+.tk-open span { margin-left: 4px; font-variant-numeric: tabular-nums; }

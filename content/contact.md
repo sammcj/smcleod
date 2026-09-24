@@ -1,5 +1,7 @@
 ---
 title: "Contact"
+window: mail
+icon: mail
 description: "Sam McLeod"
 aliases: ["contact", "email"]
 author: "Sam McLeod"

@@ -1,24 +1,8 @@
-{{ $id := .Get "id" | default "vram-calculator" }}
-{{ $css := resources.Get "css/tailwind.min.css" | resources.Fingerprint }}
-{{ $react := resources.Get "js/react.production.min.js" | resources.Fingerprint }}
-{{ $reactDom := resources.Get "js/react-dom.production.min.js" | resources.Fingerprint }}
-{{ $calculator := resources.Get "js/vram-calculator.js" | resources.Minify | resources.Fingerprint }}
-
-<div id="{{ $id }}"></div>
-<link href="{{ $css.RelPermalink }}" rel="stylesheet">
-
-<!-- Load scripts in correct order -->
-<script src="{{ $react.RelPermalink }}"></script>
-<script src="{{ $reactDom.RelPermalink }}"></script>
-<script src="{{ $calculator.RelPermalink }}"></script>
-
-<script>
-  window.addEventListener('load', function () {
-    if (window.React && window.ReactDOM && window.initVRAMCalculator) {
-      const container = document.getElementById('{{ $id }}');
-      window.initVRAMCalculator(container);
-    } else {
-      console.error('Required dependencies not loaded');
-    }
-  });
-</script>
+{{- /* Native vRAM estimator: vanilla JS bundled from assets/js/vram/, styles scoped under .vram-est */ -}}
+{{- $js := resources.Get "js/vram/index.js" | js.Build (dict "format" "iife" "minify" true "target" "es2022" "targetPath" "js/vram-estimator.js") | fingerprint -}}
+{{- $css := resources.Get "css/vram-calculator.css" | minify | fingerprint -}}
+<link rel="stylesheet" href="{{ $css.RelPermalink }}" integrity="{{ $css.Data.Integrity }}">
+<div class="vram-est"{{ with .Get "id" }} id="{{ . }}"{{ end }}>
+  <p class="ve-nojs">The vRAM estimator runs in your browser and needs JavaScript enabled.</p>
+</div>
+<script src="{{ $js.RelPermalink }}" integrity="{{ $js.Data.Integrity }}"></script>

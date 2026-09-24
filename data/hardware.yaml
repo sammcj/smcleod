@@ -1,0 +1,34 @@
+# Hardware in the Hardware folder (/hardware/), in display order, grouped by category.
+# thumb: a vendor product shot under assets/hardware/, cropped or padded to 4:3 at 800x600. The site keeps its own
+# copy, as vendor pages block bots, move or drop discontinued products.
+- name: Das Keyboard
+  url: https://www.daskeyboard.com
+  description: Mechanical Keyboard
+  category: For Your Hands
+  thumb: hardware/das-keyboard.jpg
+- name: Keychron
+  url: https://www.keychron.com
+  description: Low Profile Mechanical Keyboards
+  category: For Your Hands
+  thumb: hardware/keychron.jpg
+- name: Logitech MX Master 3S
+  url: https://www.logitech.com/en-au/shop/p/mx-master-3s
+  description: Mouse
+  category: For Your Hands
+  thumb: hardware/mx-master-3s.jpg
+
+- name: Ultrasone Signature Pro
+  url: https://web.archive.org/web/2021/https://ultrasone.com/product/ultrasone-signature-pro/?lang=en
+  description: HiFi Headphones
+  category: For Your Ears
+  thumb: hardware/ultrasone-signature-pro.jpg
+- name: Sony WH-1000XM5
+  url: https://www.sony.com.au/electronics/headband-headphones/wh-1000xm5
+  description: Portable Headphones
+  category: For Your Ears
+  thumb: hardware/sony-wh-1000xm5.jpg
+- name: Benchmark DAC
+  url: https://benchmarkmedia.com/collections/digital-to-analog-audio-converter
+  description: DAC & Preamp
+  category: For Your Ears
+  thumb: hardware/benchmark-dac.jpg

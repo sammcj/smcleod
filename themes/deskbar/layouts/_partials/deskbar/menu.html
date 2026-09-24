@@ -1,0 +1,48 @@
+{{- /* Whisker-style menu, a native popover opened by #menuBtn. The same on every page, so panel.html caches it.
+       Groups: Writing is built from the reader section and taxonomies, the rest from params.deskbar.menu:
+       [{ name, page?, url?, icon?, items: [{ name?, page?, url?, icon? }] }]. A group's own page or url is its app
+       (Tracker links to it); groups that end up with no entries are left out. A group's icon, shown on its
+       category, is its own icon, else its page's, else a folder. */ -}}
+{{- $sections := site.Params.deskbar.readerSections | default (slice "posts") -}}
+{{- $groups := slice -}}
+{{- $w := partial "deskbar/launcher-link.html" (dict "item" (dict "name" "All posts" "page" (index $sections 0) "icon" "folder") "class" "mn-it") -}}
+{{- range slice "tags" "series" "categories" -}}
+  {{- with site.GetPage . -}}
+    {{- $w = print $w (partial "deskbar/launcher-link.html" (dict "item" (dict "name" (printf "All %s" (lower .LinkTitle)) "page" .Path "icon" "folder") "class" "mn-it")) -}}
+  {{- end -}}
+{{- end -}}
+{{- range first 3 (where site.RegularPages "Section" "in" $sections).ByDate.Reverse -}}
+  {{- $w = print $w (partial "deskbar/launcher-link.html" (dict "item" (dict "page" .Path "icon" "doc") "class" "mn-it")) -}}
+{{- end -}}
+{{- with $w }}{{ $groups = $groups | append (dict "name" "Writing" "body" . "app" false "icon" "write") }}{{ end -}}
+{{- range $g := site.Params.deskbar.menu -}}
+  {{- $icon := $g.icon -}}
+  {{- with $g.page }}{{ with site.GetPage . }}{{ $icon = $icon | default .Params.icon }}{{ end }}{{ end -}}
+  {{- $body := partial "deskbar/launcher-link.html" (dict "item" (dict "name" (printf "Open %s" $g.name) "page" $g.page "url" $g.url "icon" $g.icon) "class" "mn-it mn-app") -}}
+  {{- range $g.items }}{{ $body = print $body (partial "deskbar/launcher-link.html" (dict "item" . "class" "mn-it")) }}{{ end -}}
+  {{- with strings.TrimSpace $body }}{{ $groups = $groups | append (dict "name" $g.name "body" . "app" true "icon" ($icon | default "folder")) }}{{ end -}}
+{{- end -}}
+<nav id="menu" popover aria-label="Menu">
+  <div class="mn-head" data-shell>
+    <input id="mnQ" type="search" placeholder="Search posts and pages" aria-label="Search posts and pages" autocomplete="off">
+  </div>
+  <div class="mn-body">
+    <div class="mn-cats" data-shell>
+      {{- range $i, $g := $groups }}
+      <button type="button" data-cat="{{ $i }}"><svg class="ico" aria-hidden="true"><use href="#i-{{ $g.icon }}"/></svg>{{ $g.name }}</button>
+      {{- end }}
+    </div>
+    <div class="mn-list">
+      {{- range $i, $g := $groups }}
+      <section class="mn-sec" data-cat="{{ $i }}" data-group="{{ $g.name }}"{{ if not $g.app }} data-builtin{{ end }}>
+        <h3><svg class="ico" aria-hidden="true"><use href="#i-{{ $g.icon }}"/></svg>{{ $g.name }}</h3>
+        <div class="mn-items">{{ $g.body | safeHTML }}</div>
+      </section>
+      {{- end }}
+      <section class="mn-res" data-shell hidden></section>
+    </div>
+  </div>
+  {{- with partialCached "deskbar/tray.html" . }}
+  <div class="mn-foot">{{ . }}</div>
+  {{- end }}
+</nav>

@@ -1,0 +1,16 @@
+# Items for the Videos folder (content/videos.md, view: cards). feed and thumb are asset paths here so the example
+# builds offline; on a real site they are URLs, e.g. youtube.com/feeds/videos.xml?channel_id=... and a thumbnail.
+- name: Haiku Talks
+  url: https://www.youtube.com/channel/UCexample
+  feed: previews/channel.xml
+- name: Radio Deskbar
+  url: https://example.com/radio/
+  feed: previews/podcast.xml
+  description: A show about desktops
+- name: Quiet Channel
+  url: https://example.com/quiet/
+  # the feed is missing, so the stored thumbnail stands in
+  feed: previews/missing.xml
+  thumb: previews/fallback.jpg
+- name: No Preview
+  url: https://example.com/none/

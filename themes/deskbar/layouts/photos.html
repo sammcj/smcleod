@@ -1,0 +1,33 @@
+{{- /* Photos app page (front matter: layout: photos, window: photos). Publishes the album manifest the app reads
+       and, for no-JS visitors, every album as a grid of linked thumbnails. */ -}}
+{{- define "main" }}
+{{- $albums := partial "deskbar/apps/albums.html" . }}
+{{- $manifest := resources.FromString "deskbar/albums.json" (jsonify $albums) | fingerprint }}
+<article class="rd photos-doc" data-albums="{{ $manifest.RelPermalink }}">
+  <header>
+    <h1>{{ .Title }}</h1>
+    {{- with .Description }}
+    <p class="lede">{{ . }}</p>
+    {{- end }}
+  </header>
+  {{- with .Content }}
+  <div class="rd-body">{{ . }}</div>
+  {{- end }}
+  <ul class="ph-index">
+    {{- range $albums }}
+    <li><a href="#album-{{ .id }}">{{ .title }}</a> <small>{{ len .items }}</small></li>
+    {{- end }}
+  </ul>
+  {{- range $albums }}
+  <section id="album-{{ .id }}">
+    <h2>{{ .title }}</h2>
+    {{- with .post }}<p><a href="{{ . }}">Read the post</a></p>{{ end }}
+    <ul class="ph-grid">
+      {{- range .items }}
+      <li><a class="ph" href="{{ .src }}"><img src="{{ .thumb | default .src }}" alt="{{ .caption }}" loading="lazy" decoding="async"></a></li>
+      {{- end }}
+    </ul>
+  </section>
+  {{- end }}
+</article>
+{{- end }}

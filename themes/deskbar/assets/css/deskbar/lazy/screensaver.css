@@ -1,0 +1,10 @@
+/* Screen saver (lazy/screensaver.js): above everything but the browser's top layer, fading in over a second */
+.saver { position: fixed; inset: 0; z-index: 2147483647; background: radial-gradient(ellipse at 50% 35%, #102015, #040604 75%); cursor: none; opacity: 0; transition: opacity 1.2s ease; touch-action: none; }
+/* the sheep wander the desktop itself, dimmed */
+.saver[data-kind=sheep] { background: rgba(4, 7, 14, .6); }
+/* pixel art: a canvas the browser stretches (a screen above 2x) keeps hard pixel edges */
+.saver[data-kind=sheep] canvas { image-rendering: pixelated; }
+.saver.on { opacity: 1; }
+.saver.waking { opacity: 0; transition: none; }
+.saver canvas { display: block; width: 100%; height: 100%; }
+@media (prefers-reduced-motion: reduce) { .saver { transition: none; } }

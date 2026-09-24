@@ -15,6 +15,7 @@ tags:
 - tech
 - storage
 - hardware
+photos: true
 title: Delayed Serial STONITH
 ---
 

@@ -1,0 +1,43 @@
+# Photos albums (D15), resolved at build time by the deskbar theme into /deskbar/albums.<hash>.json.
+# source is one of:
+#   { type: post, slug }                        the photos a post shows, in order
+#   { type: folder, path }                      image files in assets/<path> or static/<path>
+#   { type: urls, items: [{ src, caption }] }   external images, hotlinked
+# exclude: [n, ...] leaves out photos by number (1-based, source order); pin: true puts an album first, where
+# Photos opens.
+# Any other post gets an album of its own under "From posts" only by opting in (D26): front matter `photos: true`
+# or the gallery shortcode. Posts with several images are more often screenshots and diagrams than photos.
+- id: highlands
+  title: Highlands Festival of Speed 2018
+  source: { type: post, slug: highlands-festival-of-speed-2018 }
+- id: otago
+  title: Otago road trip in a Mustang GT
+  source: { type: post, slug: new-zealand-otago-trip-in-a-2019-mustang-gt }
+  # first in Photos, which opens on it
+  pin: true
+- id: ferrari-f12
+  title: Ferrari F12 Berlinetta
+  source: { type: post, slug: ferrari-f12-berlinetta }
+- id: jimothy
+  title: Jimothy
+  source: { type: post, slug: rest-in-peace-jimothy }
+  # photo numbers as the post orders them (12 is 13.jpeg, 16 is 19.jpeg, 35 is 38.jpeg)
+  exclude: [12, 16, 35]
+- id: castle-hill
+  title: Castle Hill winter trip 2016
+  source: { type: post, slug: castle-hill-winter-trip-2016-photos }
+- id: silvia
+  title: Rancilio Silvia upgrade
+  source: { type: post, slug: rancilio-silvia-upgrade }
+- id: dalle-2
+  title: DALL-E 2 selected works
+  source: { type: post, slug: dalle-2-selected-works }
+- id: albums-2017
+  title: Album picks 2017
+  source: { type: post, slug: top-album-picks-for-2017 }
+- id: co2-logger
+  title: CO2 sensor logger build
+  source: { type: post, slug: mh-z19-co2-sensor-reader-logger-and-visualiser }
+- id: storage
+  title: Storage builds
+  source: { type: folder, path: img/san }

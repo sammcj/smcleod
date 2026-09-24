@@ -1,5 +1,7 @@
 ---
 title: "Agentic Coding Tools"
+window: tool
+icon: compare
 description: "Rating Agentic Coding Tools"
 author: "Sam McLeod"
 norss: true

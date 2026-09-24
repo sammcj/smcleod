@@ -1,0 +1,46 @@
+[module]
+  [module.hugoVersion]
+    # layouts use the template system introduced in 0.146.0 (_partials, home.html, page.html)
+    min = "0.146.0"
+    extended = false
+
+# The shell's post index. Sites opt in by adding "deskbar" to outputs.home,
+# since a theme can define output formats but not a site's outputs.
+[outputFormats.deskbar]
+  mediaType = "application/json"
+  baseName = "deskbar"
+  isPlainText = true
+  notAlternative = true
+
+# Spotlight's site-wide search index (/search.json, D28). Opt in the same way, with "deskbarsearch" in outputs.home.
+[outputFormats.deskbarsearch]
+  mediaType = "application/json"
+  baseName = "search"
+  isPlainText = true
+  notAlternative = true
+
+# A page's markdown source at index.md beside index.html (page.markdown.md), which the reader's "Copy as markdown"
+# fetches. Sites opt in per section, e.g. a cascade giving posts outputs = ["html", "markdown"].
+[outputFormats.markdown]
+  mediaType = "text/markdown"
+  baseName = "index"
+  isPlainText = true
+  notAlternative = true
+
+[params.deskbar]
+  # Sections whose pages open in the single reader window; they also feed Tracker and the phone home screen
+  readerSections = ["posts"]
+  # IANA time zone for the panel clock; empty uses the visitor's local time
+  timeZone = ""
+  # Extra stylesheets (e.g. web fonts), loaded after the theme CSS
+  stylesheets = []
+
+  [[params.deskbar.icons]]
+    name = "Posts"
+    url = "/posts/"
+    icon = "folder"
+
+  [[params.deskbar.dock]]
+    name = "Posts"
+    url = "/posts/"
+    icon = "folder"

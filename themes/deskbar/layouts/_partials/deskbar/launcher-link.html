@@ -1,0 +1,24 @@
+{{- /* A desktop icon, dock item or menu entry: { name, url, icon } or { page, name?, icon? } from params.deskbar.
+       `page` is a Hugo page path such as "/about"; its link, title and icon come from the page, and the entry is
+       left out when the page does not exist, so config can name apps that a site has not built yet. */ -}}
+{{- $url := "" -}}
+{{- with .item.url }}{{ $url = . | relURL }}{{ end -}}
+{{- $name := .item.name | default "" -}}
+{{- $icon := .item.icon | default "" -}}
+{{- with .item.page -}}
+  {{- $url = "" -}}
+  {{- with site.GetPage . -}}
+    {{- $url = .RelPermalink -}}
+    {{- $name = $name | default .LinkTitle -}}
+    {{- $icon = $icon | default .Params.icon -}}
+  {{- end -}}
+{{- end -}}
+{{- if $url -}}
+{{- /* only other sites open in a new tab; the site's own pages and tools, absolute or not, open as windows */ -}}
+{{- $host := (urls.Parse $url).Host -}}
+{{- $ext := and $host (ne $host (urls.Parse site.BaseURL).Host) -}}
+<a class="{{ .class }}" href="{{ $url }}" title="{{ $name }}"
+  {{- if $ext }} target="_blank" rel="noopener"{{ end }}>
+  <svg class="ico" aria-hidden="true"><use href="#i-{{ $icon | default "doc" }}"/></svg><span class="lbl">{{ $name }}</span>
+</a>
+{{- end -}}

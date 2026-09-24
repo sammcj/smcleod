@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" data-ground="#8d8170 #544a3c">
+<!-- reference and quantised distributions standing on a plinth. Rendered by scripts/render-thumbs.mjs. -->
+<defs><style>.o{stroke-width:1.1}.t{stroke-width:.66}.o3{stroke-width:5.2}.o5{stroke-width:7.2}</style>
+<linearGradient id="pf" x2="0.5" y2="1"><stop stop-color="#ffffff"/><stop offset="1" stop-color="#dcd5c4"/></linearGradient><linearGradient id="pq" x2="0" y2="1"><stop stop-color="#ffd760"/><stop offset="1" stop-color="#eba21a"/></linearGradient><linearGradient id="pp" x2="0" y2="1"><stop stop-color="#7fb0e6"/><stop offset="1" stop-color="#2f66a8"/></linearGradient></defs>
+<g transform="translate(-1 0.5)">
+<g stroke="#5f584a" class="o" stroke-linejoin="round"><path d="M4 52l10-10h48l-10 10z" fill="url(#pf)"/>
+<path d="M52 52l10-10v5l-10 10z" fill="#9b917c"/><rect x="4" y="52" width="48" height="5" fill="#c9c0ab"/></g>
+<path class="d" d="M5.5 51.5l9-8.8h46" stroke="#fff" stroke-width=".9" fill="none"/>
+<path d="M15 45L15 44.88L16 44.8L17 44.68L18 44.5L19 44.24L20 43.86L21 43.33L22 42.62L23 41.7L24 40.52L25 39.06L26 37.33L27 35.33L28 33.1L29 30.7L30 28.25L31 25.84L32 23.61L33 21.71L34 20.24L35 19.32L36 19L37 19.32L38 20.24L39 21.71L40 23.61L41 25.84L42 28.25L43 30.7L44 33.1L45 35.33L46 37.33L47 39.06L48 40.52L49 41.7L50 42.62L51 43.33L52 43.86L53 44.24L54 44.5L55 44.68L55 45Z" fill="url(#pq)" stroke="#8a5a06" class="o" stroke-linejoin="round"/>
+<path d="M8 50L8 49.85L8.95 49.73L9.9 49.53L10.85 49.21L11.8 48.72L12.75 48L13.7 46.98L14.65 45.59L15.6 43.75L16.55 41.45L17.5 38.69L18.45 35.53L19.4 32.08L20.35 28.55L21.3 25.16L22.25 22.18L23.2 19.86L24.15 18.42L25.1 18.01L26.05 18.65L27 20.28L27.95 22.76L28.9 25.85L29.85 29.29L30.8 32.82L31.75 36.22L32.7 39.31L33.65 41.98L34.6 44.18L35.55 45.91L36.5 47.23L37.45 48.18L38.4 48.84L39.35 49.29L40.3 49.58L41.25 49.76L42.2 49.87L43.15 49.93L44.1 49.96L45.05 49.98L46 49.99L46 50Z" fill="url(#pp)" fill-opacity=".9" stroke="#1d4b82" class="o" stroke-linejoin="round"/>
+<path class="d" d="M8 49.85L8.95 49.73L9.9 49.53L10.85 49.21L11.8 48.72L12.75 48L13.7 46.98L14.65 45.59L15.6 43.75L16.55 41.45L17.5 38.69L18.45 35.53L19.4 32.08L20.35 28.55L21.3 25.16" stroke="#fff" stroke-opacity=".6" stroke-width=".9" fill="none" transform="translate(.9 .9)"/></g>
+</svg>

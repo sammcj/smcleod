@@ -1,0 +1,21 @@
+{{- /* XFCE-style top panel plus its Whisker-style menu. Without JS the panel is a plain site header: the menu
+       (a native popover, so it still opens), Home and the tray links. The window switcher is rendered in the dock
+       (see dock.html). */ -}}
+{{- $tray := partialCached "deskbar/tray.html" . -}}
+<header id="panel">
+  <button id="menuBtn" class="pb" type="button" popovertarget="menu" title="Menu" aria-label="Menu">
+    <svg class="ico" aria-hidden="true"><use href="#i-leaf"/></svg><span>Menu</span>
+  </button>
+  {{- partial "deskbar/home-btn.html" "panelHome" }}
+  <div id="tasks" data-shell></div>
+  <span class="grow"></span>
+  {{- partialCached "deskbar/spotlight.html" . }}
+  {{- with $tray }}
+  <nav id="tray" aria-label="Elsewhere">{{ . }}</nav>
+  {{- end }}
+  <button id="themeBtn" class="pb" type="button" title="Light or dark" aria-label="Toggle light or dark theme" data-shell>
+    <svg class="ico" aria-hidden="true"><use href="#i-theme"/></svg>
+  </button>
+  <time id="clock" data-shell data-tz="{{ site.Params.deskbar.timeZone }}"></time>
+</header>
+{{- partialCached "deskbar/menu.html" . }}

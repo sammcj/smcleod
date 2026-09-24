@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" data-ground="#5f8586 #324a4d">
+<!-- a toolbox: one server holding many tools. Rendered by scripts/render-thumbs.mjs. -->
+<defs><style>.o{stroke-width:1.1}.t{stroke-width:.66}.o3{stroke-width:5.2}.o5{stroke-width:7.2}</style>
+<linearGradient id="tb" x2="0.3" y2="1"><stop stop-color="#b85446"/><stop offset="1" stop-color="#6e2c22"/></linearGradient><linearGradient id="stl" x2="0" y2="1"><stop stop-color="#f4f6f7"/><stop offset="1" stop-color="#8d969c"/></linearGradient></defs>
+<g transform="translate(-2 2.5)">
+<g stroke="#2e0f0a" class="o" stroke-linejoin="round">
+<path d="M7 30L15 24L61 24L53 30Z" fill="#d77f6f"/>
+<path d="M53 30L61 24L61 49L53 55Z" fill="#5a2219"/>
+<rect x="7" y="30" width="46" height="25" fill="url(#tb)"/></g><path class="d" d="M7.9 54V30.9H52" stroke="#fff" stroke-opacity="0.35" stroke-width=".8" fill="none"/>
+<path d="M7 37.5h46l8-6" stroke="#2e0f0a" stroke-width="1.2" fill="none"/><path class="d" d="M8 38.6h45" stroke="#e7a296" stroke-opacity=".5" stroke-width=".7"/>
+<path d="M22 27V20.5H46V27" fill="none" stroke="#1f2427" class="o3" stroke-linejoin="round"/><path d="M22 27V20.5H46V27" fill="none" stroke="url(#stl)" stroke-width="3" stroke-linejoin="round"/>
+<g stroke="#1f2427" class="t"><rect x="12" y="34.5" width="6" height="6.5" rx=".8" fill="url(#stl)"/><rect x="42" y="34.5" width="6" height="6.5" rx=".8" fill="url(#stl)"/></g>
+<path class="d" d="M11 47h38M11 50h38" stroke="#4a1a12" stroke-opacity=".45" stroke-width=".8"/></g>
+</svg>

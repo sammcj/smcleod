@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Shaped like a YouTube channel feed (youtube.com/feeds/videos.xml?channel_id=), with asset paths for the
+     thumbnails. The older video comes first, so the preview has to go by date. -->
+<feed xmlns:yt="http://www.youtube.com/xml/schemas/2015" xmlns:media="http://search.yahoo.com/mrss/" xmlns="http://www.w3.org/2005/Atom">
+  <title>Haiku Talks</title>
+  <link rel="alternate" href="https://www.youtube.com/channel/UCexample"/>
+  <entry>
+    <yt:videoId>older000001</yt:videoId>
+    <title>An older talk</title>
+    <link rel="alternate" href="https://www.youtube.com/watch?v=older000001"/>
+    <published>2026-08-01T10:00:00+00:00</published>
+    <media:group>
+      <media:title>An older talk</media:title>
+      <media:thumbnail url="previews/older.jpg" width="480" height="360"/>
+    </media:group>
+  </entry>
+  <entry>
+    <yt:videoId>newest00001</yt:videoId>
+    <title>Building a desktop in the browser</title>
+    <link rel="alternate" href="https://www.youtube.com/watch?v=newest00001"/>
+    <published>2026-09-20T10:00:00+00:00</published>
+    <media:group>
+      <media:title>Building a desktop in the browser</media:title>
+      <media:thumbnail url="previews/newest.jpg" width="480" height="360"/>
+    </media:group>
+  </entry>
+</feed>
