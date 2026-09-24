@@ -131,7 +131,7 @@ params:
   # description, author and images feed the RSS template and Hugo's embedded opengraph/twitter cards.
   description: "The personal blog of Sam McLeod."
   author: Sam McLeod
-  images: ["/logo-painted-350.svg"]
+  images: ["/og-card.jpg"]
   social:
     github: "sammcj"
     linkedin: "sammcj"
