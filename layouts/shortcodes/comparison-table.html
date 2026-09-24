@@ -1,1 +1,2 @@
+{{- with resources.Get "css/agentic-tools-table.css" | minify | fingerprint }}<link rel="stylesheet" href="{{ .RelPermalink }}">{{ end }}
 {{ partial "comparison-table.html" . }}

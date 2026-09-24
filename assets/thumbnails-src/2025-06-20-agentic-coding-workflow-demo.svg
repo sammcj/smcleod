@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" data-ground="#946f60 #573d33">
+<!-- a video camera for the recorded demo. Rendered by scripts/render-thumbs.mjs. -->
+<defs><style>.o{stroke-width:1.1}.t{stroke-width:.66}.o3{stroke-width:5.2}.o5{stroke-width:7.2}</style>
+<linearGradient id="vb" x2="0.3" y2="1"><stop stop-color="#5d676f"/><stop offset="1" stop-color="#262c31"/></linearGradient><linearGradient id="vbar" x2="0" y2="1"><stop stop-color="#5a646b"/><stop offset="0.5" stop-color="#2b3136"/><stop offset="1" stop-color="#101315"/></linearGradient><radialGradient id="vl" cx="0.4" cy="0.35" r="0.8"><stop stop-color="#b7c7ee"/><stop offset="0.45" stop-color="#4a5a93"/><stop offset="1" stop-color="#10142a"/></radialGradient></defs>
+<g transform="translate(0.4 10.5) scale(1.000)">
+<path d="M26 22V17H46V22" fill="none" stroke="#0d1012" class="o3" stroke-linejoin="round"/><path d="M26 22V17H46V22" fill="none" stroke="#4a5359" stroke-width="3" stroke-linejoin="round"/>
+<g stroke="#0d1012" class="o" stroke-linejoin="round">
+<path d="M21 25L28 19.5L58 19.5L51 25Z" fill="#8d979f"/>
+<path d="M51 25L58 19.5L58 41.5L51 47Z" fill="#1f2428"/>
+<rect x="21" y="25" width="30" height="22" fill="url(#vb)"/></g><path class="d" d="M21.9 46V25.9H50" stroke="#fff" stroke-opacity="0.3" stroke-width=".8" fill="none"/>
+<g stroke="#0d1012" class="o" stroke-linejoin="round"><rect x="50" y="18" width="9" height="6" rx="1" fill="#39424a"/><ellipse cx="59" cy="21" rx="1.6" ry="3.4" fill="#15191c"/>
+<rect x="8" y="27" width="14" height="18" fill="url(#vbar)"/><rect x="5" y="25.5" width="4" height="21" rx="1" fill="url(#vbar)"/></g>
+<ellipse cx="5" cy="36" rx="2.4" ry="9.6" fill="#15191c" stroke="#0d1012" class="t"/><ellipse cx="4.6" cy="36" rx="1.5" ry="6.6" fill="url(#vl)"/>
+<path class="d" d="M12 27.5v17M13.6 27.5v17M15.2 27.5v17M16.8 27.5v17" stroke="#101315" stroke-width=".8"/>
+<circle cx="46" cy="29.5" r="1.3" fill="#e0452d" stroke="#5a1208" stroke-width=".5"/>
+<path d="M27 38h18M27 41h18" stroke="#11161a" stroke-width="1"/></g>
+</svg>

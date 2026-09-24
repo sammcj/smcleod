@@ -1,0 +1,9 @@
+{{- /* A contact form in the markup the Mail window lays out (class mail-form). The action is a placeholder. */ -}}
+<form class="mail-form" method="post" action="https://example.org/form">
+  <p class="mail-row"><span class="mail-l">To</span><span>The deskbar demo</span></p>
+  <p class="mail-row"><label class="mail-l" for="name">Name</label><input id="name" name="name" type="text" autocomplete="name" required></p>
+  <p class="mail-row"><label class="mail-l" for="email">Email</label><input id="email" name="email" type="email" autocomplete="email" required></p>
+  <label class="mail-l mail-msg-l" for="message">Message</label>
+  <textarea id="message" name="message" rows="10" required></textarea>
+  <p class="mail-send"><button type="submit" name="submit">Send</button></p>
+</form>

@@ -1,6 +1,9 @@
 ---
 title: "Getting Started with Agentic Systems - Developer Learning Paths"
 date: 2025-04-16T01:10:00+10:00
+thumbnail: thumbnail.png
+images: ["thumbnail.png"]
+thumbnailIcon: thumbnail-icon.svg
 tags: ["ai", "llm", "tech", "agentic", "coding", "learning", "engineering", "tutorials"]
 author: "Sam McLeod"
 showToc: true
@@ -142,7 +145,7 @@ I think the best community in terms to sharing new methods, models and tools is 
 > [!TIP] The most effective way to learn is by doing.
 
 1. **Start small**: Begin with simple agent implementations before moving to complex multi-agent systems.
-2. **Focus on understanding**: Don't just copy code—understand why agents make certain decisions and how they process information.
+2. **Focus on understanding**: Don't just copy code-understand why agents make certain decisions and how they process information.
 3. **Get your hands dirty and experiment**: Create small, disposable proof-of-concept projects to test different agent architectures and approaches.
 4. **Try agentic coding**: Try using tools like Cline or Copilot Agent to help accelerate your coding process.
 

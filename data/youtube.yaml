@@ -1,0 +1,40 @@
+# YouTube channels and playlists in the YouTube folder (/youtube/), in display order. Each card shows the latest
+# video from feed (the channel's or playlist's RSS, read at build time, so the 6-hourly deploy keeps it current).
+# @handle and /c/ URLs don't work in the feed URL, so it takes the channel id (the channel page's canonical link).
+# thumb: a recent video's thumbnail, shown when YouTube's feed fails, as it often does with a 404.
+- name: Machine Learning Street Talk
+  url: https://www.youtube.com/@MachineLearningStreetTalk
+  feed: https://www.youtube.com/feeds/videos.xml?channel_id=UCMLtBahI5DMrt0NPvDSoIRQ
+  thumb: https://i.ytimg.com/vi/72Im-Mm5JKs/mqdefault.jpg
+- name: NPR Tiny Desk Concerts
+  url: https://www.youtube.com/playlist?list=PL1B627337ED6F55F0
+  feed: https://www.youtube.com/feeds/videos.xml?playlist_id=PL1B627337ED6F55F0
+  thumb: https://i.ytimg.com/vi/lPbzlEj3A0U/mqdefault.jpg
+- name: Techmoan
+  url: https://www.youtube.com/playlist?list=PLN2yCnHTG_6qxmv_pdBxWxCPsbA1Cl2RI
+  feed: https://www.youtube.com/feeds/videos.xml?playlist_id=PLN2yCnHTG_6qxmv_pdBxWxCPsbA1Cl2RI
+  thumb: https://i.ytimg.com/vi/PS_ZJZ1jT84/mqdefault.jpg
+- name: Big Clive
+  url: https://www.youtube.com/@bigclivedotcom
+  feed: https://www.youtube.com/feeds/videos.xml?channel_id=UCtM5z2gkrGRuWd0JQMx76qA
+  thumb: https://i.ytimg.com/vi/d-41yfHILSY/mqdefault.jpg
+- name: Fireship
+  url: https://www.youtube.com/@Fireship
+  feed: https://www.youtube.com/feeds/videos.xml?channel_id=UCsBjURrPoezykLs9EqgamOA
+  thumb: https://i.ytimg.com/vi/ylO0DQeVEBQ/mqdefault.jpg
+- name: DTM Racing
+  url: https://www.youtube.com/channel/UCwKq447rYMVI5dAQWMmFnfg
+  feed: https://www.youtube.com/feeds/videos.xml?channel_id=UCwKq447rYMVI5dAQWMmFnfg
+  thumb: https://i.ytimg.com/vi/ymrKKERTI6Q/mqdefault.jpg
+- name: Smarter Every Day
+  url: https://www.youtube.com/c/smartereveryday
+  feed: https://www.youtube.com/feeds/videos.xml?channel_id=UC6107grRI4m0o2-emgoDnAA
+  thumb: https://i.ytimg.com/vi/vS6HEes8daw/mqdefault.jpg
+- name: Warped Perception
+  url: https://www.youtube.com/channel/UCFH4dWqQQOYkyJZUGT4q5pg
+  feed: https://www.youtube.com/feeds/videos.xml?channel_id=UCFH4dWqQQOYkyJZUGT4q5pg
+  thumb: https://i.ytimg.com/vi/XeISB1DEhhE/mqdefault.jpg
+- name: Retro Game Corps
+  url: https://www.youtube.com/@RetroGameCorps
+  feed: https://www.youtube.com/feeds/videos.xml?channel_id=UCoZQiN0o7f36H7PaW4fVhFw
+  thumb: https://i.ytimg.com/vi/Q-pFlOcNJk0/mqdefault.jpg

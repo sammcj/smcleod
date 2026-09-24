@@ -1,0 +1,20 @@
+{{- /* A feed, fetched and unmarshalled: { doc, err }. doc is the parsed XML (a map; an empty one on failure) and err
+       says why it failed, for the caller's warning. A URL without a scheme is an asset path (assets/<path>), for
+       fixtures and offline builds. */ -}}
+{{- $body := "" -}}
+{{- $err := "" -}}
+{{- if findRE `^https?://` . 1 -}}
+  {{- $got := partial "deskbar/remote.html" . -}}
+  {{- with $got.res }}{{ $body = .Content }}{{ end -}}
+  {{- $err = $got.err -}}
+{{- else -}}
+  {{- with resources.Get . }}{{ $body = .Content }}{{ else }}{{ $err = "no such asset" }}{{ end -}}
+{{- end -}}
+{{- $doc := dict -}}
+{{- if $body -}}
+  {{- with try (transform.Unmarshal $body) -}}
+    {{- with .Err }}{{ $err = printf "%v" . }}{{ else }}{{ $doc = .Value }}{{ end -}}
+  {{- end -}}
+{{- else if not $err }}{{ $err = "empty" }}{{ end -}}
+{{- if not (reflect.IsMap $doc) }}{{ $err = $err | default "not a feed" }}{{ $doc = dict }}{{ end -}}
+{{- return dict "doc" $doc "err" $err -}}

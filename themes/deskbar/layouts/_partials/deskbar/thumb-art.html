@@ -1,0 +1,72 @@
+{{- /* Build-time placeholder art for posts without an image: one object in the style of Haiku's vector icons (dark
+       tone-on-tone outlines, restrained gradients, lit from the top-left). Context: dict "page" and "variant" ("card",
+       a 4:3 tile for Tracker cards and icons: the object on a quiet ground; or "mini", the bare
+       object for list rows, like a Tracker icon). Returns the URL of an SVG file.
+       The ground comes from thumb-seeds.html; the object (emblem) comes from the post's tags and categories. Emblems live
+       in data/deskbar/emblems.yaml. Files are named by their content, so identical mini icons are shared and changed art
+       never hides behind a stale cache. */ -}}
+{{- $p := .page -}}
+{{- $mini := eq .variant "mini" -}}
+{{- $seed := index (partialCached "deskbar/thumb-seeds.html" site) $p.Path -}}
+{{- if not $seed -}}
+  {{- $seed = dict "ground" (mod (int (hash.FNV32a $p.Path)) 8) -}}
+{{- end -}}
+
+{{- /* muted grounds, top and bottom; the count must match thumb-seeds.html */ -}}
+{{- $grounds := slice
+  (slice "#6a8199" "#3a4c60") (slice "#8d8170" "#544a3c") (slice "#6c8175" "#38483f") (slice "#76708a" "#433d54")
+  (slice "#5f8586" "#324a4d") (slice "#737b83" "#3b4148") (slice "#946f60" "#573d33") (slice "#838063" "#4b4935")
+-}}
+
+{{- /* Emblem by topic: the first rule with a keyword among the post's tags and categories wins, so list the most
+       specific first. params.deskbar.thumbRules replaces the defaults below with a list of
+       { emblem: name, keywords: [lowercase tags or categories] }; names are the keys of data/deskbar/emblems.yaml. */ -}}
+{{- $terms := slice -}}
+{{- range slice "tags" "categories" -}}
+  {{- with index $p.Params . -}}
+    {{- if reflect.IsSlice . }}{{ range . }}{{ $terms = $terms | append (lower (string .)) }}{{ end }}{{ else }}{{ $terms = $terms | append (lower (string .)) }}{{ end -}}
+  {{- end -}}
+{{- end -}}
+{{- $rules := site.Params.deskbar.thumbRules | default (slice
+  (dict "emblem" "car" "keywords" (slice "cars" "car" "automotive"))
+  (dict "emblem" "record" "keywords" (slice "music" "audio"))
+  (dict "emblem" "camera" "keywords" (slice "photos" "photography"))
+  (dict "emblem" "house" "keywords" (slice "home automation" "smart home" "iot"))
+  (dict "emblem" "padlock" "keywords" (slice "security" "privacy"))
+  (dict "emblem" "gpu" "keywords" (slice "gpu"))
+  (dict "emblem" "neural" "keywords" (slice "ai" "llm" "ml" "machine learning" "machine-learning"))
+  (dict "emblem" "container" "keywords" (slice "containers" "docker" "kubernetes" "k8s" "virtualisation" "virtualization"))
+  (dict "emblem" "disk" "keywords" (slice "storage" "nas" "ssd"))
+  (dict "emblem" "globe" "keywords" (slice "networking" "network" "dns" "web"))
+  (dict "emblem" "laptop" "keywords" (slice "apple" "mac" "macos"))
+  (dict "emblem" "branch" "keywords" (slice "git"))
+  (dict "emblem" "terminal" "keywords" (slice "shell" "bash" "zsh" "cli"))
+  (dict "emblem" "code" "keywords" (slice "programming" "code" "coding" "javascript" "css"))
+  (dict "emblem" "server" "keywords" (slice "linux" "servers" "sysadmin"))
+  (dict "emblem" "chip" "keywords" (slice "hardware" "electronics" "cpu"))
+  (dict "emblem" "screen" "keywords" (slice "talks" "talk" "slides" "presentation"))
+  (dict "emblem" "board" "keywords" (slice "agile" "kanban" "devops"))
+  (dict "emblem" "chart" "keywords" (slice "data" "analytics" "performance"))
+  (dict "emblem" "palette" "keywords" (slice "art" "design"))
+  (dict "emblem" "chat" "keywords" (slice "culture" "communication" "community"))
+  (dict "emblem" "briefcase" "keywords" (slice "career" "work"))
+  (dict "emblem" "window" "keywords" (slice "software" "apps"))
+) -}}
+{{- $emblem := "doc" -}}
+{{- range $rules -}}
+  {{- if and (eq $emblem "doc") (intersect .keywords $terms) }}{{ $emblem = .emblem }}{{ end -}}
+{{- end -}}
+{{- /* hugo.Data replaced site.Data in 0.156; branch so older Hugo still builds */ -}}
+{{- $lib := dict -}}
+{{- if ge hugo.Version "0.156.0" }}{{ $lib = hugo.Data.deskbar.emblems }}{{ else }}{{ $lib = site.Data.deskbar.emblems }}{{ end -}}
+{{- $e := index $lib $emblem | default $lib.doc -}}
+
+{{- /* Outline widths per variant (see emblems.yaml): the mini icon, drawn at 20-32px, gets heavier outlines and no detail */ -}}
+{{- $svg := "" -}}
+{{- if $mini -}}
+  {{- $svg = printf `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><defs><style>.o{stroke-width:2}.t{stroke-width:1.2}.o3{stroke-width:7}.o5{stroke-width:9}.d{display:none}</style>%s</defs>%s</svg>` $e.defs $e.body -}}
+{{- else -}}
+  {{- $g := index $grounds $seed.ground -}}
+  {{- $svg = printf `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 120"><defs><style>.o{stroke-width:1.1}.t{stroke-width:.66}.o3{stroke-width:5.2}.o5{stroke-width:7.2}</style><linearGradient id="bg" x2="0" y2="1"><stop stop-color="%s"/><stop offset="1" stop-color="%s"/></linearGradient><filter id="sh" x="-20%%" y="-100%%" width="140%%" height="300%%"><feGaussianBlur stdDeviation="3"/></filter>%s</defs><rect width="160" height="120" fill="url(#bg)"/><ellipse cx="80" cy="98" rx="40" ry="5.5" fill="#000" opacity=".3" filter="url(#sh)"/><g transform="translate(34.56 16) scale(1.42)">%s</g></svg>` (index $g 0) (index $g 1) $e.defs $e.body -}}
+{{- end -}}
+{{- return (resources.FromString (printf "deskbar/art/%x.svg" (hash.FNV32a $svg)) $svg).RelPermalink -}}

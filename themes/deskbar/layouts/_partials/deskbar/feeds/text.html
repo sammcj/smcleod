@@ -1,0 +1,7 @@
+{{- /* The text of an unmarshalled XML element: a plain string, or "#text" when the element has attributes
+       (<title type="html">). Anything else, such as <media:content url="..."/>, has no text. Namespaces are
+       dropped, so a podcast item's <title> and <itunes:title> arrive as a list; the first with text wins. */ -}}
+{{- $t := "" -}}
+{{- if reflect.IsMap . }}{{ $t = index . "#text" | default "" }}{{ else if eq (printf "%T" .) "string" }}{{ $t = . }}
+{{- else if reflect.IsSlice . }}{{ range . }}{{ if not $t }}{{ $t = partial "deskbar/feeds/text.html" . }}{{ end }}{{ end }}{{ end -}}
+{{- return $t -}}

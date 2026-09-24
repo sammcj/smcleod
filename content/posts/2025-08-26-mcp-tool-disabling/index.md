@@ -1,6 +1,9 @@
 ---
 title: "Stop Polluting Context - Let Users Disable Individual MCP Tools"
 date: 2025-08-26T01:10:00+10:00
+thumbnail: thumbnail.png
+images: ["thumbnail.png"]
+thumbnailIcon: thumbnail-icon.svg
 tags: ["ai", "llm", "tech", "mcp", "cline", "claude", "agentic", "agentic coding", "mcp", "security"]
 author: "Sam McLeod"
 showToc: true

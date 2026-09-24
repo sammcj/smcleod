@@ -7,6 +7,7 @@ comments: false
 showDate: false
 subtitle: Sam McLeod
 readingTime: false
+windowWidth: 884  # 30% wider than the default page window
 toc:
   enable: true
   auto: false

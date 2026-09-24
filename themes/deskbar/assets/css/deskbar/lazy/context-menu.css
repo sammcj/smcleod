@@ -1,0 +1,14 @@
+/* Context menu (lazy/context-menu.js): a Haiku/XFCE-style popup in the Whisker menu's colours (nav.css) */
+.ctx { position: fixed; inset: auto; margin: 0; min-width: 190px; max-width: min(320px, calc(100vw - 8px)); padding: 4px 0; background: var(--content); color: var(--fg); border: 1px solid var(--frame-dk); border-radius: 4px; box-shadow: 0 1px 0 var(--frame-hi) inset, 0 8px 24px rgba(0,0,0,.4); font: 13px/1.3 var(--ui); user-select: none; -webkit-user-select: none; }
+.ctx-it { display: flex; align-items: center; gap: 9px; width: 100%; min-height: 28px; padding: 4px 18px 4px 10px; border: 0; background: none; color: inherit; font: inherit; text-align: left; cursor: default; }
+.ctx-it span { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.ctx-it svg { width: 16px; height: 16px; flex: none; color: var(--muted); }
+.ctx-it:hover, .ctx-it:focus-visible { background: var(--accent); color: var(--accent-fg); outline: none; }
+.ctx-it:hover svg, .ctx-it:focus-visible svg { color: inherit; }
+.ctx-sep { height: 1px; margin: 4px 0; background: var(--line); }
+@media (pointer: coarse) { .ctx-it { min-height: 42px; font-size: 15px; } }
+
+/* Copy confirmation, above the dock */
+.ctx-note { position: fixed; left: 50%; bottom: calc(var(--dock-h, 56px) + 28px); z-index: 2147483647; transform: translate(-50%, 8px); padding: 7px 14px; border-radius: 4px; background: var(--panel); color: var(--panel-fg); font: 13px var(--ui); box-shadow: 0 6px 18px rgba(0,0,0,.35); opacity: 0; pointer-events: none; transition: opacity .15s, transform .15s; }
+.ctx-note.on { opacity: 1; transform: translate(-50%, 0); }
+@media (prefers-reduced-motion: reduce) { .ctx-note { transition: none; } }

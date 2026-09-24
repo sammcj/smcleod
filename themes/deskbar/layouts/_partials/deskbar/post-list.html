@@ -1,0 +1,9 @@
+{{- /* Pages grouped by year: the no-JS stand-in for Tracker */ -}}
+{{- range .GroupByDate "2006" }}
+<h2>{{ .Key }}</h2>
+<ul class="plist">
+  {{- range .Pages }}
+  <li><a href="{{ .RelPermalink }}">{{ .Title }}</a> <time datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date.Format "2 Jan" }}</time></li>
+  {{- end }}
+</ul>
+{{- end }}

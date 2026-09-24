@@ -1,6 +1,9 @@
 ---
 title: "The Role Bridging Problem"
 date: 2025-11-20T01:10:00+10:00
+thumbnail: thumbnail.png
+images: ["thumbnail.png"]
+thumbnailIcon: thumbnail-icon.svg
 tags: ["ai", "llm", "tech", "agentic coding", "mcp", "learning", "software engineering"]
 author: "Sam McLeod"
 showToc: true

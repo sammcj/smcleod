@@ -1,0 +1,20 @@
+# Photos albums, resolved at build time (see layouts/_partials/deskbar/apps/albums.html in the theme).
+# Other posts get an album of their own only by opting in (D26): the gallery shortcode or front matter `photos: true`.
+- id: javascript
+  title: Small JavaScript, the pictures
+  source: { type: post, slug: keeping-javascript-small }
+- id: links
+  title: Linked images
+  # photo numbers in source order, so the second sun is left out
+  exclude: [2]
+  source:
+    type: urls
+    items:
+      - { src: /img/sun.svg, caption: A yellow sun }
+      - { src: /img/sun.svg, caption: The same sun again }
+      - { src: /img/sun.svg, caption: A third sun }
+# listed last but pinned, so Photos opens on it
+- id: wallpapers
+  title: Wallpapers
+  pin: true
+  source: { type: folder, path: gallery }

@@ -1,0 +1,9 @@
+{{- /* A block of photos that open in the Photos lightbox (apps/gallery.js picks up [data-gallery]). Using it also
+       gives the post an album and a "View photos" chip (D26). Without JS the images are plain images.
+       Usage: {{< gallery >}}
+              ![Caption](photo.jpg)
+              ![Another](https://example.org/photo.jpg)
+              {{< /gallery >}} */ -}}
+<div class="gallery" data-gallery>
+{{ .Page.RenderString (dict "display" "block") (trim .Inner "\n") }}
+</div>

@@ -1,2 +1,0 @@
-{{/*  this causes hugo to crash  */}}
-{{- return .Host | and .Path | and (strings.HasSuffix .Path "/" | not) -}}

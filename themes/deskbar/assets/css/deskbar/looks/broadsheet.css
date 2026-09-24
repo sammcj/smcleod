@@ -1,0 +1,185 @@
+/* Broadsheet: neo-brutalist newsprint. Ink rules, hard offset shadows, Space Grotesk headlines over a Literata body,
+   slab title bars, a typographic wallpaper, a dock of sticker tabs and a reading bar driven by the post's scroll.
+   Dark mode is the night edition: the same page with cream ink on near-black newsprint and the spot colours kept, so
+   the look follows the visitor's theme rather than forcing a light page on them. Acid and tomato only ever carry the
+   near-black #121212, and cobalt only white, so those pairs hold 4.5:1 in either edition. */
+@font-face { font-family: 'Space Grotesk'; font-display: swap; src: url(../../../fonts/space-grotesk/space-grotesk-400-normal.woff2) format('woff2'); }
+@font-face { font-family: 'Space Grotesk'; font-display: swap; font-weight: 700; src: url(../../../fonts/space-grotesk/space-grotesk-700-normal.woff2) format('woff2'); }
+@font-face { font-family: Literata; font-display: swap; font-weight: 200 900; src: url(../../../fonts/literata/literata-variable.woff2) format('woff2'); }
+@font-face { font-family: Literata; font-display: swap; font-weight: 200 900; font-style: italic; src: url(../../../fonts/literata/literata-variable-italic.woff2) format('woff2'); }
+
+/* the wallpaper and the Control panel's thumbnails draw with these whatever window style is on */
+:root:is([data-deco=broadsheet], [data-wall=broadsheet]), .cp-deco.broadsheet, .cp-wp.broadsheet {
+  --bs-paper: light-dark(#efebe1, #151412); --bs-sheet: light-dark(#fffdf7, #1e1d1a); --bs-ink: light-dark(#121212, #ebe6d9);
+  --bs-cob: #2a3dff; --bs-acid: #dcff3a; --bs-tom: #ff5a36; --bs-rule: color-mix(in srgb, var(--bs-ink) 7%, transparent);
+  --bs-head: 'Space Grotesk', 'Helvetica Neue', Arial, system-ui, sans-serif;
+}
+:root[data-deco=broadsheet] {
+  --bs-sh: 7px 7px 0 var(--bs-ink); --bs-hi: light-dark(#eefa9c, #3a4212);
+  --ui: var(--bs-head); --serif: Literata, 'Source Serif 4', Georgia, serif; --tab-h: 28px; --ctl: #121212;
+  --panel: #121212; --panel-fg: #fff; --panel-hover: rgba(255,255,255,.16);
+  --frame: var(--bs-paper); --frame-hi: var(--bs-sheet); --frame-lo: var(--bs-ink); --frame-dk: var(--bs-ink);
+  --tab: var(--bs-acid); --tab-hi: var(--bs-acid); --tab-lo: var(--bs-ink); --tab-dim: light-dark(#eef9b0, #9fb82a);
+  --tab-in: var(--bs-paper); --tab-in-lo: var(--bs-ink); --tab-in-fg: var(--bs-ink);
+  --content: var(--bs-sheet); --fg: var(--bs-ink); --muted: light-dark(#4d4a42, #b3ad9f); --side: var(--bs-paper);
+  --line: light-dark(#cfc8b8, #45423b); --zebra: color-mix(in srgb, var(--bs-ink) 4%, transparent);
+  --accent: light-dark(#2a3dff, #4a5bff); --accent-fg: #fff; --link: light-dark(#2a3dff, #9ea8ff);
+  --read-bg: light-dark(#f8f5ed, #191816); --read-fg: light-dark(#1b1b1b, #e6e1d4); --code-bg: light-dark(#ebe6d9, #282622);
+  --wall-1: light-dark(#4a5bff, #2330a8); --wall-2: light-dark(#2a3dff, #1a2699); --wall-3: light-dark(#1a28b8, #0f1766);
+  --wall-glow: rgba(220,255,58,.18);
+  scrollbar-color: var(--bs-ink) var(--bs-paper);
+}
+:root[data-deco=broadsheet] ::selection { background: var(--bs-acid); color: #121212; }
+
+/* Windows: a slab title bar across the top, ink rules and one hard shadow. Tabs paint before the frame, so a tab's
+   shadow shows only beside it, where it runs on into the frame's. */
+:root[data-deco=broadsheet] .win .frame { padding: 0; background: var(--bs-sheet); border: 2px solid var(--bs-ink); border-top: 0; box-shadow: 4px 4px 0 var(--bs-ink); }
+:root[data-deco=broadsheet] .win.active .frame { box-shadow: var(--bs-sh); }
+:root[data-deco=broadsheet] .views { border: 0; }
+:root[data-deco=broadsheet] .win :is(.tab, .th) { gap: 4px; padding: 0 3px 0 10px; color: var(--bs-ink); background: var(--bs-paper); border: 2px solid var(--bs-ink); box-shadow: 4px 4px 0 var(--bs-ink); }
+:root[data-deco=broadsheet] .win.active :is(.tab, .th) { box-shadow: var(--bs-sh); }
+:root[data-deco=broadsheet] .win.active .tab { color: #121212; background: var(--bs-acid); }
+:root[data-deco=broadsheet] .win.active .tab:not(.on) { background: var(--tab-dim); }
+:root[data-deco=broadsheet] .win .tabs:not(.multi) .tab { left: 0 !important; right: 0; }
+:root[data-deco=broadsheet] .tabs.multi .tab { margin-right: -2px; }
+:root[data-deco=broadsheet] .tab .tt { font-size: 11.5px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; }
+:root[data-deco=broadsheet] .tabs:not(.multi) .tt { max-width: none; }
+:root[data-deco=broadsheet] .win .ctl { color: inherit; opacity: 1; border: 2px solid; border-radius: 0; background: var(--bs-sheet); }
+:root[data-deco=broadsheet] .win.active .tab .ctl { background: #fff; }
+:root[data-deco=broadsheet] .win .ctl:hover { color: #fff; background: #121212; border-color: #121212; }
+:root[data-deco=broadsheet] .win .ctl.close:hover { color: #121212; background: var(--bs-tom); }
+:root[data-deco=broadsheet] .grip { background: linear-gradient(135deg, transparent 50%, var(--bs-ink) 50%); }
+:root[data-deco=broadsheet] .sizer { border: 2px solid var(--bs-ink); border-radius: 0; box-shadow: none; background: var(--bs-acid); color: #121212; font-weight: 700; }
+:root[data-deco=broadsheet] .win.peek .frame { outline: 3px solid var(--bs-tom); }
+:root[data-deco=broadsheet] #snapPreview { border: 2px dashed var(--bs-ink); border-radius: 0; background: repeating-linear-gradient(-45deg, color-mix(in srgb, var(--bs-cob) 24%, transparent) 0 6px, transparent 6px 12px); }
+
+/* toolbars, buttons and fields */
+:root[data-deco=broadsheet] :is(.toolbar, .status, .list th) { background: var(--bs-paper); border-color: var(--bs-ink); border-width: 2px; }
+:root[data-deco=broadsheet] .status { color: var(--fg); }
+:root[data-deco=broadsheet] :is(.tb, .seg) { border: 2px solid var(--bs-ink); border-radius: 0; font-weight: 700; }
+:root[data-deco=broadsheet] .seg + .seg { border-left: 0; }
+:root[data-deco=broadsheet] :is(.tb, .seg):not(:where(.on, :active, [aria-expanded=true], [aria-pressed=true])) { background: var(--bs-sheet); }
+:root[data-deco=broadsheet] :is(.tb, .segs) { box-shadow: 2px 2px 0 var(--bs-ink); }
+:root[data-deco=broadsheet] :is(.tb, .seg):active { translate: 2px 2px; box-shadow: none; }
+:root[data-deco=broadsheet] :is(input:not([type=checkbox], [type=radio], [type=range], .sp-q, .mail-row *), select, textarea) { border: 2px solid var(--bs-ink); border-radius: 0; background: var(--bs-sheet); }
+:root[data-deco=broadsheet] :is(.cp-opt, .cp-art, .cp-sample) { border-radius: 0 !important; }
+:root[data-deco=broadsheet] :is(.cp-nav, .places, .mn-cats) { border-right: 2px solid var(--bs-ink); }
+
+/* the top bar is the masthead: black, set in capitals, with the menu on an acid block and the clock on tomato */
+:root[data-deco=broadsheet] #panel { padding: 0; gap: 0; border-bottom: 2px solid var(--bs-ink); box-shadow: none; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; }
+:root[data-deco=broadsheet] #panel :is(.pb, .task) { height: 100%; border: 0; border-radius: 0; }
+:root[data-deco=broadsheet] #menuBtn { padding: 0 14px; color: #121212; background: var(--bs-acid); font-size: 13px; letter-spacing: .02em; }
+:root[data-deco=broadsheet] #menuBtn:is(:hover, .open) { background: #fff; box-shadow: none; }
+:root[data-deco=broadsheet] #menuBtn:focus-visible { outline: 2px solid #121212; outline-offset: -5px; }
+:root[data-deco=broadsheet] #panel .task.on { color: #121212; background: var(--bs-acid); box-shadow: none; }
+:root[data-deco=broadsheet] #clock { align-self: stretch; padding: 0 12px; line-height: calc(var(--panel-h) - 2px); color: #121212; background: var(--bs-tom); }
+:root[data-deco=broadsheet] #winsBtn b { border-radius: 0; color: #121212; }
+
+/* Menu, context menu and search: flat sheets under an ink rule with a hard shadow */
+:root[data-deco=broadsheet] :is(#menu, .ctx, .sp-frame) { border: 2px solid var(--bs-ink); border-radius: 0; box-shadow: var(--bs-sh); }
+:root[data-deco=broadsheet] .ctx { box-shadow: 4px 4px 0 var(--bs-ink); }
+:root[data-deco=broadsheet] .mn-head { border-bottom: 2px solid var(--bs-ink); }
+:root[data-deco=broadsheet] :is(.mn-cats button.on, .sp-opt.on) { color: #121212; background: var(--bs-acid); }
+:root[data-deco=broadsheet] :is(.mn-sec h3, .mn-res h3, .places h2, .sp-gh) { color: var(--fg); letter-spacing: .12em; }
+:root[data-deco=broadsheet] .ctx-sep { height: 2px; background: var(--bs-ink); }
+:root[data-deco=broadsheet] .ctx-note { border-radius: 0; box-shadow: 4px 4px 0 var(--bs-tom); }
+:root[data-deco=broadsheet] .sp-tab { border: 2px solid var(--bs-ink); border-bottom: 0; color: #121212; box-shadow: var(--bs-sh); font-weight: 700; letter-spacing: .1em; text-transform: uppercase; }
+:root[data-deco=broadsheet] :is(.sp-field, .sp-list) { border: 2px solid var(--bs-ink); }
+:root[data-deco=broadsheet] .sp-close { border: 2px solid var(--bs-ink); border-radius: 0; }
+
+/* Dock: sticker tabs, each its own card with a hard shadow, labelled in capitals; Home is the masthead's slug */
+.wm[data-deco=broadsheet] #dock { bottom: 14px; gap: 10px; padding: 0; background: none; border: 0; border-radius: 0; box-shadow: none; backdrop-filter: none; -webkit-backdrop-filter: none; }
+/* a list rather than :is(), so each keeps its own weight and the running state below outranks the launchers */
+:root[data-deco=broadsheet] #dock .dk, :root[data-deco=broadsheet] #dock #homeBtn, :root[data-deco=broadsheet] #dock #winsBtn { display: flex; align-items: center; gap: 7px; width: auto; height: 40px; margin: 0; padding: 0 12px 0 8px; color: var(--bs-ink); background: var(--bs-sheet); border: 2px solid var(--bs-ink); border-radius: 0; box-shadow: 3px 3px 0 var(--bs-ink); font: 700 11px var(--bs-head); letter-spacing: .1em; white-space: nowrap; text-decoration: none; text-transform: uppercase; transition: translate .12s, box-shadow .12s; }
+:root[data-deco=broadsheet] #dock :is(.dk, #homeBtn, #winsBtn) .ico { width: 22px; height: 22px; }
+:root[data-deco=broadsheet] #dock .lbl, :root[data-deco=broadsheet] #dock #homeBtn span { position: static; width: auto; height: auto; overflow: visible; clip-path: none; font-size: inherit; }
+:root[data-deco=broadsheet] #dock #homeBtn { color: var(--bs-acid); background: #121212; }
+:root[data-deco=broadsheet] #dock .dk.run { color: #121212; background: var(--bs-acid); }
+:root[data-deco=broadsheet] #dock .dk.run::after, :root[data-deco=broadsheet] #dock #homeBtn::after, :root[data-deco=broadsheet] #dock #winsBtn::before { content: none; }
+:root[data-deco=broadsheet] #dock #winsBtn b { position: static; box-shadow: none; }
+:root[data-deco=broadsheet] #dock :is(.dk, #homeBtn, #winsBtn):hover { translate: -2px -2px; box-shadow: 5px 5px 0 var(--bs-ink); }
+:root[data-deco=broadsheet] #dock :is(.dk, #homeBtn, #winsBtn):active { translate: 3px 3px; box-shadow: none; }
+/* a laptop's width can't take every label, so the stickers keep their icons only */
+@media (max-width: 1100px) {
+  :root[data-deco=broadsheet] #dock .lbl { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); }
+  :root[data-deco=broadsheet] #dock .dk { padding: 0 8px; }
+}
+
+/* desktop icons carry ink captions, the phone home screen and window switcher are cards and tabs of the same stock */
+:root[data-deco=broadsheet] .dicon span { color: var(--bs-paper); background: var(--bs-ink); border-radius: 0; text-shadow: none; font-size: 10.5px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; }
+:root[data-deco=broadsheet] .dicon .ico { filter: drop-shadow(2px 2px 0 var(--bs-ink)); }
+:root[data-deco=broadsheet] #recent h2 { color: #121212; border: 2px solid var(--bs-ink); border-bottom: 0; letter-spacing: .1em; text-transform: uppercase; }
+:root[data-deco=broadsheet] .recent-list { background: var(--bs-paper); border: 2px solid var(--bs-ink); box-shadow: 5px 5px 0 var(--bs-ink); }
+:root[data-deco=broadsheet] .sw-tab { color: var(--bs-ink); background: var(--bs-paper); border: 2px solid var(--bs-ink); border-bottom: 0; box-shadow: none; filter: drop-shadow(4px 4px 0 var(--bs-ink)); }
+:root[data-deco=broadsheet] .sw-tab::after { left: -2px; background: var(--bs-sheet); border: 2px solid var(--bs-ink); box-shadow: none; }
+:root[data-deco=broadsheet] .sw-tab.on { color: #121212; background: var(--bs-acid); }
+:root[data-deco=broadsheet] .sw-tab.min { border-bottom: 2px solid var(--bs-ink); }
+:root[data-deco=broadsheet] :is(.sw-link, .sw-empty) { color: #fff; background: #121212; border: 2px solid var(--bs-ink); border-radius: 0; box-shadow: 3px 3px 0 var(--bs-ink); }
+
+/* Tracker: cards on hard shadows, year rules in reverse type */
+:root[data-deco=broadsheet] .pv-year { color: var(--bs-paper); background: var(--bs-ink); border: 0; letter-spacing: .12em; text-transform: uppercase; }
+:root[data-deco=broadsheet] .pv-year small { color: inherit; }
+:root[data-deco=broadsheet] .pc { background: var(--bs-sheet); border: 2px solid var(--bs-ink); border-radius: 0; box-shadow: 3px 3px 0 var(--bs-ink); }
+:root[data-deco=broadsheet] .pc:hover { box-shadow: 4px 4px 0 var(--accent); }
+:root[data-deco=broadsheet] .pc-t { font-size: 15px; font-weight: 700; line-height: 1.15; letter-spacing: -.015em; }
+:root[data-deco=broadsheet] .pc.open { background: var(--bs-hi); }
+:root[data-deco=broadsheet] :is(.row.open, .list tr.open td:first-child) { box-shadow: inset 4px 0 0 var(--bs-ink); }
+:root[data-deco=broadsheet] :is(.tg, .pc-img, .gi-img, .ph) { border-radius: 0; border-color: var(--bs-ink); }
+
+/* The reader: a kicker between rules over a tight grotesque headline, a cobalt drop cap, and newsprint furniture */
+:root[data-deco=broadsheet] .rd .meta { padding: 5px 0; color: var(--fg); border-block: 2px solid var(--bs-ink); font-weight: 700; letter-spacing: .12em; }
+:root[data-deco=broadsheet] .rd header h1 { margin: .3em 0 .35em; font-size: 2.35em; line-height: 1; letter-spacing: -.035em; text-wrap: balance; }
+:root[data-deco=broadsheet] .rd :is(h2, h3, h4) { letter-spacing: -.02em; }
+:root[data-deco=broadsheet] .rd h2 { padding: .35em 0 0; border-bottom: 0; border-top: 2px solid var(--bs-ink); }
+:root[data-deco=broadsheet] .rd a { text-decoration-thickness: .08em; }
+:root[data-deco=broadsheet] .rd blockquote { padding: .5em 0; color: var(--link); border: 0; border-block: 2px solid var(--bs-ink); font-style: italic; }
+:root[data-deco=broadsheet] .rd hr { border-top: 6px double var(--bs-ink); }
+:root[data-deco=broadsheet] .rd :is(img, video, code, .copy, .admonition[class]) { border-radius: 0; }
+:root[data-deco=broadsheet] .rd img.cover { border: 2px solid var(--bs-ink); box-shadow: var(--bs-sh); }
+:root[data-deco=broadsheet] .rd :is(pre, .highlight > div.chroma) { border: 2px solid var(--bs-ink); border-radius: 0; box-shadow: 4px 4px 0 var(--bs-ink); }
+:root[data-deco=broadsheet] .rd .highlight pre, :root[data-deco=broadsheet] .rd .lntable pre, :root[data-deco=broadsheet] .rd pre.mermaid.drawn { border: 0; box-shadow: none; }
+:root[data-deco=broadsheet] .rd :is(th, td) { border-color: var(--bs-ink); }
+:root[data-deco=broadsheet] .rd th { color: var(--bs-paper); background: var(--bs-ink); }
+:root[data-deco=broadsheet] .rd .admonition[class] { border: 2px solid var(--bs-ink); border-left: 6px solid var(--adm-type-color); }
+:root[data-deco=broadsheet] .rd .chip { padding: 1px 9px; border: 2px solid var(--bs-ink); border-radius: 0; background: var(--bs-sheet); box-shadow: 2px 2px 0 var(--bs-ink); font-size: 11px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; }
+:root[data-deco=broadsheet] .rd .chip:hover { color: #121212; background: var(--bs-acid); }
+:root[data-deco=broadsheet] .rd-pager a { border: 2px solid var(--bs-ink); border-radius: 0; box-shadow: 3px 3px 0 var(--bs-ink); font-weight: 700; }
+:root[data-deco=broadsheet] .rd-pager a:hover { box-shadow: 4px 4px 0 var(--accent); }
+@supports (initial-letter: 3) or (-webkit-initial-letter: 3) {
+  :root[data-deco=broadsheet] .rd:has(> header > .meta) > .rd-body > p:first-of-type::first-letter { -webkit-initial-letter: 3; initial-letter: 3; margin-right: 10px; padding: 0 10px; color: #fff; background: var(--bs-cob); font-family: var(--bs-head); font-weight: 700; }
+}
+/* The reading bar: tomato filling a strip pinned to the top of the post as it scrolls. Only where scroll timelines
+   exist, and not under reduced motion, where the shell stops every animation anyway. */
+@supports (animation-timeline: scroll()) {
+  @media (prefers-reduced-motion: no-preference) {
+    :root[data-deco=broadsheet] .rd-scroll::before { content: ''; position: sticky; top: 0; z-index: 3; display: block; height: 7px; margin-bottom: -7px; background: linear-gradient(var(--bs-tom) 0 0) 0 0 / 0 100% no-repeat, var(--bs-paper); border-bottom: 2px solid var(--bs-ink); animation: bs-read linear both; animation-timeline: scroll(nearest block); }
+  }
+}
+@keyframes bs-read { to { background-size: 100% 100%, auto; } }
+
+/* Wallpaper: ruled newsprint with a halftone patch fading out under the icons, a cobalt disc, and the site's name set
+   huge in outline over it (#desk::after, which the core draws faintly) */
+.wm[data-wall=broadsheet] body { background: radial-gradient(circle 170px at calc(100% - 70px) 56%, var(--bs-cob) 99%, transparent), linear-gradient(var(--bs-rule) 1px, transparent 1px) 0 0 / 24px 24px, linear-gradient(90deg, var(--bs-rule) 1px, transparent 1px) 0 0 / 24px 24px, radial-gradient(300px 280px at 0 var(--panel-h), transparent 30%, var(--bs-paper) 100%), radial-gradient(circle, var(--bs-ink) 1.2px, transparent 1.6px) 0 0 / 7px 7px, var(--bs-paper); }
+.wm[data-wall=broadsheet] #desk::after { right: 28px; bottom: calc(var(--dock-h) + 6px); font: 700 min(13vw, 30vh)/.8 var(--bs-head); letter-spacing: -.05em; white-space: nowrap; color: transparent; -webkit-text-stroke: 2px var(--bs-ink); }
+
+/* Control panel thumbnails: the slab window, and the wallpaper in miniature */
+.cp-deco.broadsheet, .cp-wp.broadsheet { background: linear-gradient(var(--bs-rule) 1px, transparent 1px) 0 0 / 8px 8px, linear-gradient(90deg, var(--bs-rule) 1px, transparent 1px) 0 0 / 8px 8px, var(--bs-paper); }
+.cp-deco.broadsheet::before { width: 52px; background: var(--bs-acid); border: 2px solid var(--bs-ink); box-shadow: 3px 3px 0 var(--bs-ink); }
+.cp-deco.broadsheet::after { background: var(--bs-sheet); border: 2px solid var(--bs-ink); border-top: 0; box-shadow: 3px 3px 0 var(--bs-ink); }
+.cp-wp.broadsheet { background: radial-gradient(circle 15px at 86% 60%, var(--bs-cob) 98%, transparent), radial-gradient(34px 30px at 0 0, transparent 30%, var(--bs-paper)), radial-gradient(circle, var(--bs-ink) .7px, transparent 1px) 0 0 / 3px 3px, var(--bs-paper); }
+.cp-wp.broadsheet::after { content: 'Aa' / ''; position: absolute; right: 3px; bottom: -3px; font: 700 28px/1 var(--bs-head); letter-spacing: -.05em; color: transparent; -webkit-text-stroke: 1px var(--bs-ink); }
+
+/* Phones (the same query as windows.css): one full-screen window whose title bar is the slab, and a dock of square
+   stickers at touch size */
+@media (max-width: 767px), (max-height: 500px) and (pointer: coarse) {
+  :root[data-deco=broadsheet] { --tab-h: 44px; }
+  :root[data-deco=broadsheet] #panel { letter-spacing: .02em; }
+  :root[data-deco=broadsheet] #clock { padding: 0 8px; }
+  :root[data-deco=broadsheet] .win .frame { border: 0; }
+  :root[data-deco=broadsheet] .win :is(.tab, .th) { border-width: 0 0 2px; box-shadow: none !important; }
+  :root[data-deco=broadsheet] .win .ctl { width: 40px; height: 36px; }
+  :root[data-deco=broadsheet] #dock :is(.dk, #homeBtn, #winsBtn) { width: 44px; height: 44px; padding: 0; justify-content: center; }
+  :root[data-deco=broadsheet] #dock .ico { width: 28px; height: 28px; }
+  :root[data-deco=broadsheet] #dock .lbl { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); }
+  .wm[data-deco=broadsheet] #dock { gap: 8px; bottom: 10px; }
+}

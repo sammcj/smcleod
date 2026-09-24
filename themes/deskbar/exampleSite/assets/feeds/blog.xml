@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Atom fixture for the Feeds app (assets/feeds.opml). Covers several links with rels, an HTML summary, content without
+     a summary, published beside updated, a time zone offset and an HTML title. -->
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <title>Example Blog</title>
+  <link href="https://blog.example.org/feed.xml" rel="self"/>
+  <link href="https://blog.example.org/"/>
+  <id>https://blog.example.org/</id>
+  <updated>2026-09-21T00:00:00Z</updated>
+  <entry>
+    <title>Atom entry one</title>
+    <link rel="enclosure" href="https://blog.example.org/one.mp3"/>
+    <link rel="alternate" href="https://blog.example.org/one/"/>
+    <id>https://blog.example.org/one/</id>
+    <updated>2026-09-19T09:00:00+10:00</updated>
+    <summary type="html">&lt;p&gt;First &lt;em&gt;entry&lt;/em&gt;.&lt;/p&gt;</summary>
+  </entry>
+  <entry>
+    <title>Atom entry two</title>
+    <link href="https://blog.example.org/two/"/>
+    <id>https://blog.example.org/two/</id>
+    <published>2026-09-12T00:00:00Z</published>
+    <updated>2026-09-21T00:00:00Z</updated>
+    <content type="html">&lt;p&gt;Only content, no summary.&lt;/p&gt;</content>
+  </entry>
+  <entry>
+    <title type="html">Tom &amp;amp; Jerry</title>
+    <link href="https://blog.example.org/tom-and-jerry/"/>
+    <id>https://blog.example.org/tom-and-jerry/</id>
+    <published>2026-08-20T00:00:00Z</published>
+  </entry>
+</feed>

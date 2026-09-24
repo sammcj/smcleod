@@ -1,0 +1,159 @@
+/* Phosphor: a P3 amber tube. One hue at a few brightnesses, text-mode windows ruled in double lines with the title
+   set into the top rule, bloom on the chrome, scanlines and a slow refresh band over the glass, a burnt-in login
+   prompt and a function-key bar for a dock. Post text keeps the reader's font and no bloom, for long reads. */
+:root[data-deco=phosphor] {
+  color-scheme: dark;
+  --p: #ffb52e; --p-hi: #ffd88a; --p-dim: #e39a2a; --p-lo: #6b4606; --bg: #0d0900;
+  --bloom: 0 0 1px rgba(255,181,46,.8), 0 0 5px rgba(255,170,30,.55), 0 0 14px rgba(255,130,0,.28);
+  --bloom-soft: 0 0 3px rgba(255,160,20,.4);
+  --glow: 0 0 10px rgba(255,160,20,.5), 0 0 2px var(--p);
+  /* luminance to amber, for the sprite icons drawn in colour */
+  --amber: grayscale(1) sepia(1) saturate(4) hue-rotate(-12deg) brightness(.95);
+  --ui: var(--mono);
+  --panel: var(--p); --panel-fg: var(--bg); --panel-hover: rgba(13,9,0,.16);
+  --frame: #110b00; --frame-hi: var(--p); --frame-lo: var(--p-lo); --frame-dk: var(--p);
+  --tab: var(--p); --tab-hi: var(--p-hi); --tab-lo: #9a6408; --tab-dim: #c98a1c;
+  --tab-in: #1a1100; --tab-in-lo: var(--p-lo); --tab-in-fg: var(--p-dim);
+  --content: var(--bg); --side: #140d00; --fg: var(--p); --muted: var(--p-dim); --line: #4a3104; --zebra: rgba(255,181,46,.04);
+  --accent: var(--p); --accent-fg: var(--bg); --link: var(--p-hi); --ctl: var(--p);
+  --read-bg: #0f0a02; --read-fg: #f0b24a; --code-bg: #1a1100;
+  --wall-1: #2a1b02; --wall-2: #1a1100; --wall-3: var(--bg); --wall-glow: rgba(255,181,46,.12); --wall-ring: rgba(255,181,46,.05); --wall-line: rgba(255,181,46,.1);
+  --hl-kw: var(--p-hi); --hl-str: #e9a33a; --hl-com: #c28418; --hl-num: #ffc864; --hl-fn: #ffe3a8; --hl-type: #f7b955; --hl-bi: #eeac44; --hl-var: #ffcf7a;
+  scrollbar-color: var(--p-lo) var(--side);
+}
+:root[data-deco=phosphor] .rd { --adm-note: var(--p); --adm-info: var(--p); --adm-tip: var(--p); --adm-warning: var(--p-hi); --adm-caution: #ff9d3c; --adm-important: var(--p-hi); }
+:root[data-deco=phosphor] ::selection { background: var(--p); color: var(--bg); text-shadow: none; }
+:root[data-deco=phosphor] mark { background: var(--p); color: var(--bg); text-shadow: none; }
+:root[data-deco=phosphor] :is(.ico, .tico) { filter: var(--amber); }
+:root[data-deco=phosphor] :is(.views, #menu, .ctx, .spotlight, #switcher, #recent) { text-shadow: var(--bloom-soft); }
+
+/* the top bar in inverse video, its icons as dark glyphs */
+:root[data-deco=phosphor] #panel { border-bottom: 0; box-shadow: var(--glow); }
+:root[data-deco=phosphor] #panel .ico { filter: grayscale(1) sepia(1) brightness(.4) contrast(1.8); }
+:root[data-deco=phosphor] #panel :focus-visible { outline-color: var(--bg); }
+:root[data-deco=phosphor] #panel :is(.task.on, #menuBtn.open, .home-btn.on, .home-btn:active) { background: var(--bg); color: var(--p); border-color: var(--bg); box-shadow: none; text-shadow: var(--bloom); }
+:root[data-deco=phosphor] #panel :is(.task.on, #menuBtn.open, .home-btn.on) .ico { filter: var(--amber); }
+:root[data-deco=phosphor] #panel #winsBtn b { background: var(--bg); color: var(--p); }
+:root[data-deco=phosphor] .task.min { opacity: .8; }
+/* a tube has no light mode */
+:root[data-deco=phosphor] #themeBtn { display: none; }
+
+/* Windows: a double rule, glowing when focused, with the title chip and [-][^][x] set into its top edge */
+:root[data-deco=phosphor] .win .frame { padding: 14px 5px 5px; background: var(--frame); border: 3px double var(--p-lo); border-radius: 0; box-shadow: 0 10px 30px rgba(0,0,0,.6); }
+:root[data-deco=phosphor] .win.active .frame { border-color: var(--p); box-shadow: 0 0 10px rgba(255,160,20,.35), inset 0 0 10px rgba(255,160,20,.16), 0 14px 36px rgba(0,0,0,.7); }
+:root[data-deco=phosphor] .views { border: 0; }
+:root[data-deco=phosphor] .win:not(.active) .views { text-shadow: none; }
+:root[data-deco=phosphor] .win .tabs { left: 12px; right: 12px; bottom: calc(100% - 13px); z-index: 1; }
+:root[data-deco=phosphor] .win .tabs:not(.multi) .tab { left: 0 !important; right: 0; }
+:root[data-deco=phosphor] .win :is(.tab, .th), :root[data-deco=phosphor] .win.active .tab { gap: 0; padding: 0; background: none; border: 0; box-shadow: none; color: var(--p); text-shadow: var(--bloom); }
+:root[data-deco=phosphor] .win:not(.active) .tab { color: var(--p-dim); text-shadow: 0 0 4px rgba(154,100,8,.5); }
+:root[data-deco=phosphor] .tabs.multi .tab { margin-right: 6px; }
+:root[data-deco=phosphor] .tab .tt { flex: 0 1 auto; margin: 0 auto 0 0; padding: 0 6px; line-height: 18px; background: var(--frame); font-size: 12px; font-weight: 700; }
+:root[data-deco=phosphor] .win.active .tab.on .tt { background: var(--p); color: var(--bg); text-shadow: none; box-shadow: var(--glow); }
+:root[data-deco=phosphor] .tab .tt:focus-visible { outline-color: var(--p-hi); border-radius: 0; }
+:root[data-deco=phosphor] .th { flex-basis: 48px; }
+:root[data-deco=phosphor] .th::before { margin: 6px 6px 6px 0; background: radial-gradient(circle, var(--p-dim) .8px, transparent 1.2px) 0 0 / 3px 3px, var(--frame); }
+:root[data-deco=phosphor] :is(.win, #switcher) .ctl { width: auto; height: 18px; padding: 0 1px; border-radius: 0; background: var(--frame); color: inherit; font: 700 12px/18px var(--mono); opacity: 1; }
+:root[data-deco=phosphor] #switcher .ctl { background: none; }
+:root[data-deco=phosphor] .ctl svg { display: none; }
+:root[data-deco=phosphor] .ctl::before { content: '[x]'; }
+:root[data-deco=phosphor] .ctl.min::before { content: '[-]'; }
+:root[data-deco=phosphor] .ctl.max::before { content: '[^]'; }
+:root[data-deco=phosphor] :is(.win, #switcher) .ctl:hover { background: var(--p); color: var(--bg); text-shadow: none; }
+:root[data-deco=phosphor] .sizer { border-radius: 0; border-color: var(--p); box-shadow: none; }
+:root[data-deco=phosphor] #snapPreview { background: rgba(255,181,46,.08); border: 3px double var(--p); border-radius: 0; }
+
+/* controls: square, outlined, inverse video when pressed or on */
+:root[data-deco=phosphor] :is(.toolbar, .status, .pv-year) { background: var(--frame); border-color: var(--line); color: var(--p); }
+:root[data-deco=phosphor] :is(.tb, .seg, select, textarea, input:not([type=checkbox], [type=radio], [type=range])) { border-radius: 0; border-color: var(--p-lo); }
+:root[data-deco=phosphor] :is(.tb, .seg):not(:where(.on, :active, [aria-expanded=true], [aria-pressed=true])) { background: none; }
+:root[data-deco=phosphor] :is(.tb, .seg):hover { border-color: var(--p); }
+:root[data-deco=phosphor] :is(.tb:active, .seg.on, .tb[aria-pressed=true], .tb[aria-expanded=true]) { background: var(--p); color: var(--bg); box-shadow: var(--glow); text-shadow: none; }
+:root[data-deco=phosphor] :is(.pc, .tg, .ph, .gi, .folder a, .rd-pager a, .cp-opt, .cp-art, .term-chip, .rd .chip, .rd pre, .rd .highlight > div.chroma, .rd code, .rd img, .sp-close, .sp-field, .recent-list, #recent h2) { border-radius: 0; }
+:root[data-deco=phosphor] .pc.open .pc-t::before { color: var(--p-hi); }
+:root[data-deco=phosphor] :is(.mn-it, .ctx-it, .mn-cats button, .places button, .sp-opt):is(:hover, :focus-visible, .on) .ico, :root[data-deco=phosphor] .sw-tab.on .ico { filter: brightness(0); }
+
+/* menus and popups: double-ruled boxes */
+:root[data-deco=phosphor] :is(#menu, .ctx, .sp-frame, .recent-list) { border: 3px double var(--p); border-radius: 0; box-shadow: 0 0 12px rgba(255,160,20,.3), 0 12px 36px rgba(0,0,0,.6); }
+:root[data-deco=phosphor] .mn-head { background: var(--side); border-bottom-color: var(--line); }
+:root[data-deco=phosphor] :is(.sp-tab, #recent h2) { border: 0; box-shadow: var(--glow); text-shadow: none; }
+:root[data-deco=phosphor] .sw-tab { border-color: var(--p); box-shadow: none; }
+:root[data-deco=phosphor] .sw-link { color: var(--p); background: var(--bg); border-color: var(--p-lo); border-radius: 0; }
+:root[data-deco=phosphor] .sw-link:hover { background: var(--p); color: var(--bg); }
+
+/* Desktop icons: amber sprites over caps labels that invert under the pointer */
+:root[data-deco=phosphor] .dicon .ico { filter: var(--amber) drop-shadow(0 0 3px rgba(255,160,20,.7)); }
+:root[data-deco=phosphor] .dicon span { color: var(--p); background: none; border-radius: 0; font-size: 11px; letter-spacing: .04em; text-transform: uppercase; text-shadow: 0 0 5px rgba(255,160,20,.6); }
+:root[data-deco=phosphor] .dicon:is(:hover, :focus-visible) span { background: var(--p); color: var(--bg); text-shadow: none; box-shadow: var(--glow); }
+
+/* The dock as a function-key bar: a key number, then its label in inverse video, the keys sharing the width */
+:root[data-deco=phosphor] { --dock-h: 36px; }
+.wm[data-deco=phosphor] #dock { left: 0; right: 0; bottom: 0; transform: none; gap: 6px; padding: 4px 8px; padding-bottom: max(4px, env(safe-area-inset-bottom)); counter-reset: fk; color: var(--p); background: var(--bg); border: 0; border-top: 1px solid var(--line); border-radius: 0; box-shadow: none; backdrop-filter: none; -webkit-backdrop-filter: none; font: 13px/22px var(--mono); }
+.wm[data-deco=phosphor] #dock :is(.dk, #homeBtn, #winsBtn) { counter-increment: fk; flex: 1 1 0; min-width: 0; width: auto; height: 28px; margin: 0; padding: 0; display: flex; align-items: center; justify-content: flex-start; gap: 0; text-align: left; border: 0; border-radius: 0; background: none; box-shadow: none; color: var(--p); font-weight: 400; text-decoration: none; text-shadow: var(--bloom); }
+.wm[data-deco=phosphor] #dock :is(.dk, #homeBtn, #winsBtn)::before { content: counter(fk); position: static; width: auto; height: auto; padding-right: 3px; background: none; }
+.wm[data-deco=phosphor] #dock .dk .lbl, .wm[data-deco=phosphor] #dock :is(#homeBtn, #winsBtn)::after { position: static; order: 1; flex: 1; width: auto; min-width: 0; height: 22px; overflow: hidden; clip-path: none; padding: 0 5px; background: var(--p); color: var(--bg); box-shadow: 0 0 8px rgba(255,160,20,.45); text-overflow: ellipsis; white-space: nowrap; text-shadow: none; }
+.wm[data-deco=phosphor] #dock #homeBtn::after { content: 'Home'; }
+.wm[data-deco=phosphor] #dock #winsBtn::after { content: 'Windows'; }
+.wm[data-deco=phosphor] #dock :is(.ico, #homeBtn span) { display: none; }
+.wm[data-deco=phosphor] #dock #winsBtn b { position: static; order: 2; min-width: 0; height: 22px; padding: 0 6px 0 0; border-radius: 0; background: var(--p); color: var(--bg); box-shadow: none; font-size: 13px; line-height: 22px; }
+.wm[data-deco=phosphor] #dock :is(.dk, #homeBtn, #winsBtn):hover :is(.lbl, b), .wm[data-deco=phosphor] #dock :is(#homeBtn, #winsBtn):hover::after { background: var(--p-hi); }
+.wm[data-deco=phosphor] #dock :is(.home-btn.on, .dk:active, .home-btn:active)::before { color: var(--p-hi); }
+.wm[data-deco=phosphor] #dock .dk.run::after { left: 0; right: 0; bottom: -3px; width: auto; height: 2px; margin: 0; border-radius: 0; background: var(--p); box-shadow: var(--glow); }
+.wm[data-deco=phosphor]:has(#switcher:popover-open) #dock #winsBtn { background: none; box-shadow: none; }
+
+/* Post text: the reader's own font, no bloom, amber on near-black; headings take the glow */
+:root[data-deco=phosphor] .rd { text-shadow: none; }
+:root[data-deco=phosphor] .rd :is(h1, h2, h3, h4) { text-shadow: var(--bloom-soft); }
+:root[data-deco=phosphor] .rd h2 { border-bottom: 3px double var(--p-lo); }
+/* photos keep their colour, a little sepia until pointed at */
+:root[data-deco=phosphor] :is(.rd img, .pc-img, .gi-img, .sp-thumb, .ph img) { filter: sepia(.45) saturate(1.2) brightness(.92); transition: filter .3s, transform .2s; }
+:root[data-deco=phosphor] :is(.rd img:hover, .pc:hover .pc-img, .gi:hover .gi-img, .ph:hover img) { filter: none; }
+
+/* Terminal: already a tube, now in amber, errors in inverse video */
+:root[data-deco=phosphor] .app-terminal { --t-bg: var(--bg); --t-fg: var(--p); --t-dim: var(--p-dim); }
+:root[data-deco=phosphor] .term { text-shadow: var(--bloom); }
+:root[data-deco=phosphor] .term :is(.c-g, .c-c) { color: var(--p); }
+:root[data-deco=phosphor] .term :is(.c-b, .c-y, .tl) { color: var(--p-hi); }
+:root[data-deco=phosphor] .term .c-r { background: var(--p); color: var(--bg); text-shadow: none; }
+:root[data-deco=phosphor] .term .tl:is(:hover, :focus-visible) { color: #fff0cc; }
+:root[data-deco=phosphor] :is(.term .tl, .term-chip):focus-visible { outline-color: var(--p-hi); }
+:root[data-deco=phosphor] .term .term-in { caret-color: var(--p-hi); }
+:root[data-deco=phosphor] .term-line:focus-within { background: rgba(255,181,46,.07); }
+:root[data-deco=phosphor] .term .sw { background: linear-gradient(90deg, #1a1100 12.5%, #4a3104 0 25%, #6b4606 0 37.5%, #9a6408 0 50%, #b8780f 0 62.5%, #d08a1a 0 75%, #ffb52e 0 87.5%, #ffd88a 0); }
+:root[data-deco=phosphor] .term .sw i { background: none; }
+:root[data-deco=phosphor] .term-chip:hover { background: var(--p); color: var(--bg); border-color: var(--p); }
+
+/* The tube, on the wallpaper layer so it can go with any window style: a dark glass with a warm centre and a
+   burnt-in login prompt, scanlines with a vignette and glare over everything, and a refresh band rolling down it.
+   Neither overlay takes the pointer. */
+.wm[data-wall=phosphor] body { background: radial-gradient(ellipse 75% 70% at 50% 48%, #1d1300, #0d0900 70%, #050300); }
+.wm[data-wall=phosphor] body::before, .wm[data-wall=phosphor] body::after { content: ''; position: fixed; z-index: 2147483000; pointer-events: none; }
+.wm[data-wall=phosphor] body::before { inset: 0; background: repeating-linear-gradient(rgba(0,0,0,.2) 0 1px, transparent 1px 3px), radial-gradient(ellipse 120% 90% at 30% 0%, rgba(255,255,255,.04), transparent 40%); box-shadow: inset 0 0 140px rgba(0,0,0,.6); }
+.wm[data-wall=phosphor] body::after { left: 0; right: 0; top: 0; height: 28vh; background: linear-gradient(transparent, rgba(255,190,80,.035) 70%, rgba(255,205,110,.07) 96%, transparent); animation: ph-roll 9s linear infinite; }
+@keyframes ph-roll { from { transform: translateY(-100%); } to { transform: translateY(100vh); } }
+.wm[data-wall=phosphor] #desk::after { content: 'LOGIN: ' attr(data-name); font: 700 40px/1 var(--mono); letter-spacing: .08em; text-transform: uppercase; color: rgba(255,181,46,.07); }
+@media (prefers-reduced-motion: reduce) { .wm[data-wall=phosphor] body::after { display: none; } }
+
+/* Control panel thumbnails */
+.cp-deco.phosphor, .cp-wp.phosphor { background: repeating-linear-gradient(rgba(0,0,0,.3) 0 1px, transparent 1px 3px), radial-gradient(ellipse at 50% 45%, #1d1300, #0d0900 70%, #050300); }
+.cp-deco.phosphor::after { top: 16px; left: 10px; width: 56px; height: 24px; background: #110b00; border: 3px double #ffb52e; box-shadow: 0 0 6px rgba(255,160,20,.5), inset 0 0 5px rgba(255,160,20,.25); }
+.cp-deco.phosphor::before { top: 12px; left: 16px; z-index: 1; width: 24px; height: 7px; background: #ffb52e; border: 0; box-shadow: 0 0 5px rgba(255,160,20,.7); }
+.cp-wp.phosphor::before { content: '> _'; position: absolute; left: 8px; top: 8px; font: 700 11px/1 var(--mono); color: #ffb52e; text-shadow: 0 0 4px rgba(255,160,20,.8); }
+
+@media (pointer: coarse) {
+  .wm[data-deco=phosphor] #dock :is(.dk, #homeBtn, #winsBtn) { height: 44px; }
+  .wm[data-deco=phosphor] #dock :is(.dk .lbl, #winsBtn b), .wm[data-deco=phosphor] #dock :is(#homeBtn, #winsBtn)::after { height: 36px; line-height: 36px; }
+}
+/* Phones (the same query as windows.css): the title bar sits above a full-screen window, touch-sized */
+@media (max-width: 767px), (max-height: 500px) and (pointer: coarse) {
+  :root[data-deco=phosphor] { --dock-h: 60px; }
+  :root[data-deco=phosphor] .win .tabs { left: 0; right: 0; bottom: 100%; }
+  :root[data-deco=phosphor] .win :is(.tab, .th), :root[data-deco=phosphor] .win.active .tab { padding: 0 4px; background: var(--bg); }
+  :root[data-deco=phosphor] .tab .tt { line-height: 28px; font-size: 13px; }
+  :root[data-deco=phosphor] .win .frame, :root[data-deco=phosphor] .win.active .frame { padding: 0; border-width: 3px 0 0; box-shadow: none; }
+  :root[data-deco=phosphor] :is(.win, #switcher) .ctl { min-width: 44px; height: 36px; font-size: 14px; line-height: 36px; }
+  .wm[data-deco=phosphor] #dock { gap: 4px; padding-inline: 4px; font-size: 12px; }
+  .wm[data-deco=phosphor] #dock :is(.dk, #homeBtn, #winsBtn) { height: 48px; }
+  .wm[data-deco=phosphor] #dock :is(.dk .lbl, #winsBtn b), .wm[data-deco=phosphor] #dock :is(#homeBtn, #winsBtn)::after { height: 40px; line-height: 40px; padding-inline: 3px; }
+  .wm[data-wall=phosphor] #desk::after { content: none; }
+}

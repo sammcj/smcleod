@@ -1,0 +1,55 @@
+/* Panel tray, the Whisker-style menu and find in post */
+#tray { display: flex; gap: 1px; margin-right: 2px; }
+.tr { padding: 0 6px; }
+.tr .ico { width: 16px; height: 16px; }
+#menuBtn { font-weight: 700; }
+#menuBtn.open { background: rgba(0,0,0,.38); box-shadow: inset 0 1px 2px rgba(0,0,0,.5); }
+
+/* A native popover, so the UA hides it when closed; only the open state may set display */
+#menu { position: fixed; inset: calc(var(--panel-h) + 2px) auto auto 4px; margin: 0; padding: 0; width: 560px; max-width: calc(100vw - 8px); height: min(480px, calc(100dvh - var(--panel-h) - 12px)); overflow: hidden; background: var(--content); color: var(--fg); border: 1px solid var(--frame-dk); border-radius: 0 0 4px 4px; box-shadow: 0 12px 36px rgba(0,0,0,.45); font: 13px/1.4 var(--ui); user-select: none; -webkit-user-select: none; }
+#menu:popover-open { display: flex; flex-direction: column; }
+.mn-head { flex: none; padding: 8px 10px; background: var(--panel); border-bottom: 1px solid var(--frame-dk); }
+#mnQ { width: 100%; min-height: 32px; }
+.mn-body { flex: 1; display: flex; min-height: 0; }
+.mn-cats { width: 150px; flex: none; padding: 6px 0; overflow: auto; background: var(--side); border-right: 1px solid var(--line); }
+.mn-cats button { display: flex; align-items: center; gap: 8px; width: 100%; padding: 6px 12px; text-align: left; font-weight: 600; }
+.mn-cats .ico { width: 22px; height: 22px; }
+.mn-cats button.on { background: var(--accent); color: var(--accent-fg); }
+.mn-list { flex: 1; min-width: 0; overflow: auto; padding: 4px 0 10px; -webkit-overflow-scrolling: touch; }
+.mn-sec h3, .mn-res h3 { margin: 10px 14px 4px; font-size: 11px; text-transform: uppercase; letter-spacing: .06em; color: var(--muted); }
+.mn-sec h3 { display: flex; align-items: center; gap: 6px; }
+.mn-sec h3 .ico { width: 16px; height: 16px; }
+.mn-items { display: grid; grid-template-columns: minmax(0, 1fr); }
+.mn-it { display: flex; align-items: center; gap: 10px; min-height: 40px; padding: 5px 14px; color: inherit; text-decoration: none; }
+.mn-it .ico { width: 26px; height: 26px; }
+.mn-it .lbl { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.mn-it small { color: var(--muted); font-size: 11px; white-space: nowrap; }
+.mn-it:hover, .mn-it:focus-visible { background: var(--accent); color: var(--accent-fg); outline: none; }
+.mn-it:hover small, .mn-it:focus-visible small { color: inherit; }
+.mn-app { font-weight: 600; }
+.mn-more { margin: 8px 14px; }
+.mn-foot { display: none; }
+#menu.searching .mn-sec { display: none; }
+/* wide screens show one group beside the rail; phones and no-JS pages scroll every group under its heading */
+@media not ((max-width: 767px) or ((max-height: 500px) and (pointer: coarse))) {
+  .wm #menu .mn-sec.off { display: none; }
+  .wm #menu .mn-sec h3 { display: none; }
+}
+
+@media (max-width: 767px), (max-height: 500px) and (pointer: coarse) {
+  #menuBtn span, #tray { display: none; }
+  #menu { inset: calc(var(--panel-h) + 2px) 4px auto; width: auto; max-width: none; height: calc(100dvh - var(--panel-h) - 10px); }
+  #menu::backdrop { background: rgba(0,0,0,.3); }
+  .mn-cats { display: none; }
+  .mn-sec .mn-items { grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); }
+  .mn-it { min-height: 48px; font-size: 15px; }
+  .mn-sec .mn-it .lbl { white-space: normal; line-height: 1.25; }
+  #mnQ { min-height: 38px; font-size: 16px; }
+  .mn-foot { flex: none; display: flex; justify-content: center; gap: 10px; padding: 6px; background: var(--side); border-top: 1px solid var(--line); }
+  .mn-foot .tr { width: 48px; height: 40px; justify-content: center; }
+  .mn-foot .tr .ico { width: 22px; height: 22px; }
+}
+
+/* Find in post */
+.fd-btn { margin-left: auto; }
+.fd-btn[aria-expanded=true] { background: var(--accent); color: #fff; }

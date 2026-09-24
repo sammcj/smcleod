@@ -1,0 +1,6 @@
+/* The Mail window (lazy/mail.js). The form's own .mail-form styles are in apps.css, for its page without JS too. */
+.app-mail .send { font-weight: 600; }
+.mail-body { flex: 1; display: flex; flex-direction: column; overflow: auto; padding: 4px 14px 14px; background: var(--content); }
+.mail-body .mail-form { flex: 1; }
+.mail-body textarea { flex: 1; resize: none; }
+.mail-body .mail-send { display: none; }

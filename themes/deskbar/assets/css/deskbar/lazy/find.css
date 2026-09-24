@@ -1,0 +1,7 @@
+/* The find bar (lazy/find.js). Its toolbar button, .fd-btn, is styled in nav.css. */
+.findbar { flex: none; display: flex; align-items: center; gap: 6px; padding: 4px 8px; background: var(--frame); border-bottom: 1px solid var(--frame-lo); }
+.findbar input { flex: 1; min-width: 0; max-width: 340px; }
+.fd-n { min-width: 64px; color: var(--muted); font-variant-numeric: tabular-nums; white-space: nowrap; }
+::highlight(deskbar-find) { background-color: rgba(255, 203, 0, .45); }
+::highlight(deskbar-find-cur) { background-color: #ff8c1a; color: #111; }
+@media (pointer: coarse) { .findbar .tb { height: 34px; min-width: 38px; justify-content: center; } }

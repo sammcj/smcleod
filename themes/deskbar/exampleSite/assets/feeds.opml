@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- The Feeds app's subscriptions, as OPML (a feed reader's export works as is). These point at local fixtures
+     under assets/feeds/ so builds and tests never touch the network; a real list uses https:// feed URLs.
+     Missing Feed and Offline Feed fail on purpose: the build warns, carries on and leaves them out of the list. A failed feed sits between two
+     working ones, which once nested every later feed's items. hugo.toml excludes Excluded Feed. -->
+<opml version="1.1">
+  <head>
+    <title>deskbar demo feeds</title>
+  </head>
+  <body>
+    <outline text="Example News" title="Example News" type="rss" xmlUrl="feeds/news.xml" htmlUrl="https://news.example.org/"/>
+    <outline text="Missing Feed" title="Missing Feed" type="rss" xmlUrl="feeds/missing.xml" htmlUrl="https://missing.example.org/"/>
+    <outline text="Blogs" title="Blogs">
+      <outline text="Example Blog" type="rss" xmlUrl="feeds/blog.xml"/>
+    </outline>
+    <outline text="Excluded Feed" type="rss" xmlUrl="feeds/excluded.xml"/>
+    <outline text="Broken" title="Broken">
+      <outline text="Offline Feed" title="Offline Feed" type="rss" xmlUrl="http://127.0.0.1:9/feed.xml" htmlUrl="https://offline.example.org/"/>
+    </outline>
+  </body>
+</opml>

@@ -1,0 +1,39 @@
+/* Design tokens. light-dark() follows the OS scheme until the visitor picks one (data-theme on <html>). */
+:root {
+  color-scheme: light dark;
+  --panel-h: 30px; --tab-h: 24px; --dock-h: 72px;
+  --ui: 'Noto Sans', system-ui, sans-serif;
+  --serif: 'Source Serif 4', Georgia, serif;
+  --mono: 'JetBrains Mono', ui-monospace, monospace;
+  --panel: linear-gradient(#484b50, #36393d); --panel-fg: #ececec; --panel-hover: rgba(255,255,255,.1);
+  --frame: light-dark(#d8d8d8, #46494d); --frame-hi: light-dark(#fff, #62666b);
+  --frame-lo: light-dark(#989898, #2c2e31); --frame-dk: light-dark(#626262, #17181a);
+  --tab: light-dark(#ffcb00, #e9b900); --tab-hi: light-dark(#fff4b8, #f7d95c); --tab-lo: light-dark(#b89200, #8d7100);
+  --tab-dim: light-dark(#f1de8c, #9c8a45); --tab-in: light-dark(#e6dcb4, #5a5340);
+  --tab-in-lo: light-dark(#b3a878, #3a3527); --tab-in-fg: light-dark(#4d4a40, #d8d4c6);
+  --content: light-dark(#fff, #26282b); --fg: light-dark(#1f1f1f, #e3e3e3); --muted: light-dark(#5a5a5a, #b8b8b8);
+  --line: light-dark(#d4d4d4, #3a3d41); --zebra: light-dark(rgba(0,0,0,.028), rgba(255,255,255,.03));
+  --accent: light-dark(#3467b8, #3b73c9); --accent-fg: #fff;
+  /* text on content backgrounds: the dark accent is too dim for 4.5:1 there, and a lighter one fails under white text */
+  --link: light-dark(#3467b8, #72a0e3); --side: light-dark(#eeeeec, #2e3033);
+  --read-bg: light-dark(#fbfaf6, #1f2123); --read-fg: light-dark(#232323, #dddcd8); --code-bg: light-dark(#f1efe7, #2a2c2f);
+  --rd-size: 18px;
+  --wall-glow: light-dark(rgba(255,203,0,.16), rgba(255,203,0,.09));
+  --wall-ring: light-dark(rgba(255,255,255,.05), rgba(255,255,255,.035));
+  --wall-1: light-dark(#45709e, #243a55); --wall-2: light-dark(#2b4b72, #172739); --wall-3: light-dark(#1b304c, #0e1826);
+}
+[data-theme=light] { color-scheme: light; }
+[data-theme=dark] { color-scheme: dark; }
+
+*, *::before, *::after { box-sizing: border-box; }
+[hidden] { display: none !important; }
+body { margin: 0; font: 13px/1.4 var(--ui); color: var(--fg); -webkit-font-smoothing: antialiased; }
+button { font: inherit; color: inherit; background: none; border: 0; padding: 0; cursor: pointer; }
+input, select { font: inherit; color: var(--fg); background: var(--content); border: 1px solid var(--frame-lo); border-radius: 3px; padding: 3px 7px; min-height: 26px; }
+input:focus, select:focus, button:focus-visible, a:focus-visible { outline: 2px solid var(--accent); outline-offset: -1px; }
+.ico { display: inline-block; width: 18px; height: 18px; flex: none; }
+.grow { flex: 1; }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
+}

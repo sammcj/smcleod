@@ -1,0 +1,78 @@
+{{- /* A folder of icons (front matter: layout: folder, window: folder). Lists the section's pages plus any page
+       paths in `include` (pages that live elsewhere), by title, each with its own `icon`.
+       `items: <data key>` adds entries from a data file, in file order and grouped under their category:
+         { name, url, icon?, description?, category?, meta?, feed?, thumb? }
+       icon is an image path (anything with a /), a sprite name, or left out for a monogram tile. Links to other
+       sites open in a new tab. meta is a list of short labels. `view: list` shows items as rows with their
+       description and meta. `view: cards` shows each item as a preview image over its name, the title of its feed's
+       newest entry and its description; `thumbSize` (default 320x240) sets the image's pixels and shape. The preview
+       comes from feed or thumb (_partials/deskbar/folder/preview.html). `itemPages: { <item name>: <page path> }`
+       gives an item a second link to a page on this site, e.g. the post about a project (names match
+       case-insensitively, as Hugo lowercases param keys). The page's own content follows the icons. */ -}}
+{{- define "main" }}
+{{- /* deskbarHidden pages (retired tools that keep their URL) stay out of the folder too */}}
+{{- $items := where .Pages "Params.deskbarHidden" "!=" true }}
+{{- range .Params.include }}{{ with site.GetPage . }}{{ $items = $items | append . }}{{ end }}{{ end }}
+{{- $data := slice }}
+{{- with .Params.items }}
+  {{- /* hugo.Data replaced site.Data in 0.156; branch so older Hugo still builds */ -}}
+  {{- if ge hugo.Version "0.156.0" }}{{ $data = index hugo.Data . }}{{ else }}{{ $data = index site.Data . }}{{ end }}
+{{- end }}
+{{- $list := eq .Params.view "list" }}
+{{- $cards := eq .Params.view "cards" }}
+{{- $size := .Params.thumbSize | default "320x240" }}
+{{- $pages := .Params.itemPages | default dict }}
+{{- $site := (urls.Parse site.BaseURL).Host }}
+<article class="rd folder-doc">
+  {{- if $data }}{{ with resources.Get "css/deskbar/folder-items.css" | minify | fingerprint }}
+  <link rel="stylesheet" href="{{ .RelPermalink }}" integrity="{{ .Data.Integrity }}">
+  {{- end }}{{ end }}
+  <header>
+    <h1>{{ .Title }}</h1>
+    {{- with .Description }}
+    <p class="lede">{{ . }}</p>
+    {{- end }}
+  </header>
+  {{- with $items }}
+  <ul class="folder">
+    {{- range sort . "LinkTitle" }}
+    <li><a href="{{ .RelPermalink }}" title="{{ .Description | default .LinkTitle }}"><svg class="ico" aria-hidden="true"><use href="#i-{{ .Params.icon | default "doc" }}"/></svg><span>{{ .LinkTitle }}</span></a></li>
+    {{- end }}
+  </ul>
+  {{- end }}
+  {{- $cats := slice }}
+  {{- range $data }}{{ $cats = $cats | append (.category | default "") }}{{ end }}
+  {{- range uniq $cats }}
+  {{- $cat := . }}
+  {{- with $cat }}
+  <h2 class="folder-h">{{ . }}</h2>
+  {{- end }}
+  <ul class="folder{{ if $list }} folder-list{{ else if $cards }} folder-cards{{ end }}">
+    {{- range $data }}{{ if eq (.category | default "") $cat }}
+    {{- $host := (urls.Parse .url).Host }}
+    {{- $icon := .icon | default "" }}
+    <li><a href="{{ .url }}"{{ if not (or $list $cards) }} title="{{ .description | default .name }}"{{ end }}{{ if and $host (ne $host $site) }} target="_blank" rel="noopener"{{ end }}>
+      {{- if $cards }}
+      {{- $p := partial "deskbar/folder/preview.html" (dict "item" . "size" $size) }}
+      {{- with $p.src }}<img class="thumb" src="{{ . }}" alt="" width="{{ $p.width }}" height="{{ $p.height }}" loading="lazy" decoding="async">
+      {{- else }}<span class="thumb mono" style="--hue: {{ mod (hash.FNV32a .name) 360 }}; --w: {{ index (split $size "x") 0 }}; --h: {{ index (split $size "x") 1 }}" aria-hidden="true">{{ substr .name 0 1 | upper }}</span>
+      {{- end }}
+      <span class="fi"><b>{{ .name }}</b>{{ with $p.latest }}<small class="fi-new">{{ . }}</small>{{ end }}{{ with .description }}<small>{{ . }}</small>{{ end }}</span>
+      {{- else if in $icon "/" }}<img class="ico" src="{{ $icon | relURL }}" alt="" width="40" height="40" loading="lazy" decoding="async">
+      {{- else if $icon }}<svg class="ico" aria-hidden="true"><use href="#i-{{ $icon }}"/></svg>
+      {{- else }}<span class="ico mono" style="--hue: {{ mod (hash.FNV32a .name) 360 }}" aria-hidden="true">{{ substr .name 0 1 | upper }}</span>
+      {{- end }}
+      {{- if $list }}<span class="fi"><b>{{ .name }}</b>{{ with .description }}<small>{{ . }}</small>{{ end }}</span>
+      {{- /* a long CamelCase name (BetterTouchTool) wraps at a capital rather than mid-word */}}
+      {{- else if not $cards }}<span>{{ .name | htmlEscape | replaceRE `([a-z])([A-Z])` "$1<wbr>$2" | safeHTML }}</span>{{ end -}}
+    </a>
+    {{- if $list }}<small class="fi-m">{{ delimit (.meta | default slice) " · " }}</small>{{ end }}
+    {{- with index $pages (lower .name) }}{{ with site.GetPage . }}<a class="fi-page" href="{{ .RelPermalink }}" title="{{ .LinkTitle }}" aria-label="Read more: {{ .LinkTitle }}">Read more</a>{{ end }}{{ end }}</li>
+    {{- end }}{{ end }}
+  </ul>
+  {{- end }}
+  {{- with .Content }}
+  <div class="rd-body">{{ . }}</div>
+  {{- end }}
+</article>
+{{- end }}

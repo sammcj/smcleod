@@ -1,0 +1,16 @@
+# Missing link targets in old content, recorded 2026-09-23 so `make check` passes in CI.
+# check-site.mjs fails only on targets not listed here, and lists entries that resolve again so they can be removed.
+# `node scripts/check-site.mjs --strict` ignores this file. One target path per line, as the check reports it.
+//img/san/dom.jpg
+/2022-10-19-apps-of-2022/
+/tech/2016/07/04/update-rcd-stonith-design.html
+/images/san/lcmcpcmk.png
+/images/san/supermicrox2.jpg
+/2016/07/update-delayed-serial-stonith-design/CAD/STONTH_CAD_DESIGN_V3
+/posts/2022-10-19-apps-of-2022/
+/2023/01/introduction-to-ai-and-large-language-models-llms/carlosfenguix.website
+/2024/05/confuddlement-download-confluence-spaces-as-markdown-summarise-with-ollama/.env.template
+/posts/2025-04-28-agentic-coding-dev-flow/
+/files/slides-Search-A-Journey-of-Delivery-on-a-Budget/smcleod.net
+/files/slides-Search-A-Journey-of-Delivery-on-a-Budget/infoxchange.org
+/files/slides-Search-A-Journey-of-Delivery-on-a-Budget/plugin/index.html

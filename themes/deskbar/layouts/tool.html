@@ -1,0 +1,18 @@
+{{- /* An embedded tool (front matter: layout: tool, window: tool, frame: /path/to/tool.html). The shell shows just
+       the frame in a tool window; without JS the page is a heading, the frame and a link to the tool itself. */ -}}
+{{- define "main" }}
+{{- $src := .Params.frame | relURL }}
+<article class="rd tool-doc">
+  <header>
+    <h1>{{ .Title }}</h1>
+    {{- with .Description }}
+    <p class="lede">{{ . }}</p>
+    {{- end }}
+  </header>
+  {{- with .Content }}
+  <div class="rd-body">{{ . }}</div>
+  {{- end }}
+  <iframe class="tool-frame" src="{{ $src }}" title="{{ .Title }}" loading="lazy"></iframe>
+  <p class="tool-open"><a href="{{ $src }}">Open {{ .Title }} on its own page</a></p>
+</article>
+{{- end }}

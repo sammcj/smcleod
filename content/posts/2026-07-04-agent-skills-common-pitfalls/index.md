@@ -1,6 +1,9 @@
 ---
 title: 'Writing and Reviewing Agent Skills - Common Pitfalls'
 date: 2026-07-04T01:00:00+10:00
+thumbnail: thumbnail.png
+images: ["thumbnail.png"]
+thumbnailIcon: thumbnail-icon.svg
 tags: ['ai', 'llm', 'agentic coding', 'agents', 'skills', 'claude', 'claude code']
 author: 'Sam McLeod'
 showToc: true

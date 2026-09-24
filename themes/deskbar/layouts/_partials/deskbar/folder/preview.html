@@ -1,0 +1,63 @@
+{{- /* A card's preview in a `view: cards` folder (layouts/folder.html): { src, width, height, latest }, from a data
+       item and a Fill size such as "320x180".
+       The image is the first that works of: the item's feed artwork (a podcast's itunes:image or <image>, an Atom
+       logo), the feed's newest entry's media:thumbnail (a YouTube channel or playlist feed), and the item's thumb.
+       latest is the newest entry's title. feed and thumb are URLs, or asset paths (assets/<path>) for images kept in
+       the site and for fixtures. The image is cropped to size as WebP, so the page never hotlinks a large original.
+       Failures only warn, and a card left without an image shows a monogram, so a dead feed never stops the build.
+       The feed is read on every build, so a scheduled rebuild keeps a channel's latest video current. */ -}}
+{{- $it := .item -}}
+{{- $srcs := slice -}}
+{{- $latest := "" -}}
+{{- with $it.feed -}}
+  {{- $got := partial "deskbar/feeds/get.html" . -}}
+  {{- $doc := $got.doc -}}
+  {{- /* itunes:image and an RSS <image> both unmarshal as "image", as namespaces are dropped */ -}}
+  {{- $art := ($doc.channel | default dict).image | default $doc.logo | default $doc.icon -}}
+  {{- range cond (reflect.IsSlice $art) $art (slice $art) -}}
+    {{- $u := . -}}
+    {{- if reflect.IsMap . }}{{ $u = index . "-href" | default .url }}{{ end -}}
+    {{- with partial "deskbar/feeds/text.html" $u | strings.TrimSpace }}{{ $srcs = $srcs | append . }}{{ end -}}
+  {{- end -}}
+  {{- /* feeds list their newest entry first as a rule, but not always, so the dates decide */ -}}
+  {{- $newest := dict -}}
+  {{- $ts := 0 -}}
+  {{- range partial "deskbar/feeds/entries.html" $doc -}}
+    {{- if not (reflect.IsMap .) }}{{ continue }}{{ end -}}
+    {{- $t := 0 -}}
+    {{- with .published | default .pubDate | default .updated | default .date -}}
+      {{- with try (time.AsTime (partial "deskbar/feeds/text.html" .)) }}{{ with .Value }}{{ $t = .Unix }}{{ end }}{{ end -}}
+    {{- end -}}
+    {{- if or (not $newest) (gt $t $ts) }}{{ $newest = . }}{{ $ts = $t }}{{ end -}}
+  {{- end -}}
+  {{- with $newest -}}
+    {{- $latest = partial "deskbar/feeds/text.html" .title | plainify | htmlUnescape | replaceRE `\s+` " " | strings.TrimSpace -}}
+    {{- $th := (.group | default dict).thumbnail | default .thumbnail -}}
+    {{- if reflect.IsSlice $th }}{{ $th = index $th 0 }}{{ end -}}
+    {{- if reflect.IsMap $th }}{{ with index $th "-url" }}{{ $srcs = $srcs | append . }}{{ end }}{{ end -}}
+  {{- end -}}
+  {{- with $got.err }}{{ warnf "Folder %q: feed %s failed: %s" $it.name $it.feed . }}{{ end -}}
+{{- end -}}
+{{- with $it.thumb }}{{ $srcs = $srcs | append . }}{{ end -}}
+{{- $out := dict "latest" $latest -}}
+{{- range $srcs -}}
+  {{- $res := "" -}}
+  {{- $err := "" -}}
+  {{- if findRE `^https?://` . 1 -}}
+    {{- $got := partial "deskbar/remote.html" . -}}
+    {{- $res = $got.res -}}
+    {{- $err = $got.err -}}
+  {{- else -}}
+    {{- $res = resources.Get . -}}
+  {{- end -}}
+  {{- with $res -}}
+    {{- with try (.Fill (printf "%s webp Center" $.size)) -}}
+      {{- with .Err }}{{ $err = printf "%v" . }}{{ else with .Value }}{{ $out = merge $out (dict "src" .RelPermalink "width" .Width "height" .Height) }}{{ end -}}
+    {{- end -}}
+  {{- else -}}
+    {{- $err = $err | default "no such asset" -}}
+  {{- end -}}
+  {{- if $out.src }}{{ break }}{{ end -}}
+  {{- warnf "Folder %q: no preview image from %s: %s" $it.name . $err -}}
+{{- end -}}
+{{- return $out -}}

@@ -1,0 +1,14 @@
+{{- define "main" }}
+<article class="rd">
+  <header>
+    <h1>{{ .Title }}</h1>
+    {{- with .Description }}
+    <p class="lede">{{ . }}</p>
+    {{- end }}
+  </header>
+  {{- with .Content }}
+  <div class="rd-body">{{ . }}</div>
+  {{- end }}
+  {{- partial "deskbar/post-list.html" .Pages.ByDate.Reverse }}
+</article>
+{{- end }}

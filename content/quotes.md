@@ -13,7 +13,6 @@ readingTime: true
 toc: true
 aliases:
   - /quotes-musings/
-  - /{{:section}}/{{ dateFormat "2006" .Date }}/{{ dateFormat "01" .Date }}/{{ replace .Name "-" " " | title }}
 ---
 
 A collection of quotes and musings
@@ -130,8 +129,8 @@ A collection of quotes and musings
 
 > "Some may never live, but the crazy never die."
 
-> "We are all alone, born alone, die alone, and—in spite of True Romance magazines—we shall all someday look back on our lives and see that, in spite of our company,
-we were alone the whole way. I do not say lonely—at least, not all the time—but essentially, and finally, alone. This is what makes your self-respect so important,
+> "We are all alone, born alone, die alone, and-in spite of True Romance magazines-we shall all someday look back on our lives and see that, in spite of our company,
+we were alone the whole way. I do not say lonely-at least, not all the time-but essentially, and finally, alone. This is what makes your self-respect so important,
 and I don't see how you can respect yourself if you must look in the hearts and minds of others for your happiness."
 
 {{< typeit group=paragraph >}}
@@ -196,7 +195,7 @@ and I don't see how you can respect yourself if you must look in the hearts and 
 
 ---
 
-> "Any intelligent fool can make things bigger, more complex, and more violent. It takes a touch of genius — and a lot of courage to move in the opposite direction."
+> "Any intelligent fool can make things bigger, more complex, and more violent. It takes a touch of genius - and a lot of courage to move in the opposite direction."
 
 {{< typeit group=paragraph >}}
 \- E.F. Schumacher
@@ -212,7 +211,7 @@ and I don't see how you can respect yourself if you must look in the hearts and 
 
 ---
 
-> "To do a great and important work, two things are necessary — a definite plan, and not quite enough time."
+> "To do a great and important work, two things are necessary - a definite plan, and not quite enough time."
 
 {{< typeit group=paragraph >}}
 \- Leonard Bernstein

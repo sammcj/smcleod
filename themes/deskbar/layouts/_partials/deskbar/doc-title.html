@@ -1,0 +1,5 @@
+{{- /* A page's document title. Shared by head.html and the post index (docTitles), so a place Tracker opens without
+       fetching its page gets the same title a full load would. */ -}}
+{{- $t := site.Title -}}
+{{- if not .IsHome }}{{ $t = printf "%s - %s" .Title site.Title }}{{ end -}}
+{{- return $t -}}

@@ -1,0 +1,17 @@
+/* Related posts ticker (D27), lazy/ticker.js: the desktop reader's slim bar of related posts, which hides the inline block */
+.ticker-mode .rd-related { display: none; }
+.ticker { flex: none; display: flex; align-items: center; gap: 10px; height: 0; overflow: hidden; padding: 0 6px 0 8px; background: var(--frame); border-top: 1px solid var(--frame-lo); font: 12.5px/1 var(--ui); transition: height .25s ease; }
+.ticker.in { height: 32px; }
+.ticker-h { flex: none; padding: 3px 7px; border-radius: 3px; background: var(--tab); color: #3a3000; font-size: 10.5px; font-weight: 700; text-transform: uppercase; letter-spacing: .06em; }
+.ticker-track { flex: 1; min-width: 0; overflow-x: auto; scrollbar-width: none; }
+.ticker ul { display: flex; width: max-content; margin: 0; padding: 0; list-style: none; white-space: nowrap; }
+.ticker li + li::before { content: '/'; margin: 0 12px; color: var(--muted); }
+.ticker a { color: var(--fg); text-decoration: none; }
+.ticker a:hover, .ticker a:focus-visible { color: var(--link); text-decoration: underline; }
+.ticker-track.roll { overflow: hidden; mask-image: linear-gradient(90deg, #000 92%, transparent); }
+.ticker-track.roll ul { animation: ticker-roll 16s ease-in-out 1.5s infinite alternate; }
+.ticker-track.roll:is(:hover, :focus-within) ul { animation-play-state: paused; }
+@keyframes ticker-roll { 10% { transform: none; } 90%, 100% { transform: translateX(var(--dx)); } }
+.ticker-x { flex: none; width: 24px; height: 24px; border-radius: 3px; font-size: 17px; line-height: 1; color: var(--muted); }
+.ticker-x:hover { color: var(--fg); background: var(--frame-hi); }
+@media (prefers-reduced-motion: reduce) { .ticker-track.roll { overflow-x: auto; mask-image: none; } }

@@ -1,4 +1,5 @@
 ---
+url: "/2024/07/understanding-ai/llm-quantisation-through-interactive-visualisations/"  # keeps the live URL: Hugo 0.166 no longer keeps "/" from the title in :title slugs
 title: "Understanding AI/LLM Quantisation Through Interactive Visualisations"
 date: 2024-07-17T01:00:10+00:00
 # weight: 1

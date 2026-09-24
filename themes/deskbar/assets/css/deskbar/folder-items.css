@@ -1,0 +1,34 @@
+/* Folder items from a data file (layouts/folder.html `items`). Linked from the folder page itself, so only
+   folders that use data items load it and the shell budget stays as is. */
+.folder .ico { flex: none; }
+/* data folders hold dozens of icons, so pack them about a quarter tighter each way than page folders. Scoped by
+   this stylesheet's own link, as it stays in the document once loaded and page folders keep their spacing. */
+.folder-doc:has(> link) .folder:not(.folder-list, .folder-cards) { grid-template-columns: repeat(auto-fill, minmax(84px, 1fr)); gap: 2px 4px; }
+.folder-doc:has(> link) .folder:not(.folder-list, .folder-cards) a { gap: 4px; padding: 5px 2px; overflow-wrap: anywhere; }
+/* app icons come in every shape; one corner radius makes square logos sit with rounded app icons */
+.folder img.ico, .folder .mono { border-radius: 9px; }
+.folder .mono { display: grid; place-items: center; background: linear-gradient(hsl(var(--hue) 45% 44%), hsl(var(--hue) 45% 32%)); color: #fff; font: 600 19px var(--ui); }
+.rd .folder-h { margin: 16px 6px 4px; padding: 0; border: 0; font: 600 11.5px var(--ui); letter-spacing: .05em; text-transform: uppercase; color: var(--muted); }
+.folder-body .folder-h:first-of-type { margin-top: 4px; }
+
+/* view: list, rows with a description, meta labels and an optional page link, in columns shared by every row */
+.folder-list { grid-template-columns: 1fr auto auto; gap: 0; }
+.folder-list li { display: grid; grid-column: 1 / -1; grid-template-columns: subgrid; align-items: center; border-radius: 4px; }
+.folder-list li:nth-child(even) { background: var(--zebra); }
+.folder-list a { flex-direction: row; gap: 10px; padding: 8px; text-align: left; }
+.fi { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 2px; }
+.fi small, .fi-m { color: var(--muted); font-size: 12px; }
+.fi-m { padding: 0 8px; white-space: nowrap; }
+.folder .fi-page { grid-column: 3; padding: 8px 10px; color: var(--link); text-decoration: underline; white-space: nowrap; }
+/* view: cards, a preview over each name; the image's width and height attributes (or the monogram's --w and --h,
+   from thumbSize) give the shape, so the grid doesn't jump as lazy images arrive */
+.folder-cards { grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 6px; align-items: start; }
+.folder-cards a { align-items: stretch; padding: 6px; text-align: left; }
+.folder-cards .thumb { display: block; width: 100%; height: auto; border-radius: 3px; box-shadow: 0 0 0 1px var(--line); background: var(--zebra); }
+.folder-cards .mono { aspect-ratio: var(--w) / var(--h); border-radius: 3px; font-size: 32px; }
+.folder-cards .fi small { display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; overflow: hidden; }
+@container (max-width: 480px) {
+  .folder-list { grid-template-columns: 1fr auto; }
+  .fi-m { grid-row: 2; grid-column: 1; padding: 0 8px 8px 58px; }
+  .folder .fi-page { grid-column: 2; grid-row: 1; }
+}

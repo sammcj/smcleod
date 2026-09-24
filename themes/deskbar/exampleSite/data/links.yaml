@@ -1,0 +1,19 @@
+# Items for the Links folder (content/links.md): { name, url, icon?, description?, category?, meta? }
+- name: Hugo
+  url: https://gohugo.io
+  icon: /img/sun.svg
+  description: The static site generator this theme is for
+  category: Tools
+- name: Haiku
+  url: https://www.haiku-os.org
+  icon: globe
+  description: The desktop that inspired the window tabs
+  category: Tools
+- name: MDN Web Docs
+  url: https://developer.mozilla.org
+  description: Reference for the platform features the shell uses
+  category: Reading
+- name: About this site
+  url: /about/
+  icon: person
+  category: Reading

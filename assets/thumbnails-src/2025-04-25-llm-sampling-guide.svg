@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" data-ground="#8d8170 #544a3c">
+<!-- a mixing desk of sliders and knobs: sampling parameters. Rendered by scripts/render-thumbs.mjs. -->
+<defs><style>.o{stroke-width:1.1}.t{stroke-width:.66}.o3{stroke-width:5.2}.o5{stroke-width:7.2}</style>
+<linearGradient id="mt" x2="1" y2="1"><stop stop-color="#f1f3f4"/><stop offset="1" stop-color="#aab2b8"/></linearGradient><linearGradient id="ca" x2="0" y2="1"><stop stop-color="#fbc94e"/><stop offset="1" stop-color="#d48b0a"/></linearGradient><linearGradient id="kb" x2="1" y2="0"><stop stop-color="#3f474d"/><stop offset="1" stop-color="#101315"/></linearGradient></defs>
+<g stroke="#2a3136" class="o" stroke-linejoin="round">
+<path d="M6 52L18 22L58 22L46 52Z" fill="url(#mt)"/>
+<path d="M46 52L58 22L58 27L46 57Z" fill="#666e74"/>
+<rect x="6" y="52" width="40" height="5" fill="#8d969c"/></g>
+<path d="M14.6 48L23.4 26M23.6 48L32.4 26M32.6 48L41.4 26" stroke="#2a3136" stroke-width="2.4" stroke-linecap="round"/>
+<g stroke="#4f3203" class="o" stroke-linejoin="round">
+<path d="M16.6 31L18.4 29L26.4 29L24.6 31Z" fill="#ffe8a0"/>
+<path d="M24.6 31L26.4 29L26.4 32.6L24.6 34.6Z" fill="#a86a06"/>
+<rect x="16.6" y="31" width="8" height="3.6" fill="url(#ca)"/></g><g stroke="#0b0d0e" class="o" stroke-linejoin="round">
+<path d="M21.6 41L23.4 39L31.4 39L29.6 41Z" fill="#5b646b"/>
+<path d="M29.6 41L31.4 39L31.4 42.6L29.6 44.6Z" fill="#15191c"/>
+<rect x="21.6" y="41" width="8" height="3.6" fill="#262c30"/></g><g stroke="#0b0d0e" class="o" stroke-linejoin="round">
+<path d="M32.6 36L34.4 34L42.4 34L40.6 36Z" fill="#5b646b"/>
+<path d="M40.6 36L42.4 34L42.4 37.6L40.6 39.6Z" fill="#15191c"/>
+<rect x="32.6" y="36" width="8" height="3.6" fill="#262c30"/></g><g stroke="#0b0d0e" class="o"><path d="M44 26.5V31A4.4 2.1 0 0 0 52.8 31V26.5Z" fill="url(#kb)"/><ellipse cx="48.4" cy="26.5" rx="4.4" ry="2.1" fill="#4a5359"/></g><path d="M48.4 26.5l-2.6 -1.2" stroke="#f4f6f7" stroke-width="1.2" stroke-linecap="round"/><g stroke="#0b0d0e" class="o"><path d="M39.2 38.5V43A4.4 2.1 0 0 0 48 43V38.5Z" fill="url(#kb)"/><ellipse cx="43.6" cy="38.5" rx="4.4" ry="2.1" fill="#4a5359"/></g><path d="M43.6 38.5l-2.6 -1.2" stroke="#f4f6f7" stroke-width="1.2" stroke-linecap="round"/>
+</svg>

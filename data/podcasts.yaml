@@ -1,0 +1,20 @@
+# Podcasts in the Podcasts folder (/podcasts/), in display order. Each card shows the show's artwork (itunes:image)
+# and latest episode from feed, the show's RSS, read at build time.
+- name: The Skeptics Guide To The Universe (SGU)
+  url: https://www.theskepticsguide.org/
+  feed: https://feed.theskepticsguide.org/feed/rss.aspx?feed=sgu
+- name: No Such Thing As A Fish
+  url: https://www.nosuchthingasafish.com/
+  feed: https://audioboom.com/channels/2399216.rss
+- name: You Are Not So Smart
+  url: https://youarenotsosmart.com/
+  feed: https://feeds.simplecast.com/N5eKDxJI
+- name: Off Menu
+  url: https://www.offmenupodcast.co.uk
+  feed: https://feeds.acast.com/public/shows/b19ac1f5-6adf-4c8b-aa1a-2af2160f99e4
+- name: RHLSTP
+  url: https://www.rhlstp.co.uk/
+  feed: https://feeds.acast.com/public/shows/aacb15fc-f2a9-43e6-9d0f-521463063cef
+- name: The Adam Buxton Podcast
+  url: https://www.adam-buxton.co.uk/podcasts
+  feed: https://feeds.acast.com/public/shows/18dcd5db-f898-42c6-ab31-3a1853c1a645

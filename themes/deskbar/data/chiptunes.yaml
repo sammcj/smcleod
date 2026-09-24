@@ -1,0 +1,19 @@
+# Playlist for the Chiptunes player (layout: chiptunes, window: chiptunes). A site's own data/chiptunes.yaml
+# replaces this one. Each track has a title, an optional credit, and one of:
+# - song: song data the player synthesises live (format in assets/js/deskbar/lazy/chiptunes.js). An assets/ path
+#   is published with the page; anything else is used as a URL.
+# - url: a rendered audio file hosted outside the site's git history, such as a GitHub Release asset. Hosts that
+#   send CORS headers also drive the visualiser.
+tracks:
+  - title: Pixel Picnic
+    credit: Composed by Claude (AI)
+    song: chiptunes/pixel-picnic.json
+  - title: Cat Nap Cartridge
+    credit: Composed by Claude (AI)
+    song: chiptunes/cat-nap-cartridge.json
+  - title: Carburettor Cruise
+    credit: Composed by Claude (AI)
+    song: chiptunes/carburettor-cruise.json
+  - title: Flinders Street Shuffle
+    credit: Composed by Claude (AI)
+    song: chiptunes/flinders-street-shuffle.json

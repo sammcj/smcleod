@@ -1,3 +1,5 @@
+{{- /* Also loads the citation styles for the page's cite-inline references, which always come with one */ -}}
+{{- with resources.Get "css/citations.css" | minify | fingerprint }}<link rel="stylesheet" href="{{ .RelPermalink }}">{{ end }}
 <div class="bibliography">
   <h2 id="references">References</h2>
   {{ .Inner }}

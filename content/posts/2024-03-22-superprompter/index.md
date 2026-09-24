@@ -1,4 +1,5 @@
 ---
+url: "/2024/03/superprompter-supercharge-your-text-prompts-for-ai/llm-image-generation/"  # keeps the live URL: Hugo 0.166 no longer keeps "/" from the title in :title slugs
 title: "SuperPrompter - Supercharge your text prompts for AI/LLM image generation"
 author: "Sam McLeod"
 description:

@@ -1,0 +1,18 @@
+{{- /* On-demand bundles (assets/js/deskbar/loader.js). Each js/deskbar/lazy/<name>.js, and css/deskbar/lazy/<name>.css
+       if there is one, builds into its own fingerprinted file. A whole look, css/deskbar/looks/<name>.css, is
+       look-<name> with a stylesheet only. Returns { <name>: { js, css } } for head.html to list. */ -}}
+{{- $out := dict -}}
+{{- range resources.Match "js/deskbar/lazy/*.js" -}}
+  {{- $name := path.Base .Name | strings.TrimSuffix ".js" -}}
+  {{- $js := . | js.Build (dict "format" "esm" "minify" true "target" "es2022" "targetPath" (printf "js/deskbar-lazy/%s.js" $name)) | fingerprint -}}
+  {{- $e := dict "js" $js.RelPermalink -}}
+  {{- with resources.Get (printf "css/deskbar/lazy/%s.css" $name) -}}
+    {{- $e = merge $e (dict "css" (. | minify | fingerprint).RelPermalink) -}}
+  {{- end -}}
+  {{- $out = merge $out (dict $name $e) -}}
+{{- end -}}
+{{- range resources.Match "css/deskbar/looks/*.css" -}}
+  {{- $css := (. | minify | fingerprint).RelPermalink -}}
+  {{- $out = merge $out (dict (printf "look-%s" (path.Base .Name | strings.TrimSuffix ".css")) (dict "css" $css)) -}}
+{{- end -}}
+{{- return $out -}}

@@ -1,26 +1,100 @@
-.vram-calculator {
-  @apply max-w-3xl mx-auto bg-white rounded-lg shadow-lg p-6 my-8;
+/* vRAM estimator (layouts/shortcodes/vram-calculator.html). Everything is scoped under .vram-est so it can sit in a
+   tool window or a post without touching the shell; colours come from the deskbar theme tokens. */
+.vram-est {
+  --ve-m-fp16: light-dark(#2f63b5, #4f86dd); --ve-k-fp16: light-dark(#8fb3ea, #2c4a78);
+  --ve-m-q8_0: light-dark(#2f8a4c, #45a866); --ve-k-q8_0: light-dark(#94d1a7, #28573a);
+  --ve-m-q4_0: light-dark(#7a4bb8, #9a70d6); --ve-k-q4_0: light-dark(#c6aee8, #4b3670);
+  --ve-ok: light-dark(#1f6b3a, #7fd29b); --ve-ok-bg: light-dark(#eaf6ee, #1d3325);
+  --ve-err: light-dark(#b3261e, #ff8a80);
+  --ve-ctl-h: 38px;
+  container-type: inline-size;
+  display: grid; gap: 18px;
+  max-width: 820px; margin: 0 auto 1.5em;
+  font: 14px/1.45 var(--ui); color: var(--fg);
+}
+@media (pointer: coarse) { .vram-est { --ve-ctl-h: 44px; } }
+.vram-est * { box-sizing: border-box; }
+.vram-est [hidden] { display: none !important; }
+.vram-est p { margin: 0; }
+.vram-est .ve-nojs { padding: 12px 14px; border: 1px solid var(--line); border-radius: 4px; background: var(--side); color: var(--muted); }
+
+/* Form controls */
+.vram-est .ve-field { display: grid; gap: 6px; align-content: start; min-width: 0; }
+.vram-est .ve-field > span:first-child { font-weight: 600; font-size: 13px; color: var(--fg); }
+.vram-est :is(select, input[type=url]) {
+  width: 100%; min-width: 0; min-height: var(--ve-ctl-h); padding: 0 10px; margin: 0;
+  font: 15px var(--ui); color: var(--fg); background: var(--content);
+  border: 1px solid var(--frame-lo); border-radius: 4px;
+}
+.vram-est input[type=file] { font: 13px var(--ui); color: var(--muted); max-width: 100%; }
+.vram-est input[type=file]::file-selector-button {
+  min-height: var(--ve-ctl-h); margin-right: 10px; padding: 0 14px; font: 600 13px var(--ui);
+  color: var(--fg); background: var(--side); border: 1px solid var(--frame-lo); border-radius: 4px; cursor: pointer;
+}
+@media (pointer: coarse) { .vram-est :is(select, input[type=url]) { font-size: 16px; } }
+.vram-est :is(select, input, button):focus-visible { outline: 2px solid var(--accent); outline-offset: 1px; }
+.vram-est .ve-inline { display: flex; gap: 8px; }
+.vram-est .ve-range { display: flex; align-items: center; gap: 12px; }
+.vram-est input[type=range] { flex: 1; min-width: 0; height: var(--ve-ctl-h); margin: 0; accent-color: var(--accent); cursor: pointer; }
+.vram-est output { min-width: 4.5ch; text-align: right; font-variant-numeric: tabular-nums; font-weight: 600; }
+
+.vram-est .ve-btn {
+  flex: none; min-height: var(--ve-ctl-h); min-width: 64px; padding: 0 16px; border: 0; border-radius: 4px;
+  font: 600 14px var(--ui); color: var(--accent-fg); background: var(--accent); cursor: pointer;
+}
+.vram-est .ve-btn:hover { filter: brightness(1.08); }
+.vram-est .ve-btn:disabled { background: var(--code-bg); color: var(--muted); box-shadow: inset 0 0 0 1px var(--line); cursor: default; filter: none; }
+.vram-est .ve-btn-quiet { color: var(--ve-ok); background: none; border: 1px solid currentColor; min-width: 0; }
+
+/* Switches: a native checkbox restyled, so keyboard and forms behave as normal */
+.vram-est .ve-switch { display: inline-flex; align-items: center; gap: 10px; min-height: var(--ve-ctl-h); font-weight: 600; cursor: pointer; user-select: none; }
+.vram-est .ve-switch input {
+  appearance: none; position: relative; flex: none; width: 40px; height: 22px; margin: 0; padding: 0; min-height: 0;
+  border: 0; border-radius: 11px; background: var(--frame-lo); cursor: inherit; transition: background-color .15s;
+}
+.vram-est .ve-switch input::after {
+  content: ''; position: absolute; top: 3px; left: 3px; width: 16px; height: 16px; border-radius: 50%;
+  background: #fff; box-shadow: 0 1px 2px rgba(0,0,0,.3); transition: transform .15s;
+}
+.vram-est .ve-switch input:checked { background: var(--accent); }
+.vram-est .ve-switch input:checked::after { transform: translateX(18px); }
+.vram-est .ve-switch:has(input:disabled) { cursor: default; color: var(--muted); }
+.vram-est .ve-head { display: flex; justify-content: flex-end; }
+.vram-est .ve-hint { color: var(--muted); font-size: 12px; }
+
+.vram-est .ve-controls { display: grid; grid-template-columns: 1fr; gap: 16px; }
+.vram-est .ve-mtp { display: flex; flex-wrap: wrap; align-items: center; gap: 4px 12px; }
+@container (min-width: 560px) {
+  .vram-est .ve-controls { grid-template-columns: 1fr 1fr; gap: 18px 24px; }
+  .vram-est .ve-mtp { align-self: end; }
 }
 
-.vram-calculator select {
-  @apply block w-full p-2 border rounded-md bg-white;
-}
+/* GGUF loader */
+.vram-est .ve-loader { display: grid; gap: 12px; padding: 14px; border: 1px solid var(--line); border-radius: 6px; background: var(--side); }
+.vram-est .ve-loader-inputs { display: grid; gap: 14px; }
+.vram-est .ve-card { display: flex; align-items: flex-start; gap: 12px; padding: 10px 12px; border: 1px solid color-mix(in srgb, var(--ve-ok) 35%, transparent); border-radius: 4px; background: var(--ve-ok-bg); color: var(--ve-ok); }
+.vram-est .ve-card > div { flex: 1; min-width: 0; display: grid; gap: 2px; overflow-wrap: anywhere; }
+.vram-est .ve-card small { font-size: 12px; }
+.vram-est .ve-status { color: var(--accent); }
+.vram-est .ve-error { color: var(--ve-err); font-weight: 600; }
 
-.vram-calculator label {
-  @apply block text-sm font-medium text-gray-700 mb-2;
-}
-
-/* Dark mode support */
-@media (prefers-color-scheme: dark) {
-  .vram-calculator {
-    @apply bg-gray-800 text-white;
-  }
-
-  .vram-calculator select {
-    @apply bg-gray-700 border-gray-600 text-white;
-  }
-
-  .vram-calculator label {
-    @apply text-gray-300;
-  }
-}
+/* Results */
+.vram-est .ve-results { display: grid; gap: 18px; padding-top: 4px; }
+.vram-est .ve-row { display: grid; gap: 6px; }
+.vram-est .ve-row-head { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; }
+.vram-est .ve-name { font-weight: 600; }
+.vram-est .ve-name small { font-weight: 400; color: var(--muted); }
+.vram-est .ve-row-head strong { font-size: 17px; font-variant-numeric: tabular-nums; white-space: nowrap; }
+.vram-est .ve-bar { display: flex; height: 22px; overflow: hidden; border-radius: 4px; background: var(--code-bg); box-shadow: inset 0 0 0 1px var(--line); }
+.vram-est .ve-seg { height: 100%; transition: width .3s; }
+.vram-est .ve-nums { display: flex; flex-wrap: wrap; gap: 2px 18px; font-size: 13px; color: var(--muted); font-variant-numeric: tabular-nums; }
+.vram-est .ve-key { display: inline-flex; align-items: center; gap: 6px; }
+.vram-est .ve-key::before { content: ''; width: 10px; height: 10px; border-radius: 2px; background: var(--ve-sw); }
+.vram-est .ve-fp16 { --ve-m: var(--ve-m-fp16); --ve-k: var(--ve-k-fp16); }
+.vram-est .ve-q8_0 { --ve-m: var(--ve-m-q8_0); --ve-k: var(--ve-k-q8_0); }
+.vram-est .ve-q4_0 { --ve-m: var(--ve-m-q4_0); --ve-k: var(--ve-k-q4_0); }
+.vram-est .ve-seg-m { background: var(--ve-m); }
+.vram-est .ve-seg-k { background: var(--ve-k); }
+.vram-est .ve-key-m { --ve-sw: var(--ve-m); }
+.vram-est .ve-key-k { --ve-sw: var(--ve-k); }
+.vram-est .ve-note { font-size: 12.5px; line-height: 1.5; color: var(--muted); }

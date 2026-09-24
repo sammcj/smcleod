@@ -1,6 +1,9 @@
 ---
 title: "Vibe Coding vs Agentic Coding"
 date: 2025-06-06T01:10:00+10:00
+thumbnail: thumbnail.png
+images: ["thumbnail.png"]
+thumbnailIcon: thumbnail-icon.svg
 tags: ["ai", "llm", "tech", "ollama", "coding", "cline", "agentic", "tutorials", "llama", "agentic coding", "vibe coding"]
 author: "Sam McLeod"
 showToc: true

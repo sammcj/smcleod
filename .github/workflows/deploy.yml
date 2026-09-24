@@ -3,18 +3,23 @@ name: Deploy Hugo site to Pages
 on:
   push:
     branches: ["main"]
+  pull_request:
   workflow_dispatch:
+  # Rebuilds every six hours so the Feeds app (/feeds/) picks up new posts, and the YouTube and Podcasts folders
+  # their latest videos and episodes; Hugo fetches the feeds at build time.
+  # Scheduled runs use the default branch (main), so they build, test and deploy exactly as a push to main does.
+  schedule:
+    - cron: "23 */6 * * *"
 
-# Sets permissions of the GITHUB_TOKEN to allow deployment to GitHub Pages
+# Read-only token by default; only the deploy jobs get the Pages and OIDC scopes.
 permissions:
-  contents: write
-  pages: write
-  id-token: write
+  contents: read
 
-# Allow one concurrent deployment
+# One run per ref, so PR runs never cancel a main deploy. A newer push to a PR replaces its older run, while main
+# runs queue so a deploy isn't cut off halfway.
 concurrency:
-  group: "pages"
-  cancel-in-progress: true
+  group: pages-${{ github.ref }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
 
 defaults:
   run:
@@ -32,28 +37,41 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
         with:
           submodules: recursive
-
-      - name: Setup Pages
-        id: pages
-        uses: actions/configure-pages@983d7736d9b0ae728b81ab479565c72886d7745b # v5
+          persist-credentials: false
 
       - name: Setup Hugo
-        uses: peaceiris/actions-hugo@v3
+        uses: peaceiris/actions-hugo@2752ce1d29631191ea3f27c23495fa06139a5b78 # v3.2.1
         with:
-          hugo-version: "0.152.2"
+          hugo-version: "0.166.0"
           extended: true
 
+      # hugo-admonitions compiles its SCSS with toCSS (transpiler dartsass); without Dart Sass the build fails.
       - name: Install Dart Sass
         run: |
           curl -LJO https://github.com/sass/dart-sass/releases/download/1.94.2/dart-sass-1.94.2-linux-x64.tar.gz
           tar -xf dart-sass-1.94.2-linux-x64.tar.gz
-          echo "$GITHUB_WORKSPACE/dart-sass" >> $GITHUB_PATH
+          echo "$GITHUB_WORKSPACE/dart-sass" >> "$GITHUB_PATH"
+
+      - name: Setup Node
+        uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
+        with:
+          node-version: lts/*
+
+      - name: Unit tests
+        run: make test
+
+      # The deskbar theme (themes/deskbar): its unit tests and the JS/CSS size budget, which builds its example site
+      - name: Theme unit tests and size budget
+        working-directory: themes/deskbar
+        run: |
+          npm ci
+          make test
 
       - name: Setup Python and install uv
-        uses: actions/setup-python@f677139bbe7f9c59b41e40162b753c062f5d49a3 # v5
+        uses: actions/setup-python@f677139bbe7f9c59b41e40162b753c062f5d49a3 # v5.2.0
         with:
           python-version: '3.11'
 
@@ -74,6 +92,13 @@ jobs:
           uvx --from hugo2llmtxt hugo2llmtxt hugo_list.csv static/llms.txt false
           uvx --from hugo2llmtxt hugo2llmtxt hugo_list.csv static/llms-full.txt true
 
+      # The Projects folder lists pinned repos. The pinned-items API needs auth, so it's fetched here rather than
+      # in the browser. A failed fetch keeps the committed data/pinned.json instead of failing the build.
+      - name: Fetch pinned GitHub repos
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: bash scripts/fetch-pinned.sh || echo "::warning::Pinned repos fetch failed, building with the committed data/pinned.json"
+
       - name: Build
         run: |
           hugo \
@@ -83,23 +108,51 @@ jobs:
           HUGO_ENVIRONMENT: ${{ matrix.environment }}
           HUGO_ENV: ${{ matrix.environment }}
 
+      - name: Check built site
+        run: make check
+
+      # Browser and accessibility tests: the theme's Playwright specs, first on its example site, whose fixtures
+      # cover cases no real page has, then on this build
+      - name: Browser tests on the theme's example site
+        working-directory: themes/deskbar
+        run: |
+          npx playwright install --with-deps chromium
+          make e2e
+
+      - name: Browser tests on this site
+        working-directory: themes/deskbar
+        run: make e2e SITE_DIR="$GITHUB_WORKSPACE/public"
+        env:
+          # Real pages for the specs that otherwise use example-site fixtures. POST_PATH, MD_PAGE and GALLERY_POST
+          # stay unset: those specs assert on example content (heading ids, a footnote count, a Go snippet, a
+          # two-photo gallery) that no real page has, so they skip.
+          ALIAS_PATH: /tech/2015/04/15/talk-high-perf-sds-ictalk/
+          MERMAID_PAGE: /2025/04/getting-started-with-agentic-systems-developer-learning-paths/
+          PHOTOS_POST: /2020/11/ferrari-f12-berlinetta/
+          SCRIPT_PAGE: /admeds/
+          SCRIPT_SELECTOR: .admeds-legend-title
+
       - name: Prepare tag
         id: prepare_tag
         if: startsWith(github.ref, 'refs/tags/')
         run: |
           TAG_NAME="${GITHUB_REF##refs/tags/}"
-          echo "tag_name=${TAG_NAME}" >> $GITHUB_OUTPUT
-          echo "deploy_tag_name=deploy-${TAG_NAME}" >> $GITHUB_OUTPUT
+          echo "tag_name=${TAG_NAME}" >> "$GITHUB_OUTPUT"
+          echo "deploy_tag_name=deploy-${TAG_NAME}" >> "$GITHUB_OUTPUT"
 
       - name: Upload artifact
-        uses: actions/upload-pages-artifact@56afc609e74202658d3ffba0e8f6dda462b719fa # v3
+        if: github.event_name != 'pull_request'
+        uses: actions/upload-pages-artifact@56afc609e74202658d3ffba0e8f6dda462b719fa # v3.0.1
         with:
           path: ./public
 
-  # Deploy job
+  # Deploy job. Pushes to main and manual runs on main deploy; pull requests only build and test.
   deploy:
     needs: build
-    if: github.ref == 'refs/heads/main' && github.repository == 'sammcj/smcleod'
+    if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main' && github.repository == 'sammcj/smcleod'
+    permissions:
+      pages: write
+      id-token: write
     runs-on: ubuntu-latest
     environment:
       name: github-pages
@@ -107,12 +160,15 @@ jobs:
     steps:
       - name: Deploy to GitHub Pages
         id: deployment
-        uses: actions/deploy-pages@d6db90164ac5ed86f2b6aed7e0febac5b3c0c03e # v4
+        uses: actions/deploy-pages@d6db90164ac5ed86f2b6aed7e0febac5b3c0c03e # v4.0.5
 
   # Deploy job
   deploy-staging:
     needs: build
-    if: github.ref == 'refs/heads/main' && github.repository == 'sammcj/smcleod-hugo'
+    if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main' && github.repository == 'sammcj/smcleod-hugo'
+    permissions:
+      pages: write
+      id-token: write
     runs-on: ubuntu-latest
     environment:
       name: github-pages
@@ -120,4 +176,4 @@ jobs:
     steps:
       - name: Deploy to GitHub Pages
         id: deployment
-        uses: actions/deploy-pages@d6db90164ac5ed86f2b6aed7e0febac5b3c0c03e # v4
+        uses: actions/deploy-pages@d6db90164ac5ed86f2b6aed7e0febac5b3c0c03e # v4.0.5

@@ -1,0 +1,38 @@
+{{- /* The Feeds reader (front matter: layout: feeds, window: feeds). Lists the latest items from the feeds in
+       assets/feeds.opml (_partials/deskbar/feeds.html) for lazy/feeds.js to read. Without JS the page is the list. */ -}}
+{{- define "main" }}
+{{- $f := partialCached "deskbar/feeds.html" . "deskbar-feeds" }}
+<article class="rd feeds-doc">
+  <header>
+    <h1>{{ .Title }}</h1>
+    {{- with .Description }}
+    <p class="lede">{{ . }}</p>
+    {{- end }}
+  </header>
+  {{- with .Content }}
+  <div class="rd-body">{{ . }}</div>
+  {{- end }}
+  <div class="rd-body">
+  <h2>Latest</h2>
+  <ol class="fd-items" data-updated="{{ now.UTC.Format "2006-01-02T15:04:05Z" }}">
+    {{- range $f.items }}
+    <li data-feed="{{ .feed }}" data-date="{{ .date.UTC.Format "2006-01-02T15:04:05Z" }}">
+      <h3><a href="{{ .link }}">{{ .title }}</a></h3>
+      <p><small>{{ .feed }}, <time datetime="{{ .date.UTC.Format "2006-01-02T15:04:05Z" }}">{{ .date.Format "2 Jan 2006" }}</time></small></p>
+      {{- with .summary }}
+      <p class="fd-sum">{{ . }}</p>
+      {{- end }}
+    </li>
+    {{- else }}
+    <li>No items. Feeds are fetched when the site is built.</li>
+    {{- end }}
+  </ol>
+  <h2>Feeds</h2>
+  <ul class="fd-feeds">
+    {{- range $f.feeds }}
+    <li data-name="{{ .name }}">{{ with .site }}<a href="{{ . }}">{{ end }}{{ .name }}{{ with .site }}</a>{{ end }} <small>{{ .count }} items</small></li>
+    {{- end }}
+  </ul>
+  </div>
+</article>
+{{- end }}

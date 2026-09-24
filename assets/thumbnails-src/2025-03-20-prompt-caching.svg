@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" data-ground="#76708a #433d54">
+<!-- a stack of cached context slabs with the fresh prompt on top. Rendered by scripts/render-thumbs.mjs. -->
+<defs><style>.o{stroke-width:1.1}.t{stroke-width:.66}.o3{stroke-width:5.2}.o5{stroke-width:7.2}</style>
+<linearGradient id="bt" x2="1" y2="1"><stop stop-color="#b9d6f4"/><stop offset="1" stop-color="#7aa7d9"/></linearGradient><linearGradient id="at" x2="1" y2="1"><stop stop-color="#fff0b0"/><stop offset="1" stop-color="#ffcf4d"/></linearGradient></defs>
+<g transform="translate(1.7 -0.7) scale(0.946)">
+<g stroke="#1b3656" class="o" stroke-linejoin="round">
+<path d="M9 45L32 56.5V61.5L9 50z" fill="#4f80b6"/>
+<path d="M32 56.5L55 45V50L32 61.5z" fill="#2e5b8e"/>
+<path d="M32 33.5L55 45L32 56.5L9 45z" fill="url(#bt)"/></g>
+<path class="d" d="M11.5 45L32 34.8" stroke="#fff" stroke-opacity=".6" stroke-width=".9"/><g stroke="#1b3656" class="o" stroke-linejoin="round">
+<path d="M9 37L32 48.5V53.5L9 42z" fill="#4f80b6"/>
+<path d="M32 48.5L55 37V42L32 53.5z" fill="#2e5b8e"/>
+<path d="M32 25.5L55 37L32 48.5L9 37z" fill="url(#bt)"/></g>
+<path class="d" d="M11.5 37L32 26.8" stroke="#fff" stroke-opacity=".6" stroke-width=".9"/><g stroke="#1b3656" class="o" stroke-linejoin="round">
+<path d="M9 29L32 40.5V45.5L9 34z" fill="#4f80b6"/>
+<path d="M32 40.5L55 29V34L32 45.5z" fill="#2e5b8e"/>
+<path d="M32 17.5L55 29L32 40.5L9 29z" fill="url(#bt)"/></g>
+<path class="d" d="M11.5 29L32 18.8" stroke="#fff" stroke-opacity=".6" stroke-width=".9"/><g stroke="#734a04" class="o" stroke-linejoin="round">
+<path d="M9 17L32 28.5V33.5L9 22z" fill="#eda61c"/>
+<path d="M32 28.5L55 17V22L32 33.5z" fill="#c07f0a"/>
+<path d="M32 5.5L55 17L32 28.5L9 17z" fill="url(#at)"/></g>
+<path class="d" d="M11.5 17L32 6.8" stroke="#fff" stroke-opacity=".6" stroke-width=".9"/></g>
+</svg>

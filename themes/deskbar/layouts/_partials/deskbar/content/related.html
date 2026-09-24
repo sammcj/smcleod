@@ -1,0 +1,31 @@
+{{- /* D25, D27: related posts at the end of a post. This block is the no-JS version (and what the reader shows
+       again once its ticker is dismissed); content/ticker.js shows the same links as a ticker in the reader.
+       Ranked by shared tags, then newest first, within the post's section. Hugo's .Related would need the
+       site's [related] config (a theme's is not merged, and its default skips newer posts), so it is not used. */ -}}
+{{- $n := site.Params.deskbar.relatedCount | default 4 }}
+{{- /* term names rather than term pages: intersect does not match page collections reliably */}}
+{{- $tags := slice }}
+{{- range .GetTerms "tags" }}{{ $tags = $tags | append .Name }}{{ end }}
+{{- $scored := slice }}
+{{- if $tags }}
+  {{- range $p := where site.RegularPages "Section" .Section }}
+    {{- if ne $p $ }}
+      {{- $shared := 0 }}
+      {{- range $p.GetTerms "tags" }}{{ if in $tags .Name }}{{ $shared = add $shared 1 }}{{ end }}{{ end }}
+      {{- if $shared }}
+        {{- /* one sortable key: shared tag count first, then date */}}
+        {{- $scored = $scored | append (dict "k" (add (mul $shared 10000000000) $p.Date.Unix) "p" $p) }}
+      {{- end }}
+    {{- end }}
+  {{- end }}
+{{- end }}
+{{- with first $n (sort $scored "k" "desc") }}
+<aside class="rd-related" aria-label="Related posts">
+  <h2 class="rd-related-h">Related posts</h2>
+  <ul>
+    {{- range . }}{{ with .p }}
+    <li><a href="{{ .RelPermalink }}" data-title="{{ .Title }}">{{ .Title }}</a> <time datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date.Format "Jan 2006" }}</time></li>
+    {{- end }}{{ end }}
+  </ul>
+</aside>
+{{- end }}

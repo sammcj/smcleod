@@ -1,6 +1,9 @@
 ---
 title: "Agentic Coding Adoption Cost Cycle"
 date: 2025-07-16T01:10:00+10:00
+thumbnail: thumbnail.png
+images: ["thumbnail.png"]
+thumbnailIcon: thumbnail-icon.svg
 tags: ["ai", "llm", "tech","coding", "cline", "agentic", "agentic coding"]
 author: "Sam McLeod"
 showToc: true

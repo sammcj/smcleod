@@ -1,6 +1,9 @@
 ---
 title: "Patching NVIDIA's driver and vLLM to enable P2P on consumer GPUs"
 date: 2026-02-25T23:59:00+10:00
+thumbnail: thumbnail.png
+images: ["thumbnail.png"]
+thumbnailIcon: thumbnail-icon.svg
 tags:
   [
     'ai',

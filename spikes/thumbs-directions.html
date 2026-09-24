@@ -1,0 +1,466 @@
+<!doctype html>
+<html lang="en-AU">
+<head>
+<meta charset="utf-8">
+<title>Thumbnail directions</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+  :root { --ui: system-ui, -apple-system, 'Noto Sans', sans-serif; --mono: ui-monospace, 'SF Mono', Menlo, monospace; }
+  * { box-sizing: border-box; }
+  body { margin: 0; padding: 28px 32px 40px; font: 13px/1.45 var(--ui); background: #d8d8d8; color: #1f1f1f; width: 1480px; }
+  h1 { font-size: 20px; margin: 0 0 4px; }
+  .lede { margin: 0 0 22px; color: #4a4a4a; max-width: 110ch; }
+  section { margin: 0 0 26px; background: #ececec; border: 1px solid #989898; box-shadow: inset 1px 1px #fff; }
+  .head { display: flex; align-items: baseline; gap: 14px; padding: 7px 14px; background: linear-gradient(#ffe56b, #ffcb00); border-bottom: 1px solid #b89200; }
+  .head h2 { margin: 0; font-size: 14px; }
+  .head p { margin: 0; color: #3d3620; }
+  .mode { display: grid; grid-template-columns: auto 1fr; gap: 22px; padding: 16px 16px 14px; align-items: start; }
+  .mode.light { background: #fff; color: #1f1f1f; --muted: #5a5a5a; --line: #d4d4d4; --zebra: rgba(0,0,0,.028); }
+  .mode.dark { background: #26282b; color: #e3e3e3; --muted: #b8b8b8; --line: #3a3d41; --zebra: rgba(255,255,255,.03); }
+  .tag { grid-column: 1 / -1; margin: -4px 0 -8px; font: 11px var(--mono); color: var(--muted); }
+  .cards { display: grid; grid-template-columns: repeat(6, 160px); gap: 14px; }
+  .card img { display: block; width: 160px; height: 120px; border: 1px solid var(--line); }
+  .card b { display: block; margin-top: 6px; font-weight: 600; font-size: 12px; line-height: 1.3; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+  .card small { color: var(--muted); font: 11px var(--mono); }
+  .rows { border: 1px solid var(--line); min-width: 0; }
+  .row { display: flex; align-items: center; gap: 10px; height: 40px; padding: 0 10px; border-bottom: 1px solid var(--line); }
+  .row:nth-child(even) { background: var(--zebra); }
+  .row:last-child { border-bottom: 0; }
+  .row img { width: 32px; height: 32px; flex: none; }
+  .row span { flex: 1; min-width: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .row small { color: var(--muted); font: 11px var(--mono); }
+  .notes { padding: 10px 16px 12px; border-top: 1px solid #c8c8c8; color: #333; }
+  .notes ul { margin: 0; padding-left: 18px; }
+</style>
+</head>
+<body>
+<h1>Post thumbnail directions</h1>
+<p class="lede">The same six posts in each direction: four bespoke covers and two generated placeholders (emblem from tags, palette and ground from the path hash). Cards are the 160x120 tile, rows use the 32px mini icon. All art is plain SVG with no text or fonts, shown unchanged on the light and dark themes.</p>
+<main id="out"></main>
+
+<script>
+/* ---------- shared helpers ---------- */
+const svg = (w, h, body, defs = '') =>
+  `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${w} ${h}">${defs ? `<defs>${defs}</defs>` : ''}${body}</svg>`;
+const uri = (s) => 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(s);
+const f = (n) => +n.toFixed(2);
+const gauss = (x, m, s) => Math.exp(-((x - m) ** 2) / (2 * s * s));
+const bell = (x0, x1, base, h, m, s, step = 1.5) => {
+  const p = [];
+  for (let x = x0; x <= x1 + 0.01; x += step) p.push([x, base - h * gauss(x, m, s)]);
+  return p;
+};
+const line = (p) => p.map((q, i) => (i ? 'L' : 'M') + f(q[0]) + ' ' + f(q[1])).join('');
+const area = (p, base) => line(p) + `L${f(p.at(-1)[0])} ${base}L${f(p[0][0])} ${base}Z`;
+// region between two curves sampled at the same x positions
+const between = (p, q) => {
+  const up = p.map((a, i) => [a[0], Math.min(a[1], q[i][1])]);
+  const lo = p.map((a, i) => [a[0], Math.max(a[1], q[i][1])]).reverse();
+  return line(up) + lo.map((a) => `L${f(a[0])} ${f(a[1])}`).join('') + 'Z';
+};
+// halftone: dot radius from a function of position
+const halftone = (w, h, step, rf, fill, angle = 0) => {
+  let s = '';
+  for (let y = -h; y < h * 2; y += step)
+    for (let x = -w; x < w * 2; x += step) {
+      const r = rf(x, y);
+      if (r > 0.12 && x > -2 && x < w + 2 && y > -2 && y < h + 2) s += `<circle cx="${f(x)}" cy="${f(y)}" r="${f(r)}"/>`;
+    }
+  return `<g fill="${fill}">${s}</g>`;
+};
+const grainDef = (light) =>
+  `<filter id="grain" x="0" y="0" width="100%" height="100%"><feTurbulence type="fractalNoise" baseFrequency=".95" numOctaves="2" seed="7" stitchTiles="stitch"/><feColorMatrix values="0 0 0 0 ${light ? 1 : 0} 0 0 0 0 ${light ? 1 : 0} 0 0 0 0 ${light ? 1 : 0} 1.9 0 0 0 -.95"/></filter>`;
+const grain = (op) => `<rect width="160" height="120" filter="url(#grain)" opacity="${op}"/>`;
+
+/* ---------- posts ---------- */
+const POSTS = [
+  { id: 'p2p', kind: 'bespoke', date: '2026-02-26', title: "Patching NVIDIA's driver and vLLM to enable P2P on consumer GPUs" },
+  { id: 'kld', kind: 'bespoke', date: '2026-04-27', title: 'Measuring Model Quantisation Quality with KL Divergence' },
+  { id: 'advice', kind: 'bespoke', date: '2026-03-05', title: 'The advice I find myself repeating every time someone asks how to get started with Claude Code' },
+  { id: 'cache', kind: 'bespoke', date: '2025-03-20', title: 'The effects of prompt caching on Agentic coding' },
+  { id: 'ai', kind: 'generated: neural', date: '2024-11-30', title: 'Will AI Take My Job?' },
+  { id: 'git', kind: 'generated: code', date: '2023-05-28', title: 'Defaulting git clone to shallow (depth=1)' },
+];
+
+/* =====================================================================
+   A. Editorial / abstract
+   Flat fields of two or three muted inks, one geometric idea per post, hairline detail, halftone and paper grain.
+   ===================================================================== */
+const A = (() => {
+  const INK = '#1f2328', BONE = '#eee8da', VERM = '#cf5436', OCHRE = '#d9a13b', SAGE = '#b8c6a1', TEAL = '#2c6663', SLATE = '#22303f';
+
+  // generated placeholders: palette + ground motif from the seed, a flat emblem from the tags
+  const PAL = {
+    plum: { g: '#453a4f', g2: '#524660', a: '#e3a857', b: BONE, light: false },
+    bone: { g: '#e6dfcf', g2: '#d8cfbb', a: VERM, b: INK, light: true },
+  };
+  const grounds = {
+    disc: (P) => `<circle cx="138" cy="18" r="74" fill="${P.g2}"/>`,
+    split: (P) => `<path d="M0 120L160 30V120Z" fill="${P.g2}"/>`,
+  };
+  const emblem = {
+    neural: (P, k = 1) => {
+      const L = [[[50, 44], [50, 76]], [[80, 34], [80, 60], [80, 86]], [[110, 48], [110, 72]]];
+      let e = '';
+      for (let i = 0; i < 2; i++) for (const a of L[i]) for (const b of L[i + 1]) e += `M${a[0]} ${a[1]}L${b[0]} ${b[1]}`;
+      const hot = [[50, 44], [80, 60], [110, 72]];
+      return `<path d="${e}" stroke="${P.b}" stroke-width=".7" opacity=".7" fill="none"/>
+        <path d="${line(hot)}" stroke="${P.a}" stroke-width="2.4" fill="none"/>
+        ${L.flat().map(([x, y]) => {
+          const h = hot.some((q) => q[0] === x && q[1] === y);
+          return `<circle cx="${x}" cy="${y}" r="${h ? 6.5 : 5}" fill="${h ? P.a : P.b}"/>`;
+        }).join('')}`;
+    },
+    code: (P) => {
+      const bars = [[36, 34, 58], [48, 46, 40], [48, 58, 26, 1], [60, 70, 34], [36, 82, 22]];
+      return bars.map(([x, y, w, hot]) => `<rect x="${x}" y="${y}" width="${w}" height="6" fill="${hot ? P.a : P.b}"/>`).join('') +
+        `<path d="M120 34l-8 27 8 27" stroke="${P.b}" stroke-width=".8" fill="none"/>`;
+    },
+  };
+  const placeholder = { ai: ['plum', 'disc', 'neural'], git: ['bone', 'split', 'code'] };
+
+  const card = (id) => {
+    if (placeholder[id]) {
+      const [pal, gr, em] = placeholder[id];
+      const P = PAL[pal];
+      return svg(160, 120, `<rect width="160" height="120" fill="${P.g}"/>${grounds[gr](P)}${emblem[em](P)}${grain(P.light ? 0.16 : 0.1)}`, grainDef(!P.light));
+    }
+    if (id === 'p2p') {
+      // two boards, joined directly by the red band; the old route runs the long way round through the host
+      const fins = (y) => Array.from({ length: 13 }, (_, i) => `M${50 + i * 4} ${y + 3}v16`).join('');
+      return svg(160, 120, `<rect width="160" height="120" fill="#e7e1d1"/>
+        <circle cx="62" cy="60" r="44" fill="${SAGE}"/>
+        <rect x="44" y="26" width="64" height="22" fill="${INK}"/><rect x="44" y="72" width="64" height="22" fill="${INK}"/>
+        <path d="${fins(26)}${fins(72)}" stroke="${BONE}" stroke-width=".6" opacity=".3"/>
+        <rect x="108" y="30" width="10" height="60" fill="${VERM}"/>
+        <path d="M44 37H22V83H44" stroke="${INK}" stroke-width=".7" stroke-dasharray="2 2" fill="none"/>
+        <rect x="17" y="55" width="10" height="10" fill="#e7e1d1" stroke="${INK}" stroke-width=".7"/>
+        ${grain(0.16)}`, grainDef(false));
+    }
+    if (id === 'kld') {
+      const base = 94;
+      const P = bell(12, 148, base, 62, 66, 14);
+      const Q = bell(12, 148, base, 50, 94, 19);
+      const ticks = Array.from({ length: 17 }, (_, i) => `M${16 + i * 8} ${base + 3}v3`).join('');
+      return svg(160, 120, `<rect width="160" height="120" fill="${SLATE}"/>
+        <path d="${area(P, base)}" fill="${OCHRE}"/>
+        <g clip-path="url(#q)">${halftone(160, 120, 2.6, () => 0.62, BONE)}</g>
+        <path d="${line(Q)}" stroke="${BONE}" stroke-width=".8" fill="none"/>
+        <path d="M12 ${base}H148" stroke="${BONE}" stroke-width=".7"/>
+        <path d="${ticks}" stroke="${BONE}" stroke-width=".5" opacity=".5"/>
+        ${grain(0.1)}`, grainDef(true) + `<clipPath id="q"><path d="${area(Q, base)}"/></clipPath>`);
+    }
+    if (id === 'advice') {
+      const chev = (x, op) => `<path d="M${x} 38l22 22-22 22" stroke="${INK}" stroke-width="9" fill="none" opacity="${op}"/>`;
+      return svg(160, 120, `<rect width="160" height="120" fill="${OCHRE}"/>
+        ${halftone(160, 120, 4, (x, y) => Math.max(0, 1.9 * (1 - Math.hypot(160 - x, y) / 120)), '#b37f27')}
+        ${chev(24, 0.14)}${chev(42, 0.3)}${chev(60, 0.55)}${chev(78, 1)}
+        <rect x="108" y="78" width="26" height="7" fill="${BONE}"/>
+        ${grain(0.16)}`, grainDef(false));
+    }
+    if (id === 'cache') {
+      const rows = [[0, 64], [64, 20], [84, 20], [104, 20]];
+      const bars = rows.map(([pre, add], i) => {
+        const y = 30 + i * 16;
+        return (pre ? `<rect x="18" y="${y}" width="${pre}" height="9" fill="${BONE}"/>` : '') +
+          `<rect x="${18 + pre + (pre ? 1.5 : 0)}" y="${y}" width="${add - (pre ? 1.5 : 0)}" height="9" fill="${OCHRE}"/>`;
+      }).join('');
+      return svg(160, 120, `<rect width="160" height="120" fill="${TEAL}"/>
+        <path d="M18 24V100" stroke="${BONE}" stroke-width=".6" opacity=".6"/>
+        ${bars}
+        <path d="M18 100H142" stroke="${BONE}" stroke-width=".6" opacity=".6"/>
+        ${grain(0.1)}`, grainDef(true));
+    }
+  };
+
+  const icon = (id) => {
+    const bg = (c) => `<rect width="32" height="32" rx="2" fill="${c}"/>`;
+    switch (id) {
+      case 'p2p': return svg(32, 32, `${bg('#e7e1d1')}<circle cx="13" cy="16" r="11" fill="${SAGE}"/>
+        <rect x="5" y="6" width="18" height="7" fill="${INK}"/><rect x="5" y="19" width="18" height="7" fill="${INK}"/>
+        <rect x="23" y="7.5" width="4" height="17" fill="${VERM}"/>`);
+      case 'kld': {
+        const P = bell(3, 29, 25, 17, 13, 3.8, 0.5), Q = bell(3, 29, 25, 13, 19.5, 4.6, 0.5);
+        return svg(32, 32, `${bg(SLATE)}<path d="${area(P, 25)}" fill="${OCHRE}"/><path d="${line(Q)}" stroke="${BONE}" stroke-width="1.3" fill="none"/><path d="M3 25.3H29" stroke="${BONE}" stroke-width=".9"/>`);
+      }
+      case 'advice': return svg(32, 32, `${bg(OCHRE)}<path d="M5 9l7 7-7 7" stroke="${INK}" stroke-width="3" fill="none" opacity=".3"/><path d="M11 9l7 7-7 7" stroke="${INK}" stroke-width="3" fill="none"/><rect x="20" y="21" width="7" height="2.6" fill="${BONE}"/>`);
+      case 'cache': return svg(32, 32, `${bg(TEAL)}
+        <rect x="5" y="8" width="12" height="4" fill="${OCHRE}"/>
+        <rect x="5" y="14" width="12" height="4" fill="${BONE}"/><rect x="17.8" y="14" width="5" height="4" fill="${OCHRE}"/>
+        <rect x="5" y="20" width="17.8" height="4" fill="${BONE}"/><rect x="23.6" y="20" width="4" height="4" fill="${OCHRE}"/>`);
+      case 'ai': { const P = PAL.plum; return svg(32, 32, `${bg(P.g)}<circle cx="30" cy="2" r="16" fill="${P.g2}"/>
+        <path d="M8 16L16 8M8 16L16 24M16 8L24 16M16 24L24 16" stroke="${P.b}" stroke-width=".9" opacity=".7"/>
+        <path d="M8 16L16 24L24 16" stroke="${P.a}" stroke-width="1.8" fill="none"/>
+        <circle cx="16" cy="8" r="2.6" fill="${P.b}"/><circle cx="8" cy="16" r="3" fill="${P.a}"/><circle cx="16" cy="24" r="3" fill="${P.a}"/><circle cx="24" cy="16" r="3" fill="${P.a}"/>`); }
+      case 'git': { const P = PAL.bone; return svg(32, 32, `${bg(P.g)}<path d="M0 32L32 12V32Z" fill="${P.g2}"/>
+        <rect x="6" y="7" width="17" height="3" fill="${P.b}"/><rect x="10" y="13" width="12" height="3" fill="${P.b}"/><rect x="10" y="19" width="8" height="3" fill="${P.a}"/><rect x="6" y="25" width="10" height="3" fill="${P.b}"/>`); }
+    }
+  };
+  return { card, icon };
+})();
+
+/* =====================================================================
+   B. Technical drawing
+   One stroke weight for every primary line, dashed construction lines, hatching for emphasis, one accent per drawing.
+   ===================================================================== */
+const B = (() => {
+  const G = {
+    slate: { bg: '#1e2a35', grid: 'rgba(255,255,255,.07)', ln: '#cfd8e0', dim: 'rgba(207,216,224,.42)', acc: '#f0b429' },
+    paper: { bg: '#ebe7dc', grid: 'rgba(52,103,184,.16)', ln: '#26303b', dim: 'rgba(38,48,59,.45)', acc: '#c4553a' },
+    graphite: { bg: '#2a2d30', grid: 'rgba(255,255,255,.06)', ln: '#dad6cc', dim: 'rgba(218,214,204,.4)', acc: '#6cc3ad' },
+  };
+  const SW = 1.3;
+  const defs = (g) => `<pattern id="gr" width="8" height="8" patternUnits="userSpaceOnUse"><path d="M8 0H0V8" fill="none" stroke="${g.grid}" stroke-width=".5"/></pattern>
+    <pattern id="gR" width="40" height="40" patternUnits="userSpaceOnUse"><path d="M40 0H0V40" fill="none" stroke="${g.grid}" stroke-width="1.1"/></pattern>
+    <pattern id="h" width="3" height="3" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><path d="M0 0V3" stroke="${g.acc}" stroke-width=".9"/></pattern>`;
+  const sheet = (g, body) => svg(160, 120, `<rect width="160" height="120" fill="${g.bg}"/>
+    <rect width="160" height="120" fill="url(#gr)"/><rect width="160" height="120" fill="url(#gR)"/>
+    <path d="M6 12V6H12M148 6H154V12M154 108V114H148M12 114H6V108" stroke="${g.dim}" stroke-width=".7" fill="none"/>
+    <path d="M114 102H148V108H114ZM114 108V112H148V108M128 102V108" stroke="${g.dim}" stroke-width=".5" fill="none"/>
+    <g fill="none" stroke="${g.ln}" stroke-width="${SW}" stroke-linecap="round" stroke-linejoin="round">${body}</g>`, defs(g));
+  const arrow = (x, y, dir, c) => `<path d="M${x - 3 * dir} ${y - 2.2}L${x} ${y}L${x - 3 * dir} ${y + 2.2}" stroke="${c}"/>`;
+
+  const drawings = {
+    p2p: (g) => {
+      const gpu = (y) => `<rect x="46" y="${y}" width="62" height="26" rx="1.5"/>
+        <circle cx="62" cy="${y + 13}" r="8.5"/><circle cx="62" cy="${y + 13}" r="2.5"/>
+        <circle cx="90" cy="${y + 13}" r="8.5"/><circle cx="90" cy="${y + 13}" r="2.5"/>
+        <path d="M58 ${y + 26}v3h26v-3M62 ${y + 28}v-1.5M66 ${y + 28}v-1.5M70 ${y + 28}v-1.5M74 ${y + 28}v-1.5M78 ${y + 28}v-1.5" stroke-width=".8"/>`;
+      return `${gpu(22)}${gpu(64)}
+        <g stroke="${g.dim}" stroke-width=".7" stroke-dasharray="2.5 2"><path d="M46 35H26V52M46 77H26V68"/></g>
+        <rect x="18" y="52" width="16" height="16" rx="1"/><rect x="22" y="56" width="8" height="8" stroke-width=".7"/>
+        <g stroke="${g.acc}" stroke-width="1.6"><path d="M110 35H122V77H110"/>${arrow(110, 35, -1, g.acc)}${arrow(110, 77, -1, g.acc)}</g>`;
+    },
+    kld: (g) => {
+      const base = 96;
+      const P = bell(20, 146, base, 62, 68, 14), Q = bell(20, 146, base, 50, 94, 18);
+      const ticks = Array.from({ length: 8 }, (_, i) => `M${34 + i * 16} ${base}v3`).join('');
+      return `<path d="${between(P, Q)}" fill="url(#h)" stroke="none"/>
+        <path d="M18 ${base}H148M18 ${base}V20${ticks}" stroke-width="1"/>${arrow(148, base, 1, g.ln)}
+        <path d="${line(P)}"/><path d="${line(Q)}" stroke-dasharray="3.5 2.5"/>
+        <path d="M68 30V${base}M94 44V${base}" stroke="${g.dim}" stroke-width=".6" stroke-dasharray="1.5 2"/>
+        <path d="M116 66L130 50H142" stroke="${g.acc}" stroke-width=".9"/><circle cx="116" cy="66" r="1.6" fill="${g.acc}" stroke="none"/>`;
+    },
+    advice: (g) => `<path d="M42 26H72V32" stroke-width="1"/>
+        <rect x="42" y="32" width="72" height="54" rx="2"/><path d="M42 42H114" stroke-width=".8"/>
+        <path d="M52 52l6 5-6 5" stroke="${g.acc}" stroke-width="1.6"/><path d="M63 62h9" stroke="${g.acc}" stroke-width="1.6"/>
+        <path d="M52 72h38M52 78h24" stroke="${g.dim}" stroke-width="1"/>
+        <g stroke="${g.acc}" stroke-width="1.6"><path d="M131.5 78A14 14 0 1 1 118 68"/><path d="M114 64.5L118.5 68L114.5 72"/></g>`,
+    cache: (g) => {
+      const counts = [6, 8, 10, 11];
+      let s = '';
+      counts.forEach((n, r) => {
+        const cached = r ? counts[r - 1] : 0;
+        for (let c = 0; c < n; c++) {
+          const x = 20 + c * 11, y = 26 + r * 14;
+          s += c < cached ? `<rect x="${x}" y="${y}" width="8" height="8" fill="url(#h)" stroke="${g.acc}" stroke-width="1"/>`
+            : `<rect x="${x}" y="${y}" width="8" height="8" stroke-width="1.1"/>`;
+        }
+      });
+      const end = 20 + 10 * 11 - 3;
+      return s + `<g stroke="${g.dim}" stroke-width=".7"><path d="M20 84V96M${end} 84V96"/><path d="M20 92H${end}" stroke-width=".8"/></g>
+        ${arrow(20, 92, -1, g.dim)}${arrow(end, 92, 1, g.dim)}`;
+    },
+    ai: (g) => {
+      const L = [[[44, 38], [44, 60], [44, 82]], [[80, 28], [80, 50], [80, 70], [80, 92]], [[116, 48], [116, 72]]];
+      let e = '';
+      for (let i = 0; i < 2; i++) for (const a of L[i]) for (const b of L[i + 1]) e += `M${a[0]} ${a[1]}L${b[0]} ${b[1]}`;
+      const hot = [[44, 60], [80, 50], [116, 48]];
+      return `<path d="${e}" stroke="${g.dim}" stroke-width=".6"/><path d="${line(hot)}" stroke="${g.acc}" stroke-width="1.6"/>
+        ${L.flat().map(([x, y]) => `<circle cx="${x}" cy="${y}" r="5" fill="${hot.some((q) => q[0] === x && q[1] === y) ? g.acc : g.bg}" ${hot.some((q) => q[0] === x && q[1] === y) ? `stroke="${g.acc}"` : ''}/>`).join('')}`;
+    },
+    git: (g) => `<path d="M60 30q-8 0-8 8v12q0 6-6 6q6 0 6 6v12q0 8 8 8"/><path d="M100 30q8 0 8 8v12q0 6 6 6q-6 0-6 6v12q0 8-8 8"/>
+        <path d="M66 42h24M72 50h16M72 58h8M72 66h20M66 74h12"/><path d="M72 58h8" stroke="${g.acc}" stroke-width="1.6"/>
+        <circle cx="86" cy="58" r="1.2" fill="${g.acc}" stroke="none"/>`,
+  };
+  const pick = { p2p: 'slate', kld: 'paper', advice: 'graphite', cache: 'slate', ai: 'graphite', git: 'paper' };
+  const card = (id) => sheet(G[pick[id]], drawings[id](G[pick[id]]));
+
+  const icons = {
+    p2p: (g) => `<rect x="5" y="6" width="17" height="8" rx=".8"/><circle cx="10" cy="10" r="2.2" stroke-width="1"/><circle cx="17" cy="10" r="2.2" stroke-width="1"/>
+      <rect x="5" y="18" width="17" height="8" rx=".8"/><circle cx="10" cy="22" r="2.2" stroke-width="1"/><circle cx="17" cy="22" r="2.2" stroke-width="1"/>
+      <path d="M23.5 10H27V22H23.5" stroke="${g.acc}" stroke-width="1.6"/>`,
+    kld: (g) => {
+      const P = bell(4, 29, 25, 16, 13, 3.6, 0.5), Q = bell(4, 29, 25, 13, 19.5, 4.4, 0.5);
+      return `<path d="${between(P, Q)}" fill="${g.acc}" fill-opacity=".55" stroke="none"/><path d="M4 25H29"/><path d="${line(P)}"/><path d="${line(Q)}" stroke-dasharray="1.8 1.4"/>`;
+    },
+    advice: (g) => `<path d="M5 5.5H13" stroke-width="1.2"/><rect x="5" y="8" width="22" height="18" rx="1"/><path d="M9 13l3 2.5-3 2.5M14 20h5" stroke="${g.acc}" stroke-width="1.6"/>`,
+    cache: (g) => [3, 4, 5].map((n, r) => Array.from({ length: n }, (_, c) => {
+      const x = 4 + c * 5, y = 7 + r * 7, cached = c < (r ? [3, 4, 5][r - 1] : 0);
+      return `<rect x="${x}" y="${y}" width="3.6" height="3.6" ${cached ? `fill="${g.acc}" stroke="${g.acc}"` : ''} stroke-width="1"/>`;
+    }).join('')).join(''),
+    ai: (g) => `<path d="M8 16L16 8M8 16L16 24M16 8L24 16M16 24L24 16" stroke="${g.dim}" stroke-width=".9"/><path d="M8 16L16 24L24 16" stroke="${g.acc}" stroke-width="1.6"/>
+      <circle cx="16" cy="8" r="2.4" fill="${g.bg}"/><circle cx="8" cy="16" r="2.6" fill="${g.acc}" stroke="${g.acc}"/><circle cx="16" cy="24" r="2.6" fill="${g.acc}" stroke="${g.acc}"/><circle cx="24" cy="16" r="2.6" fill="${g.acc}" stroke="${g.acc}"/>`,
+    git: (g) => `<path d="M11 6q-3 0-3 3v4q0 3-3 3q3 0 3 3v4q0 3 3 3"/><path d="M21 6q3 0 3 3v4q0 3 3 3q-3 0-3 3v4q0 3-3 3"/><path d="M13 12h6M13 20h4" /><path d="M14 16h5" stroke="${g.acc}" stroke-width="1.6"/>`,
+  };
+  const icon = (id) => {
+    const g = G[pick[id]];
+    return svg(32, 32, `<rect width="32" height="32" rx="2" fill="${g.bg}"/><path d="M0 8H32M0 16H32M0 24H32M8 0V32M16 0V32M24 0V32" stroke="${g.grid}" stroke-width=".5"/>
+      <g fill="none" stroke="${g.ln}" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">${icons[id](g)}</g>`);
+  };
+  return { card, icon };
+})();
+
+/* =====================================================================
+   C. Haiku icon language (HVIF)
+   One object per post on a 64 unit grid, seen from above-left, lit from top-left, outlined in a darker tone of its own
+   fill. Cards place the object on a quiet ground; rows use the bare object like a real Tracker icon.
+   ===================================================================== */
+const C = (() => {
+  const GROUNDS = {
+    blue: ['#6a8199', '#3a4c60'], warm: ['#8d8170', '#544a3c'], green: ['#6c8175', '#38483f'], violet: ['#76708a', '#433d54'],
+  };
+  const common = `<linearGradient id="hl" x2="0" y2="1"><stop stop-color="#fff" stop-opacity=".55"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></linearGradient>`;
+
+  // each returns [defs, body] on a 64 grid; ow = outline width (thicker at 32px so edges survive)
+  const OBJ = {
+    p2p: (ow) => {
+      // landscape boards with a metal IO bracket, so two fans read as a graphics card rather than a speaker
+      const gpu = (y) => {
+        const x = 11, w = 38, h = 17, dx = 5, dy = -4;
+        return `<g stroke="#171c20" stroke-width="${ow}" stroke-linejoin="round">
+          <path d="M${x + w} ${y}l${dx} ${dy}v${h}l${-dx} ${-dy}z" fill="url(#gs)"/>
+          <path d="M${x} ${y}l${dx} ${dy}h${w}l${-dx} ${-dy}z" fill="url(#gt)"/>
+          <rect x="${x + 15}" y="${y + h + 2.5}" width="16" height="2" fill="#d9a441" stroke-width="${ow * 0.6}"/>
+          <rect x="${x}" y="${y + h}" width="${w}" height="2.5" fill="#3f7c4c"/>
+          <rect x="${x}" y="${y}" width="${w}" height="${h}" fill="url(#gf)"/>
+          <circle cx="${x + 10}" cy="${y + 8.5}" r="6.4" fill="url(#fan)"/><circle cx="${x + 28}" cy="${y + 8.5}" r="6.4" fill="url(#fan)"/>
+          <circle cx="${x + 10}" cy="${y + 8.5}" r="1.8" fill="#9aa4ab" stroke-width="${ow * 0.6}"/><circle cx="${x + 28}" cy="${y + 8.5}" r="1.8" fill="#9aa4ab" stroke-width="${ow * 0.6}"/>
+          <path d="M${x - 5} ${y - 3}h5v${h + 8}h-5z" fill="url(#io)" stroke="#3f474d"/></g>
+          <circle cx="${x + 10}" cy="${y + 8.5}" r="4.3" stroke="#6d7880" stroke-width=".6" fill="none"/><circle cx="${x + 28}" cy="${y + 8.5}" r="4.3" stroke="#6d7880" stroke-width=".6" fill="none"/>
+          <path d="M${x - 2.5} ${y + 1}v4M${x - 2.5} ${y + 8}v4" stroke="#3f474d" stroke-width="1.1" stroke-linecap="round"/>
+          <path d="M${x + 0.8} ${y + h - 1}V${y + 0.8}H${x + w - 1}" stroke="#fff" stroke-opacity=".25" stroke-width=".8" fill="none"/>`;
+      };
+      return [`<linearGradient id="gf" x2=".4" y2="1"><stop stop-color="#66717a"/><stop offset="1" stop-color="#2f363c"/></linearGradient>
+        <linearGradient id="gs" x2="0" y2="1"><stop stop-color="#454e55"/><stop offset="1" stop-color="#1f2428"/></linearGradient>
+        <linearGradient id="gt" x2="1"><stop stop-color="#98a2a9"/><stop offset="1" stop-color="#6e7880"/></linearGradient>
+        <radialGradient id="fan" cx=".38" cy=".35" r=".75"><stop stop-color="#3c454b"/><stop offset="1" stop-color="#0e1214"/></radialGradient>
+        <linearGradient id="br" x2="1"><stop stop-color="#ffd760"/><stop offset="1" stop-color="#e3950b"/></linearGradient>
+        <linearGradient id="io" x2="1"><stop stop-color="#eef1f3"/><stop offset="1" stop-color="#9aa3a9"/></linearGradient>`,
+        `${gpu(12)}${gpu(38)}
+        <g stroke="#7d5205" stroke-width="${ow}" stroke-linejoin="round">
+          <path d="M57 16l4-3v30l-4 3z" fill="#b87808"/><path d="M51 16l4-3h6l-4 3z" fill="#ffe9a6"/>
+          <rect x="51" y="16" width="6" height="30" fill="url(#br)"/></g>`];
+    },
+    kld: (ow) => {
+      // two distributions standing as sheets on a plinth, the reference behind and the quantised one in front
+      const P = bell(8, 46, 50, 32, 23, 5, 0.8), Q = bell(15, 55, 45, 26, 37, 6.2, 0.8);
+      return [`<linearGradient id="pf" x2=".5" y2="1"><stop stop-color="#ffffff"/><stop offset="1" stop-color="#dcd5c4"/></linearGradient>
+        <linearGradient id="pq" x2="0" y2="1"><stop stop-color="#ffd760"/><stop offset="1" stop-color="#eba21a"/></linearGradient>
+        <linearGradient id="pp" x2="0" y2="1"><stop stop-color="#7fb0e6"/><stop offset="1" stop-color="#2f66a8"/></linearGradient>`,
+        `<g stroke="#5f584a" stroke-width="${ow}" stroke-linejoin="round">
+          <path d="M4 52l10-10h48l-10 10z" fill="url(#pf)"/>
+          <path d="M52 52l10-10v5l-10 10z" fill="#9b917c"/><rect x="4" y="52" width="48" height="5" fill="#c9c0ab"/></g>
+        <path d="M5.5 51.5l9-8.8h46" stroke="#fff" stroke-width=".9" fill="none"/>
+        <path d="${area(Q, 45)}" fill="url(#pq)" stroke="#8a5a06" stroke-width="${ow}" stroke-linejoin="round"/>
+        <path d="${area(P, 50)}" fill="url(#pp)" fill-opacity=".88" stroke="#1d4b82" stroke-width="${ow}" stroke-linejoin="round"/>
+        <path d="${line(P.filter((q) => q[0] < 22))}" stroke="#fff" stroke-opacity=".6" stroke-width=".9" fill="none" transform="translate(.9 .9)"/>`];
+    },
+    advice: (ow) => {
+      // stacked Haiku windows: yellow tab on the front one, inactive tabs behind
+      const win = (x, y, w, h, active) => `<g stroke="#4c4c4c" stroke-width="${ow}" stroke-linejoin="round">
+          <path d="M${x} ${y}v-6h${w * 0.5}v6z" fill="${active ? 'url(#tab)' : '#e6dcb4'}"/>
+          <rect x="${x}" y="${y}" width="${w}" height="${h}" fill="url(#frm)"/>
+          <rect x="${x + 2.5}" y="${y + 2.5}" width="${w - 5}" height="${h - 5}" fill="${active ? 'url(#scr)' : '#9aa1a8'}"/></g>`;
+      return [`<linearGradient id="tab" x2="0" y2="1"><stop stop-color="#fff0a0"/><stop offset="1" stop-color="#ffcb00"/></linearGradient>
+        <linearGradient id="frm" x2=".3" y2="1"><stop stop-color="#f2f2f2"/><stop offset="1" stop-color="#b4b4b4"/></linearGradient>
+        <linearGradient id="scr" x2=".3" y2="1"><stop stop-color="#3e454c"/><stop offset="1" stop-color="#15191c"/></linearGradient>`,
+        `${win(20, 12, 38, 26, false)}${win(14, 20, 38, 26, false)}${win(7, 29, 42, 29, true)}
+        <path d="M14 39l5 4-5 4" stroke="#ffcb00" stroke-width="2.4" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M22 48h8" stroke="#e8e8e8" stroke-width="2.4" stroke-linecap="round"/>`];
+    },
+    cache: (ow) => {
+      const slab = (t, c) => {
+        const cx = 32, hw = 23, hh = 11.5, d = 5;
+        return `<g stroke="${c.o}" stroke-width="${ow}" stroke-linejoin="round">
+          <path d="M${cx - hw} ${t}L${cx} ${t + hh}V${t + hh + d}L${cx - hw} ${t + d}z" fill="${c.l}"/>
+          <path d="M${cx} ${t + hh}L${cx + hw} ${t}V${t + d}L${cx} ${t + hh + d}z" fill="${c.r}"/>
+          <path d="M${cx} ${t - hh}L${cx + hw} ${t}L${cx} ${t + hh}L${cx - hw} ${t}z" fill="${c.t}"/></g>
+          <path d="M${cx - hw + 2.5} ${t}L${cx} ${t - hh + 1.3}" stroke="#fff" stroke-opacity=".6" stroke-width=".9"/>`;
+      };
+      const blue = { t: 'url(#bt)', l: '#4f80b6', r: '#2e5b8e', o: '#1b3656' };
+      const amber = { t: 'url(#at)', l: '#eda61c', r: '#c07f0a', o: '#734a04' };
+      return [`<linearGradient id="bt" x2="1" y2="1"><stop stop-color="#b9d6f4"/><stop offset="1" stop-color="#7aa7d9"/></linearGradient>
+        <linearGradient id="at" x2="1" y2="1"><stop stop-color="#fff0b0"/><stop offset="1" stop-color="#ffcf4d"/></linearGradient>`,
+        `${slab(45, blue)}${slab(37, blue)}${slab(29, blue)}${slab(17, amber)}`];
+    },
+    ai: (ow) => {
+      // three glass layers receding up-right, units on each, the active path lit in amber
+      const panes = [[30, 7], [19, 15], [8, 23]];
+      const dot = ([x, y], j) => [x + 13, y + 7 + j * 8];
+      const hot = [1, 0, 1];
+      let s = '';
+      panes.forEach((p, i) => {
+        if (i) {
+          const prev = panes[i - 1];
+          let e = '';
+          for (let a = 0; a < 3; a++) for (let b = 0; b < 3; b++) { const A = dot(prev, a), B = dot(p, b); e += `M${A[0]} ${A[1]}L${B[0]} ${B[1]}`; }
+          const A = dot(prev, hot[i - 1]), B = dot(p, hot[i]);
+          s += `<path d="${e}" stroke="#2a4d75" stroke-opacity=".55" stroke-width=".8"/><path d="M${A[0]} ${A[1]}L${B[0]} ${B[1]}" stroke="#e3950b" stroke-width="1.8"/>`;
+        }
+        s += `<rect x="${p[0]}" y="${p[1]}" width="26" height="30" rx="1.5" fill="url(#glass)" stroke="#27507f" stroke-width="${ow}"/>
+          <path d="M${p[0] + 1.2} ${p[1] + 28}V${p[1] + 1.2}H${p[0] + 24.5}" stroke="#fff" stroke-opacity=".7" stroke-width=".8" fill="none"/>`;
+        for (let j = 0; j < 3; j++) {
+          const [x, y] = dot(p, j), on = j === hot[i];
+          s += `<circle cx="${x}" cy="${y}" r="${on ? 3.2 : 2.5}" fill="url(#${on ? 'sa' : 'sb'})" stroke="${on ? '#7a4d04' : '#1b3656'}" stroke-width="${ow * 0.7}"/>`;
+        }
+      });
+      return [`<linearGradient id="glass" x2=".5" y2="1"><stop stop-color="#e4f0fb" stop-opacity=".92"/><stop offset="1" stop-color="#8fb6de" stop-opacity=".78"/></linearGradient>
+        <radialGradient id="sb" cx=".35" cy=".3" r=".8"><stop stop-color="#e6f1fc"/><stop offset=".45" stop-color="#8db6e3"/><stop offset="1" stop-color="#2d5e98"/></radialGradient>
+        <radialGradient id="sa" cx=".35" cy=".3" r=".8"><stop stop-color="#fff6d0"/><stop offset=".45" stop-color="#ffd257"/><stop offset="1" stop-color="#d38708"/></radialGradient>`, s];
+    },
+    git: (ow) => {
+      const lines = [[18, 24, 16, '#3a6fb0'], [22, 30, 18, '#6e675a'], [22, 36, 10, '#d88a0c'], [26, 42, 14, '#6e675a'], [22, 48, 20, '#3a6fb0'], [18, 54, 8, '#6e675a']];
+      return [`<linearGradient id="pg" x2=".6" y2="1"><stop stop-color="#ffffff"/><stop offset="1" stop-color="#dcd5c4"/></linearGradient>`,
+        `<g transform="matrix(1 -.1 .06 1 -1 3)">
+          <path d="M12 10H40L50 20V60H12Z" fill="url(#pg)" stroke="#5f584a" stroke-width="${ow}" stroke-linejoin="round"/>
+          <path d="M40 10V20H50" fill="#cfc6b1" stroke="#5f584a" stroke-width="${ow}" stroke-linejoin="round"/>
+          <path d="M13 59V11H39" stroke="#fff" stroke-width=".9" fill="none"/>
+          ${lines.map(([x, y, w, c]) => `<path d="M${x} ${y}h${w}" stroke="${c}" stroke-width="2.8" stroke-linecap="round"/>`).join('')}
+        </g>`];
+    },
+  };
+  const pick = { p2p: 'green', kld: 'warm', advice: 'blue', cache: 'violet', ai: 'blue', git: 'warm' };
+
+  const card = (id) => {
+    const [d, body] = OBJ[id](1.1);
+    const [t, b] = GROUNDS[pick[id]];
+    const s = 1.42;
+    return svg(160, 120, `<rect width="160" height="120" fill="url(#bg)"/>
+      <ellipse cx="80" cy="104" rx="44" ry="7" fill="#000" opacity=".3" filter="url(#blur)"/>
+      <g transform="translate(${80 - 32 * s} ${58 - 32 * s}) scale(${s})">${body}</g>`,
+      `<linearGradient id="bg" x2="0" y2="1"><stop stop-color="${t}"/><stop offset="1" stop-color="${b}"/></linearGradient>
+      <filter id="blur" x="-20%" y="-100%" width="140%" height="300%"><feGaussianBlur stdDeviation="3"/></filter>${common}${d}`);
+  };
+  const icon = (id) => {
+    const [d, body] = OBJ[id](2);
+    return svg(64, 64, body, common + d);
+  };
+  return { card, icon };
+})();
+
+/* ---------- page ---------- */
+const DIRS = [
+  ['A', 'Editorial', 'Flat fields of two or three muted inks, one geometric idea per post, hairlines, halftone and paper grain. No objects.', A, [
+    'Generated: the seed picks a palette and a ground motif (disc, split, halftone, rules), and the tag rule picks a flat emblem. Grain is one SVG filter.',
+    'Bespoke 1200x630 covers extend the colour field sideways, so the 4:3 crop loses nothing.',
+    'Risk: abstraction drifts into vagueness unless each post gets one clear idea.']],
+  ['B', 'Technical drawing', 'Monoline figures in one stroke weight on drafting grounds (slate, paper, graphite). Hatching marks the point of the figure.', B, [
+    'Generated: three grounds from the seed and emblems in the same stroke. This is the easiest direction to template in thumb-art.html.',
+    'Covers most subjects (hardware, maths, workflow) without props.',
+    'Risk: a grid of diagrams looks samey, so the ground and accent colours have to carry the variety.']],
+  ['C', 'Haiku icon', 'One HVIF-style object per post: oblique view, top-left light, tone-on-tone outlines. The row icon is the bare object, like Tracker.', C, [
+    'Closest fit to the desktop: rows show real Haiku-style icons, and cards show the same object on a quiet ground.',
+    'Takes the most drawing per post. Generated emblems keep the current thumb-art.html structure (emblem plus seeded ground).',
+    'Risk: object metaphors slide back into clip-art. The rules are one object, no floating props, no glow or dot fields.']],
+];
+const esc = (s) => s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/"/g, '&quot;');
+const block = (D, mode) => `<div class="mode ${mode}"><div class="tag">${mode}</div>
+  <div class="cards">${POSTS.map((p) => `<div class="card"><img alt="" src="${uri(D.card(p.id))}"><b>${esc(p.title)}</b><small>${p.kind}</small></div>`).join('')}</div>
+  <div class="rows">${POSTS.map((p) => `<div class="row"><img alt="" src="${uri(D.icon(p.id))}"><span>${esc(p.title)}</span><small>${p.date}</small></div>`).join('')}</div></div>`;
+document.getElementById('out').innerHTML = DIRS.map(([k, name, desc, D, notes]) => `<section id="${k}">
+  <div class="head"><h2>${k}. ${name}</h2><p>${desc}</p></div>${block(D, 'light')}${block(D, 'dark')}
+  <div class="notes"><ul>${notes.map((n) => `<li>${n}</li>`).join('')}</ul></div></section>`).join('');
+</script>
+</body>
+</html>

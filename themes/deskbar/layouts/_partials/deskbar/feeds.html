@@ -1,0 +1,66 @@
+{{- /* The Feeds app's items, fetched and parsed at build time, since browsers can't read other sites' feeds (CORS).
+       Returns { feeds: [{ name, site, url, count }], items: [{ feed, title, link, date, summary }] }, newest first.
+
+       The feed list is the site's assets/feeds.opml, as feed readers export it (NetNewsWire: File > Export
+       Subscriptions). Hugo's data loader rejects .opml, hence assets. Folders are flattened, and feeds whose
+       xmlUrl is in params.deskbar.feeds.exclude are dropped. An xmlUrl without a scheme is an asset path
+       (assets/<path>), for fixtures and offline builds. RSS 2.0, RSS 1.0 and Atom parse. A feed that fails to fetch
+       or parse is left out with a warning, so one broken feed never stops the build, and so is one with no items. Items without a title, link or
+       date are dropped, and summaries are plain text. Every feed keeps its newest perFeed items, with no overall cap,
+       so busy feeds never crowd a quiet one out. Remote responses are cached like any resources.GetRemote call: set
+       caches.getresource.maxAge (e.g. 6h) or local builds keep the first copy for ever.
+       params.deskbar.feeds: { perFeed, summaryChars, exclude } */ -}}
+{{- $cfg := site.Params.deskbar.feeds | default dict -}}
+{{- $per := $cfg.perFeed | default 10 -}}
+{{- $chars := $cfg.summaryChars | default 280 -}}
+{{- $opml := dict -}}
+{{- with resources.Get "feeds.opml" }}{{ $opml = .Content | transform.Unmarshal }}{{ end -}}
+{{- $list := slice -}}
+{{- range partial "deskbar/feeds/outlines.html" (($opml.body | default dict).outline) -}}
+  {{- if not (in ($cfg.exclude | default slice) .url) }}{{ $list = $list | append . }}{{ end -}}
+{{- end -}}
+{{- $feeds := slice -}}
+{{- $all := slice -}}
+{{- range $list -}}
+  {{- $f := . -}}
+  {{- $got := partial "deskbar/feeds/get.html" $f.url -}}
+  {{- $doc := $got.doc -}}
+  {{- $err := $got.err -}}
+  {{- $ch := $doc.channel | default dict -}}
+  {{- $raw := partial "deskbar/feeds/entries.html" $doc -}}
+  {{- if and (not $err) (not $raw) }}{{ $err = "no RSS items or Atom entries" }}{{ end -}}
+  {{- if $err }}{{ warnf "Feeds: skipped %s: %v" $f.url $err }}{{ end -}}
+  {{- $name := $f.name | default (partial "deskbar/feeds/text.html" ($ch.title | default $doc.title)) | plainify | htmlUnescape | strings.TrimSpace -}}
+  {{- $site := $f.site | default (partial "deskbar/feeds/link.html" ($ch.link | default $doc.link)) -}}
+  {{- $u := urls.Parse $f.url -}}
+  {{- if and (not $site) $u.Host }}{{ $site = printf "%s://%s/" $u.Scheme $u.Host }}{{ end -}}
+  {{- $name = $name | default $u.Host | default $f.url -}}
+  {{- $items := slice -}}
+  {{- range $raw -}}
+    {{- if not (reflect.IsMap .) }}{{ continue }}{{ end -}}
+    {{- $title := partial "deskbar/feeds/text.html" .title | plainify | htmlUnescape | replaceRE `\s+` " " | strings.TrimSpace -}}
+    {{- $link := partial "deskbar/feeds/link.html" .link -}}
+    {{- /* relative links resolve against the feed's site */ -}}
+    {{- if and $link $site (not (findRE `^https?://` $link 1)) -}}
+      {{- with try ((urls.Parse $site).ResolveReference (urls.Parse $link)) }}{{ with .Value }}{{ $link = .String }}{{ end }}{{ end -}}
+    {{- end -}}
+    {{- $when := "" -}}
+    {{- with .published | default .pubDate | default .updated | default .date -}}
+      {{- with try (time.AsTime (partial "deskbar/feeds/text.html" .)) }}{{ with .Value }}{{ $when = . }}{{ end }}{{ end -}}
+    {{- end -}}
+    {{- if not (and $title (findRE `^https?://` $link 1) $when) }}{{ continue }}{{ end -}}
+    {{- $text := "" -}}
+    {{- range slice .description .summary .encoded .content -}}
+      {{- if not $text }}{{ $text = partial "deskbar/feeds/text.html" . }}{{ end -}}
+    {{- end -}}
+    {{- /* script and style bodies are text to plainify, so they go first; truncate is avoided, as it returns HTML */ -}}
+    {{- $text = $text | replaceRE `(?is)<(script|style|noscript)\b.*?</(script|style|noscript)>` " " | plainify | htmlUnescape | replaceRE `\s+` " " | strings.TrimSpace -}}
+    {{- if gt (strings.RuneCount $text) $chars }}{{ $text = printf "%s..." (substr $text 0 $chars | replaceRE `\s+\S*$` "") }}{{ end -}}
+    {{- $items = $items | append (dict "feed" $name "title" $title "link" $link "date" $when "ts" $when.Unix "summary" $text) -}}
+  {{- end -}}
+  {{- $items = first $per (sort $items "ts" "desc") -}}
+  {{- if $items }}{{ $feeds = $feeds | append (dict "name" $name "site" $site "url" $f.url "count" (len $items)) }}{{ end -}}
+  {{- /* item by item: appending a whole list to one that has changed type nests it rather than merging */ -}}
+  {{- range $items }}{{ $all = $all | append . }}{{ end -}}
+{{- end -}}
+{{- return dict "feeds" $feeds "items" (sort $all "ts" "desc") -}}

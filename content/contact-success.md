@@ -1,7 +1,7 @@
 ---
 title: "Success"
 description: "Message Sent"
-aliases: ["contact", "email", "message"]
+aliases: ["message"]  # /contact/ and /email/ belong to contact.md
 author: "Sam McLeod"
 norss: true
 comments: false
@@ -10,6 +10,7 @@ subtitle: Message Sent
 readingTime: false
 hiddenFromHomePage: true
 hiddenFromSearch: true
+deskbarHidden: true # keeps it out of Tracker and Spotlight
 toc:
   enable: false
   auto: false

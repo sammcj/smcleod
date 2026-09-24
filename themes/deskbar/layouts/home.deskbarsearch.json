@@ -1,0 +1,53 @@
+{{- /* Spotlight's site index (D28): every regular page (posts, pages, tools) with its plain text cut to
+       params.deskbar.searchBodyChars (default 3000), app pages such as the Tools folder and Photos, every photo
+       album and the tags and series. Pages with searchHidden or deskbarHidden in front matter are left out.
+       Sites opt in by adding "deskbarsearch" to outputs.home; the shell fetches /search.json on first open.
+       It is a home output rather than a fingerprinted resource because a resource would have to be built while
+       each page renders its panel, and reading every page's .Content from there deadlocks Hugo's page renders. */ -}}
+{{- $sections := site.Params.deskbar.readerSections | default (slice "posts") -}}
+{{- $chars := site.Params.deskbar.searchBodyChars | default 3000 -}}
+{{- $entries := slice -}}
+{{- $photosURL := "" -}}
+{{- range site.Pages -}}
+  {{- $win := .Params.window | default "" -}}
+  {{- if and (or .IsPage $win) (not .IsHome) (not .Params.searchHidden) (not .Params.deskbarHidden) -}}
+    {{- $kind := "page" -}}
+    {{- if and .IsPage (in $sections .Section) }}{{ $kind = "post" }}{{ end -}}
+    {{- /* folders are generic, so only a folder that says so (searchKind: tool) joins the Tools group */ -}}
+    {{- if eq $win "tool" }}{{ $kind = "tool" }}{{ end -}}
+    {{- with .Params.searchKind }}{{ $kind = . }}{{ end -}}
+    {{- if eq $win "photos" }}{{ $kind = "photo" }}{{ $photosURL = .RelPermalink }}{{ end -}}
+    {{- /* .Content rather than .Plain, to drop the heading "#" links (render-heading.html) and the text of inline
+           scripts and styles. substr rather than truncate: truncate treats text such as "<div>" in code as markup. */ -}}
+    {{- $body := .Content | replaceRE `(?s)<(script|style)\b.*?</(script|style)>|<a class="hlink"[^>]*>#</a>` " " -}}
+    {{- $body = $body | plainify | htmlUnescape | replaceRE `\s+` " " | strings.TrimSpace -}}
+    {{- if gt (len $body) $chars }}{{ $body = substr $body 0 $chars | replaceRE `\s+\S*$` "" }}{{ end -}}
+    {{- $e := dict "title" .Title "url" .RelPermalink "kind" $kind "description" (.Description | default "") "body" $body -}}
+    {{- with .Params.icon }}{{ $e = merge $e (dict "icon" .) }}{{ end -}}
+    {{- if eq $kind "post" -}}
+      {{- $e = merge $e (dict "date" (.Date.Format "2006-01-02")) -}}
+      {{- $p := . -}}
+      {{- range $tax := slice "tags" "series" -}}
+        {{- $names := slice -}}
+        {{- range $p.GetTerms $tax }}{{ $names = $names | append .Data.Term }}{{ end -}}
+        {{- with $names }}{{ $e = merge $e (dict $tax .) }}{{ end -}}
+      {{- end -}}
+    {{- end -}}
+    {{- $entries = $entries | append $e -}}
+  {{- end -}}
+{{- end -}}
+{{- with $photosURL -}}
+  {{- $url := . -}}
+  {{- range partialCached "deskbar/apps/albums.html" site.Home "search-index" -}}
+    {{- $first := index .items 0 -}}
+    {{- $entries = $entries | append (dict "title" .title "url" (printf "%s?album=%s" $url (urlquery .id)) "kind" "photo" "thumb" ($first.thumb | default $first.src) "count" (len .items)) -}}
+  {{- end -}}
+{{- end -}}
+{{- range $tax, $kind := dict "tags" "tag" "series" "series" -}}
+  {{- with index site.Taxonomies $tax -}}
+    {{- range .ByCount -}}
+      {{- $entries = $entries | append (dict "title" .Page.Data.Term "url" .Page.RelPermalink "kind" $kind "count" .Count) -}}
+    {{- end -}}
+  {{- end -}}
+{{- end -}}
+{{- dict "version" 1 "entries" $entries | jsonify -}}

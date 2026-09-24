@@ -1,395 +1,109 @@
-/* Comparison Table Styles */
+/* Agentic coding tools comparison (layouts/partials/comparison-table.html). Colours follow the deskbar theme
+   tokens; light-dark() picks each highlight for the current scheme. Highlights are opaque so pinned cells hide
+   what scrolls beneath them. */
 :root {
-  /* Highlight colours at ~20% opacity */
-  --highlight-1: rgba(255, 244, 179, 0.3);  /* Very light yellow - enterprise */
-  --highlight-2: rgba(255, 205, 179, 0.35); /* Light orange-red */
-  --highlight-3: rgba(255, 171, 145, 0.4);  /* Medium orange-red */
-  --highlight-4: rgba(255, 138, 128, 0.45); /* Strong red-orange */
-  --highlight-5: rgba(239, 83, 80, 0.5);    /* Intense red */
-
-  /* Table cell max width - configurable */
+  --highlight-0: light-dark(#d9ecf6, #1d3a4b); /* meets requirements */
+  --highlight-1: light-dark(#fff3c4, #4a4119); /* requires subscription */
+  --highlight-2: light-dark(#ffdfc4, #5c3a14);
+  --highlight-3: light-dark(#ffc2a8, #7a3414);
+  --highlight-4: light-dark(#ff9f94, #8e2424);
+  --highlight-5: light-dark(#ef6f6b, #b3182c);
   --table-cell-max-width: 300px;
-
-  /* Positive highlight colour for Yes/True values */
-  --highlight-positive: rgba(173, 216, 230, 0.6); /* Light blue - more visible */
-}
-
-/* Wide table - centered */
-.wide-table {
-  width: 95vw !important;
-  max-width: 95vw !important;
-  position: relative !important;
-  left: 50% !important;
-  right: 50% !important;
-  margin-left: -47.5vw !important;
-  margin-right: -47.5vw !important;
-  overflow-x: auto !important;
-  overflow-y: visible !important;
-  margin-top: 2rem !important;
-  margin-bottom: 2rem !important;
 }
 
 .comparison-table-wrapper {
-  padding: 0 2rem;
-  display: flex;
-  justify-content: center;
-}
-
-.comparison-table {
-  width: auto;
-  border-collapse: collapse;
-  font-size: 0.9rem;
-  background-color: white;
-  margin: 0 auto;
-  table-layout: auto;
-}
-
-.comparison-table th {
-  background-color: #e3f2fd !important;
-  padding: 0.75rem;
-  text-align: center !important;
-  vertical-align: middle !important;
-  font-weight: 600;
-  border: 1px solid #ddd;
-  position: sticky;
-  top: 0;
-  z-index: 10;
-  min-width: 140px !important;
-  max-width: var(--table-cell-max-width);
-  word-wrap: break-word;
-  overflow-wrap: break-word;
-  hyphens: auto;
-}
-
-/* Tool header colours - manually configured */
-.comparison-table th.tool-avg-0 {
-  background-color: rgba(173, 216, 230, 0.7) !important; /* Light blue - best */
-}
-
-.comparison-table th.tool-avg-1 {
-  background-color: rgba(255, 244, 179, 0.7) !important; /* Light yellow */
-}
-
-.comparison-table th.tool-avg-2 {
-  background-color: rgba(255, 205, 179, 0.7) !important; /* Light orange */
-}
-
-.comparison-table th.tool-avg-3 {
-  background-color: rgba(255, 171, 145, 0.7) !important; /* Orange-red */
-}
-
-.comparison-table th.tool-avg-4 {
-  background-color: rgba(255, 138, 128, 0.7) !important; /* Red-orange */
-}
-
-.comparison-table th.tool-avg-5 {
-  background-color: rgba(239, 83, 80, 0.7) !important; /* Red - worst */
-}
-
-.comparison-table td {
-  padding: 0.75rem;
-  border: 1px solid #ddd;
-  vertical-align: middle;
-  background-color: white;
-  max-width: var(--table-cell-max-width);
-  word-wrap: break-word;
-  overflow-wrap: break-word;
-  hyphens: auto;
-  text-align: center;
-}
-
-.comparison-table .feature-column {
-  background-color: #f0f4f7 !important;
-  font-weight: 500;
-}
-
-.comparison-table .feature-name {
-  background-color: #f0f4f7 !important;
-  font-weight: 500;
-  min-width: 200px;
-  position: sticky;
-  left: 0;
-  z-index: 5;
-}
-
-.comparison-table .category-row {
-  background-color: white !important;
-}
-
-.comparison-table .category-name {
-  font-weight: 600;
-  padding: 0.5rem 0.75rem;
-  background-color: white !important;
-}
-
-/* Highlight levels - with !important to override theme styles */
-.comparison-table td.highlight-0 {
-  background-color: rgba(173, 216, 230, 0.5) !important; /* Light blue for positive/good */
-}
-
-.comparison-table td.highlight-1 {
-  background-color: var(--highlight-1) !important;
-}
-
-.comparison-table td.highlight-2 {
-  background-color: var(--highlight-2) !important;
-}
-
-.comparison-table td.highlight-3 {
-  background-color: var(--highlight-3) !important;
-}
-
-.comparison-table td.highlight-4 {
-  background-color: var(--highlight-4) !important;
-}
-
-.comparison-table td.highlight-5 {
-  background-color: var(--highlight-5) !important;
-}
-
-/* Legend styles */
-.comparison-legend {
-  margin: 1rem auto 2rem auto;
-  padding: 1rem;
-  background-color: #f5f5f5;
+  --ct-mark: light-dark(rgba(0,0,0,.38), rgba(255,255,255,.5));
+  max-height: min(78dvh, 1100px);
+  overflow: auto;
+  margin: 1.2em 0 2em;
+  border: 1px solid var(--frame-lo);
   border-radius: 4px;
-  max-width: 800px;
+  background: var(--content);
 }
+.comparison-table-wrapper:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
 
-.comparison-legend h4 {
-  margin: 0 0 0.5rem 0;
-  font-size: 0.9rem;
+/* .comparison-table-wrapper prefix outranks the reader's .rd table / th rules */
+.comparison-table-wrapper .comparison-table {
+  display: table; overflow: visible; width: max-content; min-width: 100%; margin: 0;
+  border-collapse: separate; border-spacing: 0;
+  font: 13px/1.45 var(--ui); color: var(--fg);
 }
-
-.comparison-legend ul {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-  display: flex;
-  flex-wrap: wrap;
-  gap: 1rem;
+.comparison-table-wrapper .comparison-table :is(th, td) {
+  min-width: 130px; max-width: var(--table-cell-max-width); padding: 8px 10px;
+  border: 0; border-right: 1px solid var(--line); border-bottom: 1px solid var(--line);
+  text-align: center; vertical-align: middle; overflow-wrap: break-word; hyphens: auto;
+  background: var(--content); color: var(--fg);
 }
+.comparison-table-wrapper .comparison-table tbody tr:nth-child(even) { background: none; }
 
-.comparison-legend li {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  font-size: 0.85rem;
+/* Pinned header row and feature column */
+.comparison-table-wrapper .comparison-table thead th {
+  position: sticky; top: 0; z-index: 2; font-weight: 700;
+  border-bottom: 1px solid var(--frame-lo); box-shadow: 0 1px 0 var(--frame-lo);
 }
-
-.legend-swatch {
-  display: inline-block;
-  width: 40px;
-  height: 20px;
-  border: 1px solid #ddd;
-  border-radius: 2px;
+.comparison-table-wrapper .comparison-table .feature-name,
+.comparison-table-wrapper .comparison-table .feature-column {
+  position: sticky; left: 0; z-index: 1; min-width: 190px; text-align: left; font-weight: 600;
+  background: var(--side); border-right: 1px solid var(--frame-lo);
 }
+.comparison-table-wrapper .comparison-table thead .feature-column { z-index: 3; }
 
-.legend-swatch.highlight-1 {
-  background-color: var(--highlight-1) !important;
+.comparison-table-wrapper .comparison-table .category-name {
+  max-width: none; padding: 12px 10px 6px; text-align: left; font-weight: 700; font-size: 12px;
+  letter-spacing: .04em; text-transform: uppercase; color: var(--muted); background: var(--code-bg);
 }
+/* the name stays in view while the row scrolls sideways */
+.comparison-table-wrapper .category-name > span { position: sticky; left: 10px; }
 
-.legend-swatch.highlight-2 {
-  background-color: var(--highlight-2) !important;
-}
+.comparison-table-wrapper .comparison-table :is(th.tool-avg-0, td.highlight-0) { background-color: var(--highlight-0); }
+.comparison-table-wrapper .comparison-table :is(th.tool-avg-1, td.highlight-1) { background-color: var(--highlight-1); }
+.comparison-table-wrapper .comparison-table :is(th.tool-avg-2, td.highlight-2) { background-color: var(--highlight-2); }
+.comparison-table-wrapper .comparison-table :is(th.tool-avg-3, td.highlight-3) { background-color: var(--highlight-3); }
+.comparison-table-wrapper .comparison-table :is(th.tool-avg-4, td.highlight-4) { background-color: var(--highlight-4); }
+.comparison-table-wrapper .comparison-table :is(th.tool-avg-5, td.highlight-5) { background-color: var(--highlight-5); }
 
-.legend-swatch.highlight-3 {
-  background-color: var(--highlight-3) !important;
-}
-
-.legend-swatch.highlight-4 {
-  background-color: var(--highlight-4) !important;
-}
-
-.legend-swatch.highlight-5 {
-  background-color: var(--highlight-5) !important;
-}
-
-/* Cell link styling */
-.comparison-table td .cell-link {
-  color: inherit;
-  text-decoration: none;
-  display: block;
-  cursor: pointer !important;
-  position: relative;
-  z-index: 10;
-  width: 100%;
-}
-
-.comparison-table td .cell-link:hover {
-  text-decoration: underline;
-}
-
-/* Cells with links should have pointer cursor */
-.comparison-table td.has-cell-link {
-  cursor: pointer !important;
-  padding: 0;
-}
-
-.comparison-table td.has-cell-link .cell-link {
-  padding: 0.75rem;
-  cursor: pointer !important;
-}
-
-/* Tooltip styling - tooltips are JavaScript-driven only */
-.comparison-table td[data-tooltip] {
-  position: relative;
-}
-
-/* Cell has tooltip but no link */
-.comparison-table td.has-tooltip:not(.has-cell-link) {
+/* Cells with more to say get a corner mark */
+.comparison-table-wrapper .comparison-table td.has-tooltip {
   cursor: help;
+  background-image: linear-gradient(225deg, var(--ct-mark) 5px, transparent 5px);
+}
+.comparison-table-wrapper .comparison-table td.has-tooltip[aria-describedby] { outline: 2px solid var(--accent); outline-offset: -2px; }
+.comparison-table-wrapper .comparison-table .cell-link {
+  color: inherit; text-decoration: underline; text-underline-offset: 2px;
+  text-decoration-color: color-mix(in srgb, currentColor 40%, transparent);
+}
+.comparison-table-wrapper .comparison-table .cell-link:hover { text-decoration-color: currentColor; }
+.comparison-table-wrapper .comparison-table td.has-cell-link { cursor: pointer; }
+
+.comparison-table-wrapper .visually-hidden {
+  position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap;
 }
 
-/* Cell has both link and tooltip - link cursor takes precedence */
-.comparison-table td.has-cell-link[data-tooltip] {
-  cursor: pointer !important;
+@media (max-width: 600px) {
+  .comparison-table-wrapper .comparison-table { font-size: 12.5px; }
+  .comparison-table-wrapper .comparison-table :is(th, td) { min-width: 110px; max-width: min(var(--table-cell-max-width), 190px); padding: 7px 8px; }
+  .comparison-table-wrapper .comparison-table :is(.feature-name, .feature-column) { min-width: 118px; max-width: 118px; }
 }
 
-.comparison-table td.has-cell-link[data-tooltip] .cell-link {
-  cursor: pointer !important;
+/* Tooltip popover (comparison-table-tooltips.js); in the top layer where supported, so no window clips it */
+.ct-tip {
+  position: fixed; inset: auto; margin: 0; z-index: 1000;
+  width: max-content; max-width: min(380px, calc(100vw - 16px)); padding: 9px 12px;
+  font: 13px/1.5 var(--ui); color: var(--fg); text-align: left; overflow-wrap: anywhere;
+  background: var(--content); border: 1px solid var(--frame-lo); border-radius: 6px;
+  box-shadow: 0 6px 20px rgba(0,0,0,.22);
 }
+.ct-tip a { color: var(--accent); text-underline-offset: 2px; }
 
-@media (max-width: 768px) {
-  .wide-table {
-    padding: 0 1rem !important;
-    margin-left: -47.5vw !important;
-  }
-
-  .comparison-table {
-    font-size: 0.8rem;
-  }
-
-  .comparison-table td,
-  .comparison-table th {
-    padding: 0.5rem;
-  }
-
-  .comparison-table .feature-name {
-    min-width: 150px;
-  }
-
-  /* Adjust tooltip size for mobile */
-  .comparison-table td[data-tooltip]::after {
-    max-width: 250px;
-    font-size: 0.8rem;
-    padding: 0.5rem 0.75rem;
-  }
-}
-
-/* Interactive tooltips with clickable links */
-.interactive-tooltip {
-  position: fixed;
-  background-color: rgba(0, 0, 0, 0.9);
-  color: white;
-  padding: 0.75rem 1rem;
-  border-radius: 6px;
-  font-size: 0.85rem;
-  max-width: 400px;
-  width: auto;
-  z-index: 1000;
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity 0.2s ease-in-out;
-  line-height: 1.4;
-  text-align: left;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-  white-space: normal;
-  word-wrap: break-word;
-  overflow-wrap: break-word;
-}
-
-.interactive-tooltip.visible {
-  opacity: 1;
-  pointer-events: auto;
-}
-
-/* Position is now handled by JavaScript for fixed positioning */
-
-.tooltip-arrow {
-  position: absolute;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 0;
-  height: 0;
-  border: 6px solid transparent;
-}
-
-.interactive-tooltip.top .tooltip-arrow {
-  bottom: 0;
-  transform: translateX(-50%) translateY(100%);
-  border-top-color: rgba(0, 0, 0, 0.9);
-  border-bottom: none;
-}
-
-.interactive-tooltip.bottom .tooltip-arrow {
-  top: 0;
-  transform: translateX(-50%) translateY(-100%);
-  border-bottom-color: rgba(0, 0, 0, 0.9);
-  border-top: none;
-}
-
-.tooltip-link {
-  color: #66b3ff;
-  text-decoration: underline;
-  cursor: pointer;
-  word-break: break-all;
-}
-
-.tooltip-link:hover {
-  color: #99ccff;
-}
-
-/* Cells with interactive tooltips */
-.comparison-table td.has-interactive-tooltip {
-  cursor: help;
-}
-
-@media (max-width: 768px) {
-  .interactive-tooltip {
-    max-width: 250px;
-    font-size: 0.8rem;
-    padding: 0.5rem 0.75rem;
-  }
-}
-
-/* Dark mode overrides - force black text on light backgrounds */
-@media (prefers-color-scheme: dark) {
-  .comparison-table,
-  .comparison-table th,
-  .comparison-table td,
-  .comparison-table .feature-name,
-  .comparison-table .feature-column,
-  .comparison-table .category-name,
-  .comparison-table .category-row,
-  .comparison-table td .cell-link {
-    color: #000 !important;
-  }
-
-  .comparison-legend {
-    color: #000 !important;
-  }
-
-  .comparison-legend h4,
-  .comparison-legend li {
-    color: #000 !important;
-  }
-}
-
-/* Also handle theme class-based dark mode if used */
-.dark .comparison-table,
-.dark .comparison-table th,
-.dark .comparison-table td,
-.dark .comparison-table .feature-name,
-.dark .comparison-table .feature-column,
-.dark .comparison-table .category-name,
-.dark .comparison-table .category-row,
-.dark .comparison-table td .cell-link {
-  color: #000 !important;
-}
-
-.dark .comparison-legend,
-.dark .comparison-legend h4,
-.dark .comparison-legend li {
-  color: #000 !important;
-}
+/* Legend (comparison-table-legend.html) */
+.comparison-legend { margin: 1em 0; font: 13px/1.4 var(--ui); color: var(--fg); }
+.comparison-legend .legend-title { margin: 0 0 6px; font-weight: 700; }
+.comparison-legend ul { display: flex; flex-wrap: wrap; gap: 6px 16px; margin: 0; padding: 0; list-style: none; }
+.comparison-legend li { display: flex; align-items: center; gap: 6px; margin: 0; }
+.legend-swatch { width: 26px; height: 16px; border: 1px solid var(--frame-lo); border-radius: 3px; }
+.legend-swatch.highlight-0 { background: var(--highlight-0); }
+.legend-swatch.highlight-1 { background: var(--highlight-1); }
+.legend-swatch.highlight-2 { background: var(--highlight-2); }
+.legend-swatch.highlight-3 { background: var(--highlight-3); }
+.legend-swatch.highlight-4 { background: var(--highlight-4); }
+.legend-swatch.highlight-5 { background: var(--highlight-5); }

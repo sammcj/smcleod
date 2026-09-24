@@ -1,5 +1,8 @@
-{{/* layouts/shortcodes/tool-ratings-heatmap.html */}}
-<div class="heatmap-container">
+{{- /* Tool ratings heatmap. The script runs on every mount when the page is routed into a window, so it
+       is wrapped in a function scope; the tooltip is placed relative to the container, which may scroll. */ -}}
+{{- $ratings := dict }}
+{{- if ge hugo.Version "0.156.0" }}{{ $ratings = hugo.Data.toolRatings }}{{ else }}{{ $ratings = site.Data.toolRatings }}{{ end }}
+<div class="heatmap-container wide-content">
     <div id="heatmap"></div>
     <div id="tooltip"></div>
     <div id="unrated-note"></div>
@@ -7,7 +10,8 @@
 </div>
 
 <script>
-    const toolData = {{ site.Data.toolRatings | jsonify | safeJS }};
+(() => {
+    const toolData = {{ $ratings | jsonify | safeJS }};
     const categories = Object.keys(toolData);
 
     function createHeatmap() {
@@ -100,8 +104,10 @@
                     left = Math.max(heatmapRect.left, Math.min(left, heatmapRect.right - tooltipRect.width));
                     top = Math.max(heatmapRect.top, Math.min(top, heatmapRect.bottom - tooltipRect.height));
 
-                    tooltip.style.left = `${left}px`;
-                    tooltip.style.top = `${top}px`;
+                    // viewport coordinates to the container's, which is the tooltip's positioned (and scrolling) parent
+                    const box = tooltip.offsetParent.getBoundingClientRect();
+                    tooltip.style.left = `${left - box.left + tooltip.offsetParent.scrollLeft}px`;
+                    tooltip.style.top = `${top - box.top + tooltip.offsetParent.scrollTop}px`;
                 });
 
                 cell.addEventListener('mouseout', () => {
@@ -172,15 +178,16 @@
     }
 
     document.addEventListener('DOMContentLoaded', createHeatmap);
+})();
 </script>
 
 <style>
+    /* width comes from the theme's wide-content class */
     .heatmap-container {
-        width: 95vw;
-        margin-left: 50%;
-        transform: translateX(-50%);
+        position: relative;
         overflow-x: auto;
-        padding-bottom: 200px;
+        padding-bottom: 40px;
+        font-family: var(--ui, sans-serif);
     }
 
     #heatmap {
@@ -248,11 +255,11 @@
 
     #tooltip {
         position: absolute;
-        background: white;
-        border: 1px solid #000;
+        background: var(--content, white);
+        border: 1px solid var(--line, #000);
         padding: 5px;
         display: none;
-        color: black;
+        color: var(--fg, black);
         text-shadow: none;
         z-index: 1000;
         max-width: 450px;

@@ -1,5 +1,7 @@
 {{- $rel := "" -}}
-<a href="{{ .Destination | safeURL }}"{{ with .Title }} title="{{ . }}"{{ end }}{{ if (urls.Parse .Destination).Host | or .Newtab }}{{ $rel = "noopener noreferrer" }} target="_blank"{{ end }} rel="{{ $rel }}{{ with .Rel }} {{ . }}{{ end }}"{{ with .Class }} class="{{ . }}"{{ end }}>
+{{- /* only other sites open in a new tab: the site's own pages and tools always open as windows in the shell */ -}}
+{{- $host := (urls.Parse .Destination).Host -}}
+<a href="{{ .Destination | safeURL }}"{{ with .Title }} title="{{ . }}"{{ end }}{{ if and $host (ne $host (urls.Parse site.BaseURL).Host) }}{{ $rel = "noopener noreferrer" }} target="_blank"{{ end }} rel="{{ $rel }}{{ with .Rel }} {{ . }}{{ end }}"{{ with .Class }} class="{{ . }}"{{ end }}>
     {{- with .Icon -}}
         {{- partial "plugin/icon.html" . -}}
     {{- end -}}

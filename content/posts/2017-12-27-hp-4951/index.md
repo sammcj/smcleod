@@ -14,6 +14,7 @@ cover:
 tags:
 - tech
 - hardware
+photos: true
 title: HP 4951C Protocol Analyser
 ---
 

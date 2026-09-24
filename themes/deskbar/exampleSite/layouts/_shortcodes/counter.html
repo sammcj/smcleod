@@ -1,0 +1,20 @@
+<p><button type="button" id="counter-btn">Count</button> <output id="counter-out">0</output></p>
+<p>Script order: <span id="counter-log"></span>. Page load: <span id="counter-ready">waiting</span>.</p>
+<script>
+  // wrapped so the page can open more than once without redeclaring anything
+  (function () {
+    window.counterLog = ['inline'];
+    var n = 0;
+    document.getElementById('counter-btn').addEventListener('click', function () {
+      document.getElementById('counter-out').textContent = String(++n);
+    });
+    window.addEventListener('load', function () {
+      document.getElementById('counter-ready').textContent = 'loaded';
+    });
+  })();
+</script>
+<script src="{{ "js/counter-lib.js" | relURL }}"></script>
+<script>
+  window.counterLog.push(window.counterLib ? 'after lib' : 'before lib');
+  document.getElementById('counter-log').textContent = window.counterLog.join(', ');
+</script>

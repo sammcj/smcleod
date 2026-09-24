@@ -1,0 +1,9 @@
+.build/
+node_modules/
+exampleSite/public/
+exampleSite/resources/
+exampleSite/.hugo_build.lock
+exampleSite/assets/jsconfig.json
+test-results/
+playwright-report/
+.DS_Store

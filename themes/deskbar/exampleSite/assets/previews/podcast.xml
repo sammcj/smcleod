@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Shaped like a podcast feed, with asset paths for the artwork. The show's artwork wins over each episode's. -->
+<rss version="2.0" xmlns:itunes="http://www.itunes.com/dtds/podcast-1.0.dtd">
+  <channel>
+    <title>Radio Deskbar</title>
+    <link>https://example.com/radio/</link>
+    <itunes:image href="previews/art.png"/>
+    <image>
+      <url>previews/art.png</url>
+      <title>Radio Deskbar</title>
+      <link>https://example.com/radio/</link>
+    </image>
+    <item>
+      <title>Episode 2: Window tabs</title>
+      <pubDate>Mon, 21 Sep 2026 08:00:00 +0000</pubDate>
+      <itunes:image href="previews/episode.png"/>
+    </item>
+    <item>
+      <title>Episode 1: Hello</title>
+      <pubDate>Mon, 14 Sep 2026 08:00:00 +0000</pubDate>
+      <itunes:image href="previews/episode.png"/>
+    </item>
+  </channel>
+</rss>

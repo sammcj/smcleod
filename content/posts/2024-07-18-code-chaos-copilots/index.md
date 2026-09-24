@@ -1,4 +1,5 @@
 ---
+url: "/2024/07/code-chaos-and-copilots-ai/llm-talk-july-2024/"  # keeps the live URL: Hugo 0.166 no longer keeps "/" from the title in :title slugs
 title: "Code, Chaos, and Copilots (AI/LLM Talk July 2024)"
 date: 2024-07-18T01:00:10+00:00
 # weight: 1

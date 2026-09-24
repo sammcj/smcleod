@@ -1,0 +1,15 @@
+{
+  "name": "deskbar",
+  "private": true,
+  "description": "Dev tooling only. The theme itself ships through Hugo Pipes and needs no Node at build time.",
+  "type": "module",
+  "license": "MIT",
+  "scripts": {
+    "test": "make test",
+    "e2e": "make e2e"
+  },
+  "devDependencies": {
+    "axe-core": "4.13.0",
+    "playwright": "^1.63.0"
+  }
+}

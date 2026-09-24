@@ -63,6 +63,17 @@
       overflow-x: hidden;
     }
   }
+
+  /* In a reader window, break out the theme's way (--rd-wide in its content.css), which never exceeds the window,
+     so on a phone the post can't scroll sideways */
+  .rd .quantisation-dashboard-wrapper {
+    width: var(--rd-wide);
+    max-width: none !important;
+    margin-left: calc(50% - var(--rd-wide) / 2);
+    transform: none;
+    padding: 0;
+    overflow-x: auto;
+  }
 </style>
 <div class="quantisation-dashboard-wrapper">
   {{ $dashboard := readFile "static/quantisation-dashboard.html" }}
