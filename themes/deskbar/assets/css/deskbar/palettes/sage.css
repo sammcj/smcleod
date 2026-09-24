@@ -1,0 +1,11 @@
+:where(:root)[data-palette=sage] {
+  --panel: linear-gradient(#4c5448, #3a4137); --panel-fg: #eef1ea;
+  --frame: light-dark(#d9dbd3, #45483f); --frame-hi: light-dark(#f8f9f5, #62665a);
+  --frame-lo: light-dark(#959a8c, #2b2d27); --frame-dk: light-dark(#50554a, #141511);
+  --tab: light-dark(#b5cf9c, #9dbb82); --tab-hi: light-dark(#e2eed6, #c3d9ae); --tab-lo: light-dark(#789560, #5f7a49);
+  --tab-dim: light-dark(#cfdfc0, #80966b); --tab-in: light-dark(#e0e2da, #50544a);
+  --tab-in-lo: light-dark(#adb2a4, #33362f); --tab-in-fg: light-dark(#474b41, #dcdfd4);
+  --accent: #4b7a3f; --link: light-dark(#3d6b31, #a3c98f); --ctl: #28391c;
+  --wall-1: light-dark(#6c8a5f, #34472f); --wall-2: light-dark(#4d6a43, #26351f); --wall-3: light-dark(#33482e, #182214);
+  --wall-glow: light-dark(rgba(255,214,120,.14), rgba(255,214,120,.07));
+}

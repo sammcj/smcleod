@@ -360,3 +360,37 @@ test('a dock item lights its running dot while a lazy app opened from it is open
   assert.deepEqual(page.errors, []);
   await page.context().close();
 });
+
+test('a dock item shows and hides its window: in front it minimises, minimised it comes back, behind it comes forward', async () => {
+  const page = await open(desktop, '/posts/');
+  const tk = win(page, 'tracker'), cp = win(page, 'control-panel'), dk = page.locator('#dock a.dk[href="/control-panel/"]');
+  await tk.waitFor();
+  await dk.click();
+  await cp.waitFor();
+  await page.waitForFunction(() => document.querySelector('.win.active .view[data-key="control-panel"]'));
+
+  await dk.click();
+  await cp.waitFor({ state: 'hidden' });
+  assert.equal(await page.locator('.task.min').count(), 1, 'minimised, not closed');
+  await dk.click();
+  await cp.waitFor();
+  await page.waitForFunction(() => document.querySelector('.win.active .view[data-key="control-panel"]'));
+
+  await tk.locator('.tab.on .tt').click();
+  await dk.click();
+  await page.waitForTimeout(400);
+  assert.ok(await cp.evaluate(w => w.classList.contains('active')), 'a window behind others comes to the front');
+  assert.ok(await tk.isVisible(), 'and the others stay');
+
+  // stacked behind Tracker's tab in the front window, it comes forward rather than minimising the stack
+  const t = await tk.locator('.tab.on .tt').boundingBox();
+  await dragTab(page, 'control-panel', { x: t.x + t.width / 2, y: t.y + t.height / 2 });
+  await page.mouse.up();
+  await page.locator('.tabs.multi .tab').first().locator('.tt').click();
+  await tk.waitFor();
+  await dk.click();
+  await cp.waitFor();
+  assert.equal(await page.locator('.task.min').count(), 0, 'the stack stays up');
+  assert.deepEqual(page.errors, []);
+  await page.context().close();
+});

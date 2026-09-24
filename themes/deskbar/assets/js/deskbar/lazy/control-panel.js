@@ -19,12 +19,16 @@ const PALETTE = ['palette', 'Colours', [
   ['xfce', 'Xfce', '#a3bddf #d9dde3 #3f6189'], ['sage', 'Sage', '#b5cf9c #d9dbd3 #4d6a43'],
   ['snow', 'Snow', '#bcd7fb #f2f5f9 #7eaee8'], ['mint', 'Mint', '#aee8d3 #f1f7f4 #5cc3a1'], ['peach', 'Peach', '#ffcfba #fbf6f3 #f59e7e'],
   ['synthwave', 'Synthwave', '#ff8fcb #e6def5 #4a2590'],
+  ['rose', 'Rosé', '#e9a8a6 #f2e9e1 #b98aa0'], ['ember', 'Ember', '#f5a04a #ebdbb2 #423c38'], ['solar', 'Solar', '#d5a41c #eee8d5 #0b3d4a'],
+  ['lagoon', 'Lagoon', '#ff8a70 #f0e6d2 #3fb1b8'],
 ], swatch];
 const MODE = ['theme', 'Mode', [['auto', 'Auto'], ['light', 'Light'], ['dark', 'Dark']]];
 const DECO = ['deco', 'Window style', [['haiku', 'Haiku'], ['beos', 'BeOS'], ['flat', 'Flat'], ['clear', 'Clear'], ['liquid', 'Liquid Ass'],
-  ['platinum', 'Platinum'], ['clearlooks', 'Clearlooks'], ['phosphor', 'Phosphor'], ['broadsheet', 'Broadsheet'], ['synthwave', 'Synthwave']], thumb('cp-deco')];
+  ['platinum', 'Platinum'], ['clearlooks', 'Clearlooks'], ['phosphor', 'Phosphor'], ['broadsheet', 'Broadsheet'], ['synthwave', 'Synthwave'],
+  ['pixel', 'Pixel'], ['woodblock', 'Woodblock']], thumb('cp-deco')];
 const WALL = ['wall', 'Wallpaper', [['rings', 'Rings'], ['plain', 'Plain'], ['grid', 'Grid'], ['dots', 'Dots'], ['hills', 'Hills'], ['liquid', 'Liquid'], ['clear', 'Clear'],
-  ['platinum', 'Platinum'], ['clearlooks', 'Clearlooks'], ['phosphor', 'Phosphor'], ['broadsheet', 'Broadsheet'], ['synthwave', 'Synthwave']], thumb('cp-wp')];
+  ['platinum', 'Platinum'], ['clearlooks', 'Clearlooks'], ['phosphor', 'Phosphor'], ['broadsheet', 'Broadsheet'], ['synthwave', 'Synthwave'],
+  ['pixel', 'Pixel'], ['woodblock', 'Woodblock']], thumb('cp-wp')];
 // Whole looks: window styles that bring their own wallpaper and dock (deco() below). owns: the Appearance groups a
 // look sets itself, disabled while it is on. Platinum and the rest are css/deskbar/looks/<name>.css, which draws
 // the window style, wallpaper, dock and both thumbnails; Liquid Ass and Clear live in control-panel.css.
@@ -36,6 +40,8 @@ const LOOKS = {
   phosphor: { wall: 'phosphor', dock: 'panel', owns: ['palette', 'dock', 'theme'] },
   broadsheet: { wall: 'broadsheet', dock: 'glass', owns: ['palette', 'dock'] },
   synthwave: { wall: 'synthwave', dock: 'glass', owns: ['palette', 'dock', 'theme'] },
+  pixel: { wall: 'pixel', dock: 'glass', owns: ['palette', 'dock'] },
+  woodblock: { wall: 'woodblock', dock: 'glass', owns: ['palette', 'dock'] },
 };
 // The Mac startup chime, synthesised rather than recorded: a slightly strummed F sharp major chord of detuned saws
 // through a closing low-pass filter, with a short echo for the room. Played only when the visitor picks Platinum,
@@ -70,8 +76,9 @@ LOOKS.platinum.hello = () => {
   });
   setTimeout(() => ctx.close(), 4800);
 };
-// a look's stylesheet, loaded once; anything else has none, and goes ahead at once
-const look = v => window.deskbar.loadLazy('look-' + v).catch(() => {});
+// a look's or palette's stylesheet, loaded once; anything else has none, and goes ahead at once
+const sheet = k => window.deskbar.loadLazy(k).catch(() => {});
+const look = v => sheet('look-' + v);
 const DOCK = ['dock', 'Dock', [['glass', 'Glass'], ['deskbar', 'Deskbar'], ['panel', 'Panel']], thumb('cp-dk')];
 const WIDTH = ['readerWidth', 'Width', [['narrow', 'Narrow'], ['normal', 'Normal'], ['wide', 'Wide']]];
 // Sans and Mono are the theme's UI and code fonts, already loaded; Atkinson Hyperlegible loads once chosen
@@ -160,6 +167,7 @@ function build(v, page) {
     else if (k === 'saverKind') store.set(k, e.target.value === 'sheep' ? null : e.target.value);
     else if (k === 'deco') { LOOKS[e.target.value]?.hello?.(); deco(e.target.value); }
     else if (k === 'wall') look(e.target.value).then(() => s.set(k, e.target.value));
+    else if (k === 'palette') sheet('palette-' + e.target.value).then(() => s.set(k, e.target.value));
     else if (k) s.set(k, e.target.value);
   });
   // A look's wallpaper and dock replace the visitor's, which are kept (deskbar:lookWas, so a reload in between doesn't
@@ -208,7 +216,9 @@ function build(v, page) {
     sync();
     status.value = `${shown.label} is back to the defaults.`;
   };
-  // every look's stylesheet, for the thumbnails it draws and so picking one applies at once
+  // every palette's and look's stylesheet, for the thumbnails looks draw and so picking one applies at once. Palettes
+  // go first: a look outranks them, and both lose ties to whatever loaded later.
+  for (const [n] of PALETTE[2]) sheet('palette-' + n);
   for (const n in LOOKS) look(n);
   sync();
   v.teardown = s.on(sync);

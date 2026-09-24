@@ -1,0 +1,17 @@
+/* Snow, Mint and Peach: near-white frames and panel with one clear colour, in place of the grey. Dark mode keeps the
+   hue in deep tinted neutrals. */
+:where(:root)[data-palette=snow] {
+  --panel: linear-gradient(light-dark(#fff, #253043), light-dark(#edf2f9, #1c2535)); --panel-fg: light-dark(#18212e, #edf2f9);
+  --panel-hover: light-dark(rgba(31,111,235,.09), rgba(255,255,255,.1));
+  --frame: light-dark(#f2f5f9, #232c3a); --frame-hi: light-dark(#fff, #36435a);
+  --frame-lo: light-dark(#c2ccd9, #151b25); --frame-dk: light-dark(#8593a8, #0a0e14);
+  --tab: light-dark(#bcd7fb, #8db8f2); --tab-hi: light-dark(#e6f0fe, #bcd6fa); --tab-lo: light-dark(#7ea5dc, #5a86c4);
+  --tab-dim: light-dark(#dae7f9, #7392bd); --tab-in: light-dark(#eef1f6, #2d3747);
+  --tab-in-lo: light-dark(#c7d0dc, #1c2330); --tab-in-fg: light-dark(#475264, #cad4e3);
+  --content: light-dark(#fff, #19202b); --fg: light-dark(#141c28, #e5eaf1); --muted: light-dark(#536072, #a8b4c5);
+  --line: light-dark(#e0e6ee, #2c3645); --side: light-dark(#f5f8fc, #1f2733); --read-bg: light-dark(#fff, #171d27);
+  --code-bg: light-dark(#f2f5fa, #222b38);
+  --accent: light-dark(#1f6feb, #2d6fd9); --link: light-dark(#1a5fd0, #82b1ff); --ctl: #173866;
+  --wall-1: light-dark(#a9cbf2, #203553); --wall-2: light-dark(#7eaee8, #182a42); --wall-3: light-dark(#5a93db, #0f1c2e);
+  --wall-glow: light-dark(rgba(255,255,255,.3), rgba(140,190,255,.08)); --wall-ring: light-dark(rgba(255,255,255,.14), rgba(255,255,255,.035));
+}

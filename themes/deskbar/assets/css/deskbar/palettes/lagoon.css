@@ -1,0 +1,18 @@
+/* Lagoon: a mid-century poolside. Coral tabs, a teal panel and sand frames in light; in dark the frames go deep
+   lagoon green and the coral drops a shade. */
+:where(:root)[data-palette=lagoon] {
+  --panel: linear-gradient(light-dark(#127a7e, #0d5a5e), light-dark(#0b5e62, #083f42)); --panel-fg: #f2fbfa;
+  --frame: light-dark(#f0e6d2, #1e3536); --frame-hi: light-dark(#fbf6ea, #33504f);
+  --frame-lo: light-dark(#c5b590, #102020); --frame-dk: light-dark(#7d7358, #071212);
+  --tab: light-dark(#ff8a70, #f0705a); --tab-hi: light-dark(#ffc4b5, #ffa593); --tab-lo: light-dark(#c9553d, #b04a36);
+  --tab-dim: light-dark(#ffbcae, #c8836f); --tab-in: light-dark(#e9e0cc, #2a4242);
+  --tab-in-lo: light-dark(#bfb08d, #182a2a); --tab-in-fg: light-dark(#554d3a, #cfe0dc);
+  --content: light-dark(#fffdf7, #182b2c); --fg: light-dark(#1f2a2a, #e8efe9); --muted: light-dark(#5b6663, #a9bcb8);
+  --line: light-dark(#e6dcc6, #2f4849); --side: light-dark(#f7f1e3, #1f3536); --read-bg: light-dark(#fdf9ef, #132324);
+  --code-bg: light-dark(#f3ecda, #22393a);
+  --accent: light-dark(#0f7c80, #14797d); --link: light-dark(#0b6b6f, #6fd8d6); --ctl: #4a1a10;
+  --wall-1: light-dark(#7fd3d6, #1c5c62); --wall-2: light-dark(#3fb1b8, #12444a); --wall-3: light-dark(#1a7f88, #0a2b30);
+  --wall-glow: light-dark(rgba(255,220,100,.4), rgba(255,127,102,.14));
+}
+/* as for Synthwave: the olive label text falls short on coral in dark */
+:root[data-palette=lagoon] .ticker-h { color: var(--ctl); }

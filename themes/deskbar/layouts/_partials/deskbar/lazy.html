@@ -1,6 +1,6 @@
 {{- /* On-demand bundles (assets/js/deskbar/loader.js). Each js/deskbar/lazy/<name>.js, and css/deskbar/lazy/<name>.css
        if there is one, builds into its own fingerprinted file. A whole look, css/deskbar/looks/<name>.css, is
-       look-<name> with a stylesheet only. Returns { <name>: { js, css } } for head.html to list. */ -}}
+       look-<name> with a stylesheet only, as is a palette, css/deskbar/palettes/<name>.css, as palette-<name>. Returns { <name>: { js, css } } for head.html to list. */ -}}
 {{- $out := dict -}}
 {{- range resources.Match "js/deskbar/lazy/*.js" -}}
   {{- $name := path.Base .Name | strings.TrimSuffix ".js" -}}
@@ -11,8 +11,10 @@
   {{- end -}}
   {{- $out = merge $out (dict $name $e) -}}
 {{- end -}}
-{{- range resources.Match "css/deskbar/looks/*.css" -}}
-  {{- $css := (. | minify | fingerprint).RelPermalink -}}
-  {{- $out = merge $out (dict (printf "look-%s" (path.Base .Name | strings.TrimSuffix ".css")) (dict "css" $css)) -}}
+{{- range $dir, $key := dict "looks" "look" "palettes" "palette" -}}
+  {{- range resources.Match (printf "css/deskbar/%s/*.css" $dir) -}}
+    {{- $css := (. | minify | fingerprint).RelPermalink -}}
+    {{- $out = merge $out (dict (printf "%s-%s" $key (path.Base .Name | strings.TrimSuffix ".css")) (dict "css" $css)) -}}
+  {{- end -}}
 {{- end -}}
 {{- return $out -}}

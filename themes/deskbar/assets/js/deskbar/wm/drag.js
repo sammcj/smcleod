@@ -1,7 +1,8 @@
 // Pointer handling for windows: move by a lone tab, a stack's handle or the frame, resize by grip, snap on release,
 // slide tabs, stack windows by dropping a tab or handle on another window's tabs, tear tabs off a stack, and drag the
-// shared divider. Pointer events cover touch too. The q and w keys close the focused window.
+// shared divider. Pointer events cover touch too. Also the window keys: q, w, f, a, ? and `.
 import { OWN_KEYS } from '../lib/dom.js';
+import { loadLazy } from '../loader.js';
 import { S } from './state.js';
 import { zoneAt, splitFor, clampSplit } from './snap.js';
 import {
@@ -196,16 +197,22 @@ export function initPointer(desk) {
     focusView(w.views[(w.views.indexOf(v) + (e.key === 'ArrowRight' ? 1 : n - 1)) % n]);
     w.tabsEl.querySelector('.tab.on .tt').focus();
   });
-  // q or w closes the focused window's front tab, as its close button does, and a tiles every open window or puts
-  // them back; not while a field, dialog or menu has the keys
+  // q or w closes the focused window's front tab, as its close button does, f maximises or restores it, a tiles
+  // every open window or puts them back, ? lists the shortcuts (lazy/shortcuts.js), and ` or ~ drops the terminal
+  // down (lazy/quake.js); not while a field, dialog or menu has the keys, bar ` in the terminal's own line, which
+  // puts it away
   document.addEventListener('keydown', e => {
     const k = e.key;
-    if (!'qwa'.includes(k) || k.length !== 1 || e.repeat || e.isComposing || e.defaultPrevented || e.ctrlKey || e.metaKey || e.altKey) return;
-    if (e.target.closest?.(OWN_KEYS) || document.querySelector(':popover-open, dialog[open]')) return;
+    if (!'qwaf?`~'.includes(k) || k.length !== 1 || e.repeat || e.isComposing || e.defaultPrevented || e.ctrlKey || e.metaKey || e.altKey) return;
+    const own = k === '`' && e.target.closest?.('.term');
+    if (!own && (e.target.closest?.(OWN_KEYS) || document.querySelector(':popover-open, dialog[open]'))) return;
     const w = S.focused;
-    if (k === 'a') { e.preventDefault(); return toggleArrange(); }
-    if (!w || w.min) return;
     e.preventDefault();
+    if (k === '`' || k === '~') return loadLazy('quake').then(m => m.quake(), console.error);
+    if (k === '?') return loadLazy('shortcuts').then(m => m.showShortcuts(), console.error);
+    if (k === 'a') return toggleArrange();
+    if (!w || w.min) return;
+    if (k === 'f') { if (!isPhone()) morph([w], () => toggleMax(w)); return; }
     transition(() => closeView(w.views[w.active]));
   });
 }

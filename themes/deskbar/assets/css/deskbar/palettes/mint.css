@@ -1,0 +1,15 @@
+:where(:root)[data-palette=mint] {
+  --panel: linear-gradient(light-dark(#fff, #20302c), light-dark(#ecf6f2, #182521)); --panel-fg: light-dark(#14231e, #ebf5f1);
+  --panel-hover: light-dark(rgba(13,122,95,.09), rgba(255,255,255,.1));
+  --frame: light-dark(#f1f7f4, #202b28); --frame-hi: light-dark(#fff, #33443f);
+  --frame-lo: light-dark(#bdd0c8, #131a18); --frame-dk: light-dark(#7c998d, #090d0c);
+  --tab: light-dark(#aee8d3, #86d3b7); --tab-hi: light-dark(#e0f7ee, #b8ebd8); --tab-lo: light-dark(#63b797, #4f9d80);
+  --tab-dim: light-dark(#d2efe3, #5f9a85); --tab-in: light-dark(#ecf3f0, #2a3733);
+  --tab-in-lo: light-dark(#c3d4cd, #1a2320); --tab-in-fg: light-dark(#435850, #c6d9d1);
+  --content: light-dark(#fff, #17201d); --fg: light-dark(#13201b, #e3eee9); --muted: light-dark(#4f645c, #a4bbb2);
+  --line: light-dark(#dde9e4, #2a3632); --side: light-dark(#f4faf7, #1d2724); --read-bg: light-dark(#fff, #151d1a);
+  --code-bg: light-dark(#eff6f3, #202b27);
+  --accent: light-dark(#0d7a5f, #117a60); --link: light-dark(#0b6e55, #74d6b3); --ctl: #0f3d30;
+  --wall-1: light-dark(#8fd9bf, #1d4038); --wall-2: light-dark(#5cc3a1, #16332c); --wall-3: light-dark(#34a582, #0e231e);
+  --wall-glow: light-dark(rgba(255,255,255,.3), rgba(120,230,190,.08)); --wall-ring: light-dark(rgba(255,255,255,.14), rgba(255,255,255,.035));
+}

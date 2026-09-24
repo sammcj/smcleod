@@ -1,5 +1,6 @@
-// Chiptunes (lazy/chiptunes.js): the playlist loads, nothing plays until Play, Play starts the audio context, and
-// closing the window stops the audio. Skips on a site without /chiptunes/.
+// Chiptunes (lazy/chiptunes.js): the playlist loads, opening the player after a press plays the first track while a
+// page loaded straight into it waits for Play, Play starts the audio context, and closing the window stops the
+// audio. Skips on a site without /chiptunes/.
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { useBrowser, open, needs, shot, win, desktop, phone } from './lib.mjs';
@@ -32,7 +33,7 @@ test('the playlist loads with lengths, and nothing plays until Play', async t =>
   const rows = w.locator('.ct-row');
   assert.ok((await rows.count()) >= 3, 'tracks listed');
   for (const len of await w.locator('.ct-len').allTextContents()) assert.match(len, /^[0-5]:\d\d$/);
-  assert.match(await rows.first().textContent(), /Composed by Claude \(AI\)/);
+  assert.equal(await rows.first().locator('.ct-name').textContent(), 'Carburettor Cruise', 'the first track, with no credit');
   assert.equal(await w.locator('.ct-row[aria-current]').count(), 1, 'the first track is cued');
   assert.match(await w.locator('.status').textContent(), /\d+ tracks/);
   await page.waitForTimeout(500);
@@ -40,6 +41,21 @@ test('the playlist loads with lengths, and nothing plays until Play', async t =>
   assert.equal(await w.locator('.view').getAttribute('data-state'), 'paused');
   assert.equal(await w.locator('.ct-seek').isDisabled(), true);
   await shot(page, 'chiptunes-idle');
+  assert.deepEqual(page.errors, []);
+  await page.context().close();
+});
+
+test('opening the player from the desktop plays the first track', async t => {
+  if (!(await needs(t, url))) return;
+  const page = await open(desktop, '/', spyAudio);
+  // any press on the page lets it make sound
+  await page.mouse.click(desktop.width - 60, desktop.height / 2);
+  await page.evaluate(u => window.deskbar.go(u), url);
+  const w = win(page, 'chiptunes');
+  await page.waitForFunction(() => window.__audio[0]?.state === 'running');
+  assert.equal(await w.locator('.view').getAttribute('data-state'), 'playing');
+  assert.match(await w.locator('.ct-row[aria-current]').textContent(), /Carburettor Cruise/);
+  await page.waitForFunction(() => /^0:0[1-9] \//.test(document.querySelector('.app-chiptunes .ct-time').textContent));
   assert.deepEqual(page.errors, []);
   await page.context().close();
 });

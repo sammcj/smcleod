@@ -150,6 +150,10 @@ test('axe: every palette, decorator and dock style, light and dark', async t => 
     // Synthwave's colours without its whole look
     { palette: 'synthwave', deco: 'haiku', wall: 'rings', dock: 'glass' }, { palette: 'synthwave', deco: 'beos', wall: 'grid', dock: 'panel' },
     { palette: 'synthwave', deco: 'flat', wall: 'dots', dock: 'deskbar' },
+    // Rosé, Ember, Solar and Lagoon, whose tinted content and reader backgrounds carry the text
+    { palette: 'rose', deco: 'haiku', wall: 'rings', dock: 'glass' }, { palette: 'rose', deco: 'liquid', wall: 'plain', dock: 'glass' },
+    { palette: 'ember', deco: 'flat', wall: 'grid', dock: 'deskbar' }, { palette: 'solar', deco: 'beos', wall: 'dots', dock: 'panel' },
+    { palette: 'lagoon', deco: 'clear', wall: 'clear', dock: 'glass' }, { palette: 'lagoon', deco: 'haiku', wall: 'hills', dock: 'deskbar' },
     // Platinum, Clearlooks, Phosphor, Broadsheet and Synthwave run axe in their own look-*.spec.mjs
   ];
   for (const look of looks) {

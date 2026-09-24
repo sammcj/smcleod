@@ -1,111 +1,8 @@
 /* The Control panel (lazy/control-panel.js) and every non-default look it offers. head.html links this stylesheet
    before first paint when a stored palette, decorator, wallpaper, dock style or reader font needs it, after the core
    stylesheet, as loader.js does when the app opens. Each rule carries an attribute selector to outrank the core rule
-   it replaces. */
+   it replaces. Each palette's own colours are css/deskbar/palettes/<name>.css, loaded the same way. */
 
-/* Palettes. Tokens as in tokens.css; text stays at 4.5:1 or better in light and dark. */
-:root[data-palette=beos] {
-  --panel: linear-gradient(light-dark(#e8e8e8, #5c5c5c), light-dark(#cdcdcd, #474747));
-  --panel-fg: light-dark(#1f1f1f, #f2f2f2); --panel-hover: light-dark(rgba(0,0,0,.08), rgba(255,255,255,.1));
-  --frame: light-dark(#d8d8d8, #474747); --frame-hi: light-dark(#fff, #636363);
-  --frame-lo: light-dark(#969696, #2e2e2e); --frame-dk: light-dark(#505050, #141414);
-  --tab-dim: light-dark(#f3df8a, #a08d45); --tab-in: light-dark(#e2e2e2, #5c5c5c);
-  --tab-in-lo: light-dark(#a8a8a8, #3a3a3a); --tab-in-fg: light-dark(#404040, #e0e0e0);
-  --accent: #336698; --link: light-dark(#2c5b8a, #86b0dc);
-  --wall-1: light-dark(#3d73a6, #28496b); --wall-2: light-dark(#336698, #1f3c5a); --wall-3: light-dark(#2a557f, #172e46);
-  --wall-glow: rgba(255,255,255,.06);
-}
-/* its panel is light in light mode, so pressed and minimised states need lighter shading than the core's */
-:root[data-palette=beos] .pb:focus-visible { outline-color: var(--accent); }
-:root[data-palette=beos] :is(.task.on, #menuBtn.open) { background: light-dark(rgba(0,0,0,.14), rgba(0,0,0,.35)); }
-:root[data-palette=beos] .task.min { opacity: .8; }
-:root[data-palette=xfce] {
-  --panel: linear-gradient(#4c5a6d, #394555); --panel-fg: #eef2f7;
-  --frame: light-dark(#d9dde3, #3f454d); --frame-hi: light-dark(#f7f9fb, #5b636d);
-  --frame-lo: light-dark(#929aa6, #262b31); --frame-dk: light-dark(#4d5663, #111418);
-  --tab: light-dark(#a3bddf, #8aa8d2); --tab-hi: light-dark(#d9e5f4, #b9cdea); --tab-lo: light-dark(#6d88ad, #56729a);
-  --tab-dim: light-dark(#c6d5ea, #7189ab); --tab-in: light-dark(#dfe3e8, #4a525c);
-  --tab-in-lo: light-dark(#aab2bd, #30363d); --tab-in-fg: light-dark(#454b53, #d5dbe3);
-  --accent: #3f6aa3; --link: light-dark(#33609a, #8db3e8); --ctl: #1f3350;
-  --wall-1: light-dark(#5b7ea6, #2a3f5a); --wall-2: light-dark(#3f6189, #1d2d42); --wall-3: light-dark(#2a4466, #121d2c);
-  --wall-glow: light-dark(rgba(170,205,255,.16), rgba(170,205,255,.08));
-}
-:root[data-palette=sage] {
-  --panel: linear-gradient(#4c5448, #3a4137); --panel-fg: #eef1ea;
-  --frame: light-dark(#d9dbd3, #45483f); --frame-hi: light-dark(#f8f9f5, #62665a);
-  --frame-lo: light-dark(#959a8c, #2b2d27); --frame-dk: light-dark(#50554a, #141511);
-  --tab: light-dark(#b5cf9c, #9dbb82); --tab-hi: light-dark(#e2eed6, #c3d9ae); --tab-lo: light-dark(#789560, #5f7a49);
-  --tab-dim: light-dark(#cfdfc0, #80966b); --tab-in: light-dark(#e0e2da, #50544a);
-  --tab-in-lo: light-dark(#adb2a4, #33362f); --tab-in-fg: light-dark(#474b41, #dcdfd4);
-  --accent: #4b7a3f; --link: light-dark(#3d6b31, #a3c98f); --ctl: #28391c;
-  --wall-1: light-dark(#6c8a5f, #34472f); --wall-2: light-dark(#4d6a43, #26351f); --wall-3: light-dark(#33482e, #182214);
-  --wall-glow: light-dark(rgba(255,214,120,.14), rgba(255,214,120,.07));
-}
-/* Snow, Mint and Peach: near-white frames and panel with one clear colour, in place of the grey. Dark mode keeps the
-   hue in deep tinted neutrals. */
-:root[data-palette=snow] {
-  --panel: linear-gradient(light-dark(#fff, #253043), light-dark(#edf2f9, #1c2535)); --panel-fg: light-dark(#18212e, #edf2f9);
-  --panel-hover: light-dark(rgba(31,111,235,.09), rgba(255,255,255,.1));
-  --frame: light-dark(#f2f5f9, #232c3a); --frame-hi: light-dark(#fff, #36435a);
-  --frame-lo: light-dark(#c2ccd9, #151b25); --frame-dk: light-dark(#8593a8, #0a0e14);
-  --tab: light-dark(#bcd7fb, #8db8f2); --tab-hi: light-dark(#e6f0fe, #bcd6fa); --tab-lo: light-dark(#7ea5dc, #5a86c4);
-  --tab-dim: light-dark(#dae7f9, #7392bd); --tab-in: light-dark(#eef1f6, #2d3747);
-  --tab-in-lo: light-dark(#c7d0dc, #1c2330); --tab-in-fg: light-dark(#475264, #cad4e3);
-  --content: light-dark(#fff, #19202b); --fg: light-dark(#141c28, #e5eaf1); --muted: light-dark(#536072, #a8b4c5);
-  --line: light-dark(#e0e6ee, #2c3645); --side: light-dark(#f5f8fc, #1f2733); --read-bg: light-dark(#fff, #171d27);
-  --code-bg: light-dark(#f2f5fa, #222b38);
-  --accent: light-dark(#1f6feb, #2d6fd9); --link: light-dark(#1a5fd0, #82b1ff); --ctl: #173866;
-  --wall-1: light-dark(#a9cbf2, #203553); --wall-2: light-dark(#7eaee8, #182a42); --wall-3: light-dark(#5a93db, #0f1c2e);
-  --wall-glow: light-dark(rgba(255,255,255,.3), rgba(140,190,255,.08)); --wall-ring: light-dark(rgba(255,255,255,.14), rgba(255,255,255,.035));
-}
-:root[data-palette=mint] {
-  --panel: linear-gradient(light-dark(#fff, #20302c), light-dark(#ecf6f2, #182521)); --panel-fg: light-dark(#14231e, #ebf5f1);
-  --panel-hover: light-dark(rgba(13,122,95,.09), rgba(255,255,255,.1));
-  --frame: light-dark(#f1f7f4, #202b28); --frame-hi: light-dark(#fff, #33443f);
-  --frame-lo: light-dark(#bdd0c8, #131a18); --frame-dk: light-dark(#7c998d, #090d0c);
-  --tab: light-dark(#aee8d3, #86d3b7); --tab-hi: light-dark(#e0f7ee, #b8ebd8); --tab-lo: light-dark(#63b797, #4f9d80);
-  --tab-dim: light-dark(#d2efe3, #5f9a85); --tab-in: light-dark(#ecf3f0, #2a3733);
-  --tab-in-lo: light-dark(#c3d4cd, #1a2320); --tab-in-fg: light-dark(#435850, #c6d9d1);
-  --content: light-dark(#fff, #17201d); --fg: light-dark(#13201b, #e3eee9); --muted: light-dark(#4f645c, #a4bbb2);
-  --line: light-dark(#dde9e4, #2a3632); --side: light-dark(#f4faf7, #1d2724); --read-bg: light-dark(#fff, #151d1a);
-  --code-bg: light-dark(#eff6f3, #202b27);
-  --accent: light-dark(#0d7a5f, #117a60); --link: light-dark(#0b6e55, #74d6b3); --ctl: #0f3d30;
-  --wall-1: light-dark(#8fd9bf, #1d4038); --wall-2: light-dark(#5cc3a1, #16332c); --wall-3: light-dark(#34a582, #0e231e);
-  --wall-glow: light-dark(rgba(255,255,255,.3), rgba(120,230,190,.08)); --wall-ring: light-dark(rgba(255,255,255,.14), rgba(255,255,255,.035));
-}
-:root[data-palette=peach] {
-  --panel: linear-gradient(light-dark(#fff, #33282a), light-dark(#fbf0ea, #281f20)); --panel-fg: light-dark(#2a1a14, #f8eeea);
-  --panel-hover: light-dark(rgba(194,65,12,.08), rgba(255,255,255,.1));
-  --frame: light-dark(#fbf6f3, #2d2526); --frame-hi: light-dark(#fff, #463a3b);
-  --frame-lo: light-dark(#dbc9c0, #1b1516); --frame-dk: light-dark(#a88d80, #0e0a0b);
-  --tab: light-dark(#ffcfba, #f5ad8d); --tab-hi: light-dark(#ffece3, #fdd2bd); --tab-lo: light-dark(#e28f6b, #c9785a);
-  --tab-dim: light-dark(#fde2d6, #bb866f); --tab-in: light-dark(#f6efeb, #3a3032);
-  --tab-in-lo: light-dark(#dccdc6, #241d1e); --tab-in-fg: light-dark(#5e4b43, #e0d0ca);
-  --content: light-dark(#fff, #221c1d); --fg: light-dark(#231815, #f0e8e5); --muted: light-dark(#6a5750, #c2b1ab);
-  --line: light-dark(#efe4de, #3a3032); --side: light-dark(#fdf8f5, #2a2324); --read-bg: light-dark(#fffdfb, #1f191a);
-  --code-bg: light-dark(#fbf1ec, #2d2527);
-  --accent: light-dark(#c2410c, #b8400f); --link: light-dark(#b13a0a, #ffab85); --ctl: #5a1f08;
-  --wall-1: light-dark(#fbc3a8, #4d2c24); --wall-2: light-dark(#f59e7e, #3c221c); --wall-3: light-dark(#e57f5f, #2a1713);
-  --wall-glow: light-dark(rgba(255,255,255,.3), rgba(255,170,130,.08)); --wall-ring: light-dark(rgba(255,255,255,.14), rgba(255,255,255,.035));
-}
-/* Synthwave: neon pink tabs and a dark violet panel; lavender frames in light mode, deep indigo ones and cyan links
-   in dark. The whole look, with its sun and grid, is looks/synthwave.css. */
-:root[data-palette=synthwave] {
-  --panel: linear-gradient(#3a1d6b, #24104a); --panel-fg: #f5eeff; --panel-hover: rgba(255,255,255,.12);
-  --frame: light-dark(#e6def5, #2a1f4a); --frame-hi: light-dark(#f8f5fd, #43356e);
-  --frame-lo: light-dark(#a99bc6, #181030); --frame-dk: light-dark(#5e4f82, #0b0619);
-  --tab: light-dark(#ff8fcb, #ff4fae); --tab-hi: light-dark(#ffd3ea, #ff9ad2); --tab-lo: light-dark(#d9589e, #b0266f);
-  --tab-dim: light-dark(#ffc4e3, #cf6ea6); --tab-in: light-dark(#ece6f7, #3a2d5e);
-  --tab-in-lo: light-dark(#b9aed0, #251b40); --tab-in-fg: light-dark(#453d5c, #d8cff0);
-  --content: light-dark(#fff, #1b1433); --fg: light-dark(#1f1a2e, #ece6ff); --muted: light-dark(#5b5270, #b6a8dc);
-  --line: light-dark(#e2dcee, #33295a); --side: light-dark(#f3eff9, #211942); --read-bg: light-dark(#fdfbff, #171030);
-  --code-bg: light-dark(#f3eef9, #251c45);
-  --accent: light-dark(#b0246f, #c2267a); --link: light-dark(#0a6e8c, #6fe3ff); --ctl: #3a0a26;
-  --wall-1: light-dark(#6a3fb5, #2e1760); --wall-2: light-dark(#4a2590, #1f0f45); --wall-3: light-dark(#2f1466, #12072c);
-  --wall-glow: light-dark(rgba(255,62,165,.3), rgba(255,62,165,.18)); --wall-line: rgba(255,120,200,.16);
-}
-/* the core's olive label text is too dim on the pink tab colour */
-:root[data-palette=synthwave] .ticker-h { color: var(--ctl); }
 /* the light palettes' panel is light in light mode, so its borders, pressed and minimised states and the window
    switcher's links (panel text on a panel-coloured chip) swap the core's dark-panel shading */
 :root:is([data-palette=snow], [data-palette=mint], [data-palette=peach]) #panel { border-bottom-color: light-dark(rgba(0,0,0,.12), #0b0f14); box-shadow: 0 1px 0 light-dark(#fff, rgba(255,255,255,.06)) inset; }
@@ -186,7 +83,7 @@
 /* the tab is glass too, with the palette's tab colour showing through as a tint. Liquid Ass floats it as a pill on
    the frame's rim, clear of its big corner curves; Clear joins it to the frame's top edge */
 :root:is([data-deco=liquid], [data-deco=clear]) .win :is(.tab, .th) { gap: 0; padding: 0 12px 0 5px; border: 1px solid var(--lq-rim); color: light-dark(#333, #ddd); background: light-dark(rgba(255,255,255,.72), rgba(40,42,50,.76)); box-shadow: var(--lq-shine); backdrop-filter: var(--lq-blur); -webkit-backdrop-filter: var(--lq-blur); }
-:root:is([data-deco=liquid], [data-deco=clear]) .win.active .tab { color: #1f1f1f; background: linear-gradient(rgba(255,255,255,.55), rgba(255,255,255,.05)), color-mix(in srgb, var(--tab) 70%, transparent); }
+:root[data-deco=liquid] .win.active .tab { color: #1f1f1f; background: linear-gradient(rgba(255,255,255,.55), rgba(255,255,255,.05)), color-mix(in srgb, var(--tab) 70%, transparent); }
 :root:is([data-deco=liquid], [data-deco=clear]) .tabs.multi .tab { margin-right: 4px; }
 :root[data-deco=liquid] .tab .tt { margin-left: 5px; }
 :root[data-deco=liquid] .win .tabs { left: 34px; right: 34px; bottom: calc(100% - 13px); z-index: 1; }
@@ -210,19 +107,28 @@
 :root[data-deco=liquid] .ctl svg { width: 7px; height: 7px; opacity: 0; }
 :root[data-deco=liquid] :is(.tab:hover, .tab:focus-within) .ctl svg { opacity: 1; }
 /* Clear: a window on its own has its tab across the whole top, a title bar joined to the frame, so the window is one
-   pane of glass. Its controls sit together at the right end as one glass capsule of thin marks: close turns red under
-   the pointer, the others take the accent. Stacked windows keep their tabs, each with its own capsule. */
+   pane of glass. The bar is frosted white lit along its top edge, with a hairline where it meets the frame; the
+   palette's tab colour is only a wash over the front window's bar, since at full strength it went muddy over the
+   wallpaper. Its controls sit together at the right end as one glass capsule of thin marks: close turns red under the
+   pointer, the others take the accent. Stacked windows keep their tabs, each with its own capsule. */
+:root[data-deco=clear] { --tab-h: 28px; }
 :root[data-deco=clear] .win .frame { border-top: 0; border-top-left-radius: 0; border-top-right-radius: 0; }
 :root[data-deco=clear] .win .tabs:not(.multi) .tab { left: 0 !important; right: 0; border-radius: 12px 12px 0 0; }
-:root[data-deco=clear] .win .tab { padding: 0 3px 0 12px; }
-:root[data-deco=clear] .tab .tt { max-width: none; }
-:root[data-deco=clear] .win .ctl { width: 28px; height: 18px; margin-left: -1px; border: 1px solid var(--lq-rim); border-radius: 0; color: light-dark(#2b2f36, #e8eaf0); background: light-dark(rgba(255,255,255,.45), rgba(255,255,255,.1)); box-shadow: inset 0 1px 0 light-dark(rgba(255,255,255,.8), rgba(255,255,255,.15)); }
+:root[data-deco=clear] .win .tab { padding: 0 5px 0 14px; }
+:root[data-deco=clear] .win :is(.tab, .th) { --lq-mk: light-dark(rgba(0,0,0,.14), rgba(255,255,255,.18)); --lq-fg: light-dark(#30343c, #e8eaf0); --lq-bg: light-dark(rgba(255,255,255,.5), rgba(255,255,255,.08)); color: light-dark(#40444d, #b4b8c2); background: linear-gradient(rgba(255,255,255,.4), rgba(255,255,255,.08) 50%, transparent 65%, rgba(255,255,255,.06)), light-dark(rgba(255,255,255,.5), rgba(44,46,54,.62)); box-shadow: inset 0 1px 0 light-dark(rgba(255,255,255,.95), rgba(255,255,255,.28)), inset 1px 0 0 light-dark(rgba(255,255,255,.5), rgba(255,255,255,.08)), inset 0 -1px 0 light-dark(rgba(0,0,0,.08), rgba(0,0,0,.4)); }
+:root[data-deco=clear] .win.active .tab.on { --lq-mk: rgba(0,0,0,.14); --lq-fg: #30343c; --lq-bg: rgba(255,255,255,.5); color: #16181d; background: linear-gradient(rgba(255,255,255,.6), rgba(255,255,255,.16) 48%, transparent 64%, rgba(255,255,255,.1)), color-mix(in srgb, var(--tab) 50%, rgba(255,255,255,.8)); }
+:root[data-deco=clear] .th::before { opacity: .4; }
+:root[data-deco=clear] .tab .tt { max-width: none; font-size: 12.5px; font-weight: 600; letter-spacing: .01em; text-shadow: 0 1px 0 rgba(255,255,255,.45); }
+:root[data-deco=clear] .win :is(:not(.active) .tab, .tab:not(.on)) .tt { font-weight: 500; text-shadow: none; }
+/* the capsule's ring, marks and fill come from the bar (--lq-mk, --lq-fg, --lq-bg), since the front window's bar is
+   light in both schemes and always takes dark marks, while hover sets them on the control itself */
+:root[data-deco=clear] .win .ctl { width: 27px; height: 19px; margin-left: -1px; border: 0; border-radius: 0; color: var(--lq-fg); background: var(--lq-bg); box-shadow: inset 0 0 0 1px var(--lq-mk), inset 0 2px 0 light-dark(rgba(255,255,255,.7), rgba(255,255,255,.1)); }
 :root[data-deco=clear] .win .ctl svg { width: 9px; height: 9px; }
-:root[data-deco=clear] .win :is(.ctl.min, .tt + .ctl.close) { margin-left: 0; border-top-left-radius: 9px; border-bottom-left-radius: 9px; }
-:root[data-deco=clear] .win :is(.ctl.close, .th .ctl.max) { border-top-right-radius: 9px; border-bottom-right-radius: 9px; }
-:root[data-deco=clear] .win .ctl:hover { color: #fff; background: color-mix(in srgb, var(--accent) 85%, transparent); }
-:root[data-deco=clear] .win .ctl.close:hover { background: #e5484d; }
-:root[data-deco=clear] .win:not(.active) .ctl { opacity: .55; }
+:root[data-deco=clear] .win :is(.ctl.min, .tt + .ctl.close) { margin-left: 0; border-top-left-radius: 10px; border-bottom-left-radius: 10px; }
+:root[data-deco=clear] .win :is(.ctl.close, .th .ctl.max) { border-top-right-radius: 10px; border-bottom-right-radius: 10px; }
+:root[data-deco=clear] .win .ctl:hover { --lq-mk: transparent; --lq-fg: #fff; --lq-bg: color-mix(in srgb, var(--accent) 85%, transparent); }
+:root[data-deco=clear] .win .ctl.close:hover { --lq-bg: #e5484d; }
+:root[data-deco=clear] .win:not(.active) .ctl { opacity: .6; }
 :root:is([data-deco=liquid], [data-deco=clear]) :is(.tb, .seg, input, select) { border-color: var(--lq-rim); }
 :root:is([data-deco=liquid], [data-deco=clear]) :is(.tb, .seg):not(:where(.on, :active, [aria-expanded=true], [aria-pressed=true])) { background: linear-gradient(light-dark(rgba(255,255,255,.85), rgba(255,255,255,.2)), light-dark(rgba(255,255,255,.35), rgba(255,255,255,.04))); }
 :root:is([data-deco=liquid], [data-deco=clear]) .mn-head { background: transparent; border-bottom-color: var(--lq-rim); }
@@ -271,13 +177,16 @@
   :root[data-deco=liquid] .win .tab { bottom: 3px; }
   :root[data-deco=clear] :is(.win .frame, .views) { border-radius: 0; }
   :root[data-deco=clear] .win .tabs:not(.multi) .tab { border-radius: 0; }
+  :root[data-deco=clear] { --tab-h: 36px; }
   :root[data-deco=clear] .win .ctl { width: 44px; height: 30px; }
+  :root[data-deco=clear] .tab .tt { font-size: 13px; }
   :root[data-deco=liquid] .win .ctl, :root[data-deco=liquid] .win .ctl:hover { width: 32px; height: 32px; background: radial-gradient(circle at 42% 36%, rgba(255,255,255,.85) 0 2px, transparent 3px), radial-gradient(circle, var(--lq-c) 0 8px, rgba(0,0,0,.28) 8.5px, transparent 9.5px); }
   :root[data-deco=liquid] .ctl svg { width: 9px; height: 9px; }
 }
 
 /* Wallpapers, each drawn from the palette's --wall tokens. .cp-wp is the app's thumbnail of each. */
-:root { --wall-line: rgba(255,255,255,.08); }
+/* :where so a palette's own --wall-line wins whichever sheet loads last */
+:where(:root) { --wall-line: rgba(255,255,255,.08); }
 .cp-wp { background: radial-gradient(60% 60% at 80% 110%, var(--wall-glow), transparent 62%), repeating-radial-gradient(circle at 80% 118%, var(--wall-ring) 0 1px, transparent 1px 8px), linear-gradient(165deg, var(--wall-1) 0%, var(--wall-2) 46%, var(--wall-3) 100%); }
 .wm[data-wall=plain] body, .cp-wp.plain { background: var(--wall-2); }
 .wm[data-wall=grid] body, .cp-wp.grid { background: linear-gradient(var(--wall-line) 1px, transparent 1px) 0 0 / 32px 32px, linear-gradient(90deg, var(--wall-line) 1px, transparent 1px) 0 0 / 32px 32px, linear-gradient(165deg, var(--wall-1), var(--wall-3)); }

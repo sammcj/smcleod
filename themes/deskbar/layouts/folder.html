@@ -23,7 +23,15 @@
 {{- $size := .Params.thumbSize | default "320x240" }}
 {{- $pages := .Params.itemPages | default dict }}
 {{- $site := (urls.Parse site.BaseURL).Host }}
-<article class="rd folder-doc">
+{{- /* data-up, the folder toolbar's Up (lazy/folder.js): the parent section when it is a folder, else the first
+       folder that includes this page */}}
+{{- $up := "" }}
+{{- with .Parent }}{{ if eq .Params.window "folder" }}{{ $up = .RelPermalink }}{{ end }}{{ end }}
+{{- $self := .RelPermalink }}
+{{- range where site.Pages "Params.window" "folder" }}{{ $f := . }}
+  {{- range .Params.include }}{{ with site.GetPage . }}{{ if and (not $up) (eq .RelPermalink $self) }}{{ $up = $f.RelPermalink }}{{ end }}{{ end }}{{ end }}
+{{- end }}
+<article class="rd folder-doc"{{ with $up }} data-up="{{ . }}"{{ end }}>
   {{- if $data }}{{ with resources.Get "css/deskbar/folder-items.css" | minify | fingerprint }}
   <link rel="stylesheet" href="{{ .RelPermalink }}" integrity="{{ .Data.Integrity }}">
   {{- end }}{{ end }}

@@ -1,0 +1,16 @@
+/* Ember: after Gruvbox. Orange tabs and an aqua accent on cream frames, or on dark brown-charcoal ones; the panel
+   and desk stay brown-charcoal in both modes. */
+:where(:root)[data-palette=ember] {
+  --panel: linear-gradient(#45403b, #2f2b28); --panel-fg: #ebdbb2;
+  --frame: light-dark(#ebdbb2, #3c3836); --frame-hi: light-dark(#fbf1c7, #575049);
+  --frame-lo: light-dark(#b9a983, #211f1d); --frame-dk: light-dark(#7c6f64, #0f0e0d);
+  --tab: light-dark(#f5a04a, #fe8019); --tab-hi: light-dark(#fbd09c, #ffb469); --tab-lo: light-dark(#c06a15, #b5530d);
+  --tab-dim: light-dark(#f4c58f, #c98a4a); --tab-in: light-dark(#e6d6ad, #4c4640);
+  --tab-in-lo: light-dark(#b8a882, #2b2725); --tab-in-fg: light-dark(#504538, #dccba7);
+  --content: light-dark(#fcf5d7, #282828); --fg: light-dark(#3c3836, #ebdbb2); --muted: light-dark(#665c54, #b8a98c);
+  --line: light-dark(#dccdaa, #45403b); --side: light-dark(#f4eac0, #32302e); --read-bg: light-dark(#fbf1c7, #1f1e1d);
+  --code-bg: light-dark(#ebdbb2, #363230);
+  --accent: light-dark(#427b58, #3f7d5c); --link: light-dark(#2f6544, #8ec07c); --ctl: #3a2200;
+  --wall-1: light-dark(#5e564e, #4a4640); --wall-2: light-dark(#423c38, #34312d); --wall-3: light-dark(#2a2624, #1d1b19);
+  --wall-glow: light-dark(rgba(254,128,25,.22), rgba(254,128,25,.14));
+}

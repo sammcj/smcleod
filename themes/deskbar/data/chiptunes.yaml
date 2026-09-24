@@ -5,15 +5,11 @@
 # - url: a rendered audio file hosted outside the site's git history, such as a GitHub Release asset. Hosts that
 #   send CORS headers also drive the visualiser.
 tracks:
+  - title: Carburettor Cruise
+    song: chiptunes/carburettor-cruise.json
   - title: Pixel Picnic
-    credit: Composed by Claude (AI)
     song: chiptunes/pixel-picnic.json
   - title: Cat Nap Cartridge
-    credit: Composed by Claude (AI)
     song: chiptunes/cat-nap-cartridge.json
-  - title: Carburettor Cruise
-    credit: Composed by Claude (AI)
-    song: chiptunes/carburettor-cruise.json
   - title: Flinders Street Shuffle
-    credit: Composed by Claude (AI)
     song: chiptunes/flinders-street-shuffle.json

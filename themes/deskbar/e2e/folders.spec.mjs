@@ -150,3 +150,96 @@ test('the arrow keys move through a folder\'s icons, across its groups, and Ente
   assert.deepEqual(page.errors, []);
   await page.context().close();
 });
+
+// Favourites is a folder of folders on both the example site and smcleod.net; Links is one of them
+const views = page => page.locator('.view.app-folder').count();
+const nav = (w, label) => w.locator(`.toolbar button[aria-label="${label}"]`);
+
+test('a folder opened from inside a folder shows in the same window, with Back, Up and browser Back', async t => {
+  if (!(await needs(t, '/favourites/', '/links/'))) return;
+  const page = await open(desktop, '/favourites/');
+  const w = win(page, 'folder:/favourites/'), links = w.locator('.folder a[href="/links/"]');
+  await links.waitFor();
+  assert.ok(await nav(w, 'Back').isDisabled(), 'nothing to go back to yet');
+  assert.ok(await nav(w, 'Parent folder').isDisabled(), 'Favourites is at the top');
+  await links.click();
+  await page.waitForFunction(() => location.pathname === '/links/');
+  // the window keeps its key, showing Links in place of Favourites
+  await w.locator('.folder-doc[data-up="/favourites/"]').waitFor();
+  assert.equal(await views(page), 1, 'no second folder window');
+  assert.ok(!(await nav(w, 'Back').isDisabled()));
+  await nav(w, 'Parent folder').click();
+  await page.waitForFunction(() => location.pathname === '/favourites/');
+  await links.waitFor();
+  await nav(w, 'Back').click();
+  await page.waitForFunction(() => location.pathname === '/links/');
+  await w.locator('.folder-doc[data-up="/favourites/"]').waitFor();
+  // browser Back returns to the folder this window showed before
+  await page.goBack();
+  await page.waitForFunction(() => location.pathname === '/favourites/');
+  await links.waitFor();
+  assert.equal(await views(page), 1);
+  // a link to anything else still opens its own window
+  await page.evaluate(() => window.deskbar.go('/about/'));
+  await win(page, 'page:/about/').waitFor();
+  assert.deepEqual(page.errors, []);
+  await page.context().close();
+});
+
+test('the keyboard goes into a folder with Enter and back up with Alt+Up or Backspace', async t => {
+  if (!(await needs(t, '/favourites/', '/links/'))) return;
+  const page = await open(desktop, '/favourites/');
+  const w = win(page, 'folder:/favourites/'), links = w.locator('.folder a[href="/links/"]');
+  await links.waitFor();
+  await links.focus();
+  await page.keyboard.press('Enter');
+  await page.waitForFunction(() => location.pathname === '/links/');
+  // focus lands on the new folder's first icon, so the arrows and Enter carry on working
+  await page.waitForFunction(() => document.activeElement?.closest('.folder-doc[data-up]'));
+  await page.keyboard.press('Alt+ArrowUp');
+  await page.waitForFunction(() => location.pathname === '/favourites/');
+  await links.focus();
+  await page.keyboard.press('Enter');
+  await page.waitForFunction(() => location.pathname === '/links/');
+  await page.waitForFunction(() => document.activeElement?.closest('.folder-doc[data-up]'));
+  await page.keyboard.press('Backspace');
+  await page.waitForFunction(() => location.pathname === '/favourites/');
+  assert.equal(await views(page), 1);
+  assert.deepEqual(page.errors, []);
+  await page.context().close();
+});
+
+test('a sub-folder loaded directly goes up to the folder that includes it, and a phone browses in place too', async t => {
+  if (!(await needs(t, '/favourites/', '/links/'))) return;
+  for (const [vp, opts] of [[desktop, {}], [phone, { hasTouch: true, isMobile: true }]]) {
+    const page = await open(vp, '/links/', null, opts);
+    const w = win(page, 'folder:/links/');
+    await w.locator('.folder li').first().waitFor();
+    assert.ok(await nav(w, 'Back').isDisabled());
+    await nav(w, 'Parent folder').click();
+    await page.waitForFunction(() => location.pathname === '/favourites/');
+    await w.locator('.folder a[href="/links/"]').click();
+    await page.waitForFunction(() => location.pathname === '/links/');
+    await w.locator('.folder-doc[data-up="/favourites/"]').waitFor();
+    assert.equal(await views(page), 1, `one folder window at ${vp.width}px`);
+    assert.deepEqual(page.errors, []);
+    await page.context().close();
+  }
+});
+
+test('a folder window goes where its own links lead, even to a folder another window shows, and keeps the keys', async t => {
+  if (!(await needs(t, '/favourites/', '/links/'))) return;
+  const page = await open(desktop, '/links/');
+  await win(page, 'folder:/links/').locator('.folder-doc').waitFor();
+  await page.evaluate(() => window.deskbar.go('/favourites/'));
+  const w = win(page, 'folder:/favourites/'), links = w.locator('.folder a[href="/links/"]');
+  await links.click();
+  await w.locator('.folder-doc[data-up="/favourites/"]').waitFor();
+  assert.equal(await views(page), 2, 'this window shows Links too, rather than raising the other');
+  // Up disables itself at the top, so focus moves on to the first icon rather than dropping to the page
+  await nav(w, 'Parent folder').click();
+  await links.waitFor();
+  await page.waitForFunction(() => document.activeElement?.matches('.folder-body a'));
+  assert.deepEqual(page.errors, []);
+  await page.context().close();
+});
