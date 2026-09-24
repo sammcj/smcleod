@@ -25,10 +25,10 @@ const PALETTE = ['palette', 'Colours', [
 const MODE = ['theme', 'Mode', [['auto', 'Auto'], ['light', 'Light'], ['dark', 'Dark']]];
 const DECO = ['deco', 'Window style', [['haiku', 'Haiku'], ['beos', 'BeOS'], ['flat', 'Flat'], ['clear', 'Clear'], ['liquid', 'Liquid Ass'],
   ['platinum', 'Platinum'], ['clearlooks', 'Clearlooks'], ['phosphor', 'Phosphor'], ['broadsheet', 'Broadsheet'], ['synthwave', 'Synthwave'],
-  ['pixel', 'Pixel'], ['woodblock', 'Woodblock']], thumb('cp-deco')];
+  ['pixel', 'Pixel']], thumb('cp-deco')];
 const WALL = ['wall', 'Wallpaper', [['rings', 'Rings'], ['plain', 'Plain'], ['grid', 'Grid'], ['dots', 'Dots'], ['hills', 'Hills'], ['liquid', 'Liquid'], ['clear', 'Clear'],
   ['platinum', 'Platinum'], ['clearlooks', 'Clearlooks'], ['phosphor', 'Phosphor'], ['broadsheet', 'Broadsheet'], ['synthwave', 'Synthwave'],
-  ['pixel', 'Pixel'], ['woodblock', 'Woodblock']], thumb('cp-wp')];
+  ['pixel', 'Pixel']], thumb('cp-wp')];
 // Whole looks: window styles that bring their own wallpaper and dock (deco() below). owns: the Appearance groups a
 // look sets itself, disabled while it is on. Platinum and the rest are css/deskbar/looks/<name>.css, which draws
 // the window style, wallpaper, dock and both thumbnails; Liquid Ass and Clear live in control-panel.css.
@@ -41,7 +41,6 @@ const LOOKS = {
   broadsheet: { wall: 'broadsheet', dock: 'glass', owns: ['palette', 'dock'] },
   synthwave: { wall: 'synthwave', dock: 'glass', owns: ['palette', 'dock', 'theme'] },
   pixel: { wall: 'pixel', dock: 'glass', owns: ['palette', 'dock'] },
-  woodblock: { wall: 'woodblock', dock: 'glass', owns: ['palette', 'dock'] },
 };
 // The Mac startup chime, synthesised rather than recorded: a slightly strummed F sharp major chord of detuned saws
 // through a closing low-pass filter, with a short echo for the room. Played only when the visitor picks Platinum,

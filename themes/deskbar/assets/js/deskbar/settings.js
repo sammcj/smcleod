@@ -16,7 +16,7 @@ export const DEFAULT = {
 };
 const subs = new Set();
 // Choices the theme no longer offers, which visitors may still have stored
-const RETIRED = { dock: 'minimal' };
+const RETIRED = { dock: 'minimal', deco: 'woodblock', wall: 'woodblock' };
 
 // Stored values are checked on the way out, since anything can be in localStorage
 function valid(k, v) {
