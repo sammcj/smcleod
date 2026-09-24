@@ -486,7 +486,7 @@ test('Reset to defaults resets the pane on screen only', async t => {
   await cp(page).getByRole('button', { name: 'Reset to defaults' }).click();
   assert.deepEqual(await stored(page), { readerWidth: 'narrow', readerFont: 'mono', textSize: 23, saver: 10 }, 'Posts and System keep theirs');
   assert.deepEqual(await attrs(page), { rdWidth: 'narrow', rdFont: 'mono' });
-  for (const [k, v] of Object.entries({ palette: 'haiku', theme: 'auto', deco: 'haiku', wall: 'rings', dock: 'glass' })) {
+  for (const [k, v] of Object.entries({ palette: 'haiku', theme: 'light', deco: 'haiku', wall: 'rings', dock: 'glass' })) {
     assert.equal(await checked(page, k), v, k);
   }
   assert.equal(await cp(page).getByRole('status').textContent(), 'Appearance is back to the defaults.');

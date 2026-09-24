@@ -64,7 +64,7 @@ mjx-container[display="true"] { overflow-x: auto; overflow-y: hidden; }
 /* GitHub gists (.gist markup, or a gist shortcode's iframe.gist-frame) only come light, and a frame's colours can't
    be restyled from outside, so dark mode inverts them. The half turn of hue keeps syntax colours near their own. */
 [data-theme=dark] :is(.gist, .gist-frame) { filter: invert(.88) hue-rotate(180deg); }
-@media (prefers-color-scheme: dark) { :root:not([data-theme]) :is(.gist, .gist-frame) { filter: invert(.88) hue-rotate(180deg); } }
+@media (prefers-color-scheme: dark) { :root[data-theme=auto] :is(.gist, .gist-frame) { filter: invert(.88) hue-rotate(180deg); } }
 
 /* Footnotes (goldmark) */
 .rd sup { line-height: 0; }

@@ -79,7 +79,7 @@ test('Clearlooks: Metacity title bars, two light panels, the window list and pag
 });
 
 test('Clearlooks dark: dark panels and windows, the title bar still blue', async () => {
-  const page = await openLook(desktop, '/posts/', LOOK, { colorScheme: 'dark' });
+  const page = await openLook(desktop, '/posts/', { ...LOOK, theme: 'auto' }, { colorScheme: 'dark' });
   await twoWindows(page);
   assert.ok(rgbs(await css(page.locator('#panel'), 'backgroundImage')).every(c => grey(c) && c[0] < 90), 'dark grey panel');
   assert.ok(rgbs(await css(page.locator('.win.active .tab.on'), 'backgroundImage')).every(blue));

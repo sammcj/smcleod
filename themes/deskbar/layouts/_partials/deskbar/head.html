@@ -4,7 +4,7 @@
 {{- $desc := .Description | default site.Params.description }}
 {{- if and (not .Description) (eq .Kind "page") }}{{ $desc = .Summary | plainify | htmlUnescape | truncate 160 }}{{ end }}
 <meta name="description" content="{{ $desc }}">
-<meta name="color-scheme" content="light dark">
+<meta name="color-scheme" content="light">
 {{- /* also shown by the About this desktop app; a module replaced with a local path is marked as such */}}
 {{- $gen := printf "Hugo %s" hugo.Version }}
 {{- range hugo.Deps }}
