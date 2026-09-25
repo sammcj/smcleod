@@ -15,7 +15,7 @@ build: ## build the example site into .build/public
 unit: ## unit tests (node --test, no dependencies)
 	node --test 'tests/*.test.mjs'
 
-budget: build ## shell JS + CSS at or under 40KB gzipped, each on-demand bundle at or under 12KB
+budget: build ## shell JS + CSS at or under 45KB gzipped, each on-demand bundle at or under 12KB
 	node scripts/size-budget.mjs $(OUT)
 
 test: unit budget

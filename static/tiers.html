@@ -1352,10 +1352,7 @@ var Core = (function () {
       for (var key in theme) out += "--" + key.replace(/[A-Z]/g, function (m) { return "-" + m.toLowerCase(); }) + ":" + theme[key] + ";";
       return selector + "{" + out + "}";
     }
-    return block(":root", Core.THEMES.light) +
-      "@media (prefers-color-scheme: dark){" + block(':root:not([data-theme="light"])', Core.THEMES.dark) + "}" +
-      block(':root[data-theme="dark"]', Core.THEMES.dark) +
-      block(':root[data-theme="light"]', Core.THEMES.light);
+    return block(":root", Core.THEMES.light) + block(':root[data-theme="dark"]', Core.THEMES.dark);
   }
   var tokens = document.createElement("style");
   tokens.id = "theme-tokens";
@@ -1596,8 +1593,7 @@ var Core = (function () {
 
   function renderChrome() {
     if (document.activeElement !== els.title) els.title.value = state.title;
-    if (state.settings.theme === "system") document.documentElement.removeAttribute("data-theme");
-    else document.documentElement.dataset.theme = state.settings.theme;
+    document.documentElement.dataset.theme = resolvedTheme();
     els.undo.disabled = !Core.canUndo(history);
     els.redo.disabled = !Core.canRedo(history);
     els.theme.value = state.settings.theme;
@@ -1926,7 +1922,18 @@ var Core = (function () {
   function resolvedTheme() {
     if (state.settings.theme === "dark") return "dark";
     if (state.settings.theme === "light") return "light";
-    return window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+    return siteTheme();
+  }
+
+  // "system" follows the site's theme, which the site keeps in localStorage (deskbar:theme: light unless set, auto
+  // for the OS's), so it applies both in a site window and on this page alone
+  var SITE_THEME_KEY = "deskbar:theme";
+  function osDark() { return !!window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches; }
+  function siteTheme() {
+    var t = null;
+    try { t = JSON.parse(localStorage.getItem(SITE_THEME_KEY)); } catch (e) { /* storage off or unreadable */ }
+    if (t === "auto") return osDark() ? "dark" : "light";
+    return t === "dark" ? "dark" : "light";
   }
 
   function readAsDataUri(blob) {
@@ -2419,6 +2426,10 @@ var Core = (function () {
     els.exportButton.addEventListener("click", function () { closePop(); exportDialog(); });
 
     els.theme.addEventListener("change", function () { setState(Core.setSetting(state, "theme", els.theme.value)); });
+    // the site's theme button writes from the parent window (or another tab), which fires storage events here
+    function followSite() { if (state.settings.theme === "system") render(); }
+    window.addEventListener("storage", function (e) { if (e.key === SITE_THEME_KEY || e.key === null) followSite(); });
+    if (window.matchMedia) window.matchMedia("(prefers-color-scheme: dark)").addEventListener("change", followSite);
     els.palette.addEventListener("change", function () { setState(Core.setSetting(state, "palette", els.palette.value)); });
     els.cardSize.addEventListener("input", function () {
       setState(Core.setSetting(state, "cardSize", Number(els.cardSize.value)), { key: "cardSize" });
@@ -2525,7 +2536,7 @@ var Core = (function () {
       <button type="button" data-pop="pop-board">Board ▾</button>
       <div class="pop-panel left">
         <div class="row"><label for="theme">Theme</label>
-          <select id="theme"><option value="system">System</option><option value="light">Light</option><option value="dark">Dark</option></select>
+          <select id="theme"><option value="system">Site</option><option value="light">Light</option><option value="dark">Dark</option></select>
         </div>
         <div class="row"><label for="palette">Tier palette</label><select id="palette"></select></div>
         <div class="row"><label for="preset">Tier preset</label>

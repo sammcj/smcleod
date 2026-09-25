@@ -3,7 +3,7 @@
 //
 // Extension points (each documented where it lives):
 // - apps/registry.js  defineApp({ kind, key, geometry, create, mount }), one module per app in apps/
-// - loader.js         code loaded on first use, outside the 40KB shell. lazyApp({ kind, name = kind, key, geometry })
+// - loader.js         code loaded on first use, outside the 45KB shell. lazyApp({ kind, name = kind, key, geometry })
 //                     in apps/index.js, with lazy/<name>.js exporting mount(view, page, opts) and optional
 //                     css/deskbar/lazy/<name>.css. loadLazy(name) resolves to such a module for non-window features.
 //                     Lazy modules import only lib/ and reach the shell through window.deskbar, which has

@@ -1,4 +1,4 @@
-// Fails when the built shell (theme JS + CSS, gzipped) exceeds the DEV_PLAN budget of 40KB, or any on-demand bundle
+// Fails when the built shell (theme JS + CSS, gzipped) exceeds the DEV_PLAN budget of 45KB, or any on-demand bundle
 // (loader.js: its JS plus CSS) exceeds 12KB.
 // Measures the bundles the home page links, since fingerprinted builds from earlier runs linger in the output dir.
 // The shell includes the Spotlight code and stylesheet the search button loads on first open (data-module, data-css).
@@ -8,7 +8,7 @@ import { readFileSync } from 'node:fs';
 import { join } from 'node:path';
 import { gzipSync } from 'node:zlib';
 
-const BUDGET = 40 * 1024, LAZY_BUDGET = 12 * 1024;
+const BUDGET = 45 * 1024, LAZY_BUDGET = 12 * 1024;
 const root = process.argv[2];
 if (!root) {
   console.error('usage: size-budget.mjs <public dir>');

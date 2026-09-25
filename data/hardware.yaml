@@ -6,16 +6,21 @@
   description: Mechanical Keyboard
   category: For Your Hands
   thumb: hardware/das-keyboard.jpg
-- name: Keychron
-  url: https://www.keychron.com
-  description: Low Profile Mechanical Keyboards
+- name: Keychron V1 Ultra 8K
+  url: https://www.keychron.com/products/keychron-v1-ultra-8k-wireless-custom-mechanical-keyboard
+  description: Mechanical Keyboard, used with low profile keycaps
   category: For Your Hands
-  thumb: hardware/keychron.jpg
+  thumb: hardware/keychron-v1-ultra.jpg
 - name: Logitech MX Master 3S
   url: https://www.logitech.com/en-au/shop/p/mx-master-3s
   description: Mouse
   category: For Your Hands
   thumb: hardware/mx-master-3s.jpg
+- name: Steam Controller
+  url: https://store.steampowered.com/hardware/steamcontroller
+  description: Game Controller
+  category: For Your Hands
+  thumb: hardware/steam-controller.jpg
 
 - name: Ultrasone Signature Pro
   url: https://web.archive.org/web/2021/https://ultrasone.com/product/ultrasone-signature-pro/?lang=en
@@ -32,3 +37,19 @@
   description: DAC & Preamp
   category: For Your Ears
   thumb: hardware/benchmark-dac.jpg
+- name: Fosi Audio V3 Mono
+  url: https://www.amazon.com.au/dp/B0D97H4ZSS
+  description: Monoblock Amplifiers
+  category: For Your Ears
+  thumb: hardware/fosi-v3-mono.jpg
+
+- name: Creality K2 Pro
+  url: https://www.creality.com/products/k2-series
+  description: 3D Printer
+  category: For Your Home
+  thumb: hardware/creality-k2-pro.jpg
+- name: Aranet4 Home
+  url: https://aranet.com/en/home/products/aranet4-home
+  description: CO2 & Air Quality Monitor
+  category: For Your Home
+  thumb: hardware/aranet4.jpg

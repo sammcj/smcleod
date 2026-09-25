@@ -1,0 +1,35 @@
+# AI blogs in the Blogs > AI folder (/blogs/ai/), in display order. Each card shows the site's logo and, when it has
+# feed (RSS, read at build time), its latest post. A feed's own artwork wins over thumb.
+# thumb: the site's logo under assets/blogs/, kept here as sites move or block bots.
+# r/LocalLLaMA and the changelog have no feed: a subreddit's newest post is noise, and ClaudeLog's feed covers its whole site.
+- name: r/LocalLLaMA
+  url: https://www.reddit.com/r/LocalLLaMA/
+  thumb: blogs/reddit.png
+- name: AINews
+  url: https://news.smol.ai
+  feed: https://news.smol.ai/rss.xml
+  thumb: blogs/smol-ainews.png
+- name: Hugging Face Blog
+  url: https://huggingface.co/blog
+  feed: https://huggingface.co/blog/feed.xml
+  thumb: blogs/hugging-face.png
+- name: Latent Space AINews
+  url: https://www.latent.space/s/ainews
+  feed: https://www.latent.space/feed?sectionId=327741
+  thumb: blogs/latent-space.jpg
+- name: SwirlAI Newsletter
+  url: https://www.newsletter.swirlai.com
+  feed: https://www.newsletter.swirlai.com/feed
+  thumb: blogs/swirlai.png
+- name: Claude Blog
+  url: https://claude.com/blog
+  thumb: blogs/claude.png
+- name: Anthropic Engineering
+  url: https://www.anthropic.com/engineering
+  thumb: blogs/anthropic.png
+- name: Claude Code Changelog
+  url: https://claudelog.com/claude-code-changelog/
+  thumb: blogs/claudelog.png
+- name: Qwen Research
+  url: https://qwen.ai/research
+  thumb: blogs/qwen.png

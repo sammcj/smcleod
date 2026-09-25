@@ -6,5 +6,5 @@ window: folder
 searchKind: tool
 icon: apps
 norss: true
-include: ["/vram-estimator", "/agentic-coding-tools", "/terminal", "/sketch", "/chiptunes", "/feeds", "/screensaver"]
+include: ["/vram-estimator", "/terminal", "/sketch", "/chiptunes", "/feeds", "/screensaver"]
 ---

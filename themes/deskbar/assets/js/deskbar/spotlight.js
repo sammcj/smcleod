@@ -9,7 +9,7 @@ import { parseSiteIndex, searchSite, snippet, marks } from './site-search.js';
 const ICONS = { post: 'doc', page: 'doc', tool: 'tools', photo: 'photos', tag: 'folder', series: 'folder' };
 const KNOWN = new Set(['folder', 'doc', 'write', 'term', 'person', 'chart', 'image', 'globe', 'git', 'home', 'leaf', 'photos', 'tools', 'apps', 'favourites', 'projects', 'theme',
   'appearance', 'control-panel', 'sketch', 'music', 'vram', 'compare', 'tiers', 'quantise', 'energy', 'mail', 'feeds',
-  'videos', 'podcasts', 'hardware', 'software']);
+  'videos', 'podcasts', 'hardware', 'software', 'blogs', 'ai']);
 
 let ui = null, entries = null, loading = null, cssReady = null, from = null;
 

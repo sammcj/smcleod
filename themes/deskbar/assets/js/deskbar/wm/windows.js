@@ -72,6 +72,13 @@ export function clearOfIcons(x, w, d = deskRect()) {
   return x < left && left + w <= d.w - 10 ? left : x;
 }
 
+// The Posts window's home spot (D36): where Recent posts used to open, just right of the icons. At most 630x830,
+// which leaves the desktop in view on a large screen and reaches the dock on a smaller one
+export function postsHome() {
+  const d = deskRect(), y = 16 + tabH(), x = (iconsRight() || 102) + 22;
+  return { x, y, w: Math.min(630, d.w - x - 8), h: Math.min(830, d.h - y - 8) };
+}
+
 // The floating dock covers the bottom of the desk, so windows stop above it
 export function deskRect() {
   const dock = document.getElementById('dock');

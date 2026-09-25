@@ -99,16 +99,15 @@ params:
       - name: Applications
         page: /tools
         items:
-          - { page: /agentic-coding-tools }
           - { page: /vram-estimator }
           - { page: /tools/tiers }
           - { page: /tools/quantisation-dashboard }
-          - { page: /tools/ai-consumption }
           - { page: /terminal }
           - { page: /screensaver }
           - { page: /sketch }
           - { page: /chiptunes }
           - { page: /feeds }
+          - { page: /tools/old }
       - name: Photos
         page: /photos
       - name: Pages

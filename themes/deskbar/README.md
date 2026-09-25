@@ -3,7 +3,7 @@
 The Hugo theme for smcleod.net. It lives in this repo rather than as a published theme. It turns a blog into a small desktop in the browser, after Haiku (BeOS) and XFCE. Posts open in a reader window, Tracker browses posts by year, tag and series, and windows snap, stack and tile. Every page is still a plain HTML document, so it reads fine without JavaScript, in feed readers and on search engines.
 
 - Hugo 0.146.0 or newer (standard edition is enough)
-- No runtime dependencies. Shell JS and CSS stay under 40KB gzipped.
+- No runtime dependencies. Shell JS and CSS stay under 45KB gzipped.
 - Phones (under 768px wide, or under 500px tall with touch, as when turned sideways) get one full-screen window at a time with a switcher. The page itself scrolls there, so it runs under a browser's floating toolbar, and the home screen shows it is a desktop: a Latest posts widget (the newest three, and All posts, which opens Tracker) over the desktop icons in a grid, with the dock below
 - The Windows switcher copies a link to the current layout (`?layout=`), which reopens the same windows and snaps
 - A post dragged out of Tracker onto the desk opens in a window of its own, where it lands, with its own Back and Forward. Cmd/Ctrl-click and Shift-click (or Shift+Up/Down) select several posts in Tracker; drag them out, or open them with Enter, the toolbar button or the context menu. Desktop only; a middle click still opens a browser tab
@@ -68,7 +68,7 @@ params:
 
 Posts without an image get a generated card: one Haiku-style object (the emblem) on a quiet ground. Posts without `thumbnailIcon` get the bare emblem as their list-row icon. Emblems: `neural windows terminal window code doc branch globe disk container car camera house gpu chip padlock screen laptop server record board chart plug palette chat briefcase` (`doc` when nothing matches). They live in `data/deskbar/emblems.yaml`, which also documents the drawing conventions. Setting `thumbRules` replaces the theme's default rules, so list every rule you want.
 
-Icons: `folder apps favourites projects doc write term person chart image globe git home leaf photos tools theme appearance control-panel sketch music vram compare tiers quantise energy mail feeds videos podcasts hardware software`. External URLs open in a new tab.
+Icons: `folder apps favourites projects doc write term person chart image globe git home leaf photos tools theme appearance control-panel sketch music vram compare tiers quantise energy mail feeds videos podcasts hardware software blogs ai`. External URLs open in a new tab.
 
 Front matter the theme reads:
 
@@ -83,6 +83,7 @@ searchKind: tool          # Spotlight group for this page (post, page, tool, pho
 window: photos            # open in a registered app instead of the default window
 windowWidth: 880          # default window width for this page in any app (px; plain pages default to 680)
 windowHeight: 546         # default window height, likewise; a page with either size opens centred, clamped to the desk
+windowBesidePosts: true   # with a size: no taller than the Posts window, and just right of its home spot when it fits there
 math: true                # load MathJax (\( \), \[ \], $$ $$); prose with those delimiters also triggers it
 photos: true              # give this post an album in Photos and a "View photos" chip (so does the gallery shortcode)
 frame: /tiers.html        # with layout: tool, window: tool - embed a standalone HTML file as a tool window
@@ -172,7 +173,7 @@ Window size: pass `size: 'large'` instead of `geometry` for an application. Its 
 
 #### Apps loaded on first open
 
-Anything that isn't needed at start-up should load on demand so it stays out of the 40KB shell (`assets/js/deskbar/loader.js`). Each on-demand bundle has its own 12KB gzipped budget.
+Anything that isn't needed at start-up should load on demand so it stays out of the 45KB shell (`assets/js/deskbar/loader.js`). Each on-demand bundle has its own 12KB gzipped budget.
 
 ```text
 assets/js/deskbar/lazy/<name>.js      # exports mount(view, page, opts); built to its own file
@@ -205,7 +206,7 @@ A failed load, or a mount that throws, shows an error in the window, and opening
 ```sh
 make serve    # example site with live reload
 make build    # example site into .build/public
-make test     # unit tests plus the size budgets (40KB shell, 12KB per on-demand bundle)
+make test     # unit tests plus the size budgets (45KB shell, 12KB per on-demand bundle)
 npm install && make e2e   # Playwright browser and axe accessibility tests against the example build
 ```
 

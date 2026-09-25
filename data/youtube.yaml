@@ -2,10 +2,7 @@
 # video from feed (the channel's or playlist's RSS, read at build time, so the 6-hourly deploy keeps it current).
 # @handle and /c/ URLs don't work in the feed URL, so it takes the channel id (the channel page's canonical link).
 # thumb: a recent video's thumbnail, shown when YouTube's feed fails, as it often does with a 404.
-- name: Machine Learning Street Talk
-  url: https://www.youtube.com/@MachineLearningStreetTalk
-  feed: https://www.youtube.com/feeds/videos.xml?channel_id=UCMLtBahI5DMrt0NPvDSoIRQ
-  thumb: https://i.ytimg.com/vi/72Im-Mm5JKs/mqdefault.jpg
+# category: groups cards under a heading; uncategorised cards come first, with none.
 - name: NPR Tiny Desk Concerts
   url: https://www.youtube.com/playlist?list=PL1B627337ED6F55F0
   feed: https://www.youtube.com/feeds/videos.xml?playlist_id=PL1B627337ED6F55F0
@@ -30,11 +27,71 @@
   url: https://www.youtube.com/c/smartereveryday
   feed: https://www.youtube.com/feeds/videos.xml?channel_id=UC6107grRI4m0o2-emgoDnAA
   thumb: https://i.ytimg.com/vi/vS6HEes8daw/mqdefault.jpg
-- name: Warped Perception
-  url: https://www.youtube.com/channel/UCFH4dWqQQOYkyJZUGT4q5pg
-  feed: https://www.youtube.com/feeds/videos.xml?channel_id=UCFH4dWqQQOYkyJZUGT4q5pg
-  thumb: https://i.ytimg.com/vi/XeISB1DEhhE/mqdefault.jpg
 - name: Retro Game Corps
   url: https://www.youtube.com/@RetroGameCorps
   feed: https://www.youtube.com/feeds/videos.xml?channel_id=UCoZQiN0o7f36H7PaW4fVhFw
   thumb: https://i.ytimg.com/vi/Q-pFlOcNJk0/mqdefault.jpg
+- name: Asianometry
+  url: https://www.youtube.com/@Asianometry
+  feed: https://www.youtube.com/feeds/videos.xml?channel_id=UC1LpsuAUaKoMzzJSEt5WImw
+  thumb: https://i.ytimg.com/vi/3nTpW52nioI/mqdefault.jpg
+- name: Machine Learning Street Talk
+  url: https://www.youtube.com/@MachineLearningStreetTalk
+  feed: https://www.youtube.com/feeds/videos.xml?channel_id=UCMLtBahI5DMrt0NPvDSoIRQ
+  thumb: https://i.ytimg.com/vi/72Im-Mm5JKs/mqdefault.jpg
+  category: AI
+  description: In-depth interviews with ML researchers.
+- name: AI Explained
+  url: https://www.youtube.com/@aiexplained-official
+  feed: https://www.youtube.com/feeds/videos.xml?channel_id=UCNJ1Ymd5yFuUPtn21xtRbbw
+  thumb: https://i.ytimg.com/vi/R9momwXV9w4/mqdefault.jpg
+  category: AI
+  description: Excellent critical thinking around new models.
+- name: Julia Turc
+  url: https://www.youtube.com/@juliaturc1
+  feed: https://www.youtube.com/feeds/videos.xml?channel_id=UCMUy_WsUIYbM_hKR9drb9dA
+  thumb: https://i.ytimg.com/vi/-WmLZcgiyyU/mqdefault.jpg
+  category: AI
+  description: Great for machine learning topics.
+- name: 3Blue1Brown
+  url: https://www.youtube.com/@3blue1brown
+  feed: https://www.youtube.com/feeds/videos.xml?channel_id=UCYO_jab_esuFRV4b17AJtAw
+  thumb: https://i.ytimg.com/vi/Nbwv5wHQoj0/mqdefault.jpg
+  category: AI
+  description: Excellent for ML deep dives.
+- name: AI Engineer
+  url: https://www.youtube.com/@aiDotEngineer
+  feed: https://www.youtube.com/feeds/videos.xml?channel_id=UCLKPca3kwwd-B59HNr-_lvA
+  thumb: https://i.ytimg.com/vi/2LRIAfng7eA/mqdefault.jpg
+  category: AI
+  description: Conference talks. Some are thinly veiled sales pitches.
+- name: Nate B Jones
+  url: https://www.youtube.com/@NateBJones
+  feed: https://www.youtube.com/feeds/videos.xml?channel_id=UC0C-17n9iuUQPylguM1d-lQ
+  thumb: https://i.ytimg.com/vi/Risal7sjYms/mqdefault.jpg
+  category: AI
+  description: A good lens on enterprise AI, with some hot takes.
+- name: Dwarkesh Patel
+  url: https://www.youtube.com/@DwarkeshPatel
+  feed: https://www.youtube.com/feeds/videos.xml?channel_id=UCXl4i9dYBrFOabk0xGmbkRA
+  thumb: https://i.ytimg.com/vi/f6cjAEr08qk/mqdefault.jpg
+  category: AI
+  description: (Mostly) good interviews.
+- name: Hannah Fry
+  url: https://www.youtube.com/@fryrsquared
+  feed: https://www.youtube.com/feeds/videos.xml?channel_id=UCsX5upzW0Tk2riDY1WB887w
+  thumb: https://i.ytimg.com/vi/WnzR5aOElvw/mqdefault.jpg
+  category: AI
+  description: Good episodes on AI ethics.
+- name: Andrej Karpathy
+  url: https://www.youtube.com/@AndrejKarpathy
+  feed: https://www.youtube.com/feeds/videos.xml?channel_id=UCXUPKJO5MZQN11PqgIvyuvQ
+  thumb: https://i.ytimg.com/vi/EWvNQjAaOHw/mqdefault.jpg
+  category: AI
+  description: Wouldn't be an AI list without him.
+- name: Matt Maher
+  url: https://www.youtube.com/@MetalSole
+  feed: https://www.youtube.com/feeds/videos.xml?channel_id=UC6-EGajbNF0DPD9AJ8oQC1A
+  thumb: https://i.ytimg.com/vi/ChsbhUjFrn4/mqdefault.jpg
+  category: AI
+  description: What I send people starting out with AI coding.

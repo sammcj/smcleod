@@ -16,4 +16,4 @@ windowWidth: 720
 windowHeight: 546
 ---
 
-More favourites: [YouTube Channels](/youtube/), [Podcasts](/podcasts/) and [Tools](/links/).
+More favourites: [YouTube Channels](/youtube/), [Podcasts](/podcasts/), [Tools](/links/) and [Blogs](/blogs/).

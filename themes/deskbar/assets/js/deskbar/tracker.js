@@ -8,7 +8,7 @@ import { store } from './lib/store.js';
 import { fmtDate, shortDate, plural, thumb, mini } from './lib/format.js';
 import { filterPosts } from './index-data.js';
 import { searchPosts } from './search.js';
-import { createWindow, findView, focusView, renderTabs, place, refresh, deskRect, tabH, isPhone, clearOfIcons, iconsRight } from './wm/windows.js';
+import { createWindow, findView, focusView, renderTabs, place, refresh, deskRect, tabH, isPhone, clearOfIcons, postsHome } from './wm/windows.js';
 import { arrowTo } from './lib/keys.js';
 import { dragOut } from './dragout-trigger.js';
 import * as router from './router.js';
@@ -296,20 +296,13 @@ export function ensureTracker({ place, url, q, focus = true } = {}) {
   return v;
 }
 
-// The Posts window's home spot (D36): where Recent posts used to open, just right of the icons. At most 630x830,
-// which leaves the desktop in view on a large screen and reaches the dock on a smaller one
-function homeGeo() {
-  const d = deskRect(), y = 16 + tabH(), x = (iconsRight() || 102) + 22;
-  return { x, y, w: Math.min(630, d.w - x - 8), h: Math.min(830, d.h - y - 8) };
-}
-
 // First load (beneath) opens it at its home spot under any window the page opened, which keeps the focus. Home (D24)
 // brings it to the front there. Neither animates or takes keyboard focus, and a pending Home snapshot stays (focus()
 // would drop it). Phones have their own home screen (phone-home.js).
 export function showPosts(beneath) {
   let v = findView('tracker');
   if (isPhone() || (beneath && v)) return;
-  const { focused, booting, home } = S, geo = homeGeo();
+  const { focused, booting, home } = S, geo = postsHome();
   S.booting = true;
   if (!v) createWindow(v = makeTracker(), geo);
   const w = v.win;

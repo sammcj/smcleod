@@ -16,4 +16,4 @@ windowWidth: 720
 windowHeight: 546
 ---
 
-More favourites: [Podcasts](/podcasts/), [Hardware](/hardware/) and [Tools](/links/).
+More favourites: [Podcasts](/podcasts/), [Hardware](/hardware/), [Tools](/links/) and [Blogs](/blogs/).

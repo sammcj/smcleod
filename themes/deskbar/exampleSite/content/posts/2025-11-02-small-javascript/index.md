@@ -6,7 +6,7 @@ description: "A size budget keeps the shell honest."
 thumbnail: photo-2.jpg
 ---
 
-The shell has a 40KB gzipped budget for its JavaScript and CSS combined.
+The shell has a 45KB gzipped budget for its JavaScript and CSS combined.
 
 ![A generated plasma image](photo-1.jpg)
 

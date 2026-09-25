@@ -11,7 +11,7 @@
 <body>
   {{- partial "deskbar/panel.html" . }}
   {{- partial "deskbar/desk.html" . }}
-  <main id="content" data-window="{{ $w.kind }}" data-title="{{ $w.title }}" data-slug="{{ $w.slug }}" data-place="{{ $w.place }}" data-icon="{{ $w.icon }}"{{ with .Params.windowWidth }} data-width="{{ . }}"{{ end }}{{ with .Params.windowHeight }} data-height="{{ . }}"{{ end }}>
+  <main id="content" data-window="{{ $w.kind }}" data-title="{{ $w.title }}" data-slug="{{ $w.slug }}" data-place="{{ $w.place }}" data-icon="{{ $w.icon }}"{{ with .Params.windowWidth }} data-width="{{ . }}"{{ end }}{{ with .Params.windowHeight }} data-height="{{ . }}"{{ end }}{{ if .Params.windowBesidePosts }} data-beside-posts{{ end }}>
     {{- block "main" . }}{{ end }}
   </main>
   {{- partial "deskbar/dock.html" . }}

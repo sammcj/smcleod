@@ -89,7 +89,7 @@ export function pageFromMain(main, href, docTitle) {
   let first = main;
   return {
     url: u.pathname + u.search, kind: d.window || 'page', title: d.title || docTitle, slug: d.slug || '',
-    place: d.place || '', icon: d.icon || 'doc', width: Number(d.width) || 0, height: Number(d.height) || 0, docTitle,
+    place: d.place || '', icon: d.icon || 'doc', width: Number(d.width) || 0, height: Number(d.height) || 0, besidePosts: 'besidePosts' in d, docTitle,
     // The first call hands over the original nodes, so anything the page's own scripts bound to them keeps
     // working. Later calls (a cached page shown again) get fresh copies.
     content: () => {

@@ -20,7 +20,7 @@
 // D12 anchors work the same in every window: a deep link's #hash, and an in-page link to a heading, scroll the
 // view showing that page to the element with that id. A view can set scrollTo(id) to do this its own way.
 import { h } from '../lib/dom.js';
-import { createWindow, findView, focusView, renderTabs, deskRect, tabH, allViews, activeView, iconsRight, clearOfIcons, arrange } from '../wm/windows.js';
+import { createWindow, findView, focusView, renderTabs, deskRect, tabH, allViews, activeView, iconsRight, clearOfIcons, arrange, postsHome } from '../wm/windows.js';
 import { S } from '../wm/state.js';
 import * as router from '../router.js';
 
@@ -49,13 +49,16 @@ function large(d, th) {
 }
 
 // Front matter windowWidth and windowHeight replace the app's default size for that page, re-centred on the desk.
-// A window that would cover the desktop icons starts just right of them instead, when it fits there.
+// windowBesidePosts caps the height at the Posts window's and opens it just right of that window's home spot, top
+// edges level, when the width fits there. A window that would cover the desktop icons starts just right of them
+// instead, when it fits there.
 function geometry(app, page) {
   const d = deskRect(), th = tabH(), g = (app.size === 'large' ? large : app.geometry)?.(d, th, page) || {};
   if (page.width || page.height) {
+    const p = page.besidePosts && postsHome(), x = p && p.x + p.w + 12;
     g.w = Math.min(d.w - 20, page.width || g.w || 680);
-    g.h = Math.min(d.h - th - 16, page.height || g.h || 460);
-    Object.assign(g, { x: Math.max(10, (d.w - g.w) / 2), y: Math.max(th + 10, (d.h - g.h) / 2) });
+    g.h = Math.min(d.h - th - 16, page.height || g.h || 460, p ? p.h : Infinity);
+    Object.assign(g, p && x + g.w <= d.w - 10 ? { x, y: p.y } : { x: Math.max(10, (d.w - g.w) / 2), y: Math.max(th + 10, (d.h - g.h) / 2) });
   }
   if (g.w && g.x != null) g.x = clearOfIcons(g.x, g.w, d);
   return g;
