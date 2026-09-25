@@ -121,3 +121,20 @@ test('D24/D36: Home shows the Posts window at its spot, then puts it back minimi
   assert.deepEqual(page.errors, []);
   await page.context().close();
 });
+
+test('phone: an app closed from its own address opens again', async t => {
+  if (!(await needs(t, '/photos/'))) return;
+  const page = await open(phone);
+  // as its icon or a link does
+  const openPhotos = () => page.evaluate(() => window.deskbar.go('/photos/')), photos = win(page, 'photos');
+  await openPhotos();
+  await photos.waitFor();
+  assert.ok(await page.locator('#panel #winsBtn').isHidden(), 'no switcher for the one window on screen');
+  await photos.locator('.tab.on .ctl.close').click();
+  await photos.waitFor({ state: 'detached' });
+  await page.waitForFunction(() => location.pathname === '/', null, { timeout: 3000 });
+  await openPhotos();
+  await photos.waitFor({ timeout: 5000 });
+  assert.deepEqual(page.errors, []);
+  await page.context().close();
+});

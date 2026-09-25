@@ -182,6 +182,9 @@ test('axe: Platinum at 1440 and 390, light and dark', async t => {
       await cards(page).first().click();
       await win(page, 'reader').locator('.rd h1').waitFor();
       for (const v of await audit(page)) found.push(`${tag} reader] ${v}`);
+      // a second window, as a phone shows the switcher only with one behind the front one
+      await page.evaluate(() => window.deskbar.go('/posts/'));
+      await win(page, 'tracker').waitFor();
       await page.locator('#winsBtn').click();
       await page.locator('#switcher .sw-tab').first().waitFor();
       for (const v of await audit(page)) found.push(`${tag} switcher] ${v}`);

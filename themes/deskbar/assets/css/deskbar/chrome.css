@@ -153,6 +153,8 @@ button.dicon { background: none; border: 0; font: inherit; color: inherit; curso
   /* Home is first in the panel, and the dock's copy stays out, as does the switcher until main.js moves it up */
   #panel #panelHome { order: -2; }
   #dock :is(#homeBtn, #winsBtn) { display: none !important; }
+  /* the switcher shows only when a window is behind the front one or minimised, as both are hidden here */
+  .wm:not(:has(.win[hidden])) #panel #winsBtn { display: none; }
   /* full width, like the tab of a phone's full-screen window, and touch sized */
   #switcher { --sw-w: min(300px, calc(100vw - 30px)); }
   .sw-tab { width: 100%; height: 42px; }

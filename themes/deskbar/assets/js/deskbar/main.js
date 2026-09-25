@@ -58,10 +58,10 @@ function onResize() {
 }
 
 // After a window closes, point the address bar at what is still showing, or the desktop's address when nothing that
-// has one is left.
+// has one is left. An app's route can carry its own state (Photos' ?album=) that the address doesn't, so paths compare.
 function afterClose(views) {
-  const cur = router.currentPath();
-  if (!views.some(v => v.route() === cur)) return;
+  const path = h => router.routeFor(h, location.href)?.path;
+  if (!views.some(v => path(v.route()) === path(location.href))) return;
   const top = topWin(), v = top && top.views[top.active], home = document.getElementById('homeBtn');
   if (v?.route()) router.replace(v.route(), v.page?.docTitle);
   else router.replace(home.getAttribute('href'), home.dataset.docTitle);
