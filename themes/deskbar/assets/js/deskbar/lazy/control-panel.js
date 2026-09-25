@@ -25,10 +25,10 @@ const PALETTE = ['palette', 'Colours', [
 const MODE = ['theme', 'Mode', [['auto', 'Auto'], ['light', 'Light'], ['dark', 'Dark']]];
 const DECO = ['deco', 'Window style', [['haiku', 'Haiku'], ['beos', 'BeOS'], ['flat', 'Flat'], ['clear', 'Clear'], ['liquid', 'Liquid Ass'],
   ['platinum', 'Platinum'], ['clearlooks', 'Clearlooks'], ['phosphor', 'Phosphor'], ['broadsheet', 'Broadsheet'], ['synthwave', 'Synthwave'],
-  ['pixel', 'Pixel']], thumb('cp-deco')];
+  ['vector', 'Vector'], ['memphis', 'Memphis'], ['nightdrive', 'Night Drive'], ['pixel', 'Pixel']], thumb('cp-deco')];
 const WALL = ['wall', 'Wallpaper', [['rings', 'Rings'], ['plain', 'Plain'], ['grid', 'Grid'], ['dots', 'Dots'], ['hills', 'Hills'], ['liquid', 'Liquid'], ['clear', 'Clear'],
   ['platinum', 'Platinum'], ['clearlooks', 'Clearlooks'], ['phosphor', 'Phosphor'], ['broadsheet', 'Broadsheet'], ['synthwave', 'Synthwave'],
-  ['pixel', 'Pixel']], thumb('cp-wp')];
+  ['vector', 'Vector'], ['memphis', 'Memphis'], ['nightdrive', 'Night Drive'], ['pixel', 'Pixel']], thumb('cp-wp')];
 // Whole looks: window styles that bring their own wallpaper and dock (deco() below). owns: the Appearance groups a
 // look sets itself, disabled while it is on. Platinum and the rest are css/deskbar/looks/<name>.css, which draws
 // the window style, wallpaper, dock and both thumbnails; Liquid Ass and Clear live in control-panel.css.
@@ -40,6 +40,10 @@ const LOOKS = {
   phosphor: { wall: 'phosphor', dock: 'panel', owns: ['palette', 'dock', 'theme'] },
   broadsheet: { wall: 'broadsheet', dock: 'glass', owns: ['palette', 'dock'] },
   synthwave: { wall: 'synthwave', dock: 'glass', owns: ['palette', 'dock', 'theme'] },
+  // Synthwave's colours with other chrome over flat, patterned wallpapers (looks/vector.css and the rest)
+  vector: { wall: 'vector', dock: 'glass', owns: ['palette', 'dock', 'theme'] },
+  memphis: { wall: 'memphis', dock: 'glass', owns: ['palette', 'dock', 'theme'] },
+  nightdrive: { wall: 'nightdrive', dock: 'glass', owns: ['palette', 'dock', 'theme'] },
   pixel: { wall: 'pixel', dock: 'glass', owns: ['palette', 'dock'] },
 };
 // The Mac startup chime, synthesised rather than recorded: a slightly strummed F sharp major chord of detuned saws

@@ -1,0 +1,123 @@
+/* Vector: Synthwave's colours on a vector display. Square windows ruled in a cyan line with a pink hairline inside
+   it when focused, angled tabs filled cyan and set in wide-spaced Space Grotesk capitals, a flat panel and dock on
+   hairlines, and a flat indigo wallpaper ruled in a fine triangle lattice. Lines stand in for glow, and window
+   content is near-white on deep indigo, unlit, for long reads. Dark only. */
+@font-face { font-family: 'Space Grotesk'; font-display: swap; font-weight: 700; src: url(../../../fonts/space-grotesk/space-grotesk-700-normal.woff2) format('woff2'); }
+
+:root[data-deco=vector] {
+  color-scheme: dark;
+  --sw-pink: #ff3ea5; --sw-cyan: #6fe3ff; --sw-ink: #1a0b3a; --sw-edge: #4a3580;
+  --sw-head: 'Space Grotesk', var(--ui);
+  /* the focused double rule: a gap in the frame's colour, then the pink hairline */
+  --vx-rule: inset 0 0 0 2px var(--frame), inset 0 0 0 3px var(--sw-pink);
+  --vx-cut: polygon(0 100%, 9px 0, calc(100% - 9px) 0, 100% 100%);
+  --panel: #1a0b3a; --panel-fg: #f5eeff; --panel-hover: rgba(111,227,255,.14);
+  --frame: #211546; --frame-hi: #3b2a70; --frame-lo: #120a2a; --frame-dk: #0a0418;
+  --tab: var(--sw-cyan); --tab-hi: #b5f1ff; --tab-lo: #2aa7c9; --tab-dim: #3fb5d6;
+  --tab-in: #2a1b52; --tab-in-lo: #1a0f38; --tab-in-fg: #cfc3f2; --ctl: var(--sw-ink);
+  --content: #160e2c; --side: #1c1236; --fg: #ece6ff; --muted: #b6a8dc; --line: #3a2a66; --zebra: rgba(255,255,255,.035);
+  --accent: #c2267a; --accent-fg: #fff; --link: var(--sw-cyan);
+  --read-bg: #140c28; --read-fg: #e4ddf5; --code-bg: #22173f;
+  --wall-1: #1d0c44; --wall-2: #150936; --wall-3: #0d0526; --wall-glow: rgba(111,227,255,.12); --wall-line: rgba(111,227,255,.14);
+}
+:root[data-deco=vector] ::selection { background: var(--sw-cyan); color: var(--sw-ink); }
+:root[data-deco=vector] :focus-visible { outline-color: var(--sw-cyan); }
+:root[data-deco=vector] #themeBtn { display: none; }
+:root[data-deco=vector] .ticker-h { color: var(--sw-ink); }
+@supports selector(::-webkit-scrollbar) {
+  html[data-deco=vector] ::-webkit-scrollbar { width: 12px; height: 12px; background: var(--side); }
+  html[data-deco=vector] ::-webkit-scrollbar-thumb { border: 3px solid var(--side); background: var(--sw-edge); }
+  html[data-deco=vector] ::-webkit-scrollbar-thumb:hover { background: var(--sw-cyan); }
+  html[data-deco=vector] ::-webkit-scrollbar-corner { background: var(--side); }
+}
+@supports not selector(::-webkit-scrollbar) {
+  :root[data-deco=vector] { scrollbar-color: var(--sw-edge) var(--side); }
+}
+
+/* the top bar is flat, on a cyan rule with a pink hairline under it */
+:root[data-deco=vector] #panel { border-bottom: 1px solid var(--sw-cyan); box-shadow: 0 1px 0 rgba(255,62,165,.7); }
+:root[data-deco=vector] .task { border-radius: 0; }
+:root[data-deco=vector] .task.on { background: rgba(111,227,255,.12); border-color: var(--sw-cyan); box-shadow: none; }
+
+/* Windows: square, a cyan line and a pink hairline inside it when focused, dim indigo lines otherwise */
+:root[data-deco=vector] .win .frame { padding: 5px; border: 1px solid var(--sw-edge); border-radius: 0; box-shadow: 0 12px 30px rgba(0,0,0,.55); }
+:root[data-deco=vector] .win.active .frame { border-color: var(--sw-cyan); box-shadow: var(--vx-rule), 0 0 8px rgba(111,227,255,.18), 0 16px 40px rgba(0,0,0,.6); }
+:root[data-deco=vector] .views { border: 1px solid var(--line); border-radius: 0; }
+/* the tab's slanted ends are cut, so it takes no border; the padding clears the slants */
+:root[data-deco=vector] .win :is(.tab, .th) { padding: 0 11px 0 16px; border: 0; border-radius: 0; box-shadow: none; clip-path: var(--vx-cut); }
+:root[data-deco=vector] .tabs.multi .tab { margin-right: -3px; }
+:root[data-deco=vector] .win.active .tab { color: var(--sw-ink); background: var(--sw-cyan); box-shadow: none; }
+:root[data-deco=vector] .win.active .tab:not(.on) { background: var(--tab-dim); }
+:root[data-deco=vector] .tab .tt { font-family: var(--sw-head); font-size: 11px; letter-spacing: .16em; text-transform: uppercase; }
+:root[data-deco=vector] .win.active .tab .tt:focus-visible { outline-color: var(--sw-ink); border-radius: 0; }
+:root[data-deco=vector] .th::before { margin: 8px 6px 8px 0; background: repeating-linear-gradient(120deg, var(--sw-edge) 0 1px, transparent 0 5px); }
+:root[data-deco=vector] .win.active .th::before { background: repeating-linear-gradient(120deg, rgba(111,227,255,.5) 0 1px, transparent 0 5px); }
+:root[data-deco=vector] :is(.win, #switcher) .ctl { border-radius: 0; }
+:root[data-deco=vector] .win .ctl:hover { background: rgba(26,11,58,.2); }
+:root[data-deco=vector] .win .ctl.close:hover { color: var(--sw-cyan); background: var(--sw-ink); }
+:root[data-deco=vector] .sizer { border-color: var(--sw-cyan); border-radius: 0; box-shadow: none; }
+:root[data-deco=vector] #snapPreview { background: rgba(111,227,255,.07); border: 1px solid var(--sw-cyan); border-radius: 0; box-shadow: inset 0 0 0 3px rgba(21,9,54,.6), inset 0 0 0 4px var(--sw-pink); }
+
+/* controls: square, lit cyan under the pointer, filled cyan when pressed or on, like the tab */
+:root[data-deco=vector] :is(.tb, .seg, select, textarea, input:not([type=checkbox], [type=radio], [type=range])) { border-color: var(--sw-edge); border-radius: 0; }
+:root[data-deco=vector] :is(.tb, .seg):hover { border-color: var(--sw-cyan); }
+:root[data-deco=vector] :is(.tb:active, .seg.on, .tb[aria-pressed=true], .tb[aria-expanded=true]) { color: var(--sw-ink); background: var(--sw-cyan); border-color: var(--sw-cyan); box-shadow: none; }
+:root[data-deco=vector] :is(.pc, .tg, .ph, .gi, .folder a, .rd-pager a, .cp-opt, .cp-art, .term-chip, .rd .chip, .rd pre, .rd .highlight > div.chroma, .rd code, .rd img, .sp-close, .sp-field, .recent-list, .mn-it, .ctx-it, .sp-opt, .sw-link, .dk, #homeBtn, #winsBtn, #recent h2) { border-radius: 0; }
+:root[data-deco=vector] .pc:hover { box-shadow: inset 0 0 0 1px var(--sw-cyan); }
+
+/* menus and popups: a cyan line, the Spotlight frame with the window's double rule */
+:root[data-deco=vector] :is(#menu, .ctx, .sp-frame, .recent-list) { border: 1px solid var(--sw-cyan); border-radius: 0; box-shadow: 0 14px 36px rgba(0,0,0,.6); }
+:root[data-deco=vector] .sp-frame { padding: 7px; box-shadow: var(--vx-rule), 0 14px 36px rgba(0,0,0,.6); }
+:root[data-deco=vector] :is(.sp-tab, #recent h2) { padding-inline: 16px; color: var(--sw-ink); background: var(--sw-cyan); border: 0; box-shadow: none; font-family: var(--sw-head); letter-spacing: .16em; text-transform: uppercase; }
+:root[data-deco=vector] .sp-tab { clip-path: var(--vx-cut); }
+/* the switcher's tabs keep square ends, as each carries its frame below it */
+:root[data-deco=vector] .sw-tab { border-color: var(--sw-edge); box-shadow: none; }
+:root[data-deco=vector] .sw-tab.on { color: var(--sw-ink); border-color: var(--sw-cyan); }
+:root[data-deco=vector] .sw-tab.on::after { border-color: var(--sw-cyan); box-shadow: var(--vx-rule); }
+:root[data-deco=vector] .sw-tab .sw-open { font-family: var(--sw-head); letter-spacing: .1em; text-transform: uppercase; }
+
+/* the dock: flat and square on the same double rule, square cyan bars under running apps */
+.wm[data-deco=vector] #dock { background: rgba(21,9,54,.94); border: 1px solid var(--sw-cyan); border-radius: 0; box-shadow: inset 0 0 0 2px rgba(21,9,54,.94), inset 0 0 0 3px rgba(255,62,165,.7), 0 8px 24px rgba(0,0,0,.5); backdrop-filter: none; -webkit-backdrop-filter: none; }
+.wm[data-deco=vector] #dock .dk:hover { background: rgba(111,227,255,.14); }
+.wm[data-deco=vector] #dock .dk.run::after { bottom: 2px; width: 14px; height: 2px; margin-left: -7px; border-radius: 0; background: var(--sw-cyan); }
+.wm[data-deco=vector] #dock #homeBtn.on { background: rgba(111,227,255,.16); box-shadow: inset 0 0 0 1px var(--sw-cyan); }
+
+:root[data-deco=vector] .dicon span { background: rgba(13,5,38,.82); border-radius: 0; text-shadow: none; }
+:root[data-deco=vector] .dicon:is(:hover, :focus-visible) span { color: var(--sw-ink); background: var(--sw-cyan); }
+
+/* Post text keeps the reader's font, unlit; headings are drawn in the display face, on hairlines */
+:root[data-deco=vector] .rd :is(h1, h2, h3) { font-family: var(--sw-head); letter-spacing: .01em; }
+:root[data-deco=vector] .rd h1 { color: var(--sw-cyan); }
+:root[data-deco=vector] .rd h2 { color: #ff8fcb; border-bottom: 1px solid; border-image: linear-gradient(90deg, var(--sw-pink), var(--sw-cyan) 40%, transparent) 1; }
+
+/* Wallpaper: flat indigo ruled in a triangle lattice. Each lattice is one tile a triangle wide and two rows high,
+   whose corner-to-corner diagonals run at 60 degrees, so the tiles meet exactly whatever the rounding. The fine one
+   is pink with cyan rows; a sparser one, four times the size with lit vertices, sits over it. --vx-w scales both
+   for the thumbnails. It is all background, behind everything and never in the pointer's way. */
+.wm[data-wall=vector] body, .cp-wp.vector, .cp-deco.vector {
+  --vx-a: var(--vx-w, 56px); --vx-b: calc(var(--vx-a) * 1.7321); --vx-A: calc(var(--vx-a) * 4); --vx-B: calc(var(--vx-b) * 4);
+  --vx-big: transparent calc(50% - .6px), rgba(111,227,255,.2) 0 calc(50% + .6px), transparent 0;
+  --vx-fine: transparent calc(50% - .6px), rgba(255,62,165,.16) 0 calc(50% + .6px), transparent 0;
+  --vx-dot: radial-gradient(circle, rgba(111,227,255,.75) 1.2px, transparent 2.2px);
+  background:
+    var(--vx-dot) 0 0 / var(--vx-A) var(--vx-B), var(--vx-dot) calc(var(--vx-A) / 2) calc(var(--vx-B) / 2) / var(--vx-A) var(--vx-B),
+    linear-gradient(to top right, var(--vx-big)) 0 0 / var(--vx-A) var(--vx-B), linear-gradient(to top left, var(--vx-big)) 0 0 / var(--vx-A) var(--vx-B),
+    linear-gradient(rgba(255,62,165,.24) 1px, transparent 0) 0 0 / 100% calc(var(--vx-B) / 2),
+    linear-gradient(to top right, var(--vx-fine)) 0 0 / var(--vx-a) var(--vx-b), linear-gradient(to top left, var(--vx-fine)) 0 0 / var(--vx-a) var(--vx-b),
+    linear-gradient(rgba(111,227,255,.12) 1px, transparent 0) 0 0 / 100% calc(var(--vx-b) / 2),
+    linear-gradient(#1d0c44, #150936 55%, #0d0526);
+}
+.wm[data-wall=vector] #desk::after { font: 700 40px/1 'Space Grotesk', var(--ui); letter-spacing: .3em; text-transform: uppercase; color: transparent; -webkit-text-stroke: 1px rgba(111,227,255,.35); }
+
+/* Control panel thumbnails: the lattice scaled down, and a square window under a cut cyan tab */
+.cp-wp.vector, .cp-deco.vector { --vx-w: 12px; }
+.cp-deco.vector::before { background: #6fe3ff; border: 0; box-shadow: none; clip-path: polygon(0 100%, 4px 0, calc(100% - 4px) 0, 100% 100%); }
+.cp-deco.vector::after { background: #211546; border: 1px solid #6fe3ff; border-radius: 0; box-shadow: inset 0 0 0 2px #211546, inset 0 0 0 3px #ff3ea5, 0 3px 6px rgba(0,0,0,.5); }
+
+/* Phones (the same query as windows.css): the title bar spans the full-screen window, so it loses its cut ends and
+   sits on the pink hairline instead */
+@media (max-width: 767px), (max-height: 500px) and (pointer: coarse) {
+  :root[data-deco=vector] .win :is(.tab, .th) { padding: 0 4px 0 12px; clip-path: none; }
+  :root[data-deco=vector] .win.active .tab.on { box-shadow: inset 0 -2px 0 var(--sw-pink); }
+  :root[data-deco=vector] .sp-frame { box-shadow: none; }
+}

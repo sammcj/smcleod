@@ -40,6 +40,8 @@
 :root[data-deco=synthwave] .win :is(.tab, .th) { border: 1px solid var(--sw-edge); border-bottom: 0; border-radius: 6px 6px 0 0; box-shadow: none; }
 :root[data-deco=synthwave] .win.active .tab { color: var(--sw-ink); background: linear-gradient(90deg, var(--sw-pink), #ff7a8a); border-color: var(--sw-pink); box-shadow: 0 -2px 12px rgba(255,62,165,.45); }
 :root[data-deco=synthwave] .win.active .tab:not(.on) { background: var(--tab-dim); }
+/* cyan would all but vanish on the pink tab */
+:root[data-deco=synthwave] .win.active .tab .tt:focus-visible { outline-color: var(--sw-ink); }
 :root[data-deco=synthwave] .tab .tt { font-family: var(--sw-head); font-size: 11.5px; letter-spacing: .08em; text-transform: uppercase; }
 :root[data-deco=synthwave] .win .ctl:hover { background: rgba(26,11,58,.2); }
 :root[data-deco=synthwave] .win .ctl.close:hover { color: #fff; background: var(--sw-ink); }
@@ -87,5 +89,6 @@
 /* Phones (the same query as windows.css): the title bar spans the full-screen window, so it loses its corners */
 @media (max-width: 767px), (max-height: 500px) and (pointer: coarse) {
   :root[data-deco=synthwave] :is(.win .frame, .views, .win .tab) { border-radius: 0; }
-  :root[data-deco=synthwave] .win.active .frame { box-shadow: none; }
+  /* nothing to clip without corners, and clipping would stop the reader toolbar sticking under the title bar */
+  :root[data-deco=synthwave] .views { overflow: visible; }
 }

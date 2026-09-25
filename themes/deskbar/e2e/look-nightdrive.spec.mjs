@@ -1,6 +1,7 @@
-// Synthwave (css/deskbar/looks/synthwave.css): an 80s outrun night. Indigo windows edged in neon with sunset tabs,
-// a striped sun over a perspective grid that stays behind everything and never takes the pointer, no Light mode,
-// linked before first paint, nothing left behind when the look is off, and axe over its main states.
+// Night Drive (css/deskbar/looks/nightdrive.css): synthwave as an 80s sportswear tag. Rounded indigo windows, the
+// focused one rimmed in a pink to cyan gradient, stripe-filled pill tabs, a flat striped wallpaper that stays behind
+// everything, no Light mode, linked before first paint, nothing left behind when the look is off, and axe over its
+// main states.
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
@@ -9,21 +10,18 @@ import { env, useBrowser, open, needs, shot, win, cards, desktop, phone, toolbar
 
 useBrowser();
 
-const LOOK = { deco: 'synthwave', wall: 'synthwave', dock: 'glass' };
+const LOOK = { deco: 'nightdrive', wall: 'nightdrive', dock: 'glass' };
 const seed = look => `for (const [k, v] of Object.entries(${JSON.stringify(look)})) localStorage.setItem("deskbar:" + k, JSON.stringify(v));`;
 const openLook = (vp, path, opts) => open(vp, path, seed(LOOK), opts);
-const PINK = 'rgb(255, 62, 165)', INK = 'rgb(26, 11, 58)';
+const INK = 'rgb(26, 11, 58)', EDGE = 'rgb(74, 53, 128)';
 const css = (loc, props, pseudo) => loc.evaluate((el, [ps, p]) => {
   const s = getComputedStyle(el, p);
   return Object.fromEntries(ps.map(k => [k, s[k]]));
 }, [props, pseudo]);
-const bodyPseudo = (page, pseudo, props) => page.evaluate(([p, ps]) => {
-  const s = getComputedStyle(document.body, p);
-  return Object.fromEntries(ps.map(k => [k, s[k]]));
-}, [pseudo, props]);
-const lookHref = page => page.evaluate(() => JSON.parse(document.getElementById('deskbar-lazy').textContent)['look-synthwave'].css);
+const bodyStyle = (page, props, pseudo) => css(page.locator('body'), props, pseudo);
+const lookHref = page => page.evaluate(() => JSON.parse(document.getElementById('deskbar-lazy').textContent)['look-nightdrive'].css);
 
-test('Synthwave: neon-edged indigo windows, a sunset tab in capitals, unlit post text and no Light mode', async t => {
+test('Night Drive: a gradient rim, stripe pill tabs, a striped panel rule, plain post text and no Light mode', async t => {
   if (!(await needs(t, '/posts/'))) return;
   const page = await openLook(desktop, '/posts/');
   const w = win(page, 'tracker');
@@ -31,34 +29,45 @@ test('Synthwave: neon-edged indigo windows, a sunset tab in capitals, unlit post
   assert.equal(await page.evaluate(() => getComputedStyle(document.documentElement).colorScheme), 'dark');
 
   const frame = w.locator('.frame'), tab = w.locator('.tab.on');
-  const f = await css(frame, ['borderTopColor', 'borderBottomRightRadius', 'boxShadow']);
-  assert.equal(f.borderTopColor, PINK);
-  assert.equal(f.borderBottomRightRadius, '6px');
-  assert.match(f.boxShadow, /rgba\(255, 62, 165/, 'the focused frame glows');
-  const tb = await css(tab, ['backgroundImage', 'color', 'borderTopLeftRadius']);
-  assert.match(tb.backgroundImage, /linear-gradient/);
+  const f = await css(frame, ['borderTopColor', 'borderBottomRightRadius', 'backgroundImage', 'boxShadow']);
+  assert.equal(f.borderTopColor, 'rgba(0, 0, 0, 0)', 'the rim is the background under a clear border');
+  assert.equal(f.borderBottomRightRadius, '12px');
+  assert.match(f.backgroundImage, /linear-gradient\(135deg, rgb\(255, 62, 165\), rgb\(255, 158, 74\) 50%, rgb\(111, 227, 255\)\)/);
+  assert.match(f.boxShadow, /rgba\(111, 227, 255/, 'the focused frame glows cyan on one side');
+  const tb = await css(tab, ['backgroundImage', 'color', 'borderTopLeftRadius', 'borderBottomLeftRadius']);
+  assert.match(tb.backgroundImage, /rgb\(255, 228, 94\) 22%, rgb\(255, 158, 74\) 0px/, 'hard-stop sunset bands');
   assert.equal(tb.color, INK);
-  assert.equal(tb.borderTopLeftRadius, '6px');
-  const tt = await css(tab.locator('.tt'), ['fontFamily', 'textTransform']);
+  assert.equal(tb.borderBottomLeftRadius, '999px', 'a pill');
+  const tt = await css(tab.locator('.tt'), ['fontFamily', 'fontStyle', 'textShadow']);
   assert.match(tt.fontFamily, /Space Grotesk/);
-  assert.equal(tt.textTransform, 'uppercase');
-  // an unfocused window loses the neon
+  assert.equal(tt.fontStyle, 'italic');
+  assert.match(tt.textShadow, /rgba\(111, 227, 255/, 'a chromatic offset');
+  // a keyboard focus ring on the stripes is ink, as cyan would vanish into them
+  await page.keyboard.press('Shift');
+  await tab.locator('.tt').focus();
+  assert.equal(await tab.locator('.tt').evaluate(el => el.matches(':focus-visible') && getComputedStyle(el).outlineColor), INK);
+  assert.match((await css(page.locator('#panel'), ['backgroundImage'])).backgroundImage, /rgb\(255, 228, 94\)/, 'the panel sits on a stripe');
+  assert.equal((await css(page.locator('#dock'), ['borderTopLeftRadius'])).borderTopLeftRadius, '999px', 'a pill dock');
+
+  // an unfocused window takes a plain indigo edge and tab
   await cards(page).first().click();
-  await win(page, 'reader').locator('.rd h1').waitFor();
-  assert.notEqual((await css(frame, ['borderTopColor'])).borderTopColor, PINK);
-  assert.equal((await css(tab, ['backgroundImage'])).backgroundImage, 'none');
-  // post text has no glow, for long reads; the title does
   const rd = win(page, 'reader').locator('.rd');
+  await rd.locator('h1').waitFor();
+  const off = await css(frame, ['borderTopColor', 'backgroundImage']);
+  assert.equal(off.borderTopColor, EDGE);
+  assert.equal(off.backgroundImage, 'none');
+  assert.equal((await css(tab, ['backgroundImage'])).backgroundImage, 'none');
+  // post text stays plain for long reads; the title carries the offset
   assert.equal((await css(rd.locator('p').first(), ['textShadow'])).textShadow, 'none');
   assert.notEqual((await css(rd.locator('h1'), ['textShadow'])).textShadow, 'none');
 
   assert.equal(await page.locator('#themeBtn').isVisible(), false, 'dark only');
-  await shot(page, 'synthwave');
+  await shot(page, 'nightdrive');
   assert.deepEqual(page.errors, []);
   await page.context().close();
 });
 
-test('Synthwave: the Control panel turns off Colours, Mode and Dock while the look is on', async t => {
+test('Night Drive: the Control panel turns off Colours, Mode and Dock and draws both thumbnails', async t => {
   if (!(await needs(t, '/control-panel/'))) return;
   const page = await openLook(desktop, '/control-panel/');
   const cp = win(page, 'control-panel');
@@ -67,31 +76,24 @@ test('Synthwave: the Control panel turns off Colours, Mode and Dock while the lo
     assert.equal(await cp.locator(`fieldset:has([name="cp-${g}"])`).evaluate(f => f.disabled), true, `${g} is the look's`);
   }
   assert.equal(await cp.locator('fieldset:has([name="cp-wall"])').evaluate(f => f.disabled), false);
-  // both thumbnails are drawn: the glowing window, and the sun over the grid
-  assert.equal((await css(cp.locator('.cp-deco.synthwave'), ['borderTopColor'], '::after')).borderTopColor, PINK);
-  const sun = await css(cp.locator('.cp-wp.synthwave'), ['borderTopLeftRadius', 'maskImage'], '::before');
-  assert.equal(sun.borderTopLeftRadius, '50%');
-  assert.match(sun.maskImage, /linear-gradient/);
+  const win_ = await css(cp.locator('.cp-deco.nightdrive'), ['borderTopLeftRadius', 'backgroundImage'], '::after');
+  assert.equal(win_.borderTopLeftRadius, '5px');
+  assert.match(win_.backgroundImage, /135deg/, 'the rimmed window');
+  assert.match((await css(cp.locator('.cp-wp.nightdrive'), ['backgroundImage'])).backgroundImage, /repeating-linear-gradient.*rgb\(255, 228, 94\)/, 'scanlines over the bands');
+  await shot(page, 'nightdrive-cp');
   assert.deepEqual(page.errors, []);
   await page.context().close();
 });
 
-test('Synthwave: the sun and grid sit behind the windows, never take a click, and hold still', async t => {
+test('Night Drive: the wallpaper is flat bands under scanlines, behind the windows, and never takes a click', async t => {
   if (!(await needs(t, '/posts/'))) return;
-  const page = await openLook(desktop, '/posts/', { reducedMotion: 'no-preference' });
+  const page = await openLook(desktop, '/posts/');
   const w = win(page, 'tracker');
   await w.locator('.pc').first().waitFor();
-  const sun = await bodyPseudo(page, '::before', ['position', 'zIndex', 'pointerEvents', 'borderTopLeftRadius', 'maskImage']);
-  assert.deepEqual({ ...sun, maskImage: /linear-gradient/.test(sun.maskImage) },
-    { position: 'fixed', zIndex: '-1', pointerEvents: 'none', borderTopLeftRadius: '50%', maskImage: true });
-  const grid = await bodyPseudo(page, '::after', ['position', 'zIndex', 'pointerEvents', 'transform', 'backgroundImage']);
-  assert.equal(grid.position, 'fixed');
-  assert.equal(grid.zIndex, '-1');
-  assert.equal(grid.pointerEvents, 'none');
-  assert.match(grid.transform, /^matrix3d/, 'tipped back in perspective');
-  assert.match(grid.backgroundImage, /linear-gradient/);
-  for (const p of ['::before', '::after']) assert.equal((await bodyPseudo(page, p, ['animationName'])).animationName, 'none', `${p} holds still`);
-  // the wallpaper draws without stealing clicks from what is over it
+  const bg = (await bodyStyle(page, ['backgroundImage'])).backgroundImage;
+  assert.match(bg, /^repeating-linear-gradient/, 'scanlines on top');
+  assert.doesNotMatch(bg, /url\(|radial-gradient/, 'flat: no image, no sun');
+  for (const p of ['::before', '::after']) assert.equal((await bodyStyle(page, ['content'], p)).content, 'none', `no ${p} scene`);
   const card = w.locator('.pc').first(), b = await card.boundingBox();
   assert.equal(await page.evaluate(([x, y]) => !!document.elementFromPoint(x, y)?.closest('.pc'), [b.x + b.width / 2, b.y + b.height / 2]), true);
   await card.click();
@@ -100,18 +102,18 @@ test('Synthwave: the sun and grid sit behind the windows, never take a click, an
   await page.context().close();
 });
 
-test('Synthwave is back before first paint on reload', async () => {
+test('Night Drive is back before first paint on reload', async () => {
   const page = await openLook(desktop, '/');
   const href = await lookHref(page);
   await page.reload({ waitUntil: 'commit' });
   await page.waitForFunction(() => document.body);
   assert.equal(await page.evaluate(h => !!document.querySelector(`head link[rel=stylesheet][href="${h}"]`), href), true, 'linked from head.html');
   await page.waitForSelector('html.wm-ready');
-  assert.equal((await bodyPseudo(page, '::before', ['position'])).position, 'fixed', 'the sun is up');
+  assert.match((await bodyStyle(page, ['backgroundImage'])).backgroundImage, /rgb\(255, 228, 94\)/, 'the bands are up');
   await page.context().close();
 });
 
-test('Synthwave on a phone: a full-width title bar without corners, over the full-screen window', async t => {
+test('Night Drive on a phone: a square title bar on the full-screen window', async t => {
   if (!(await needs(t, '/posts/'))) return;
   const page = await openLook(phone, '/');
   await cards(page).first().click();
@@ -119,25 +121,26 @@ test('Synthwave on a phone: a full-width title bar without corners, over the ful
   await w.locator('.rd h1').waitFor();
   const [tab, frame] = [await w.locator('.tab.on').boundingBox(), await w.locator('.frame').boundingBox()];
   assert.equal(Math.round(frame.width), phone.width, 'full width');
-  assert.ok(Math.abs(tab.y + tab.height - frame.y) <= 1, 'title bar above the frame');
+  assert.ok(Math.abs(tab.y + tab.height - frame.y) <= 1, 'title bar on the frame');
   assert.equal((await css(w.locator('.tab.on'), ['borderTopLeftRadius'])).borderTopLeftRadius, '0px');
-  // the reader toolbar sticks straight under the title bar, with no band between them, scrolled or not
+  assert.equal((await css(w.locator('.frame'), ['borderTopLeftRadius'])).borderTopLeftRadius, '0px');
+  // the reader toolbar sticks straight under the title bar, with no band between them
   for (const g of await toolbarGaps(page, w)) assert.ok(Math.abs(g) <= 8, `toolbar ${g}px from the title bar`);
-  await shot(page, 'synthwave-phone');
+  await shot(page, 'nightdrive-phone');
   assert.deepEqual(page.errors, []);
   await page.context().close();
 });
 
-test('Synthwave leaves nothing behind when another look is on, though its stylesheet is loaded', async t => {
+test('Night Drive leaves nothing behind when another look is on, though its stylesheet is loaded', async t => {
   if (!(await needs(t, '/control-panel/'))) return;
   const page = await open(desktop, '/control-panel/');
   const cp = win(page, 'control-panel');
   await cp.locator('.cp').waitFor();
   const href = await lookHref(page);
   await page.waitForFunction(h => !!document.querySelector(`head link[rel=stylesheet][href="${h}"]`)?.sheet, href);
-  assert.notEqual((await css(cp.locator('.frame'), ['borderTopColor'])).borderTopColor, PINK);
-  assert.equal((await bodyPseudo(page, '::before', ['content'])).content, 'none');
-  assert.equal((await bodyPseudo(page, '::after', ['content'])).content, 'none');
+  assert.notEqual((await css(cp.locator('.frame'), ['borderBottomRightRadius'])).borderBottomRightRadius, '12px');
+  assert.notEqual((await css(cp.locator('.tab.on'), ['borderBottomLeftRadius'])).borderBottomLeftRadius, '999px');
+  assert.doesNotMatch((await bodyStyle(page, ['backgroundImage'])).backgroundImage, /rgb\(255, 228, 94\)/);
   assert.equal(await page.locator('#themeBtn').isVisible(), true);
   await page.context().close();
 });
@@ -165,9 +168,17 @@ const states = {
     },
   },
   controlpanel: { path: '/control-panel/', need: '/control-panel/', setup: page => win(page, 'control-panel').locator('.cp').waitFor() },
+  spotlight: {
+    path: '/',
+    async setup(page) {
+      await page.locator('#searchBtn').click();
+      await page.locator('dialog.spotlight .sp-q').fill('window');
+      await page.locator('dialog.spotlight .sp-opt').first().waitFor();
+    },
+  },
 };
 
-test('axe: Synthwave over its main states at 1440 and 390, with either stored mode', async () => {
+test('axe: Night Drive over its main states at 1440 and 390, with either stored mode', async () => {
   const found = [];
   for (const [name, s] of Object.entries(states)) {
     if (s.need && !(await fetch(env.base + s.need)).ok) continue;
@@ -179,6 +190,7 @@ test('axe: Synthwave over its main states at 1440 and 390, with either stored mo
         await page.goto(env.base + s.path);
         await page.waitForSelector('html.wm-ready');
         await s.setup(page);
+        if (theme === 'dark') await shot(page, `nightdrive-${name}-${w}`);
         for (const v of await audit(page, s.exclude)) found.push(`[${name} ${w} ${theme}] ${v}`);
         await ctx.close();
       }

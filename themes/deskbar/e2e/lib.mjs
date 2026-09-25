@@ -72,6 +72,21 @@ export const path = page => new URL(page.url()).pathname;
 export const readerTitle = page => win(page, 'reader').locator('.rd h1').first().textContent();
 export const desktop = { width: 1440, height: 900 }, phone = { width: 390, height: 844 };
 
+// Phones: the gaps between a window's title bar and its sticky toolbar, at the top of the page and scrolled down.
+// A look that clips .views pushes the toolbar down at the top and stops it sticking once scrolled.
+export async function toolbarGaps(page, w) {
+  const gap = async () => {
+    const [tab, bar] = [await w.locator('.tab.on').boundingBox(), await w.locator('.toolbar').first().boundingBox()];
+    return Math.round(bar.y - tab.y - tab.height);
+  };
+  const top = await gap();
+  await page.evaluate(() => scrollTo(0, 800));
+  await page.waitForFunction(() => scrollY > 0);
+  const scrolled = await gap();
+  await page.evaluate(() => scrollTo(0, 0));
+  return [top, scrolled];
+}
+
 export async function dragTab(page, key, to) {
   const tab = win(page, key).locator('.tab.on .tt');
   const b = await tab.boundingBox();

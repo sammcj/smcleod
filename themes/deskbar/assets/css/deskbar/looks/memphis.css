@@ -1,0 +1,170 @@
+/* Memphis: Synthwave's colours redrawn as 80s Memphis Group graphics. Flat indigo windows in 2px rules with hard offset
+   shadows and no blur, chunky pink tabs in Space Grotesk capitals, buttons that press into their shadows, and a flat
+   wallpaper of confetti: dots, rings, triangles, crosses and a squiggle. Post text stays plain, for long reads.
+   Dark only. */
+@font-face { font-family: 'Space Grotesk'; font-display: swap; font-weight: 700; src: url(../../../fonts/space-grotesk/space-grotesk-700-normal.woff2) format('woff2'); }
+
+:root[data-deco=memphis] {
+  color-scheme: dark;
+  --sw-pink: #ff3ea5; --sw-cyan: #6fe3ff; --sw-ink: #1a0b3a; --sw-edge: #4a3580; --mp-sun: #ffe45e; --mp-dk: #0a0418;
+  --sw-head: 'Space Grotesk', var(--ui); --tab-h: 28px;
+  --panel: var(--sw-ink); --panel-fg: #f5eeff; --panel-hover: rgba(255,255,255,.12);
+  --frame: #211546; --frame-hi: #3b2a70; --frame-lo: #120a2a; --frame-dk: var(--mp-dk);
+  --tab: var(--sw-pink); --tab-hi: var(--sw-pink); --tab-lo: var(--mp-dk); --tab-dim: #e07ab8;
+  --tab-in: #2a1b52; --tab-in-lo: #1a0f38; --tab-in-fg: #cfc3f2; --ctl: var(--sw-ink);
+  --content: #160e2c; --side: #1c1236; --fg: #ece6ff; --muted: #b6a8dc; --line: #3a2a66; --zebra: rgba(255,255,255,.035);
+  --accent: #c2267a; --accent-fg: #fff; --link: var(--sw-cyan);
+  --read-bg: #140c28; --read-fg: #e4ddf5; --code-bg: #22173f;
+  --wall-1: #2c1560; --wall-2: #1f0d47; --wall-3: #140833; --wall-glow: rgba(255,62,165,.2); --wall-line: rgba(255,62,165,.18);
+}
+:root[data-deco=memphis] ::selection { background: var(--mp-sun); color: var(--sw-ink); }
+:root[data-deco=memphis] :focus-visible { outline-color: var(--mp-sun); }
+/* yellow would barely show on pink, so focus on a pink tab rings in ink */
+:root[data-deco=memphis] :is(.win.active .tab .tt, .sw-tab.on .sw-open):focus-visible { outline-color: var(--sw-ink); }
+:root[data-deco=memphis] #themeBtn { display: none; }
+:root[data-deco=memphis] .ticker-h { color: var(--sw-ink); }
+@supports selector(::-webkit-scrollbar) {
+  html[data-deco=memphis] ::-webkit-scrollbar { width: 12px; height: 12px; background: var(--side); }
+  html[data-deco=memphis] ::-webkit-scrollbar-thumb { border: 3px solid var(--side); background: var(--sw-pink); }
+  html[data-deco=memphis] ::-webkit-scrollbar-corner { background: var(--side); }
+}
+@supports not selector(::-webkit-scrollbar) {
+  :root[data-deco=memphis] { scrollbar-color: var(--sw-pink) var(--side); }
+}
+
+/* the top bar sits on two stripes, pink over cyan */
+:root[data-deco=memphis] #panel { border-bottom: 2px solid var(--sw-pink); box-shadow: 0 3px 0 var(--sw-cyan); }
+:root[data-deco=memphis] #panel .task.on { color: var(--sw-ink); background: var(--mp-sun); border-radius: 0; box-shadow: none; }
+
+/* Windows: square frames in 2px rules on a hard shadow, cyan behind the focused one. Tabs paint before the frame, so a
+   tab's shadow shows only beside it. */
+:root[data-deco=memphis] .win .frame { padding: 4px; border: 2px solid var(--sw-edge); border-radius: 0; box-shadow: 5px 5px 0 var(--mp-dk); }
+:root[data-deco=memphis] .win.active .frame { border-color: var(--sw-pink); box-shadow: 6px 6px 0 var(--sw-cyan); }
+:root[data-deco=memphis] .views { border: 2px solid var(--line); border-radius: 0; }
+:root[data-deco=memphis] .win :is(.tab, .th) { border: 2px solid var(--sw-edge); border-bottom: 0; border-radius: 0; box-shadow: none; }
+:root[data-deco=memphis] .win.active :is(.tab, .th) { border-color: var(--mp-dk); }
+:root[data-deco=memphis] .win.active .tab { color: var(--sw-ink); background: var(--sw-pink); box-shadow: 4px 4px 0 var(--sw-cyan); }
+:root[data-deco=memphis] .win.active .tab:not(.on) { background: var(--tab-dim); }
+:root[data-deco=memphis] .tabs.multi .tab { margin-right: -2px; }
+:root[data-deco=memphis] .tab .tt { font-family: var(--sw-head); font-size: 12px; letter-spacing: .08em; text-transform: uppercase; }
+:root[data-deco=memphis] .win .ctl { border-radius: 0; }
+:root[data-deco=memphis] .win .ctl:hover { color: var(--mp-sun); background: var(--sw-ink); }
+:root[data-deco=memphis] .win .ctl.close:hover { color: var(--sw-ink); background: var(--mp-sun); }
+/* Teeth run along the top of the frame, and the tab covers them where it sits. The strip is drawn by the tab row,
+   which doesn't take the pointer. */
+:root[data-deco=memphis] .win .tabs::before { content: ''; position: absolute; left: 0; right: 0; bottom: 0; height: 5px; background: linear-gradient(45deg, var(--sw-edge) 25%, transparent 0) -5px 100% / 10px 10px, linear-gradient(315deg, var(--sw-edge) 25%, transparent 0) -5px 100% / 10px 10px; }
+:root[data-deco=memphis] .win.active .tabs::before { background-image: linear-gradient(45deg, var(--sw-pink) 25%, transparent 0), linear-gradient(315deg, var(--sw-pink) 25%, transparent 0); }
+/* the stacked tabs' handle is a strip of zigzag teeth */
+:root[data-deco=memphis] .th::before { margin-block: 9px; background: linear-gradient(135deg, var(--sw-edge) 25%, transparent 0) -4px 0 / 8px 8px repeat-x, linear-gradient(225deg, var(--sw-edge) 25%, transparent 0) -4px 0 / 8px 8px repeat-x; }
+:root[data-deco=memphis] .win.active .th::before { background-image: linear-gradient(135deg, var(--mp-sun) 25%, transparent 0), linear-gradient(225deg, var(--mp-sun) 25%, transparent 0); }
+:root[data-deco=memphis] .grip { background: linear-gradient(135deg, transparent 50%, var(--sw-pink) 0); }
+:root[data-deco=memphis] .sizer { color: var(--sw-ink); background: var(--mp-sun); border: 2px solid var(--mp-dk); border-radius: 0; box-shadow: 3px 3px 0 var(--sw-pink); font-weight: 700; }
+:root[data-deco=memphis] #snapPreview { background: repeating-linear-gradient(-45deg, rgba(111,227,255,.18) 0 6px, transparent 0 12px); border: 2px dashed var(--sw-cyan); border-radius: 0; box-shadow: none; }
+
+/* Buttons and fields: 2px rules, and a press drops a button into its shadow */
+:root[data-deco=memphis] :is(.tb, .seg, select, textarea, input:not([type=checkbox], [type=radio], [type=range], .sp-q, .mail-row *)) { border: 2px solid var(--sw-edge); border-radius: 0; }
+:root[data-deco=memphis] .seg + .seg { border-left: 0; }
+:root[data-deco=memphis] :is(.tb, .segs) { box-shadow: 2px 2px 0 var(--sw-edge); }
+:root[data-deco=memphis] :is(.tb, .seg):hover { border-color: var(--sw-cyan); }
+:root[data-deco=memphis] .tb:hover { box-shadow: 2px 2px 0 var(--sw-cyan); }
+:root[data-deco=memphis] :is(.seg.on, .tb[aria-pressed=true], .tb[aria-expanded=true]) { color: var(--sw-ink); background: var(--sw-pink); border-color: var(--mp-dk); }
+:root[data-deco=memphis] .tb:active { translate: 2px 2px; box-shadow: none; }
+:root[data-deco=memphis] :is(select, textarea, input:not([type=checkbox], [type=radio], [type=range], .sp-q, .mail-row *)):focus-visible { border-color: var(--sw-cyan); outline: 0; box-shadow: 3px 3px 0 var(--sw-cyan); }
+:root[data-deco=memphis] :is(.toolbar, .status, .list th) { border-color: var(--line); }
+:root[data-deco=memphis] :is(.cp-opt, .cp-art, .cp-sample) { border-radius: 0 !important; }
+@media (prefers-reduced-motion: no-preference) {
+  :root[data-deco=memphis] :is(.tb, .pc, .sw-link, #dock .dk) { transition: translate .08s, box-shadow .08s, border-color .08s; }
+}
+
+/* menus and popups: pink rules on a hard cyan shadow */
+:root[data-deco=memphis] :is(#menu, .ctx, .sp-frame, .recent-list) { border: 2px solid var(--sw-pink); border-radius: 0; box-shadow: 6px 6px 0 var(--sw-cyan); }
+:root[data-deco=memphis] .ctx { box-shadow: 4px 4px 0 var(--sw-cyan); }
+:root[data-deco=memphis] .mn-head { border-bottom: 2px solid var(--line); }
+:root[data-deco=memphis] :is(.mn-cats button.on, .sp-opt.on) { color: var(--sw-ink); background: var(--mp-sun); }
+:root[data-deco=memphis] :is(.mn-sec h3, .mn-res h3, .places h2, .sp-gh) { color: var(--mp-sun); letter-spacing: .12em; }
+:root[data-deco=memphis] .ctx-sep { height: 2px; background: var(--line); }
+:root[data-deco=memphis] .sp-tab { color: var(--sw-ink); border: 2px solid var(--mp-dk); border-bottom: 0; border-radius: 0; box-shadow: 4px 4px 0 var(--sw-cyan); font-family: var(--sw-head); letter-spacing: .08em; text-transform: uppercase; }
+:root[data-deco=memphis] :is(.sp-field, .sp-list) { border: 2px solid var(--line); border-radius: 0; }
+:root[data-deco=memphis] .sp-field:focus-within { border-color: var(--sw-cyan); box-shadow: none; }
+:root[data-deco=memphis] #recent h2 { color: var(--sw-ink); border: 2px solid var(--mp-dk); border-bottom: 0; border-radius: 0; font-family: var(--sw-head); letter-spacing: .08em; text-transform: uppercase; }
+
+/* the switcher's tabs and links are the same stock as the windows */
+:root[data-deco=memphis] .sw-tab { border: 2px solid var(--sw-edge); border-bottom: 0; border-radius: 0; box-shadow: none; }
+:root[data-deco=memphis] .sw-tab::after { left: -2px; border: 2px solid var(--sw-edge); border-radius: 0; box-shadow: 5px 5px 0 var(--mp-dk); }
+:root[data-deco=memphis] .sw-tab.on { color: var(--sw-ink); border-color: var(--mp-dk); }
+:root[data-deco=memphis] .sw-tab.on::after { border-color: var(--sw-pink); box-shadow: 5px 5px 0 var(--sw-cyan); }
+:root[data-deco=memphis] .sw-tab.min { border-bottom: 2px solid var(--sw-edge); filter: none; }
+:root[data-deco=memphis] :is(.sw-link, .sw-empty) { background: var(--sw-ink); border: 2px solid var(--sw-pink); border-radius: 0; box-shadow: 3px 3px 0 var(--sw-cyan); }
+
+/* the dock: a flat bar on a hard shadow, yellow blocks under running apps */
+.wm[data-deco=memphis] #dock { background: var(--sw-ink); border: 2px solid var(--sw-pink); border-radius: 0; box-shadow: 6px 6px 0 var(--sw-cyan); backdrop-filter: none; -webkit-backdrop-filter: none; }
+.wm[data-deco=memphis] #dock .dk.run::after { width: 8px; height: 4px; margin-left: -4px; border-radius: 0; background: var(--mp-sun); box-shadow: none; }
+.wm[data-deco=memphis] #dock #homeBtn.on { background: rgba(255,62,165,.25); border-radius: 0; box-shadow: inset 0 0 0 2px var(--sw-pink); }
+.wm[data-deco=memphis] #dock :is(.dk, #homeBtn, #winsBtn) { border-radius: 0; }
+.wm[data-deco=memphis] #dock :is(.dk, #homeBtn, #winsBtn):active { translate: 2px 2px; }
+
+:root[data-deco=memphis] .dicon span { background: var(--sw-ink); border-radius: 0; text-shadow: none; box-shadow: 2px 2px 0 var(--sw-pink); }
+
+/* Tracker: cards on hard shadows, years in yellow capitals */
+:root[data-deco=memphis] .pv-year { color: var(--mp-sun); border-bottom: 2px solid var(--line); font-family: var(--sw-head); letter-spacing: .1em; }
+:root[data-deco=memphis] .pc { border: 2px solid var(--line); border-radius: 0; box-shadow: 3px 3px 0 var(--mp-dk); }
+:root[data-deco=memphis] .pc:hover { border-color: var(--sw-cyan); box-shadow: 3px 3px 0 var(--sw-cyan); }
+:root[data-deco=memphis] .pc.open { border-color: var(--sw-pink); box-shadow: 3px 3px 0 var(--sw-pink); }
+:root[data-deco=memphis] .pc.open .pc-t::before { color: var(--mp-sun); }
+:root[data-deco=memphis] :is(.row.open, .list tr.open td:first-child) { box-shadow: inset 4px 0 0 var(--sw-pink); }
+:root[data-deco=memphis] :is(.tg, .pc-img, .gi-img, .ph) { border-radius: 0; }
+
+/* Post text keeps the reader's font, unlit; headings take the graphics: a yellow title on a pink offset, and h2 over a
+   row of teeth */
+:root[data-deco=memphis] .rd :is(h1, h2, h3) { font-family: var(--sw-head); letter-spacing: -.01em; }
+:root[data-deco=memphis] .rd h1 { color: var(--mp-sun); text-shadow: 3px 3px 0 var(--sw-pink); }
+:root[data-deco=memphis] .rd h2 { padding-bottom: 10px; color: var(--sw-cyan); border: 0; background: linear-gradient(135deg, var(--sw-pink) 25%, transparent 0) -4px 100% / 8px 8px repeat-x, linear-gradient(225deg, var(--sw-pink) 25%, transparent 0) -4px 100% / 8px 8px repeat-x; }
+:root[data-deco=memphis] .rd blockquote { border-left: 4px solid var(--mp-sun); }
+:root[data-deco=memphis] .rd :is(img, video, code, .copy, .admonition[class]) { border-radius: 0; }
+:root[data-deco=memphis] .rd :is(pre, .highlight > div.chroma) { border: 2px solid var(--line); border-radius: 0; box-shadow: 4px 4px 0 var(--sw-edge); }
+:root[data-deco=memphis] .rd .highlight pre, :root[data-deco=memphis] .rd .lntable pre, :root[data-deco=memphis] .rd pre.mermaid.drawn { border: 0; box-shadow: none; }
+:root[data-deco=memphis] .rd .chip { border: 2px solid var(--sw-edge); border-radius: 0; }
+:root[data-deco=memphis] .rd .chip:hover { color: var(--sw-ink); background: var(--mp-sun); border-color: var(--mp-dk); }
+:root[data-deco=memphis] .rd-pager a { border: 2px solid var(--line); border-radius: 0; box-shadow: 3px 3px 0 var(--mp-dk); }
+:root[data-deco=memphis] .rd-pager a:hover { border-color: var(--sw-cyan); box-shadow: 3px 3px 0 var(--sw-cyan); }
+
+/* Wallpaper: flat indigo under confetti. Each shape is one gradient on its own tile, sized in primes so the
+   scatter takes a long way to repeat, and offset so shapes don't collide or sit under the desktop icons at 1440x900.
+   A tile's edge clips what it draws, which bounds the shapes a gradient can't: a triangle is a 60deg conic wedge
+   whose apex sits just short of the edge, and a squiggle is three rings centred on the edges, so only half of each
+   shows. Crosses are pairs of thin ellipses. Sparse and a little see-through, so icon labels stay readable. */
+.wm[data-wall=memphis] body { --p: rgba(255,62,165,.8); --c: rgba(111,227,255,.7); --y: rgba(255,228,94,.8); --r: transparent 8px, var(--c) 8.5px 11px, transparent 11.5px; --q: transparent 7px, var(--p) 7.5px 10px, transparent 10.5px; background:
+  radial-gradient(circle 5px, var(--p) 90%, transparent) 161px 21px / 263px 227px,
+  radial-gradient(circle 3px, var(--y) 90%, transparent) 53px 17px / 191px 173px,
+  radial-gradient(circle 4px, var(--c) 90%, transparent) 96px 58px / 337px 181px,
+  radial-gradient(circle 10px, transparent 6px, var(--c) 6.5px 9.5px, transparent 10px) 96px 98px / 311px 251px,
+  radial-gradient(circle 7px, transparent 4px, var(--y) 4.5px 6.5px, transparent 7px) 39px 150px / 283px 331px,
+  conic-gradient(from 150deg at 50% calc(100% - 16px), var(--y) 60deg, transparent 0) 262px 131px / 281px 233px,
+  conic-gradient(from 330deg at 50% 14px, var(--p) 60deg, transparent 0) 146px 210px / 331px 263px,
+  conic-gradient(from 150deg at 50% calc(100% - 12px), var(--c) 60deg, transparent 0) 79px 266px / 229px 293px,
+  radial-gradient(8px 2px, var(--y) 90%, transparent) 99px 1px / 269px 241px,
+  radial-gradient(2px 8px, var(--y) 90%, transparent) 99px 1px / 269px 241px,
+  radial-gradient(7px 2px, var(--p) 90%, transparent) 126px 246px / 353px 307px,
+  radial-gradient(2px 7px, var(--p) 90%, transparent) 126px 246px / 353px 307px,
+  radial-gradient(circle at 12px 0, var(--r)) 112px 217px / 313px 271px,
+  radial-gradient(circle at 31px 100%, var(--r)) 112px 217px / 313px 271px,
+  radial-gradient(circle at 50px 0, var(--r)) 112px 217px / 313px 271px,
+  radial-gradient(circle at 11px 100%, var(--q)) 366px 308px / 419px 347px,
+  radial-gradient(circle at 28px 0, var(--q)) 366px 308px / 419px 347px,
+  radial-gradient(circle at 45px 100%, var(--q)) 366px 308px / 419px 347px,
+  #1f0d47; }
+.wm[data-wall=memphis] #desk::after { font: 700 46px/1 'Space Grotesk', var(--ui); letter-spacing: .02em; text-transform: uppercase; color: transparent; -webkit-text-stroke: 1px rgba(255,228,94,.35); }
+
+/* Control panel thumbnails: a few pieces of the confetti, each placed once on a tile the size of the thumbnail, and a
+   pink-tabbed window on its cyan shadow */
+.cp-wp.memphis, .cp-deco.memphis { --z: transparent 3.5px, #ffe45e 4px 5px, transparent 5.5px; background: radial-gradient(circle 2.5px, #ff3ea5 90%, transparent) -9px -12px / 38px 48px, radial-gradient(circle 4px, transparent 2.5px, #6fe3ff 3px 3.8px, transparent 4px) 28px 6px / 76px 48px, conic-gradient(from 150deg at 50% calc(100% - 7px), #ffe45e 60deg, transparent 0) -8px -34px / 76px 48px, radial-gradient(circle at 5px 0, var(--z)) 8px 36px / 76px 48px, radial-gradient(circle at 14px 100%, var(--z)) 8px 36px / 76px 48px, radial-gradient(circle at 23px 0, var(--z)) 8px 36px / 76px 48px, #1f0d47; }
+.cp-deco.memphis::before { background: #ff3ea5; border: 2px solid #0a0418; border-bottom: 0; box-shadow: 2px 2px 0 #6fe3ff; }
+.cp-deco.memphis::after { background: #211546; border: 2px solid #ff3ea5; box-shadow: 3px 3px 0 #6fe3ff; }
+
+/* Phones (the same query as windows.css): one full-screen window whose tab spans the width, so shadows go */
+@media (max-width: 767px), (max-height: 500px) and (pointer: coarse) {
+  :root[data-deco=memphis] { --tab-h: 40px; }
+  :root[data-deco=memphis] .win .frame { border-width: 0 0 2px; }
+  :root[data-deco=memphis] .win.active .tab { box-shadow: none; }
+  :root[data-deco=memphis] .win :is(.tab, .th) { border-width: 0 0 2px; border-color: var(--mp-dk); }
+}

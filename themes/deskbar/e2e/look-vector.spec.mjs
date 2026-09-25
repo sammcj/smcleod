@@ -1,6 +1,7 @@
-// Synthwave (css/deskbar/looks/synthwave.css): an 80s outrun night. Indigo windows edged in neon with sunset tabs,
-// a striped sun over a perspective grid that stays behind everything and never takes the pointer, no Light mode,
-// linked before first paint, nothing left behind when the look is off, and axe over its main states.
+// Vector (css/deskbar/looks/vector.css): Synthwave's colours on a vector display. Square windows on a cyan line with
+// a pink hairline inside when focused, cut cyan tabs in spaced capitals, a flat square panel and dock, and a flat
+// lattice wallpaper that never takes the pointer. No Light mode, nothing left behind when the look is off, and axe
+// over its main states.
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
@@ -9,21 +10,18 @@ import { env, useBrowser, open, needs, shot, win, cards, desktop, phone, toolbar
 
 useBrowser();
 
-const LOOK = { deco: 'synthwave', wall: 'synthwave', dock: 'glass' };
+const LOOK = { deco: 'vector', wall: 'vector', dock: 'glass' };
 const seed = look => `for (const [k, v] of Object.entries(${JSON.stringify(look)})) localStorage.setItem("deskbar:" + k, JSON.stringify(v));`;
 const openLook = (vp, path, opts) => open(vp, path, seed(LOOK), opts);
-const PINK = 'rgb(255, 62, 165)', INK = 'rgb(26, 11, 58)';
+const CYAN = 'rgb(111, 227, 255)', INK = 'rgb(26, 11, 58)';
 const css = (loc, props, pseudo) => loc.evaluate((el, [ps, p]) => {
   const s = getComputedStyle(el, p);
   return Object.fromEntries(ps.map(k => [k, s[k]]));
 }, [props, pseudo]);
-const bodyPseudo = (page, pseudo, props) => page.evaluate(([p, ps]) => {
-  const s = getComputedStyle(document.body, p);
-  return Object.fromEntries(ps.map(k => [k, s[k]]));
-}, [pseudo, props]);
-const lookHref = page => page.evaluate(() => JSON.parse(document.getElementById('deskbar-lazy').textContent)['look-synthwave'].css);
+const bodyStyle = (page, props, pseudo) => css(page.locator('body'), props, pseudo);
+const lookHref = page => page.evaluate(() => JSON.parse(document.getElementById('deskbar-lazy').textContent)['look-vector'].css);
 
-test('Synthwave: neon-edged indigo windows, a sunset tab in capitals, unlit post text and no Light mode', async t => {
+test('Vector: square cyan-ruled windows, a cut cyan tab in spaced capitals, unlit post text and no Light mode', async t => {
   if (!(await needs(t, '/posts/'))) return;
   const page = await openLook(desktop, '/posts/');
   const w = win(page, 'tracker');
@@ -32,33 +30,43 @@ test('Synthwave: neon-edged indigo windows, a sunset tab in capitals, unlit post
 
   const frame = w.locator('.frame'), tab = w.locator('.tab.on');
   const f = await css(frame, ['borderTopColor', 'borderBottomRightRadius', 'boxShadow']);
-  assert.equal(f.borderTopColor, PINK);
-  assert.equal(f.borderBottomRightRadius, '6px');
-  assert.match(f.boxShadow, /rgba\(255, 62, 165/, 'the focused frame glows');
-  const tb = await css(tab, ['backgroundImage', 'color', 'borderTopLeftRadius']);
-  assert.match(tb.backgroundImage, /linear-gradient/);
-  assert.equal(tb.color, INK);
-  assert.equal(tb.borderTopLeftRadius, '6px');
-  const tt = await css(tab.locator('.tt'), ['fontFamily', 'textTransform']);
+  assert.equal(f.borderTopColor, CYAN);
+  assert.equal(f.borderBottomRightRadius, '0px');
+  assert.match(f.boxShadow, /rgb\(255, 62, 165\) 0px 0px 0px 3px inset/, 'a pink hairline inside the cyan line');
+  const tb = await css(tab, ['backgroundColor', 'color', 'clipPath']);
+  assert.deepEqual([tb.backgroundColor, tb.color], [CYAN, INK]);
+  assert.match(tb.clipPath, /^polygon/, 'the tab has cut ends');
+  const tt = await css(tab.locator('.tt'), ['fontFamily', 'textTransform', 'letterSpacing']);
   assert.match(tt.fontFamily, /Space Grotesk/);
   assert.equal(tt.textTransform, 'uppercase');
-  // an unfocused window loses the neon
+  assert.notEqual(tt.letterSpacing, 'normal');
+  // the panel and dock are flat and square, on a cyan hairline rather than a glow
+  const panel = await css(page.locator('#panel'), ['borderBottomColor', 'boxShadow']);
+  assert.equal(panel.borderBottomColor, CYAN);
+  assert.match(panel.boxShadow, /0px 1px 0px 0px$/, 'a second hairline, no blur');
+  const dock = await css(page.locator('#dock'), ['borderTopColor', 'borderTopLeftRadius', 'backdropFilter']);
+  assert.deepEqual(dock, { borderTopColor: CYAN, borderTopLeftRadius: '0px', backdropFilter: 'none' });
+  await shot(page, 'vector');
+
+  // an unfocused window goes to dim indigo lines with no neon
   await cards(page).first().click();
   await win(page, 'reader').locator('.rd h1').waitFor();
-  assert.notEqual((await css(frame, ['borderTopColor'])).borderTopColor, PINK);
-  assert.equal((await css(tab, ['backgroundImage'])).backgroundImage, 'none');
-  // post text has no glow, for long reads; the title does
+  const off = await css(frame, ['borderTopColor', 'boxShadow']);
+  assert.notEqual(off.borderTopColor, CYAN);
+  assert.doesNotMatch(off.boxShadow, /255, 62, 165|111, 227, 255/);
+  assert.notEqual((await css(tab, ['backgroundColor'])).backgroundColor, CYAN);
+  // post text has no glow, for long reads
   const rd = win(page, 'reader').locator('.rd');
   assert.equal((await css(rd.locator('p').first(), ['textShadow'])).textShadow, 'none');
-  assert.notEqual((await css(rd.locator('h1'), ['textShadow'])).textShadow, 'none');
+  assert.equal((await css(rd.locator('h1'), ['color'])).color, CYAN);
 
   assert.equal(await page.locator('#themeBtn').isVisible(), false, 'dark only');
-  await shot(page, 'synthwave');
+  await shot(page, 'vector-reader');
   assert.deepEqual(page.errors, []);
   await page.context().close();
 });
 
-test('Synthwave: the Control panel turns off Colours, Mode and Dock while the look is on', async t => {
+test('Vector: the Control panel turns off Colours, Mode and Dock, and draws both thumbnails', async t => {
   if (!(await needs(t, '/control-panel/'))) return;
   const page = await openLook(desktop, '/control-panel/');
   const cp = win(page, 'control-panel');
@@ -67,77 +75,65 @@ test('Synthwave: the Control panel turns off Colours, Mode and Dock while the lo
     assert.equal(await cp.locator(`fieldset:has([name="cp-${g}"])`).evaluate(f => f.disabled), true, `${g} is the look's`);
   }
   assert.equal(await cp.locator('fieldset:has([name="cp-wall"])').evaluate(f => f.disabled), false);
-  // both thumbnails are drawn: the glowing window, and the sun over the grid
-  assert.equal((await css(cp.locator('.cp-deco.synthwave'), ['borderTopColor'], '::after')).borderTopColor, PINK);
-  const sun = await css(cp.locator('.cp-wp.synthwave'), ['borderTopLeftRadius', 'maskImage'], '::before');
-  assert.equal(sun.borderTopLeftRadius, '50%');
-  assert.match(sun.maskImage, /linear-gradient/);
+  const deco = cp.locator('.cp-deco.vector');
+  assert.equal((await css(deco, ['borderTopColor'], '::after')).borderTopColor, CYAN);
+  assert.match((await css(deco, ['clipPath'], '::before')).clipPath, /^polygon/);
+  const wp = (await css(cp.locator('.cp-wp.vector'), ['backgroundImage'])).backgroundImage;
+  assert.ok((wp.match(/linear-gradient/g) || []).length >= 6, 'the lattice is drawn');
+  await shot(page, 'vector-cp');
   assert.deepEqual(page.errors, []);
   await page.context().close();
 });
 
-test('Synthwave: the sun and grid sit behind the windows, never take a click, and hold still', async t => {
+test('Vector: the wallpaper is flat CSS lines behind the windows, and never takes a click', async t => {
   if (!(await needs(t, '/posts/'))) return;
-  const page = await openLook(desktop, '/posts/', { reducedMotion: 'no-preference' });
+  const page = await openLook(desktop, '/posts/');
   const w = win(page, 'tracker');
   await w.locator('.pc').first().waitFor();
-  const sun = await bodyPseudo(page, '::before', ['position', 'zIndex', 'pointerEvents', 'borderTopLeftRadius', 'maskImage']);
-  assert.deepEqual({ ...sun, maskImage: /linear-gradient/.test(sun.maskImage) },
-    { position: 'fixed', zIndex: '-1', pointerEvents: 'none', borderTopLeftRadius: '50%', maskImage: true });
-  const grid = await bodyPseudo(page, '::after', ['position', 'zIndex', 'pointerEvents', 'transform', 'backgroundImage']);
-  assert.equal(grid.position, 'fixed');
-  assert.equal(grid.zIndex, '-1');
-  assert.equal(grid.pointerEvents, 'none');
-  assert.match(grid.transform, /^matrix3d/, 'tipped back in perspective');
-  assert.match(grid.backgroundImage, /linear-gradient/);
-  for (const p of ['::before', '::after']) assert.equal((await bodyPseudo(page, p, ['animationName'])).animationName, 'none', `${p} holds still`);
-  // the wallpaper draws without stealing clicks from what is over it
+  const bg = (await bodyStyle(page, ['backgroundImage'])).backgroundImage;
+  assert.match(bg, /linear-gradient\(to right top/);
+  assert.doesNotMatch(bg, /url\(/, 'no images');
+  for (const p of ['::before', '::after']) assert.equal((await bodyStyle(page, ['content'], p)).content, 'none', `no ${p} scene`);
   const card = w.locator('.pc').first(), b = await card.boundingBox();
   assert.equal(await page.evaluate(([x, y]) => !!document.elementFromPoint(x, y)?.closest('.pc'), [b.x + b.width / 2, b.y + b.height / 2]), true);
-  await card.click();
-  await win(page, 'reader').locator('.rd h1').waitFor();
-  assert.deepEqual(page.errors, []);
-  await page.context().close();
-});
-
-test('Synthwave is back before first paint on reload', async () => {
-  const page = await openLook(desktop, '/');
+  // reloads with the look linked before first paint
   const href = await lookHref(page);
   await page.reload({ waitUntil: 'commit' });
   await page.waitForFunction(() => document.body);
   assert.equal(await page.evaluate(h => !!document.querySelector(`head link[rel=stylesheet][href="${h}"]`), href), true, 'linked from head.html');
-  await page.waitForSelector('html.wm-ready');
-  assert.equal((await bodyPseudo(page, '::before', ['position'])).position, 'fixed', 'the sun is up');
+  assert.deepEqual(page.errors, []);
   await page.context().close();
 });
 
-test('Synthwave on a phone: a full-width title bar without corners, over the full-screen window', async t => {
+test('Vector on a phone: a full-width title bar without cut ends, over the full-screen window', async t => {
   if (!(await needs(t, '/posts/'))) return;
   const page = await openLook(phone, '/');
+  await shot(page, 'vector-phone-home');
   await cards(page).first().click();
   const w = win(page, 'reader');
   await w.locator('.rd h1').waitFor();
   const [tab, frame] = [await w.locator('.tab.on').boundingBox(), await w.locator('.frame').boundingBox()];
   assert.equal(Math.round(frame.width), phone.width, 'full width');
   assert.ok(Math.abs(tab.y + tab.height - frame.y) <= 1, 'title bar above the frame');
-  assert.equal((await css(w.locator('.tab.on'), ['borderTopLeftRadius'])).borderTopLeftRadius, '0px');
-  // the reader toolbar sticks straight under the title bar, with no band between them, scrolled or not
+  assert.equal((await css(w.locator('.tab.on'), ['clipPath'])).clipPath, 'none');
+  // the reader toolbar sticks straight under the title bar, with no band between them
   for (const g of await toolbarGaps(page, w)) assert.ok(Math.abs(g) <= 8, `toolbar ${g}px from the title bar`);
-  await shot(page, 'synthwave-phone');
+  await shot(page, 'vector-phone');
   assert.deepEqual(page.errors, []);
   await page.context().close();
 });
 
-test('Synthwave leaves nothing behind when another look is on, though its stylesheet is loaded', async t => {
+test('Vector leaves nothing behind when another look is on, though its stylesheet is loaded', async t => {
   if (!(await needs(t, '/control-panel/'))) return;
   const page = await open(desktop, '/control-panel/');
   const cp = win(page, 'control-panel');
   await cp.locator('.cp').waitFor();
   const href = await lookHref(page);
   await page.waitForFunction(h => !!document.querySelector(`head link[rel=stylesheet][href="${h}"]`)?.sheet, href);
-  assert.notEqual((await css(cp.locator('.frame'), ['borderTopColor'])).borderTopColor, PINK);
-  assert.equal((await bodyPseudo(page, '::before', ['content'])).content, 'none');
-  assert.equal((await bodyPseudo(page, '::after', ['content'])).content, 'none');
+  assert.notEqual((await css(cp.locator('.frame'), ['borderTopColor'])).borderTopColor, CYAN);
+  assert.equal((await css(cp.locator('.tab.on'), ['clipPath'])).clipPath, 'none');
+  assert.doesNotMatch((await bodyStyle(page, ['backgroundImage'])).backgroundImage, /to right top/);
+  assert.notEqual((await css(page.locator('#panel'), ['borderBottomColor'])).borderBottomColor, CYAN);
   assert.equal(await page.locator('#themeBtn').isVisible(), true);
   await page.context().close();
 });
@@ -165,9 +161,17 @@ const states = {
     },
   },
   controlpanel: { path: '/control-panel/', need: '/control-panel/', setup: page => win(page, 'control-panel').locator('.cp').waitFor() },
+  spotlight: {
+    path: '/',
+    async setup(page) {
+      await page.locator('#searchBtn').click();
+      await page.locator('dialog.spotlight .sp-q').fill('window');
+      await page.locator('dialog.spotlight .sp-opt').first().waitFor();
+    },
+  },
 };
 
-test('axe: Synthwave over its main states at 1440 and 390, with either stored mode', async () => {
+test('axe: Vector over its main states at 1440 and 390, with either stored mode', async () => {
   const found = [];
   for (const [name, s] of Object.entries(states)) {
     if (s.need && !(await fetch(env.base + s.need)).ok) continue;

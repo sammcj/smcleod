@@ -1,0 +1,128 @@
+/* Night Drive: synthwave as an 80s sportswear tag or VHS cover. Soft rounded indigo windows, the focused one rimmed in
+   a pink to orange to cyan gradient, pill tabs filled with hard sunset stripes, and a flat wallpaper of stripe bands
+   under faint scanlines. Synthwave's colours; the stripes stay on the chrome and post text stays plain. Dark only. */
+@font-face { font-family: 'Space Grotesk'; font-display: swap; font-weight: 700; src: url(../../../fonts/space-grotesk/space-grotesk-700-normal.woff2) format('woff2'); }
+
+:root[data-deco=nightdrive] {
+  color-scheme: dark;
+  --nd-pink: #ff3ea5; --nd-orange: #ff9e4a; --nd-cyan: #6fe3ff; --nd-yellow: #ffe45e; --nd-mag: #e8339f; --nd-ink: #1a0b3a; --nd-edge: #4a3580;
+  --nd-head: 'Space Grotesk', var(--ui);
+  /* the sunset stripe: hard-stop bands, the middle two widest so tab text sits on the colours ink reads best on */
+  --nd-stripe: linear-gradient(var(--nd-yellow) 22%, var(--nd-orange) 0 50%, var(--nd-pink) 0 78%, var(--nd-mag) 0);
+  --nd-rim: linear-gradient(135deg, var(--nd-pink), var(--nd-orange) 50%, var(--nd-cyan));
+  --nd-chroma: -1px 0 rgba(111,227,255,.45), 1px 0 rgba(255,62,165,.5);
+  --nd-glow: -6px 0 22px -6px rgba(255,62,165,.6), 6px 0 22px -6px rgba(111,227,255,.5);
+  --panel: linear-gradient(#2a1356, #1a0b3a); --panel-fg: #f5eeff; --panel-hover: rgba(255,255,255,.12);
+  --frame: #211546; --frame-hi: #3b2a70; --frame-lo: #120a2a; --frame-dk: #0a0418;
+  --tab: var(--nd-pink); --tab-hi: #ff9ad2; --tab-lo: #b0266f; --tab-dim: #3b2a70;
+  --tab-in: #2a1b52; --tab-in-lo: #1a0f38; --tab-in-fg: #cfc3f2; --ctl: var(--nd-ink);
+  --content: #160e2c; --side: #1c1236; --fg: #ece6ff; --muted: #b6a8dc; --line: #3a2a66; --zebra: rgba(255,255,255,.035);
+  --accent: #c2267a; --accent-fg: #fff; --link: var(--nd-cyan);
+  --read-bg: #140c28; --read-fg: #e4ddf5; --code-bg: #22173f;
+  --wall-1: #2a1356; --wall-2: #1c0b3f; --wall-3: #0e0526; --wall-glow: rgba(255,62,165,.2); --wall-line: rgba(255,62,165,.18);
+}
+:root[data-deco=nightdrive] ::selection { background: var(--nd-pink); color: var(--nd-ink); }
+:root[data-deco=nightdrive] :focus-visible { outline-color: var(--nd-cyan); }
+:root[data-deco=nightdrive] #themeBtn { display: none; }
+:root[data-deco=nightdrive] .ticker-h { color: var(--nd-ink); }
+@supports selector(::-webkit-scrollbar) {
+  html[data-deco=nightdrive] ::-webkit-scrollbar { width: 12px; height: 12px; background: var(--side); }
+  html[data-deco=nightdrive] ::-webkit-scrollbar-thumb { border: 3px solid var(--side); border-radius: 6px; background: linear-gradient(var(--nd-pink), var(--nd-orange)); }
+  html[data-deco=nightdrive] ::-webkit-scrollbar-corner { background: var(--side); }
+}
+@supports not selector(::-webkit-scrollbar) {
+  :root[data-deco=nightdrive] { scrollbar-color: var(--nd-mag) var(--side); }
+}
+
+/* the top bar sits on a thin stripe, one pixel per colour */
+:root[data-deco=nightdrive] #panel { border-bottom: 0; box-shadow: 0 2px 10px rgba(255,62,165,.3); background: linear-gradient(transparent calc(100% - 4px), var(--nd-yellow) 0 calc(100% - 3px), var(--nd-orange) 0 calc(100% - 2px), var(--nd-pink) 0 calc(100% - 1px), var(--nd-mag) 0), var(--panel); text-shadow: var(--nd-chroma); }
+
+/* Windows: soft indigo frames, the focused one rimmed in the gradient (a padding-box fill over a border-box
+   gradient, so the rim follows the radius) with a pink glow on the left and cyan on the right */
+:root[data-deco=nightdrive] .win .frame { padding: 5px; border: 2px solid var(--nd-edge); border-radius: 12px; box-shadow: 0 12px 32px rgba(0,0,0,.5); }
+:root[data-deco=nightdrive] .win.active .frame { border-color: transparent; background: linear-gradient(var(--frame) 0 0) padding-box, var(--nd-rim) border-box; box-shadow: var(--nd-glow), 0 16px 40px rgba(0,0,0,.6); }
+:root[data-deco=nightdrive] .views { border: 1px solid var(--line); border-radius: 8px; overflow: hidden; }
+/* pill tabs float a few pixels above the frame */
+:root[data-deco=nightdrive] .win :is(.tab, .th) { bottom: 3px; padding-left: 12px; border: 1px solid var(--nd-edge); border-radius: 999px; box-shadow: none; }
+:root[data-deco=nightdrive] .tabs.multi .tab { margin-right: 3px; }
+:root[data-deco=nightdrive] .win.active .tab { color: var(--nd-ink); background: var(--nd-stripe); border-color: rgba(255,228,94,.6); box-shadow: 0 3px 12px rgba(255,62,165,.4); }
+:root[data-deco=nightdrive] .win.active .tab:not(.on) { --ctl: var(--fg); color: var(--fg); background: var(--tab-dim); border-color: var(--nd-edge); box-shadow: none; }
+:root[data-deco=nightdrive] .tab .tt { font-family: var(--nd-head); font-size: 11.5px; font-style: italic; letter-spacing: .06em; text-transform: uppercase; text-shadow: var(--nd-chroma); }
+/* ink on the stripes takes a fainter cyan offset only; pink would vanish into the pink band */
+:root[data-deco=nightdrive] .win.active .tab.on .tt { text-shadow: 1px 0 rgba(111,227,255,.55); }
+/* a cyan ring all but vanishes on the stripes, so focus there is drawn in ink */
+:root[data-deco=nightdrive] :is(.win.active .tab.on, .sw-tab.on) :focus-visible { outline-color: var(--nd-ink); }
+:root[data-deco=nightdrive] .win .ctl { border-radius: 50%; }
+:root[data-deco=nightdrive] .win .ctl:hover { background: rgba(26,11,58,.2); }
+:root[data-deco=nightdrive] .win .ctl.close:hover { color: #fff; background: var(--nd-ink); }
+:root[data-deco=nightdrive] .th::before { background: radial-gradient(circle, var(--nd-edge) 1.1px, transparent 1.6px) 0 0 / 5px 5px; }
+:root[data-deco=nightdrive] .grip { border-bottom-right-radius: 10px; }
+:root[data-deco=nightdrive] .sizer { border-color: var(--nd-pink); border-radius: 999px; box-shadow: none; }
+:root[data-deco=nightdrive] #snapPreview { background: rgba(255,62,165,.1); border: 2px solid var(--nd-pink); border-radius: 12px; box-shadow: var(--nd-glow); }
+
+/* soft pill controls: cyan under the pointer, the magenta accent when pressed */
+:root[data-deco=nightdrive] .toolbar { border-bottom-color: var(--line); }
+:root[data-deco=nightdrive] .tb { border-color: var(--nd-edge); border-radius: 999px; background: #2a1b52; }
+:root[data-deco=nightdrive] .seg { border-color: var(--nd-edge); background: #2a1b52; }
+:root[data-deco=nightdrive] .seg:first-child { border-radius: 999px 0 0 999px; }
+:root[data-deco=nightdrive] .seg:last-child { border-radius: 0 999px 999px 0; }
+:root[data-deco=nightdrive] :is(select, textarea, input:not([type=checkbox], [type=radio], [type=range])) { border-color: var(--nd-edge); border-radius: 8px; }
+:root[data-deco=nightdrive] :is(.tb, .seg):hover { border-color: var(--nd-cyan); }
+:root[data-deco=nightdrive] :is(.tb:active, .seg.on, .tb[aria-pressed=true], .tb[aria-expanded=true]) { color: #fff; background: var(--accent); border-color: var(--nd-pink); }
+
+/* menus and popups: rounded, on the indigo edge with the window's soft two-colour glow */
+:root[data-deco=nightdrive] :is(#menu, .ctx, .sp-frame, .recent-list) { border: 1px solid var(--nd-edge); border-radius: 12px; box-shadow: var(--nd-glow), 0 14px 36px rgba(0,0,0,.6); }
+:root[data-deco=nightdrive] .ctx { padding: 5px; }
+:root[data-deco=nightdrive] .sp-field { border-radius: 8px; }
+:root[data-deco=nightdrive] .sp-field:focus-within { border-color: var(--nd-cyan); box-shadow: 0 0 0 1px var(--nd-cyan); }
+:root[data-deco=nightdrive] :is(.mn-it, .ctx-it) { border-radius: 8px; }
+:root[data-deco=nightdrive] .mn-head { background: var(--frame); }
+
+/* other title bars (Spotlight, the phone's Recent posts, the window switcher) are the same stripe pills */
+:root[data-deco=nightdrive] :is(.sp-tab, #recent h2) { margin-bottom: 3px; color: var(--nd-ink); background: var(--nd-stripe); border: 1px solid rgba(255,228,94,.6); border-radius: 999px; box-shadow: 0 3px 12px rgba(255,62,165,.4); font-family: var(--nd-head); font-style: italic; letter-spacing: .06em; text-transform: uppercase; }
+:root[data-deco=nightdrive] .sw-tab { padding-left: 12px; border-radius: 999px; border: 1px solid var(--nd-edge); box-shadow: none; }
+:root[data-deco=nightdrive] .sw-tab.on { color: var(--nd-ink); background: var(--nd-stripe); border-color: rgba(255,228,94,.6); }
+:root[data-deco=nightdrive] .sw-tab:not(.on):hover { color: #fff; background: var(--frame-hi); }
+:root[data-deco=nightdrive] .sw-tab::after { top: calc(100% + 2px); height: 5px; border-color: var(--nd-edge); border-radius: 3px; box-shadow: none; }
+:root[data-deco=nightdrive] .sw-tab.on::after { border-color: transparent; background: linear-gradient(var(--frame) 0 0) padding-box, var(--nd-rim) border-box; }
+
+/* the dock: a pill of dark glass, each running app's lamp one of the stripe's colours in turn */
+.wm[data-deco=nightdrive] #dock { background: rgba(20,8,48,.72); border-color: rgba(111,227,255,.3); border-radius: 999px; padding-inline: 14px; box-shadow: var(--nd-glow), 0 8px 24px rgba(0,0,0,.5); }
+.wm[data-deco=nightdrive] #dock .dk.run::after { width: 10px; height: 3px; margin-left: -5px; border-radius: 2px; background: currentColor; color: var(--nd-yellow); box-shadow: 0 0 6px currentColor; }
+.wm[data-deco=nightdrive] #dock .dk:nth-child(4n+1).run::after { color: var(--nd-orange); }
+.wm[data-deco=nightdrive] #dock .dk:nth-child(4n+2).run::after { color: var(--nd-pink); }
+.wm[data-deco=nightdrive] #dock .dk:nth-child(4n+3).run::after { color: var(--nd-cyan); }
+.wm[data-deco=nightdrive] #dock :is(#homeBtn, #winsBtn) { border-radius: 50%; }
+.wm[data-deco=nightdrive] #dock #homeBtn.on { background: rgba(255,62,165,.25); box-shadow: inset 0 0 0 1px var(--nd-pink); }
+
+:root[data-deco=nightdrive] .dicon span { background: rgba(14,5,38,.78); border-radius: 999px; padding-inline: 7px; }
+
+/* Tracker's year headings take the chrome font */
+:root[data-deco=nightdrive] .pv-year { font-family: var(--nd-head); font-style: italic; letter-spacing: .02em; color: var(--nd-yellow); }
+
+/* Post text keeps the reader's font, unshadowed; headings take the chrome font, the offset and a stripe tag */
+:root[data-deco=nightdrive] .rd :is(h1, h2, h3) { font-family: var(--nd-head); letter-spacing: -.01em; text-shadow: var(--nd-chroma); }
+:root[data-deco=nightdrive] .rd h1 { color: #ffd37a; text-shadow: -1.5px 0 rgba(111,227,255,.5), 1.5px 0 rgba(255,62,165,.6); }
+:root[data-deco=nightdrive] .rd h2 { padding-bottom: 10px; color: var(--nd-cyan); border-bottom: 0; background: linear-gradient(var(--nd-yellow) 25%, var(--nd-orange) 0 50%, var(--nd-pink) 0 75%, var(--nd-mag) 0) 0 100% / 3.5em 8px no-repeat; }
+:root[data-deco=nightdrive] .rd h3 { color: #ff9ecf; }
+
+/* Wallpaper: a flat indigo field with sunset bands across the lower third, thickening as they fall, and fine
+   scanlines over all of it. One background on the body, so it sits behind everything and never takes the pointer.
+   Literal colours, as the wallpaper can be picked under any window style. */
+.wm[data-wall=nightdrive] body { --b: 66%; background: repeating-linear-gradient(rgba(6,2,20,.28) 0 1px, transparent 0 3px), linear-gradient(transparent calc(var(--b) - 14px), rgba(111,227,255,.55) 0 calc(var(--b) - 13px), transparent 0 var(--b), #ffe45e 0 calc(var(--b) + 4px), transparent 0 calc(var(--b) + 12px), #ff9e4a 0 calc(var(--b) + 18px), transparent 0 calc(var(--b) + 26px), #ff3ea5 0 calc(var(--b) + 34px), transparent 0 calc(var(--b) + 42px), #e8339f 0 calc(var(--b) + 52px), transparent 0 calc(var(--b) + 60px), #7b3fe4 0 calc(var(--b) + 72px), transparent 0), linear-gradient(#0b0420, #1c0b3f 40%, #2e1462 var(--b), #140833 0, #0b0420); }
+.wm[data-wall=nightdrive] #desk::after { font: italic 700 46px/1 'Space Grotesk', var(--ui); letter-spacing: .02em; text-transform: uppercase; color: rgba(255,228,94,.14); text-shadow: -2px 0 rgba(111,227,255,.14), 2px 0 rgba(255,62,165,.16); }
+
+/* Control panel thumbnails: the bands in miniature, and a rimmed window under a stripe pill */
+.cp-wp.nightdrive, .cp-deco.nightdrive { background: repeating-linear-gradient(rgba(6,2,20,.3) 0 1px, transparent 0 2px), linear-gradient(transparent 60%, #ffe45e 0 63%, transparent 0 67%, #ff9e4a 0 71%, transparent 0 75%, #ff3ea5 0 80%, transparent 0 84%, #e8339f 0 90%, transparent 0 94%, #7b3fe4 0), linear-gradient(#0b0420, #2e1462 60%, #140833 0); }
+.cp-deco.nightdrive::before { top: 6px; width: 30px; height: 9px; border: 0; border-radius: 5px; background: linear-gradient(#ffe45e 22%, #ff9e4a 0 50%, #ff3ea5 0 78%, #e8339f 0); box-shadow: 0 1px 5px rgba(255,62,165,.6); }
+.cp-deco.nightdrive::after { border: 1.5px solid transparent; border-radius: 5px; background: linear-gradient(#211546 0 0) padding-box, linear-gradient(135deg, #ff3ea5, #ff9e4a 50%, #6fe3ff) border-box; box-shadow: -3px 0 7px -2px rgba(255,62,165,.7), 3px 0 7px -2px rgba(111,227,255,.6); }
+
+/* Phones (the same query as windows.css): the title bar spans the full-screen window, so it sits on the frame and
+   loses its corners, and the rim becomes a gradient rule across the top */
+@media (max-width: 767px), (max-height: 500px) and (pointer: coarse) {
+  :root[data-deco=nightdrive] :is(.win .frame, .views, .win .tab, .win .th) { border-radius: 0; }
+  :root[data-deco=nightdrive] .win :is(.tab, .th) { bottom: 0; }
+  /* square corners need no clip, and a clipping .views would hold the toolbar from sticking under the tab */
+  :root[data-deco=nightdrive] .views { overflow: visible; }
+  :root[data-deco=nightdrive] .win .frame { padding: 0; border-width: 2px 0 0; --nd-rim: linear-gradient(90deg, var(--nd-pink), var(--nd-orange), var(--nd-cyan)); }
+}
