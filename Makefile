@@ -21,7 +21,7 @@ PUBLIC ?= public
 
 # Tasks
 
-.PHONY: serve site-build check test thumbs
+.PHONY: serve site-build check test e2e thumbs
 serve: ## Run the Hugo dev server
 	$(HUGO) server --port $(HUGO_PORT)
 
@@ -33,6 +33,17 @@ check: ## Check the built site: posts, aliases, RSS, internal links, key pages (
 
 test: ## Run the unit tests (vRAM estimator)
 	node --test 'tests/*.test.mjs'
+
+# Real pages for the theme specs that otherwise use example-site fixtures. POST_PATH, MD_PAGE and GALLERY_POST stay
+# unset: those specs assert on example content (heading ids, a footnote count, a Go snippet, a two-photo gallery) that no
+# real page has, so they skip.
+e2e: ## Run the theme's browser and accessibility tests against the site built in $(PUBLIC) (local only, too slow for CI; CHROMIUM_PATH optional)
+	$(MAKE) -C themes/deskbar e2e SITE_DIR="$(abspath $(PUBLIC))" \
+		ALIAS_PATH=/tech/2015/04/15/talk-high-perf-sds-ictalk/ \
+		MERMAID_PAGE=/2025/04/getting-started-with-agentic-systems-developer-learning-paths/ \
+		PHOTOS_POST=/2020/11/ferrari-f12-berlinetta/ \
+		SCRIPT_PAGE=/admeds/ \
+		SCRIPT_SELECTOR=.admeds-legend-title
 
 thumbs: ## Render bespoke post thumbnails from assets/thumbnails-src (THUMBS=<bundle> for one; CHROMIUM_PATH optional; uses the theme's Playwright and pngquant)
 	node scripts/render-thumbs.mjs $(THUMBS)

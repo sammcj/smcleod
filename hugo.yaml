@@ -51,7 +51,6 @@ params:
       - { name: About, url: /about/, icon: person }
       - { page: /control-panel }
       - { page: /chiptunes }
-      - { name: smcleod.net on GitHub, url: "https://github.com/sammcj/smcleod", icon: globe }
     dock:
       - { page: /tools }
       - { name: Posts, url: /posts/, icon: folder }
