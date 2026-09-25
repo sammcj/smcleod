@@ -256,6 +256,8 @@ export function mount(v, page, { fresh }) {
 
   function ensureContext() {
     if (ctx) return;
+    // iOS mutes Web Audio in silent mode unless the page asks for a playback session, as a music app does
+    if (navigator.audioSession) navigator.audioSession.type = 'playback';
     // created after a press on the page (Play, or opening the player), which is what browsers require
     ctx = new AudioContext();
     master = ctx.createGain();
