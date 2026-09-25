@@ -1,6 +1,7 @@
 # Project Instructions for Coding Agents
 
-- NEVER change `themes/github.com/` (hugo-admonitions, an upstream submodule) or `themes/PaperMod/` (unused leftovers). `themes/deskbar/` is this site's own theme and is edited freely.
+- NEVER change `themes/github.com/` (hugo-admonitions, an upstream submodule) or `themes/PaperMod/` (unused leftovers).
+- `themes/deskbar/` is this site's own theme and is edited freely.
 - NEVER commit or push a git repo unless the user has explicitly requested you to do so.
 - In markdown content always use - for lists, _underscores_ and **bold**
 - If you are asked to review the users content, as well as the usual Australian English spelling and grammar, you should check the clarity of prose, ensure there's no fluff, filler, empty verbiage, buzzwords, hype or marketing speak, that the content is clear, concise and to the point as well as being factually accurate and well structured.
@@ -64,3 +65,9 @@ tool_name:
 ```
 
 Other types and options: `themes/github.com/KKKZOZ/hugo-admonitions/README.md`.
+
+---
+
+## Other Rules
+
+- When working on the site make use of sub-agents to parallelise work when appropriate.
