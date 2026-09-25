@@ -1,10 +1,11 @@
 {{- /* The desktop the shell draws windows on. Hidden without JS. */ -}}
 <div id="desk" data-shell data-name="{{ site.Title }}">
+  {{- /* the phone home screen's Latest posts widget (phone-home.js), above the icons there; the desktop has the Posts
+         window instead */}}
+  <section id="recent" aria-label="Latest posts" hidden></section>
   <nav id="icons" aria-label="Desktop">
     {{- range site.Params.deskbar.icons }}{{ partial "deskbar/launcher-link.html" (dict "item" . "class" "dicon") }}{{ end -}}
   </nav>
-  {{- /* the phone home screen (phone-home.js); the desktop has the Posts window instead */}}
-  <section id="recent" aria-label="Recent posts" hidden></section>
   <div id="snapPreview" hidden></div>
   {{- /* pointer-only (keyboard users resize nothing), so it stays out of the accessibility tree */}}
   <div id="divider" aria-hidden="true" title="Drag to resize both windows" hidden></div>

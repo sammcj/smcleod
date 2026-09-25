@@ -67,8 +67,8 @@ button.dicon { background: none; border: 0; font: inherit; color: inherit; curso
 #divider::after { content: ''; position: absolute; left: 5px; top: 50%; width: 4px; height: 56px; margin-top: -28px; border-radius: 2px; background: var(--tab); box-shadow: 0 0 0 1px rgba(0,0,0,.45); }
 #divider:hover::after, .dragging #divider::after { height: 96px; margin-top: -48px; }
 
-/* Recent posts (phone-home.js): the phone home screen (D17), Tracker's cards in a panel on the desk under a Haiku tab of
-   its own, placed in the phone block below. The desktop has the Posts window instead (D36). */
+/* Latest posts (phone-home.js): the phone home screen's widget (D17), Tracker's cards in a panel on the desk under a
+   Haiku tab of its own, placed in the phone block below. The desktop has the Posts window instead (D36). */
 #desk > #recent { display: none; position: absolute; flex-direction: column; z-index: 1; }
 #recent h2 { align-self: flex-start; cursor: default; user-select: none; margin: 0; padding: 2px 10px; font-size: 12px; background: var(--tab); color: #1f1f1f; border: 1px solid var(--frame-dk); border-bottom: 0; }
 .recent-list { display: grid; gap: 4px; min-height: 0; overflow: auto; padding: 4px; background: var(--frame); border: 1px solid var(--frame-dk); box-shadow: inset 1px 1px 0 var(--frame-hi), 0 8px 24px rgba(0,0,0,.3); }
@@ -119,7 +119,7 @@ button.dicon { background: none; border: 0; font: inherit; color: inherit; curso
 /* D17 phone mode; the same query as PHONE in wm/windows.js */
 @media (max-width: 767px), (max-height: 500px) and (pointer: coarse) {
   :root { --dock-h: 64px; }
-  .wm #tasks, .wm #clock .cd, #icons { display: none; }
+  .wm #tasks, .wm #clock .cd { display: none; }
   /* The page itself scrolls, as any site does, rather than a box inside a fixed desktop: mobile browsers flow a
      scrolling page under their toolbars and shrink them as it scrolls, where a fixed layout stops short of them. The
      home screen or the one open window is the page's content (windows.css); wm/windows.js keeps each one's place. */
@@ -135,14 +135,21 @@ button.dicon { background: none; border: 0; font: inherit; color: inherit; curso
   html.wm.has-win { background-color: var(--content); }
   html.wm.has-win:has(.win.active .view:not([hidden]) :is(.rd-scroll, .tool-body, .about-body)) { background-color: var(--read-bg); }
   #desk > #recent { display: flex; position: static; margin: 12px 10px 0; padding-bottom: 12px; }
-  /* Tracker's list (phone-home.js) on its paper */
-  .recent-list { display: block; overflow: visible; padding: 0; }
-  .recent-list .pv { background: var(--content); }
+  /* the Latest posts widget (phone-home.js): Tracker's cards cut down to thumbnail, title and date */
+  .recent-list { overflow: visible; }
+  #recent .pc { grid-template-columns: 56px minmax(0, 1fr); grid-template-areas: 'img t' 'img meta'; align-items: center; gap: 2px 10px; padding: 8px; }
+  #recent .pc-img { width: 56px; height: 42px; }
+  #recent :is(.pc-d, .tg) { display: none; }
+  .recent-all { padding: 10px; text-align: center; font-weight: 600; color: var(--link); text-decoration: none; background: var(--content); border: 1px solid var(--line); }
+  /* the desktop icons as a home screen grid under it */
+  #icons { position: static; display: grid; grid-template-columns: repeat(auto-fill, minmax(80px, 1fr)); gap: 14px 4px; max-height: none; margin: 18px 6px 16px; }
+  #icons .dicon { width: auto; }
+  #icons .dicon .ico { width: 48px; height: 48px; }
   /* Sticky rather than fixed: it stays just above the browser's toolbar, and the page still runs on beneath it */
   .wm #dock { position: sticky; left: auto; right: auto; bottom: 6px; transform: none; margin: 0 auto 6px; width: fit-content; }
   .wm:is([data-dock=panel], [data-dock=deskbar]) #dock { width: auto; margin: 0; bottom: 0; }
   /* D17: a full-screen window owns the screen; Home and the Windows switcher in the panel stay reachable */
-  .wm.has-win #dock, .wm.has-win #desk > #recent { display: none; }
+  .wm.has-win #dock, .wm.has-win #desk > :is(#recent, #icons) { display: none; }
   /* Home is first in the panel, and the dock's copy stays out, as does the switcher until main.js moves it up */
   #panel #panelHome { order: -2; }
   #dock :is(#homeBtn, #winsBtn) { display: none !important; }

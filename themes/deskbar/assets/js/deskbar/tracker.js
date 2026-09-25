@@ -36,7 +36,7 @@ const VIEWS = {
 const postItem = p => ({ title: p.title, url: p.url, date: p.date, sub: shortDate(p.date), icon: 'doc', words: p.words, post: p });
 const linkItem = x => ({ title: x.title, url: x.url, date: '', sub: x.sub || '', icon: x.icon || 'doc', words: 0 });
 
-function card(p) {
+export function card(p) {
   return h('a', { class: 'pc', href: p.url, title: p.title, 'data-url': p.url, 'data-post': p.url },
     h('span', { class: 'pc-t' }, p.title), thumb(p),
     h('span', { class: 'pc-m' },

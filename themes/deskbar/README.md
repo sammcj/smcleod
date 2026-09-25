@@ -4,7 +4,7 @@ The Hugo theme for smcleod.net. It lives in this repo rather than as a published
 
 - Hugo 0.146.0 or newer (standard edition is enough)
 - No runtime dependencies. Shell JS and CSS stay under 40KB gzipped.
-- Phones (under 768px wide, or under 500px tall with touch, as when turned sideways) get one full-screen window at a time with a switcher. The page itself scrolls there, so it runs under a browser's floating toolbar, and the home screen lists every post
+- Phones (under 768px wide, or under 500px tall with touch, as when turned sideways) get one full-screen window at a time with a switcher. The page itself scrolls there, so it runs under a browser's floating toolbar, and the home screen shows it is a desktop: a Latest posts widget (the newest three, and All posts, which opens Tracker) over the desktop icons in a grid, with the dock below
 - The Windows switcher copies a link to the current layout (`?layout=`), which reopens the same windows and snaps
 - A post dragged out of Tracker onto the desk opens in a window of its own, where it lands, with its own Back and Forward. Cmd/Ctrl-click and Shift-click (or Shift+Up/Down) select several posts in Tracker; drag them out, or open them with Enter, the toolbar button or the context menu. Desktop only; a middle click still opens a browser tab
 - Dropping a window's tab (or a stack's handle) on another window's tab stacks them in one frame. Each tab keeps its own close button. The grey dotted handle after the tabs moves the whole stack and holds its minimise and maximise. Drag a tab away to tear it off. Desktop only

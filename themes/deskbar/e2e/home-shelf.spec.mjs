@@ -1,5 +1,5 @@
 // The Posts window (D36) is one window however it is opened, and on phones minimised windows wait in the panel
-// switcher, since the home screen belongs to Recent posts.
+// switcher, since the home screen belongs to Latest posts and the icons.
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { useBrowser, open, shot, win, cards, desktop, phone, needs } from './lib.mjs';
@@ -32,7 +32,7 @@ test('desktop: the Posts icon raises the one Posts window, restores it from the 
   await page.context().close();
 });
 
-test('phone: minimised windows wait in the panel switcher, leaving the home screen to Recent posts', async () => {
+test('phone: minimised windows wait in the panel switcher, leaving the home screen to Latest posts and the icons', async () => {
   const page = await open(phone);
   await cards(page).first().click();
   const reader = win(page, 'reader');

@@ -338,7 +338,19 @@ test('phone: home screen, one full-screen window, switcher and Back', async () =
   assert.ok(wb.width > 330, 'the home screen fills the phone width');
   assert.equal(await visibleWins(page), 0, 'D17: the phone home screen has no Posts window');
   assert.ok(await page.locator('#dock').isVisible(), 'dock shows on the home screen');
+  // the Latest posts widget: the newest three and a way to the rest, over the desktop icons in a grid
+  assert.equal(await home.locator('.pc').count(), 3);
+  const [ib, db, ab] = await Promise.all([page.locator('#icons').boundingBox(), page.locator('#dock').boundingBox(), home.locator('.recent-all').boundingBox()]);
+  assert.ok(ib.y >= wb.y + wb.height, 'the icons sit under the widget');
+  const icons = await page.locator('#icons .dicon').evaluateAll(as => as.map(a => a.getBoundingClientRect().top));
+  assert.equal(new Set(icons.slice(0, 4)).size, 1, 'up to four icons to a row');
+  assert.ok(ib.y + ib.height <= db.y, 'the dock covers none of them');
   await shot(page, 'm1-home');
+  await home.locator('.recent-all').click();
+  await win(page, 'tracker').waitFor();
+  assert.ok(ab.width > 300, 'All posts spans the widget');
+  await page.goBack();
+  await page.locator('#icons').waitFor();
 
   const first = cards(page).first(), firstURL = await first.getAttribute('href');
   await first.click();
