@@ -51,7 +51,7 @@ const items = f => read(f).split(/^- /m).slice(1).map(block =>
 
 test('every YouTube card reads a channel or playlist feed by id, with a stored thumbnail for when it fails', () => {
   const list = items('data/youtube.yaml');
-  assert.equal(list.length, 9);
+  assert.equal(list.length, 18);
   for (const it of list) {
     assert.match(it.url, /^https:\/\/www\.youtube\.com\//, it.name);
     // @handle and /c/ URLs have no feed of their own, so each resolves to its channel id once, by hand
@@ -75,7 +75,7 @@ test('every podcast card reads the show\'s RSS feed', () => {
 
 test('every hardware card has a small 4:3 product shot kept in the site', () => {
   const list = items('data/hardware.yaml');
-  assert.equal(list.length, 6);
+  assert.equal(list.length, 10);
   for (const it of list) {
     assert.ok(it.description && it.category, it.name);
     const file = join(root, 'assets', it.thumb);
@@ -85,5 +85,15 @@ test('every hardware card has a small 4:3 product shot kept in the site', () => 
     let i = 2;
     while (i < b.length && !(b[i] === 0xff && (b[i + 1] === 0xc0 || b[i + 1] === 0xc2))) i += 2 + b.readUInt16BE(i + 2);
     assert.deepEqual([b.readUInt16BE(i + 7), b.readUInt16BE(i + 5)], [800, 600], it.thumb);
+  }
+});
+
+test('every AI blog card has its logo kept in the site, and any feed is https', () => {
+  const list = items('data/blogs_ai.yaml');
+  assert.equal(list.length, 9);
+  for (const it of list) {
+    assert.match(it.url, /^https:\/\//, it.name);
+    if (it.feed) assert.match(it.feed, /^https:\/\//, it.name);
+    assert.ok(statSync(join(root, 'assets', it.thumb)).size <= 80 * 1024, `${it.thumb} is small`);
   }
 });

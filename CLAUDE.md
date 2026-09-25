@@ -32,6 +32,7 @@
 
 - `hugo server` holds the build lock. Side builds need `hugo --noBuildLock -d <dir>`.
 - After building, run `make check PUBLIC=<dir>`. It verifies posts, aliases, RSS, internal links and key pages. Known broken external links are listed in `scripts/known-broken-links.txt`.
+- Run `make test` at the repo root when `data/` or site tools change. CI runs it, and `tests/folders.test.mjs` pins each card folder's item count.
 - CI (`.github/workflows/deploy.yml`) pins Hugo and SHA-pins its actions. Keep both pinned when updating.
 - CI runs unit tests and `make check` but no browser tests, as they are too slow there. Run them locally when a change touches theme JS, CSS, layouts or an e2e spec. Content-only changes don't need them.
   - Example site: `make e2e` from `themes/deskbar/`. `SPECS=e2e/<name>.spec.mjs` runs a subset for a focused change.
