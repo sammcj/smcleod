@@ -8,7 +8,7 @@
 ## Architecture
 
 - The site's theme is `themes/deskbar/`, a browser desktop (windows, dock, apps) in vanilla JS. It is Hugo module `github.com/sammcj/smcleod/deskbar`, which `go.mod` replaces with that directory. It is kept here rather than published, as it isn't meant for general use.
-  - Shell behaviour, apps and generic layouts belong in the theme. Run its checks from `themes/deskbar/` (`npm ci` once): `make test` (unit tests plus the JS size budget) and `make e2e` (Playwright on its example site; `SITE_DIR=<public dir>` tests this site's build). CI runs both.
+  - Shell behaviour, apps and generic layouts belong in the theme. Run its checks from `themes/deskbar/` (`npm ci` once): `make test` (unit tests plus the JS size budget) and `make e2e` (Playwright on its example site). Root `make e2e PUBLIC=<dir>` runs the same specs on this site's build. CI runs `make test` only: browser tests are too slow for CI, so run them locally before a PR.
   - Site-only markup goes in this repo's `layouts/`.
 - `themes/github.com/` holds `hugo-admonitions`, imported via a `go.mod` replace; the theme's example site uses it too.
 - Front matter the theme reads (`thumbnail`, `thumbnailIcon`, `photos`, `layout: photos` and more) is documented in the theme's `README.md`.

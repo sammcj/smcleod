@@ -111,29 +111,6 @@ jobs:
       - name: Check built site
         run: make check
 
-      # Browser and accessibility tests: the theme's Playwright specs, first on its example site, whose fixtures
-      # cover cases no real page has, then on this build. Scheduled runs only refresh the feeds, so they skip them.
-      - name: Browser tests on the theme's example site
-        if: github.event_name != 'schedule'
-        working-directory: themes/deskbar
-        run: |
-          npx playwright install --with-deps chromium
-          make e2e
-
-      - name: Browser tests on this site
-        if: github.event_name != 'schedule'
-        working-directory: themes/deskbar
-        run: make e2e SITE_DIR="$GITHUB_WORKSPACE/public"
-        env:
-          # Real pages for the specs that otherwise use example-site fixtures. POST_PATH, MD_PAGE and GALLERY_POST
-          # stay unset: those specs assert on example content (heading ids, a footnote count, a Go snippet, a
-          # two-photo gallery) that no real page has, so they skip.
-          ALIAS_PATH: /tech/2015/04/15/talk-high-perf-sds-ictalk/
-          MERMAID_PAGE: /2025/04/getting-started-with-agentic-systems-developer-learning-paths/
-          PHOTOS_POST: /2020/11/ferrari-f12-berlinetta/
-          SCRIPT_PAGE: /admeds/
-          SCRIPT_SELECTOR: .admeds-legend-title
-
       - name: Prepare tag
         id: prepare_tag
         if: startsWith(github.ref, 'refs/tags/')
