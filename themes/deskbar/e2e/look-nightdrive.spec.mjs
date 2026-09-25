@@ -1,6 +1,6 @@
 // Night Drive (css/deskbar/looks/nightdrive.css): synthwave as an 80s sportswear tag. Rounded indigo windows, the
-// focused one rimmed in a pink to cyan gradient, stripe-filled pill tabs, a flat striped wallpaper that stays behind
-// everything, no Light mode, linked before first paint, nothing left behind when the look is off, and axe over its
+// focused one rimmed in a pink to cyan gradient, flush indigo tabs with a sunset badge, a neon purple panel rule, a flat
+// striped wallpaper that stays behind everything, no Light mode, linked before first paint, nothing left behind when the look is off, and axe over its
 // main states.
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
@@ -13,7 +13,7 @@ useBrowser();
 const LOOK = { deco: 'nightdrive', wall: 'nightdrive', dock: 'glass' };
 const seed = look => `for (const [k, v] of Object.entries(${JSON.stringify(look)})) localStorage.setItem("deskbar:" + k, JSON.stringify(v));`;
 const openLook = (vp, path, opts) => open(vp, path, seed(LOOK), opts);
-const INK = 'rgb(26, 11, 58)', EDGE = 'rgb(74, 53, 128)';
+const PINK = 'rgb(255, 62, 165)', YELLOW = 'rgb(255, 228, 94)', CYAN = 'rgb(111, 227, 255)', EDGE = 'rgb(74, 53, 128)';
 const css = (loc, props, pseudo) => loc.evaluate((el, [ps, p]) => {
   const s = getComputedStyle(el, p);
   return Object.fromEntries(ps.map(k => [k, s[k]]));
@@ -21,7 +21,7 @@ const css = (loc, props, pseudo) => loc.evaluate((el, [ps, p]) => {
 const bodyStyle = (page, props, pseudo) => css(page.locator('body'), props, pseudo);
 const lookHref = page => page.evaluate(() => JSON.parse(document.getElementById('deskbar-lazy').textContent)['look-nightdrive'].css);
 
-test('Night Drive: a gradient rim, stripe pill tabs, a striped panel rule, plain post text and no Light mode', async t => {
+test('Night Drive: a gradient rim, flush badged tabs, a purple panel glow, plain post text and no Light mode', async t => {
   if (!(await needs(t, '/posts/'))) return;
   const page = await openLook(desktop, '/posts/');
   const w = win(page, 'tracker');
@@ -34,19 +34,23 @@ test('Night Drive: a gradient rim, stripe pill tabs, a striped panel rule, plain
   assert.equal(f.borderBottomRightRadius, '12px');
   assert.match(f.backgroundImage, /linear-gradient\(135deg, rgb\(255, 62, 165\), rgb\(255, 158, 74\) 50%, rgb\(111, 227, 255\)\)/);
   assert.match(f.boxShadow, /rgba\(111, 227, 255/, 'the focused frame glows cyan on one side');
-  const tb = await css(tab, ['backgroundImage', 'color', 'borderTopLeftRadius', 'borderBottomLeftRadius']);
-  assert.match(tb.backgroundImage, /rgb\(255, 228, 94\) 22%, rgb\(255, 158, 74\) 0px/, 'hard-stop sunset bands');
-  assert.equal(tb.color, INK);
-  assert.equal(tb.borderBottomLeftRadius, '999px', 'a pill');
+  const tb = await css(tab, ['backgroundImage', 'color', 'borderTopColor', 'borderTopLeftRadius', 'borderBottomLeftRadius']);
+  assert.match(tb.backgroundImage, /rgb\(255, 228, 94\).*rgb\(232, 51, 159\)/, 'a sunset stripe badge');
+  assert.deepEqual([tb.color, tb.borderTopColor], [YELLOW, PINK]);
+  assert.deepEqual([tb.borderTopLeftRadius, tb.borderBottomLeftRadius], ['10px', '0px'], 'flush on the frame, not a pill');
+  const [tbox, fbox] = [await tab.boundingBox(), await frame.boundingBox()];
+  assert.ok(Math.abs(tbox.y + tbox.height - fbox.y) <= 1, 'sits on the frame');
   const tt = await css(tab.locator('.tt'), ['fontFamily', 'fontStyle', 'textShadow']);
   assert.match(tt.fontFamily, /Space Grotesk/);
   assert.equal(tt.fontStyle, 'italic');
   assert.match(tt.textShadow, /rgba\(111, 227, 255/, 'a chromatic offset');
-  // a keyboard focus ring on the stripes is ink, as cyan would vanish into them
+  // the tab is dark, so the usual cyan focus ring shows on it
   await page.keyboard.press('Shift');
   await tab.locator('.tt').focus();
-  assert.equal(await tab.locator('.tt').evaluate(el => el.matches(':focus-visible') && getComputedStyle(el).outlineColor), INK);
-  assert.match((await css(page.locator('#panel'), ['backgroundImage'])).backgroundImage, /rgb\(255, 228, 94\)/, 'the panel sits on a stripe');
+  assert.equal(await tab.locator('.tt').evaluate(el => el.matches(':focus-visible') && getComputedStyle(el).outlineColor), CYAN);
+  const panel = await css(page.locator('#panel'), ['backgroundImage', 'boxShadow']);
+  assert.doesNotMatch(panel.backgroundImage, /rgb\(255, 228, 94\)/, 'no stripe under the panel');
+  assert.match(panel.boxShadow, /rgba\(178, 107, 255/, 'a neon purple glow');
   assert.equal((await css(page.locator('#dock'), ['borderTopLeftRadius'])).borderTopLeftRadius, '999px', 'a pill dock');
 
   // an unfocused window takes a plain indigo edge and tab
@@ -56,7 +60,7 @@ test('Night Drive: a gradient rim, stripe pill tabs, a striped panel rule, plain
   const off = await css(frame, ['borderTopColor', 'backgroundImage']);
   assert.equal(off.borderTopColor, EDGE);
   assert.equal(off.backgroundImage, 'none');
-  assert.equal((await css(tab, ['backgroundImage'])).backgroundImage, 'none');
+  assert.doesNotMatch((await css(tab, ['backgroundImage'])).backgroundImage, /rgb\(255, 228, 94\)/, 'a dull badge');
   // post text stays plain for long reads; the title carries the offset
   assert.equal((await css(rd.locator('p').first(), ['textShadow'])).textShadow, 'none');
   assert.notEqual((await css(rd.locator('h1'), ['textShadow'])).textShadow, 'none');
@@ -77,7 +81,7 @@ test('Night Drive: the Control panel turns off Colours, Mode and Dock and draws 
   }
   assert.equal(await cp.locator('fieldset:has([name="cp-wall"])').evaluate(f => f.disabled), false);
   const win_ = await css(cp.locator('.cp-deco.nightdrive'), ['borderTopLeftRadius', 'backgroundImage'], '::after');
-  assert.equal(win_.borderTopLeftRadius, '5px');
+  assert.equal(win_.borderTopLeftRadius, '0px', 'the tab sits on its square corner');
   assert.match(win_.backgroundImage, /135deg/, 'the rimmed window');
   assert.match((await css(cp.locator('.cp-wp.nightdrive'), ['backgroundImage'])).backgroundImage, /repeating-linear-gradient.*rgb\(255, 228, 94\)/, 'scanlines over the bands');
   await shot(page, 'nightdrive-cp');
@@ -139,7 +143,7 @@ test('Night Drive leaves nothing behind when another look is on, though its styl
   const href = await lookHref(page);
   await page.waitForFunction(h => !!document.querySelector(`head link[rel=stylesheet][href="${h}"]`)?.sheet, href);
   assert.notEqual((await css(cp.locator('.frame'), ['borderBottomRightRadius'])).borderBottomRightRadius, '12px');
-  assert.notEqual((await css(cp.locator('.tab.on'), ['borderBottomLeftRadius'])).borderBottomLeftRadius, '999px');
+  assert.notEqual((await css(cp.locator('.tab.on'), ['borderTopLeftRadius'])).borderTopLeftRadius, '10px');
   assert.doesNotMatch((await bodyStyle(page, ['backgroundImage'])).backgroundImage, /rgb\(255, 228, 94\)/);
   assert.equal(await page.locator('#themeBtn').isVisible(), true);
   await page.context().close();
