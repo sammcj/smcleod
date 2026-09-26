@@ -262,13 +262,13 @@ test('a window style change keeps the palette when it can, and otherwise picks o
   assert.equal(paletteFor('flat', 'mint'), 'mint', 'palettes go with the plain styles');
   assert.equal(paletteFor('synthwave', 'mint'), 'mint', 'a style in its own colours leaves the palette for later');
   assert.equal(paletteFor('pixel', 'mint'), 'pixel', "a style with colour variants starts on its own");
-  assert.equal(paletteFor('pixel', 'pixel-quest'), 'pixel-quest');
-  assert.equal(paletteFor('haiku', 'pixel-quest'), undefined, "another style's variant goes back to the default");
-  assert.equal(paletteFor('synthwave', 'pixel-quest'), undefined, 'and is dropped under a style in its own colours');
+  assert.equal(paletteFor('pixel', 'pixel-pico'), 'pixel-pico');
+  assert.equal(paletteFor('haiku', 'pixel-pico'), undefined, "another style's variant goes back to the default");
+  assert.equal(paletteFor('synthwave', 'pixel-pico'), undefined, 'and is dropped under a style in its own colours');
   // every look's stylesheet has a LOOKS entry, so lookSheet asks only for sheets that exist
   const sheets = readdirSync(new URL('../assets/css/deskbar/looks/', import.meta.url)).filter(f => f.endsWith('.css'));
   assert.deepEqual(sheets.map(f => f.slice(0, -4)).sort(), Object.keys(LOOKS).sort());
-  assert.equal(lookSheet('pixel-quest'), 'look-pixel');
+  assert.equal(lookSheet('pixel-pico'), 'look-pixel');
   assert.equal(lookSheet('liquid'), null, 'Liquid Ass is in the Control panel stylesheet');
   // every look's colour variant is in its own stylesheet, and none is also a palette
   for (const [name, l] of Object.entries(LOOKS)) for (const [v] of l.colours || []) {

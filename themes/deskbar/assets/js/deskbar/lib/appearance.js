@@ -24,11 +24,11 @@ export const DECOS = [['haiku', 'Haiku'], ['beos', 'BeOS'], ['flat', 'Flat'], ['
 export const DOCKS = [['glass', 'Glass'], ['deskbar', 'Deskbar'], ['panel', 'Panel'], ['liquid', 'Liquid Ass'],
   ['platinum', 'Platinum'], ['clearlooks', 'Clearlooks'], ['phosphor', 'Function keys'], ['broadsheet', 'Broadsheet'], ['synthwave', 'Synthwave'],
   ['vector', 'Vector'], ['memphis', 'Memphis'], ['nightdrive', 'Night Drive'],
-  ['pixel', 'Hotbar'], ['pixel-quest', 'Quest menu'], ['pixel-cartridge', 'Cartridges']];
+  ['pixel', 'Hotbar'], ['pixel-cartridge', 'Cartridges']];
 export const WALLS = [['rings', 'Rings'], ['plain', 'Plain'], ['grid', 'Grid'], ['dots', 'Dots'], ['hills', 'Hills'], ['liquid', 'Liquid'], ['clear', 'Clear'],
   ['platinum', 'Platinum'], ['clearlooks', 'Clearlooks'], ['phosphor', 'Phosphor'], ['broadsheet', 'Broadsheet'], ['synthwave', 'Synthwave'],
   ['vector', 'Vector'], ['memphis', 'Memphis'], ['nightdrive', 'Night Drive'],
-  ['pixel', 'Pixel hills'], ['pixel-handheld', 'Handheld'], ['pixel-pico', 'Pico'], ['pixel-quest', 'Quest']];
+  ['pixel', 'Pixel hills'], ['pixel-pico', 'Pico']];
 export const CRTS = [['off', 'Off'], ['scanlines', 'Scanlines'], ['tube', 'Tube'], ['grille', 'Aperture grille'], ['amber', 'Amber'], ['green', 'Green']];
 
 // Window styles drawn in colours of their own, so the palettes don't reach them. colours: what the Colours group
@@ -37,10 +37,7 @@ export const CRTS = [['off', 'Off'], ['scanlines', 'Scanlines'], ['tube', 'Tube'
 export const LOOKS = {
   platinum: {}, clearlooks: {}, broadsheet: {},
   phosphor: { dark: true }, synthwave: { dark: true }, vector: { dark: true }, memphis: { dark: true }, nightdrive: { dark: true },
-  pixel: {
-    colours: [['pixel', 'Pixel', '#ffcd4d #f5ead0 #3a8adf'], ['pixel-handheld', 'Handheld', '#0f380f #8bac0f #9bbc0f'],
-      ['pixel-pico', 'Pico', '#ff77a8 #c2c3c7 #1d2b53'], ['pixel-quest', 'Quest', '#3c64d8 #2840b0 #2448b4']],
-  },
+  pixel: { colours: [['pixel', 'Pixel', '#ffcd4d #f5ead0 #3a8adf'], ['pixel-pico', 'Pico', '#ff77a8 #c2c3c7 #1d2b53']] },
 };
 
 // Every Appearance setting but the mode, which stays the visitor's. A preset names each one, so picking it gives the
@@ -65,9 +62,7 @@ export const PRESETS = [
   { id: 'memphis', label: 'Memphis', ...whole('memphis') },
   { id: 'nightdrive', label: 'Night Drive', ...whole('nightdrive') },
   { id: 'pixel', label: 'Pixel', ...whole('pixel'), palette: 'pixel' },
-  { id: 'pixel-handheld', label: 'Handheld', deco: 'pixel', palette: 'pixel-handheld', wall: 'pixel-handheld', dock: 'pixel-cartridge', crt: 'off' },
   { id: 'pixel-pico', label: 'Pico', deco: 'pixel', palette: 'pixel-pico', wall: 'pixel-pico', dock: 'pixel-cartridge', crt: 'off' },
-  { id: 'pixel-quest', label: 'Quest', deco: 'pixel', palette: 'pixel-quest', wall: 'pixel-quest', dock: 'pixel-quest', crt: 'off' },
 ];
 
 // The stylesheet key (loader.js, lazy.html) that draws a window style, wallpaper or dock value, if it has one. Every

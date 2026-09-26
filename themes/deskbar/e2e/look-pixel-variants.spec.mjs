@@ -1,7 +1,7 @@
-// Pixel's other colours, docks and wallpapers (css/deskbar/looks/pixel.css). Handheld, Pico and Quest colours apply
-// only under the Pixel window style; the hotbar, Quest menu and cartridge docks and the Handheld, Pico and Quest
-// wallpapers go with any window style, and each leaves nothing behind when off. Readable in both schemes, axe clean,
-// and the reader toolbar still sticks under the title bar on phones. Skips without /control-panel/.
+// Pixel's other colours, docks and wallpapers (css/deskbar/looks/pixel.css). Pico's colours apply only under the
+// Pixel window style; the hotbar and cartridge docks and the Pico wallpaper go with any window style, and each leaves
+// nothing behind when off. Readable in both schemes, axe clean, and the
+// reader toolbar still sticks under the title bar on phones. Skips without /control-panel/.
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
@@ -11,9 +11,9 @@ import { useBrowser, open, needs, shot, win, cards, desktop, phone, toolbarGaps 
 
 useBrowser();
 
-const VARIANTS = ['pixel-handheld', 'pixel-pico', 'pixel-quest'];
+const VARIANTS = ['pixel-pico'];
 // the presets' pairings (appearance.js)
-const preset = v => ({ deco: 'pixel', palette: v, wall: v, dock: v === 'pixel-quest' ? 'pixel-quest' : 'pixel-cartridge' });
+const preset = v => ({ deco: 'pixel', palette: v, wall: v, dock: 'pixel-cartridge' });
 // settings as stored, following the browser's scheme, which a test sets
 const seed = s => `localStorage.setItem('deskbar:theme', '"auto"');
   for (const [k, v] of Object.entries(${JSON.stringify(s)})) localStorage.setItem('deskbar:' + k, JSON.stringify(v));`;
@@ -39,7 +39,6 @@ async function twoWindows(page) {
 }
 
 const FRAME = {
-  'pixel-handheld': { light: 'rgb(139, 172, 15)', dark: 'rgb(19, 61, 19)' },
   'pixel-pico': { light: 'rgb(194, 195, 199)', dark: 'rgb(29, 43, 83)' },
 };
 
@@ -52,8 +51,7 @@ test('each colour set dresses the Pixel window style, light and dark, with title
       const front = page.locator('.win.active'), back = page.locator('.win:not(.active)'), at = `${v} ${scheme}`;
       assert.match(await css(front.locator('.tab'), 'borderImageSource'), /svg\+xml/, `${at}: ringed`);
       assert.match(await css(front.locator('.tab'), 'backgroundImage'), /repeating-conic-gradient/, `${at}: dithered bar`);
-      if (FRAME[v]) assert.equal(await css(front.locator('.frame'), 'backgroundColor'), FRAME[v][scheme], `${at}: frame`);
-      else assert.match(await css(front.locator('.frame'), 'backgroundImage'), /linear-gradient/, `${at}: a gradient menu window`);
+      assert.equal(await css(front.locator('.frame'), 'backgroundColor'), FRAME[v][scheme], `${at}: frame`);
       for (const [where, loc] of [['front title', front.locator('.tab .tt')], ['back title', back.locator('.tab .tt')],
         ['post text', front.locator('.rd p:not(.meta, .lede)')], ['panel', page.locator('#panel .task').first()],
         ['Posts', back.locator('.pc-t, .pc h3, .pc a').first()]]) {
@@ -90,7 +88,7 @@ test('the colour sets apply only under the Pixel window style, and any other pal
 
 test('the docks go with any window style, point, lift and light up, and fit a phone', async t => {
   if (!(await needs(t, '/control-panel/'))) return;
-  for (const dock of ['pixel', 'pixel-quest', 'pixel-cartridge']) {
+  for (const dock of ['pixel', 'pixel-cartridge']) {
     const page = await open(desktop, '/posts/', seed({ deco: 'haiku', dock }));
     await win(page, 'tracker').waitFor();
     const d = page.locator('#dock'), run = d.locator('.dk.run'), idle = d.locator('.dk:not(.run)');
@@ -105,17 +103,6 @@ test('the docks go with any window style, point, lift and light up, and fit a ph
       assert.match(await css(d, 'borderImageSource'), /svg\+xml/);
       assert.equal(await css(d.locator('#homeBtn'), 'backgroundColor'), 'rgb(255, 205, 77)', 'Pixel colours of its own');
       assert.equal(await css(run, 'backgroundColor', '::after'), 'rgb(239, 125, 87)');
-    } else if (dock === 'pixel-quest') {
-      assert.match(await css(d, 'borderImageSource'), /svg\+xml/);
-      assert.match(await css(d, 'backgroundImage'), /linear-gradient/);
-      assert.equal(await css(idle, 'content', '::before'), 'none', 'no glove until pointed at');
-      await idle.first().hover();
-      assert.match(await css(idle, 'backgroundImage', '::before'), /svg\+xml/, 'the glove');
-      const [glove, icon] = [await idle.first().evaluate(el => el.getBoundingClientRect().left + parseFloat(getComputedStyle(el, '::before').left) + 32),
-        await idle.first().locator('.ico').boundingBox()];
-      assert.ok(Math.abs(glove - icon.x) <= 2, 'the glove points at the icon');
-      assert.equal(await css(run, 'backgroundColor', '::after'), 'rgb(255, 255, 255)', 'a pip under a running app');
-      await snap(d, 'pixel-dock-quest');
     } else {
       assert.match(await css(idle, 'backgroundImage'), /svg\+xml/, 'a cartridge');
       assert.equal(await css(idle, 'backgroundColor', '::after'), 'rgb(88, 34, 42)', 'an unlit LED');
@@ -156,16 +143,11 @@ test('the wallpapers stay behind everything and never take the pointer', async t
       // a spot on the bare desktop belongs to the desktop, whatever the wallpaper draws there
       const hit = await page.evaluate(() => document.elementFromPoint(innerWidth - 60, innerHeight - 160)?.closest('#desk') != null);
       assert.ok(hit, `${wall} ${scheme}: the desktop takes the pointer`);
-      if (wall === 'pixel-quest') {
-        const stars = await css(page.locator('body'), 'backgroundImage', '::before');
-        assert[scheme === 'dark' ? 'match' : 'doesNotMatch'](stars, /svg\+xml/, `quest ${scheme}: stars by night only`);
-        assert.match(await css(page.locator('body'), 'maskImage', '::after'), /svg\+xml/, 'the castle');
-      }
       await page.context().close();
     }
   }
   // off: another wallpaper leaves nothing of them, with the stylesheet loaded by the dock
-  const page = await open(desktop, '/', seed({ deco: 'haiku', dock: 'pixel-quest' }));
+  const page = await open(desktop, '/', seed({ deco: 'haiku', dock: 'pixel-cartridge' }));
   assert.doesNotMatch(await css(page.locator('body'), 'backgroundImage'), /svg\+xml/);
   assert.equal(await css(page.locator('body'), 'content', '::before'), 'none');
   assert.equal(await css(page.locator('body'), 'content', '::after'), 'none');
@@ -194,11 +176,9 @@ test('the Control panel draws a thumbnail of each dock and wallpaper', async t =
   const page = await open(desktop, '/control-panel/');
   await win(page, 'control-panel').locator('.cp').waitFor();
   const thumb = (group, v, cls) => page.locator(`.cp-opt:has(input[name=cp-${group}][value=${v}]) > .${cls}`);
-  await page.waitForFunction(() => getComputedStyle(document.querySelector('.cp-dk.pixel-quest'), '::after').content !== 'none');
+  await page.waitForFunction(() => getComputedStyle(document.querySelector('.cp-dk.pixel-cartridge'), '::before').content !== 'none');
   for (const v of VARIANTS) assert.match(await css(thumb('wall', v, 'cp-wp'), 'backgroundImage'), /svg\+xml/, v);
-  assert.match(await css(thumb('wall', 'pixel-quest', 'cp-wp'), 'maskImage', '::after'), /svg\+xml/, 'the castle');
   assert.match(await css(thumb('dock', 'pixel', 'cp-dk'), 'borderTopColor', '::before'), /rgb\(28, 26, 46\)/);
-  assert.match(await css(thumb('dock', 'pixel-quest', 'cp-dk'), 'backgroundImage', '::after'), /svg\+xml/, 'the glove');
   assert.match(await css(thumb('dock', 'pixel-cartridge', 'cp-dk'), 'backgroundImage', '::before'), /repeating-linear-gradient/);
   await snap(page.locator('.cp-set').filter({ has: page.locator('input[name=cp-dock]') }), 'pixel-cp-docks');
   await snap(page.locator('.cp-set').filter({ has: page.locator('input[name=cp-wall]') }), 'pixel-cp-walls');

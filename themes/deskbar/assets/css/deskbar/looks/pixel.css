@@ -2,16 +2,14 @@
    edge is an ink ring two pixels thick with one corner pixel knocked out (a border-image, so the ring follows any
    box), bevels are two-pixel lines, gradients are ordered dithers, and the chrome is set in Pixelify Sans while the
    reader keeps its own face. The wallpaper is a dithered sky over tiling hills with pines: a day scene in light mode
-   and a dusk with twinkling stars in dark, each built from SVG drawn on an integer grid and scaled crisp. Three more
-   sets of colours (palette values that apply only under this window style), three docks and three more wallpapers
-   follow classic consoles: Handheld (the Game Boy's four greens), Pico (PICO-8's sixteen) and Quest (a 16-bit
-   JRPG's blue menus). The docks and wallpapers go with any window style, so they carry their own colours. Loaded as
-   look-pixel (lazy.html) whenever the window style, wallpaper or dock is one of these. */
+   and a dusk with twinkling stars in dark, each built from SVG drawn on an integer grid and scaled crisp. Pico, after
+   PICO-8's sixteen colours, is another set of colours (a palette value that applies only under this window style)
+   with a snowy summit wallpaper. The docks and wallpapers go with any window style, so they carry their own colours.
+   Loaded as look-pixel (lazy.html) whenever the window style, wallpaper or dock is one of these. */
 @font-face { font-family: 'Pixelify Sans'; font-display: swap; font-weight: 400 700; src: url(../../../fonts/pixelify-sans/pixelify-sans-variable.woff2) format('woff2'); }
 
-/* the scene's art, day first, for the wallpaper and the Control panel's thumbnails whatever window style is on.
-   Quest's wallpaper borrows its sun, moon and stars. */
-:root:is([data-deco=pixel], [data-wall=pixel], [data-wall=pixel-quest]), .cp-deco.pixel, .cp-wp:is(.pixel, .pixel-quest) {
+/* the scene's art, day first, for the wallpaper and the Control panel's thumbnails whatever window style is on */
+:root:is([data-deco=pixel], [data-wall=pixel]), .cp-deco.pixel, .cp-wp.pixel {
   --pk-top: #3a8adf; --pk-stars: none;
   --pk-sky: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='4' height='220' shape-rendering='crispEdges'%3E%3Cpath fill='%232f7fd8' d='M0 0h4v18h-4zM1 18h1v1h-1zM3 18h1v1h-1zM0 19h1v1h-1zM2 19h1v1h-1zM1 20h1v1h-1zM3 20h1v1h-1zM0 21h1v1h-1zM2 21h1v1h-1z'/%3E%3Cpath fill='%233f8fe0' d='M0 18h1v1h-1zM2 18h1v1h-1zM1 19h1v1h-1zM3 19h1v1h-1zM0 20h1v1h-1zM2 20h1v1h-1zM1 21h1v1h-1zM3 21h1v1h-1zM0 22h4v16h-4zM1 38h1v1h-1zM3 38h1v1h-1zM0 39h1v1h-1zM2 39h1v1h-1zM1 40h1v1h-1zM3 40h1v1h-1zM0 41h1v1h-1zM2 41h1v1h-1z'/%3E%3Cpath fill='%2356a3ea' d='M0 38h1v1h-1zM2 38h1v1h-1zM1 39h1v1h-1zM3 39h1v1h-1zM0 40h1v1h-1zM2 40h1v1h-1zM1 41h1v1h-1zM3 41h1v1h-1zM0 42h4v16h-4zM1 58h1v1h-1zM3 58h1v1h-1zM0 59h1v1h-1zM2 59h1v1h-1zM1 60h1v1h-1zM3 60h1v1h-1zM0 61h1v1h-1zM2 61h1v1h-1z'/%3E%3Cpath fill='%2370b6f0' d='M0 58h1v1h-1zM2 58h1v1h-1zM1 59h1v1h-1zM3 59h1v1h-1zM0 60h1v1h-1zM2 60h1v1h-1zM1 61h1v1h-1zM3 61h1v1h-1zM0 62h4v16h-4zM1 78h1v1h-1zM3 78h1v1h-1zM0 79h1v1h-1zM2 79h1v1h-1zM1 80h1v1h-1zM3 80h1v1h-1zM0 81h1v1h-1zM2 81h1v1h-1z'/%3E%3Cpath fill='%238cc8f4' d='M0 78h1v1h-1zM2 78h1v1h-1zM1 79h1v1h-1zM3 79h1v1h-1zM0 80h1v1h-1zM2 80h1v1h-1zM1 81h1v1h-1zM3 81h1v1h-1zM0 82h4v16h-4zM1 98h1v1h-1zM3 98h1v1h-1zM0 99h1v1h-1zM2 99h1v1h-1zM1 100h1v1h-1zM3 100h1v1h-1zM0 101h1v1h-1zM2 101h1v1h-1z'/%3E%3Cpath fill='%23a8d8f7' d='M0 98h1v1h-1zM2 98h1v1h-1zM1 99h1v1h-1zM3 99h1v1h-1zM0 100h1v1h-1zM2 100h1v1h-1zM1 101h1v1h-1zM3 101h1v1h-1zM0 102h4v14h-4zM1 116h1v1h-1zM3 116h1v1h-1zM0 117h1v1h-1zM2 117h1v1h-1zM1 118h1v1h-1zM3 118h1v1h-1zM0 119h1v1h-1zM2 119h1v1h-1z'/%3E%3Cpath fill='%23c6e6fa' d='M0 116h1v1h-1zM2 116h1v1h-1zM1 117h1v1h-1zM3 117h1v1h-1zM0 118h1v1h-1zM2 118h1v1h-1zM1 119h1v1h-1zM3 119h1v1h-1zM0 120h4v14h-4zM1 134h1v1h-1zM3 134h1v1h-1zM0 135h1v1h-1zM2 135h1v1h-1zM1 136h1v1h-1zM3 136h1v1h-1zM0 137h1v1h-1zM2 137h1v1h-1z'/%3E%3Cpath fill='%23e2f0fb' d='M0 134h1v1h-1zM2 134h1v1h-1zM1 135h1v1h-1zM3 135h1v1h-1zM0 136h1v1h-1zM2 136h1v1h-1zM1 137h1v1h-1zM3 137h1v1h-1zM0 138h4v12h-4zM1 150h1v1h-1zM3 150h1v1h-1zM0 151h1v1h-1zM2 151h1v1h-1zM1 152h1v1h-1zM3 152h1v1h-1zM0 153h1v1h-1zM2 153h1v1h-1z'/%3E%3Cpath fill='%23f3e6cb' d='M0 150h1v1h-1zM2 150h1v1h-1zM1 151h1v1h-1zM3 151h1v1h-1zM0 152h1v1h-1zM2 152h1v1h-1zM1 153h1v1h-1zM3 153h1v1h-1zM0 154h4v66h-4z'/%3E%3C/svg%3E");
   --pk-hills: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='256' height='96' shape-rendering='crispEdges'%3E%3Cpath fill='%238fb8db' d='M0 96V31h1v-1h3v1h1v1h2v2h1v1h1v1h1v1h1v1h6v-1h1v-1h2v-1h1v-1h2v-1h3v1h3v1h2v1h2v1h6v1h2v1h2v1h1v1h1v2h1v1h1v1h1v1h1v1h1v1h3v-1h2v-1h1v-2h1v-1h1v-1h1v-2h1v-1h1v-2h1v-1h1v-1h2v-1h8v-1h3v-1h7v1h1v1h2v1h1v1h1v1h5v-1h2v-1h1v-1h1v-1h1v-1h1v-1h5v1h1v1h1v1h1v2h1v1h1v2h1v1h1v1h1v1h1v2h2v1h1v1h1v1h1v1h2v1h1v1h1v1h1v2h1v1h1v1h1v1h1v1h2v1h3v-1h1v-1h2v-2h1v-1h1v-1h1v-1h1v-1h6v1h1v1h2v1h1v1h2v1h3v-1h3v-1h2v-1h2v-1h6v-1h2v-1h2v-1h1v-1h1v-2h1v-1h1v-1h1v-1h1v-1h1v-1h3v1h2v1h1v2h1v1h1v1h1v2h1v1h1v2h1v1h1v1h2v1h8v1h3v1h7v-1h1v-1h2v-1h1v-1h1v-1h5v1h2v1h1v1h1v1h1v1h1v1h5v-1h1v-1h1v-1h1v-2h1v-1h1v-2h1v-1h1v-1h1v-1h1v-2h2v-1h1v-1h1v-1h1v-1h2v-1h1v-1h1v-1h1v-2h1v-1h1v-1h1v-1h1v-1h1V96z'/%3E%3Cpath fill='%23a4dc8a' d='M0 96V58h4v1h4v1h3v1h3v1h3v1h3v1h28v1h3v1h2v1h2v1h1v1h2v1h1v1h2v1h1v1h2v1h1v1h2v1h2v1h2v1h3v1h8v-1h4v-1h3v-1h2v-1h3v-1h3v-1h6v-1h9v1h7v-1h6v-1h2v-1h2v-1h2v-1h2v-1h2v-1h1v-1h2v-1h1v-1h2v-1h1v-1h2v-1h2v-1h3v-1h11v1h3v1h3v1h3v1h3v1h4v1h8v-1h5v-1h5v-1h11v1h4v1h3v1h2v1h3v1h3v1h5v1h3v-1h5v-1h3v-1h2v-1h2v-1h2v-1h2v-1h2v-1h3v-1h3v-1h4V96z'/%3E%3Cpath fill='%2379c26a' d='M0 96V59h4v1h4v1h3v1h3v1h3v1h3v1h28v1h3v1h2v1h2v1h1v1h2v1h1v1h2v1h1v1h2v1h1v1h2v1h2v1h2v1h3v1h8v-1h4v-1h3v-1h2v-1h3v-1h3v-1h6v-1h9v1h7v-1h6v-1h2v-1h2v-1h2v-1h2v-1h2v-1h1v-1h2v-1h1v-1h2v-1h1v-1h2v-1h2v-1h3v-1h11v1h3v1h3v1h3v1h3v1h4v1h8v-1h5v-1h5v-1h11v1h4v1h3v1h2v1h3v1h3v1h5v1h3v-1h5v-1h3v-1h2v-1h2v-1h2v-1h2v-1h2v-1h3v-1h3v-1h4V96z'/%3E%3Cpath fill='%233f9a4b' d='M0 96V84h5v1h6v1h4v1h4v1h7v1h4v-1h5v-1h3v-1h3v-1h2v-1h3v-1h2v-1h3v-1h3v-1h25v-1h15v1h7v1h7v1h8v-1h5v-1h3v-1h2v-1h3v-1h3v-1h3v-1h4v-1h12v1h7v1h8v1h8v1h5v1h3v1h3v1h3v1h3v1h4v1h14v-1h4v-1h4v-1h5v-1h10v1h6v1h6v1h8v1h4V96z'/%3E%3Cpath fill='%2325683a' d='M16 80h1v1h-1zM15 81h3v1h-3zM15 82h3v1h-3zM14 83h5v1h-5zM15 84h3v1h-3zM14 85h5v1h-5zM16 86h1v1h-1zM35 80h1v1h-1zM34 81h3v1h-3zM34 82h3v1h-3zM33 83h5v1h-5zM34 84h3v1h-3zM33 85h5v1h-5zM35 86h1v1h-1zM72 73h1v1h-1zM71 74h3v1h-3zM71 75h3v1h-3zM70 76h5v1h-5zM71 77h3v1h-3zM70 78h5v1h-5zM72 79h1v1h-1zM94 73h1v1h-1zM93 74h3v1h-3zM93 75h3v1h-3zM92 76h5v1h-5zM93 77h3v1h-3zM92 78h5v1h-5zM94 79h1v1h-1zM123 73h1v1h-1zM122 74h3v1h-3zM122 75h3v1h-3zM121 76h5v1h-5zM122 77h3v1h-3zM121 78h5v1h-5zM123 79h1v1h-1zM152 68h1v1h-1zM151 69h3v1h-3zM151 70h3v1h-3zM150 71h5v1h-5zM151 72h3v1h-3zM150 73h5v1h-5zM152 74h1v1h-1zM178 71h1v1h-1zM177 72h3v1h-3zM177 73h3v1h-3zM176 74h5v1h-5zM177 75h3v1h-3zM176 76h5v1h-5zM178 77h1v1h-1zM207 77h1v1h-1zM206 78h3v1h-3zM206 79h3v1h-3zM205 80h5v1h-5zM206 81h3v1h-3zM205 82h5v1h-5zM207 83h1v1h-1zM233 74h1v1h-1zM232 75h3v1h-3zM232 76h3v1h-3zM231 77h5v1h-5zM232 78h3v1h-3zM231 79h5v1h-5zM233 80h1v1h-1z'/%3E%3C/svg%3E");
@@ -24,9 +22,9 @@
   --pk-n-stars: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='256' height='64' shape-rendering='crispEdges'%3E%3Cpath fill='%23f4f1ff' d='M119 4h1v1h-1zM183 4h1v1h-1zM5 6h1v1h-1zM69 6h1v1h-1zM197 6h1v1h-1zM44 8h1v1h-1zM172 8h1v1h-1zM236 8h1v1h-1zM26 12h1v1h-1zM218 12h1v1h-1zM78 17h1v1h-1zM206 17h1v1h-1zM175 21h1v1h-1zM47 22h1v1h-1zM174 22h3v1h-3zM175 23h1v1h-1zM139 30h1v1h-1zM33 36h1v1h-1zM97 36h1v1h-1zM58 41h1v1h-1zM122 41h1v1h-1zM66 46h1v1h-1zM130 46h1v1h-1zM194 46h1v1h-1zM103 51h1v1h-1zM167 51h1v1h-1zM148 58h1v1h-1zM212 58h1v1h-1z'/%3E%3Cpath fill='%237e83c4' d='M133 6h1v1h-1zM108 8h1v1h-1zM90 12h1v1h-1zM14 17h1v1h-1zM142 17h1v1h-1zM239 22h1v1h-1zM75 30h1v1h-1zM203 30h1v1h-1zM161 36h1v1h-1zM225 36h1v1h-1zM250 41h1v1h-1zM2 46h1v1h-1zM39 51h1v1h-1zM20 58h1v1h-1zM84 58h1v1h-1z'/%3E%3C/svg%3E");
 }
 /* night swaps the art in, since light-dark() takes colours only; auto follows the browser */
-:root[data-theme=dark]:is([data-deco=pixel], [data-wall=pixel], [data-wall=pixel-quest]), :root[data-theme=dark] :is(.cp-deco.pixel, .cp-wp.pixel, .cp-wp.pixel-quest) { --pk-top: #0b0a1f; --pk-sky: var(--pk-n-sky); --pk-hills: var(--pk-n-hills); --pk-orb: var(--pk-n-orb); --pk-clouds: var(--pk-n-clouds); --pk-stars: var(--pk-n-stars); }
+:root[data-theme=dark]:is([data-deco=pixel], [data-wall=pixel]), :root[data-theme=dark] :is(.cp-deco.pixel, .cp-wp.pixel) { --pk-top: #0b0a1f; --pk-sky: var(--pk-n-sky); --pk-hills: var(--pk-n-hills); --pk-orb: var(--pk-n-orb); --pk-clouds: var(--pk-n-clouds); --pk-stars: var(--pk-n-stars); }
 @media (prefers-color-scheme: dark) {
-  :root[data-theme=auto]:is([data-deco=pixel], [data-wall=pixel], [data-wall=pixel-quest]), :root[data-theme=auto] :is(.cp-deco.pixel, .cp-wp.pixel, .cp-wp.pixel-quest) { --pk-top: #0b0a1f; --pk-sky: var(--pk-n-sky); --pk-hills: var(--pk-n-hills); --pk-orb: var(--pk-n-orb); --pk-clouds: var(--pk-n-clouds); --pk-stars: var(--pk-n-stars); }
+  :root[data-theme=auto]:is([data-deco=pixel], [data-wall=pixel]), :root[data-theme=auto] :is(.cp-deco.pixel, .cp-wp.pixel) { --pk-top: #0b0a1f; --pk-sky: var(--pk-n-sky); --pk-hills: var(--pk-n-hills); --pk-orb: var(--pk-n-orb); --pk-clouds: var(--pk-n-clouds); --pk-stars: var(--pk-n-stars); }
 }
 
 /* the ink ring, for the window style and the hotbar dock with any other */
@@ -50,22 +48,6 @@
 }
 :root[data-deco=pixel] ::selection { background: var(--pk-sun); color: var(--pk-on-sun); }
 
-/* Other colours. Handheld keeps to the Game Boy's four greens, with the lit title bar dark by day and light by
-   night, as the screen inverts; only the muted text and a stacked tab take a fifth shade, for 4.5:1. */
-:root[data-deco=pixel][data-palette=pixel-handheld] {
-  --pk-ink: #0f380f; --pk-cream: #9bbc0f; --pk-sun: light-dark(#0f380f, #9bbc0f); --pk-amber: light-dark(#306230, #8bac0f);
-  --pk-coral: light-dark(#306230, #8bac0f); --pk-on-sun: light-dark(#9bbc0f, #0f380f); --pk-shadow: light-dark(rgba(15,56,15,.45), rgba(0,0,0,.6));
-  --pk-ring: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='6' height='6' shape-rendering='crispEdges'%3E%3Cpath fill='%230f380f' d='M2 0h2v2h2v2H4v2H2V4H0V2h2z'/%3E%3C/svg%3E");
-  --panel: #0f380f; --panel-fg: #9bbc0f; --panel-hover: rgba(155,188,15,.16);
-  --frame: light-dark(#8bac0f, #133d13); --frame-hi: light-dark(#9bbc0f, #1f4a1f); --frame-lo: light-dark(#306230, #0f380f); --frame-dk: #0f380f;
-  --tab: light-dark(#8bac0f, #306230); --tab-hi: light-dark(#306230, #9bbc0f); --tab-lo: light-dark(#0f380f, #9bbc0f); --tab-dim: light-dark(#1f4a1f, #8bac0f);
-  --tab-in: light-dark(#8bac0f, #0f380f); --tab-in-lo: light-dark(#306230, #0f380f); --tab-in-fg: light-dark(#0f380f, #8bac0f);
-  --content: light-dark(#9bbc0f, #0f380f); --fg: light-dark(#0f380f, #9bbc0f); --muted: light-dark(#0f380f, #8bac0f);
-  --line: light-dark(#8bac0f, #306230); --side: light-dark(#8bac0f, #0f380f); --zebra: light-dark(rgba(15,56,15,.06), rgba(155,188,15,.05));
-  --accent: light-dark(#0f380f, #9bbc0f); --accent-fg: light-dark(#9bbc0f, #0f380f); --link: light-dark(#0f380f, #9bbc0f);
-  --read-bg: var(--content); --read-fg: var(--fg); --code-bg: light-dark(#8bac0f, #133d13);
-  --wall-1: #9bbc0f; --wall-2: #8bac0f; --wall-3: #306230;
-}
 /* Pico: PICO-8's palette, its editor's dark blue bar over grey windows, a pink title bar reddening down */
 :root[data-deco=pixel][data-palette=pixel-pico] {
   --pk-ink: #000; --pk-cream: #fff1e8; --pk-sun: #ff77a8; --pk-amber: #ff004d; --pk-coral: #ff004d; --pk-on-sun: #000;
@@ -80,29 +62,7 @@
   --read-bg: var(--content); --read-fg: light-dark(#1d2b53, #c2c3c7); --code-bg: light-dark(#ffe3d1, #1d2b53);
   --wall-1: #29adff; --wall-2: #1d2b53; --wall-3: #000;
 }
-/* Quest: a 16-bit JRPG's menus, blue in both modes (brighter by day) inside a white and silver ring with rounded
-   corners, white type, gold links. Its windows and sheets are gradients, so they get a rule of their own. */
-:root[data-deco=pixel][data-palette=pixel-quest] {
-  --pk-ink: #0c0c24; --pk-cream: #fff; --pk-sun: light-dark(#3c64d8, #2c48b8); --pk-amber: light-dark(#2848b8, #1c2c88);
-  --pk-coral: #e84a5f; --pk-on-sun: #fff; --pk-shadow: rgba(4,4,20,.55); --pk-ring: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='6' height='6' shape-rendering='crispEdges'%3E%3Cpath fill='%23ffffff' d='M1 0h4v1h-4zM0 1h1v4h-1zM5 1h1v4h-1zM1 5h4v1h-4z'/%3E%3Cpath fill='%239aa4d4' d='M1 1h4v1h-4zM1 2h1v3h-1zM4 2h1v3h-1zM2 4h2v1h-2z'/%3E%3C/svg%3E");
-  --panel: linear-gradient(light-dark(#3048c0, #1c2a88), light-dark(#182078, #0a0e3a)); --panel-fg: #fff; --panel-hover: rgba(255,255,255,.16);
-  --frame: light-dark(#2840b0, #1a2478); --frame-hi: light-dark(#4060d0, #3a4ab8); --frame-lo: light-dark(#101c70, #0a0f40); --frame-dk: #0c0c24;
-  --tab: var(--pk-sun); --tab-hi: #7898f0; --tab-lo: #f8d048; --tab-dim: light-dark(#2a3a90, #1c2668);
-  --tab-in: light-dark(#1c2a80, #121a58); --tab-in-lo: light-dark(#101c70, #0a0f40); --tab-in-fg: light-dark(#c8d0f0, #b0b8e0);
-  --content: light-dark(#1c2c90, #10164a); --fg: #fff; --muted: #b8c4f0; --line: light-dark(#3a4cb8, #283478);
-  --side: light-dark(#182680, #0c1240); --zebra: rgba(255,255,255,.04);
-  --accent: #f8d048; --accent-fg: #0c0c24; --link: #ffe07a;
-  --read-bg: light-dark(#1a2888, #0e1444); --read-fg: #eef0ff; --code-bg: light-dark(#101a60, #080c30);
-  --wall-1: light-dark(#6090e0, #231c4a); --wall-2: light-dark(#2448b4, #0b0b24); --wall-3: light-dark(#1c3ca8, #04040f);
-}
-:root[data-deco=pixel][data-palette=pixel-quest] :is(.win .frame, #menu, .ctx, .sp-frame, .recent-list) { background: linear-gradient(light-dark(#3050c8, #1e2a88), light-dark(#162488, #0c1450)) padding-box; }
-/* Callout headers and code take the shell's type colours, picked for a white page by day. Quest's page is dark blue in
-   both modes, so it takes the night ones. Only the darkest green reads on Handheld's greens, so its code and callouts
-   are one colour, as on the console. Pico's muted grey is too faint on its grey tracker year bar. */
-:root[data-deco=pixel][data-palette=pixel-handheld] .rd { --adm-note: var(--fg); --adm-info: var(--fg); --adm-tip: var(--fg); --adm-warning: var(--fg); --adm-caution: var(--fg); --adm-important: var(--fg);
-  --hl-kw: var(--fg); --hl-str: var(--fg); --hl-com: var(--fg); --hl-num: var(--fg); --hl-fn: var(--fg); --hl-type: var(--fg); --hl-bi: var(--fg); --hl-var: var(--fg); }
-:root[data-deco=pixel][data-palette=pixel-quest] .rd { --adm-note: #7ea8ea; --adm-info: #6cc4dc; --adm-tip: #7cc47f; --adm-warning: #efb45c; --adm-caution: #f28b82; --adm-important: #c4a0f2;
-  --hl-kw: #e39bd8; --hl-str: #a6d189; --hl-com: #9a978a; --hl-num: #f2a766; --hl-fn: #8ab4f0; --hl-type: #6fd0d6; --hl-bi: #e5c07b; --hl-var: #f28b82; }
+/* the shell's warning colour and muted grey are too faint on Pico's cream page and grey year bar */
 :root[data-deco=pixel][data-palette=pixel-pico] .rd { --adm-warning: light-dark(#8a5100, #efb45c); }
 :root[data-deco=pixel][data-palette=pixel-pico] .pv-year small { color: light-dark(#1d2b53, #c2c3c7); }
 
@@ -182,7 +142,6 @@
 /* Docks. Each goes with any window style, so each brings its colours; the hotbar takes the window style's own
    while that is Pixel, so it follows the colour sets. Phones (chrome.css) keep them at touch size. */
 .wm[data-dock=pixel] { --dock-h: 76px; }
-.wm[data-dock=pixel-quest] { --dock-h: 80px; }
 .wm[data-dock=pixel-cartridge] { --dock-h: 84px; }
 .wm[data-dock^=pixel] #dock { border-radius: 0; backdrop-filter: none; -webkit-backdrop-filter: none; }
 .wm[data-dock^=pixel] :is(.dk, #dock #homeBtn, #dock #winsBtn) { margin: 0; border-radius: 0; }
@@ -205,22 +164,6 @@
 .wm[data-dock=pixel] #dock .dk.run { box-shadow: inset 0 0 0 2px var(--hb-run); }
 .wm[data-dock=pixel] #dock .dk.run::after { bottom: 4px; width: 4px; height: 4px; margin-left: -2px; border-radius: 0; background: var(--hb-run); }
 .wm[data-dock=pixel] #dock #winsBtn b { top: 2px; right: 2px; min-width: 16px; }
-
-/* Quest menu: a JRPG command window, blue inside a rounded white ring, and the white glove pointing at whichever
-   launcher is under the pointer or focused, bobbing as it does in the menus. A running app gets a pip. */
-.wm[data-dock=pixel-quest] #dock, .cp-dk.pixel-quest {
-  --pq-ring: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' shape-rendering='crispEdges'%3E%3Cpath fill='%230c0c24' d='M2 0h8v1h-8zM1 1h1v1h-1zM10 1h1v1h-1zM0 2h1v8h-1zM11 2h1v8h-1zM1 10h1v1h-1zM10 10h1v1h-1zM2 11h8v1h-8z'/%3E%3Cpath fill='%23ffffff' d='M2 1h8v1h-8zM1 2h2v1h-2zM9 2h2v1h-2zM1 3h1v7h-1zM10 3h1v7h-1zM2 9h1v2h-1zM9 9h1v2h-1zM3 10h6v1h-6z'/%3E%3Cpath fill='%23a8b0d0' d='M3 2h6v1h-6zM2 3h1v6h-1zM9 3h1v6h-1zM3 9h6v1h-6z'/%3E%3Cpath fill='%23303880' d='M3 3h6v1h-6zM3 4h1v5h-1zM8 4h1v5h-1zM4 8h4v1h-4z'/%3E%3C/svg%3E");
-  --pq-hand: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='11' shape-rendering='crispEdges'%3E%3Cpath fill='%2314142a' d='M6 0h3v1h-3zM5 1h1v1h-1zM9 1h1v1h-1zM2 2h3v1h-3zM10 2h5v1h-5zM1 3h1v6h-1zM3 3h1v7h-1zM15 3h1v1h-1zM10 4h5v1h-5zM13 5h1v1h-1zM10 6h3v1h-3zM12 7h1v1h-1zM10 8h2v1h-2zM2 9h1v1h-1zM4 9h1v2h-1zM10 9h1v1h-1zM5 10h5v1h-5z'/%3E%3Cpath fill='%23ffffff' d='M6 1h3v8h-3zM5 2h1v7h-1zM9 2h1v7h-1zM4 3h1v5h-1zM10 3h5v1h-5zM10 5h3v1h-3zM10 7h2v1h-2z'/%3E%3Cpath fill='%23b8bcd8' d='M2 3h1v6h-1zM4 8h1v1h-1zM5 9h5v1h-5z'/%3E%3C/svg%3E");
-}
-.wm[data-dock=pixel-quest] #dock { bottom: 10px; gap: 18px; padding: 6px 12px 6px 26px; border: 4px solid transparent; border-image: var(--pq-ring) 4; background: linear-gradient(light-dark(#4a64e0, #2c3ca8), light-dark(#1c2a98, #101860)) padding-box; box-shadow: 4px 4px 0 rgba(4,4,20,.5); }
-.wm[data-dock=pixel-quest] :is(.dk, #dock #homeBtn, #dock #winsBtn) { width: 46px; height: 46px; color: #fff; background: none; }
-.wm[data-dock=pixel-quest] #dock :is(.dk, #homeBtn, #winsBtn) .ico { width: 30px; height: 30px; }
-.wm[data-dock=pixel-quest] #dock :is(.dk, #homeBtn, #winsBtn):is(:hover, :focus-visible) { background: none; outline: 0; }
-.wm[data-dock=pixel-quest] #dock :is(.dk, #homeBtn):is(:hover, :focus-visible)::before, .wm[data-dock=pixel-quest] #dock #winsBtn:is(:hover, :focus-visible)::after { content: ''; position: absolute; left: -24px; top: 12px; width: 32px; height: 22px; background: var(--pq-hand) 0 0 / 100% 100%; animation: pq-bob .6s steps(1) infinite; pointer-events: none; }
-@keyframes pq-bob { 50% { translate: -2px 0; } }
-.wm[data-dock=pixel-quest] #dock :is(#homeBtn.on, #homeBtn:active, #winsBtn:active) { background: rgba(255,255,255,.14); }
-.wm[data-dock=pixel-quest] #dock .dk.run::after { bottom: -2px; width: 6px; height: 4px; margin-left: -3px; border-radius: 0; background: #fff; box-shadow: 0 0 0 2px #0c0c24; }
-.wm[data-dock=pixel-quest] #dock #winsBtn b { top: 0; right: -4px; border-radius: 0; color: #0c0c24; background: #f8d048; box-shadow: 0 0 0 2px #0c0c24; }
 
 /* Cartridges: each launcher a Game Boy cartridge standing in a console's slot, its icon on the label. Pointing at
    one draws it half out, a running app lights the LED on the slot's lip beneath it, and Home and the switcher are
@@ -292,23 +235,13 @@
    animation. By day the star layer draws nothing. */
 .wm[data-wall^=pixel] { --px: 5px; }
 .wm[data-wall=pixel] body { background: var(--pk-orb) right 14% top 32% / calc(16 * var(--px)) calc(16 * var(--px)) no-repeat, var(--pk-hills) 0 100% / calc(256 * var(--px)) calc(96 * var(--px)) repeat-x, var(--pk-sky) 0 100% / calc(4 * var(--px)) calc(220 * var(--px)) repeat-x var(--pk-top); }
-.wm:is([data-wall=pixel], [data-wall=pixel-quest]) body::before, .wm[data-wall^=pixel] body::after { content: ''; position: fixed; z-index: -1; top: var(--panel-h); pointer-events: none; }
-.wm:is([data-wall=pixel], [data-wall=pixel-quest]) body::before { left: 0; right: calc(-256 * var(--px)); height: 60vh; background: var(--pk-stars) 0 0 / calc(256 * var(--px)) calc(64 * var(--px)); -webkit-mask: linear-gradient(#000 45%, transparent); mask: linear-gradient(#000 45%, transparent); animation: pk-twinkle 3.2s steps(4) infinite; }
+.wm[data-wall=pixel] body::before, .wm[data-wall^=pixel] body::after { content: ''; position: fixed; z-index: -1; top: var(--panel-h); pointer-events: none; }
+.wm[data-wall=pixel] body::before { left: 0; right: calc(-256 * var(--px)); height: 60vh; background: var(--pk-stars) 0 0 / calc(256 * var(--px)) calc(64 * var(--px)); -webkit-mask: linear-gradient(#000 45%, transparent); mask: linear-gradient(#000 45%, transparent); animation: pk-twinkle 3.2s steps(4) infinite; }
 .wm[data-wall=pixel] body::after { top: calc(var(--panel-h) + 2vh); left: calc(-192 * var(--px)); right: 0; height: calc(40 * var(--px)); background: var(--pk-clouds) 0 0 / calc(192 * var(--px)) calc(40 * var(--px)) repeat-x; animation: pk-drift 160s steps(192) infinite; }
 @keyframes pk-twinkle { to { translate: calc(-256 * var(--px)) 0; } }
 @keyframes pk-drift { to { translate: calc(192 * var(--px)) 0; } }
 @media (min-width: 2200px) { .wm[data-wall^=pixel] { --px: 7px; } }
 
-/* The other wallpapers, on the same grid and anchored the same way, each the same by day and night unless said.
-   Their thumbnails are the same layers at a third of a pixel. Handheld: two ranges in the Game Boy's greens, their
-   shadow sides dithered, under a sun with a dithered halo and a faint grid like the handheld's LCD. */
-.wm[data-wall=pixel-handheld], .cp-wp.pixel-handheld {
-  --ph-hills: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='64' shape-rendering='crispEdges'%3E%3Cpattern id='a' width='2' height='2' patternUnits='userSpaceOnUse'%3E%3Cpath fill='%238bac0f' d='M0 0h2v2H0z'/%3E%3Cpath fill='%23306230' d='M0 0h1v1H0zM1 1h1v1H1z'/%3E%3C/pattern%3E%3Cpattern id='b' width='2' height='2' patternUnits='userSpaceOnUse'%3E%3Cpath fill='%23306230' d='M0 0h2v2H0z'/%3E%3Cpath fill='%230f380f' d='M0 0h1v1H0zM1 1h1v1H1z'/%3E%3C/pattern%3E%3Cpath fill='%238bac0f' d='M0 64v-5h1v-1h1v-1h2v-1h1v-1h1v-1h1v-1h1v-2h1v-1h1v-1h1v-2h1v-1h1v-1h1v-2h1v-1h1v-1h2v-1h2v-1h2v-1h1v-1h1v-3h1v3h1v1h1v1h1v1h1v1h1v1h1v1h1v1h1v2h1v1h1v2h1v2h1v2h1v1h1v2h1v-1h1v-1h1v-1h1v-2h1v-1h1v-2h1v-1h1v-2h1v-2h1v-1h1v-2h1v-1h1v-2h1v-1h1v-1h1v-1h1v-1h1v-1h1v-1h1v-1h1v-2h1v-1h1v-2h1v-2h1v-2h1v-2h1v-2h1v-2h1v-2h1v-2h1v1h1v-1h1v2h1v2h1v2h1v2h1v1h1v2h1v2h1v1h1v1h1v1h1v1h2v1h1v1h1v1h2v2h1v1h1v1h1v2h1v1h1v2h1v1h1v2h1v1h1v1h1v1h1v1h1v1h1v1h1v1h1v1h1v1h1v-1h1v-1h1v-1h1v-1h1v-1h1v-2h1v-2h1v-2h1v-2h1v-1h1v-2h1v-2h1v-2h1v-1h1v-1h2v1h1v2h1v2h1v1h1v2h1v1h1v1h1v1h1v1h1v1h1v1h2v1h1v1h1v1h1v1h1v2h1v1h1v1h1v2h1v1h1v1h1v1h2v-1h1v-2h1v-1h1v-2h1v-2h1v-1h1v-2h1v-2h1v-2h1v-1h1v-2h1v-1h1v-1h1v-1h1v-1h1v-1h1v-2h1v-1h1v-1h1v-2h1v-2h1v-2h1v-2h1v-2h2v1h1v1h1v1h1v1h1v2h1v1h1v2h1v1h1v2h1v2h1v1h1v2h1v1h1v1h1v1h1v1h1v1h2v1h1v1h1v1h1v1h1v1h1v1h1v2h1v1h1v1h1v1h1v2h1v-1h2v-1h1v-1h1v-1h1v-1h2v-1h1v-1h1v-1h1v-2h1v-1h1v-2h1v-2h1v-2h2v-1h1v1h1v1h1v2h1v1h1v2h1v2h1v1h1v2h1v1h1v1h1v1h1v1h1v1h2v1h1v1h1v1h2v1h1v1h1v1h1v1h2v-1h1V64z'/%3E%3Cpath fill='url(%23a)' d='M25 64v-27h1v1h1v1h1v1h1v1h1v1h1v1h1v1h1v2h1v1h1v2h1v2h1v2h1v1h1v2h1V64zM71 64v-53h1v2h1v2h1v2h1v2h1v1h1v2h1v2h1v1h1v1h1v1h1v1h2v1h1v1h1v1h2v2h1v1h1v1h1v2h1v1h1v2h1v1h1v2h1v1h1v1h1v1h1v1h1v1h1v1h1v1h1v1h1v1h1V64zM121 64v-33h1v2h1v2h1v1h1v2h1v1h1v1h1v1h1v1h1v1h1v1h2v1h1v1h1v1h1v1h1v2h1v1h1v1h1v2h1v1h1v1h1v1h1V64zM169 64v-44h1v1h1v1h1v1h1v1h1v2h1v1h1v2h1v1h1v2h1v2h1v1h1v2h1v1h1v1h1v1h1v1h1v1h2v1h1v1h1v1h1v1h1v1h1v1h1v2h1v1h1v1h1v1h1v2h1V64zM215 64v-27h1v1h1v1h1v2h1v1h1v2h1v2h1v1h1v2h1v1h1v1h1v1h1v1h1v1h2v1h1v1h1v1h2v1h1v1h1v1h1V64z'/%3E%3Cpath fill='%23306230' d='M0 64v-13h2v-1h2v-1h3v-1h2v1h1v1h1v1h2v1h2v1h4v1h2v1h2v1h1v1h2v1h1v1h2v1h1v1h4v-1h1v-1h2v-1h1v-1h2v-1h2v-1h1v-1h2v-1h1v-1h1v-1h1v-1h1v-1h1v-1h1v-1h1v-1h1v-1h1v-1h2v-1h1v-1h2v1h1v1h1v1h2v1h2v1h4v1h3v1h2v1h1v1h2v1h1v1h1v1h2v1h2v1h3v1h2v1h3v1h2v1h2v-1h2v-1h3v-1h2v-1h2v-1h2v-1h1v-1h1v-1h1v-1h1v-1h5v1h1v1h1v1h1v1h1v1h1v1h2v1h2v1h2v1h2v1h2v-1h1v-1h2v-1h1v-1h1v-1h2v-1h1v-1h2v-1h2v-1h2v-1h2v-1h1v-1h1v-1h1v-1h1v-1h3v1h2v1h1v1h1v1h1v1h2v1h1v1h1v1h1v1h2v1h3v1h2v1h2v1h2v1h2v1h1v1h2v1h5v-1h2v-1h1v-1h2v-1h2v-1h3v-1h4v-1h3v-1h2v-1h1v-1h1v-1h5v1h2v1h1v1h1v1h2v1h1v1h2v1h3v1h5v-1h3v-1h3v-1h2v-1h1v-1h2v-1h1v-1h1V64z'/%3E%3Cpath fill='url(%23b)' d='M9 64v-15h1v1h1v1h2v1h2v1h4v1h2v1h2v1h1v1h2v1h1v1h2v1h1v1h2V64zM59 64v-21h1v1h1v1h2v1h2v1h4v1h3v1h2v1h1v1h2v1h1v1h1v1h2v1h2v1h3v1h2v1h3v1h2v1h2V64zM113 64v-14h2v1h1v1h1v1h1v1h1v1h1v1h2v1h2v1h2v1h2v1h2V64zM151 64v-19h2v1h2v1h1v1h1v1h1v1h2v1h1v1h1v1h1v1h2v1h3v1h2v1h2v1h2v1h2v1h1v1h2v1h2V64zM207 64v-13h3v1h2v1h1v1h1v1h2v1h1v1h2v1h3v1h2V64z'/%3E%3Cpath fill='%230f380f' d='M0 64v-5h2v-1h3v-1h8v1h4v1h9v-1h6v1h4v1h3v1h10v-1h3v-1h3v-1h12v1h4v-1h7v-1h4v1h4v1h3v1h2v1h10v-1h3v-1h19v-1h4v-1h9v1h3v1h2v1h4v1h4v-1h7v-1h5v1h11v-1h3v-1h3v-1h10v1h3v1h4v1h6v-1h9v1h5v1h7v-1h3v-1h3v-1h3v-1h8v1h1V64z'/%3E%3C/svg%3E");
-  --ph-sky: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='2' height='200' shape-rendering='crispEdges'%3E%3Cpattern id='a' width='2' height='2' patternUnits='userSpaceOnUse'%3E%3Cpath fill='%238bac0f' d='M0 0h2v2H0z'/%3E%3Cpath fill='%239bbc0f' d='M0 0h1v1H0zM1 1h1v1H1z'/%3E%3C/pattern%3E%3Cpath fill='url(%23a)' d='M0 50h2v10H0z'/%3E%3Cpath fill='%239bbc0f' d='M0 60h2v140H0z'/%3E%3C/svg%3E");
-  --ph-sun: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='44' height='28' shape-rendering='crispEdges'%3E%3Cpattern id='h' width='2' height='2' patternUnits='userSpaceOnUse'%3E%3Cpath fill='%239bbc0f' d='M1 0h1v1H1zM0 1h1v1H0z'/%3E%3C/pattern%3E%3Cpath fill='url(%23h)' d='M19 10h1V8h1V6h1V5h1V4h2V3h2V2h8V3h2V4h2V5h1V6h1V8h1V10h1V18h-1V20h-1V22h-1V23h-1V24h-2V25h-2V26h-8V25h-2V24h-2V23h-1V22h-1V20h-1V18h-1z'/%3E%3Cpath fill='%239bbc0f' d='M22 10h1V8h1V7h1V6h2V5h8V6h2V7h1V8h1V10h1V18h-1V20h-1V21h-1V22h-2V23h-8V22h-2V21h-1V20h-1V18h-1z'/%3E%3Cpath fill='%23306230' d='M1 13h1v1h-1zM5 13h1v1h-1zM2 14h1v1h-1zM4 14h1v1h-1zM3 15h1v1h-1zM9 17h1v1h-1zM13 17h1v1h-1zM10 18h1v1h-1zM12 18h1v1h-1zM11 19h1v1h-1zM4 22h1v1h-1zM8 22h1v1h-1zM5 23h1v1h-1zM7 23h1v1h-1zM6 24h1v1h-1z'/%3E%3C/svg%3E");
-}
-.wm[data-wall=pixel-handheld] body, .cp-wp.pixel-handheld { background: var(--ph-sun) right 14% top 9% / calc(44 * var(--px)) calc(28 * var(--px)) no-repeat, var(--ph-hills) 0 100% / calc(240 * var(--px)) calc(64 * var(--px)) repeat-x, var(--ph-sky) 0 100% / calc(2 * var(--px)) calc(200 * var(--px)) repeat-x #8bac0f; }
-.wm[data-wall=pixel-handheld] body::after { left: 0; right: 0; bottom: 0; background: linear-gradient(90deg, rgba(15,56,15,.07) 1px, transparent 0) 0 0 / var(--px) var(--px), linear-gradient(rgba(15,56,15,.07) 1px, transparent 0) 0 0 / var(--px) var(--px); }
 /* Pico: PICO-8's night over a snowy summit, after Celeste Classic, with pines below and snow falling one art pixel a
    step */
 .wm[data-wall=pixel-pico], .cp-wp.pixel-pico {
@@ -319,28 +252,15 @@
 .wm[data-wall=pixel-pico] body, .cp-wp.pixel-pico { background: var(--pp-peak) 0 100% / calc(288 * var(--px)) calc(80 * var(--px)) repeat-x, var(--pp-sky) 0 100% / calc(2 * var(--px)) calc(140 * var(--px)) repeat-x #000; }
 .wm[data-wall=pixel-pico] body::after { top: calc(var(--panel-h) - 128 * var(--px)); left: calc(-64 * var(--px)); right: 0; bottom: 0; background: var(--pp-snow) 0 0 / calc(64 * var(--px)) calc(64 * var(--px)); animation: pp-snow 40s steps(128) infinite; }
 @keyframes pp-snow { to { translate: calc(64 * var(--px)) calc(128 * var(--px)); } }
-/* Quest: a 16-bit sky in stepped bands, as the SNES recoloured it a block of scanlines at a time, over a banded sea
-   with glints and a castle on its island. Pixel's sun by day; its moon and twinkling stars by night. */
-.wm[data-wall=pixel-quest], .cp-wp.pixel-quest {
-  --pq-castle: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='64' height='52' shape-rendering='crispEdges'%3E%3Cpath d='M31 0h4v1h-4zM31 1h2v1h-2zM31 2h1v13h-1zM32 3h1v36h-1zM30 4h1v36h-1zM33 5h1v35h-1zM29 6h1v46h-1zM34 7h1v45h-1zM28 8h1v44h-1zM35 9h1v43h-1zM27 10h1v2h-1zM36 11h1v1h-1zM12 13h1v13h-1zM13 14h1v38h-1zM11 15h1v37h-1zM50 15h1v13h-1zM14 16h1v36h-1zM51 16h1v36h-1zM10 17h1v35h-1zM15 17h1v35h-1zM22 17h1v35h-1zM24 17h1v35h-1zM26 17h1v6h-1zM31 17h1v22h-1zM36 17h1v35h-1zM38 17h1v35h-1zM40 17h1v35h-1zM49 17h1v35h-1zM9 18h1v34h-1zM23 18h1v34h-1zM25 18h1v34h-1zM27 18h1v34h-1zM37 18h1v5h-1zM39 18h1v34h-1zM41 18h1v34h-1zM52 18h1v34h-1zM16 19h1v33h-1zM48 19h1v33h-1zM53 19h1v33h-1zM8 20h1v2h-1zM47 20h1v32h-1zM17 21h1v1h-1zM54 21h1v31h-1zM46 22h1v2h-1zM55 23h1v1h-1zM26 25h1v6h-1zM37 25h1v6h-1zM12 28h1v6h-1zM50 30h1v5h-1zM18 31h1v21h-1zM20 31h1v21h-1zM17 32h1v20h-1zM19 32h1v20h-1zM21 32h1v20h-1zM43 32h1v20h-1zM45 32h1v20h-1zM26 33h1v19h-1zM37 33h1v19h-1zM42 33h1v19h-1zM44 33h1v19h-1zM46 33h1v19h-1zM3 35h1v13h-1zM5 35h1v13h-1zM7 35h1v13h-1zM4 36h1v12h-1zM6 36h1v12h-1zM8 36h1v16h-1zM12 36h1v16h-1zM55 36h1v16h-1zM57 36h1v12h-1zM59 36h1v12h-1zM50 37h1v15h-1zM56 37h1v15h-1zM58 37h1v11h-1zM60 37h1v11h-1zM30 48h4v4h-4zM5 49h3v3h-3zM57 49h3v3h-3zM3 50h2v2h-2zM60 50h2v2h-2zM0 51h3v1h-3zM62 51h2v1h-2z'/%3E%3C/svg%3E");
-  --pq-glints: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='128' height='44' shape-rendering='crispEdges'%3E%3Cpath fill='%239db4ec' d='M0 3h1v1h-1zM27 3h1v1h-1zM54 3h1v1h-1zM81 3h1v1h-1zM108 3h1v1h-1zM8 5h1v1h-1zM48 5h1v1h-1zM88 5h1v1h-1zM16 7h2v1h-2zM57 7h2v1h-2zM98 7h2v1h-2zM24 9h2v1h-2zM61 9h2v1h-2zM98 9h2v1h-2zM3 11h2v1h-2zM36 11h2v1h-2zM69 11h2v1h-2zM102 11h2v1h-2zM11 13h2v1h-2zM57 13h2v1h-2zM103 13h2v1h-2zM19 16h3v1h-3zM66 16h3v1h-3zM113 16h3v1h-3zM27 19h3v1h-3zM70 19h3v1h-3zM113 19h3v1h-3zM6 22h4v1h-4zM50 22h4v1h-4zM94 22h4v1h-4zM14 25h4v1h-4zM71 25h4v1h-4zM22 29h5v1h-5zM80 29h5v1h-5zM1 33h5v1h-5zM55 33h5v1h-5zM109 33h5v1h-5zM9 37h6v1h-6zM64 37h6v1h-6zM119 37h6v1h-6zM17 42h7v1h-7zM90 42h7v1h-7z'/%3E%3C/svg%3E");
-}
-.wm[data-wall=pixel-quest] body, .cp-wp.pixel-quest { background: var(--pk-orb) left 16% top 14% / calc(16 * var(--px)) calc(16 * var(--px)) no-repeat, var(--pq-glints) 0 100% / calc(128 * var(--px)) calc(44 * var(--px)) repeat-x,
-  linear-gradient(light-dark(#4870d0, #1c1c58) 0 calc(3 * var(--px)), light-dark(#3c64c8, #18184c) 0 calc(7 * var(--px)), light-dark(#3058bc, #141442) 0 calc(13 * var(--px)), light-dark(#284cb0, #101038) 0 calc(22 * var(--px)), light-dark(#2040a0, #0c0c2e) 0) 0 100% / 100% calc(44 * var(--px)) no-repeat,
-  linear-gradient(light-dark(#2a4cbc, #04040f) 0 calc(20 * var(--px)), light-dark(#3058c0, #070718) 0 calc(36 * var(--px)), light-dark(#3864c8, #0b0b24) 0 calc(50 * var(--px)), light-dark(#4474d0, #111030) 0 calc(62 * var(--px)), light-dark(#5484d8, #19163c) 0 calc(72 * var(--px)), light-dark(#6898e0, #231c4a) 0 calc(80 * var(--px)), light-dark(#80ace8, #302458) 0 calc(86 * var(--px)), light-dark(#9cc4f0, #412c64) 0 calc(91 * var(--px)), light-dark(#bcd8f4, #563470) 0) 0 calc(100% - 44 * var(--px)) / 100% calc(96 * var(--px)) no-repeat light-dark(#2a4cbc, #04040f); }
-.wm[data-wall=pixel-quest] body::after, .cp-wp.pixel-quest::after { content: ''; position: absolute; top: auto; right: 6%; bottom: calc(40 * var(--px)); width: calc(64 * var(--px)); height: calc(52 * var(--px)); background: light-dark(#28388c, #05051a); -webkit-mask: var(--pq-castle) 0 0 / 100% 100%; mask: var(--pq-castle) 0 0 / 100% 100%; }
-.wm[data-wall=pixel-quest] body::after { position: fixed; }
-.cp-wp:is(.pixel-handheld, .pixel-pico, .pixel-quest) { --px: .3px; }
+.cp-wp.pixel-pico { --px: .3px; }
 
 /* Control panel thumbnails: the scene at a third of a pixel, and a ringed window on it */
 .cp-deco.pixel, .cp-wp.pixel { background: var(--pk-orb) 82% 22% / 5px 5px no-repeat, var(--pk-hills) 0 100% / 77px 29px repeat-x, var(--pk-sky) 0 100% / 1.2px 66px repeat-x var(--pk-top); }
 .cp-deco.pixel::before { top: 7px; width: 36px; height: 10px; background: #ffcd4d; border: 1px solid #1c1a2e; border-bottom: 0; box-shadow: none; }
 .cp-deco.pixel::after { top: 16px; background: light-dark(#f1e4c6, #3a3560); border: 1px solid #1c1a2e; box-shadow: inset 1px 1px 0 light-dark(#fff9ea, #5b5591), 3px 3px 0 rgba(12,10,28,.55); }
 
-/* the docks: the hotbar's slots, the Quest menu with its glove, and cartridges in their slot */
+/* the docks: the hotbar's slots and cartridges in their slot */
 .cp-dk.pixel::before { height: 14px; padding: 2px; border: 1px solid #1c1a2e; border-radius: 0; background: var(--ic) content-box, #f1e4c6; box-shadow: inset 1px 1px 0 #fff9ea, 2px 2px 0 rgba(28,26,46,.45); }
-.cp-dk.pixel-quest::before { width: 52px; padding: 2px 3px 2px 9px; border: 1px solid #fff; border-radius: 2px; background: var(--ic) content-box, linear-gradient(#4a64e0, #1c2a98); box-shadow: 0 0 0 1px #0c0c24; }
-.cp-dk.pixel-quest::after { content: ''; position: absolute; left: 13px; bottom: 9px; width: 8px; height: 6px; background: var(--pq-hand) 0 0 / 100% 100%; }
 .cp-dk.pixel-cartridge::before { width: 56px; height: 18px; padding: 2px 4px 6px; border: 1px solid #1a1a22; border-radius: 0; background: linear-gradient(#25242e 0 0) 0 100% / 100% 5px no-repeat, repeating-linear-gradient(90deg, #efe9d8 0 5px, #9c9ca8 5px 7px, transparent 7px 9px) content-box, #bdbac8; }
 
 /* Phones (the same query as windows.css): one full-screen window under a sun bar with an ink rule, touch-sized
@@ -355,11 +275,8 @@
   .wm[data-dock=pixel] #dock .dk { width: 48px; height: 48px; }
   .wm[data-dock=pixel] #dock .dk .ico { width: 32px; height: 32px; }
   .wm[data-dock=pixel] #dock { gap: 4px; bottom: 8px; }
-  .wm[data-dock=pixel-quest] #dock { gap: 6px; padding: 6px; }
   .wm[data-dock=pixel-cartridge] #dock { gap: 4px; padding-inline: 8px; }
   .wm[data-wall^=pixel] { --px: 4px; }
   .wm[data-wall=pixel] body { background-position: right 10% top 12%, 0 calc(100lvh - 96 * var(--px)), 0 calc(100lvh - 220 * var(--px)); }
-  .wm[data-wall=pixel-handheld] body { background-position: right 10% top 8%, 0 calc(100lvh - 64 * var(--px)), 0 calc(100lvh - 200 * var(--px)); }
   .wm[data-wall=pixel-pico] body { background-position: 0 calc(100lvh - 80 * var(--px)), 0 calc(100lvh - 140 * var(--px)); }
-  .wm[data-wall=pixel-quest] body { background-position: left 10% top 10%, 0 calc(100lvh - 44 * var(--px)), 0 calc(100lvh - 44 * var(--px)), 0 calc(100lvh - 140 * var(--px)); }
 }
