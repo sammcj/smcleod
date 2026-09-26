@@ -8,8 +8,8 @@
 @font-face { font-family: Literata; font-display: swap; font-weight: 200 900; src: url(../../../fonts/literata/literata-variable.woff2) format('woff2'); }
 @font-face { font-family: Literata; font-display: swap; font-weight: 200 900; font-style: italic; src: url(../../../fonts/literata/literata-variable-italic.woff2) format('woff2'); }
 
-/* the wallpaper and the Control panel's thumbnails draw with these whatever window style is on */
-:root:is([data-deco=broadsheet], [data-wall=broadsheet]), .cp-deco.broadsheet, .cp-wp.broadsheet {
+/* the wallpaper, the dock and the Control panel's thumbnails draw with these whatever window style is on */
+:root:is([data-deco=broadsheet], [data-wall=broadsheet], [data-dock=broadsheet]), .cp-deco.broadsheet, .cp-wp.broadsheet, .cp-dk.broadsheet {
   --bs-paper: light-dark(#efebe1, #151412); --bs-sheet: light-dark(#fffdf7, #1e1d1a); --bs-ink: light-dark(#121212, #ebe6d9);
   --bs-cob: #2a3dff; --bs-acid: #dcff3a; --bs-tom: #ff5a36; --bs-rule: color-mix(in srgb, var(--bs-ink) 7%, transparent);
   --bs-head: 'Space Grotesk', 'Helvetica Neue', Arial, system-ui, sans-serif;
@@ -73,7 +73,7 @@
 :root[data-deco=broadsheet] #menuBtn:focus-visible { outline: 2px solid #121212; outline-offset: -5px; }
 :root[data-deco=broadsheet] #panel .task.on { color: #121212; background: var(--bs-acid); box-shadow: none; }
 :root[data-deco=broadsheet] #clock { align-self: stretch; padding: 0 12px; line-height: calc(var(--panel-h) - 2px); color: #121212; background: var(--bs-tom); }
-:root[data-deco=broadsheet] #winsBtn b { border-radius: 0; color: #121212; }
+:root[data-deco=broadsheet] #panel #winsBtn b { border-radius: 0; color: #121212; }
 
 /* Menu, context menu and search: flat sheets under an ink rule with a hard shadow */
 :root[data-deco=broadsheet] :is(#menu, .ctx, .sp-frame) { border: 2px solid var(--bs-ink); border-radius: 0; box-shadow: var(--bs-sh); }
@@ -87,22 +87,23 @@
 :root[data-deco=broadsheet] :is(.sp-field, .sp-list) { border: 2px solid var(--bs-ink); }
 :root[data-deco=broadsheet] .sp-close { border: 2px solid var(--bs-ink); border-radius: 0; }
 
-/* Dock: sticker tabs, each its own card with a hard shadow, labelled in capitals; Home is the masthead's slug */
-.wm[data-deco=broadsheet] #dock { bottom: 14px; gap: 10px; padding: 0; background: none; border: 0; border-radius: 0; box-shadow: none; backdrop-filter: none; -webkit-backdrop-filter: none; }
+/* Dock: sticker tabs, each its own card with a hard shadow, labelled in capitals; Home is the masthead's slug. It can
+   be picked under any window style, so it draws in the --bs- colours, set for it above. */
+.wm[data-dock=broadsheet] #dock { bottom: 14px; gap: 10px; padding: 0; background: none; border: 0; border-radius: 0; box-shadow: none; backdrop-filter: none; -webkit-backdrop-filter: none; }
 /* a list rather than :is(), so each keeps its own weight and the running state below outranks the launchers */
-:root[data-deco=broadsheet] #dock .dk, :root[data-deco=broadsheet] #dock #homeBtn, :root[data-deco=broadsheet] #dock #winsBtn { display: flex; align-items: center; gap: 7px; width: auto; height: 40px; margin: 0; padding: 0 12px 0 8px; color: var(--bs-ink); background: var(--bs-sheet); border: 2px solid var(--bs-ink); border-radius: 0; box-shadow: 3px 3px 0 var(--bs-ink); font: 700 11px var(--bs-head); letter-spacing: .1em; white-space: nowrap; text-decoration: none; text-transform: uppercase; transition: translate .12s, box-shadow .12s; }
-:root[data-deco=broadsheet] #dock :is(.dk, #homeBtn, #winsBtn) .ico { width: 22px; height: 22px; }
-:root[data-deco=broadsheet] #dock .lbl, :root[data-deco=broadsheet] #dock #homeBtn span { position: static; width: auto; height: auto; overflow: visible; clip-path: none; font-size: inherit; }
-:root[data-deco=broadsheet] #dock #homeBtn { color: var(--bs-acid); background: #121212; }
-:root[data-deco=broadsheet] #dock .dk.run { color: #121212; background: var(--bs-acid); }
-:root[data-deco=broadsheet] #dock .dk.run::after, :root[data-deco=broadsheet] #dock #homeBtn::after, :root[data-deco=broadsheet] #dock #winsBtn::before { content: none; }
-:root[data-deco=broadsheet] #dock #winsBtn b { position: static; box-shadow: none; }
-:root[data-deco=broadsheet] #dock :is(.dk, #homeBtn, #winsBtn):hover { translate: -2px -2px; box-shadow: 5px 5px 0 var(--bs-ink); }
-:root[data-deco=broadsheet] #dock :is(.dk, #homeBtn, #winsBtn):active { translate: 3px 3px; box-shadow: none; }
+:root[data-dock=broadsheet] #dock .dk, :root[data-dock=broadsheet] #dock #homeBtn, :root[data-dock=broadsheet] #dock #winsBtn { display: flex; align-items: center; gap: 7px; width: auto; height: 40px; margin: 0; padding: 0 12px 0 8px; color: var(--bs-ink); background: var(--bs-sheet); border: 2px solid var(--bs-ink); border-radius: 0; box-shadow: 3px 3px 0 var(--bs-ink); font: 700 11px var(--bs-head); letter-spacing: .1em; white-space: nowrap; text-decoration: none; text-transform: uppercase; transition: translate .12s, box-shadow .12s; }
+:root[data-dock=broadsheet] #dock :is(.dk, #homeBtn, #winsBtn) .ico { width: 22px; height: 22px; }
+:root[data-dock=broadsheet] #dock .lbl, :root[data-dock=broadsheet] #dock #homeBtn span { position: static; width: auto; height: auto; overflow: visible; clip-path: none; font-size: inherit; }
+:root[data-dock=broadsheet] #dock #homeBtn { color: var(--bs-acid); background: #121212; }
+:root[data-dock=broadsheet] #dock .dk.run { color: #121212; background: var(--bs-acid); }
+:root[data-dock=broadsheet] #dock .dk.run::after, :root[data-dock=broadsheet] #dock #homeBtn::after, :root[data-dock=broadsheet] #dock #winsBtn::before { content: none; }
+:root[data-dock=broadsheet] #dock #winsBtn b { position: static; border-radius: 0; color: #121212; background: var(--bs-acid); box-shadow: none; }
+:root[data-dock=broadsheet] #dock :is(.dk, #homeBtn, #winsBtn):hover { translate: -2px -2px; box-shadow: 5px 5px 0 var(--bs-ink); }
+:root[data-dock=broadsheet] #dock :is(.dk, #homeBtn, #winsBtn):active { translate: 3px 3px; box-shadow: none; }
 /* a laptop's width can't take every label, so the stickers keep their icons only */
 @media (max-width: 1100px) {
-  :root[data-deco=broadsheet] #dock .lbl { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); }
-  :root[data-deco=broadsheet] #dock .dk { padding: 0 8px; }
+  :root[data-dock=broadsheet] #dock .lbl { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); }
+  :root[data-dock=broadsheet] #dock .dk { padding: 0 8px; }
 }
 
 /* desktop icons carry ink captions, the phone home screen and window switcher are cards and tabs of the same stock */
@@ -162,12 +163,14 @@
 .wm[data-wall=broadsheet] body { background: radial-gradient(circle 170px at calc(100% - 70px) 56%, var(--bs-cob) 99%, transparent), linear-gradient(var(--bs-rule) 1px, transparent 1px) 0 0 / 24px 24px, linear-gradient(90deg, var(--bs-rule) 1px, transparent 1px) 0 0 / 24px 24px, radial-gradient(300px 280px at 0 var(--panel-h), transparent 30%, var(--bs-paper) 100%), radial-gradient(circle, var(--bs-ink) 1.2px, transparent 1.6px) 0 0 / 7px 7px, var(--bs-paper); }
 .wm[data-wall=broadsheet] #desk::after { right: 28px; bottom: calc(var(--dock-h) + 6px); font: 700 min(13vw, 30vh)/.8 var(--bs-head); letter-spacing: -.05em; white-space: nowrap; color: transparent; -webkit-text-stroke: 2px var(--bs-ink); }
 
-/* Control panel thumbnails: the slab window, and the wallpaper in miniature */
+/* Control panel thumbnails: the slab window, the wallpaper in miniature, and three stickers (Home, a running app and
+   another) on their shadows, each an ink block under its fill */
 .cp-deco.broadsheet, .cp-wp.broadsheet { background: linear-gradient(var(--bs-rule) 1px, transparent 1px) 0 0 / 8px 8px, linear-gradient(90deg, var(--bs-rule) 1px, transparent 1px) 0 0 / 8px 8px, var(--bs-paper); }
 .cp-deco.broadsheet::before { width: 52px; background: var(--bs-acid); border: 2px solid var(--bs-ink); box-shadow: 3px 3px 0 var(--bs-ink); }
 .cp-deco.broadsheet::after { background: var(--bs-sheet); border: 2px solid var(--bs-ink); border-top: 0; box-shadow: 3px 3px 0 var(--bs-ink); }
 .cp-wp.broadsheet { background: radial-gradient(circle 15px at 86% 60%, var(--bs-cob) 98%, transparent), radial-gradient(34px 30px at 0 0, transparent 30%, var(--bs-paper)), radial-gradient(circle, var(--bs-ink) .7px, transparent 1px) 0 0 / 3px 3px, var(--bs-paper); }
 .cp-wp.broadsheet::after { content: 'Aa' / ''; position: absolute; right: 3px; bottom: -3px; font: 700 28px/1 var(--bs-head); letter-spacing: -.05em; color: transparent; -webkit-text-stroke: 1px var(--bs-ink); }
+.cp-dk.broadsheet::before { width: 54px; height: 13px; padding: 0; border: 0; border-radius: 0; background: linear-gradient(var(--bs-acid) 0 0) 5px 4px / 4px 3px, linear-gradient(#121212 0 0) 2px 2px / 10px 7px, linear-gradient(var(--bs-acid) 0 0) 21px 2px / 10px 7px, linear-gradient(var(--bs-sheet) 0 0) 40px 2px / 10px 7px, linear-gradient(var(--bs-ink) 0 0) 0 0 / 14px 11px, linear-gradient(var(--bs-ink) 0 0) 19px 0 / 14px 11px, linear-gradient(var(--bs-ink) 0 0) 38px 0 / 14px 11px, linear-gradient(var(--bs-ink) 0 0) 2px 2px / 14px 11px, linear-gradient(var(--bs-ink) 0 0) 21px 2px / 14px 11px, linear-gradient(var(--bs-ink) 0 0) 40px 2px / 14px 11px; background-repeat: no-repeat; }
 
 /* Phones (the same query as windows.css): one full-screen window whose title bar is the slab, and a dock of square
    stickers at touch size */
@@ -178,8 +181,8 @@
   :root[data-deco=broadsheet] .win .frame { border: 0; }
   :root[data-deco=broadsheet] .win :is(.tab, .th) { border-width: 0 0 2px; box-shadow: none !important; }
   :root[data-deco=broadsheet] .win .ctl { width: 40px; height: 36px; }
-  :root[data-deco=broadsheet] #dock :is(.dk, #homeBtn, #winsBtn) { width: 44px; height: 44px; padding: 0; justify-content: center; }
-  :root[data-deco=broadsheet] #dock .ico { width: 28px; height: 28px; }
-  :root[data-deco=broadsheet] #dock .lbl { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); }
-  .wm[data-deco=broadsheet] #dock { gap: 8px; bottom: 10px; }
+  :root[data-dock=broadsheet] #dock :is(.dk, #homeBtn, #winsBtn) { width: 44px; height: 44px; padding: 0; justify-content: center; }
+  :root[data-dock=broadsheet] #dock .ico { width: 28px; height: 28px; }
+  :root[data-dock=broadsheet] #dock .lbl { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); }
+  .wm[data-dock=broadsheet] #dock { gap: 8px; bottom: 10px; }
 }

@@ -1,7 +1,7 @@
 // Memphis (css/deskbar/looks/memphis.css): Synthwave's colours as 80s Memphis graphics. Square windows in 2px rules
-// on hard offset shadows with no blur, pink tabs, buttons that press into their shadows, a flat confetti wallpaper that
-// stays behind everything and never takes the pointer, no Light mode, nothing left behind when the look is off, and axe
-// over its main states.
+// on hard offset shadows with no blur, pink tabs, buttons that press into their shadows, a dock on the same shadow that
+// also stands on its own, a flat confetti wallpaper that stays behind everything and never takes the pointer, no Light
+// mode, nothing left behind when the look is off, and axe over its main states.
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
@@ -10,7 +10,7 @@ import { env, useBrowser, open, needs, shot, win, cards, desktop, phone, toolbar
 
 useBrowser();
 
-const LOOK = { deco: 'memphis', wall: 'memphis', dock: 'glass' };
+const LOOK = { deco: 'memphis', wall: 'memphis', dock: 'memphis' };
 const seed = look => `for (const [k, v] of Object.entries(${JSON.stringify(look)})) localStorage.setItem("deskbar:" + k, JSON.stringify(v));`;
 const openLook = (vp, path, opts) => open(vp, path, seed(LOOK), opts);
 const PINK = 'rgb(255, 62, 165)', CYAN = 'rgb(111, 227, 255)', INK = 'rgb(26, 11, 58)';
@@ -80,20 +80,21 @@ test('Memphis: a pressed toolbar button drops into its shadow', async t => {
   await page.context().close();
 });
 
-test('Memphis: the Control panel turns off Colours, Mode and Dock, and draws both thumbnails', async t => {
+test('Memphis: the Control panel turns off Colours and Mode, and draws its thumbnails', async t => {
   if (!(await needs(t, '/control-panel/'))) return;
   const page = await openLook(desktop, '/control-panel/');
   const cp = win(page, 'control-panel');
   await cp.locator('.cp').waitFor();
-  for (const g of ['palette', 'theme', 'dock']) {
+  for (const g of ['palette', 'theme']) {
     assert.equal(await cp.locator(`fieldset:has([name="cp-${g}"])`).evaluate(f => f.disabled), true, `${g} is the look's`);
   }
-  assert.equal(await cp.locator('fieldset:has([name="cp-wall"])').evaluate(f => f.disabled), false);
-  const deco = await css(cp.locator('.cp-deco.memphis'), ['borderTopColor', 'boxShadow'], '::after');
+  for (const g of ['wall', 'dock']) assert.equal(await cp.locator(`fieldset:has([name="cp-${g}"])`).evaluate(f => f.disabled), false, `${g} stays the visitor's`);
+  assert.ok(hard((await css(cp.locator('.cp-dk.memphis'), ['boxShadow'], '::before')).boxShadow, CYAN), 'the dock on its hard shadow');
+  const deco = await css(cp.locator('fieldset:has([name="cp-deco"]) .cp-deco.memphis'), ['borderTopColor', 'boxShadow'], '::after');
   assert.equal(deco.borderTopColor, PINK);
   assert.ok(hard(deco.boxShadow, CYAN));
-  assert.match((await css(cp.locator('.cp-wp.memphis'), ['backgroundImage'])).backgroundImage, /radial-gradient.*conic-gradient/);
-  await cp.locator('.cp-wp.memphis').scrollIntoViewIfNeeded();
+  assert.match((await css(cp.locator('fieldset:has([name="cp-wall"]) .cp-wp.memphis'), ['backgroundImage'])).backgroundImage, /radial-gradient.*conic-gradient/);
+  await cp.locator('fieldset:has([name="cp-wall"]) .cp-wp.memphis').scrollIntoViewIfNeeded();
   await shot(page, 'memphis-cp');
   assert.deepEqual(page.errors, []);
   await page.context().close();
@@ -140,6 +141,36 @@ test('Memphis on a phone: a full-width square title bar over the full-screen win
   assert.deepEqual(tb, { borderTopLeftRadius: '0px', boxShadow: 'none' });
   for (const g of await toolbarGaps(page, w)) assert.ok(Math.abs(g) <= 8, `toolbar ${g}px from the title bar`);
   await shot(page, 'memphis-phone');
+  assert.deepEqual(page.errors, []);
+  await page.context().close();
+});
+
+test('Memphis: its dock is drawn under another window style in either mode, and nothing of it is on the glass dock', async t => {
+  if (!(await needs(t, '/posts/'))) return;
+  const dockOf = page => css(page.locator('#dock'), ['borderTopColor', 'borderTopLeftRadius', 'boxShadow', 'backdropFilter']);
+  const lamp = page => css(page.locator('#dock .dk.run').first(), ['backgroundColor'], '::after');
+  for (const theme of ['light', 'dark']) {
+    const page = await open(desktop, '/posts/', seed({ deco: 'haiku', dock: 'memphis', theme }));
+    const w = win(page, 'tracker');
+    await w.locator('.pc').first().waitFor();
+    assert.notEqual((await css(w.locator('.frame'), ['borderTopColor'])).borderTopColor, PINK, 'Haiku windows');
+    const d = await dockOf(page);
+    assert.deepEqual([d.borderTopColor, d.borderTopLeftRadius, d.backdropFilter], [PINK, '0px', 'none']);
+    assert.ok(hard(d.boxShadow, CYAN), `a hard cyan shadow: ${d.boxShadow}`);
+    assert.equal((await lamp(page)).backgroundColor, 'rgb(255, 228, 94)', 'yellow blocks under running apps');
+    await shot(page, `memphis-dock-${theme}`);
+    assert.deepEqual(page.errors, []);
+    await page.context().close();
+  }
+  const page = await open(desktop, '/posts/', seed({ ...LOOK, dock: 'glass' }));
+  const w = win(page, 'tracker');
+  await w.locator('.pc').first().waitFor();
+  assert.equal((await css(w.locator('.frame'), ['borderTopColor'])).borderTopColor, PINK, 'Memphis windows');
+  const d = await dockOf(page);
+  assert.equal(d.borderTopLeftRadius, '8px');
+  assert.ok(!hard(d.boxShadow, CYAN));
+  assert.notEqual((await lamp(page)).backgroundColor, 'rgb(255, 228, 94)');
+  await shot(page, 'memphis-glass-dock');
   assert.deepEqual(page.errors, []);
   await page.context().close();
 });

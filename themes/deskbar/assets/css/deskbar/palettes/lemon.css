@@ -1,0 +1,17 @@
+/* butter tabs, with the cool blue carried by the panel, frame edges, links and a sky desk so the yellow stays fresh
+   rather than turning to cream */
+:where(:root)[data-palette=lemon] {
+  --panel: linear-gradient(light-dark(#2f6a88, #23394a), light-dark(#245671, #1a2c3a)); --panel-fg: light-dark(#f2fbff, #eef7fb);
+  --panel-hover: rgba(255,255,255,.12);
+  --frame: light-dark(#fafbf6, #252b2f); --frame-hi: light-dark(#fff, #3a4247);
+  --frame-lo: light-dark(#b9c5cd, #161a1c); --frame-dk: light-dark(#6b8494, #0a0c0d);
+  --tab: light-dark(#ffe98a, #f5dc6e); --tab-hi: light-dark(#fff7cc, #fbeea8); --tab-lo: light-dark(#d4b43a, #b89c2c);
+  --tab-dim: light-dark(#fbf0bb, #a89a55); --tab-in: light-dark(#f0f2ef, #323a3f);
+  --tab-in-lo: light-dark(#cdd3cf, #20262a); --tab-in-fg: light-dark(#4a5055, #d5dde2);
+  --content: light-dark(#fff, #1b2124); --fg: light-dark(#1a2226, #e9eef0); --muted: light-dark(#536068, #afbcc3);
+  --line: light-dark(#e6e9e4, #30393e); --side: light-dark(#f8f9f4, #20272b); --read-bg: light-dark(#fff, #181d20);
+  --code-bg: light-dark(#f4f6f1, #262e32);
+  --accent: light-dark(#1f6f9a, #1f6f9a); --link: light-dark(#1a638b, #7fcbee); --ctl: #4a3b00;
+  --wall-1: light-dark(#a8daec, #1f4a5e); --wall-2: light-dark(#7ec4de, #173a4b); --wall-3: light-dark(#55a9ca, #0f2836);
+  --wall-glow: light-dark(rgba(255,236,140,.45), rgba(255,225,120,.1)); --wall-ring: light-dark(rgba(255,255,255,.14), rgba(255,255,255,.035));
+}

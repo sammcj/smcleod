@@ -13,7 +13,7 @@ const LARGE = [
   ['/tools/demo/', 'tool:/tools/demo/'], ['/photos/', 'photos'], ['/terminal/', 'terminal'], ['/sketch/', 'sketch'],
   ['/agentic-coding-tools/', 'tool:/agentic-coding-tools/'], ['/vram-estimator/', 'tool:/vram-estimator/'],
 ];
-const SMALL = [['/contact/', 'mail', 620], ['/control-panel/', 'control-panel', 720], ['/chiptunes/', 'chiptunes', 400]];
+const SMALL = [['/contact/', 'mail', 620], ['/control-panel/', 'control-panel', 900], ['/chiptunes/', 'chiptunes', 400]];
 
 const present = async list => (await Promise.all(list.map(async e => ((await fetch(env.base + e[0])).ok ? e : null)))).filter(Boolean);
 
@@ -61,6 +61,19 @@ test('small apps and dialogs keep their own sizes', async () => {
     const page = await opened(desktop, path, key);
     const { win: w } = await layout(page, key);
     assert.equal(Math.round(w.w), width, path);
+    await page.context().close();
+  }
+});
+
+test('the Control panel is as tall as the Posts window at its home spot, top edges level', async t => {
+  if (!(await fetch(env.base + '/control-panel/')).ok) return t.skip('no /control-panel/ on this site');
+  for (const vp of [desktop, laptop]) {
+    const page = await opened(vp, '/', 'tracker');
+    const posts = (await layout(page, 'tracker')).win;
+    await page.evaluate(() => window.deskbar.go('/control-panel/'));
+    await page.locator('.win:not([hidden]) .view[data-key="control-panel"]').waitFor();
+    const w = (await layout(page, 'control-panel')).win;
+    assert.deepEqual([Math.round(w.t), Math.round(w.h)], [Math.round(posts.t), Math.round(posts.h)], `${vp.width}x${vp.height}`);
     await page.context().close();
   }
 });

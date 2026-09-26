@@ -1,0 +1,17 @@
+/* Lilac, Blossom and Lemon: pastel tabs on near-white frames, like Snow, Mint and Peach, but under a deep tinted
+   panel, so the panel keeps the core's pressed and hover states. Dark mode keeps the hue in deep tinted neutrals. */
+:where(:root)[data-palette=lilac] {
+  --panel: linear-gradient(light-dark(#5e4c93, #3b3059), light-dark(#4a3b7b, #2c2445)); --panel-fg: #f6f2ff;
+  --panel-hover: rgba(255,255,255,.12);
+  --frame: light-dark(#f5f3fb, #2a2640); --frame-hi: light-dark(#fff, #3f3960);
+  --frame-lo: light-dark(#c5bde0, #191628); --frame-dk: light-dark(#7c6fa6, #0b0a13);
+  --tab: light-dark(#ccb8f6, #c2adf4); --tab-hi: light-dark(#eee7fd, #dfd3fb); --tab-lo: light-dark(#9a84d6, #876dcc);
+  --tab-dim: light-dark(#e1d6f9, #8676b0); --tab-in: light-dark(#eeebf5, #363050);
+  --tab-in-lo: light-dark(#cac3db, #221d35); --tab-in-fg: light-dark(#4b4562, #d6cfee);
+  --content: light-dark(#fff, #1d1a2b); --fg: light-dark(#1d1830, #ebe7f7); --muted: light-dark(#59536f, #b3abcf);
+  --line: light-dark(#e6e1f1, #332d4a); --side: light-dark(#f8f6fd, #232036); --read-bg: light-dark(#fff, #1a1727);
+  --code-bg: light-dark(#f4f1fb, #29243c);
+  --accent: light-dark(#6947c4, #6a4cc8); --link: light-dark(#5a3cb4, #bba6ff); --ctl: #2e1f5c;
+  --wall-1: light-dark(#c6b6f0, #3b2f63); --wall-2: light-dark(#a891e2, #2c2350); --wall-3: light-dark(#8b72d2, #1c1636);
+  --wall-glow: light-dark(rgba(255,255,255,.3), rgba(190,160,255,.08)); --wall-ring: light-dark(rgba(255,255,255,.14), rgba(255,255,255,.035));
+}

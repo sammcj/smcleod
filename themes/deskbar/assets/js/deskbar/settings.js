@@ -10,9 +10,9 @@ export const nextWidth = w => WIDTHS[(WIDTHS.indexOf(w) + 1) % WIDTHS.length];
 
 // The <html> data attribute each setting shows as. A default is stored as nothing and leaves its attribute off, so
 // the core CSS applies alone and head.html has no extra stylesheet to load. The default theme is light; auto follows the OS.
-const ATTR = { theme: 'theme', palette: 'palette', deco: 'deco', wall: 'wall', dock: 'dock', readerWidth: 'rdWidth', readerFont: 'rdFont' };
+const ATTR = { theme: 'theme', palette: 'palette', deco: 'deco', wall: 'wall', dock: 'dock', crt: 'crt', readerWidth: 'rdWidth', readerFont: 'rdFont' };
 export const DEFAULT = {
-  theme: 'light', palette: 'haiku', deco: 'haiku', wall: 'rings', dock: 'glass', readerWidth: 'normal', readerFont: 'serif', textSize: 18,
+  theme: 'light', palette: 'haiku', deco: 'haiku', wall: 'rings', dock: 'glass', crt: 'off', readerWidth: 'normal', readerFont: 'serif', textSize: 18,
 };
 const subs = new Set();
 // Choices the theme no longer offers, which visitors may still have stored

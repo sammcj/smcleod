@@ -144,6 +144,8 @@ test('axe: every palette, decorator and dock style, light and dark', async t => 
     // Liquid Ass over its own wallpaper, and over a plain one, where axe can see through the glass to work out contrast
     { palette: 'haiku', deco: 'liquid', wall: 'liquid', dock: 'glass' }, { palette: 'xfce', deco: 'liquid', wall: 'plain', dock: 'panel' },
     { palette: 'beos', deco: 'liquid', wall: 'plain', dock: 'glass' }, { palette: 'mint', deco: 'clear', wall: 'clear', dock: 'glass' },
+    // Liquid Ass's dock under a plain window style
+    { palette: 'sage', deco: 'haiku', wall: 'liquid', dock: 'liquid' },
     // the light palettes, whose panel is light too
     { palette: 'snow', deco: 'haiku', wall: 'rings', dock: 'glass' }, { palette: 'mint', deco: 'beos', wall: 'dots', dock: 'panel' },
     { palette: 'peach', deco: 'flat', wall: 'hills', dock: 'deskbar' },

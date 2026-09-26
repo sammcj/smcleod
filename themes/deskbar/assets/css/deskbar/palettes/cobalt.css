@@ -1,0 +1,18 @@
+/* Cobalt: tangerine tabs on cobalt. Toolbars and status bars sit on the frame colour with the body text, so in light
+   mode the frames stay pale and the cobalt goes into their edges, the panel and the desk; in dark the frames go
+   deep cobalt too. */
+:where(:root)[data-palette=cobalt] {
+  --panel: linear-gradient(light-dark(#2446b8, #1c3291), light-dark(#1a3596, #122470)); --panel-fg: #f5f7ff;
+  --panel-hover: rgba(255,255,255,.14);
+  --frame: light-dark(#e3e9fb, #19296b); --frame-hi: light-dark(#fafbff, #2e44a0);
+  --frame-lo: light-dark(#7f95dc, #0d1847); --frame-dk: light-dark(#142a80, #040a24);
+  --tab: light-dark(#ff9b3d, #ff8f2e); --tab-hi: light-dark(#ffcf9e, #ffbb7a); --tab-lo: light-dark(#c8641a, #c25a10);
+  --tab-dim: light-dark(#ffc38f, #b9774a); --tab-in: light-dark(#d3dcf5, #25378a);
+  --tab-in-lo: light-dark(#95a6d8, #13205a); --tab-in-fg: light-dark(#26346a, #dfe6ff);
+  --content: light-dark(#fff, #111a40); --fg: light-dark(#111a3a, #e8ecfb); --muted: light-dark(#4a5478, #aab5e0);
+  --line: light-dark(#dfe4f3, #25336e); --side: light-dark(#f2f5fd, #152056); --read-bg: light-dark(#fff, #0e1638);
+  --code-bg: light-dark(#eef2fc, #1a2654);
+  --accent: light-dark(#1f47c9, #2f58e0); --link: light-dark(#1c43bf, #9ab8ff); --ctl: #3a1a00;
+  --wall-1: light-dark(#3160e0, #1b3aa6); --wall-2: light-dark(#2049c6, #122a82); --wall-3: light-dark(#13309a, #0a1a55);
+  --wall-glow: light-dark(rgba(255,155,61,.3), rgba(255,143,46,.16)); --wall-ring: rgba(255,255,255,.05);
+}

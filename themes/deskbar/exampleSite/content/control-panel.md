@@ -8,7 +8,7 @@ aliases: ["/appearance/"]
 
 The Control panel holds this desktop's settings, kept in this browser:
 
-- **Appearance:** colours, light or dark, window style, wallpaper and dock style
+- **Appearance:** themes, or window style, colours, light or dark, dock, wallpaper and a CRT effect one at a time
 - **Posts:** the reader's width, text size and font
 - **System:** the screen saver's delay, and a button to try it
 

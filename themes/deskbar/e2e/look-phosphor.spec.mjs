@@ -1,6 +1,7 @@
 // Phosphor (css/deskbar/looks/phosphor.css): a P3 amber tube. Text-mode windows with the title set into a double
-// rule, a scanline and refresh-band overlay that never takes the pointer, a function-key bar for a dock, no Light
-// mode, touch-sized on phones, nothing left behind when the look is off, and axe over its main states.
+// rule, the tube CRT effect's scanlines and refresh band that never take the pointer, a function-key bar for a dock
+// that goes with any window style, no Light mode, touch-sized on phones, nothing left behind when the look is off,
+// and axe over its main states.
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
@@ -9,7 +10,7 @@ import { env, useBrowser, open, needs, shot, win, cards, desktop, phone } from '
 
 useBrowser();
 
-const LOOK = { deco: 'phosphor', wall: 'phosphor', dock: 'panel' };
+const LOOK = { deco: 'phosphor', wall: 'phosphor', dock: 'phosphor', crt: 'tube' };
 const seed = look => `for (const [k, v] of Object.entries(${JSON.stringify(look)})) localStorage.setItem("deskbar:" + k, JSON.stringify(v));`;
 const openLook = (vp, path, opts) => open(vp, path, seed(LOOK), opts);
 const AMBER = 'rgb(255, 181, 46)', BLACK = 'rgb(13, 9, 0)';
@@ -17,8 +18,9 @@ const css = (loc, props, pseudo) => loc.evaluate((el, [ps, p]) => {
   const s = getComputedStyle(el, p);
   return Object.fromEntries(ps.map(k => [k, s[k]]));
 }, [props, pseudo]);
-const bodyPseudo = (page, pseudo, props) => page.evaluate(([p, ps]) => {
-  const s = getComputedStyle(document.body, p);
+// the tube is drawn on <html>'s pseudo-elements (effects/crt.css)
+const rootPseudo = (page, pseudo, props) => page.evaluate(([p, ps]) => {
+  const s = getComputedStyle(document.documentElement, p);
   return Object.fromEntries(ps.map(k => [k, s[k]]));
 }, [pseudo, props]);
 
@@ -56,18 +58,26 @@ test('Phosphor: amber text-mode windows, the title set into a double rule, [-][^
   await page.context().close();
 });
 
-test('Phosphor: the Control panel turns off Colours, Mode and Dock while the look is on', async t => {
+test('Phosphor: its preset sets the whole look, and the Control panel turns off Colours and Mode while it is on', async t => {
   if (!(await needs(t, '/control-panel/'))) return;
-  const page = await openLook(desktop, '/control-panel/');
+  const page = await open(desktop, '/control-panel/');
   const cp = win(page, 'control-panel');
   await cp.locator('.cp').waitFor();
-  for (const g of ['palette', 'theme', 'dock']) {
+  await cp.locator('input[name="cp-preset"][value="phosphor"]').check();
+  const attrs = await page.evaluate(() => { const d = document.documentElement.dataset; return [d.deco, d.wall, d.dock, d.crt]; });
+  assert.deepEqual(attrs, ['phosphor', 'phosphor', 'phosphor', 'tube']);
+  for (const g of ['palette', 'theme']) {
     assert.equal(await cp.locator(`fieldset:has([name="cp-${g}"])`).evaluate(f => f.disabled), true, `${g} is the look's`);
   }
-  assert.equal(await cp.locator('fieldset:has([name="cp-wall"])').evaluate(f => f.disabled), false);
-  // both thumbnails are drawn
-  assert.equal((await css(cp.locator('.cp-deco.phosphor'), ['borderTopStyle'], '::after')).borderTopStyle, 'double');
-  assert.equal((await css(cp.locator('.cp-wp.phosphor'), ['content'], '::before')).content, '"> _"');
+  for (const g of ['wall', 'dock', 'crt']) {
+    assert.equal(await cp.locator(`fieldset:has([name="cp-${g}"])`).evaluate(f => f.disabled), false, `${g} stays the visitor's`);
+  }
+  // its thumbnails are drawn
+  assert.equal((await css(cp.locator('fieldset:has([name="cp-deco"]) .cp-deco.phosphor'), ['borderTopStyle'], '::after')).borderTopStyle, 'double');
+  assert.equal((await css(cp.locator('fieldset:has([name="cp-wall"]) .cp-wp.phosphor'), ['content'], '::before')).content, '"> _"');
+  const key = await css(cp.locator('fieldset:has([name="cp-dock"]) .cp-dk.phosphor'), ['backgroundImage', 'width'], '::before');
+  assert.match(key.backgroundImage, /repeating-linear-gradient/);
+  assert.equal(key.width, '76px', 'the bar spans the thumbnail');
   assert.deepEqual(page.errors, []);
   await page.context().close();
 });
@@ -77,13 +87,13 @@ test('Phosphor: scanlines and a refresh band over the tube that never take a cli
   const page = await openLook(desktop, '/posts/', { reducedMotion: 'no-preference' });
   const w = win(page, 'tracker');
   await w.locator('.pc').first().waitFor();
-  const scan = await bodyPseudo(page, '::before', ['content', 'position', 'pointerEvents', 'backgroundImage', 'zIndex']);
+  const scan = await rootPseudo(page, '::before', ['content', 'position', 'pointerEvents', 'backgroundImage', 'zIndex']);
   assert.equal(scan.position, 'fixed');
   assert.equal(scan.pointerEvents, 'none');
   assert.match(scan.backgroundImage, /repeating-linear-gradient/);
-  const band = await bodyPseudo(page, '::after', ['pointerEvents', 'animationName', 'display']);
-  assert.deepEqual(band, { pointerEvents: 'none', animationName: 'ph-roll', display: 'block' });
-  assert.equal(await page.evaluate(() => document.getAnimations().filter(a => a.animationName === 'ph-roll').length), 1);
+  const band = await rootPseudo(page, '::after', ['pointerEvents', 'animationName', 'display']);
+  assert.deepEqual(band, { pointerEvents: 'none', animationName: 'crt-roll', display: 'block' });
+  assert.equal(await page.evaluate(() => document.getAnimations().filter(a => a.animationName === 'crt-roll').length), 1);
   // over the windows, yet a click lands on what is under it
   const winZ = await w.evaluate(el => +getComputedStyle(el).zIndex || 0);
   assert.ok(+scan.zIndex > winZ, `overlay ${scan.zIndex} over window ${winZ}`);
@@ -96,29 +106,54 @@ test('Phosphor: scanlines and a refresh band over the tube that never take a cli
   await page.context().close();
 
   const still = await openLook(desktop, '/posts/');
-  const rm = await bodyPseudo(still, '::after', ['animationName', 'display']);
+  const rm = await rootPseudo(still, '::after', ['animationName', 'display']);
   assert.equal(rm.display, 'none', 'no rolling band under reduced motion');
-  assert.equal(await still.evaluate(() => document.getAnimations().filter(a => a.animationName?.startsWith('ph-')).length), 0, 'nothing of the tube animates');
+  assert.equal(await still.evaluate(() => document.getAnimations().filter(a => /^(ph|crt)-/.test(a.animationName)).length), 0, 'nothing of the tube animates');
   await still.context().close();
 });
 
-test('Phosphor: the dock is a function-key bar across the bottom of the screen', async () => {
-  const page = await openLook(desktop, '/');
-  const dock = page.locator('#dock'), key = dock.locator('.dk').first();
-  const db = await dock.boundingBox();
-  assert.equal(db.x, 0);
-  assert.equal(db.width, desktop.width, 'spans the screen');
-  assert.equal(Math.round(db.y + db.height), desktop.height, 'on the bottom edge');
-  assert.equal((await css(key, ['content'], '::before')).content, 'counter(fk)', 'numbered keys');
-  assert.equal(await key.locator('.ico').isVisible(), false, 'labels, not icons');
-  const lbl = await css(key.locator('.lbl'), ['backgroundColor', 'color', 'width']);
-  assert.equal(lbl.backgroundColor, AMBER, 'label in inverse video');
-  assert.equal(lbl.color, BLACK);
-  assert.ok(parseFloat(lbl.width) > 40, `label shown, ${lbl.width}`);
-  assert.equal((await css(dock.locator('#winsBtn'), ['content'], '::after')).content, '"Windows"');
-  // keys share the width
-  const widths = await dock.locator('.dk').evaluateAll(ks => ks.map(k => Math.round(k.getBoundingClientRect().width)));
-  assert.ok(Math.max(...widths) - Math.min(...widths) <= 1, `even keys ${widths}`);
+// The function-key bar on its own (data-dock=phosphor): the same with the look, with the default style in light, and
+// with BeOS in Xfce's colours in dark, as its colours are its own
+const WITH = { look: LOOK, classic: { dock: 'phosphor' }, beos: { deco: 'beos', palette: 'xfce', wall: 'hills', dock: 'phosphor', theme: 'dark' } };
+test('Phosphor: the dock is a function-key bar across the bottom of the screen, under any window style', async () => {
+  for (const [name, look] of Object.entries(WITH)) {
+    const page = await open(desktop, '/', seed(look), { colorScheme: look.theme ?? 'light' });
+    const dock = page.locator('#dock'), key = dock.locator('.dk').first();
+    const db = await dock.boundingBox();
+    assert.equal(db.x, 0, name);
+    assert.equal(db.width, desktop.width, `${name}: spans the screen`);
+    assert.equal(Math.round(db.y + db.height), desktop.height, `${name}: on the bottom edge`);
+    assert.ok(db.height <= 40, `${name}: a slim bar, ${db.height}px`);
+    assert.equal(await page.evaluate(() => getComputedStyle(document.documentElement).getPropertyValue('--dock-h').trim()), '36px', `${name}: windows get the room`);
+    assert.equal((await css(key, ['content'], '::before')).content, 'counter(fk)', `${name}: numbered keys`);
+    assert.equal(await key.locator('.ico').isVisible(), false, `${name}: labels, not icons`);
+    const lbl = await css(key.locator('.lbl'), ['backgroundColor', 'color', 'width', 'fontFamily']);
+    assert.equal(lbl.backgroundColor, AMBER, `${name}: label in inverse video`);
+    assert.equal(lbl.color, BLACK, name);
+    assert.match(lbl.fontFamily, /Mono|monospace/, name);
+    assert.ok(parseFloat(lbl.width) > 40, `${name}: label shown, ${lbl.width}`);
+    assert.equal((await css(dock, ['backgroundColor'])).backgroundColor, BLACK, name);
+    assert.equal((await css(dock.locator('#winsBtn'), ['content'], '::after')).content, '"Windows"', name);
+    // keys share the width
+    const widths = await dock.locator('.dk').evaluateAll(ks => ks.map(k => Math.round(k.getBoundingClientRect().width)));
+    assert.ok(Math.max(...widths) - Math.min(...widths) <= 1, `${name}: even keys ${widths}`);
+    if (name === 'beos') await shot(page, 'phosphor-dock-beos');
+    assert.deepEqual(page.errors, []);
+    await page.context().close();
+  }
+});
+
+test('Phosphor windows over the glass dock: the dock keeps its own shape and icons', async t => {
+  if (!(await needs(t, '/posts/'))) return;
+  const page = await openLook(desktop, '/posts/');
+  // glass is the default dock, shown as no attribute
+  await page.evaluate(() => { delete document.documentElement.dataset.dock; });
+  const dock = page.locator('#dock'), db = await dock.boundingBox();
+  assert.ok(db.x > 0 && db.width < desktop.width, `centred, ${JSON.stringify(db)}`);
+  assert.equal(await dock.locator('.dk .ico').first().isVisible(), true);
+  assert.equal((await css(dock.locator('.dk .lbl').first(), ['width'])).width, '1px', 'labels stay for screen readers only');
+  assert.equal((await css(win(page, 'tracker').locator('.frame'), ['borderTopStyle'])).borderTopStyle, 'double', 'the window style is unchanged');
+  await shot(page, 'phosphor-glass-dock');
   assert.deepEqual(page.errors, []);
   await page.context().close();
 });
@@ -140,6 +175,15 @@ test('Phosphor on a phone: a title bar over the full-screen window, touch-sized 
   await shot(page, 'phosphor-phone');
   assert.deepEqual(page.errors, []);
   await page.context().close();
+
+  // the bar alone, under another window style, spans the phone and stays touch-sized
+  const other = await open(phone, '/', seed(WITH.beos), { colorScheme: 'dark' });
+  const [db, ob] = [await other.locator('#dock').boundingBox(), await other.locator('#dock .dk').first().boundingBox()];
+  assert.equal(Math.round(db.width), phone.width, 'the bar spans the phone');
+  assert.ok(ob.height >= 44, `dock key ${ob.height}px tall`);
+  await shot(other, 'phosphor-dock-phone');
+  assert.deepEqual(other.errors, []);
+  await other.context().close();
 });
 
 test('Phosphor leaves nothing behind when another look is on, though its stylesheet is loaded', async t => {
@@ -150,7 +194,7 @@ test('Phosphor leaves nothing behind when another look is on, though its stylesh
   const href = await page.evaluate(() => JSON.parse(document.getElementById('deskbar-lazy').textContent)['look-phosphor'].css);
   await page.waitForFunction(h => !!document.querySelector(`head link[rel=stylesheet][href="${h}"]`)?.sheet, href);
   assert.notEqual((await css(cp.locator('.frame'), ['borderTopStyle'])).borderTopStyle, 'double');
-  assert.equal((await bodyPseudo(page, '::before', ['content'])).content, 'none');
+  assert.doesNotMatch(await page.evaluate(() => getComputedStyle(document.getElementById('desk'), '::after').content), /LOGIN/);
   assert.equal(await page.locator('#dock .dk .ico').first().isVisible(), true);
   assert.equal(await page.locator('#themeBtn').isVisible(), true);
   await page.context().close();

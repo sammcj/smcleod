@@ -62,7 +62,9 @@
 :root[data-deco=vector] :is(.tb, .seg, select, textarea, input:not([type=checkbox], [type=radio], [type=range])) { border-color: var(--sw-edge); border-radius: 0; }
 :root[data-deco=vector] :is(.tb, .seg):hover { border-color: var(--sw-cyan); }
 :root[data-deco=vector] :is(.tb:active, .seg.on, .tb[aria-pressed=true], .tb[aria-expanded=true]) { color: var(--sw-ink); background: var(--sw-cyan); border-color: var(--sw-cyan); box-shadow: none; }
-:root[data-deco=vector] :is(.pc, .tg, .ph, .gi, .folder a, .rd-pager a, .cp-opt, .cp-art, .term-chip, .rd .chip, .rd pre, .rd .highlight > div.chroma, .rd code, .rd img, .sp-close, .sp-field, .recent-list, .mn-it, .ctx-it, .sp-opt, .sw-link, .dk, #homeBtn, #winsBtn, #recent h2) { border-radius: 0; }
+:root[data-deco=vector] :is(.pc, .tg, .ph, .gi, .folder a, .rd-pager a, .cp-opt, .cp-art, .term-chip, .rd .chip, .rd pre, .rd .highlight > div.chroma, .rd code, .rd img, .sp-close, .sp-field, .recent-list, .mn-it, .ctx-it, .sp-opt, .sw-link, #recent h2) { border-radius: 0; }
+/* phones move the window switcher into the panel; the dock squares its own */
+:root[data-deco=vector] #panel #winsBtn { border-radius: 0; }
 :root[data-deco=vector] .pc:hover { box-shadow: inset 0 0 0 1px var(--sw-cyan); }
 
 /* menus and popups: a cyan line, the Spotlight frame with the window's double rule */
@@ -76,11 +78,13 @@
 :root[data-deco=vector] .sw-tab.on::after { border-color: var(--sw-cyan); box-shadow: var(--vx-rule); }
 :root[data-deco=vector] .sw-tab .sw-open { font-family: var(--sw-head); letter-spacing: .1em; text-transform: uppercase; }
 
-/* the dock: flat and square on the same double rule, square cyan bars under running apps */
-.wm[data-deco=vector] #dock { background: rgba(21,9,54,.94); border: 1px solid var(--sw-cyan); border-radius: 0; box-shadow: inset 0 0 0 2px rgba(21,9,54,.94), inset 0 0 0 3px rgba(255,62,165,.7), 0 8px 24px rgba(0,0,0,.5); backdrop-filter: none; -webkit-backdrop-filter: none; }
-.wm[data-deco=vector] #dock .dk:hover { background: rgba(111,227,255,.14); }
-.wm[data-deco=vector] #dock .dk.run::after { bottom: 2px; width: 14px; height: 2px; margin-left: -7px; border-radius: 0; background: var(--sw-cyan); }
-.wm[data-deco=vector] #dock #homeBtn.on { background: rgba(111,227,255,.16); box-shadow: inset 0 0 0 1px var(--sw-cyan); }
+/* The dock: flat and square on the same double rule, square cyan bars under running apps. Literal colours, as it can
+   be picked under any window style. */
+.wm[data-dock=vector] #dock { background: rgba(21,9,54,.94); border: 1px solid #6fe3ff; border-radius: 0; box-shadow: inset 0 0 0 2px rgba(21,9,54,.94), inset 0 0 0 3px rgba(255,62,165,.7), 0 8px 24px rgba(0,0,0,.5); backdrop-filter: none; -webkit-backdrop-filter: none; }
+.wm[data-dock=vector] #dock :is(.dk, #homeBtn, #winsBtn) { border-radius: 0; }
+.wm[data-dock=vector] #dock .dk:hover { background: rgba(111,227,255,.14); }
+.wm[data-dock=vector] #dock .dk.run::after { bottom: 2px; width: 14px; height: 2px; margin-left: -7px; border-radius: 0; background: #6fe3ff; }
+.wm[data-dock=vector] #dock #homeBtn.on { background: rgba(111,227,255,.16); box-shadow: inset 0 0 0 1px #6fe3ff; }
 
 :root[data-deco=vector] .dicon span { background: rgba(13,5,38,.82); border-radius: 0; text-shadow: none; }
 :root[data-deco=vector] .dicon:is(:hover, :focus-visible) span { color: var(--sw-ink); background: var(--sw-cyan); }
@@ -109,10 +113,11 @@
 }
 .wm[data-wall=vector] #desk::after { font: 700 40px/1 'Space Grotesk', var(--ui); letter-spacing: .3em; text-transform: uppercase; color: transparent; -webkit-text-stroke: 1px rgba(111,227,255,.35); }
 
-/* Control panel thumbnails: the lattice scaled down, and a square window under a cut cyan tab */
+/* Control panel thumbnails: the lattice scaled down, a square window under a cut cyan tab, and the ruled dock */
 .cp-wp.vector, .cp-deco.vector { --vx-w: 12px; }
 .cp-deco.vector::before { background: #6fe3ff; border: 0; box-shadow: none; clip-path: polygon(0 100%, 4px 0, calc(100% - 4px) 0, 100% 100%); }
 .cp-deco.vector::after { background: #211546; border: 1px solid #6fe3ff; border-radius: 0; box-shadow: inset 0 0 0 2px #211546, inset 0 0 0 3px #ff3ea5, 0 3px 6px rgba(0,0,0,.5); }
+.cp-dk.vector::before { background: var(--ic) content-box, #150936; border-color: #6fe3ff; border-radius: 0; box-shadow: inset 0 0 0 1px #150936, inset 0 0 0 2px #ff3ea5; }
 
 /* Phones (the same query as windows.css): the title bar spans the full-screen window, so it loses its cut ends and
    sits on the pink hairline instead */

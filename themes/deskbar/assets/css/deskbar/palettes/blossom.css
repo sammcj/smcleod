@@ -1,0 +1,15 @@
+:where(:root)[data-palette=blossom] {
+  --panel: linear-gradient(light-dark(#8e3e68, #4a2537), light-dark(#763153, #381b2a)); --panel-fg: #fff3f8;
+  --panel-hover: rgba(255,255,255,.12);
+  --frame: light-dark(#fdf4f7, #2f212c); --frame-hi: light-dark(#fff, #4a3446);
+  --frame-lo: light-dark(#e2c2ce, #1c1419); --frame-dk: light-dark(#a67388, #0e090c);
+  --tab: light-dark(#ffc4d9, #f5a8c4); --tab-hi: light-dark(#ffe6ef, #fcd0e0); --tab-lo: light-dark(#e08aa8, #c66f90);
+  --tab-dim: light-dark(#ffdbe7, #b9849a); --tab-in: light-dark(#f7eff2, #3b2d34);
+  --tab-in-lo: light-dark(#dccbd1, #251c21); --tab-in-fg: light-dark(#5c4650, #e6d3dc);
+  --content: light-dark(#fff, #231a1f); --fg: light-dark(#2a1720, #f2e7ec); --muted: light-dark(#6b5360, #c4aeb9);
+  --line: light-dark(#f1e2e8, #3b2d34); --side: light-dark(#fdf7f9, #2a2026); --read-bg: light-dark(#fff, #1f171b);
+  --code-bg: light-dark(#fcf0f4, #2f242a);
+  --accent: light-dark(#b83273, #b3306f); --link: light-dark(#a82a66, #ffa3c8); --ctl: #5a1233;
+  --wall-1: light-dark(#f8c6d8, #5a2447); --wall-2: light-dark(#f0a2c0, #441a37); --wall-3: light-dark(#e07ea6, #2c1025);
+  --wall-glow: light-dark(rgba(255,255,255,.3), rgba(255,160,200,.08)); --wall-ring: light-dark(rgba(255,255,255,.14), rgba(255,255,255,.035));
+}

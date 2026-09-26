@@ -1,0 +1,16 @@
+/* Crisp: Haiku with the grime washed off. Same yellow tab and bevels, but cool white frames with darker edge lines,
+   pure white pages in place of the cream reader and a cleaner blue desk; dark mode is neutral charcoal. */
+:where(:root)[data-palette=crisp] {
+  --panel: linear-gradient(#3a3d42, #282a2e); --panel-fg: #f2f3f5;
+  --frame: light-dark(#f1f2f4, #2d3034); --frame-hi: light-dark(#fff, #464a50);
+  --frame-lo: light-dark(#a9aeb5, #1b1d20); --frame-dk: light-dark(#4a4f56, #09090a);
+  --tab: light-dark(#ffcf0f, #f5c400); --tab-hi: light-dark(#fff3b3, #fde17a); --tab-lo: light-dark(#c29a00, #9a7a00);
+  --tab-dim: light-dark(#f6e59a, #a28d3c); --tab-in: light-dark(#e7e9ec, #3b3e43);
+  --tab-in-lo: light-dark(#b6bbc2, #25272a); --tab-in-fg: light-dark(#42464c, #d8dbe0);
+  --content: light-dark(#fff, #1d1f22); --fg: light-dark(#15171a, #e9ebee); --muted: light-dark(#51565d, #b4b9c0);
+  --line: light-dark(#e2e4e8, #33363b); --side: light-dark(#f6f7f8, #232529); --read-bg: light-dark(#fff, #191a1d);
+  --read-fg: light-dark(#1b1d20, #e3e5e8); --code-bg: light-dark(#f2f3f5, #26292d);
+  --accent: light-dark(#2667d0, #2b68cc); --link: light-dark(#1d5bc2, #80aef5);
+  --wall-1: light-dark(#4a86d4, #25446e); --wall-2: light-dark(#2d67b5, #1a3354); --wall-3: light-dark(#1c4a8a, #10223a);
+  --wall-glow: light-dark(rgba(255,207,15,.18), rgba(255,207,15,.08)); --wall-ring: light-dark(rgba(255,255,255,.07), rgba(255,255,255,.035));
+}

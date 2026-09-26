@@ -80,6 +80,8 @@
 :root[data-deco=clear] .win .frame { padding: 5px; border-radius: 12px; box-shadow: var(--lq-shine), 0 6px 20px rgba(0,0,0,.2); }
 :root[data-deco=clear] .win.active .frame { box-shadow: var(--lq-shine), 0 10px 32px rgba(0,0,0,.3); }
 :root[data-deco=clear] .views { border-radius: 8px; }
+/* a fainter white on the window's outer edge and inner rim than the rest of the glass, so windows don't look puffed up */
+:root[data-deco=clear] .win :is(.frame, .tab, .th) { --lq-rim: light-dark(rgba(255,255,255,.42), rgba(255,255,255,.16)); --lq-shine: inset 1px 1px 0 var(--lq-rim), inset 0 0 10px light-dark(rgba(255,255,255,.12), rgba(255,255,255,.03)); }
 /* the tab is glass too, with the palette's tab colour showing through as a tint. Liquid Ass floats it as a pill on
    the frame's rim, clear of its big corner curves; Clear joins it to the frame's top edge */
 :root:is([data-deco=liquid], [data-deco=clear]) .win :is(.tab, .th) { gap: 0; padding: 0 12px 0 5px; border: 1px solid var(--lq-rim); color: light-dark(#333, #ddd); background: light-dark(rgba(255,255,255,.72), rgba(40,42,50,.76)); box-shadow: var(--lq-shine); backdrop-filter: var(--lq-blur); -webkit-backdrop-filter: var(--lq-blur); }
@@ -154,11 +156,13 @@
 :root[data-deco=clear] .ctx { border-radius: 10px; box-shadow: var(--lq-shine), 0 10px 28px rgba(0,0,0,.3); }
 :root[data-deco=clear] #recent h2 { border-radius: 9px 9px 0 0; }
 :root[data-deco=clear] #desk .recent-list { border-radius: 0 12px 12px 12px; box-shadow: var(--lq-shine), 0 10px 28px rgba(0,0,0,.25); }
-/* the glass dock goes glassier, and its launchers swell under the pointer */
-.wm[data-deco=liquid]:not([data-dock]) #dock { padding: 12px 20px; background: light-dark(rgba(255,255,255,.18), rgba(255,255,255,.07)); border: 1px solid var(--lq-rim); border-radius: 30px 46px 24px 54px; backdrop-filter: blur(34px) saturate(340%) brightness(1.15); -webkit-backdrop-filter: blur(34px) saturate(340%) brightness(1.15); box-shadow: var(--lq-shine), 0 10px 20px rgba(0,0,0,.25), 0 40px 80px rgba(0,0,0,.35), 0 0 120px rgba(255,120,220,.4); }
-.wm[data-deco=liquid]:not([data-dock]) :is(.dk, #dock #homeBtn, #dock #winsBtn) { border-radius: 16px 12px 18px 10px; }
-.wm[data-deco=liquid]:not([data-dock]) :is(.dk, #dock #homeBtn, #dock #winsBtn) .ico { transition: transform .25s cubic-bezier(.3, 1.8, .5, 1); }
-.wm[data-deco=liquid]:not([data-dock]) :is(.dk, #dock #homeBtn, #dock #winsBtn):hover .ico { transform: translateY(-8px) scale(1.35); }
+/* Liquid Ass's dock: the glass dock gone glassier, its launchers swelling under the pointer. It can go with any window
+   style, so it carries Liquid Ass's rim and shine itself. */
+.wm[data-dock=liquid] #dock { --lq-rim: light-dark(rgba(255,255,255,.85), rgba(255,255,255,.4)); --lq-shine: inset 2px 2px 1px var(--lq-rim), inset -2px -3px 2px light-dark(rgba(255,255,255,.35), rgba(255,255,255,.12)), inset 0 0 22px light-dark(rgba(255,255,255,.35), rgba(255,255,255,.08));
+  padding: 12px 20px; background: light-dark(rgba(255,255,255,.18), rgba(255,255,255,.07)); border: 1px solid var(--lq-rim); border-radius: 30px 46px 24px 54px; backdrop-filter: blur(34px) saturate(340%) brightness(1.15); -webkit-backdrop-filter: blur(34px) saturate(340%) brightness(1.15); box-shadow: var(--lq-shine), 0 10px 20px rgba(0,0,0,.25), 0 40px 80px rgba(0,0,0,.35), 0 0 120px rgba(255,120,220,.4); }
+.wm[data-dock=liquid] :is(.dk, #dock #homeBtn, #dock #winsBtn) { border-radius: 16px 12px 18px 10px; }
+.wm[data-dock=liquid] :is(.dk, #dock #homeBtn, #dock #winsBtn) .ico { transition: transform .25s cubic-bezier(.3, 1.8, .5, 1); }
+.wm[data-dock=liquid] :is(.dk, #dock #homeBtn, #dock #winsBtn):hover .ico { transform: translateY(-8px) scale(1.35); }
 @keyframes lq-jelly { 25% { transform: scale(1.16, .84); } 45% { transform: scale(.88, 1.12); } 62% { transform: scale(1.06, .94); } 80% { transform: scale(.98, 1.02); } }
 @media (prefers-reduced-motion: no-preference) {
   :root[data-deco=liquid] :is(.tb, .seg, .ctl, .pb, .dk, .cp-opt):hover { animation: lq-jelly .6s ease-out; }
@@ -167,7 +171,7 @@
 @supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
   :root:is([data-deco=liquid], [data-deco=clear]) { --frame: light-dark(rgba(240,241,246,.94), rgba(42,46,58,.95)); --panel: light-dark(rgba(246,247,250,.95), rgba(24,26,34,.96)); --content: light-dark(#fff, #26282b); }
   :root:is([data-deco=liquid], [data-deco=clear]) .win .tab { background: light-dark(#f3f3f6, #34363e); }
-  .wm[data-deco=liquid]:not([data-dock]) #dock { background: light-dark(rgba(236,236,244,.92), rgba(40,42,52,.94)); }
+  .wm[data-dock=liquid] #dock { background: light-dark(rgba(236,236,244,.92), rgba(40,42,52,.94)); }
 }
 @media (max-width: 767px), (max-height: 500px) and (pointer: coarse) {
   :root:is([data-deco=liquid], [data-deco=clear]) .win .frame { padding: 0; }
@@ -265,6 +269,10 @@
 .cp-art { position: relative; display: block; width: 76px; height: 48px; border-radius: 3px; overflow: hidden; box-shadow: inset 0 0 0 1px rgba(0,0,0,.2); }
 /* palette swatch: a window (tab and frame) on the desktop colour */
 .cp-sw { background: linear-gradient(var(--a) 0 0) 10px 10px / 30px 7px no-repeat, linear-gradient(var(--b) 0 0) 10px 17px / 56px 24px no-repeat, var(--c); }
+/* preset: its window style's thumbnail over its wallpaper's, the style's own backdrop dropped */
+.cp-pre > .cp-art { position: absolute; inset: 0; border-radius: 0; box-shadow: none; }
+.cp-pre > .cp-art.cp-deco { background: none; }
+.cp-presets { padding-bottom: 14px; border-bottom: 1px solid var(--line); }
 /* decorator: a small window in each style */
 .cp-deco { background: var(--wall-2); }
 .cp-deco::before, .cp-deco::after { content: ''; position: absolute; left: 12px; }
@@ -288,6 +296,8 @@
 /* dock style: a strip of launchers on the desktop colour */
 .cp-dk { background: var(--wall-2); --ic: repeating-linear-gradient(90deg, #ffcb00 0 6px, transparent 6px 9px, #6fa0e6 9px 15px, transparent 15px 18px); }
 .cp-dk::before { content: ''; position: absolute; left: 50%; bottom: 5px; width: 50px; height: 12px; padding: 2px 3px; transform: translateX(-50%); background: var(--ic) content-box, rgba(42,44,48,.9); border: 1px solid rgba(255,255,255,.25); border-radius: 3px; }
+.cp-dk.liquid { background: radial-gradient(40% 60% at 20% 30%, #ff7eb6, transparent), radial-gradient(40% 60% at 80% 40%, #7ab8ff, transparent), #6a4fd0; }
+.cp-dk.liquid::before { padding: 3px 5px; border-color: rgba(255,255,255,.85); border-radius: 8px 12px 6px 14px; background: var(--ic) content-box, rgba(255,255,255,.28); box-shadow: inset 1px 1px 1px #fff, 0 0 10px rgba(255,120,220,.7); }
 .cp-dk.deskbar::before { bottom: 0; width: 56px; border-color: var(--frame-dk); border-bottom: 0; border-radius: 0; background: var(--ic) content-box, var(--frame); box-shadow: inset 1px 1px 0 var(--frame-hi); }
 /* screen saver: leaves on the dark screen, or a sheep (frame 3 of the sheet, at 1x) by a window on a dimmed desktop */
 .cp-sv.leaves { background: radial-gradient(4px 2.5px at 18px 12px, #8cc152 90%, transparent), radial-gradient(2.5px 4px at 50px 20px, #5e9e3f 90%, transparent), radial-gradient(4px 2.5px at 32px 34px, #d9822b 90%, transparent), radial-gradient(2.5px 4px at 62px 38px, #a4c639 90%, transparent), radial-gradient(ellipse at 50% 35%, #1d3a24, #040604 80%); }

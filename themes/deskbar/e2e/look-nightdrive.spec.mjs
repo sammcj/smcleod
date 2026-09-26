@@ -1,7 +1,7 @@
 // Night Drive (css/deskbar/looks/nightdrive.css): synthwave as an 80s sportswear tag. Rounded indigo windows, the
-// focused one rimmed in a pink to cyan gradient, flush indigo tabs with a sunset badge, a neon purple panel rule, a flat
-// striped wallpaper that stays behind everything, no Light mode, linked before first paint, nothing left behind when the look is off, and axe over its
-// main states.
+// focused one rimmed in a pink to cyan gradient, flush indigo tabs with a sunset badge, a neon purple panel rule, a pill
+// dock that also stands on its own, a flat striped wallpaper that stays behind everything, no Light mode, linked before
+// first paint, nothing left behind when the look is off, and axe over its main states.
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
@@ -10,7 +10,7 @@ import { env, useBrowser, open, needs, shot, win, cards, desktop, phone, toolbar
 
 useBrowser();
 
-const LOOK = { deco: 'nightdrive', wall: 'nightdrive', dock: 'glass' };
+const LOOK = { deco: 'nightdrive', wall: 'nightdrive', dock: 'nightdrive' };
 const seed = look => `for (const [k, v] of Object.entries(${JSON.stringify(look)})) localStorage.setItem("deskbar:" + k, JSON.stringify(v));`;
 const openLook = (vp, path, opts) => open(vp, path, seed(LOOK), opts);
 const PINK = 'rgb(255, 62, 165)', YELLOW = 'rgb(255, 228, 94)', CYAN = 'rgb(111, 227, 255)', EDGE = 'rgb(74, 53, 128)';
@@ -71,19 +71,20 @@ test('Night Drive: a gradient rim, flush badged tabs, a purple panel glow, plain
   await page.context().close();
 });
 
-test('Night Drive: the Control panel turns off Colours, Mode and Dock and draws both thumbnails', async t => {
+test('Night Drive: the Control panel turns off Colours and Mode and draws its thumbnails', async t => {
   if (!(await needs(t, '/control-panel/'))) return;
   const page = await openLook(desktop, '/control-panel/');
   const cp = win(page, 'control-panel');
   await cp.locator('.cp').waitFor();
-  for (const g of ['palette', 'theme', 'dock']) {
+  for (const g of ['palette', 'theme']) {
     assert.equal(await cp.locator(`fieldset:has([name="cp-${g}"])`).evaluate(f => f.disabled), true, `${g} is the look's`);
   }
-  assert.equal(await cp.locator('fieldset:has([name="cp-wall"])').evaluate(f => f.disabled), false);
-  const win_ = await css(cp.locator('.cp-deco.nightdrive'), ['borderTopLeftRadius', 'backgroundImage'], '::after');
+  for (const g of ['wall', 'dock']) assert.equal(await cp.locator(`fieldset:has([name="cp-${g}"])`).evaluate(f => f.disabled), false, `${g} stays the visitor's`);
+  assert.equal((await css(cp.locator('.cp-dk.nightdrive'), ['borderTopLeftRadius'], '::before')).borderTopLeftRadius, '999px', 'the pill dock');
+  const win_ = await css(cp.locator('fieldset:has([name="cp-deco"]) .cp-deco.nightdrive'), ['borderTopLeftRadius', 'backgroundImage'], '::after');
   assert.equal(win_.borderTopLeftRadius, '0px', 'the tab sits on its square corner');
   assert.match(win_.backgroundImage, /135deg/, 'the rimmed window');
-  assert.match((await css(cp.locator('.cp-wp.nightdrive'), ['backgroundImage'])).backgroundImage, /repeating-linear-gradient.*rgb\(255, 228, 94\)/, 'scanlines over the bands');
+  assert.match((await css(cp.locator('fieldset:has([name="cp-wall"]) .cp-wp.nightdrive'), ['backgroundImage'])).backgroundImage, /repeating-linear-gradient.*rgb\(255, 228, 94\)/, 'scanlines over the bands');
   await shot(page, 'nightdrive-cp');
   assert.deepEqual(page.errors, []);
   await page.context().close();
@@ -131,6 +132,38 @@ test('Night Drive on a phone: a square title bar on the full-screen window', asy
   // the reader toolbar sticks straight under the title bar, with no band between them
   for (const g of await toolbarGaps(page, w)) assert.ok(Math.abs(g) <= 8, `toolbar ${g}px from the title bar`);
   await shot(page, 'nightdrive-phone');
+  assert.deepEqual(page.errors, []);
+  await page.context().close();
+});
+
+test('Night Drive: its dock is drawn under another window style in either mode, and nothing of it is on the glass dock', async t => {
+  if (!(await needs(t, '/posts/'))) return;
+  const dockOf = page => css(page.locator('#dock'), ['borderTopLeftRadius', 'boxShadow']);
+  const lamp = page => css(page.locator('#dock .dk.run').first(), ['width', 'boxShadow'], '::after');
+  for (const theme of ['light', 'dark']) {
+    const page = await open(desktop, '/posts/', seed({ deco: 'haiku', dock: 'nightdrive', theme }));
+    const w = win(page, 'tracker');
+    await w.locator('.pc').first().waitFor();
+    assert.notEqual((await css(w.locator('.tab.on .tt'), ['textTransform'])).textTransform, 'uppercase', 'Haiku windows');
+    const d = await dockOf(page);
+    assert.equal(d.borderTopLeftRadius, '999px', 'a pill');
+    assert.match(d.boxShadow, /rgba\(255, 62, 165.*rgba\(111, 227, 255/, 'pink and cyan glow at its ends');
+    const l = await lamp(page);
+    assert.equal(l.width, '10px', 'bar lamps');
+    assert.notEqual(l.boxShadow, 'none');
+    await shot(page, `nightdrive-dock-${theme}`);
+    assert.deepEqual(page.errors, []);
+    await page.context().close();
+  }
+  const page = await open(desktop, '/posts/', seed({ ...LOOK, dock: 'glass' }));
+  const w = win(page, 'tracker');
+  await w.locator('.pc').first().waitFor();
+  assert.equal((await css(w.locator('.tab.on .tt'), ['textTransform'])).textTransform, 'uppercase', 'Night Drive windows');
+  const d = await dockOf(page);
+  assert.equal(d.borderTopLeftRadius, '8px');
+  assert.doesNotMatch(d.boxShadow, /rgba\(255, 62, 165/);
+  assert.equal((await lamp(page)).width, '5px');
+  await shot(page, 'nightdrive-glass-dock');
   assert.deepEqual(page.errors, []);
   await page.context().close();
 });

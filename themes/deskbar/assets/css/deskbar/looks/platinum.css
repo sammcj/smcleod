@@ -6,7 +6,7 @@
 :root[data-deco=platinum] {
   --ui: Geneva, 'Noto Sans', system-ui, sans-serif;
   --p-chrome: Charcoal, 'Chicago FLF', Geneva, 'Noto Sans', system-ui, sans-serif;
-  --tab-h: 22px; --dock-h: 52px;
+  --tab-h: 22px;
   --frame: light-dark(#ddd, #444449); --frame-hi: light-dark(#fff, #66666c);
   --frame-lo: light-dark(#999, #28282c); --frame-dk: light-dark(#000, #0a0a0c);
   --panel: light-dark(#ddd, #3c3c41); --panel-fg: light-dark(#000, #eee); --panel-hover: light-dark(rgba(0,0,0,.08), rgba(255,255,255,.1));
@@ -25,8 +25,8 @@
   accent-color: var(--accent);
 }
 :root[data-deco=platinum] ::selection { background: #ccf; color: #000; }
-/* the menu bar's rounded top corners, as on a Mac screen */
-.wm[data-deco=platinum]::before { content: ''; position: fixed; inset: 0 0 auto; height: 8px; z-index: 2147483647; pointer-events: none; background: radial-gradient(circle at 100% 100%, transparent 7px, #000 7.5px) 0 0 / 8px 8px no-repeat, radial-gradient(circle at 0 100%, transparent 7px, #000 7.5px) 100% 0 / 8px 8px no-repeat; }
+/* the menu bar's rounded top corners, as on a Mac screen, drawn in the bar (the CRT effects hold the page's own pseudo-elements) */
+.wm[data-deco=platinum] #panel::before { content: ''; position: absolute; inset: 0 0 auto; height: 8px; z-index: 1; pointer-events: none; background: radial-gradient(circle at 100% 100%, transparent 7px, #000 7.5px) 0 0 / 8px 8px no-repeat, radial-gradient(circle at 0 100%, transparent 7px, #000 7.5px) 100% 0 / 8px 8px no-repeat; }
 
 /* Windows: the title bar spans the frame; its pinstripes stop short of the boxes and the centred title */
 :root[data-deco=platinum] .win .frame { padding: 0 5px 5px; border-top: 0; box-shadow: inset 1px 0 var(--frame-hi), inset -1px -1px var(--frame-lo), var(--p-shadow); }
@@ -131,25 +131,34 @@
 :root[data-deco=platinum] #recent h2 { color: var(--fg); background: var(--frame); border-color: var(--frame-dk); box-shadow: inset 1px 1px var(--frame-hi); font: 400 13px var(--p-chrome); }
 :root[data-deco=platinum] .recent-list { box-shadow: var(--p-bevel), var(--p-shadow); }
 
-/* The Control Strip: a grey bar from the left edge, modules between grooves, ended by a ridged tab */
-.wm[data-deco=platinum] #dock { left: 0; bottom: 10px; transform: none; gap: 0; padding: 2px 16px 2px 2px; background: var(--frame); border: 1px solid var(--frame-dk); border-left: 0; border-radius: 0 9px 9px 0; box-shadow: inset 0 1px var(--frame-hi), inset 0 -1px var(--frame-lo), var(--p-shadow); backdrop-filter: none; -webkit-backdrop-filter: none; }
-.wm[data-deco=platinum] #dock::after { content: ''; position: absolute; right: 3px; top: 7px; bottom: 7px; width: 7px; background: repeating-linear-gradient(90deg, var(--frame-lo) 0 1px, var(--frame-hi) 1px 2px, transparent 2px 3px); }
-.wm[data-deco=platinum] :is(.dk, #dock #homeBtn, #dock #winsBtn) { width: 38px; height: 32px; margin: 0; border-radius: 0; color: var(--fg); border-right: 1px solid var(--frame-lo); box-shadow: 1px 0 var(--frame-hi); }
-.wm[data-deco=platinum] :is(.dk, #dock #homeBtn, #dock #winsBtn) .ico { width: 24px; height: 24px; }
-.wm[data-deco=platinum] :is(.dk, #dock #homeBtn, #dock #winsBtn):hover { background: color-mix(in srgb, var(--accent) 18%, var(--frame)); }
-.wm[data-deco=platinum] :is(.dk, #dock #homeBtn, #dock #winsBtn):active, .wm[data-deco=platinum]:has(#switcher:popover-open) #dock #winsBtn, .wm[data-deco=platinum] #dock #homeBtn.on { background: var(--frame-lo); box-shadow: inset 1px 1px 2px rgba(0,0,0,.4); }
-.wm[data-deco=platinum] :is(#dock #homeBtn::after, #dock #winsBtn::before) { content: none; }
-.wm[data-deco=platinum] .dk.run::after { bottom: 1px; width: 4px; height: 4px; margin-left: -2px; background: var(--accent); }
+/* The Control Strip: a grey bar from the left edge, modules between grooves, ended by a ridged tab. It can be picked
+   under any window style, so it sets its own greys, which follow the mode as the window style's do. */
+:root[data-dock=platinum] { --dock-h: 52px; }
+.wm[data-dock=platinum] #dock {
+  --pd-face: light-dark(#ddd, #444449); --pd-hi: light-dark(#fff, #66666c); --pd-lo: light-dark(#999, #28282c);
+  --pd-accent: light-dark(#3333a0, #5050b8);
+  left: 0; bottom: 10px; transform: none; gap: 0; padding: 2px 16px 2px 2px; color: light-dark(#000, #ececec); background: var(--pd-face); border: 1px solid light-dark(#000, #0a0a0c); border-left: 0; border-radius: 0 9px 9px 0; box-shadow: inset 0 1px var(--pd-hi), inset 0 -1px var(--pd-lo), 1px 1px 0 rgba(0,0,0,.45); backdrop-filter: none; -webkit-backdrop-filter: none;
+}
+.wm[data-dock=platinum] #dock::after { content: ''; position: absolute; right: 3px; top: 7px; bottom: 7px; width: 7px; background: repeating-linear-gradient(90deg, var(--pd-lo) 0 1px, var(--pd-hi) 1px 2px, transparent 2px 3px); }
+.wm[data-dock=platinum] #dock :is(.dk, #homeBtn, #winsBtn) { width: 38px; height: 32px; margin: 0; border-radius: 0; color: inherit; border-right: 1px solid var(--pd-lo); box-shadow: 1px 0 var(--pd-hi); }
+.wm[data-dock=platinum] #dock :is(.dk, #homeBtn, #winsBtn) .ico { width: 24px; height: 24px; }
+.wm[data-dock=platinum] #dock :is(.dk, #homeBtn, #winsBtn):hover { background: color-mix(in srgb, var(--pd-accent) 18%, var(--pd-face)); }
+.wm[data-dock=platinum] #dock :is(.dk, #homeBtn, #winsBtn):active, .wm[data-dock=platinum]:has(#switcher:popover-open) #dock #winsBtn, .wm[data-dock=platinum] #dock #homeBtn.on { background: var(--pd-lo); box-shadow: inset 1px 1px 2px rgba(0,0,0,.4); }
+.wm[data-dock=platinum] :is(#dock #homeBtn::after, #dock #winsBtn::before) { content: none; }
+.wm[data-dock=platinum] #dock .dk.run::after { bottom: 1px; width: 4px; height: 4px; margin-left: -2px; background: var(--pd-accent); }
 
-/* Control panel thumbnails, in Platinum's own colours whatever the current look */
+/* Control panel thumbnails, in Platinum's own colours whatever the current look. The dock's is the strip from the
+   left edge with its ridged end. */
+.cp-dk.platinum::before { left: 0; width: 46px; padding: 2px 9px 2px 3px; transform: none; background: repeating-linear-gradient(90deg, #999 0 1px, #fff 1px 2px, transparent 2px 3px) right 2px center / 5px 6px no-repeat, var(--ic) content-box, #ddd; border-color: #000; border-left: 0; border-radius: 0 5px 5px 0; box-shadow: inset 0 1px #fff, 1px 1px 0 rgba(0,0,0,.45); }
 .wm[data-wall=platinum] body, .cp-wp.platinum, .cp-deco.platinum { background: radial-gradient(3px 3px at 25% 25%, rgba(255,255,255,.09) 50%, transparent 51%) 0 0 / 8px 8px, repeating-linear-gradient(45deg, rgba(0,0,0,.07) 0 2px, transparent 2px 5px), linear-gradient(170deg, light-dark(#6f6cc0, #4f4c98), light-dark(#4d4a9e, #37347a) 55%, light-dark(#3c3a86, #282660)); }
 .cp-deco.platinum::before { width: 52px; border-color: #000; background: linear-gradient(#ddd 0 0) 50% 0 / 16px 100% no-repeat, linear-gradient(#ddd 0 0) 4px 2px / 3px 3px no-repeat, linear-gradient(#333 0 0) 3px 1px / 5px 5px no-repeat, repeating-linear-gradient(#fff 0 1px, #999 1px 2px) 0 1px / 100% 6px no-repeat, #ddd; box-shadow: none; }
 .cp-deco.platinum::after { border-color: #000; border-top: 0; background: linear-gradient(#aaf 0 0) 100% 3px / 4px 8px no-repeat, linear-gradient(#fff 0 0) 3px 0 / calc(100% - 6px) calc(100% - 3px) no-repeat, #ddd; box-shadow: 1px 1px 0 rgba(0,0,0,.5); }
 
 /* Phones (the same query as windows.css): one full-screen window, so the frame drops its sides; touch-sized boxes */
 @media (max-width: 767px), (max-height: 500px) and (pointer: coarse) {
-  :root[data-deco=platinum] { --tab-h: 44px; --dock-h: 64px; }
-  .wm[data-deco=platinum]::before { content: none; }
+  :root[data-deco=platinum] { --tab-h: 44px; }
+  :root[data-dock=platinum] { --dock-h: 64px; }
+  .wm[data-deco=platinum] #panel::before { content: none; }
   :root[data-deco=platinum] .win .frame { padding: 0; border-inline: 0; }
   :root[data-deco=platinum] .win :is(.tab, .th), :root[data-deco=platinum] .win .tabs.multi { border-inline: 0; }
   :root[data-deco=platinum] .tab .tt { font-size: 15px; }
@@ -159,7 +168,7 @@
   :root[data-deco=platinum] .ctl.min::after { width: 13px; height: 6px; }
   :root[data-deco=platinum] #menuBtn { padding: 0 14px; }
   /* the Control Strip keeps to the left edge, as on the desktop */
-  .wm[data-deco=platinum] #dock { bottom: 6px; margin-left: 0; }
-  .wm[data-deco=platinum] :is(.dk, #dock #homeBtn, #dock #winsBtn) { width: 44px; height: 44px; }
-  .wm[data-deco=platinum] :is(.dk, #dock #homeBtn, #dock #winsBtn) .ico { width: 30px; height: 30px; }
+  .wm[data-dock=platinum] #dock { bottom: 6px; margin-left: 0; }
+  .wm[data-dock=platinum] #dock :is(.dk, #homeBtn, #winsBtn) { width: 44px; height: 44px; }
+  .wm[data-dock=platinum] #dock :is(.dk, #homeBtn, #winsBtn) .ico { width: 30px; height: 30px; }
 }

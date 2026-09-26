@@ -1,6 +1,7 @@
 // Synthwave (css/deskbar/looks/synthwave.css): an 80s outrun night. Indigo windows edged in neon with sunset tabs,
-// a striped sun over a perspective grid that stays behind everything and never takes the pointer, no Light mode,
-// linked before first paint, nothing left behind when the look is off, and axe over its main states.
+// a striped sun over a perspective grid that stays behind everything and never takes the pointer, a neon dock that
+// also stands on its own, no Light mode, linked before first paint, nothing left behind when the look is off, and axe
+// over its main states.
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
@@ -9,7 +10,7 @@ import { env, useBrowser, open, needs, shot, win, cards, desktop, phone, toolbar
 
 useBrowser();
 
-const LOOK = { deco: 'synthwave', wall: 'synthwave', dock: 'glass' };
+const LOOK = { deco: 'synthwave', wall: 'synthwave', dock: 'synthwave' };
 const seed = look => `for (const [k, v] of Object.entries(${JSON.stringify(look)})) localStorage.setItem("deskbar:" + k, JSON.stringify(v));`;
 const openLook = (vp, path, opts) => open(vp, path, seed(LOOK), opts);
 const PINK = 'rgb(255, 62, 165)', INK = 'rgb(26, 11, 58)';
@@ -39,6 +40,7 @@ test('Synthwave: neon-edged indigo windows, a sunset tab in capitals, unlit post
   assert.match(tb.backgroundImage, /linear-gradient/);
   assert.equal(tb.color, INK);
   assert.equal(tb.borderTopLeftRadius, '6px');
+  assert.equal((await css(page.locator('#dock'), ['borderTopColor'])).borderTopColor, 'rgba(255, 62, 165, 0.6)', 'the neon dock');
   const tt = await css(tab.locator('.tt'), ['fontFamily', 'textTransform']);
   assert.match(tt.fontFamily, /Space Grotesk/);
   assert.equal(tt.textTransform, 'uppercase');
@@ -58,20 +60,50 @@ test('Synthwave: neon-edged indigo windows, a sunset tab in capitals, unlit post
   await page.context().close();
 });
 
-test('Synthwave: the Control panel turns off Colours, Mode and Dock while the look is on', async t => {
+test('Synthwave: the Control panel turns off Colours and Mode while the look is on, and draws its thumbnails', async t => {
   if (!(await needs(t, '/control-panel/'))) return;
   const page = await openLook(desktop, '/control-panel/');
   const cp = win(page, 'control-panel');
   await cp.locator('.cp').waitFor();
-  for (const g of ['palette', 'theme', 'dock']) {
+  for (const g of ['palette', 'theme']) {
     assert.equal(await cp.locator(`fieldset:has([name="cp-${g}"])`).evaluate(f => f.disabled), true, `${g} is the look's`);
   }
-  assert.equal(await cp.locator('fieldset:has([name="cp-wall"])').evaluate(f => f.disabled), false);
-  // both thumbnails are drawn: the glowing window, and the sun over the grid
-  assert.equal((await css(cp.locator('.cp-deco.synthwave'), ['borderTopColor'], '::after')).borderTopColor, PINK);
-  const sun = await css(cp.locator('.cp-wp.synthwave'), ['borderTopLeftRadius', 'maskImage'], '::before');
+  for (const g of ['wall', 'dock']) assert.equal(await cp.locator(`fieldset:has([name="cp-${g}"])`).evaluate(f => f.disabled), false, `${g} stays the visitor's`);
+  // the thumbnails are drawn: the glowing window, the sun over the grid, and the neon-rimmed dock
+  assert.equal((await css(cp.locator('fieldset:has([name="cp-deco"]) .cp-deco.synthwave'), ['borderTopColor'], '::after')).borderTopColor, PINK);
+  const sun = await css(cp.locator('fieldset:has([name="cp-wall"]) .cp-wp.synthwave'), ['borderTopLeftRadius', 'maskImage'], '::before');
   assert.equal(sun.borderTopLeftRadius, '50%');
   assert.match(sun.maskImage, /linear-gradient/);
+  assert.match((await css(cp.locator('.cp-dk.synthwave'), ['boxShadow'], '::before')).boxShadow, /rgba\(255, 62, 165/);
+  assert.deepEqual(page.errors, []);
+  await page.context().close();
+});
+
+test('Synthwave: its dock is drawn under another window style in either mode, and nothing of it is on the glass dock', async t => {
+  if (!(await needs(t, '/posts/'))) return;
+  const lamp = page => css(page.locator('#dock .dk.run').first(), ['backgroundColor'], '::after');
+  for (const theme of ['light', 'dark']) {
+    const page = await open(desktop, '/posts/', seed({ deco: 'haiku', dock: 'synthwave', theme }));
+    const w = win(page, 'tracker');
+    await w.locator('.pc').first().waitFor();
+    assert.notEqual((await css(w.locator('.frame'), ['borderTopColor'])).borderTopColor, PINK, 'Haiku windows');
+    const d = await css(page.locator('#dock'), ['borderTopColor', 'borderTopLeftRadius', 'boxShadow']);
+    assert.deepEqual([d.borderTopColor, d.borderTopLeftRadius], ['rgba(255, 62, 165, 0.6)', '12px']);
+    assert.match(d.boxShadow, /rgba\(255, 62, 165/, 'the dock glows');
+    assert.equal((await lamp(page)).backgroundColor, 'rgb(111, 227, 255)', 'cyan lamps');
+    await shot(page, `synthwave-dock-${theme}`);
+    assert.deepEqual(page.errors, []);
+    await page.context().close();
+  }
+  const page = await open(desktop, '/posts/', seed({ ...LOOK, dock: 'glass' }));
+  const w = win(page, 'tracker');
+  await w.locator('.pc').first().waitFor();
+  assert.equal((await css(w.locator('.frame'), ['borderTopColor'])).borderTopColor, PINK, 'Synthwave windows');
+  const d = await css(page.locator('#dock'), ['borderTopLeftRadius', 'boxShadow']);
+  assert.equal(d.borderTopLeftRadius, '8px');
+  assert.doesNotMatch(d.boxShadow, /rgba\(255, 62, 165/);
+  assert.notEqual((await lamp(page)).backgroundColor, 'rgb(111, 227, 255)');
+  await shot(page, 'synthwave-glass-dock');
   assert.deepEqual(page.errors, []);
   await page.context().close();
 });
