@@ -1,0 +1,17 @@
+/* Racing: British racing green with tan leather tabs and white frames edged in green; in dark the frames go deep
+   green and the tan drops a shade. */
+:where(:root)[data-palette=racing] {
+  --panel: linear-gradient(light-dark(#22553e, #1a3f2e), light-dark(#163d2b, #102a1e)); --panel-fg: #f4f1e6;
+  --panel-hover: rgba(255,255,255,.12);
+  --frame: light-dark(#f3f5f0, #173a2b); --frame-hi: light-dark(#fff, #2b5a44);
+  --frame-lo: light-dark(#a7b3a6, #0c2219); --frame-dk: light-dark(#1d4a35, #040d09);
+  --tab: light-dark(#e9a560, #d9955a); --tab-hi: light-dark(#f5d3ad, #ecbd8f); --tab-lo: light-dark(#a86c32, #9a5c28);
+  --tab-dim: light-dark(#eed0ae, #a8805c); --tab-in: light-dark(#e6eae3, #22493a);
+  --tab-in-lo: light-dark(#b1bcaf, #112b20); --tab-in-fg: light-dark(#434a42, #d9e6de);
+  --content: light-dark(#fff, #13241c); --fg: light-dark(#16241c, #e6eee8); --muted: light-dark(#52605a, #a9bdb2);
+  --line: light-dark(#e1e6de, #25402f); --side: light-dark(#f6f8f3, #18291f); --read-bg: light-dark(#fff, #10201a);
+  --code-bg: light-dark(#f0f3ed, #1b3025);
+  --accent: light-dark(#1f6b47, #1f6e49); --link: light-dark(#17613f, #8fd6ad); --ctl: #3a1f05;
+  --wall-1: light-dark(#2a6a4c, #1c4a36); --wall-2: light-dark(#1d5039, #133727); --wall-3: light-dark(#113524, #0a2118);
+  --wall-glow: light-dark(rgba(227,168,105,.26), rgba(217,149,90,.12)); --wall-ring: light-dark(rgba(255,255,255,.05), rgba(255,255,255,.035));
+}

@@ -1,7 +1,7 @@
 // Every app registers itself when imported. Adding an app is one new module and one line here.
 // Apps loaded on first open (loader.js) register here instead, with their code in ../lazy/<name>.js.
 import { lazyApp } from '../loader.js';
-import { allViews, findView } from '../wm/windows.js';
+import { allViews, findView, postsHome } from '../wm/windows.js';
 import './page.js';
 import './gallery.js';
 import './tools.js';
@@ -31,4 +31,5 @@ lazyApp({ kind: 'sketch', size: 'large' });
 lazyApp({ kind: 'chiptunes', geometry: () => ({ w: 400, h: 480 }) });
 lazyApp({ kind: 'terminal', size: 'large' });
 lazyApp({ kind: 'feeds', size: 'large' });
-lazyApp({ kind: 'control-panel', geometry: (d, th) => ({ w: fitW(d, 720), h: Math.min(d.h - th - 20, 660), x: Math.max(10, (d.w - fitW(d, 720)) / 2), y: th + 20 }) });
+// the Control panel is as tall as the Posts window at its home spot, top edges level, and wide enough for rows of cards
+lazyApp({ kind: 'control-panel', geometry: d => { const p = postsHome(), w = fitW(d, 900); return { w, h: p.h, x: Math.max(10, (d.w - w) / 2), y: p.y }; } });

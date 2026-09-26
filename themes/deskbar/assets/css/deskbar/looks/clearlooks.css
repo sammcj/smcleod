@@ -35,7 +35,8 @@
   background: var(--cl-wall);
 }
 .wm[data-wall=clearlooks] body { background-size: auto min(44vh, 60vw, 420px), auto, auto, auto; background-attachment: fixed; }
-/* thumbnails: two grey panels, and a window under a blue title bar */
+/* thumbnails: two grey panels, a window under a blue title bar, and the bottom panel with its pager */
+.cp-dk.clearlooks::before { left: 0; bottom: 0; width: 100%; height: 10px; padding: 2px 4px; transform: none; border: 0; border-top: 1px solid #a8a5a0; border-radius: 0; background: linear-gradient(90deg, #6f93c8 25%, #8d9ab0 0) right 4px center / 14px 6px no-repeat, var(--ic) 0 0 / calc(100% - 18px) 100% no-repeat content-box, linear-gradient(#f4f3f1, #dedbd6); }
 .cp-deco.clearlooks { background: linear-gradient(#e8e6e2 0 0) top / 100% 4px no-repeat, linear-gradient(#e8e6e2 0 0) bottom / 100% 5px no-repeat, var(--cl-wall); }
 .cp-deco.clearlooks::before { top: 9px; width: 52px; height: 8px; border: 1px solid #2f5690; border-bottom: 0; border-radius: 3px 3px 0 0; background: linear-gradient(#89aadb, #4873b5 49%, #3e68a8 50%); box-shadow: none; }
 .cp-deco.clearlooks::after { top: 17px; height: 22px; border: 1px solid #2f5690; border-top: 0; background: linear-gradient(#e6e3df 0 0) top / 100% 4px no-repeat, #fff; box-shadow: 0 3px 6px rgba(0,0,0,.35); }
@@ -97,32 +98,54 @@
 :root[data-deco=clearlooks] .task.min span::before { content: '['; }
 :root[data-deco=clearlooks] .task.min span::after { content: ']'; }
 
-/* The bottom panel: Show desktop, the window list, launchers and the workspace pager */
-:root[data-deco=clearlooks][data-dock=panel] #dock { padding-inline: 4px; border-top: 1px solid light-dark(#a8a5a0, #1a1b19); box-shadow: inset 0 1px light-dark(#fff, rgba(255,255,255,.06)); }
-:root[data-deco=clearlooks][data-dock=panel] :is(.dk, #dock #homeBtn, #dock #winsBtn):hover { background: var(--cl-btn-hov); box-shadow: inset 0 0 0 1px light-dark(#b1aea9, #262725); }
-:root[data-deco=clearlooks][data-dock=panel] :is(#dock #homeBtn.on, #dock #homeBtn:active), .wm[data-deco=clearlooks]:has(#switcher:popover-open) #dock #winsBtn { background: var(--cl-sunk); box-shadow: inset 0 1px 2px rgba(0,0,0,.25), inset 0 0 0 1px var(--cl-btn-b); }
-:root[data-deco=clearlooks][data-dock=panel] #dock #homeBtn .ico { background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 18 16'%3E%3Crect x='.5' y='1.5' width='17' height='13' rx='1.5' fill='%23729fcf' stroke='%23204a87'/%3E%3Crect x='2.5' y='3.5' width='13' height='9' fill='%233465a4'/%3E%3C/svg%3E") center / 80% no-repeat; }
-:root[data-deco=clearlooks][data-dock=panel] #dock #homeBtn .ico use { display: none; }
-:root[data-deco=clearlooks][data-dock=panel] #dock #winsBtn { width: 96px; }
-:root[data-deco=clearlooks][data-dock=panel] #dock #winsBtn .ico { display: none; }
+/* The bottom panel: Show desktop, the window list, launchers and the workspace pager. It can be picked under any
+   window style, so it draws the whole panel itself, in its own colours, which follow the mode. */
+.wm[data-dock=clearlooks] :is(#dock, #tasks) {
+  --cd-btn: linear-gradient(light-dark(#fff, #5a5b58), light-dark(#e7e4e0, #464744));
+  --cd-hov: linear-gradient(light-dark(#fff, #666764), light-dark(#f2f0ed, #50514e));
+  --cd-sunk: linear-gradient(light-dark(#d2cfca, #2e2f2d), light-dark(#e2dfda, #383937));
+  --cd-edge: light-dark(#b1aea9, #262725); --cd-btn-b: light-dark(#8e8b86, #1e1f1d); --cd-fg: light-dark(#1a1a1a, #eeeeec);
+}
+.wm[data-dock=clearlooks] #dock { left: 0; right: 0; bottom: 0; transform: none; gap: 2px; padding: 2px 4px; padding-bottom: max(2px, env(safe-area-inset-bottom)); color: var(--cd-fg); background: linear-gradient(light-dark(#f4f3f1, #4b4c4a), light-dark(#dedbd6, #3a3b39)); border: 0; border-top: 1px solid light-dark(#a8a5a0, #1a1b19); border-radius: 0; box-shadow: inset 0 1px light-dark(#fff, rgba(255,255,255,.06)); backdrop-filter: none; -webkit-backdrop-filter: none; }
+.wm[data-dock=clearlooks] #dock :is(.dk, #homeBtn, #winsBtn) { width: 40px; height: 40px; border-radius: 3px; color: inherit; }
+.wm[data-dock=clearlooks] #dock :is(.dk, #homeBtn, #winsBtn) .ico { width: 28px; height: 28px; }
+.wm[data-dock=clearlooks] #dock :is(.dk, #homeBtn, #winsBtn):hover { background: var(--cd-hov); box-shadow: inset 0 0 0 1px var(--cd-edge); }
+.wm[data-dock=clearlooks] #dock :is(#homeBtn.on, #homeBtn:active), .wm[data-dock=clearlooks]:has(#switcher:popover-open) #dock #winsBtn { background: var(--cd-sunk); box-shadow: inset 0 1px 2px rgba(0,0,0,.25), inset 0 0 0 1px var(--cd-btn-b); }
+.wm[data-dock=clearlooks] :is(#dock #homeBtn::after, #dock #winsBtn::before) { background: light-dark(rgba(0,0,0,.2), rgba(255,255,255,.18)); }
+.wm[data-dock=clearlooks] #dock .dk.run::after { background: light-dark(#3465a4, #7fa3d6); }
+.wm[data-dock=clearlooks] #dock #homeBtn .ico { background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 18 16'%3E%3Crect x='.5' y='1.5' width='17' height='13' rx='1.5' fill='%23729fcf' stroke='%23204a87'/%3E%3Crect x='2.5' y='3.5' width='13' height='9' fill='%233465a4'/%3E%3C/svg%3E") center / 80% no-repeat; }
+.wm[data-dock=clearlooks] #dock #homeBtn .ico use { display: none; }
+.wm[data-dock=clearlooks] #dock #winsBtn { width: 96px; margin-left: auto; }
+.wm[data-dock=clearlooks] #dock #winsBtn .ico { display: none; }
 /* four workspaces, the first current; the open-window count is a small window in it */
-:root[data-deco=clearlooks][data-dock=panel] #dock #winsBtn::after { content: ''; position: absolute; inset: 4px 3px; border: 1px solid #6b6862; background: linear-gradient(90deg, #6f93c8 0 25%, #6b6862 0 calc(25% + 1px), #8d9ab0 0 50%, #6b6862 0 calc(50% + 1px), #8d9ab0 0 75%, #6b6862 0 calc(75% + 1px), #8d9ab0 0); box-shadow: inset 0 0 0 1px rgba(255,255,255,.3); }
-:root[data-deco=clearlooks][data-dock=panel] #dock #winsBtn b { z-index: 1; top: 8px; left: 7px; right: auto; min-width: 14px; padding: 0 2px; border-radius: 0; font-size: 9px; line-height: 10px; color: #1a1a1a; background: #fff; box-shadow: 0 0 0 1px #204a87; }
+.wm[data-dock=clearlooks] #dock #winsBtn::after { content: ''; position: absolute; inset: 4px 3px; border: 1px solid #6b6862; background: linear-gradient(90deg, #6f93c8 0 25%, #6b6862 0 calc(25% + 1px), #8d9ab0 0 50%, #6b6862 0 calc(50% + 1px), #8d9ab0 0 75%, #6b6862 0 calc(75% + 1px), #8d9ab0 0); box-shadow: inset 0 0 0 1px rgba(255,255,255,.3); }
+.wm[data-dock=clearlooks] #dock #winsBtn b { z-index: 1; top: 8px; left: 7px; right: auto; min-width: 14px; padding: 0 2px; border-radius: 0; font-size: 9px; line-height: 10px; color: #1a1a1a; background: #fff; box-shadow: 0 0 0 1px #204a87; }
+/* Phones (the same query as windows.css): the panel spans the foot of the screen, launchers at touch size. A mouse
+   still gets the slim desktop panel below. */
+@media (max-width: 767px), (max-height: 500px) and (pointer: coarse) {
+  .wm[data-dock=clearlooks] #dock { width: auto; margin: 0; bottom: 0; }
+  .wm[data-dock=clearlooks] #dock :is(.dk, #homeBtn, #winsBtn) { width: 44px; height: 44px; }
+  .wm[data-dock=clearlooks] #dock :is(.dk, #homeBtn, #winsBtn) .ico { width: 32px; height: 32px; }
+}
 @media (pointer: fine) {
-  :root[data-deco=clearlooks][data-dock=panel] :is(.dk, #dock #homeBtn, #dock #winsBtn) { height: 28px; }
-  :root[data-deco=clearlooks][data-dock=panel] :is(.dk, #dock #homeBtn) { width: 30px; }
-  :root[data-deco=clearlooks][data-dock=panel] :is(.dk, #dock #homeBtn) .ico { width: 22px; height: 22px; }
-  :root[data-deco=clearlooks][data-dock=panel] #dock #winsBtn b { top: 7px; }
+  .wm[data-dock=clearlooks] #dock :is(.dk, #homeBtn, #winsBtn) { height: 28px; }
+  .wm[data-dock=clearlooks] #dock :is(.dk, #homeBtn) { width: 30px; }
+  .wm[data-dock=clearlooks] #dock :is(.dk, #homeBtn) .ico { width: 22px; height: 22px; }
+  .wm[data-dock=clearlooks] #dock #winsBtn b { top: 7px; }
 }
 /* On a desktop with a mouse the window list moves from the top panel into the bottom one, between Show desktop and
    the launchers, which pack to the right. The right edge leaves room for about seven launchers and the pager. The
-   panel is lifted over the dock so its window list is drawn on it. */
+   panel is lifted over the dock so its window list is drawn on it. Its buttons are Clearlooks' whatever the window
+   style, as they sit on this panel rather than the top one. */
 @media (pointer: fine) { @media not ((max-width: 767px) or ((max-height: 500px) and (pointer: coarse))) {
-  .wm[data-deco=clearlooks][data-dock=panel] #panel { z-index: 100001; }
-  .wm[data-deco=clearlooks][data-dock=panel] #tasks { position: fixed; left: 46px; right: 300px; bottom: 0; height: 32px; margin: 0; align-items: center; }
-  .wm[data-deco=clearlooks][data-dock=panel] .task { flex: 0 1 200px; min-width: 0; }
-  .wm[data-deco=clearlooks][data-dock=panel] #dock #homeBtn { margin-right: auto; }
-  .wm[data-deco=clearlooks][data-dock=panel] #dock #winsBtn { margin-left: 7px; }
+  .wm[data-dock=clearlooks] #panel { z-index: 100001; }
+  .wm[data-dock=clearlooks] #tasks { position: fixed; left: 46px; right: 300px; bottom: 0; height: 32px; margin: 0; align-items: center; }
+  .wm[data-dock=clearlooks] #panel #tasks .task { flex: 0 1 200px; min-width: 0; color: var(--cd-fg); background: var(--cd-btn); border: 1px solid var(--cd-edge); box-shadow: inset 0 1px light-dark(#fff, rgba(255,255,255,.1)); text-shadow: none; }
+  .wm[data-dock=clearlooks] #panel #tasks .task:hover { background: var(--cd-hov); }
+  .wm[data-dock=clearlooks] #panel #tasks .task.on { background: var(--cd-sunk); border-color: var(--cd-btn-b); box-shadow: inset 0 1px 2px rgba(0,0,0,.25), inset 0 0 0 1px var(--cd-btn-b); }
+  .wm[data-dock=clearlooks] #panel #tasks .task.min { color: light-dark(#555753, #b9b9b5); }
+  .wm[data-dock=clearlooks] #dock #homeBtn { margin-right: auto; }
+  .wm[data-dock=clearlooks] #dock #winsBtn { margin-left: 7px; }
 } }
 
 /* Menus: GTK's with Clearlooks' blue selection */

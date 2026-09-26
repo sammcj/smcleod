@@ -1,7 +1,7 @@
 // Broadsheet (css/deskbar/looks/broadsheet.css): neo-brutalist newsprint. Slab title bars over ink-ruled windows with
-// hard offset shadows, a black masthead panel, sticker-tab dock, typographic wallpaper, a night edition in dark mode,
-// a scroll-driven reading bar that stays off under reduced motion, touch-sized on phones, nothing left behind when the
-// look is off, and axe over its main states.
+// hard offset shadows, a black masthead panel, a sticker-tab dock that also stands on its own, typographic wallpaper, a
+// night edition in dark mode, a scroll-driven reading bar that stays off under reduced motion, touch-sized on phones,
+// nothing left behind when the look is off, and axe over its main states.
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
@@ -10,7 +10,7 @@ import { useBrowser, open, needs, shot, win, cards, desktop, phone } from './lib
 
 useBrowser();
 
-const LOOK = { deco: 'broadsheet', wall: 'broadsheet' };
+const LOOK = { deco: 'broadsheet', wall: 'broadsheet', dock: 'broadsheet' };
 const seed = look => `for (const [k, v] of Object.entries(${JSON.stringify(look)})) localStorage.setItem("deskbar:" + k, JSON.stringify(v));`;
 const openLook = (vp, path, opts) => open(vp, path, seed(LOOK), opts);
 const INK = 'rgb(18, 18, 18)', CREAM = 'rgb(235, 230, 217)', ACID = 'rgb(220, 255, 58)', TOMATO = 'rgb(255, 90, 54)', COBALT = 'rgb(42, 61, 255)';
@@ -168,9 +168,40 @@ test('Broadsheet leaves nothing behind once another window style is on, its styl
   assert.notEqual((await css(page.locator('#dock'), ['backgroundColor'])).backgroundColor, 'rgba(0, 0, 0, 0)');
   assert.notEqual((await css(page.locator('#panel'), ['backgroundColor'])).backgroundColor, INK);
   // its thumbnails draw on their own colours
-  const thumb = cp.locator('.cp-deco.broadsheet');
+  const thumb = cp.locator('fieldset:has([name="cp-deco"]) .cp-deco.broadsheet');
   assert.equal((await css(thumb, ['backgroundColor'])).backgroundColor, 'rgb(239, 235, 225)');
   assert.equal((await css(thumb, ['backgroundColor'], '::before')).backgroundColor, ACID);
+  assert.match((await css(cp.locator('.cp-dk.broadsheet'), ['backgroundImage'], '::before')).backgroundImage, /rgb\(220, 255, 58\)/, 'stickers');
+  assert.deepEqual(page.errors, []);
+  await page.context().close();
+});
+
+test('Broadsheet: its stickers are a dock of their own under another window style in either edition, and gone with the glass dock', async t => {
+  if (!(await needs(t, '/posts/'))) return;
+  const first = page => css(page.locator('#dock .dk').first(), ['boxShadow', 'borderTopWidth', 'textTransform']);
+  for (const [scheme, ink] of [['light', INK], ['dark', CREAM]]) {
+    const page = await open(desktop, '/posts/', seed({ deco: 'haiku', dock: 'broadsheet', theme: scheme }), { colorScheme: scheme });
+    const w = win(page, 'tracker');
+    await w.locator('.pc').first().waitFor();
+    assert.ok(!hard((await css(w.locator('.frame'), ['boxShadow'])).boxShadow, 7, ink), 'Haiku windows');
+    assert.equal((await css(page.locator('#dock'), ['backgroundColor'])).backgroundColor, 'rgba(0, 0, 0, 0)');
+    const s = await first(page);
+    assert.ok(hard(s.boxShadow, 3, ink) && s.borderTopWidth === '2px' && s.textTransform === 'uppercase', JSON.stringify(s));
+    assert.ok((await page.locator('#dock .dk .lbl').first().boundingBox()).width > 20, 'labelled');
+    assert.deepEqual(await css(page.locator('#dock #homeBtn'), ['backgroundColor', 'color']), { backgroundColor: INK, color: ACID });
+    await shot(page, `broadsheet-dock-${scheme}`);
+    assert.deepEqual(page.errors, []);
+    await page.context().close();
+  }
+  const page = await open(desktop, '/posts/', seed({ ...LOOK, dock: 'glass' }), { colorScheme: 'light' });
+  const w = win(page, 'tracker');
+  await w.locator('.pc').first().waitFor();
+  assert.ok(hard((await css(w.locator('.frame'), ['boxShadow'])).boxShadow, 7, INK), 'Broadsheet windows');
+  assert.notEqual((await css(page.locator('#dock'), ['backgroundColor'])).backgroundColor, 'rgba(0, 0, 0, 0)');
+  assert.ok(!hard((await first(page)).boxShadow, 3, INK));
+  assert.ok((await page.locator('#dock .dk .lbl').first().boundingBox()).width <= 1, 'icons only');
+  assert.notEqual((await css(page.locator('#dock #winsBtn b'), ['borderTopLeftRadius'])).borderTopLeftRadius, '0px');
+  await shot(page, 'broadsheet-glass-dock');
   assert.deepEqual(page.errors, []);
   await page.context().close();
 });

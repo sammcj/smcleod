@@ -1,15 +1,16 @@
 // GNOME 2 Clearlooks (css/deskbar/looks/clearlooks.css): Metacity's blue title bars across each window, greyed when
-// unfocused, light panels top and bottom with the window list and a workspace pager in the bottom one, its own
-// wallpaper, square touch-sized title bars on phones, nothing left behind when it is off, and axe in light and dark.
+// unfocused, light panels top and bottom with the window list and a workspace pager in the bottom one (a dock that
+// also stands on its own), its own wallpaper, square touch-sized title bars on phones, nothing left behind when it is
+// off, and axe in light and dark.
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
-import { useBrowser, open, win, cards, desktop, phone } from './lib.mjs';
+import { useBrowser, open, shot, win, cards, desktop, phone } from './lib.mjs';
 
 useBrowser();
 
-const LOOK = { deco: 'clearlooks', wall: 'clearlooks', dock: 'panel' };
+const LOOK = { deco: 'clearlooks', wall: 'clearlooks', dock: 'clearlooks' };
 // visitor settings stored before the page's own scripts run, as a script string since open() passes no argument
 const openLook = (vp, path, look, opts) => open(vp, path, `for (const [k, v] of Object.entries(${JSON.stringify(look)})) localStorage.setItem('deskbar:' + k, JSON.stringify(v));`, opts);
 const css = (loc, prop, pseudo) => loc.first().evaluate((el, [p, ps]) => getComputedStyle(el, ps)[p], [prop, pseudo]);
@@ -101,6 +102,42 @@ test('Clearlooks on a phone: a square, full-width title bar with touch-sized but
   assert.ok(rgbs(await css(tab, 'backgroundImage')).every(blue));
   const c = await box(tab.locator('.ctl.close'));
   assert.ok(c.width >= 40 && c.height >= 30, `close button: ${JSON.stringify(c)}`);
+  assert.deepEqual(page.errors, []);
+  await page.context().close();
+});
+
+test('the bottom panel is a dock of its own under another window style, in either mode', async () => {
+  for (const [scheme, shade] of [['light', c => c[0] > 200], ['dark', c => c[0] < 110]]) {
+    const page = await openLook(desktop, '/posts/', { deco: 'haiku', dock: 'clearlooks', theme: scheme }, { colorScheme: scheme });
+    await twoWindows(page);
+    assert.ok(!rgbs(await css(page.locator('.win.active .tab.on'), 'backgroundImage')).some(blue), 'a Haiku tab');
+    assert.ok(rgbs(await css(page.locator('#dock'), 'backgroundImage')).every(c => grey(c) && shade(c)), `${scheme} grey panel`);
+    const vp = page.viewportSize(), dock = await box(page.locator('#dock'));
+    assert.equal(dock.width, vp.width, 'the bottom panel spans the screen');
+    assert.ok(Math.abs(dock.y + dock.height - vp.height) <= 1 && dock.height <= 40, `a slim panel on the bottom edge: ${JSON.stringify(dock)}`);
+    // the window list comes down into it, in the panel's own buttons rather than the window style's
+    for (const t of await page.locator('#tasks .task').all()) {
+      const b = await t.boundingBox();
+      assert.ok(b.y >= dock.y, `window list button in the bottom panel: ${JSON.stringify(b)}`);
+      assert.ok(rgbs(await t.evaluate(el => getComputedStyle(el).backgroundImage)).every(c => grey(c) && shade(c)), 'a Clearlooks button');
+    }
+    assert.ok(rgbs(await css(page.locator('#dock #winsBtn'), 'backgroundImage', '::after')).some(blue), 'the pager');
+    await shot(page, `clearlooks-dock-${scheme}`);
+    assert.deepEqual(page.errors, []);
+    await page.context().close();
+  }
+});
+
+test('Clearlooks windows over the glass dock keep nothing of the bottom panel', async () => {
+  const page = await openLook(desktop, '/posts/', { ...LOOK, dock: 'glass' });
+  await twoWindows(page);
+  assert.ok(rgbs(await css(page.locator('.win.active .tab.on'), 'backgroundImage')).every(blue), 'Clearlooks title bar');
+  const vp = page.viewportSize(), dock = await box(page.locator('#dock'));
+  assert.ok(dock.width < vp.width / 2, `a floating dock: ${JSON.stringify(dock)}`);
+  assert.equal(await css(page.locator('#tasks'), 'position'), 'static', 'window list in the top panel');
+  assert.equal(await css(page.locator('#dock #winsBtn'), 'content', '::after'), 'none', 'no pager');
+  assert.notEqual(await css(page.locator('#dock #winsBtn .ico'), 'display'), 'none');
+  await shot(page, 'clearlooks-glass-dock');
   assert.deepEqual(page.errors, []);
   await page.context().close();
 });

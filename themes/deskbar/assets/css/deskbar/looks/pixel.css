@@ -2,8 +2,10 @@
    edge is an ink ring two pixels thick with one corner pixel knocked out (a border-image, so the ring follows any
    box), bevels are two-pixel lines, gradients are ordered dithers, and the chrome is set in Pixelify Sans while the
    reader keeps its own face. The wallpaper is a dithered sky over tiling hills with pines: a day scene in light mode
-   and a dusk with twinkling stars in dark, each built from SVG drawn on an integer grid and scaled crisp. Loaded as
-   look-pixel (lazy.html). */
+   and a dusk with twinkling stars in dark, each built from SVG drawn on an integer grid and scaled crisp. Pico, after
+   PICO-8's sixteen colours, is another set of colours (a palette value that applies only under this window style)
+   with a snowy summit wallpaper. The docks and wallpapers go with any window style, so they carry their own colours.
+   Loaded as look-pixel (lazy.html) whenever the window style, wallpaper or dock is one of these. */
 @font-face { font-family: 'Pixelify Sans'; font-display: swap; font-weight: 400 700; src: url(../../../fonts/pixelify-sans/pixelify-sans-variable.woff2) format('woff2'); }
 
 /* the scene's art, day first, for the wallpaper and the Control panel's thumbnails whatever window style is on */
@@ -25,12 +27,14 @@
   :root[data-theme=auto]:is([data-deco=pixel], [data-wall=pixel]), :root[data-theme=auto] :is(.cp-deco.pixel, .cp-wp.pixel) { --pk-top: #0b0a1f; --pk-sky: var(--pk-n-sky); --pk-hills: var(--pk-n-hills); --pk-orb: var(--pk-n-orb); --pk-clouds: var(--pk-n-clouds); --pk-stars: var(--pk-n-stars); }
 }
 
+/* the ink ring, for the window style and the hotbar dock with any other */
+:root:is([data-deco=pixel], [data-dock=pixel]) { --pk-ring: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='6' height='6' shape-rendering='crispEdges'%3E%3Cpath fill='%231c1a2e' d='M2 0h2v2h2v2H4v2H2V4H0V2h2z'/%3E%3C/svg%3E"); }
+/* --pk-on-sun is the text on the sun: the title bar, lit keys and badges */
 :root[data-deco=pixel] {
-  --pk-ink: #1c1a2e; --pk-cream: #f5ead0; --pk-sun: #ffcd4d; --pk-amber: #e8a52e; --pk-coral: #ef7d57;
+  --pk-ink: #1c1a2e; --pk-cream: #f5ead0; --pk-sun: #ffcd4d; --pk-amber: #e8a52e; --pk-coral: #ef7d57; --pk-on-sun: var(--pk-ink);
   --pk-shadow: light-dark(rgba(28,26,46,.4), rgba(5,4,14,.7)); --pk-font: 'Pixelify Sans', var(--ui);
-  --pk-ring: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='6' height='6' shape-rendering='crispEdges'%3E%3Cpath fill='%231c1a2e' d='M2 0h2v2h2v2H4v2H2V4H0V2h2z'/%3E%3C/svg%3E");
   --pk-dither: repeating-conic-gradient(var(--pk-sun) 0 25%, var(--pk-amber) 0 50%) 0 0 / 4px 4px;
-  --tab-h: 30px; --dock-h: 76px; --ctl: var(--pk-ink);
+  --tab-h: 30px; --ctl: var(--pk-ink);
   --panel: light-dark(#2a2748, #14122a); --panel-fg: var(--pk-cream); --panel-hover: rgba(255,255,255,.14);
   --frame: light-dark(#f1e4c6, #3a3560); --frame-hi: light-dark(#fff9ea, #5b5591); --frame-lo: light-dark(#c8b58f, #24203f); --frame-dk: var(--pk-ink);
   --tab: var(--pk-sun); --tab-hi: #ffe79a; --tab-lo: var(--pk-amber); --tab-dim: light-dark(#f0d98d, #b58f3f);
@@ -38,11 +42,29 @@
   --content: light-dark(#fffaef, #22203a); --fg: light-dark(#252235, #ece7f6); --muted: light-dark(#5b5669, #b5aecb);
   --line: light-dark(#d9cbaa, #3d385f); --side: light-dark(#f6ecd4, #2a2747); --zebra: light-dark(rgba(28,26,46,.035), rgba(255,255,255,.03));
   --accent: light-dark(#1e7368, #23796e); --accent-fg: #fff; --link: light-dark(#1e7368, #7fd9ca);
-  --read-bg: light-dark(#fcf6e8, #1e1c33); --read-fg: light-dark(#2a2735, #e4dff0); --code-bg: light-dark(#f1e7cf, #2a2745);
+  --read-bg: light-dark(#fcf6e8, #1e1c33); --read-fg: light-dark(#2a2735, #e4dff0); --code-bg: light-dark(#f1e7cf, #2a2745); --hl-com: light-dark(#5e5c52, #9a978a);
   --wall-1: light-dark(#5ea6ec, #28204f); --wall-2: light-dark(#79c26a, #241f48); --wall-3: light-dark(#3f9a4b, #161334);
   accent-color: var(--accent); scrollbar-color: var(--frame-lo) var(--content);
 }
-:root[data-deco=pixel] ::selection { background: var(--pk-sun); color: var(--pk-ink); }
+:root[data-deco=pixel] ::selection { background: var(--pk-sun); color: var(--pk-on-sun); }
+
+/* Pico: PICO-8's palette, its editor's dark blue bar over grey windows, a pink title bar reddening down */
+:root[data-deco=pixel][data-palette=pixel-pico] {
+  --pk-ink: #000; --pk-cream: #fff1e8; --pk-sun: #ff77a8; --pk-amber: #ff004d; --pk-coral: #ff004d; --pk-on-sun: #000;
+  --pk-shadow: light-dark(rgba(0,0,0,.35), rgba(0,0,0,.7)); --pk-ring: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='6' height='6' shape-rendering='crispEdges'%3E%3Cpath fill='%23000' d='M2 0h2v2h2v2H4v2H2V4H0V2h2z'/%3E%3C/svg%3E");
+  --panel: #1d2b53; --panel-fg: #fff1e8; --panel-hover: rgba(255,241,232,.14);
+  --frame: light-dark(#c2c3c7, #1d2b53); --frame-hi: light-dark(#fff1e8, #5f574f); --frame-lo: light-dark(#83769c, #000); --frame-dk: #000;
+  --tab: var(--pk-sun); --tab-hi: #ffccaa; --tab-lo: var(--pk-amber); --tab-dim: #ffccaa;
+  --tab-in: light-dark(#83769c, #1d2b53); --tab-in-lo: light-dark(#5f574f, #000); --tab-in-fg: light-dark(#000, #c2c3c7);
+  --content: light-dark(#fff1e8, #000); --fg: light-dark(#1d2b53, #fff1e8); --muted: light-dark(#5f574f, #c2c3c7);
+  --line: light-dark(#c2c3c7, #5f574f); --side: light-dark(#ffccaa, #1d2b53); --zebra: light-dark(rgba(29,43,83,.05), rgba(255,241,232,.05));
+  --accent: #29adff; --accent-fg: #000; --link: light-dark(#7e2553, #29adff);
+  --read-bg: var(--content); --read-fg: light-dark(#1d2b53, #c2c3c7); --code-bg: light-dark(#ffe3d1, #1d2b53);
+  --wall-1: #29adff; --wall-2: #1d2b53; --wall-3: #000;
+}
+/* the shell's warning colour and muted grey are too faint on Pico's cream page and grey year bar */
+:root[data-deco=pixel][data-palette=pixel-pico] .rd { --adm-warning: light-dark(#8a5100, #efb45c); }
+:root[data-deco=pixel][data-palette=pixel-pico] .pv-year small { color: light-dark(#1d2b53, #c2c3c7); }
 
 /* Windows: the title bar spans the frame and joins it, so the two read as one box in one ring. The bar is sun yellow
    dithered down to amber, the frame a bevelled slab, and both throw one hard shadow. Tabs paint before the frame, so
@@ -54,7 +76,7 @@
 :root[data-deco=pixel] .win :is(.tab, .th) { gap: 4px; padding: 0 4px 0 10px; border: 2px solid transparent; border-bottom: 0; border-image: var(--pk-ring) 2; background: var(--tab-in) padding-box; color: var(--tab-in-fg); box-shadow: inset 2px 2px 0 var(--frame-hi), 4px 4px 0 var(--pk-shadow); }
 :root[data-deco=pixel] .win .th { background: var(--frame) padding-box; }
 :root[data-deco=pixel] .win.active :is(.tab, .th) { box-shadow: inset 2px 2px 0 var(--frame-hi), 6px 6px 0 var(--pk-shadow); }
-:root[data-deco=pixel] .win.active .tab { color: var(--pk-ink); background: linear-gradient(var(--pk-sun) 0 16px, transparent 16px 22px, var(--pk-amber) 22px) padding-box, var(--pk-dither) padding-box var(--pk-sun); box-shadow: inset 2px 2px 0 var(--tab-hi), 6px 6px 0 var(--pk-shadow); }
+:root[data-deco=pixel] .win.active .tab { color: var(--pk-on-sun); background: linear-gradient(var(--pk-sun) 0 16px, transparent 16px 22px, var(--pk-amber) 22px) padding-box, var(--pk-dither) padding-box var(--pk-sun); box-shadow: inset 2px 2px 0 var(--tab-hi), 6px 6px 0 var(--pk-shadow); }
 :root[data-deco=pixel] .win.active .tab:not(.on) { background: var(--tab-dim) padding-box; box-shadow: inset 2px 2px 0 var(--tab-hi), 6px 6px 0 var(--pk-shadow); }
 :root[data-deco=pixel] .tabs.multi .tab { margin-right: -2px; }
 :root[data-deco=pixel] .th::before { margin: 9px 8px 9px 0; background: repeating-conic-gradient(var(--frame-lo) 0 25%, transparent 0 50%) 0 0 / 4px 4px; }
@@ -62,19 +84,19 @@
 :root[data-deco=pixel] .win:not(.active) .tab .tt { font-weight: 400; }
 :root[data-deco=pixel] .tabs:not(.multi) .tt { max-width: none; }
 /* controls are keycaps: a ring, a lit face and a two-pixel foot, each with a pixel glyph; pressing sinks the cap */
-:root[data-deco=pixel] .win .ctl { width: 18px; height: 18px; border: 2px solid transparent; border-image: var(--pk-ring) 2; border-radius: 0; opacity: 1; color: var(--pk-ink); background: var(--frame-hi) padding-box; box-shadow: inset 0 -2px 0 var(--frame-lo); transition: none; }
+:root[data-deco=pixel] .win .ctl { width: 18px; height: 18px; border: 2px solid transparent; border-image: var(--pk-ring) 2; border-radius: 0; opacity: 1; color: var(--ctl); background: var(--frame-hi) padding-box; box-shadow: inset 0 -2px 0 var(--frame-lo); transition: none; }
 :root[data-deco=pixel] .win .ctl::before { content: ''; width: 10px; height: 10px; margin-bottom: 2px; background: currentColor; -webkit-mask: var(--pk-glyph) center / 10px 10px no-repeat; mask: var(--pk-glyph) center / 10px 10px no-repeat; }
 :root[data-deco=pixel] .win .ctl.close { --pk-glyph: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 5 5'%3E%3Cpath d='M0 0h1v1H0zM4 0h1v1H4zM1 1h1v1H1zM3 1h1v1H3zM2 2h1v1H2zM1 3h1v1H1zM3 3h1v1H3zM0 4h1v1H0zM4 4h1v1H4z'/%3E%3C/svg%3E"); }
 :root[data-deco=pixel] .win .ctl.min { --pk-glyph: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 5 5'%3E%3Cpath d='M0 3h5v1H0z'/%3E%3C/svg%3E"); }
 :root[data-deco=pixel] .win .ctl.max { --pk-glyph: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 5 5'%3E%3Cpath fill-rule='evenodd' d='M0 0h5v5H0zM1 1v3h3V1z'/%3E%3C/svg%3E"); }
 :root[data-deco=pixel] .win .ctl svg { display: none; }
-:root[data-deco=pixel] .win .ctl:hover { background: var(--pk-sun) padding-box; }
+:root[data-deco=pixel] .win .ctl:hover { color: var(--pk-on-sun); background: var(--pk-sun) padding-box; }
 :root[data-deco=pixel] .win .ctl.close:hover { color: #fff; background: var(--pk-coral) padding-box; }
 :root[data-deco=pixel] .win .ctl:active { box-shadow: none; }
 :root[data-deco=pixel] .win .ctl:active::before { margin: 2px 0 0; }
 :root[data-deco=pixel] .win:not(.active) .ctl { color: var(--tab-in-fg); background: var(--frame) padding-box; }
 :root[data-deco=pixel] .grip { background: repeating-conic-gradient(var(--frame-lo) 0 25%, transparent 0 50%) 0 0 / 4px 4px; clip-path: polygon(100% 0, 100% 100%, 0 100%); }
-:root[data-deco=pixel] .sizer { border: 2px solid transparent; border-image: var(--pk-ring) 2; border-radius: 0; background: var(--pk-sun) padding-box; color: var(--pk-ink); box-shadow: none; font: 12px var(--pk-font); }
+:root[data-deco=pixel] .sizer { border: 2px solid transparent; border-image: var(--pk-ring) 2; border-radius: 0; background: var(--pk-sun) padding-box; color: var(--pk-on-sun); box-shadow: none; font: 12px var(--pk-font); }
 :root[data-deco=pixel] .win.peek .frame { outline: 2px solid var(--pk-coral); }
 :root[data-deco=pixel] #snapPreview { border: 2px solid var(--pk-sun); border-radius: 0; background: repeating-conic-gradient(rgba(255,205,77,.45) 0 25%, transparent 0 50%) 0 0 / 8px 8px; }
 :root[data-deco=pixel] #divider::after { border-radius: 0; background: var(--pk-sun); box-shadow: 0 0 0 2px var(--pk-ink); }
@@ -98,11 +120,11 @@
 :root[data-deco=pixel] #panel :is(.pb, .task) { border-radius: 0; }
 :root[data-deco=pixel] #menuBtn { font-weight: 700; }
 :root[data-deco=pixel] #menuBtn::before { content: ''; width: 14px; height: 14px; flex: none; background: var(--pk-coral); -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 7 7'%3E%3Cpath d='M1 0h2v1H1zM4 0h2v1H4zM0 1h7v3H0zM1 4h5v1H1zM2 5h3v1H2zM3 6h1v1H3z'/%3E%3C/svg%3E") center / 14px 14px no-repeat; mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 7 7'%3E%3Cpath d='M1 0h2v1H1zM4 0h2v1H4zM0 1h7v3H0zM1 4h5v1H1zM2 5h3v1H2zM3 6h1v1H3z'/%3E%3C/svg%3E") center / 14px 14px no-repeat; }
-:root[data-deco=pixel] :is(#menuBtn.open, #panelHome:is(:active, .on), .task.on) { color: var(--pk-ink); background: var(--pk-sun); border-color: var(--pk-sun); box-shadow: none; }
+:root[data-deco=pixel] :is(#menuBtn.open, #panelHome:is(:active, .on), .task.on) { color: var(--pk-on-sun); background: var(--pk-sun); border-color: var(--pk-sun); box-shadow: none; }
 :root[data-deco=pixel] :is(#menuBtn.open, .task.on) .ico { filter: none; }
 :root[data-deco=pixel] .task.min { opacity: .7; font-style: normal; }
 :root[data-deco=pixel] .pb:focus-visible { outline-color: var(--pk-coral); }
-:root[data-deco=pixel] #winsBtn b { border-radius: 0; color: var(--pk-ink); background: var(--pk-sun); font: 700 12px/16px var(--pk-font); box-shadow: 0 0 0 2px var(--pk-ink); }
+:root[data-deco=pixel] #winsBtn b { border-radius: 0; color: var(--pk-on-sun); background: var(--pk-sun); font: 700 12px/16px var(--pk-font); box-shadow: 0 0 0 2px var(--pk-ink); }
 
 /* Menu, context menu, search and the shortcut list: ringed sheets with a hard shadow, like an RPG's dialogue box */
 :root[data-deco=pixel] :is(#menu, .ctx, .sp-frame, .recent-list, .ctx-note) { border: 2px solid transparent; border-image: var(--pk-ring) 2; border-radius: 0; background: var(--content) padding-box; box-shadow: inset 2px 2px 0 var(--frame-hi), 6px 6px 0 var(--pk-shadow); }
@@ -113,32 +135,65 @@
 :root[data-deco=pixel] :is(.mn-sec h3, .mn-res h3, .places h2, .sp-gh, .shortcuts h2, .rd-related-h, .folder-h, .pv-year) { font: 400 13px var(--pk-font); letter-spacing: 0; text-transform: none; }
 :root[data-deco=pixel] :is(.mn-cats button, .mn-app, .sw-open, .sp-t b) { font-family: var(--pk-font); font-weight: 400; }
 :root[data-deco=pixel] .ctx-sep { height: 2px; background: var(--line); }
-:root[data-deco=pixel] .sp-tab { padding: 0 14px 0 10px; border: 2px solid transparent; border-bottom: 0; border-image: var(--pk-ring) 2; color: var(--pk-ink); background: linear-gradient(var(--pk-sun) 0 16px, transparent 16px 22px, var(--pk-amber) 22px) padding-box, var(--pk-dither) padding-box var(--pk-sun); box-shadow: inset 2px 2px 0 var(--tab-hi), 6px 6px 0 var(--pk-shadow); font: 700 15px var(--pk-font); }
+:root[data-deco=pixel] .sp-tab { padding: 0 14px 0 10px; border: 2px solid transparent; border-bottom: 0; border-image: var(--pk-ring) 2; color: var(--pk-on-sun); background: linear-gradient(var(--pk-sun) 0 16px, transparent 16px 22px, var(--pk-amber) 22px) padding-box, var(--pk-dither) padding-box var(--pk-sun); box-shadow: inset 2px 2px 0 var(--tab-hi), 6px 6px 0 var(--pk-shadow); font: 700 15px var(--pk-font); }
 :root[data-deco=pixel] :is(.sp-field, .sp-list) { border-width: 2px; border-color: var(--frame-lo) var(--frame-hi) var(--frame-hi) var(--frame-lo); }
 :root[data-deco=pixel] .sp-field:focus-within { border-color: var(--pk-coral); box-shadow: none; }
 
-/* Dock: a hotbar. Slots recessed into a ringed slab, Home on a sun slot, a running app lit with a coral rim and a
-   square pip. Phones (chrome.css) keep the same slots at touch size. */
-.wm[data-deco=pixel] #dock { bottom: 10px; gap: 4px; padding: 4px; border: 2px solid transparent; border-image: var(--pk-ring) 2; border-radius: 0; background: var(--frame) padding-box; box-shadow: inset 2px 2px 0 var(--frame-hi), inset -2px -2px 0 var(--frame-lo), 6px 6px 0 var(--pk-shadow); backdrop-filter: none; -webkit-backdrop-filter: none; }
-:root[data-deco=pixel] #dock .dk, :root[data-deco=pixel] #dock #homeBtn, :root[data-deco=pixel] #dock #winsBtn { width: 46px; height: 46px; margin: 0; border-radius: 0; color: var(--fg); background: var(--side); box-shadow: inset 2px 2px 0 var(--frame-lo), inset -2px -2px 0 var(--frame-hi); }
-:root[data-deco=pixel] #dock :is(.dk, #homeBtn, #winsBtn) .ico { width: 30px; height: 30px; }
-:root[data-deco=pixel] #dock :is(.dk, #homeBtn, #winsBtn):hover { background: var(--tab-hi); }
-:root[data-deco=pixel] #dock #homeBtn { background: var(--pk-sun); box-shadow: inset 2px 2px 0 var(--pk-amber), inset -2px -2px 0 var(--tab-hi); }
-:root[data-deco=pixel] #dock :is(#homeBtn.on, #homeBtn:active, #winsBtn:active) { background: var(--pk-amber); }
-:root[data-deco=pixel] #dock #homeBtn::after, :root[data-deco=pixel] #dock #winsBtn::before { content: none; }
-:root[data-deco=pixel] #dock .dk.run { box-shadow: inset 0 0 0 2px var(--pk-coral); }
-:root[data-deco=pixel] #dock .dk.run::after { bottom: 4px; width: 4px; height: 4px; margin-left: -2px; border-radius: 0; background: var(--pk-coral); }
-:root[data-deco=pixel] #dock #winsBtn b { top: 2px; right: 2px; min-width: 16px; }
-:root[data-deco=pixel] #dock .lbl { font-family: var(--pk-font); }
+/* Docks. Each goes with any window style, so each brings its colours; the hotbar takes the window style's own
+   while that is Pixel, so it follows the colour sets. Phones (chrome.css) keep them at touch size. */
+.wm[data-dock=pixel] { --dock-h: 76px; }
+.wm[data-dock=pixel-cartridge] { --dock-h: 84px; }
+.wm[data-dock^=pixel] #dock { border-radius: 0; backdrop-filter: none; -webkit-backdrop-filter: none; }
+.wm[data-dock^=pixel] :is(.dk, #dock #homeBtn, #dock #winsBtn) { margin: 0; border-radius: 0; }
+.wm[data-dock^=pixel] #dock #homeBtn::after, .wm[data-dock^=pixel] #dock #winsBtn::before { content: none; }
+
+/* The hotbar: slots recessed into a ringed slab, Home on a sun slot, a running app lit with a coral rim and a
+   square pip */
+.wm[data-dock=pixel] #dock {
+  --hb: light-dark(#f1e4c6, #3a3560); --hb-hi: light-dark(#fff9ea, #5b5591); --hb-lo: light-dark(#c8b58f, #24203f);
+  --hb-slot: light-dark(#f6ecd4, #2a2747); --hb-hover: #ffe79a; --hb-sun: #ffcd4d; --hb-amber: #e8a52e; --hb-run: #ef7d57;
+  --hb-fg: light-dark(#252235, #ece7f6); --hb-shadow: light-dark(rgba(28,26,46,.4), rgba(5,4,14,.7));
+  bottom: 10px; gap: 4px; padding: 4px; border: 2px solid transparent; border-image: var(--pk-ring) 2; background: var(--hb) padding-box; box-shadow: inset 2px 2px 0 var(--hb-hi), inset -2px -2px 0 var(--hb-lo), 6px 6px 0 var(--hb-shadow);
+}
+.wm[data-deco=pixel][data-dock=pixel] #dock { --hb: var(--frame); --hb-hi: var(--frame-hi); --hb-lo: var(--frame-lo); --hb-slot: var(--side); --hb-hover: var(--tab-hi); --hb-sun: var(--pk-sun); --hb-amber: var(--pk-amber); --hb-run: var(--pk-coral); --hb-fg: var(--fg); --hb-shadow: var(--pk-shadow); }
+.wm[data-dock=pixel] :is(.dk, #dock #homeBtn, #dock #winsBtn) { width: 46px; height: 46px; color: var(--hb-fg); background: var(--hb-slot); box-shadow: inset 2px 2px 0 var(--hb-lo), inset -2px -2px 0 var(--hb-hi); }
+.wm[data-dock=pixel] #dock :is(.dk, #homeBtn, #winsBtn) .ico { width: 30px; height: 30px; }
+.wm[data-dock=pixel] #dock :is(.dk, #homeBtn, #winsBtn):hover { background: var(--hb-hover); }
+.wm[data-dock=pixel] #dock #homeBtn { background: var(--hb-sun); box-shadow: inset 2px 2px 0 var(--hb-amber), inset -2px -2px 0 var(--hb-hover); }
+.wm[data-dock=pixel] #dock :is(#homeBtn.on, #homeBtn:active, #winsBtn:active) { background: var(--hb-amber); }
+.wm[data-dock=pixel] #dock .dk.run { box-shadow: inset 0 0 0 2px var(--hb-run); }
+.wm[data-dock=pixel] #dock .dk.run::after { bottom: 4px; width: 4px; height: 4px; margin-left: -2px; border-radius: 0; background: var(--hb-run); }
+.wm[data-dock=pixel] #dock #winsBtn b { top: 2px; right: 2px; min-width: 16px; }
+
+/* Cartridges: each launcher a Game Boy cartridge standing in a console's slot, its icon on the label. Pointing at
+   one draws it half out, a running app lights the LED on the slot's lip beneath it, and Home and the switcher are
+   the console's A and B buttons. */
+.wm[data-dock=pixel-cartridge] #dock, .cp-dk.pixel-cartridge {
+  --pc-cart: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='23' shape-rendering='crispEdges'%3E%3Cpath fill='%2324242e' d='M0 0h17v1h-17zM0 1h1v22h-1zM17 1h1v1h-1zM18 2h1v1h-1zM19 3h1v20h-1zM1 22h18v1h-18z'/%3E%3Cpath fill='%23c4c4ce' d='M1 1h15v1h-15zM1 2h1v20h-1z'/%3E%3Cpath fill='%239c9ca8' d='M16 1h1v2h-1zM2 2h14v1h-14zM17 2h1v19h-1zM2 3h1v18h-1zM3 4h14v1h-14zM3 6h14v1h-14zM3 19h14v2h-14z'/%3E%3Cpath fill='%2374747f' d='M3 3h14v1h-14zM3 5h14v1h-14z'/%3E%3Cpath fill='%236e6e7c' d='M18 3h1v19h-1zM2 21h16v1h-16z'/%3E%3Cpath fill='%23efe9d8' d='M3 7h14v11h-14z'/%3E%3Cpath fill='%23b0a88e' d='M3 18h14v1h-14z'/%3E%3C/svg%3E");
+  --pc-ab: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' shape-rendering='crispEdges'%3E%3Cpath fill='%232a0f1f' d='M0 7h1V5h1V3h1V2h2V1h2V0h6V1h2V2h2V3h1V5h1V7h1V13h-1V15h-1V17h-1V18h-2V19h-2V20h-6V19h-2V18h-2V17h-1V15h-1V13h-1z'/%3E%3Cpath fill='%23761c4c' d='M1 9h1V6h1V4h1V3h2V2h3V1h2V2h3V3h2V4h1V6h1V9h1V11h-1V14h-1V16h-1V17h-2V18h-3V19h-2V18h-3V17h-2V16h-1V14h-1V11h-1z'/%3E%3Cpath fill='%23a3286a' d='M1 8h1V5h1V4h1V3h1V2h3V1h2V2h3V3h1V4h1V5h1V8h1V10h-1V13h-1V14h-1V15h-1V16h-3V17h-2V16h-3V15h-1V14h-1V13h-1V10h-1z'/%3E%3Cpath fill='%23cf5c96' d='M4 5h1V4h1V3h2V4h1V5h1V7h-1V8h-1V9h-2V8h-1V7h-1z'/%3E%3C/svg%3E");
+}
+.wm[data-dock=pixel-cartridge] #dock { bottom: 8px; gap: 6px; align-items: flex-end; padding: 10px 14px 14px; border: 2px solid #1a1a22; background: light-dark(#bdbac8, #3a3846); box-shadow: inset 2px 2px 0 light-dark(#dedbe6, #57546a), inset -2px -2px 0 light-dark(#8e8a9c, #24222e), 4px 4px 0 rgba(10,10,20,.4); }
+/* the slot's lip, in front of the cartridges' feet */
+.wm[data-dock=pixel-cartridge] #dock::after { content: ''; position: absolute; left: 8px; right: 8px; bottom: 6px; height: 14px; z-index: 1; pointer-events: none; background: #25242e; box-shadow: inset 0 2px 0 #494756, inset 0 -2px 0 #16151c; }
+.wm[data-dock=pixel-cartridge] .dk { width: 40px; height: 54px; background: var(--pc-cart) 50% 100% / 40px 46px no-repeat; }
+.wm[data-dock=pixel-cartridge] #dock .dk .ico { width: 22px; height: 22px; margin-top: 2px; }
+.wm[data-dock=pixel-cartridge] #dock .dk:is(:hover, :focus-visible) { background-position: 50% 0; }
+.wm[data-dock=pixel-cartridge] #dock .dk:is(:hover, :focus-visible) .ico { translate: 0 -8px; }
+.wm[data-dock=pixel-cartridge] #dock .dk::after { content: ''; position: absolute; left: 50%; bottom: -6px; z-index: 2; width: 4px; height: 4px; margin-left: -2px; border-radius: 0; background: #58222a; }
+.wm[data-dock=pixel-cartridge] #dock .dk.run::after { background: #ff3b3b; box-shadow: 0 0 0 2px rgba(255,59,59,.35); }
+.wm[data-dock=pixel-cartridge] :is(#dock #homeBtn, #dock #winsBtn) { z-index: 2; width: 40px; height: 40px; margin-bottom: 8px; color: #fff; background: var(--pc-ab) 0 0 / 100% 100%; }
+.wm[data-dock=pixel-cartridge] #dock :is(#homeBtn, #winsBtn) .ico { width: 22px; height: 22px; }
+.wm[data-dock=pixel-cartridge] #dock :is(#homeBtn, #winsBtn):is(:hover, :active, .on) { translate: 0 2px; }
+.wm[data-dock=pixel-cartridge] #dock #winsBtn b { top: -4px; right: -6px; border-radius: 0; color: #fff; background: #25242e; box-shadow: 0 0 0 2px #1a1a22; }
 
 /* desktop icons carry ink captions; the switcher and the phone home screen are the same tabs and slabs */
 :root[data-deco=pixel] .dicon span { padding: 2px 6px; color: var(--pk-cream); background: var(--pk-ink); border-radius: 0; text-shadow: none; font: 13px/1.2 var(--pk-font); }
 :root[data-deco=pixel] .dicon .ico { filter: drop-shadow(2px 2px 0 var(--pk-shadow)); }
 :root[data-deco=pixel] #desk::after { font: 700 52px/1 var(--pk-font); letter-spacing: 0; color: light-dark(rgba(28,26,46,.14), rgba(245,234,208,.12)); }
-:root[data-deco=pixel] #recent h2 { padding: 4px 12px; color: var(--pk-ink); background: var(--pk-sun); border: 2px solid transparent; border-bottom: 0; border-image: var(--pk-ring) 2; font: 700 14px var(--pk-font); }
+:root[data-deco=pixel] #recent h2 { padding: 4px 12px; color: var(--pk-on-sun); background: var(--pk-sun); border: 2px solid transparent; border-bottom: 0; border-image: var(--pk-ring) 2; font: 700 14px var(--pk-font); }
 :root[data-deco=pixel] .sw-tab { height: 32px; padding: 0 4px 0 8px; border: 2px solid transparent; border-bottom: 0; border-image: var(--pk-ring) 2; background: var(--tab-in) padding-box; box-shadow: inset 2px 2px 0 var(--frame-hi); filter: drop-shadow(4px 4px 0 var(--pk-shadow)); }
 :root[data-deco=pixel] .sw-tab::after { left: -2px; height: 8px; border: 2px solid transparent; border-image: var(--pk-ring) 2; background: var(--frame) padding-box; box-shadow: inset 2px 2px 0 var(--frame-hi); }
-:root[data-deco=pixel] .sw-tab.on { color: var(--pk-ink); background: linear-gradient(var(--pk-sun) 0 18px, transparent 18px 24px, var(--pk-amber) 24px) padding-box, var(--pk-dither) padding-box var(--pk-sun); box-shadow: inset 2px 2px 0 var(--tab-hi); }
+:root[data-deco=pixel] .sw-tab.on { color: var(--pk-on-sun); background: linear-gradient(var(--pk-sun) 0 18px, transparent 18px 24px, var(--pk-amber) 24px) padding-box, var(--pk-dither) padding-box var(--pk-sun); box-shadow: inset 2px 2px 0 var(--tab-hi); }
 :root[data-deco=pixel] .sw-tab:not(.on):hover { background: var(--tab-dim) padding-box; }
 :root[data-deco=pixel] .sw-tab.min { border-bottom-width: 2px; }
 :root[data-deco=pixel] .sw-tab .ctl { border-radius: 0; }
@@ -168,28 +223,45 @@
 :root[data-deco=pixel] .rd th { background: var(--frame); }
 :root[data-deco=pixel] .rd .admonition[class] { border: 2px solid var(--line); border-left: 4px solid var(--adm-type-color); }
 :root[data-deco=pixel] .rd .chip { padding: 2px 8px; border: 2px solid transparent; border-image: var(--pk-ring) 2; border-radius: 0; background: var(--content) padding-box; color: var(--fg); box-shadow: 2px 2px 0 var(--pk-shadow); font: 12px var(--pk-font); }
-:root[data-deco=pixel] .rd .chip:hover { color: var(--pk-ink); background: var(--pk-sun) padding-box; }
+:root[data-deco=pixel] .rd .chip:hover { color: var(--pk-on-sun); background: var(--pk-sun) padding-box; }
 :root[data-deco=pixel] .rd-pager a { border: 2px solid transparent; border-image: var(--pk-ring) 2; border-radius: 0; background: var(--content) padding-box; box-shadow: inset 0 -2px 0 var(--frame-lo), 3px 3px 0 var(--pk-shadow); font-family: var(--pk-font); }
-:root[data-deco=pixel] .rd-pager a:hover { background: var(--pk-sun) padding-box; color: var(--pk-ink); }
+:root[data-deco=pixel] .rd-pager a:hover { background: var(--pk-sun) padding-box; color: var(--pk-on-sun); }
+:root[data-deco=pixel] .ticker-h { border-radius: 0; color: var(--pk-on-sun); background: var(--pk-sun); }
 
 /* Wallpaper. One art pixel is --px on screen. The body stacks the sun or moon, the hills tile and a four-pixel sky
    strip, all anchored to the bottom so the horizon holds whatever the height. ::before is the star tile: four frames
    of the same stars at different brightness, stepped one frame along each beat so they twinkle in place. ::after is
    the cloud tile, drifting one art pixel a step. Both stop under reduced motion, where tokens.css halts every
    animation. By day the star layer draws nothing. */
-.wm[data-wall=pixel] { --px: 5px; }
+.wm[data-wall^=pixel] { --px: 5px; }
 .wm[data-wall=pixel] body { background: var(--pk-orb) right 14% top 32% / calc(16 * var(--px)) calc(16 * var(--px)) no-repeat, var(--pk-hills) 0 100% / calc(256 * var(--px)) calc(96 * var(--px)) repeat-x, var(--pk-sky) 0 100% / calc(4 * var(--px)) calc(220 * var(--px)) repeat-x var(--pk-top); }
-.wm[data-wall=pixel] body::before, .wm[data-wall=pixel] body::after { content: ''; position: fixed; z-index: -1; top: var(--panel-h); pointer-events: none; }
+.wm[data-wall=pixel] body::before, .wm[data-wall^=pixel] body::after { content: ''; position: fixed; z-index: -1; top: var(--panel-h); pointer-events: none; }
 .wm[data-wall=pixel] body::before { left: 0; right: calc(-256 * var(--px)); height: 60vh; background: var(--pk-stars) 0 0 / calc(256 * var(--px)) calc(64 * var(--px)); -webkit-mask: linear-gradient(#000 45%, transparent); mask: linear-gradient(#000 45%, transparent); animation: pk-twinkle 3.2s steps(4) infinite; }
 .wm[data-wall=pixel] body::after { top: calc(var(--panel-h) + 2vh); left: calc(-192 * var(--px)); right: 0; height: calc(40 * var(--px)); background: var(--pk-clouds) 0 0 / calc(192 * var(--px)) calc(40 * var(--px)) repeat-x; animation: pk-drift 160s steps(192) infinite; }
 @keyframes pk-twinkle { to { translate: calc(-256 * var(--px)) 0; } }
 @keyframes pk-drift { to { translate: calc(192 * var(--px)) 0; } }
-@media (min-width: 2200px) { .wm[data-wall=pixel] { --px: 7px; } }
+@media (min-width: 2200px) { .wm[data-wall^=pixel] { --px: 7px; } }
+
+/* Pico: PICO-8's night over a snowy summit, after Celeste Classic, with pines below and snow falling one art pixel a
+   step */
+.wm[data-wall=pixel-pico], .cp-wp.pixel-pico {
+  --pp-peak: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='288' height='80' shape-rendering='crispEdges'%3E%3Cpattern id='p' width='2' height='2' patternUnits='userSpaceOnUse'%3E%3Cpath fill='%2383769c' d='M0 0h2v2H0z'/%3E%3Cpath fill='%235f574f' d='M0 0h1v1H0zM1 1h1v1H1z'/%3E%3C/pattern%3E%3Cpath fill='%2383769c' d='M0 80v-2h1v-1h1v-1h1v-1h1v-1h1v-1h1v-1h1v-2h1v-1h1v-1h1v-1h2v-1h1v-1h1v-1h1v-1h1v-1h1v-1h1v-2h1v-1h1v-2h1v-2h1v-2h1v-1h1v-2h1v-1h1v-1h1v-1h2v1h1v2h1v2h1v2h1v2h1v1h1v1h1v2h1v1h1v1h1v1h1v1h1v1h1v1h1v1h1v1h1v2h2v-1h1v-1h1v-1h1v-1h1v-1h1v-1h1v-2h1v-1h1v-1h1v-2h1v-1h1v-1h1v-2h1v-1h1v-1h1v-1h1v-1h1v-1h1v-1h2v-1h1v-1h1v-1h1v-1h1v-2h1v-1h1v-2h1v-1h1v-2h1v-1h1v-2h1v-1h1v-2h1v-1h1v-1h1v-1h2v-1h1v-1h1v-1h2v-1h1v-2h1v-1h1v-2h1v-1h1v-2h1v-2h1v-2h2v-1h1v1h1v1h1v2h1v1h1v2h1v2h1v1h1v2h1v1h1v1h1v1h1v1h1v1h1v1h2v1h2v1h1v1h1v1h1v1h1v1h1v1h1v2h1v1h1v2h1v1h1v1h1v1h1v1h1v1h1v1h1v1h2v1h1v1h1v1h2v1h1v1h1v2h1v1h1v1h1v1h1v1h1v2h1v1h1v1h1v1h2v1h1v1h1v1h1v1h2v1h1v1h1v1h1v1h1v-1h1v-1h1v-1h1v-1h1v-2h1v-1h1v-2h1v-1h1v-1h1v-1h1v-2h1v-1h1v-1h2v-1h1v-1h1v-1h1v-1h1v-1h1v-1h1v-1h1v-2h1v-2h1v-2h1v-1h1v-2h1v-2h1v-1h1v-2h1v1h2v2h1v1h1v2h1v2h1v1h1v2h1v1h1v1h1v1h1v1h1v1h2v1h1v1h1v1h1v1h1v1h1v1h1v2h1v1h1v2h1v1h1v1h1v2h1v1h1v1h1v1h1v1h1v1h1v1h1v1h2v1h1v1h1v1h1v1h1v1h2v-1h1v-1h1v-1h2v-1h1v-1h1v-1h1v-1h1v-2h1v-1h1v-1h1v-2h1v-1h1v-1h1v-2h1v-1h2v-1h1v-1h2v-1h1v-1h2v-1h1v-3h1v3h2v1h3v1h2v1h1v1h1v1h1v1h1v2h1v1h1v1h1v2h1v1h1v1h1v1h1v1h2v1h1v1h2v1h1v1h1v1h2v1h1v1h1v1h1v1h1v1h2V80zM287 80v-1h1V80z'/%3E%3Cpath fill='url(%23p)' d='M29 80v-33h1v2h1v2h1v2h1v2h1v1h1v1h1v2h1v1h1v1h1v1h1v1h1v1h1v1h1v1h1v1h1V80zM97 80v-71h1v1h1v1h1v2h1v1h1v2h1v2h1v1h1v2h1v1h1v1h1v1h1v1h1v1h1v1h2v1h2v1h1v1h1v1h1v1h1v1h1v1h1v2h1v1h1v2h1v1h1v1h1v1h1v1h1v1h1v1h1v1h2v1h1v1h1v1h2v1h1v1h1v2h1v1h1v1h1v1h1v1h1v2h1v1h1v1h1v1h2v1h1v1h1v1h1v1h2v1h1v1h1v1h1v1h1V80zM187 80v-46h1v2h1v1h1v2h1v2h1v1h1v2h1v1h1v1h1v1h1v1h1v1h2v1h1v1h1v1h1v1h1v1h1v1h1v2h1v1h1v2h1v1h1v1h1v2h1v1h1v1h1v1h1v1h1v1h1v1h1v1h2v1h1v1h1v1h1v1h1v1h1V80zM251 80v-27h2v1h3v1h2v1h1v1h1v1h1v1h1v2h1v1h1v1h1v2h1v1h1v1h1v1h1v1h2v1h1v1h2v1h1v1h1v1h2v1h1v1h1v1h1v1h1v1h2V80z'/%3E%3Cpath fill='%23fff1e8' d='M18 59h1V58h1V56h1V54h1V52h1V51h1V49h1V48h1V47h1V46h2V54h-1V56h-1V57h-1V55h-4V60h-1V61h-3zM74 37h1V35h1V39h-2zM77 32h1V31h1V29h1V28h1V27h1V26h2V25h1V24h1V23h2V22h1V20h1V19h1V17h1V16h1V14h1V12h1V10h2V28h-1V25h-2V30h-1V31h-2V32h-1V31h-2V35h-2V33h-2V30h-2V33h-1V34h-3V33h-1zM175 49h1V50h-1zM177 47h1V48h-1zM180 41h1V40h1V38h1V36h1V35h1V33h1V34h1V46h-1V43h-2V46h-4zM237 63h1V64h-1zM239 61h1V59h1V58h2V57h1V56h2V55h1V54h2V53h1V50h1V57h-1V60h-2V61h-1V62h-1V60h-2V64h-2V65h-2V62h-1z'/%3E%3Cpath fill='%23c2c3c7' d='M29 47h1V49h1V51h1V53h1V55h1V56h1V57h1V58h-2V62h-1V61h-1V59h-1V58h-1V54h-1zM97 9h1V10h1V11h1V13h1V14h1V16h1V18h1V19h1V21h1V22h1V23h1V24h1V25h1V26h1V27h2V28h2V29h1V30h1V31h1V32h1V33h1V34h1V35h-1V34h-1V33h-1V37h-2V36h-2V32h-2V34h-1V33h-1V32h-2V29h-2V33h-3V32h-1V29h-1V28h-1V30h-2V27h-1zM187 34h1V36h1V37h1V39h1V41h1V42h1V44h1V45h1V46h1V47h-2V46h-2V43h-1V42h-1V46h-3zM198 49h2V50h1V51h-3zM251 53h2V54h3V55h2V56h1V57h1V58h1V59h1V62h-2V63h-2V61h-2V63h-3V62h-1V58h-1zM264 63h1V64h-1z'/%3E%3Cpath fill='%23000' d='M0 80v-5h1v-2h1v1h1v-3h1v1h1v-4h1v1h1v-5h1v5h1v-1h1v4h1v-1h1v3h1v-1h1v2h1v-2h1v1h1v-2h2v-3h1v3h2v2h1v-1h1v1h1v-2h2v-3h1v1h1v-5h1v5h1v-1h1v3h2v2h1v-1h1v2h1v1h1v1h4v-1h2v-1h1v-3h1v1h1v-3h1v1h1v-5h1v1h1v-6h1v6h1v-1h1v5h1v-1h1v3h1v-1h1v3h1v2h1v-1h1v-2h1v1h1v-2h2v-2h2v-3h1v3h2v2h2v2h1v-1h1v2h1v1h2v-1h3v1h4v-1h3v1h4v-1h3v1h4v-1h3v1h4v-1h3v1h4v-1h3v1h3v-2h1v-2h1v1h1v-2h2v-3h1v1h1v-5h1v5h1v-1h1v3h2v2h1v-1h1v1h1v-2h1v1h1v-4h1v1h1v-5h1v2h1v-7h1v7h1v-2h1v5h1v-1h1v4h1v-1h1v2h1v2h4v-2h1v1h1v-2h2v-2h2v-3h1v3h2v2h2v2h1v-1h1v2h1v1h3v-1h3v1h4v-1h3v1h4v-1h3v1h4v-1h3v1h4v-1h3v1h4v-1h3v-1h1v-2h1v1h1v-4h1v1h1v-4h1v1h1v-5h1v5h1v-1h1v4h1v-1h1v4h1v-1h1v2h1v2h1v-2h1v-1h1v1h1v-3h1v1h1v-3h1v1h1v-4h1v4h1v-1h1v3h1v-1h1v3h1v-1h1v1h1v2h1v-1h3v1h4v-1h3v1h4v-1h3v1h4v-1h3v-1h1v-2h1v1h1v-3h1v1h1v-4h1v1h1v-5h1v5h1v-1h1v4h1v-1h1v3h1v-1h1v2h3v-2h1v1h1v-2h2v-3h1v3h2v2h1v-1h1V80z'/%3E%3C/svg%3E");
+  --pp-sky: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='2' height='140' shape-rendering='crispEdges'%3E%3Cpattern id='a' width='2' height='2' patternUnits='userSpaceOnUse'%3E%3Cpath fill='%23000' d='M0 0h2v2H0z'/%3E%3Cpath fill='%231d2b53' d='M0 0h1v1H0zM1 1h1v1H1z'/%3E%3C/pattern%3E%3Cpattern id='b' width='2' height='2' patternUnits='userSpaceOnUse'%3E%3Cpath fill='%231d2b53' d='M0 0h2v2H0z'/%3E%3Cpath fill='%237e2553' d='M0 0h1v1H0zM1 1h1v1H1z'/%3E%3C/pattern%3E%3Cpath fill='url(%23a)' d='M0 0h2v8H0z'/%3E%3Cpath fill='%231d2b53' d='M0 8h2v86H0z'/%3E%3Cpath fill='url(%23b)' d='M0 94h2v6H0z'/%3E%3Cpath fill='%237e2553' d='M0 100h2v40H0z'/%3E%3C/svg%3E");
+  --pp-snow: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='64' height='64' shape-rendering='crispEdges'%3E%3Cpath fill='%23fff1e8' d='M40 3h1v1h-1zM3 5h1v1h-1zM52 7h1v1h-1zM37 24h1v1h-1zM12 30h1v1h-1zM30 41h1v1h-1zM60 50h1v1h-1zM25 60h1v1h-1z'/%3E%3Cpath fill='%23c2c3c7' d='M21 13h1v1h-1zM55 20h1v1h-1zM47 36h1v1h-1zM8 55h1v1h-1z'/%3E%3C/svg%3E");
+}
+.wm[data-wall=pixel-pico] body, .cp-wp.pixel-pico { background: var(--pp-peak) 0 100% / calc(288 * var(--px)) calc(80 * var(--px)) repeat-x, var(--pp-sky) 0 100% / calc(2 * var(--px)) calc(140 * var(--px)) repeat-x #000; }
+.wm[data-wall=pixel-pico] body::after { top: calc(var(--panel-h) - 128 * var(--px)); left: calc(-64 * var(--px)); right: 0; bottom: 0; background: var(--pp-snow) 0 0 / calc(64 * var(--px)) calc(64 * var(--px)); animation: pp-snow 40s steps(128) infinite; }
+@keyframes pp-snow { to { translate: calc(64 * var(--px)) calc(128 * var(--px)); } }
+.cp-wp.pixel-pico { --px: .3px; }
 
 /* Control panel thumbnails: the scene at a third of a pixel, and a ringed window on it */
 .cp-deco.pixel, .cp-wp.pixel { background: var(--pk-orb) 82% 22% / 5px 5px no-repeat, var(--pk-hills) 0 100% / 77px 29px repeat-x, var(--pk-sky) 0 100% / 1.2px 66px repeat-x var(--pk-top); }
 .cp-deco.pixel::before { top: 7px; width: 36px; height: 10px; background: #ffcd4d; border: 1px solid #1c1a2e; border-bottom: 0; box-shadow: none; }
 .cp-deco.pixel::after { top: 16px; background: light-dark(#f1e4c6, #3a3560); border: 1px solid #1c1a2e; box-shadow: inset 1px 1px 0 light-dark(#fff9ea, #5b5591), 3px 3px 0 rgba(12,10,28,.55); }
+
+/* the docks: the hotbar's slots and cartridges in their slot */
+.cp-dk.pixel::before { height: 14px; padding: 2px; border: 1px solid #1c1a2e; border-radius: 0; background: var(--ic) content-box, #f1e4c6; box-shadow: inset 1px 1px 0 #fff9ea, 2px 2px 0 rgba(28,26,46,.45); }
+.cp-dk.pixel-cartridge::before { width: 56px; height: 18px; padding: 2px 4px 6px; border: 1px solid #1a1a22; border-radius: 0; background: linear-gradient(#25242e 0 0) 0 100% / 100% 5px no-repeat, repeating-linear-gradient(90deg, #efe9d8 0 5px, #9c9ca8 5px 7px, transparent 7px 9px) content-box, #bdbac8; }
 
 /* Phones (the same query as windows.css): one full-screen window under a sun bar with an ink rule, touch-sized
    keycaps, and the hotbar at finger size. The scene anchors to the first screen rather than the page's end. */
@@ -200,9 +272,11 @@
   :root[data-deco=pixel] .win .ctl { width: 40px; height: 36px; }
   :root[data-deco=pixel] .win .ctl::before { width: 15px; height: 15px; -webkit-mask-size: 15px 15px; mask-size: 15px 15px; }
   :root[data-deco=pixel] .tab .tt { font-size: 17px; }
-  :root[data-deco=pixel] #dock .dk { width: 48px; height: 48px; }
-  :root[data-deco=pixel] #dock .dk .ico { width: 32px; height: 32px; }
-  .wm[data-deco=pixel] #dock { gap: 4px; bottom: 8px; }
-  .wm[data-wall=pixel] { --px: 4px; }
+  .wm[data-dock=pixel] #dock .dk { width: 48px; height: 48px; }
+  .wm[data-dock=pixel] #dock .dk .ico { width: 32px; height: 32px; }
+  .wm[data-dock=pixel] #dock { gap: 4px; bottom: 8px; }
+  .wm[data-dock=pixel-cartridge] #dock { gap: 4px; padding-inline: 8px; }
+  .wm[data-wall^=pixel] { --px: 4px; }
   .wm[data-wall=pixel] body { background-position: right 10% top 12%, 0 calc(100lvh - 96 * var(--px)), 0 calc(100lvh - 220 * var(--px)); }
+  .wm[data-wall=pixel-pico] body { background-position: 0 calc(100lvh - 80 * var(--px)), 0 calc(100lvh - 140 * var(--px)); }
 }

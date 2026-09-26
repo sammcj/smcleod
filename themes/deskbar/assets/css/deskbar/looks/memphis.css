@@ -73,7 +73,7 @@
 :root[data-deco=memphis] :is(.toolbar, .status, .list th) { border-color: var(--line); }
 :root[data-deco=memphis] :is(.cp-opt, .cp-art, .cp-sample) { border-radius: 0 !important; }
 @media (prefers-reduced-motion: no-preference) {
-  :root[data-deco=memphis] :is(.tb, .pc, .sw-link, #dock .dk) { transition: translate .08s, box-shadow .08s, border-color .08s; }
+  :root[data-deco=memphis] :is(.tb, .pc, .sw-link) { transition: translate .08s, box-shadow .08s, border-color .08s; }
 }
 
 /* menus and popups: pink rules on a hard cyan shadow */
@@ -96,12 +96,16 @@
 :root[data-deco=memphis] .sw-tab.min { border-bottom: 2px solid var(--sw-edge); filter: none; }
 :root[data-deco=memphis] :is(.sw-link, .sw-empty) { background: var(--sw-ink); border: 2px solid var(--sw-pink); border-radius: 0; box-shadow: 3px 3px 0 var(--sw-cyan); }
 
-/* the dock: a flat bar on a hard shadow, yellow blocks under running apps */
-.wm[data-deco=memphis] #dock { background: var(--sw-ink); border: 2px solid var(--sw-pink); border-radius: 0; box-shadow: 6px 6px 0 var(--sw-cyan); backdrop-filter: none; -webkit-backdrop-filter: none; }
-.wm[data-deco=memphis] #dock .dk.run::after { width: 8px; height: 4px; margin-left: -4px; border-radius: 0; background: var(--mp-sun); box-shadow: none; }
-.wm[data-deco=memphis] #dock #homeBtn.on { background: rgba(255,62,165,.25); border-radius: 0; box-shadow: inset 0 0 0 2px var(--sw-pink); }
-.wm[data-deco=memphis] #dock :is(.dk, #homeBtn, #winsBtn) { border-radius: 0; }
-.wm[data-deco=memphis] #dock :is(.dk, #homeBtn, #winsBtn):active { translate: 2px 2px; }
+/* The dock: a flat bar on a hard shadow, yellow blocks under running apps. Literal colours, as it can be picked under
+   any window style. */
+.wm[data-dock=memphis] #dock { background: #1a0b3a; border: 2px solid #ff3ea5; border-radius: 0; box-shadow: 6px 6px 0 #6fe3ff; backdrop-filter: none; -webkit-backdrop-filter: none; }
+.wm[data-dock=memphis] #dock .dk.run::after { width: 8px; height: 4px; margin-left: -4px; border-radius: 0; background: #ffe45e; box-shadow: none; }
+.wm[data-dock=memphis] #dock #homeBtn.on { background: rgba(255,62,165,.25); border-radius: 0; box-shadow: inset 0 0 0 2px #ff3ea5; }
+.wm[data-dock=memphis] #dock :is(.dk, #homeBtn, #winsBtn) { border-radius: 0; }
+.wm[data-dock=memphis] #dock :is(.dk, #homeBtn, #winsBtn):active { translate: 2px 2px; }
+@media (prefers-reduced-motion: no-preference) {
+  .wm[data-dock=memphis] #dock .dk { transition: translate .08s; }
+}
 
 :root[data-deco=memphis] .dicon span { background: var(--sw-ink); border-radius: 0; text-shadow: none; box-shadow: 2px 2px 0 var(--sw-pink); }
 
@@ -155,10 +159,11 @@
   #1f0d47; }
 .wm[data-wall=memphis] #desk::after { font: 700 46px/1 'Space Grotesk', var(--ui); letter-spacing: .02em; text-transform: uppercase; color: transparent; -webkit-text-stroke: 1px rgba(255,228,94,.35); }
 
-/* Control panel thumbnails: a few pieces of the confetti, each placed once on a tile the size of the thumbnail, and a
-   pink-tabbed window on its cyan shadow */
+/* Control panel thumbnails: a few pieces of the confetti, each placed once on a tile the size of the thumbnail, a
+   pink-tabbed window on its cyan shadow, and the dock on the same shadow */
 .cp-wp.memphis, .cp-deco.memphis { --z: transparent 3.5px, #ffe45e 4px 5px, transparent 5.5px; background: radial-gradient(circle 2.5px, #ff3ea5 90%, transparent) -9px -12px / 38px 48px, radial-gradient(circle 4px, transparent 2.5px, #6fe3ff 3px 3.8px, transparent 4px) 28px 6px / 76px 48px, conic-gradient(from 150deg at 50% calc(100% - 7px), #ffe45e 60deg, transparent 0) -8px -34px / 76px 48px, radial-gradient(circle at 5px 0, var(--z)) 8px 36px / 76px 48px, radial-gradient(circle at 14px 100%, var(--z)) 8px 36px / 76px 48px, radial-gradient(circle at 23px 0, var(--z)) 8px 36px / 76px 48px, #1f0d47; }
 .cp-deco.memphis::before { background: #ff3ea5; border: 2px solid #0a0418; border-bottom: 0; box-shadow: 2px 2px 0 #6fe3ff; }
+.cp-dk.memphis::before { background: var(--ic) content-box, #1a0b3a; border: 2px solid #ff3ea5; border-radius: 0; box-shadow: 3px 3px 0 #6fe3ff; }
 .cp-deco.memphis::after { background: #211546; border: 2px solid #ff3ea5; box-shadow: 3px 3px 0 #6fe3ff; }
 
 /* Phones (the same query as windows.css): one full-screen window whose tab spans the width, so shadows go */

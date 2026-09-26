@@ -1,5 +1,5 @@
 // The Control panel (lazy/control-panel.js) and the settings behind it (settings.js): three panes with their own
-// addresses (?pane=), choices that apply at once and come back before first paint, the dock styles, the reader
+// addresses (?pane=), themes (presets in code), choices that apply at once and come back before first paint, the dock styles, the reader
 // font, the reader toolbar's controls sharing the Posts pane's settings, the Test screen saver button, and the old
 // /appearance/ address. Skips without /control-panel/.
 import { test } from 'node:test';
@@ -13,13 +13,13 @@ const cp = page => win(page, 'control-panel');
 const ready = page => cp(page).locator('.cp').waitFor();
 const go = (page, url) => page.evaluate(u => window.deskbar.go(u), url);
 const pick = (page, key, value) => cp(page).locator(`input[name="cp-${key}"][value="${value}"]`).check();
-const checked = (page, key) => cp(page).locator(`input[name="cp-${key}"]:checked`).getAttribute('value');
+const checked = (page, key) => cp(page).locator(`input[name="cp-${key}"]:checked`).evaluateAll(rs => rs[0]?.value ?? null);
 const pane = page => cp(page).locator('.cp-pane:not([hidden])').getAttribute('id');
 const navTo = (page, id) => cp(page).locator(`.cp-nav a[data-pane="${id}"]`).click();
 const radios = (page, id) => cp(page).locator(`#cp-${id} input[type=radio]`).evaluateAll(rs => [...new Set(rs.map(r => r.name.slice(3)))]);
 const attrs = page => page.evaluate(() => Object.fromEntries(Object.entries(document.documentElement.dataset)
-  .filter(([k]) => ['theme', 'palette', 'deco', 'wall', 'dock', 'rdWidth', 'rdFont'].includes(k))));
-const KEYS = ['palette', 'theme', 'deco', 'wall', 'dock', 'readerWidth', 'readerFont', 'textSize', 'saverKind', 'saver'];
+  .filter(([k]) => ['theme', 'palette', 'deco', 'wall', 'dock', 'crt', 'rdWidth', 'rdFont'].includes(k))));
+const KEYS = ['palette', 'theme', 'deco', 'wall', 'dock', 'crt', 'readerWidth', 'readerFont', 'textSize', 'saverKind', 'saver'];
 const stored = page => page.evaluate(keys => Object.fromEntries(keys.flatMap(k => {
   const v = localStorage.getItem('deskbar:' + k);
   return v == null ? [] : [[k, JSON.parse(v)]];
@@ -37,7 +37,7 @@ test('three panes: Appearance first, then Posts and System, each at its own addr
   assert.deepEqual(await cp(page).locator('.cp-nav a').allTextContents(), ['Appearance', 'Posts', 'System']);
   assert.equal(await pane(page), 'cp-appearance');
   assert.equal(await cp(page).locator('.cp-nav a[aria-current=page]').textContent(), 'Appearance');
-  assert.deepEqual(await radios(page, 'appearance'), ['palette', 'theme', 'deco', 'wall', 'dock'], 'Appearance is the OS look only');
+  assert.deepEqual(await radios(page, 'appearance'), ['preset', 'deco', 'palette', 'theme', 'dock', 'wall', 'crt'], 'Appearance is the OS look only, presets first');
   assert.deepEqual(await radios(page, 'posts'), ['readerWidth', 'readerFont']);
   assert.equal(await cp(page).locator('#cp-posts #cp-size').count(), 1, 'text size is on the Posts pane');
   assert.deepEqual(await radios(page, 'system'), ['saverKind', 'saver']);
@@ -182,7 +182,9 @@ test('each palette, decorator and wallpaper applies', async t => {
 });
 
 // What sets each dock style apart, measured from the dock and its first launcher
-const dockLook = page => page.evaluate(() => {
+const dockLook = page => page.evaluate(async () => {
+  // a dock with labels measures its width in its own face, once loaded
+  await document.fonts.ready;
   const d = document.getElementById('dock'), s = getComputedStyle(d), k = d.querySelector('.dk');
   return {
     bg: s.backgroundColor + s.backgroundImage, radius: s.borderTopLeftRadius, width: Math.round(d.getBoundingClientRect().width),
@@ -191,7 +193,7 @@ const dockLook = page => page.evaluate(() => {
 });
 const shape = ({ bg, ...rest }) => rest;
 
-// Liquid Ass, the Apple Liquid Glass spoof: a window style that brings its own wallpaper and the glass dock
+// Liquid Ass, the Apple Liquid Glass spoof: a window style whose preset brings its own wallpaper and dock
 const corners = (page, sel) => page.locator(sel).first().evaluate(el => {
   const s = getComputedStyle(el);
   return [s.borderTopLeftRadius, s.borderTopRightRadius, s.borderBottomRightRadius, s.borderBottomLeftRadius];
@@ -202,10 +204,11 @@ test('Liquid Ass: traffic lights on the left, glass everywhere, no two corners a
   if (!(await needs(t, app))) return;
   const page = await open(desktop, app, () => localStorage.setItem('deskbar:dock', '"deskbar"'), { reducedMotion: 'no-preference' });
   await ready(page);
-  await pick(page, 'deco', 'liquid');
-  assert.deepEqual(await attrs(page), { deco: 'liquid', wall: 'liquid' }, 'its wallpaper, and the glass dock');
+  await pick(page, 'preset', 'liquid');
+  await page.waitForFunction(() => document.documentElement.dataset.dock === 'liquid');
+  assert.deepEqual(await attrs(page), { deco: 'liquid', wall: 'liquid', dock: 'liquid' }, 'the preset brings its wallpaper and dock');
   assert.equal(await checked(page, 'wall'), 'liquid');
-  assert.equal(await checked(page, 'dock'), 'glass');
+  assert.equal(await checked(page, 'dock'), 'liquid');
 
   // red, yellow and green, left of the title
   const tab = cp(page).locator('.tab.on');
@@ -250,39 +253,59 @@ test('Liquid Ass: traffic lights on the left, glass everywhere, no two corners a
   await page.context().close();
 });
 
-test('leaving Liquid Ass puts back the wallpaper and dock it replaced, unless the visitor has changed them since', async t => {
+const settled = (page, want) => page.waitForFunction(w => Object.entries(w).every(([k, v]) => document.documentElement.dataset[k] === v), want);
+
+test('a theme sets every choice but the mode; each choice then changes on its own, and the theme shown follows', async t => {
   if (!(await needs(t, app))) return;
-  // seeded once, not on every load, so the reload below keeps what the panel stored
-  const page = await open(desktop, app, () => {
-    if (sessionStorage.getItem('seeded')) return;
-    sessionStorage.setItem('seeded', '1');
-    localStorage.setItem('deskbar:wall', '"grid"');
-    localStorage.setItem('deskbar:dock', '"panel"');
-  });
+  const page = await open(desktop, app, () => localStorage.setItem('deskbar:theme', '"dark"'));
   await ready(page);
-  await pick(page, 'deco', 'liquid');
-  assert.deepEqual(await attrs(page), { deco: 'liquid', wall: 'liquid' });
-  // remembered across a reload
+  assert.equal(await checked(page, 'preset'), 'classic', 'the defaults are Deskbar Classic');
+  assert.equal(await cp(page).locator('.cp-presets legend').textContent(), 'Themes');
+  assert.ok(await cp(page).locator('.cp-presets').evaluate(el => el.compareDocumentPosition(document.querySelector('.cp fieldset:has([name="cp-deco"])')) & Node.DOCUMENT_POSITION_FOLLOWING), 'presets come first');
+
+  await pick(page, 'preset', 'synthwave');
+  await settled(page, { deco: 'synthwave', wall: 'synthwave', dock: 'synthwave' });
+  assert.deepEqual(await attrs(page), { theme: 'dark', deco: 'synthwave', wall: 'synthwave', dock: 'synthwave' }, 'the mode is left alone');
+  assert.equal(await checked(page, 'preset'), 'synthwave');
+
+  // one choice at a time: the rest stay, and no preset is shown once they no longer add up to one
+  await pick(page, 'dock', 'panel');
+  await settled(page, { dock: 'panel' });
+  assert.equal(await checked(page, 'preset'), null);
+  await pick(page, 'deco', 'flat');
+  await settled(page, { deco: 'flat' });
+  assert.deepEqual(await attrs(page), { theme: 'dark', deco: 'flat', wall: 'synthwave', dock: 'panel' }, 'a window style changes only itself');
+  await pick(page, 'wall', 'dots');
+  await pick(page, 'crt', 'scanlines');
+  await settled(page, { wall: 'dots', crt: 'scanlines' });
   await page.reload();
   await ready(page);
-  await pick(page, 'deco', 'beos');
-  assert.deepEqual(await attrs(page), { deco: 'beos', wall: 'grid', dock: 'panel' });
-  assert.equal(await checked(page, 'wall'), 'grid');
-  assert.equal(await checked(page, 'dock'), 'panel');
+  assert.deepEqual(await attrs(page), { theme: 'dark', deco: 'flat', wall: 'dots', dock: 'panel', crt: 'scanlines' }, 'back before first paint');
 
-  // the visitor's own picks made while on Liquid Ass stay
-  await pick(page, 'deco', 'liquid');
-  await pick(page, 'wall', 'dots');
-  await pick(page, 'dock', 'deskbar');
-  await pick(page, 'deco', 'flat');
-  assert.deepEqual(await attrs(page), { deco: 'flat', wall: 'dots', dock: 'deskbar' });
-
-  // with nothing stored before, the defaults come back
-  await cp(page).getByRole('button', { name: 'Reset to defaults' }).click();
-  await pick(page, 'deco', 'liquid');
+  // a style with colour variants offers only those, starting on its own; leaving it goes back to the palettes
+  await pick(page, 'palette', 'mint');
+  await pick(page, 'deco', 'pixel');
+  await settled(page, { deco: 'pixel', palette: 'pixel' });
+  const shownColours = () => cp(page).locator('fieldset:has([name="cp-palette"]) .cp-opt:not([hidden]) input').evaluateAll(rs => rs.map(r => r.value));
+  assert.ok((await shownColours()).every(v => v.startsWith('pixel')), 'Pixel offers its own colours');
   await pick(page, 'deco', 'haiku');
-  assert.deepEqual(await attrs(page), {});
-  assert.equal(await checked(page, 'wall'), 'rings');
+  await page.waitForFunction(() => !document.documentElement.dataset.palette);
+  assert.ok((await shownColours()).includes('haiku'));
+  assert.ok(!(await shownColours()).includes('pixel'));
+
+  // a style in fixed colours turns Colours off, and a dark-only one Mode too
+  await pick(page, 'deco', 'nightdrive');
+  await settled(page, { deco: 'nightdrive' });
+  const off = key => cp(page).locator(`fieldset:has([name="cp-${key}"])`).evaluate(f => f.disabled);
+  assert.deepEqual([await off('palette'), await off('theme'), await off('dock'), await off('wall')], [true, true, false, false]);
+  await pick(page, 'deco', 'platinum');
+  await settled(page, { deco: 'platinum' });
+  assert.deepEqual([await off('palette'), await off('theme')], [true, false]);
+
+  await pick(page, 'preset', 'classic');
+  await page.waitForFunction(() => Object.keys(document.documentElement.dataset).every(k => !['deco', 'palette', 'wall', 'dock', 'crt'].includes(k)));
+  assert.deepEqual(await attrs(page), { theme: 'dark' });
+  await shot(page, 'control-panel-presets');
   assert.deepEqual(page.errors, []);
   await page.context().close();
 });
@@ -292,28 +315,33 @@ const looks = page => page.evaluate(() => Object.entries(JSON.parse(document.get
   .flatMap(([k, u]) => (k.startsWith('look-') ? [[k.slice(5), u.css]] : [])));
 const linked = (page, href) => page.evaluate(h => !!document.querySelector(`head link[rel=stylesheet][href="${h}"]`), href);
 
-test('a whole look loads its stylesheet, brings its wallpaper, sets its own colours and is back before first paint', async t => {
+test("a whole look's preset loads its stylesheet, sets its own colours and is back before first paint", async t => {
   if (!(await needs(t, app))) return;
   const page = await open(desktop, app);
   await ready(page);
   const all = await looks(page);
   if (!all.length) return t.skip('no looks in this build');
-  await pick(page, 'wall', 'grid');
   for (const [name, css] of all) {
     assert.ok(await linked(page, css), `${name}: the Control panel loads every look's stylesheet for its thumbnails`);
-    await pick(page, 'deco', name);
-    await page.waitForFunction(n => document.documentElement.dataset.deco === n, name);
-    assert.equal((await attrs(page)).wall, name, `${name} brings its wallpaper`);
-    assert.equal(await cp(page).locator('fieldset:has([name="cp-palette"])').evaluate(f => f.disabled), true, `${name} sets its own colours`);
+    await pick(page, 'preset', name);
+    await settled(page, { deco: name, wall: name });
+    assert.equal(await checked(page, 'preset'), name);
     // before first paint: head.html writes the link in while it is still parsing, ahead of the page's <body>
     await page.reload({ waitUntil: 'commit' });
     await page.waitForFunction(() => document.body);
     assert.equal(await linked(page, css), true, `${name} is linked from head.html on reload`);
     await ready(page);
+    if (name === 'pixel') assert.ok(await cp(page).locator('fieldset:has([name="cp-palette"]):not(:disabled) .cp-opt:not([hidden])').count() > 1, 'Pixel offers its colour variants');
   }
-  await pick(page, 'deco', 'haiku');
-  assert.deepEqual(await attrs(page), { wall: 'grid' }, 'leaving the last look puts back the wallpaper and dock');
-  assert.equal(await cp(page).locator('fieldset:has([name="cp-palette"])').evaluate(f => f.disabled), false);
+  // its dock alone, under the default window style, still loads it before first paint
+  const [name, css] = all[0];
+  await pick(page, 'preset', 'classic');
+  await pick(page, 'dock', name);
+  await settled(page, { dock: name });
+  await page.reload({ waitUntil: 'commit' });
+  await page.waitForFunction(() => document.body);
+  assert.equal(await linked(page, css), true, `the ${name} dock alone links its look`);
+  await ready(page);
   assert.deepEqual(page.errors, []);
   await page.context().close();
 });
@@ -328,7 +356,9 @@ test('Clear: a glass title bar across the window, its controls together on the r
     localStorage.setItem('deskbar:dock', '"panel"');
   }, { reducedMotion: 'no-preference' });
   await ready(page);
-  await pick(page, 'deco', 'clear');
+  await pick(page, 'preset', 'clear');
+  await settled(page, { deco: 'clear', wall: 'clear' });
+  await page.waitForFunction(() => !document.documentElement.dataset.dock);
   assert.deepEqual(await attrs(page), { deco: 'clear', wall: 'clear' }, 'its wallpaper, and the glass dock');
   assert.equal(await checked(page, 'wall'), 'clear');
 
@@ -352,12 +382,11 @@ test('Clear: a glass title bar across the window, its controls together on the r
   assert.equal(await btn.evaluate(el => getComputedStyle(el).animationName), 'none');
   await shot(page, 'clear');
 
-  // one glass look to the other swaps the wallpaper; leaving both puts the visitor's back
-  await pick(page, 'deco', 'liquid');
-  assert.deepEqual(await attrs(page), { deco: 'liquid', wall: 'liquid' });
-  await pick(page, 'deco', 'clear');
-  await pick(page, 'deco', 'haiku');
-  assert.deepEqual(await attrs(page), { wall: 'grid', dock: 'panel' });
+  // its outer edge is fainter than the rest of its glass
+  // (read once the frame's colour transition has run)
+  await page.waitForFunction(() => !document.querySelector('.win.active .frame').getAnimations().length);
+  const edge = await style(page, '.win.active .frame', 'borderLeftColor');
+  assert.ok(+edge.match(/[\d.]+(?=\)$)/)[0] < 0.5, `a faint rim: ${edge}`);
   assert.deepEqual(page.errors, []);
   await page.context().close();
 });
@@ -378,14 +407,16 @@ test('dock styles are distinct, independent of the palette, and the same after a
   const page = await open(desktop, app);
   await ready(page);
   const styles = await cp(page).locator('input[name="cp-dock"]').evaluateAll(rs => rs.map(r => r.value));
-  assert.deepEqual(styles, ['glass', 'deskbar', 'panel']);
+  assert.deepEqual(styles.slice(0, 3), ['glass', 'deskbar', 'panel']);
+  assert.ok(styles.includes('synthwave') && styles.includes('pixel'), "the looks' docks are offered too");
   const seen = {};
   for (const s of styles) {
     await pick(page, 'dock', s);
+    await page.waitForFunction(v => (document.documentElement.dataset.dock || 'glass') === v, s);
     seen[s] = await dockLook(page);
     await shot(page, 'dock-' + s);
   }
-  assert.equal(new Set(Object.values(seen).map(v => JSON.stringify(v))).size, 3, 'three different docks');
+  assert.equal(new Set(Object.values(seen).map(v => JSON.stringify(v))).size, styles.length, 'every dock differs');
   assert.equal(seen.panel.width, 1440, 'Panel spans the screen');
   assert.equal(seen.deskbar.radius, '0px', 'Deskbar is square');
 
@@ -401,13 +432,12 @@ test('dock styles are distinct, independent of the palette, and the same after a
   // chosen this visit (stylesheet appended) and restored on reload (written in by head.html) look the same
   for (const s of styles) {
     await pick(page, 'dock', s);
+    await page.waitForFunction(v => (document.documentElement.dataset.dock || 'glass') === v, s);
     const now = await dockLook(page);
-    await page.goto(env.base + '/');
-    await page.waitForSelector('html.wm-ready');
-    assert.deepEqual(await dockLook(page), now, `${s} after a reload`);
-    await page.goto(env.base + app);
+    await page.reload();
     await page.waitForSelector('html.wm-ready');
     await ready(page);
+    assert.deepEqual(await dockLook(page), now, `${s} after a reload`);
   }
   assert.deepEqual(page.errors, []);
   await page.context().close();
@@ -426,6 +456,21 @@ test('a visitor with the retired Minimal dock stored gets the default dock', asy
   assert.equal(await checked(page, 'dock'), 'glass');
   assert.deepEqual(await attrs(page), {});
   assert.deepEqual(await stored(page), {}, 'forgotten');
+  assert.deepEqual(page.errors, []);
+  await page.context().close();
+});
+
+test('a visitor from before whole looks came apart keeps Phosphor\'s dock and tube', async t => {
+  if (!(await needs(t, app))) return;
+  const page = await open(desktop, app, () => {
+    localStorage.setItem('deskbar:deco', '"phosphor"');
+    localStorage.setItem('deskbar:wall', '"phosphor"');
+    localStorage.setItem('deskbar:lookWas', '{}');
+  });
+  await ready(page);
+  assert.deepEqual(await attrs(page), { deco: 'phosphor', wall: 'phosphor', dock: 'phosphor', crt: 'tube' });
+  assert.equal(await checked(page, 'preset'), 'phosphor', 'the Phosphor theme, whole');
+  assert.equal(await page.evaluate(() => localStorage.getItem('deskbar:lookWas')), null);
   assert.deepEqual(page.errors, []);
   await page.context().close();
 });

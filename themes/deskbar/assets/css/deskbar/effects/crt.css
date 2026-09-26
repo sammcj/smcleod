@@ -1,0 +1,37 @@
+/* CRT screen effects (data-crt), over any look. They are drawn on <html>'s own pseudo-elements, which sit outside
+   body's isolated stacking context and so over every window, the panel and the dock, while nothing is filtered or
+   transformed that would re-contain the fixed windows. Neither overlay takes the pointer. Popovers and dialogs are in
+   the top layer, above both. */
+:root.wm:is([data-crt=tube], [data-crt=grille], [data-crt=amber], [data-crt=green])::before, :root.wm[data-crt]::after { content: ''; position: fixed; inset: 0; height: auto; z-index: 2147483000; pointer-events: none; }
+
+/* fine scanlines, light enough for long reads */
+:root.wm[data-crt=scanlines]::after { background: repeating-linear-gradient(rgba(0,0,0,.14) 0 1px, transparent 1px 3px); }
+
+/* Phosphor's tube: scanlines with a curved-glass vignette and glare, and a refresh band rolling down it */
+:root.wm[data-crt=tube]::before { background: repeating-linear-gradient(rgba(0,0,0,.2) 0 1px, transparent 1px 3px), radial-gradient(ellipse 120% 90% at 30% 0%, rgba(255,255,255,.04), transparent 40%); box-shadow: inset 0 0 140px rgba(0,0,0,.6); }
+:root.wm[data-crt=tube]::after { bottom: auto; height: 28vh; background: linear-gradient(transparent, rgba(255,190,80,.035) 70%, rgba(255,205,110,.07) 96%, transparent); animation: crt-roll 9s linear infinite; }
+@keyframes crt-roll { from { transform: translateY(-100%); } to { transform: translateY(100vh); } }
+
+/* An aperture grille: red, green and blue phosphor stripes multiplied in, so black stays black, with the shadows of
+   its two damper wires, and a soft-light hot spot for bloom that leaves black and white where they are */
+:root.wm[data-crt=grille]::after { background: linear-gradient(transparent 33.3%, rgba(0,0,0,.07) 0 calc(33.3% + 1px), transparent 0 66.6%, rgba(0,0,0,.07) 0 calc(66.6% + 1px), transparent 0), repeating-linear-gradient(90deg, rgba(255,0,0,.1) 0 1px, rgba(0,255,0,.1) 1px 2px, rgba(0,0,255,.1) 2px 3px); mix-blend-mode: multiply; }
+:root.wm[data-crt=grille]::before { background: radial-gradient(ellipse 70% 65% at 50% 50%, rgba(255,250,240,.16), transparent); mix-blend-mode: soft-light; }
+
+/* A monochrome tube: the colour blend takes the tube's hue and keeps each pixel's lightness, then a faint cast lifts
+   white towards the phosphor and the edges fall away. The blend's lightness weighs green less than WCAG does, so a
+   saturated hue lifts grey text on a light screen; light mode takes a paler one, and in dark contrast only rises. */
+:root.wm[data-crt=amber] { --crt-hue: light-dark(#ffd080, #ffb000); --crt-cast: rgba(255,176,0,.06); }
+:root.wm[data-crt=green] { --crt-hue: light-dark(#ccf5cc, #33ff00); --crt-cast: rgba(51,255,0,.05); }
+.cp-crt.amber { --crt-hue: #ffb000; }
+.cp-crt.green { --crt-hue: #33ff00; }
+:root.wm:is([data-crt=amber], [data-crt=green])::before, .cp-crt:is(.amber, .green)::before { background: var(--crt-hue); mix-blend-mode: color; }
+:root.wm:is([data-crt=amber], [data-crt=green])::after { background: repeating-linear-gradient(rgba(0,0,0,.14) 0 1px, transparent 1px 3px), radial-gradient(ellipse 90% 90% at 50% 50%, transparent 65%, rgba(0,0,0,.28)), linear-gradient(var(--crt-cast) 0 0); }
+
+@media (prefers-reduced-motion: reduce) { :root.wm[data-crt=tube]::after { display: none; } }
+
+/* Control panel thumbnails: a window on a blue desktop, the effect over it; off is the plain screen */
+.cp-crt { isolation: isolate; background: linear-gradient(#ffcb00 0 0) 12px 8px / 26px 7px no-repeat, repeating-linear-gradient(#8a939e 0 2px, transparent 2px 5px) 17px 20px / 42px 17px no-repeat, linear-gradient(#f4f4f4 0 0) 12px 15px / 52px 26px no-repeat, linear-gradient(160deg, #4f7aa6, #1d3550); }
+.cp-crt:not(.off)::after, .cp-crt:is(.amber, .green)::before { content: ''; position: absolute; inset: 0; }
+.cp-crt:is(.scanlines, .amber, .green)::after { background: repeating-linear-gradient(rgba(0,0,0,.3) 0 1px, transparent 1px 3px); }
+.cp-crt.tube::after { background: linear-gradient(transparent 55%, rgba(255,205,110,.25) 75%, transparent 80%), repeating-linear-gradient(rgba(0,0,0,.35) 0 1px, transparent 1px 3px); box-shadow: inset 0 0 16px rgba(0,0,0,.85); }
+.cp-crt.grille::after { background: repeating-linear-gradient(90deg, rgba(255,0,0,.35) 0 1px, rgba(0,255,0,.35) 1px 2px, rgba(0,0,255,.35) 2px 3px); mix-blend-mode: multiply; }

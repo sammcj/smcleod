@@ -57,10 +57,11 @@
 /* menus and popups: glowing edges */
 :root[data-deco=synthwave] :is(#menu, .ctx, .sp-frame, .recent-list) { border: 1px solid var(--sw-pink); box-shadow: var(--sw-glow), 0 14px 36px rgba(0,0,0,.6); }
 
-/* the dock: dark glass with a neon rim, and cyan lamps under running apps */
-.wm[data-deco=synthwave] #dock { background: rgba(20,8,48,.72); border-color: rgba(255,62,165,.6); border-radius: 12px; box-shadow: var(--sw-glow), 0 8px 24px rgba(0,0,0,.5); }
-.wm[data-deco=synthwave] #dock .dk.run::after { background: var(--sw-cyan); box-shadow: 0 0 6px var(--sw-cyan); }
-.wm[data-deco=synthwave] #dock #homeBtn.on { background: rgba(255,62,165,.25); box-shadow: inset 0 0 0 1px var(--sw-pink); }
+/* The dock: dark glass with a neon rim, and cyan lamps under running apps. Literal colours, as it can be picked
+   under any window style. */
+.wm[data-dock=synthwave] #dock { background: rgba(20,8,48,.72); border-color: rgba(255,62,165,.6); border-radius: 12px; box-shadow: 0 0 6px rgba(255,62,165,.55), 0 0 18px rgba(255,62,165,.3), 0 8px 24px rgba(0,0,0,.5); }
+.wm[data-dock=synthwave] #dock .dk.run::after { background: #6fe3ff; box-shadow: 0 0 6px #6fe3ff; }
+.wm[data-dock=synthwave] #dock #homeBtn.on { background: rgba(255,62,165,.25); box-shadow: inset 0 0 0 1px #ff3ea5; }
 
 :root[data-deco=synthwave] .dicon span { background: rgba(16,6,40,.7); text-shadow: 0 0 6px rgba(255,62,165,.6); }
 
@@ -79,12 +80,13 @@
 .wm[data-wall=synthwave] body::after { left: -20%; right: -20%; top: 60%; height: 26.5vh; transform-origin: 50% 0; transform: perspective(30vh) rotateX(76deg); background: linear-gradient(rgba(255,62,165,.85) 2px, transparent 0) 0 0 / 100% 3vh, linear-gradient(90deg, transparent calc(50% - 1px), rgba(255,62,165,.85) 0 calc(50% + 1px), transparent 0) 50% 0 / 4vw 100%; mask: linear-gradient(transparent, #000 40%); }
 .wm[data-wall=synthwave] #desk::after { font: italic 700 46px/1 'Space Grotesk', var(--ui); color: transparent; -webkit-text-stroke: 1px rgba(111,227,255,.4); }
 
-/* Control panel thumbnails: the sun over a fan of floor lines, and a glowing window */
+/* Control panel thumbnails: the sun over a fan of floor lines, a glowing window, and the neon-rimmed dock */
 .cp-wp.synthwave::before, .cp-deco.synthwave::before { content: ''; position: absolute; }
 .cp-wp.synthwave::after { content: ''; position: absolute; inset: 60% 0 0; background: repeating-conic-gradient(from 90deg at 50% 0, rgba(255,62,165,.8) 0 1.5deg, transparent 0 15deg), linear-gradient(rgba(255,62,165,.8) 1px, transparent 0) 0 3px / 100% 7px; }
 .cp-wp.synthwave::before { left: 24px; top: 5px; width: 28px; height: 28px; border-radius: 50%; background: linear-gradient(#ffe45e 10%, #ff4f8b 60%); mask: linear-gradient(#000 55%, transparent 0 62%, #000 0 70%, transparent 0 77%, #000 0 83%, transparent 0); }
 .cp-deco.synthwave::before { background: linear-gradient(90deg, #ff3ea5, #ff7a8a); border: 0; border-radius: 3px 3px 0 0; box-shadow: 0 0 5px rgba(255,62,165,.7); }
 .cp-deco.synthwave::after { background: #211546; border: 1px solid #ff3ea5; border-radius: 0 3px 3px; box-shadow: 0 0 6px rgba(255,62,165,.6); }
+.cp-dk.synthwave::before { background: var(--ic) content-box, rgba(20,8,48,.85); border-color: rgba(255,62,165,.8); border-radius: 4px; box-shadow: 0 0 5px rgba(255,62,165,.7); }
 
 /* Phones (the same query as windows.css): the title bar spans the full-screen window, so it loses its corners */
 @media (max-width: 767px), (max-height: 500px) and (pointer: coarse) {

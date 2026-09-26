@@ -90,14 +90,15 @@
 :root[data-deco=nightdrive] .sw-tab::after { top: calc(100% + 2px); height: 5px; border-color: var(--nd-edge); border-radius: 3px; box-shadow: none; }
 :root[data-deco=nightdrive] .sw-tab.on::after { border-color: transparent; background: linear-gradient(var(--frame) 0 0) padding-box, var(--nd-rim) border-box; }
 
-/* the dock: a pill of dark glass, each running app's lamp one of the stripe's colours in turn */
-.wm[data-deco=nightdrive] #dock { background: rgba(20,8,48,.72); border-color: rgba(111,227,255,.3); border-radius: 999px; padding-inline: 14px; box-shadow: var(--nd-glow), 0 8px 24px rgba(0,0,0,.5); }
-.wm[data-deco=nightdrive] #dock .dk.run::after { width: 10px; height: 3px; margin-left: -5px; border-radius: 2px; background: currentColor; color: var(--nd-yellow); box-shadow: 0 0 6px currentColor; }
-.wm[data-deco=nightdrive] #dock .dk:nth-child(4n+1).run::after { color: var(--nd-orange); }
-.wm[data-deco=nightdrive] #dock .dk:nth-child(4n+2).run::after { color: var(--nd-pink); }
-.wm[data-deco=nightdrive] #dock .dk:nth-child(4n+3).run::after { color: var(--nd-cyan); }
-.wm[data-deco=nightdrive] #dock :is(#homeBtn, #winsBtn) { border-radius: 50%; }
-.wm[data-deco=nightdrive] #dock #homeBtn.on { background: rgba(255,62,165,.25); box-shadow: inset 0 0 0 1px var(--nd-pink); }
+/* The dock: a pill of dark glass, each running app's lamp one of the stripe's colours in turn. Literal colours, as it
+   can be picked under any window style. */
+.wm[data-dock=nightdrive] #dock { background: rgba(20,8,48,.72); border-color: rgba(111,227,255,.3); border-radius: 999px; padding-inline: 14px; box-shadow: -6px 0 22px -6px rgba(255,62,165,.6), 6px 0 22px -6px rgba(111,227,255,.5), 0 8px 24px rgba(0,0,0,.5); }
+.wm[data-dock=nightdrive] #dock .dk.run::after { width: 10px; height: 3px; margin-left: -5px; border-radius: 2px; background: currentColor; color: #ffe45e; box-shadow: 0 0 6px currentColor; }
+.wm[data-dock=nightdrive] #dock .dk:nth-child(4n+1).run::after { color: #ff9e4a; }
+.wm[data-dock=nightdrive] #dock .dk:nth-child(4n+2).run::after { color: #ff3ea5; }
+.wm[data-dock=nightdrive] #dock .dk:nth-child(4n+3).run::after { color: #6fe3ff; }
+.wm[data-dock=nightdrive] #dock :is(#homeBtn, #winsBtn) { border-radius: 50%; }
+.wm[data-dock=nightdrive] #dock #homeBtn.on { background: rgba(255,62,165,.25); box-shadow: inset 0 0 0 1px #ff3ea5; }
 
 :root[data-deco=nightdrive] .dicon span { background: rgba(14,5,38,.78); border-radius: 999px; padding-inline: 7px; }
 
@@ -116,7 +117,8 @@
 .wm[data-wall=nightdrive] body { --b: 66%; background: repeating-linear-gradient(rgba(6,2,20,.28) 0 1px, transparent 0 3px), linear-gradient(transparent calc(var(--b) - 14px), rgba(111,227,255,.55) 0 calc(var(--b) - 13px), transparent 0 var(--b), #ffe45e 0 calc(var(--b) + 4px), transparent 0 calc(var(--b) + 12px), #ff9e4a 0 calc(var(--b) + 18px), transparent 0 calc(var(--b) + 26px), #ff3ea5 0 calc(var(--b) + 34px), transparent 0 calc(var(--b) + 42px), #e8339f 0 calc(var(--b) + 52px), transparent 0 calc(var(--b) + 60px), #7b3fe4 0 calc(var(--b) + 72px), transparent 0), linear-gradient(#0b0420, #1c0b3f 40%, #2e1462 var(--b), #140833 0, #0b0420); }
 .wm[data-wall=nightdrive] #desk::after { font: italic 700 46px/1 'Space Grotesk', var(--ui); letter-spacing: .02em; text-transform: uppercase; color: rgba(255,228,94,.14); text-shadow: -2px 0 rgba(111,227,255,.14), 2px 0 rgba(255,62,165,.16); }
 
-/* Control panel thumbnails: the bands in miniature, and a rimmed window under a pink-edged tab */
+/* Control panel thumbnails: the bands in miniature, a rimmed window under a pink-edged tab, and the pill dock */
+.cp-dk.nightdrive::before { padding-inline: 6px; background: var(--ic) content-box, rgba(20,8,48,.85); border-color: rgba(111,227,255,.45); border-radius: 999px; box-shadow: -3px 0 7px -2px rgba(255,62,165,.7), 3px 0 7px -2px rgba(111,227,255,.6); }
 .cp-wp.nightdrive, .cp-deco.nightdrive { background: repeating-linear-gradient(rgba(6,2,20,.3) 0 1px, transparent 0 2px), linear-gradient(transparent 60%, #ffe45e 0 63%, transparent 0 67%, #ff9e4a 0 71%, transparent 0 75%, #ff3ea5 0 80%, transparent 0 84%, #e8339f 0 90%, transparent 0 94%, #7b3fe4 0), linear-gradient(#0b0420, #2e1462 60%, #140833 0); }
 .cp-deco.nightdrive::before { background: linear-gradient(#ffe45e 0 1px, transparent 0 2px, #ff9e4a 0 3px, transparent 0 4px, #ff3ea5 0 5px) 4px 50% / 6px 5px no-repeat, #211546; border: 1.5px solid #ff3ea5; border-bottom: 0; border-radius: 4px 4px 0 0; box-shadow: 0 -1px 5px rgba(255,62,165,.6); }
 .cp-deco.nightdrive::after { border: 1.5px solid transparent; border-radius: 0 5px 5px; background: linear-gradient(#211546 0 0) padding-box, linear-gradient(135deg, #ff3ea5, #ff9e4a 50%, #6fe3ff) border-box; box-shadow: -3px 0 7px -2px rgba(255,62,165,.7), 3px 0 7px -2px rgba(111,227,255,.6); }

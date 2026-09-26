@@ -1,7 +1,7 @@
 // Vector (css/deskbar/looks/vector.css): Synthwave's colours on a vector display. Square windows on a cyan line with
-// a pink hairline inside when focused, cut cyan tabs in spaced capitals, a flat square panel and dock, and a flat
-// lattice wallpaper that never takes the pointer. No Light mode, nothing left behind when the look is off, and axe
-// over its main states.
+// a pink hairline inside when focused, cut cyan tabs in spaced capitals, a flat square panel and dock (the dock also
+// standing on its own), and a flat lattice wallpaper that never takes the pointer. No Light mode, nothing left behind
+// when the look is off, and axe over its main states.
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
@@ -10,7 +10,7 @@ import { env, useBrowser, open, needs, shot, win, cards, desktop, phone, toolbar
 
 useBrowser();
 
-const LOOK = { deco: 'vector', wall: 'vector', dock: 'glass' };
+const LOOK = { deco: 'vector', wall: 'vector', dock: 'vector' };
 const seed = look => `for (const [k, v] of Object.entries(${JSON.stringify(look)})) localStorage.setItem("deskbar:" + k, JSON.stringify(v));`;
 const openLook = (vp, path, opts) => open(vp, path, seed(LOOK), opts);
 const CYAN = 'rgb(111, 227, 255)', INK = 'rgb(26, 11, 58)';
@@ -66,21 +66,50 @@ test('Vector: square cyan-ruled windows, a cut cyan tab in spaced capitals, unli
   await page.context().close();
 });
 
-test('Vector: the Control panel turns off Colours, Mode and Dock, and draws both thumbnails', async t => {
+test('Vector: the Control panel turns off Colours and Mode, and draws its thumbnails', async t => {
   if (!(await needs(t, '/control-panel/'))) return;
   const page = await openLook(desktop, '/control-panel/');
   const cp = win(page, 'control-panel');
   await cp.locator('.cp').waitFor();
-  for (const g of ['palette', 'theme', 'dock']) {
+  for (const g of ['palette', 'theme']) {
     assert.equal(await cp.locator(`fieldset:has([name="cp-${g}"])`).evaluate(f => f.disabled), true, `${g} is the look's`);
   }
-  assert.equal(await cp.locator('fieldset:has([name="cp-wall"])').evaluate(f => f.disabled), false);
-  const deco = cp.locator('.cp-deco.vector');
+  for (const g of ['wall', 'dock']) assert.equal(await cp.locator(`fieldset:has([name="cp-${g}"])`).evaluate(f => f.disabled), false, `${g} stays the visitor's`);
+  assert.equal((await css(cp.locator('.cp-dk.vector'), ['borderTopColor'], '::before')).borderTopColor, CYAN, 'the ruled dock');
+  const deco = cp.locator('fieldset:has([name="cp-deco"]) .cp-deco.vector');
   assert.equal((await css(deco, ['borderTopColor'], '::after')).borderTopColor, CYAN);
   assert.match((await css(deco, ['clipPath'], '::before')).clipPath, /^polygon/);
-  const wp = (await css(cp.locator('.cp-wp.vector'), ['backgroundImage'])).backgroundImage;
+  const wp = (await css(cp.locator('fieldset:has([name="cp-wall"]) .cp-wp.vector'), ['backgroundImage'])).backgroundImage;
   assert.ok((wp.match(/linear-gradient/g) || []).length >= 6, 'the lattice is drawn');
   await shot(page, 'vector-cp');
+  assert.deepEqual(page.errors, []);
+  await page.context().close();
+});
+
+test('Vector: its dock is drawn under another window style in either mode, and nothing of it is on the glass dock', async t => {
+  if (!(await needs(t, '/posts/'))) return;
+  const dockOf = page => css(page.locator('#dock'), ['borderTopColor', 'borderTopLeftRadius', 'backdropFilter']);
+  const launcher = page => css(page.locator('#dock .dk').first(), ['borderTopLeftRadius']);
+  for (const theme of ['light', 'dark']) {
+    const page = await open(desktop, '/posts/', seed({ deco: 'haiku', dock: 'vector', theme }));
+    const w = win(page, 'tracker');
+    await w.locator('.pc').first().waitFor();
+    assert.notEqual((await css(w.locator('.frame'), ['borderTopColor'])).borderTopColor, CYAN, 'Haiku windows');
+    assert.deepEqual(await dockOf(page), { borderTopColor: CYAN, borderTopLeftRadius: '0px', backdropFilter: 'none' });
+    assert.equal((await launcher(page)).borderTopLeftRadius, '0px', 'square launchers');
+    await shot(page, `vector-dock-${theme}`);
+    assert.deepEqual(page.errors, []);
+    await page.context().close();
+  }
+  const page = await open(desktop, '/posts/', seed({ ...LOOK, dock: 'glass' }));
+  const w = win(page, 'tracker');
+  await w.locator('.pc').first().waitFor();
+  assert.equal((await css(w.locator('.frame'), ['borderTopColor'])).borderTopColor, CYAN, 'Vector windows');
+  const d = await dockOf(page);
+  assert.notEqual(d.borderTopColor, CYAN);
+  assert.equal(d.borderTopLeftRadius, '8px');
+  assert.equal((await launcher(page)).borderTopLeftRadius, '6px', 'the glass dock keeps its rounded launchers');
+  await shot(page, 'vector-glass-dock');
   assert.deepEqual(page.errors, []);
   await page.context().close();
 });

@@ -1,6 +1,7 @@
 /* Phosphor: a P3 amber tube. One hue at a few brightnesses, text-mode windows ruled in double lines with the title
-   set into the top rule, bloom on the chrome, scanlines and a slow refresh band over the glass, a burnt-in login
-   prompt and a function-key bar for a dock. Post text keeps the reader's font and no bloom, for long reads. */
+   set into the top rule, bloom on the chrome, a dark glass with a burnt-in login prompt and a function-key bar for a
+   dock. Post text keeps the reader's font and no bloom, for long reads. The scanlines and refresh band are the tube
+   CRT effect (effects/crt.css), which the Phosphor preset turns on. */
 :root[data-deco=phosphor] {
   color-scheme: dark;
   --p: #ffb52e; --p-hi: #ffd88a; --p-dim: #e39a2a; --p-lo: #6b4606; --bg: #0d0900;
@@ -86,20 +87,22 @@
 :root[data-deco=phosphor] .dicon span { color: var(--p); background: none; border-radius: 0; font-size: 11px; letter-spacing: .04em; text-transform: uppercase; text-shadow: 0 0 5px rgba(255,160,20,.6); }
 :root[data-deco=phosphor] .dicon:is(:hover, :focus-visible) span { background: var(--p); color: var(--bg); text-shadow: none; box-shadow: var(--glow); }
 
-/* The dock as a function-key bar: a key number, then its label in inverse video, the keys sharing the width */
-:root[data-deco=phosphor] { --dock-h: 36px; }
-.wm[data-deco=phosphor] #dock { left: 0; right: 0; bottom: 0; transform: none; gap: 6px; padding: 4px 8px; padding-bottom: max(4px, env(safe-area-inset-bottom)); counter-reset: fk; color: var(--p); background: var(--bg); border: 0; border-top: 1px solid var(--line); border-radius: 0; box-shadow: none; backdrop-filter: none; -webkit-backdrop-filter: none; font: 13px/22px var(--mono); }
-.wm[data-deco=phosphor] #dock :is(.dk, #homeBtn, #winsBtn) { counter-increment: fk; flex: 1 1 0; min-width: 0; width: auto; height: 28px; margin: 0; padding: 0; display: flex; align-items: center; justify-content: flex-start; gap: 0; text-align: left; border: 0; border-radius: 0; background: none; box-shadow: none; color: var(--p); font-weight: 400; text-decoration: none; text-shadow: var(--bloom); }
-.wm[data-deco=phosphor] #dock :is(.dk, #homeBtn, #winsBtn)::before { content: counter(fk); position: static; width: auto; height: auto; padding-right: 3px; background: none; }
-.wm[data-deco=phosphor] #dock .dk .lbl, .wm[data-deco=phosphor] #dock :is(#homeBtn, #winsBtn)::after { position: static; order: 1; flex: 1; width: auto; min-width: 0; height: 22px; overflow: hidden; clip-path: none; padding: 0 5px; background: var(--p); color: var(--bg); box-shadow: 0 0 8px rgba(255,160,20,.45); text-overflow: ellipsis; white-space: nowrap; text-shadow: none; }
-.wm[data-deco=phosphor] #dock #homeBtn::after { content: 'Home'; }
-.wm[data-deco=phosphor] #dock #winsBtn::after { content: 'Windows'; }
-.wm[data-deco=phosphor] #dock :is(.ico, #homeBtn span) { display: none; }
-.wm[data-deco=phosphor] #dock #winsBtn b { position: static; order: 2; min-width: 0; height: 22px; padding: 0 6px 0 0; border-radius: 0; background: var(--p); color: var(--bg); box-shadow: none; font-size: 13px; line-height: 22px; }
-.wm[data-deco=phosphor] #dock :is(.dk, #homeBtn, #winsBtn):hover :is(.lbl, b), .wm[data-deco=phosphor] #dock :is(#homeBtn, #winsBtn):hover::after { background: var(--p-hi); }
-.wm[data-deco=phosphor] #dock :is(.home-btn.on, .dk:active, .home-btn:active)::before { color: var(--p-hi); }
-.wm[data-deco=phosphor] #dock .dk.run::after { left: 0; right: 0; bottom: -3px; width: auto; height: 2px; margin: 0; border-radius: 0; background: var(--p); box-shadow: var(--glow); }
-.wm[data-deco=phosphor]:has(#switcher:popover-open) #dock #winsBtn { background: none; box-shadow: none; }
+/* The dock (data-dock=phosphor) as a function-key bar: a key number, then its label in inverse video, the keys
+   sharing the width. Its colours are its own, so it looks the same under any window style, palette or mode. */
+:root.wm[data-dock=phosphor] { --dock-h: 36px; }
+.wm[data-dock=phosphor] #dock { --fk: #ffb52e; --fk-hi: #ffd88a; --fk-bg: #0d0900; left: 0; right: 0; bottom: 0; transform: none; gap: 6px; padding: 4px 8px; padding-bottom: max(4px, env(safe-area-inset-bottom)); counter-reset: fk; color: var(--fk); background: var(--fk-bg); border: 0; border-top: 1px solid #4a3104; border-radius: 0; box-shadow: none; backdrop-filter: none; -webkit-backdrop-filter: none; font: 13px/22px var(--mono); }
+.wm[data-dock=phosphor] #dock :is(.dk, #homeBtn, #winsBtn) { counter-increment: fk; flex: 1 1 0; min-width: 0; width: auto; height: 28px; margin: 0; padding: 0; display: flex; align-items: center; justify-content: flex-start; gap: 0; text-align: left; border: 0; border-radius: 0; background: none; box-shadow: none; color: var(--fk); font-weight: 400; text-decoration: none; text-shadow: 0 0 1px rgba(255,181,46,.8), 0 0 5px rgba(255,170,30,.55), 0 0 14px rgba(255,130,0,.28); }
+.wm[data-dock=phosphor] #dock :is(.dk, #homeBtn, #winsBtn)::before { content: counter(fk); position: static; width: auto; height: auto; padding-right: 3px; background: none; box-shadow: none; }
+.wm[data-dock=phosphor] #dock .dk .lbl, .wm[data-dock=phosphor] #dock :is(#homeBtn, #winsBtn)::after { position: static; order: 1; flex: 1; width: auto; min-width: 0; height: 22px; overflow: hidden; clip-path: none; padding: 0 5px; background: var(--fk); color: var(--fk-bg); box-shadow: 0 0 8px rgba(255,160,20,.45); text-overflow: ellipsis; white-space: nowrap; text-shadow: none; }
+.wm[data-dock=phosphor] #dock #homeBtn::after { content: 'Home'; }
+.wm[data-dock=phosphor] #dock #winsBtn::after { content: 'Windows'; }
+.wm[data-dock=phosphor] #dock :is(.ico, #homeBtn span) { display: none; }
+.wm[data-dock=phosphor] #dock #winsBtn b { position: static; order: 2; min-width: 0; height: 22px; padding: 0 6px 0 0; border-radius: 0; background: var(--fk); color: var(--fk-bg); box-shadow: none; font-size: 13px; line-height: 22px; }
+.wm[data-dock=phosphor] #dock :is(.dk, #homeBtn, #winsBtn):hover :is(.lbl, b), .wm[data-dock=phosphor] #dock :is(#homeBtn, #winsBtn):hover::after { background: var(--fk-hi); }
+.wm[data-dock=phosphor] #dock :is(.home-btn.on, .dk:active, .home-btn:active)::before { color: var(--fk-hi); }
+.wm[data-dock=phosphor] #dock :focus-visible { outline-color: var(--fk-hi); }
+.wm[data-dock=phosphor] #dock .dk.run::after { left: 0; right: 0; bottom: -3px; width: auto; height: 2px; margin: 0; border-radius: 0; background: var(--fk); box-shadow: 0 0 10px rgba(255,160,20,.5), 0 0 2px var(--fk); }
+.wm[data-dock=phosphor]:has(#switcher:popover-open) #dock #winsBtn { background: none; box-shadow: none; }
 
 /* Post text: the reader's own font, no bloom, amber on near-black; headings take the glow */
 :root[data-deco=phosphor] .rd { text-shadow: none; }
@@ -123,37 +126,32 @@
 :root[data-deco=phosphor] .term .sw i { background: none; }
 :root[data-deco=phosphor] .term-chip:hover { background: var(--p); color: var(--bg); border-color: var(--p); }
 
-/* The tube, on the wallpaper layer so it can go with any window style: a dark glass with a warm centre and a
-   burnt-in login prompt, scanlines with a vignette and glare over everything, and a refresh band rolling down it.
-   Neither overlay takes the pointer. */
+/* The wallpaper: a dark glass with a warm centre and a burnt-in login prompt */
 .wm[data-wall=phosphor] body { background: radial-gradient(ellipse 75% 70% at 50% 48%, #1d1300, #0d0900 70%, #050300); }
-.wm[data-wall=phosphor] body::before, .wm[data-wall=phosphor] body::after { content: ''; position: fixed; z-index: 2147483000; pointer-events: none; }
-.wm[data-wall=phosphor] body::before { inset: 0; background: repeating-linear-gradient(rgba(0,0,0,.2) 0 1px, transparent 1px 3px), radial-gradient(ellipse 120% 90% at 30% 0%, rgba(255,255,255,.04), transparent 40%); box-shadow: inset 0 0 140px rgba(0,0,0,.6); }
-.wm[data-wall=phosphor] body::after { left: 0; right: 0; top: 0; height: 28vh; background: linear-gradient(transparent, rgba(255,190,80,.035) 70%, rgba(255,205,110,.07) 96%, transparent); animation: ph-roll 9s linear infinite; }
-@keyframes ph-roll { from { transform: translateY(-100%); } to { transform: translateY(100vh); } }
 .wm[data-wall=phosphor] #desk::after { content: 'LOGIN: ' attr(data-name); font: 700 40px/1 var(--mono); letter-spacing: .08em; text-transform: uppercase; color: rgba(255,181,46,.07); }
-@media (prefers-reduced-motion: reduce) { .wm[data-wall=phosphor] body::after { display: none; } }
 
 /* Control panel thumbnails */
 .cp-deco.phosphor, .cp-wp.phosphor { background: repeating-linear-gradient(rgba(0,0,0,.3) 0 1px, transparent 1px 3px), radial-gradient(ellipse at 50% 45%, #1d1300, #0d0900 70%, #050300); }
 .cp-deco.phosphor::after { top: 16px; left: 10px; width: 56px; height: 24px; background: #110b00; border: 3px double #ffb52e; box-shadow: 0 0 6px rgba(255,160,20,.5), inset 0 0 5px rgba(255,160,20,.25); }
 .cp-deco.phosphor::before { top: 12px; left: 16px; z-index: 1; width: 24px; height: 7px; background: #ffb52e; border: 0; box-shadow: 0 0 5px rgba(255,160,20,.7); }
 .cp-wp.phosphor::before { content: '> _'; position: absolute; left: 8px; top: 8px; font: 700 11px/1 var(--mono); color: #ffb52e; text-shadow: 0 0 4px rgba(255,160,20,.8); }
+/* numbered keys, each an inverse-video label, in a bar across the bottom */
+.cp-dk.phosphor::before { left: 0; bottom: 0; width: 100%; height: 10px; padding: 2px 3px; transform: none; border: 0; border-top: 1px solid #4a3104; border-radius: 0; background: repeating-linear-gradient(90deg, transparent 0 3px, #ffb52e 3px 13px, transparent 13px 15px) content-box, #0d0900; box-shadow: 0 0 5px rgba(255,160,20,.4); }
 
 @media (pointer: coarse) {
-  .wm[data-deco=phosphor] #dock :is(.dk, #homeBtn, #winsBtn) { height: 44px; }
-  .wm[data-deco=phosphor] #dock :is(.dk .lbl, #winsBtn b), .wm[data-deco=phosphor] #dock :is(#homeBtn, #winsBtn)::after { height: 36px; line-height: 36px; }
+  .wm[data-dock=phosphor] #dock :is(.dk, #homeBtn, #winsBtn) { height: 44px; }
+  .wm[data-dock=phosphor] #dock :is(.dk .lbl, #winsBtn b), .wm[data-dock=phosphor] #dock :is(#homeBtn, #winsBtn)::after { height: 36px; line-height: 36px; }
 }
 /* Phones (the same query as windows.css): the title bar sits above a full-screen window, touch-sized */
 @media (max-width: 767px), (max-height: 500px) and (pointer: coarse) {
-  :root[data-deco=phosphor] { --dock-h: 60px; }
+  :root.wm[data-dock=phosphor] { --dock-h: 60px; }
   :root[data-deco=phosphor] .win .tabs { left: 0; right: 0; bottom: 100%; }
   :root[data-deco=phosphor] .win :is(.tab, .th), :root[data-deco=phosphor] .win.active .tab { padding: 0 4px; background: var(--bg); }
   :root[data-deco=phosphor] .tab .tt { line-height: 28px; font-size: 13px; }
   :root[data-deco=phosphor] .win .frame, :root[data-deco=phosphor] .win.active .frame { padding: 0; border-width: 3px 0 0; box-shadow: none; }
   :root[data-deco=phosphor] :is(.win, #switcher) .ctl { min-width: 44px; height: 36px; font-size: 14px; line-height: 36px; }
-  .wm[data-deco=phosphor] #dock { gap: 4px; padding-inline: 4px; font-size: 12px; }
-  .wm[data-deco=phosphor] #dock :is(.dk, #homeBtn, #winsBtn) { height: 48px; }
-  .wm[data-deco=phosphor] #dock :is(.dk .lbl, #winsBtn b), .wm[data-deco=phosphor] #dock :is(#homeBtn, #winsBtn)::after { height: 40px; line-height: 40px; padding-inline: 3px; }
+  .wm[data-dock=phosphor] #dock { width: auto; margin: 0; bottom: 0; gap: 4px; padding-inline: 4px; font-size: 12px; }
+  .wm[data-dock=phosphor] #dock :is(.dk, #homeBtn, #winsBtn) { height: 48px; }
+  .wm[data-dock=phosphor] #dock :is(.dk .lbl, #winsBtn b), .wm[data-dock=phosphor] #dock :is(#homeBtn, #winsBtn)::after { height: 40px; line-height: 40px; padding-inline: 3px; }
   .wm[data-wall=phosphor] #desk::after { content: none; }
 }

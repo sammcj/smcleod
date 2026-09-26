@@ -2,9 +2,10 @@
 // panes and choices (lazy/control-panel.js) against the styles that implement them (css/deskbar/lazy/control-panel.css)
 import { test, beforeEach } from 'node:test';
 import assert from 'node:assert/strict';
-import { existsSync, readFileSync } from 'node:fs';
+import { existsSync, readFileSync, readdirSync } from 'node:fs';
 import { get, set, on, DEFAULT, initSettings } from '../assets/js/deskbar/settings.js';
-import { PANES, paneOf, paneUrl } from '../assets/js/deskbar/lazy/control-panel.js';
+import { PANES, paneOf, paneUrl, presetOf, paletteFor } from '../assets/js/deskbar/lazy/control-panel.js';
+import { PRESETS, KEYS, LOOKS, PALETTES, coloursFor, ownsColours, lookSheet } from '../assets/js/deskbar/lib/appearance.js';
 import { SAVERS } from '../assets/js/deskbar/lazy/screensaver.js';
 
 const read = p => readFileSync(new URL(p, import.meta.url), 'utf8');
@@ -112,12 +113,27 @@ function prePaint(stored) {
   const doc = {
     documentElement: html,
     write: s => written.push(s),
-    getElementById: id => (id === 'deskbar-lazy' ? { textContent: JSON.stringify({ 'control-panel': { js: '/a.js', css: '/a.css' }, 'look-demo': { css: '/demo.css' }, 'palette-demo': { css: '/pal.css' } }) } : null),
+    getElementById: id => (id === 'deskbar-lazy' ? { textContent: JSON.stringify({ 'control-panel': { js: '/a.js', css: '/a.css' }, 'look-demo': { css: '/demo.css' }, 'palette-demo': { css: '/pal.css' }, 'effect-crt': { css: '/crt.css' } }) } : null),
   };
-  const ls = { getItem: k => (k.slice(8) in stored ? JSON.stringify(stored[k.slice(8)]) : null) };
+  const ls = {
+    getItem: k => (k.slice(8) in stored ? JSON.stringify(stored[k.slice(8)]) : null),
+    setItem: (k, v) => { stored[k.slice(8)] = JSON.parse(v); },
+    removeItem: k => { delete stored[k.slice(8)]; },
+  };
   new Function('document', 'localStorage', 'setTimeout', src)(doc, ls, () => {});
-  return { dataset: html.dataset, size: html['--rd-size'], written };
+  return { dataset: html.dataset, size: html['--rd-size'], written, stored };
 }
+
+test("before first paint, a visitor from before whole looks came apart keeps the look's dock and tube", () => {
+  const old = prePaint({ deco: 'phosphor', wall: 'phosphor', dock: 'panel', lookWas: {} });
+  assert.deepEqual(old.dataset, { deco: 'phosphor', wall: 'phosphor', dock: 'phosphor', crt: 'tube' });
+  assert.deepEqual(old.stored, { deco: 'phosphor', wall: 'phosphor', dock: 'phosphor', crt: 'tube' }, 'stored, and the marker gone');
+  assert.equal(prePaint({ deco: 'platinum', lookWas: {} }).dataset.dock, 'platinum');
+  assert.equal(prePaint({ deco: 'synthwave', dock: 'deskbar', lookWas: {} }).dataset.dock, 'deskbar', 'a dock they chose stays');
+  const plain = prePaint({ deco: 'haiku', lookWas: {} });
+  assert.deepEqual(plain.stored, { deco: 'haiku' }, 'only a look brings anything');
+  assert.deepEqual(prePaint({ deco: 'phosphor' }).dataset, { deco: 'phosphor' }, 'without the marker nothing changes');
+});
 
 test('before first paint, stored settings are applied and the stylesheet is linked only when one needs it', () => {
   const plain = prePaint({ theme: 'dark', readerWidth: 'wide', textSize: 20 });
@@ -143,8 +159,13 @@ test("before first paint, a whole look's stylesheet follows the Control panel's,
   const link = h => `<link rel=stylesheet href="${h}">`;
   assert.deepEqual(prePaint({ deco: 'demo', wall: 'demo' }).written, [link('/a.css'), link('/demo.css')]);
   assert.deepEqual(prePaint({ wall: 'demo' }).written, [link('/a.css'), link('/demo.css')], 'its wallpaper under another style');
+  assert.deepEqual(prePaint({ dock: 'demo' }).written, [link('/a.css'), link('/demo.css')], 'its dock under another style');
+  assert.deepEqual(prePaint({ deco: 'haiku', dock: 'demo-bar', wall: 'demo-sky' }).written, [link('/a.css'), link('/demo.css')], "variants are in their family's stylesheet, linked once");
   assert.deepEqual(prePaint({ deco: 'liquid', wall: 'liquid' }).written, [link('/a.css')], 'Liquid Ass has no stylesheet of its own');
   assert.deepEqual(prePaint({ palette: 'demo', deco: 'demo' }).written, [link('/pal.css'), link('/a.css'), link('/demo.css')]);
+  const crt = prePaint({ crt: 'tube', deco: 'demo' });
+  assert.deepEqual(crt.dataset, { crt: 'tube', deco: 'demo' });
+  assert.deepEqual(crt.written, [link('/a.css'), link('/demo.css'), link('/crt.css')], 'a CRT effect comes last');
 });
 
 test('Liquid Ass: a window style with a wallpaper of its own, shown before first paint, with fallbacks', () => {
@@ -169,7 +190,7 @@ test('Liquid Ass: a window style with a wallpaper of its own, shown before first
 
 test('three panes, Appearance first, each with its own address', () => {
   assert.deepEqual(PANES.map(p => p.id), ['appearance', 'posts', 'system']);
-  assert.deepEqual(PANES[0].keys, ['palette', 'theme', 'deco', 'wall', 'dock'], 'Appearance is the OS look only');
+  assert.deepEqual(PANES[0].keys, ['deco', 'palette', 'theme', 'dock', 'wall', 'crt'], 'Appearance is the OS look only, docks before wallpapers');
   assert.deepEqual(PANES[1].keys, ['readerWidth', 'readerFont', 'textSize']);
   assert.deepEqual(PANES[2].keys, SAVER_KEYS);
   assert.deepEqual([...settingKeys].sort(), Object.keys(DEFAULT).sort(), 'every setting is in exactly one pane');
@@ -182,27 +203,78 @@ test('three panes, Appearance first, each with its own address', () => {
   assert.equal(paneOf('/control-panel/?pane=nope'), 'appearance', 'an unknown pane shows the first');
 });
 
+// The stylesheet that draws a choice: a palette's own, a look's (a window style, wallpaper or dock of its family, or a
+// window style's own colours), the CRT effects', or the Control panel's
+function stylesFor(key, v) {
+  const at = p => new URL(`../assets/css/deskbar/${p}.css`, import.meta.url);
+  const family = at(`looks/${v.split('-')[0]}`);
+  const file = key === 'crt' ? at('effects/crt') : key === 'palette' && existsSync(at(`palettes/${v}`)) ? at(`palettes/${v}`)
+    : ['deco', 'wall', 'dock', 'palette'].includes(key) && existsSync(family) ? family : at('lazy/control-panel');
+  return readFileSync(file, 'utf8');
+}
+
 test('every choice offered is a valid setting with styles behind it', () => {
   const css = read('../assets/css/deskbar/lazy/control-panel.css');
-  const attr = { palette: 'data-palette', deco: 'data-deco', wall: 'data-wall', dock: 'data-dock', readerFont: 'data-rd-font' };
+  const attr = { palette: 'data-palette', deco: 'data-deco', wall: 'data-wall', dock: 'data-dock', crt: 'data-crt', readerFont: 'data-rd-font' };
   const groups = PANES.flatMap(p => p.groups).filter(g => !SAVER_KEYS.includes(g[0]));
-  assert.ok(groups.length >= 7);
+  assert.ok(groups.length >= 8);
   for (const [key, , opts] of groups) {
     assert.ok(opts.some(([v]) => v === DEFAULT[key]), `${key} offers its default`);
+    assert.equal(new Set(opts.map(o => o[0])).size, opts.length, `${key} lists each choice once`);
     for (const [v] of opts) {
       set(key, v);
       assert.equal(get(key), v, `${key}=${v} round-trips`);
-      // a whole look's window style and wallpaper are in its own stylesheet, as is each palette
-      const dir = key === 'palette' ? 'palettes' : (key === 'deco' || key === 'wall') && 'looks';
-      const own = dir && existsSync(new URL(`../assets/css/deskbar/${dir}/${v}.css`, import.meta.url));
-      if (attr[key] && v !== DEFAULT[key]) assert.ok((own ? read(`../assets/css/deskbar/${dir}/${v}.css`) : css).includes(`[${attr[key]}=${v}]`), `${key}=${v} has styles`);
+      // a look's own colours are the look's (no rule names them), as are its defaults
+      if (attr[key] && v !== DEFAULT[key] && !(key === 'palette' && LOOKS[v])) assert.ok(stylesFor(key, v).includes(`[${attr[key]}=${v}]`), `${key}=${v} has styles`);
     }
   }
-  const dock = groups.find(g => g[0] === 'dock');
-  assert.deepEqual(dock[2].map(o => o[0]), ['glass', 'deskbar', 'panel']);
+  // every dock, wallpaper and CRT effect draws its own thumbnail; each default is the base art
+  for (const [key, cls] of [['dock', 'cp-dk'], ['wall', 'cp-wp'], ['crt', 'cp-crt']]) {
+    for (const [v] of groups.find(g => g[0] === key)[2]) if (v !== DEFAULT[key]) {
+      assert.match(stylesFor(key, v), new RegExp(`\\.${cls}(:is\\([^)]*)?\\.${v}(?![\\w-])`), `${cls}.${v}`);
+    }
+  }
+  assert.deepEqual(groups.find(g => g[0] === 'dock')[2].slice(0, 3).map(o => o[0]), ['glass', 'deskbar', 'panel'], 'the three plain docks first');
   assert.ok(!/minimal/i.test(css), 'no Minimal dock styles left behind');
   assert.deepEqual(PANES[2].groups[0][2].map(o => o[0]), SAVERS, 'screen saver: each one the saver has');
   assert.deepEqual(PANES[2].groups[1][2].map(o => o[0]), ['0', '1', '5', '10', '30'], 'delay: off or minutes');
+});
+
+test('each preset names every Appearance choice but the mode, each one offered, with colours its window style takes', () => {
+  const offered = key => PANES[0].groups.find(g => g[0] === key)[2].map(o => o[0]);
+  assert.deepEqual(KEYS.toSorted(), PANES[0].keys.filter(k => k !== 'theme').toSorted());
+  assert.equal(new Set(PRESETS.map(p => p.id)).size, PRESETS.length, 'ids are unique');
+  assert.equal(PRESETS[0].id, 'classic');
+  for (const k of KEYS) assert.equal(PRESETS[0][k], DEFAULT[k], `Deskbar Classic is the defaults (${k})`);
+  for (const p of PRESETS) {
+    assert.ok(p.label, p.id);
+    for (const k of KEYS) assert.ok(offered(k).includes(p[k]), `${p.id}: ${k}=${p[k]} is offered`);
+    if (!ownsColours(p.deco)) assert.ok(coloursFor(p.deco).some(o => o[0] === p.palette), `${p.id}: ${p.palette} goes with ${p.deco}`);
+  }
+  // the preset shown is the one the settings add up to; changing any one of them leaves none shown
+  const now = { ...PRESETS.find(p => p.id === 'synthwave') };
+  assert.equal(presetOf(k => now[k]).id, 'synthwave');
+  now.dock = 'glass';
+  assert.equal(presetOf(k => now[k]), undefined);
+});
+
+test('a window style change keeps the palette when it can, and otherwise picks one the style takes', () => {
+  assert.equal(paletteFor('flat', 'mint'), 'mint', 'palettes go with the plain styles');
+  assert.equal(paletteFor('synthwave', 'mint'), 'mint', 'a style in its own colours leaves the palette for later');
+  assert.equal(paletteFor('pixel', 'mint'), 'pixel', "a style with colour variants starts on its own");
+  assert.equal(paletteFor('pixel', 'pixel-pico'), 'pixel-pico');
+  assert.equal(paletteFor('haiku', 'pixel-pico'), undefined, "another style's variant goes back to the default");
+  assert.equal(paletteFor('synthwave', 'pixel-pico'), undefined, 'and is dropped under a style in its own colours');
+  // every look's stylesheet has a LOOKS entry, so lookSheet asks only for sheets that exist
+  const sheets = readdirSync(new URL('../assets/css/deskbar/looks/', import.meta.url)).filter(f => f.endsWith('.css'));
+  assert.deepEqual(sheets.map(f => f.slice(0, -4)).sort(), Object.keys(LOOKS).sort());
+  assert.equal(lookSheet('pixel-pico'), 'look-pixel');
+  assert.equal(lookSheet('liquid'), null, 'Liquid Ass is in the Control panel stylesheet');
+  // every look's colour variant is in its own stylesheet, and none is also a palette
+  for (const [name, l] of Object.entries(LOOKS)) for (const [v] of l.colours || []) {
+    assert.ok(v === name || v.startsWith(name + '-'), v);
+    assert.ok(!PALETTES.some(o => o[0] === v), v);
+  }
 });
 
 test('Atkinson Hyperlegible is self-hosted and only fetched once chosen', () => {

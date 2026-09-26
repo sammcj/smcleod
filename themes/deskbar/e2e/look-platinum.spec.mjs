@@ -1,7 +1,8 @@
 // Mac OS 9 Platinum (css/deskbar/looks/platinum.css): a pinstriped title bar with the close box on the left and the
 // zoom and windowshade boxes on the right, its own wallpaper, the rainbow apple for the Menu, white-boxed icon labels
-// and the Control Strip as the dock. Touch-sized on phones, readable in both schemes, and nothing of it shows while
-// another window style is on, though the Control panel has loaded its stylesheet. Skips without /control-panel/.
+// and the Control Strip as the dock, which also stands on its own under any window style. Touch-sized on phones,
+// readable in both schemes, and nothing of it shows while another window style and dock are on, though the Control
+// panel has loaded its stylesheet. Skips without /control-panel/.
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
@@ -13,9 +14,12 @@ useBrowser();
 const seed = () => {
   localStorage.setItem('deskbar:deco', '"platinum"');
   localStorage.setItem('deskbar:wall', '"platinum"');
+  localStorage.setItem('deskbar:dock', '"platinum"');
   // follow the browser's scheme, which the dark-mode tests set
   localStorage.setItem('deskbar:theme', '"auto"');
 };
+// other settings, stored before the page's scripts run
+const seedWith = look => `for (const [k, v] of Object.entries(${JSON.stringify(look)})) localStorage.setItem('deskbar:' + k, JSON.stringify(v));`;
 const css = (loc, prop, pseudo = null) => loc.first().evaluate((el, [p, ps]) => getComputedStyle(el, ps)[p], [prop, pseudo]);
 const box = loc => loc.first().boundingBox();
 // WCAG contrast of an element's text on its title bar's grey
@@ -37,7 +41,7 @@ test('Platinum: pinstriped title bar, three boxes, wallpaper, rainbow apple, ico
   if (!(await needs(t, '/control-panel/'))) return;
   const page = await open(desktop, '/posts/', seed);
   await twoWindows(page);
-  assert.deepEqual(await page.evaluate(() => ({ ...document.documentElement.dataset })).then(d => [d.deco, d.wall, d.dock]), ['platinum', 'platinum', undefined]);
+  assert.deepEqual(await page.evaluate(() => ({ ...document.documentElement.dataset })).then(d => [d.deco, d.wall, d.dock]), ['platinum', 'platinum', 'platinum']);
 
   // the front window's title bar spans its frame and is pinstriped; the one behind is plain grey without its boxes
   const front = page.locator('.win.active'), back = page.locator('.win:not(.active)');
@@ -60,7 +64,7 @@ test('Platinum: pinstriped title bar, three boxes, wallpaper, rainbow apple, ico
   assert.match(await css(page.locator('body'), 'backgroundImage'), /repeating-linear-gradient\(45deg.*rgb\(111, 108, 192\)/);
   assert.match(await css(page.locator('#menuBtn'), 'maskImage', '::before'), /^url\("data:image\/svg\+xml/);
   assert.match(await css(page.locator('#menuBtn'), 'backgroundImage', '::before'), /rgb\(94, 189, 62\).*rgb\(0, 156, 223\)/, 'rainbow');
-  assert.equal(await page.evaluate(() => getComputedStyle(document.documentElement, '::before').position), 'fixed');
+  assert.match(await css(page.locator('#panel'), 'backgroundImage', '::before'), /radial-gradient/, 'rounded screen corners in the menu bar');
   const label = page.locator('#icons .dicon span');
   assert.deepEqual([await css(label, 'backgroundColor'), await css(label, 'color')], ['rgb(255, 255, 255)', 'rgb(0, 0, 0)']);
 
@@ -98,7 +102,7 @@ test('Platinum on a phone: a full-width title bar and Control Strip with touch-s
   const dock = page.locator('#dock');
   assert.equal((await box(dock)).x, 0);
   for (const b of await page.locator('#dock .dk').all()) assert.ok((await b.boundingBox()).height >= 44, 'launchers 44px tall');
-  assert.equal(await page.evaluate(() => getComputedStyle(document.documentElement, '::before').content), 'none', 'no screen corners');
+  assert.equal(await page.evaluate(() => getComputedStyle(document.getElementById('panel'), '::before').content), 'none', 'no screen corners');
 
   await cards(page).first().click();
   const front = win(page, 'reader');
@@ -127,10 +131,41 @@ test('another window style shows nothing of Platinum, with its stylesheet loaded
   assert.doesNotMatch(await css(page.locator('body'), 'backgroundImage'), /45deg/);
   assert.notEqual((await box(page.locator('#dock'))).x, 0);
   assert.equal(await css(page.locator('#menuBtn'), 'content', '::before'), 'none');
-  assert.equal(await page.evaluate(() => getComputedStyle(document.documentElement, '::before').content), 'none');
+  assert.equal(await page.evaluate(() => getComputedStyle(document.getElementById('panel'), '::before').content), 'none');
   // its thumbnails in the Control panel are drawn all the same
   assert.match(await css(page.locator('.cp-deco.platinum'), 'backgroundImage', '::before'), /repeating-linear-gradient/);
   assert.match(await css(page.locator('.cp-wp.platinum'), 'backgroundImage'), /rgb\(111, 108, 192\)/);
+  assert.match(await css(page.locator('.cp-dk.platinum'), 'backgroundImage', '::before'), /repeating-linear-gradient/);
+  assert.deepEqual(page.errors, []);
+  await page.context().close();
+});
+
+test('the Control Strip is a dock of its own: under another window style in either mode, and gone with the glass dock', async t => {
+  if (!(await needs(t, '/control-panel/'))) return;
+  for (const [scheme, face] of [['light', 'rgb(221, 221, 221)'], ['dark', 'rgb(68, 68, 73)']]) {
+    const page = await open(desktop, '/posts/', seedWith({ deco: 'haiku', dock: 'platinum', theme: 'auto' }), { colorScheme: scheme });
+    await win(page, 'tracker').locator('.pc').first().waitFor();
+    assert.equal(await css(page.locator('.win.active .tab'), 'backgroundImage'), 'none', 'a Haiku title bar');
+    const dock = page.locator('#dock');
+    assert.equal((await box(dock)).x, 0);
+    assert.equal(await css(dock, 'borderTopRightRadius'), '9px');
+    assert.equal(await css(dock, 'backgroundColor'), face, `${scheme} greys`);
+    assert.equal(await css(dock, 'content', '::after'), '""', 'ridged end tab');
+    assert.equal(await page.evaluate(() => getComputedStyle(document.documentElement).getPropertyValue('--dock-h').trim()), '52px', 'windows clear the strip');
+    await shot(page, `platinum-dock-${scheme}`);
+    assert.deepEqual(page.errors, []);
+    await page.context().close();
+  }
+  const page = await open(desktop, '/posts/', seedWith({ deco: 'platinum', wall: 'platinum', dock: 'glass' }));
+  await win(page, 'tracker').locator('.pc').first().waitFor();
+  assert.match(await css(page.locator('.win.active .tab'), 'backgroundImage'), /repeating-linear-gradient/, 'Platinum windows');
+  const dock = page.locator('#dock');
+  assert.notEqual((await box(dock)).x, 0);
+  assert.equal(await css(dock, 'borderTopRightRadius'), '8px');
+  assert.equal(await css(dock, 'content', '::after'), 'none');
+  assert.equal(await css(page.locator('#dock .dk'), 'borderRightStyle'), 'none');
+  assert.equal(await page.evaluate(() => getComputedStyle(document.documentElement).getPropertyValue('--dock-h').trim()), '72px');
+  await shot(page, 'platinum-glass-dock');
   assert.deepEqual(page.errors, []);
   await page.context().close();
 });

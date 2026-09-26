@@ -14,6 +14,7 @@ useBrowser();
 const seed = () => {
   localStorage.setItem('deskbar:deco', '"pixel"');
   localStorage.setItem('deskbar:wall', '"pixel"');
+  localStorage.setItem('deskbar:dock', '"pixel"');
   // follow the browser's scheme, which the dark-mode tests set
   localStorage.setItem('deskbar:theme', '"auto"');
 };
@@ -39,7 +40,7 @@ test('Pixel: a ringed sun bar joined to its frame, keycap controls, pixel type, 
   if (!(await needs(t, '/control-panel/'))) return;
   const page = await open(desktop, '/posts/', seed);
   await twoWindows(page);
-  assert.deepEqual(await page.evaluate(() => ({ ...document.documentElement.dataset })).then(d => [d.deco, d.wall, d.dock]), ['pixel', 'pixel', undefined]);
+  assert.deepEqual(await page.evaluate(() => ({ ...document.documentElement.dataset })).then(d => [d.deco, d.wall, d.dock]), ['pixel', 'pixel', 'pixel']);
 
   // the front window's bar spans its frame, wears the ink ring and dithers from sun to amber; the one behind is plain
   const front = page.locator('.win.active'), back = page.locator('.win:not(.active)');
@@ -157,21 +158,23 @@ test('another window style shows nothing of Pixel, with its stylesheet loaded', 
   assert.equal(await rootCss(page, 'content', '::before'), 'none');
   assert.equal(await css(page.locator('#dock'), 'borderImageSource'), 'none');
   assert.doesNotMatch(await css(page.locator('#panel'), 'fontFamily'), /Pixelify/);
-  // its thumbnails in the Control panel are drawn all the same
-  assert.match(await css(page.locator('.cp-deco.pixel'), 'backgroundImage'), /svg\+xml/);
-  assert.match(await css(page.locator('.cp-wp.pixel'), 'backgroundImage'), /svg\+xml/);
-  assert.equal(await css(page.locator('.cp-deco.pixel'), 'backgroundColor', '::before'), 'rgb(255, 205, 77)');
+  // its thumbnails in the Control panel (the groups', not the presets' composites) are drawn all the same
+  const thumb = (group, cls) => page.locator(`.cp-opt:has(input[name=cp-${group}][value=pixel]) > .${cls}`);
+  assert.match(await css(thumb('deco', 'cp-deco'), 'backgroundImage'), /svg\+xml/);
+  assert.match(await css(thumb('wall', 'cp-wp'), 'backgroundImage'), /svg\+xml/);
+  assert.equal(await css(thumb('deco', 'cp-deco'), 'backgroundColor', '::before'), 'rgb(255, 205, 77)');
   assert.deepEqual(page.errors, []);
   await page.context().close();
 });
 
-test('picking Pixel sets the chrome in Pixelify Sans and brings its wallpaper and the floating dock', async t => {
+test('the Pixel preset sets the chrome in Pixelify Sans and brings its colours, wallpaper and hotbar', async t => {
   if (!(await needs(t, '/control-panel/'))) return;
   const page = await open(desktop, '/control-panel/');
   await win(page, 'control-panel').locator('.cp').waitFor();
-  await page.locator('.cp-opt', { hasText: 'Pixel' }).first().click();
+  await page.locator('input[name=cp-preset][value=pixel]').click();
   await page.waitForFunction(() => document.documentElement.dataset.deco === 'pixel');
-  assert.deepEqual(await page.evaluate(() => ({ ...document.documentElement.dataset })).then(d => [d.wall, d.dock]), ['pixel', undefined]);
+  assert.deepEqual(await page.evaluate(() => ({ ...document.documentElement.dataset })).then(d => [d.palette, d.wall, d.dock]), ['pixel', 'pixel', 'pixel']);
+  assert.match(await css(page.locator('#dock'), 'borderImageSource'), /svg\+xml/, 'the hotbar');
   assert.match(await css(page.locator('#panel'), 'fontFamily'), /Pixelify Sans/);
   await page.evaluate(() => document.fonts.ready);
   assert.ok(await page.evaluate(() => document.fonts.check("12px 'Pixelify Sans'")), 'the font loads');
