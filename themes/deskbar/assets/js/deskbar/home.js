@@ -134,7 +134,8 @@ export function initHome() {
     for (const btn of btns) {
       btn.classList.toggle('on', !!S.home);
       btn.setAttribute('aria-pressed', String(!!S.home));
-      btn.title = label;
+      // the dock's is an icon alone; the panel's names the site
+      if (btn.id === 'homeBtn') btn.title = label;
     }
   });
 }

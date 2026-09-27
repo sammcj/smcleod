@@ -29,6 +29,9 @@ test('an on-demand app loads only when opened, then survives routing and Back/Fo
     const credits = [...v.querySelectorAll('.rd h2')].find(e => e.textContent.includes('Credits'));
     return !!(credits && credits.compareDocumentPosition(v.querySelector('.about-facts')) & Node.DOCUMENT_POSITION_FOLLOWING);
   }), 'the facts follow the page text');
+  const keys = win(page, 'about-desktop').locator('.about-keys');
+  assert.deepEqual(await keys.locator('h3').allTextContents(), ['Anywhere', 'Tracker and posts', 'Windows, Photos and folders'], "the ? key's groups");
+  assert.ok(await keys.locator('dt kbd', { hasText: /^\?$/ }).count(), 'the ? key itself is listed');
   assert.equal(await win(page, 'about-desktop').locator('.lazy-note').count(), 0);
   assert.equal(await win(page, 'about-desktop').locator('.view').getAttribute('aria-busy'), null);
   await shot(page, 'lazy-about-desktop');

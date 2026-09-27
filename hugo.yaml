@@ -62,6 +62,7 @@ params:
       - { name: About, url: /about/, icon: person }
       - { page: /control-panel }
       - { name: GitHub, url: "https://github.com/sammcj", icon: git }
+      - { name: Search, action: search }
     # Panel tray; RSS is added after these
     tray:
       - { name: About, url: /about/, icon: person }

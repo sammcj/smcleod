@@ -8,5 +8,5 @@
 <a class="pb tr" href="{{ .url }}"{{ if not $internal }} target="_blank" rel="noopener me"{{ end }} title="{{ $name }}" aria-label="{{ $name }}"><svg class="ico" aria-hidden="true"><use href="#t-{{ cond (in (slice "github" "linkedin" "person") $icon) $icon "link" }}"/></svg></a>
 {{- end -}}
 {{- with site.Home.OutputFormats.Get "rss" -}}
-<a class="pb tr" href="{{ .RelPermalink }}" title="RSS feed" aria-label="RSS feed"><svg class="ico" aria-hidden="true"><use href="#t-rss"/></svg></a>
+<a class="pb tr" href="{{ .RelPermalink }}" aria-label="RSS feed"><svg class="ico" aria-hidden="true"><use href="#t-rss"/></svg></a>
 {{- end -}}

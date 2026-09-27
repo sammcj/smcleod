@@ -1,7 +1,7 @@
 // Browser checks for navigation: Tracker views and places, search, the menu, the tray and find in post.
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { useBrowser, open, needs, shot, win, cards, path, readerTitle, desktop, phone } from './lib.mjs';
+import { useBrowser, open, needs, shot, win, cards, path, readerTitle, desktop, phone, widePosts } from './lib.mjs';
 
 // example site pages the example-only tests assert on
 const jsPost = '/2025/11/keeping-javascript-small/', haikuPost = '/2024/03/notes-on-haikus-window-tabs/';
@@ -14,6 +14,7 @@ const tabTitle = (page, key) => win(page, key).locator('.tab.on .tt').textConten
 test('Tracker: hybrid, list and icon views, wide and snapped narrow, one click opens', async t => {
   if (!(await needs(t, jsPost, haikuPost))) return;
   const page = await open(desktop, '/posts/');
+  await widePosts(page);
   const tk = win(page, 'tracker');
   await tk.locator('.pc').first().waitFor();
   assert.equal(await tk.locator('.pc').count(), 4, 'the example site has four posts, all in Latest');
@@ -52,7 +53,7 @@ test('thumbnails: front matter thumbnail, then cover, then generated art; rows s
   const srcs = await cards.evaluateAll(els => els.map(e => e.getAttribute('src')));
   assert.equal(srcs.length, await tk.locator('.pc').count(), 'every card has an image');
   assert.ok(!(await loaded(cards)).includes(false), 'every card image loads');
-  const byTitle = Object.fromEntries(await tk.locator('.pc').evaluateAll(els => els.map(e => [e.title, e.querySelector('img').getAttribute('src')])));
+  const byTitle = Object.fromEntries(await tk.locator('.pc').evaluateAll(els => els.map(e => [e.querySelector('.pc-t').textContent, e.querySelector('img').getAttribute('src')])));
   assert.match(byTitle['Keeping JavaScript small'], /photo-2_hu/, 'thumbnail wins, processed to size');
   assert.match(byTitle["Notes on Haiku's window tabs"], /^\/deskbar\/art\/\w+\.svg$/, 'no image: generated art');
   assert.equal(new Set(srcs).size, srcs.length, 'no two posts share a thumbnail');
@@ -109,6 +110,7 @@ test('Tracker: a menu group whose app page is missing lists its entries in place
   const page = await open(desktop, '/posts/', () => document.addEventListener('readystatechange', () => {
     document.querySelector('#menu .mn-sec[data-group="Tools"] .mn-app')?.remove();
   }, { once: true }));
+  await widePosts(page);
   const tk = win(page, 'tracker');
   await tk.locator('.places button[data-k="grp:Tools"]').click();
   assert.deepEqual(await tk.locator('.row .row-t').allTextContents(), ['Demo tool', 'Colour table']);
@@ -237,7 +239,7 @@ test('phone: menu, Tracker views and the window switcher at 390px', async () => 
   await view(tk, 'hybrid');
 
   await page.locator('#menuBtn').click();
-  await menu.locator('.mn-it[title="About"]').click();
+  await menu.locator('.mn-it:has(.lbl:text-is("About"))').click();
   await page.waitForURL(u => u.pathname === '/about/');
   await page.locator('#winsBtn').click();
   // About is on screen, so its tab is the focused one, nearest the button
@@ -316,6 +318,7 @@ test('Tracker: Up and Down move the selection and the reader follows it', async 
 
 test('Space pages through the open post when focus is outside its text, and inputs keep their Space', async () => {
   const page = await open(desktop, '/posts/');
+  await widePosts(page);
   const tk = win(page, 'tracker'), rd = win(page, 'reader');
   // the longest post, so there is more than a page to scroll
   await tk.locator('.seg[data-m="list"]').click();

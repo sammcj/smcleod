@@ -5,7 +5,7 @@ import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
-import { env, useBrowser, open, win, cards, desktop, phone } from './lib.mjs';
+import { env, useBrowser, open, win, cards, desktop, phone, axeViolations } from './lib.mjs';
 
 useBrowser();
 
@@ -25,8 +25,7 @@ async function openAs(viewport, theme, path, look = {}) {
 
 async function audit(page) {
   await page.addScriptTag({ content: AXE });
-  const { violations } = await page.evaluate(() => window.axe.run(document, { iframes: false, resultTypes: ['violations'] }));
-  return violations
+  return (await axeViolations(page))
     .filter(v => !FAIL_ON || FAIL_ON.has(v.impact))
     .flatMap(v => v.nodes.map(n => `${v.impact} ${v.id}: ${n.target.join(' ')} ${n.failureSummary?.split('\n')[1]?.trim() ?? ''}`));
 }

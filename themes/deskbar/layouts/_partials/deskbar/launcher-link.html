@@ -1,6 +1,15 @@
 {{- /* A desktop icon, dock item or menu entry: { name, url, icon } or { page, name?, icon? } from params.deskbar.
        `page` is a Hugo page path such as "/about"; its link, title and icon come from the page, and the entry is
-       left out when the page does not exist, so config can name apps that a site has not built yet. */ -}}
+       left out when the page does not exist, so config can name apps that a site has not built yet.
+       { action: search, name?, icon? } is a button that opens Spotlight, left out when the site has no search index. */ -}}
+{{- if eq (.item.action | default "") "search" -}}
+{{- if site.Home.OutputFormats.Get "deskbarsearch" -}}
+{{- $name := .item.name | default "Search" -}}
+<button class="{{ .class }}" type="button"{{ if eq .class "dk" }} title="{{ $name }}"{{ end }} aria-haspopup="dialog" data-action="search" data-shell>
+  <svg class="ico" aria-hidden="true"><use href="#i-{{ .item.icon | default "search" }}"/></svg><span class="lbl">{{ $name }}</span>
+</button>
+{{- end -}}
+{{- end -}}
 {{- $url := "" -}}
 {{- with .item.url }}{{ $url = . | relURL }}{{ end -}}
 {{- $name := .item.name | default "" -}}
@@ -17,7 +26,7 @@
 {{- /* only other sites open in a new tab; the site's own pages and tools, absolute or not, open as windows */ -}}
 {{- $host := (urls.Parse $url).Host -}}
 {{- $ext := and $host (ne $host (urls.Parse site.BaseURL).Host) -}}
-<a class="{{ .class }}" href="{{ $url }}" title="{{ $name }}"
+<a class="{{ .class }}" href="{{ $url }}"{{ if eq $.class "dk" }} title="{{ $name }}"{{ end }}
   {{- if $ext }} target="_blank" rel="noopener"{{ end }}>
   <svg class="ico" aria-hidden="true"><use href="#i-{{ $icon | default "doc" }}"/></svg><span class="lbl">{{ $name }}</span>
 </a>

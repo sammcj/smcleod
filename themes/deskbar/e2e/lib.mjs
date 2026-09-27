@@ -85,12 +85,24 @@ export async function open(viewport, path = '/', init, ctxOpts = {}) {
 
 export const shot = (page, name) => shots && page.screenshot({ path: join(shots, name + '.png') });
 export const win = (page, key) => page.locator(`.win:not([hidden]):has(.view[data-key="${key}"]:not([hidden]))`);
+// The Posts window opens compact (D36); tests of the wide archive browser (places sidebar, table) maximise it
+export async function widePosts(page) {
+  await win(page, 'tracker').locator('.tab.on .ctl.max').click();
+  await page.waitForFunction(() => document.querySelector('.win:has(.view[data-key="tracker"])')?.getBoundingClientRect().width > 1000);
+}
 export const visibleWins = page => page.locator('.win:not([hidden])').count();
 // The post cards a visit starts from: the Posts window's on the desktop (D36), the home screen's on phones (D17)
 export const cards = page => page.locator('#recent .pc, .tracker .pc').filter({ visible: true });
 export const path = page => new URL(page.url()).pathname;
 export const readerTitle = page => win(page, 'reader').locator('.rd h1').first().textContent();
 export const desktop = { width: 1440, height: 900 }, phone = { width: 390, height: 844 };
+
+// axe's violations, once axe-core is on the page, outside the exclude selectors. Windows the front window covers fade
+// on purpose (.win.under, DESIGN.md Window model), which axe counts against their contrast; the visitor brings one
+// forward to read it, and it is solid there, so their contrast is left to the audit of that window in front.
+export const axeViolations = (page, exclude = []) => page.evaluate(x => window.axe.run({ exclude: x }, { iframes: false, resultTypes: ['violations'] }).then(r => r.violations.map(v => ({
+  ...v, nodes: v.id === 'color-contrast' ? v.nodes.filter(n => !document.querySelector(n.target[0])?.closest('.win.under')) : v.nodes,
+})).filter(v => v.nodes.length)), exclude);
 
 // Phones: the gaps between a window's title bar and its sticky toolbar, at the top of the page and scrolled down.
 // A look that clips .views pushes the toolbar down at the top and stops it sticking once scrolled.

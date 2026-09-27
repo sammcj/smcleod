@@ -16,4 +16,7 @@ row in this order (the pet's own frame numbers):
   3 2 192 6 7 8 9 10 / 78 79 80 0 1 58 59 60 / 61 23 24 133 46 48 47 49 / 13 12
 The PNG was then re-encoded with pngquant (lossless at 15 colours).
 
-This file is distributed alongside the theme and is not covered by the theme's MIT licence.
+gsheep-purple-icon.png: frame 3 (the first in the sheet), trimmed to 40x38 and re-encoded the same way, as the
+theme's i-sheep icon (layouts/_partials/deskbar/icons.html).
+
+These files are distributed alongside the theme and are not covered by the theme's MIT licence.

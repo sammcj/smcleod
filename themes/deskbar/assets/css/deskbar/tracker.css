@@ -20,6 +20,7 @@
 .pv-year small { font-weight: 400; color: var(--muted); }
 /* an item the arrow keys scroll to stays clear of the sticky year and column headings */
 .tk-main [data-url] { scroll-margin-top: 30px; }
+/* one column at any width: the cards run newest first, and two columns read out of order */
 .pv-grid { display: grid; grid-template-columns: 1fr; gap: 8px; padding: 8px; }
 .pc { display: grid; grid-template-columns: 72px minmax(0, 1fr); grid-template-areas: 't t' 'img meta'; gap: 6px 10px; padding: 9px 10px; color: var(--fg); text-decoration: none; background: var(--content); border: 1px solid var(--line); border-radius: 3px; }
 .pc:hover { border-color: var(--accent); }
@@ -33,7 +34,6 @@
 .pc-d { font-size: 12px; color: var(--muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .pc.open { border-color: var(--tab-lo); box-shadow: inset 4px 0 0 var(--tab); background: color-mix(in srgb, var(--tab) 16%, var(--content)); }
 .pc.open .pc-t::before { content: 'Reading: '; color: var(--tab-lo); }
-@container (min-width: 820px) { .pv-grid { grid-template-columns: 1fr 1fr; } }
 .rows { display: flex; flex-direction: column; padding: 2px 0 6px; }
 .row { display: flex; align-items: center; gap: 9px; min-height: 30px; padding: 4px 12px; }
 .rows .row:nth-child(even) { background: var(--zebra); }

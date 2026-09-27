@@ -2,7 +2,7 @@
 // switcher popover, sortable list headers and shared layout links (?layout=).
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { env, useBrowser, open, win, path, readerTitle, desktop, needs } from './lib.mjs';
+import { env, useBrowser, open, win, path, readerTitle, desktop, needs, widePosts } from './lib.mjs';
 
 useBrowser();
 
@@ -62,6 +62,7 @@ test('a failed navigation that finishes after a newer one does not load its page
 test('the same Tracker place chosen again adds no history, and the title follows the place', async () => {
   const { sectionURL, docTitles } = await index();
   const page = await open(desktop, sectionURL);
+  await widePosts(page);
   const place = win(page, 'tracker').locator('nav.places button[data-k^="tags:"]').first();
   await place.waitFor();
   const n0 = await page.evaluate(() => history.length);
@@ -85,7 +86,7 @@ test('closing and reopening Tracker leaves no listener behind', async () => {
   // each live Tracker marks the open post once per post opened, looking it up with CSS.escape
   await page.evaluate(() => { window.__marks = 0; const esc = CSS.escape; CSS.escape = s => { window.__marks++; return esc(s); }; });
   const next = win(page, 'tracker').locator(`a[data-url]:not([data-url="${posts[0].url}"])`).first();
-  const title = await next.getAttribute('title');
+  const title = (await next.locator('.row-t, .pc-t').first().textContent()).trim();
   await next.click();
   await readerIs(page, title);
   assert.equal(await page.evaluate(() => window.__marks), 1);

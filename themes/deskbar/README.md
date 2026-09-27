@@ -12,6 +12,7 @@ The Hugo theme for smcleod.net. It lives in this repo rather than as a published
 - Escape in a post opened from Tracker closes it and puts Tracker back where and how big it was. Fields, menus and dialogs keep their own Escape, and a post window of its own ignores it
 - q or w closes the focused window's front tab, as its close button does, f maximises or restores it, a tiles every open window over the desk, or puts them back, ` or ~ drops the terminal down from the top across 60% of the screen (` in it puts it away, session kept), and ? lists every shortcut. Fields, dialogs and open menus keep the keys, and modified presses are left alone
 - A dock item whose window is in front minimises it, and brings it back when minimised, as a task button does
+- Windows the front window covers fade slightly, so the one in front stands out. Windows clear of it stay solid. Not on phones, nor with the glass decorations, which are see-through already
 - Folders opened one after another tile side by side at up to their own size (an app's `tile: true`), until the visitor moves, resizes or snaps one
 - A folder opened from inside a folder window shows in that window, which keeps its size. Its toolbar has Back and Up (Alt+Up or Backspace), and browser Back returns to the folder it showed before
 
@@ -26,7 +27,7 @@ module:
     - path: github.com/sammcj/smcleod/deskbar
 outputs:
   # "deskbar" is the post index the shell reads; themes can't set a site's outputs, so add it here.
-  # "deskbarsearch" publishes /search.json for Spotlight search; leave it out and the panel has no search button.
+  # "deskbarsearch" publishes /search.json for Spotlight search; leave it out and there is no search button or `action: search` launcher.
   home: [html, rss, deskbar, deskbarsearch]
 # Optional: each post's markdown at index.md, for the reader's "Copy as markdown" button. Shortcodes are rendered;
 # give one a <name>.markdown.md template (e.g. a link in place of an embed) when its HTML reads badly as markdown.
@@ -56,6 +57,7 @@ params:
     dock:
       - { name: Posts, url: /posts/, icon: folder }
       - { name: Source, url: "https://github.com/you/site", icon: git }
+      - { name: Search, action: search }   # opens Spotlight, as the panel button does
     menu:                     # menu groups after the built-in Writing one; a group's page is its app
       - name: Tools
         page: /tools          # icon: defaults to the page's own icon, then a folder
@@ -69,7 +71,7 @@ params:
 
 Posts without an image get a generated card: one Haiku-style object (the emblem) on a quiet ground. Posts without `thumbnailIcon` get the bare emblem as their list-row icon. Emblems: `neural windows terminal window code doc branch globe disk container car camera house gpu chip padlock screen laptop server record board chart plug palette chat briefcase` (`doc` when nothing matches). They live in `data/deskbar/emblems.yaml`, which also documents the drawing conventions. Setting `thumbRules` replaces the theme's default rules, so list every rule you want.
 
-Icons: `folder apps favourites projects doc write term person chart image globe git home leaf photos tools theme appearance control-panel sketch music vram compare tiers quantise energy mail feeds videos podcasts hardware software blogs ai`. External URLs open in a new tab.
+Icons: `folder apps favourites projects doc write term person chart image globe git home leaf sheep photos tools theme appearance control-panel sketch music vram compare tiers quantise energy mail feeds videos podcasts hardware software blogs ai search`. External URLs open in a new tab.
 
 Front matter the theme reads:
 
@@ -87,6 +89,7 @@ windowHeight: 546         # default window height, likewise; a page with either 
 windowBesidePosts: true   # with a size: no taller than the Posts window, and just right of its home spot when it fits there
 windowTile: 60            # tile to the left: full height, from just right of the desktop icons to 60% of the desk's width
 hideTitle: true           # keep the page's <h1> for screen readers but hide it, for a page whose window title says it all
+folderWeight: 1           # in a folder, list this page after the others (sorted by title), lowest weight first
 math: true                # load MathJax (\( \), \[ \], $$ $$); prose with those delimiters also triggers it
 photos: true              # give this post an album in Photos and a "View photos" chip (so does the gallery shortcode)
 frame: /tiers.html        # with layout: tool, window: tool - embed a standalone HTML file as a tool window

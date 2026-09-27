@@ -2,7 +2,7 @@
 // screen's height; pressed again while it has focus it rolls back up, minimised so its session stays. Phones just
 // open it full screen.
 export async function quake() {
-  const { go, focusView, isPhone, wm: { S, findView, minimise, place, clampTab, tabH } } = window.deskbar;
+  const { go, focusView, isPhone, wm: { S, findView, minimise, place, clampTab, tabH, refresh } } = window.deskbar;
   let v = findView('terminal'), w = v?.win;
   const slide = (to, ease) => (matchMedia('(prefers-reduced-motion: reduce)').matches ? null
     : w.el.animate([{ transform: 'none' }, { transform: `translateY(${-innerHeight * 0.6}px)` }], { duration: 180, easing: ease, direction: to }).finished);
@@ -25,6 +25,8 @@ export async function quake() {
   });
   place(w);
   clampTab(w);
+  // it came forward before taking its new place, so which windows it covers is worked out again
+  refresh();
   slide('reverse', 'ease-out');
   v.el.querySelector('.term input')?.focus({ preventScroll: true });
 }

@@ -156,7 +156,7 @@ function onFrameDrag(e, w) {
 }
 
 function onDivider(e) {
-  drag(e, (dx, dy, ev) => { S.split = clampSplit(pt(ev).x / deskRect().w, deskRect().w); relayout(); });
+  drag(e, (dx, dy, ev) => { S.split = clampSplit(pt(ev).x / deskRect().w, deskRect().w); relayout(); }, () => relayout());
 }
 
 export function initPointer(desk) {

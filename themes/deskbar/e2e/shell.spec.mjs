@@ -97,7 +97,7 @@ test('desktop: tag links open Tracker at the tag, dock opens a page window, them
 
   // a non-post page opens in its own window and leaves the reader alone
   // the last launcher for a page on this site; the Control panel is an app, not a page window
-  const dockPage = page.locator('#dock .dk:not([target]):not([href$="/control-panel/"])').last(), pageURL = await dockPage.getAttribute('href');
+  const dockPage = page.locator('#dock a.dk:not([target]):not([href$="/control-panel/"])').last(), pageURL = await dockPage.getAttribute('href');
   await dockPage.click();
   await page.waitForURL(u => u.pathname === pageURL);
   await page.locator(`.view[data-key="page:${pageURL}"] .rd h1`).first().waitFor();
@@ -432,6 +432,23 @@ test('light by default, even on a dark OS; auto follows the OS', async () => {
   await page.reload();
   await page.waitForSelector('html.wm-ready');
   assert.deepEqual(await scheme(), ['light dark', 'dark'], 'auto is stored');
+  assert.deepEqual(page.errors, []);
+  await page.context().close();
+});
+
+// Hover tooltips pop up wherever the pointer crosses, so only icons that stand alone keep one: the dock's items and
+// the theme button. Anything with its name on show, or whose look says what it does, has none.
+test('tooltips only on the dock and icon-only panel buttons', async () => {
+  const page = await open(desktop, '/');
+  await cards(page).first().waitFor();
+  const titled = sel => page.locator(sel).evaluateAll(els => els.filter(e => e.title).map(e => e.className || e.id));
+  for (const sel of ['#icons .dicon', '#menuBtn', '#panelHome', '#searchBtn', '.win .ctl', '.win .pc', '.win .row']) {
+    assert.deepEqual(await titled(sel), [], `no tooltip on ${sel}`);
+  }
+  const dock = page.locator('#dock .dk');
+  assert.ok((await dock.count()) > 0);
+  assert.equal((await titled('#dock .dk')).length, await dock.count(), 'every dock item keeps its name on hover');
+  assert.ok(await page.locator('#themeBtn').getAttribute('title'), 'the theme button keeps one');
   assert.deepEqual(page.errors, []);
   await page.context().close();
 });

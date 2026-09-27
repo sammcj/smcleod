@@ -68,10 +68,12 @@ const peek = (w, on) => w.el.classList.toggle('peek', on);
 function place() {
   const r = $('#winsBtn').getBoundingClientRect(), down = r.top < innerHeight / 2, flush = r.left + 320 > innerWidth;
   switcher.classList.toggle('down', down);
-  // the tab icons line up over the button's centre; near the right edge the column hangs flush with the button instead
+  // the tab icons line up over the button's centre; near the right edge the column hangs flush with the button instead,
+  // unless that pushes it off the left edge (a phone panel with icons right of the button)
+  const room = innerWidth - (parseFloat(getComputedStyle(switcher).width) || 0);
   Object.assign(switcher.style, {
     top: down ? r.bottom + 6 + 'px' : '', bottom: down ? '' : innerHeight - r.top + 8 + 'px',
-    left: flush ? '' : r.left + r.width / 2 - 24 + 'px', right: flush ? Math.max(0, innerWidth - r.right - 10) + 'px' : '',
+    left: flush ? '' : r.left + r.width / 2 - 24 + 'px', right: flush ? Math.max(0, Math.min(room, innerWidth - r.right - 10)) + 'px' : '',
   });
 }
 
@@ -88,10 +90,10 @@ function drawSwitcher(roll) {
       onfocusin: () => peek(w, true), onfocusout: () => peek(w, false),
     },
     h('button', {
-      class: 'sw-open', type: 'button', title: label, 'aria-label': min ? label : null,
+      class: 'sw-open', type: 'button', 'aria-label': min ? label : null,
       onclick: e => { closeSwitcher(); swallowRepeat(e); if (w.min) morph([w], () => focus(w)); else focus(w); },
     }, ico('i-' + icon), h('span', {}, title), extra && h('small', {}, extra)),
-    h('button', { class: 'ctl close sw-close', type: 'button', title: 'Close', 'aria-label': 'Close ' + title, onclick: () => transition(() => closeWin(w)) }, ico('c-x', '')));
+    h('button', { class: 'ctl close sw-close', type: 'button', 'aria-label': 'Close ' + title, onclick: () => transition(() => closeWin(w)) }, ico('c-x', '')));
   });
   const link = S.wins.length && navigator.clipboard && h('button', {
     class: 'sw-link', type: 'button', title: 'Copy a link that reopens these windows', style: `--i:${Math.min(tabs.length, 11)}`, onclick: copyLayout,

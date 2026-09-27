@@ -46,6 +46,6 @@ addReaderAddon(({ view }) => {
   const n = photosIn(view.el).length, url = photosURL();
   if (!album || !n || !url) return;
   const chips = head.querySelector('.chips') || head.appendChild(h('p', { class: 'chips' }));
-  chips.append(h('a', { class: 'chip photos-chip', href: photosHref(url, album), title: 'Open this post\'s photos in Photos' },
+  chips.append(h('a', { class: 'chip photos-chip', href: photosHref(url, album) },
     `View photos (${n})`));
 });

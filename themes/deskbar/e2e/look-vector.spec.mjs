@@ -6,7 +6,7 @@ import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
-import { env, useBrowser, open, needs, shot, win, cards, desktop, phone, toolbarGaps } from './lib.mjs';
+import { env, useBrowser, open, needs, shot, win, cards, desktop, phone, toolbarGaps, axeViolations } from './lib.mjs';
 
 useBrowser();
 
@@ -171,7 +171,7 @@ test('Vector leaves nothing behind when another look is on, though its styleshee
 const AXE = readFileSync(fileURLToPath(import.meta.resolve('axe-core/axe.min.js')), 'utf8');
 async function audit(page, exclude = []) {
   await page.addScriptTag({ content: AXE });
-  const { violations } = await page.evaluate(x => window.axe.run({ exclude: x }, { iframes: false, resultTypes: ['violations'] }), exclude);
+  const violations = await axeViolations(page, exclude);
   return violations.filter(v => ['serious', 'critical'].includes(v.impact))
     .flatMap(v => v.nodes.map(n => `${v.impact} ${v.id}: ${n.target.join(' ')} ${n.failureSummary?.split('\n')[1]?.trim() ?? ''}`));
 }

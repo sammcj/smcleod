@@ -3,7 +3,7 @@
 // teardown(), which runs when the view closes.
 import { S, emit } from './state.js';
 import { h, ico } from '../lib/dom.js';
-import { snapRect, sideOf, splitFor, tileRects, GAP } from './snap.js';
+import { snapRect, sideOf, splitFor, tileRects, overlaps, GAP } from './snap.js';
 
 let desk = null, viewIds = 0, phoneMq = null;
 export function initWindows(el) {
@@ -127,7 +127,7 @@ export function place(w) {
 
 // D4: explicit, labelled controls rather than Haiku's unlabelled squares
 function ctl(cls, icon, label) {
-  return h('button', { class: 'ctl ' + cls, type: 'button', title: label, 'aria-label': label }, ico(icon, ''));
+  return h('button', { class: 'ctl ' + cls, type: 'button', 'aria-label': label }, ico(icon, ''));
 }
 
 // The title is a button so keyboard users can reach every window; stacked windows get tablist semantics.
@@ -210,7 +210,16 @@ export function refresh() {
   // phones hide the dock behind a full-screen window (see chrome.css)
   document.documentElement.classList.toggle('has-win', S.wins.some(w => !w.el.hidden));
   drawDivider();
+  shade();
   emit('refresh');
+}
+
+// Windows the front window covers fade a little (windows.css), so the one in front stands out. Worked out from the
+// window objects, not the DOM. Left as it is mid-drag, since every drag ends in a refresh or relayout.
+function shade() {
+  if (document.body.classList.contains('dragging')) return;
+  const top = !isPhone() && topWin(), th = tabH();
+  for (const w of S.wins) w.el.classList.toggle('under', !!top && w !== top && !w.min && overlaps(w, top, th));
 }
 
 // Hiding or removing the window that holds keyboard focus would drop focus to <body>. Hand it to the window
@@ -300,6 +309,7 @@ export function arrange(wins, { fill = false, animate = true } = {}) {
       clampTab(w);
     });
     drawDivider();
+    shade();
   };
   return animate ? morph(wins, update) : update();
 }
@@ -334,6 +344,7 @@ export function relayout() {
     clampTab(w);
   }
   drawDivider();
+  shade();
 }
 
 export function drawDivider() {

@@ -7,7 +7,7 @@ import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import { join } from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { useBrowser, open, needs, shot, win, cards, desktop, phone, toolbarGaps } from './lib.mjs';
+import { useBrowser, open, needs, shot, win, cards, desktop, phone, toolbarGaps, axeViolations } from './lib.mjs';
 
 useBrowser();
 
@@ -190,7 +190,7 @@ test('the Control panel draws a thumbnail of each dock and wallpaper', async t =
 const AXE = readFileSync(fileURLToPath(import.meta.resolve('axe-core/axe.min.js')), 'utf8');
 async function audit(page) {
   await page.addScriptTag({ content: AXE });
-  const { violations } = await page.evaluate(() => window.axe.run(document, { iframes: false, resultTypes: ['violations'] }));
+  const violations = await axeViolations(page);
   return violations.filter(v => ['serious', 'critical'].includes(v.impact))
     .flatMap(v => v.nodes.map(n => `${v.impact} ${v.id}: ${n.target.join(' ')}`));
 }

@@ -98,7 +98,7 @@ test('link menu: open, open in a new tab, copy link and share', async () => {
   await icon.click({ button: 'right' });
   await menu(page).waitFor();
   assert.deepEqual(await items(page), ['Open', 'Open in new tab', 'Copy link', 'Share…']);
-  assert.equal(await menu(page).getAttribute('aria-label'), await icon.getAttribute('title'));
+  assert.equal(await menu(page).getAttribute('aria-label'), await icon.locator('.lbl').textContent());
   await shot(page, 'ctx-link');
 
   await item(page, 'Copy link').click();
@@ -108,7 +108,7 @@ test('link menu: open, open in a new tab, copy link and share', async () => {
 
   await icon.click({ button: 'right' });
   await item(page, 'Share…').click();
-  assert.deepEqual(await page.evaluate(() => window.shared), [{ title: await icon.getAttribute('title'), url: href }]);
+  assert.deepEqual(await page.evaluate(() => window.shared), [{ title: await icon.locator('.lbl').textContent(), url: href }]);
 
   await icon.click({ button: 'right' });
   const [tab] = await Promise.all([page.context().waitForEvent('page'), item(page, 'Open in new tab').click()]);

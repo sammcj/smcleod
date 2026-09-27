@@ -6,7 +6,7 @@ import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
-import { useBrowser, open, needs, shot, win, cards, desktop, phone } from './lib.mjs';
+import { useBrowser, open, needs, shot, win, cards, desktop, phone, axeViolations } from './lib.mjs';
 
 useBrowser();
 
@@ -209,7 +209,7 @@ test('Broadsheet: its stickers are a dock of their own under another window styl
 const AXE = readFileSync(fileURLToPath(import.meta.resolve('axe-core/axe.min.js')), 'utf8');
 async function audit(page) {
   await page.addScriptTag({ content: AXE });
-  const { violations } = await page.evaluate(() => window.axe.run(document, { iframes: false, resultTypes: ['violations'] }));
+  const violations = await axeViolations(page);
   return violations.filter(v => ['serious', 'critical'].includes(v.impact))
     .flatMap(v => v.nodes.map(n => `${v.impact} ${v.id}: ${n.target.join(' ')} ${n.failureSummary?.split('\n')[1]?.trim() ?? ''}`));
 }

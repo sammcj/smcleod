@@ -5,6 +5,8 @@ layout: folder
 window: folder
 searchKind: tool
 icon: apps
+windowWidth: 750
+windowHeight: 384
 norss: true
 include: ["/vram-estimator", "/terminal", "/sketch", "/chiptunes", "/feeds", "/screensaver"]
 ---

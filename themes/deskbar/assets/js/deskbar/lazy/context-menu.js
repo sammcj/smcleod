@@ -80,7 +80,8 @@ export function copyMarkdown(v) {
 
 // Item lists. false leaves an item out and '-' is a separator.
 function linkItems(a) {
-  const url = a.href, title = a.title || a.textContent.trim() || url;
+  // a Tracker card, row or icon, or a desktop icon, names itself in one part; other links in their whole text
+  const url = a.href, title = a.title || (a.querySelector('.pc-t, .row-t, .gi-t, .lbl') || a).textContent.trim() || url;
   // D32: a post in Tracker opens in a window of its own; one in Tracker's selection opens it all.
   // Phones show one window at a time (D17).
   const post = !window.deskbar.isPhone() && a.closest('[data-post]'), list = post && post.closest('.tk-main'), sel = post && post.matches('.sel');

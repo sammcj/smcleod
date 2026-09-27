@@ -320,12 +320,28 @@ test('a folder window opens centred at its front matter windowWidth and windowHe
   await page.context().close();
 });
 
-test('Tracker opens at 1170x696, clamped to a small desk', async () => {
-  const page = await open(desktop, '/posts/');
+test('Tracker: All posts opens at its first-load spot however it is opened, clamped to a small desk', async () => {
+  const page = await open(desktop, '/');
   await win(page, 'tracker').waitFor();
-  const r = await rectOf(page, 'tracker');
-  assert.deepEqual([r.width, r.height], [1170, 696]);
+  const home = await rectOf(page, 'tracker');
+  await win(page, 'tracker').locator('.tab.on .ctl.close').click();
+  await win(page, 'tracker').waitFor({ state: 'detached' });
+  await page.evaluate(() => window.deskbar.go('/posts/'));
+  await win(page, 'tracker').waitFor();
+  assert.deepEqual(await rectOf(page, 'tracker'), home, 'the Posts icon opens it where first load did');
+  // the cards run newest first, so even maximised they stay one column
+  await win(page, 'tracker').locator('.tab.on .ctl.max').click();
+  await page.waitForFunction(() => document.querySelector('.win:has(.view[data-key="tracker"])').getBoundingClientRect().width > 1000);
+  const lefts = await win(page, 'tracker').locator('.pv-grid .pc').evaluateAll(els => [...new Set(els.map(e => Math.round(e.getBoundingClientRect().left)))]);
+  assert.equal(lefts.length, 1, `one column of cards (${lefts})`);
   await page.context().close();
+
+  // a reload with it open starts at /posts/, and it comes back the same
+  const archive = await open(desktop, '/posts/');
+  await win(archive, 'tracker').waitFor();
+  const r = await rectOf(archive, 'tracker');
+  assert.deepEqual(r, home, 'a visit starting at /posts/ opens it at the same spot');
+  await archive.context().close();
 
   const small = await open({ width: 1000, height: 600 }, '/posts/');
   await win(small, 'tracker').waitFor();
@@ -349,6 +365,44 @@ test('resizing by the grip shows the size until release', async t => {
   assert.equal(await size.count(), 0, 'removed on release');
   assert.deepEqual(page.errors, []);
   await page.context().close();
+});
+
+test('windows the front window covers turn slightly see-through; the rest, and phones, stay solid', async t => {
+  if (!(await needs(t, '/about/'))) return;
+  // Tracker on the left half, Control panel on the right, About on top in the top right quarter, over Control panel only
+  const url = '/about/?layout=l/posts/,r/control-panel/,tr/about/';
+  const page = await open(desktop, url);
+  const tk = win(page, 'tracker'), cp = win(page, 'control-panel'), ab = win(page, 'page:/about/');
+  await page.waitForFunction(() => document.querySelector('.win.active .view[data-key="page:/about/"]'));
+  const under = w => w.evaluate(el => el.classList.contains('under'));
+  const opacity = w => w.evaluate(el => +getComputedStyle(el).opacity);
+  assert.ok(await under(cp), 'Control panel, under About, is marked');
+  await page.waitForFunction(() => +getComputedStyle(document.querySelector('.win.under')).opacity < 1);
+  const o = await opacity(cp);
+  assert.ok(o >= 0.8 && o < 1, `a subtle fade (${o})`);
+  assert.ok(!(await under(tk)) && (await opacity(tk)) === 1, 'Tracker, clear of About, stays solid');
+  assert.ok(!(await under(ab)) && (await opacity(ab)) === 1, 'the front window stays solid');
+
+  await tk.locator('.tab.on .tt').click();
+  assert.equal(await page.locator('.win.under').count(), 0, 'Tracker in front covers nothing');
+  // About's tab covers Control panel's and the divider its left edge, so press its right edge below the quarter
+  const cb = await cp.boundingBox();
+  await page.mouse.click(cb.x + cb.width - 2, cb.y + cb.height - 60);
+  assert.ok(await under(ab) && !(await under(cp)), 'Control panel in front covers About');
+  assert.ok(await cp.evaluate(el => getComputedStyle(el).opacity === '1'), 'a window brought forward is solid at once');
+
+  // dragged off its half to the middle, Tracker takes its free size back over both the others, marked once released
+  await dragTab(page, 'tracker', { x: desktop.width / 2, y: 420 });
+  assert.equal(await page.locator('.win.under').count(), 0, 'pressed to the front on its half, it covers nothing, and that holds mid-drag');
+  await page.mouse.up();
+  assert.ok(await under(cp) && await under(ab) && !(await under(tk)), 'both covered once dropped');
+  assert.deepEqual(page.errors, []);
+  await page.context().close();
+
+  const ph = await open(phone, url);
+  await win(ph, 'page:/about/').waitFor();
+  assert.equal(await ph.locator('.win.under').count(), 0, 'phones show one window, so none is marked');
+  await ph.context().close();
 });
 
 test('a dock item lights its running dot while a lazy app opened from it is open, and after a deep link', async () => {

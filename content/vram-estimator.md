@@ -11,6 +11,7 @@ tags:
 - metal
 - gguf
 title: "LLM vRAM Estimator"
+folderWeight: 1
 window: tool
 icon: vram
 categories: ["llm"]

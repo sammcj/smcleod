@@ -1,5 +1,6 @@
 {{- /* A folder of icons (front matter: layout: folder, window: folder). Lists the section's pages plus any page
-       paths in `include` (pages that live elsewhere), by title, each with its own `icon`.
+       paths in `include` (pages that live elsewhere), by title, each with its own `icon`. `folderWeight: n` puts a
+       page after the rest, lowest first.
        `items: <data key>` adds entries from a data file, in file order and grouped under their category:
          { name, url, icon?, description?, category?, meta?, feed?, thumb? }
        icon is an image path (anything with a /), a sprite name, or left out for a monogram tile. Links to other
@@ -43,8 +44,11 @@
   </header>
   {{- with $items }}
   <ul class="folder">
-    {{- range sort . "LinkTitle" }}
-    <li><a href="{{ .RelPermalink }}" title="{{ .Description | default .LinkTitle }}"><svg class="ico" aria-hidden="true"><use href="#i-{{ .Params.icon | default "doc" }}"/></svg><span>{{ .LinkTitle }}</span></a></li>
+    {{- /* by title, then any with folderWeight after the rest, lowest first. A folder-only param, as Hugo's own weight
+         would reorder every page list (feeds, sections). sort is stable, so equal weights keep title order. */}}
+    {{- $last := sort (sort (where . "Params.folderweight" "ne" nil) "LinkTitle") "Params.folderweight" }}
+    {{- range (sort (where . "Params.folderweight" "eq" nil) "LinkTitle") | append $last }}
+    <li><a href="{{ .RelPermalink }}"><svg class="ico" aria-hidden="true"><use href="#i-{{ .Params.icon | default "doc" }}"/></svg><span>{{ .LinkTitle }}</span></a></li>
     {{- end }}
   </ul>
   {{- end }}
@@ -59,7 +63,7 @@
     {{- range $data }}{{ if eq (.category | default "") $cat }}
     {{- $host := (urls.Parse .url).Host }}
     {{- $icon := .icon | default "" }}
-    <li><a href="{{ .url }}"{{ if not (or $list $cards) }} title="{{ .description | default .name }}"{{ end }}{{ if and $host (ne $host $site) }} target="_blank" rel="noopener"{{ end }}>
+    <li><a href="{{ .url }}"{{ if and $host (ne $host $site) }} target="_blank" rel="noopener"{{ end }}>
       {{- if $cards }}
       {{- $p := partial "deskbar/folder/preview.html" (dict "item" . "size" $size) }}
       {{- with $p.src }}<img class="thumb" src="{{ . }}" alt="" width="{{ $p.width }}" height="{{ $p.height }}" loading="lazy" decoding="async">
@@ -75,7 +79,7 @@
       {{- else if not $cards }}<span>{{ .name | htmlEscape | replaceRE `([a-z])([A-Z])` "$1<wbr>$2" | safeHTML }}</span>{{ end -}}
     </a>
     {{- if $list }}<small class="fi-m">{{ delimit (.meta | default slice) " · " }}</small>{{ end }}
-    {{- with index $pages (lower .name) }}{{ with site.GetPage . }}<a class="fi-page" href="{{ .RelPermalink }}" title="{{ .LinkTitle }}" aria-label="Read more: {{ .LinkTitle }}">Read more</a>{{ end }}{{ end }}</li>
+    {{- with index $pages (lower .name) }}{{ with site.GetPage . }}<a class="fi-page" href="{{ .RelPermalink }}" aria-label="Read more: {{ .LinkTitle }}">Read more</a>{{ end }}{{ end }}</li>
     {{- end }}{{ end }}
   </ul>
   {{- end }}

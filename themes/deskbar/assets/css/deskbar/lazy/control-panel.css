@@ -65,6 +65,9 @@
   --lq-shine: inset 1px 1px 0 var(--lq-rim), inset 0 0 14px light-dark(rgba(255,255,255,.22), rgba(255,255,255,.05));
 }
 :root:is([data-deco=liquid], [data-deco=clear]) :is(#panel, .win .frame, #menu, .ctx, .recent-list) { backdrop-filter: var(--lq-blur); -webkit-backdrop-filter: var(--lq-blur); }
+/* a faded window would cut its glass off from the desk behind (opacity makes it the backdrop root), and glass shows
+   what is behind already */
+:root:is([data-deco=liquid], [data-deco=clear]) .win.under { opacity: 1; }
 :root:is([data-deco=liquid], [data-deco=clear]) #panel { border-bottom: 1px solid var(--lq-rim); box-shadow: inset 0 -1px 0 rgba(255,255,255,.3), 0 10px 30px rgba(0,0,0,.28); }
 :root[data-deco=clear] #panel { box-shadow: inset 0 -1px 0 rgba(255,255,255,.2), 0 4px 16px rgba(0,0,0,.16); }
 /* dark text on a light panel fades too far at the core's minimised opacity */

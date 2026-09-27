@@ -15,7 +15,7 @@ const open = (urls, at) => window.deskbar.openPosts(urls, at);
 // the desk, over a window or not, the posts open there; back on the list it came from, or off the desk, nothing opens.
 export function lift(it, root) {
   const many = sels.get(root)?.urls.has(url(it)) ? chosen(root) : [it];
-  const name = it.title || it.querySelector('b, a')?.textContent.trim();
+  const name = it.querySelector('.pc-t, .row-t, .gi-t, b, a')?.textContent.trim();
   const ghost = document.body.appendChild(h('div', { class: 'dragout', 'aria-hidden': 'true' },
     it.querySelector('img, svg')?.cloneNode(true), h('span', {}, name), many.length > 1 && h('b', {}, many.length)));
   const desk = document.getElementById('desk'), src = root.closest('.win');

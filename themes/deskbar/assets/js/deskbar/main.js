@@ -9,7 +9,7 @@
 //                     Lazy modules import only lib/ and reach the shell through window.deskbar, which has
 //                     loadLazy too, so one lazy feature can start another (the terminal's screensaver).
 // - content.js        onMounted(fn({ root, page, view })) after page content and its scripts are in a window
-// - wm/windows.js    wm: { S, findView, minimise, place, clampTab, tabH } for lazy features that place windows
+// - wm/windows.js    wm: { S, findView, minimise, place, clampTab, tabH, refresh } for lazy features that place windows
 // - reader.js         addReaderAddon(fn({ view, page, scroller, win }) => cleanup?, { pages })
 // - router.js         onPop(fn(key) => handled?, { first }) on Back/Forward
 // - settings.js       settings.get(k), set(k, v), on(fn(k, v)) for visitor settings (theme, palette, dock, ...)
@@ -167,7 +167,7 @@ function boot() {
   const api = {
     defineApp, addReaderAddon, onMounted, mountContent, settings, onPop: router.onPop, go: router.go, loadLazy, loaded, openPosts,
     router: { push: router.push, replace: router.replace }, focusView, renderTabs, isPhone, push: fn => fn(api),
-    wm: { S, findView, minimise, place, clampTab, tabH },
+    wm: { S, findView, minimise, place, clampTab, tabH, refresh },
   };
   const queued = Array.isArray(window.deskbar) ? window.deskbar : [];
   window.deskbar = api;

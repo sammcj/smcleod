@@ -24,7 +24,7 @@ export function makeLightbox({ onShow, onClose, returnTo } = {}) {
   const el = h('div', { class: 'lightbox', hidden: true, role: 'dialog', 'aria-modal': 'true', 'aria-label': 'Photo viewer', tabindex: '-1' },
     img, prev, next,
     h('div', { class: 'lb-bar' }, num, cap,
-      h('button', { class: 'lb-close', type: 'button', title: 'Close viewer', 'aria-label': 'Close viewer', onclick: () => close() }, ico('c-x', ''))));
+      h('button', { class: 'lb-close', type: 'button', 'aria-label': 'Close viewer', onclick: () => close() }, ico('c-x', ''))));
 
   function show(n) {
     i = n;

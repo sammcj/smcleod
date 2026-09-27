@@ -18,7 +18,7 @@ function build(links, onClose) {
     h('ul', {}, links.map(a => h('li', {}, h('a', { href: a.getAttribute('href') }, a.dataset.title || a.textContent.trim())))));
   const bar = h('div', { class: 'ticker', role: 'region', 'aria-label': 'Related posts' },
     h('span', { class: 'ticker-h' }, 'Related'), track,
-    h('button', { class: 'ticker-x', type: 'button', title: 'Dismiss', 'aria-label': 'Dismiss related posts', onclick: onClose }, '×'));
+    h('button', { class: 'ticker-x', type: 'button', 'aria-label': 'Dismiss related posts', onclick: onClose }, '×'));
   return { bar, track };
 }
 

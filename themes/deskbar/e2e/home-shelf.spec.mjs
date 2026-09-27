@@ -26,7 +26,7 @@ test('desktop: the Posts icon raises the one Posts window, restores it from the 
   await icon.click();
   await posts.locator('.pc').first().waitFor();
   const big = await posts.boundingBox();
-  assert.ok(big.width > compact.width + 300, `reopened at the Posts window's full size (${big.width} wide)`);
+  assert.deepEqual(big, compact, 'reopened where first load put it');
   assert.equal(await page.evaluate(() => document.querySelector('.win.active .view:not([hidden])')?.dataset.key), 'tracker', 'and in front');
   assert.deepEqual(page.errors, []);
   await page.context().close();

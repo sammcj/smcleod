@@ -52,3 +52,6 @@ export function tileRects(n, area, th, g = GAP) {
     return { x: Math.round(area.x + g + c * cw), y: Math.round(area.y + r * rh + g + th), w: Math.round(cw - g), h: Math.round(rh - g - th) };
   });
 }
+
+// Whether two windows' areas meet, each counting the tab row above its frame
+export const overlaps = (a, b, th) => a.x < b.x + b.w && b.x < a.x + a.w && a.y - th < b.y + b.h && b.y - th < a.y + a.h;

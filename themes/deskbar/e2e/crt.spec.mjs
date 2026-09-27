@@ -5,7 +5,7 @@ import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
-import { env, useBrowser, open, needs, shot, win, cards, desktop, phone } from './lib.mjs';
+import { env, useBrowser, open, needs, shot, win, cards, desktop, phone, axeViolations } from './lib.mjs';
 
 useBrowser();
 
@@ -161,7 +161,7 @@ test('axe: every effect over a post and Posts, on a desktop and a phone', async 
       await win(page, 'tracker').locator('a[data-url]').first().click();
       await win(page, 'reader').locator('.rd h1').waitFor();
       await page.addScriptTag({ content: AXE });
-      const { violations } = await page.evaluate(() => window.axe.run(document, { iframes: false, resultTypes: ['violations'] }));
+      const violations = await axeViolations(page);
       for (const x of violations.filter(x => ['serious', 'critical'].includes(x.impact))) {
         for (const n of x.nodes) found.push(`[${v} ${vp.width} ${theme}] ${x.impact} ${x.id}: ${n.target.join(' ')}`);
       }

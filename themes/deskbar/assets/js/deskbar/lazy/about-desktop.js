@@ -1,6 +1,7 @@
-// About this desktop (`window: about-desktop`): the page's own text, then what built the site, how much the shell
-// weighs and which bundles load on demand. Loaded on first open through lazyApp (loader.js).
+// About this desktop (`window: about-desktop`): the page's own text, the ? key's shortcut list, then what built the
+// site, how much the shell weighs and which bundles load on demand. Loaded on first open through lazyApp (loader.js).
 import { h } from '../lib/dom.js';
+import { keyList } from '../lib/shortcut-list.js';
 
 // Gzipped size of a file, as scripts/size-budget.mjs counts it. The files are already in the browser cache.
 export async function gzSize(url) {
@@ -49,7 +50,9 @@ export function mount(v, page, { fresh }) {
     h('dt', {}, 'On demand'), h('dd', {}, lazyList()),
   );
   const body = h('div', { class: 'about-body scroller' }, ...page.content());
-  (body.querySelector('.rd-body') || body).append(h('h2', {}, 'Under the hood'), facts);
+  (body.querySelector('.rd-body') || body).append(
+    h('h2', {}, 'Keyboard shortcuts'), h('div', { class: 'about-keys' }, ...keyList('h3')),
+    h('h2', {}, 'Under the hood'), facts);
   v.el.append(body);
   measure(size);
   window.deskbar.mountContent(body, page, v);

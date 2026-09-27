@@ -1,6 +1,6 @@
-// Spotlight search (D28): the panel button and the optional shortcuts, Cmd/Ctrl+K and "/". This is all that
-// sits in the shell bundle. The overlay (spotlight.js), its stylesheet and the site index are separate files
-// named on the button (_partials/deskbar/spotlight.html) and loaded on first open.
+// Spotlight search (D28): the panel button, any Search launcher and the optional shortcuts, Cmd/Ctrl+K and "/".
+// This is all that sits in the shell bundle. The overlay (spotlight.js), its stylesheet and the site index are
+// separate files named on the button (_partials/deskbar/spotlight.html) and loaded on first open.
 // The shortcuts are an extra (D3), so they never fire while someone is typing into a field.
 import * as router from './router.js';
 
@@ -18,7 +18,6 @@ export function shortcut(e) {
 export function initSpotlight() {
   const btn = document.getElementById('searchBtn');
   if (!btn?.dataset.module) return;
-  if (/Mac|iPhone|iPad/.test(navigator.platform)) btn.title = 'Search (⌘K or /)';
   let mod = null;
   function open(from) {
     mod ||= import(btn.dataset.module);
@@ -27,7 +26,8 @@ export function initSpotlight() {
       .catch(err => { mod = null; console.error(err); })
       .finally(() => btn.removeAttribute('aria-busy'));
   }
-  btn.addEventListener('click', () => open(btn));
+  // launchers with { action: search } (launcher-link.html) share the panel button's module and index
+  for (const b of document.querySelectorAll('#searchBtn, [data-action="search"]')) b.addEventListener('click', () => open(b));
   document.addEventListener('keydown', e => {
     if (!shortcut(e) || isTyping(e.target) || document.querySelector('dialog.spotlight[open]')) return;
     e.preventDefault();

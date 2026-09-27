@@ -92,6 +92,35 @@ test('a page with windowTile opens tiled to the left, full height, clear of the 
   }
 });
 
+test('About this desktop opens just right of the Posts window, top edges level, when there is room', async t => {
+  if (!(await fetch(env.base + '/about-desktop/')).ok) return t.skip('no /about-desktop/ on this site');
+  for (const vp of [desktop, laptop]) {
+    const page = await opened(vp, '/', 'tracker');
+    await page.evaluate(() => window.deskbar.go('/about-desktop/'));
+    await page.locator('.win:not([hidden]) .view[data-key="about-desktop"]').waitFor();
+    const { win: posts } = await layout(page, 'tracker'), { win: w, desk } = await layout(page, 'about-desktop');
+    const at = `${vp.width}x${vp.height}`;
+    assert.ok(w.l >= posts.r && w.l - posts.r <= 16, `beside Posts, not over it: ${at} ${JSON.stringify({ posts, w })}`);
+    assert.ok(Math.abs(w.t - posts.t) <= 1, `top edges level: ${at}`);
+    assert.ok(w.r <= desk.l + desk.w, `on the desk: ${at}`);
+    await page.context().close();
+  }
+  // a Posts window too wide to leave room: against the desk's right edge, covering as little of it as it can
+  const page = await opened(desktop, '/', 'tracker');
+  const grip = await page.locator('.win:has(.view[data-key="tracker"]) .grip').boundingBox();
+  await page.mouse.move(grip.x + 4, grip.y + 4);
+  await page.mouse.down();
+  await page.mouse.move(grip.x + 504, grip.y + 4, { steps: 5 });
+  await page.mouse.up();
+  await page.evaluate(() => window.deskbar.go('/about-desktop/'));
+  await page.locator('.win:not([hidden]) .view[data-key="about-desktop"]').waitFor();
+  const { win: posts } = await layout(page, 'tracker'), { win: w, desk } = await layout(page, 'about-desktop');
+  assert.ok(desk.w - posts.r < 420, `Posts is wide here: ${JSON.stringify(posts)}`);
+  assert.ok(Math.abs(desk.l + desk.w - 10 - w.r) <= 1, `against the right edge: ${JSON.stringify({ w, desk })}`);
+  assert.ok(Math.abs(w.t - posts.t) <= 1, 'top edges level');
+  await page.context().close();
+});
+
 test('a large app on a phone still fills the screen', async () => {
   const [[path, key]] = await present(LARGE);
   const page = await opened(phone, path, key);

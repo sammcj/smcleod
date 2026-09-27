@@ -40,7 +40,7 @@ const headingLabel = x => [...x.childNodes].filter(n => !n.classList?.contains('
 function contents(art, onPick) {
   const heads = [...art.querySelectorAll('.rd-body h2[id], .rd-body h3[id]')];
   if (heads.length < 3) return '';
-  return h('select', { 'aria-label': 'Contents', title: 'Contents', onchange: e => { onPick(e.target.value); e.target.value = ''; } },
+  return h('select', { 'aria-label': 'Contents', onchange: e => { onPick(e.target.value); e.target.value = ''; } },
     h('option', { value: '' }, 'Contents'),
     heads.map(x => h('option', { value: x.id }, (x.tagName === 'H3' ? ' ' : '') + headingLabel(x))));
 }
@@ -78,8 +78,8 @@ export function makeReader(key, icon, withNav) {
   };
   v.el = h('div', { class: 'view reader' },
     h('div', { class: 'toolbar', onpointerover: warm, onfocusin: warm }, back, fwd,
-      h('button', { class: 'tb', type: 'button', title: 'Smaller text', 'aria-label': 'Smaller text', onclick: () => textSize(-1) }, 'A-'),
-      h('button', { class: 'tb', type: 'button', title: 'Larger text', 'aria-label': 'Larger text', onclick: () => textSize(1) }, 'A+'),
+      h('button', { class: 'tb', type: 'button', 'aria-label': 'Smaller text', onclick: () => textSize(-1) }, 'A-'),
+      h('button', { class: 'tb', type: 'button', 'aria-label': 'Larger text', onclick: () => textSize(1) }, 'A+'),
       widthBtn(),
       tocSlot, act('Share', stroke(SHARE), 'shareView'), mdBtn),
     scroll);

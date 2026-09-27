@@ -225,3 +225,53 @@ test('phone: tap the button, tap a result, it opens as a window', async () => {
   await page.locator('.win:not([hidden])').first().waitFor();
   await ctx.close();
 });
+
+// The panel's controls, left to right, as ids or tags; the tray's links count as one "tray"
+const panelOrder = page => page.evaluate(() => [...document.querySelectorAll('#panel :is(a, button, time)')]
+  .filter(el => el.getBoundingClientRect().width && getComputedStyle(el).visibility !== 'hidden')
+  .sort((a, b) => a.getBoundingClientRect().x - b.getBoundingClientRect().x)
+  .map(el => (el.closest('#tray') ? 'tray' : el.id || el.tagName)));
+const seed = look => `for (const [k, v] of Object.entries(${JSON.stringify(look)})) localStorage.setItem("deskbar:" + k, JSON.stringify(v));`;
+
+for (const [name, look] of [['default', {}], ['synthwave', { deco: 'synthwave', wall: 'synthwave', dock: 'synthwave' }], ['platinum', { deco: 'platinum', dock: 'platinum' }]]) {
+  for (const [vp, size] of [['desktop', desktop], ['phone', phone]]) {
+    test(`${name} look, ${vp}: search is the panel's last icon, just before the clock`, async () => {
+      const page = await open(size, '/', seed(look));
+      const order = await panelOrder(page);
+      const clock = order.indexOf('clock');
+      // phones drop the clock under 400px wide, which leaves search last
+      assert.equal(order[clock < 0 ? order.length - 1 : clock - 1], 'searchBtn', order.join(' '));
+      assert.deepEqual(page.errors, []);
+      await page.context().close();
+    });
+  }
+}
+
+test('the dock Search item opens Spotlight by pointer and keyboard, and focus goes back to it', async () => {
+  const page = await open(desktop, '/');
+  const item = page.locator('#dock [data-action="search"]');
+  assert.equal(await item.count(), 1);
+  assert.equal(await item.getAttribute('aria-haspopup'), 'dialog');
+  await item.click();
+  await dlg(page).waitFor();
+  assert.ok(await q(page).evaluate(el => el === document.activeElement), 'the field has focus');
+  await page.keyboard.press('Escape');
+  assert.ok(!(await isOpen(page)));
+  assert.ok(await item.evaluate(el => el === document.activeElement), 'focus returns to the dock item');
+  await page.keyboard.press('Enter');
+  await dlg(page).waitFor();
+  assert.ok(await isOpen(page), 'Enter opens it too');
+  assert.deepEqual(page.errors, []);
+  await page.context().close();
+});
+
+test('phone: the dock Search item opens the Spotlight sheet', async () => {
+  const page = await open(phone, '/', undefined, { hasTouch: true, isMobile: true });
+  const item = page.locator('#dock [data-action="search"]');
+  assert.ok(await item.isVisible(), 'in the phone dock');
+  await item.tap();
+  await dlg(page).waitFor();
+  assert.ok(await isOpen(page));
+  assert.deepEqual(page.errors, []);
+  await page.context().close();
+});

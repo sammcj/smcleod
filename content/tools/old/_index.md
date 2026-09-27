@@ -1,5 +1,6 @@
 ---
 title: "Old"
+folderWeight: 3
 description: "Older apps that still work but are no longer updated."
 layout: folder
 window: folder

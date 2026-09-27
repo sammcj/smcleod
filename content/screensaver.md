@@ -1,7 +1,7 @@
 ---
 title: "Screen saver"
 description: "eSheep wandering the desktop, or leaves falling past it after Haiku's Leaves screen saver."
-icon: "leaf"
+icon: "sheep"
 deskbarHidden: true
 ---
 

@@ -37,7 +37,7 @@ const postItem = p => ({ title: p.title, url: p.url, date: p.date, sub: shortDat
 const linkItem = x => ({ title: x.title, url: x.url, date: '', sub: x.sub || '', icon: x.icon || 'doc', words: 0 });
 
 export function card(p) {
-  return h('a', { class: 'pc', href: p.url, title: p.title, 'data-url': p.url, 'data-post': p.url },
+  return h('a', { class: 'pc', href: p.url, 'data-url': p.url, 'data-post': p.url },
     h('span', { class: 'pc-t' }, p.title), thumb(p),
     h('span', { class: 'pc-m' },
       h('span', { class: 'pc-row' }, h('small', {}, fmtDate(p.date)), p.tags.slice(0, 3).map(t => h('span', { class: 'tg' }, t))),
@@ -46,13 +46,13 @@ export function card(p) {
 
 function row(it) {
   const mark = it.post ? mini(it.post) : ico('i-' + it.icon);
-  return h('a', { class: 'row', href: it.url, title: it.title, 'data-url': it.url, 'data-post': it.post && it.url },
+  return h('a', { class: 'row', href: it.url, 'data-url': it.url, 'data-post': it.post && it.url },
     mark, h('span', { class: 'row-t' }, it.title), h('small', { class: 'row-d' }, it.sub));
 }
 
 function icon(it) {
   const pic = it.post ? thumb(it.post, 'gi-img') : h('span', { class: 'gi-ico' }, ico('i-' + it.icon));
-  return h('a', { class: 'gi', href: it.url, title: it.title, 'data-url': it.url, 'data-post': it.post && it.url }, pic, h('span', { class: 'gi-t' }, it.title));
+  return h('a', { class: 'gi', href: it.url, 'data-url': it.url, 'data-post': it.post && it.url }, pic, h('span', { class: 'gi-t' }, it.title));
 }
 
 const section = (label, n, body) => h('section', {},
@@ -283,11 +283,11 @@ function makeTracker() {
 
 export function ensureTracker({ place, url, q, focus = true } = {}) {
   let v = findView('tracker');
+  // All posts (the Posts icon, or a reload with it open) opens where first load puts it (D36). A tag, year or search
+  // is browsing the archive, so opens large enough for the sidebar.
   if (!v) {
-    v = makeTracker();
-    const d = deskRect();
-    const w = Math.min(1170, d.w - 140);
-    createWindow(v, { w, h: Math.min(696, d.h - tabH() - 36), x: clearOfIcons(118, w, d), y: tabH() + 20 });
+    const d = deskRect(), w = Math.min(1170, d.w - 140);
+    createWindow(v = makeTracker(), place === 'all' ? postsHome() : { w, h: Math.min(696, d.h - tabH() - 36), x: clearOfIcons(118, w, d), y: tabH() + 20 });
   } else if (focus) {
     focusView(v);
   }

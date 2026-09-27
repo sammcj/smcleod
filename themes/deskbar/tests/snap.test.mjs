@@ -1,6 +1,6 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { snapRect, zoneAt, clampSplit, splitFor, sideOf, tileRects, GAP } from '../assets/js/deskbar/wm/snap.js';
+import { snapRect, zoneAt, clampSplit, splitFor, sideOf, tileRects, overlaps, GAP } from '../assets/js/deskbar/wm/snap.js';
 
 const desk = { w: 1200, h: 800 }, th = 24;
 
@@ -59,7 +59,6 @@ test('splitFor keeps the split only when the opposite side is occupied', () => {
 
 // Arranging (the a key, and folders opening beside each other)
 const area = { x: 100, y: 0, w: 1200, h: 800 };
-const overlap = (a, b) => a.x < b.x + b.w && b.x < a.x + a.w && a.y - th < b.y + b.h && b.y - th < a.y + a.h;
 
 test('tiles fill the area without overlapping, tabs included, for any number of windows', () => {
   for (let n = 1; n <= 9; n++) {
@@ -69,7 +68,7 @@ test('tiles fill the area without overlapping, tabs included, for any number of 
       assert.ok(r.x >= area.x + GAP && r.x + r.w <= area.x + area.w - GAP + 1, `n=${n}: inside left and right`);
       assert.ok(r.y - th >= area.y + GAP && r.y + r.h <= area.y + area.h - GAP + 1, `n=${n}: inside top and bottom, tab included`);
     }
-    rs.forEach((a, i) => rs.slice(i + 1).forEach(b => assert.ok(!overlap(a, b), `n=${n}: no two tiles overlap`)));
+    rs.forEach((a, i) => rs.slice(i + 1).forEach(b => assert.ok(!overlaps(a, b, th), `n=${n}: no two tiles overlap`)));
   }
 });
 
@@ -81,4 +80,15 @@ test('tiles favour landscape cells: two side by side, four in a square, and a sh
   assert.deepEqual(four.map(r => [r.x, r.y]), [[four[0].x, four[0].y], [four[1].x, four[0].y], [four[0].x, four[2].y], [four[1].x, four[2].y]]);
   const three = tileRects(3, area, th);
   assert.equal(three[2].w, three[0].w * 2 + GAP, 'the third spans both columns');
+});
+
+test('overlaps counts the tab above each frame, and snapped neighbours never overlap', () => {
+  const l = snapRect('l', 0.5, desk, th), r = snapRect('r', 0.5, desk, th), tr = snapRect('tr', 0.5, desk, th);
+  assert.equal(overlaps(l, r, th), false);
+  assert.equal(overlaps(tr, l, th), false);
+  assert.equal(overlaps(tr, r, th), true);
+  const a = { x: 100, y: 100, w: 300, h: 200 };
+  assert.equal(overlaps(a, { ...a, y: 300 + th - 1 }, th), true, 'a tab tucked under the frame above');
+  assert.equal(overlaps(a, { ...a, y: 300 + th }, th), false, 'a tab just clear of it');
+  assert.equal(overlaps(a, { ...a, x: 400 }, th), false, 'touching edges');
 });

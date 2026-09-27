@@ -1,5 +1,12 @@
 /* Haiku windows: yellow tab above a bevelled frame. Unfocused windows get a muted tab and dimmed controls (D20). */
-.win { position: absolute; min-width: 280px; min-height: 160px; }
+.win { position: absolute; min-width: 280px; min-height: 160px; transition: opacity .2s; }
+/* Windows the front window covers (shade() in wm/windows.js) fade a little. One falling behind fades out; one brought
+   forward is solid at once. */
+.win.under { opacity: .85; }
+/* a window the switcher is previewing is raised over the rest, so shows solid */
+.win.peek { opacity: 1; }
+.win.active { transition: none; }
+@media (prefers-contrast: more) { .win.under { opacity: 1; } }
 /* Opening, closing and content swaps cross-fade through View Transitions (transition() in wm/windows.js), which
    the script skips under reduced motion. Kept short so a window never feels slow to appear. */
 ::view-transition-old(root), ::view-transition-new(root) { animation-duration: .16s; }

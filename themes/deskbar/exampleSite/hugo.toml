@@ -65,6 +65,9 @@ title = "deskbar demo"
     name = "Source"
     url = "https://github.com/sammcj/smcleod/tree/main/themes/deskbar"
     icon = "git"
+  [[params.deskbar.dock]]
+    name = "Search"
+    action = "search"   # opens Spotlight, as the panel's search button does
 
   # Menu groups after the built-in Writing group. A group's page or url is its app, which Tracker links to.
   # Entries naming a page that does not exist are left out; a group without its app lists its entries in Tracker.
