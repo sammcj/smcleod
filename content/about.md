@@ -7,14 +7,12 @@ comments: false
 showDate: false
 subtitle: Sam McLeod
 readingTime: false
-windowWidth: 884  # 30% wider than the default page window
+hideTitle: true
+windowTile: 60
 toc:
   enable: true
   auto: false
 ---
-<!-- markdownlint-disable MD025 -->
-
-# About Me
 
 ![](/profilephoto/apple-touch-icon.png)
 
@@ -76,6 +74,12 @@ The [Links](/links/) page has some of my favourite services, tools, and media.
 ## Support my work
 
 [buymeacoffee.com/sam.mcleod](https://buymeacoffee.com/sam.mcleod)
+
+---
+
+## About this site
+
+[About this desktop](/about-desktop/) covers how this site is built and designed.
 
 ---
 

@@ -147,6 +147,26 @@ test('with the default look, no Control panel stylesheet loads', async t => {
   await page.context().close();
 });
 
+test("a site's starting look shows to a fresh visitor, stored as nothing, and another style gets a palette it offers", async t => {
+  if (!(await needs(t, app))) return;
+  const html = await (await fetch(env.base + app)).text();
+  const m = html.match(/id="?deskbar-defaults"?>([^<]*)</);
+  if (!m) return t.skip('no params.deskbar.appearance on this site');
+  const site = JSON.parse(m[1]);
+  const page = await open(desktop, app, undefined, { siteLook: true });
+  await ready(page);
+  const a = await attrs(page);
+  for (const [k, v] of Object.entries(site)) assert.equal(a[k], v, `${k} starts on the site's choice`);
+  assert.deepEqual(await stored(page), {}, 'a first visit stores nothing');
+  for (const [k, v] of Object.entries(site)) assert.equal(await checked(page, k), v, `${k} shows checked`);
+  await pick(page, 'deco', 'beos');
+  await page.waitForFunction(() => document.documentElement.dataset.deco === 'beos');
+  assert.equal((await attrs(page)).palette, undefined, "the theme's own palette, not the site's");
+  assert.equal(await checked(page, 'palette'), 'haiku');
+  assert.deepEqual(page.errors, []);
+  await page.context().close();
+});
+
 test('each palette, decorator and wallpaper applies', async t => {
   if (!(await needs(t, app))) return;
   const page = await open(desktop, app);
@@ -264,8 +284,8 @@ test('a theme sets every choice but the mode; each choice then changes on its ow
   assert.ok(await cp(page).locator('.cp-presets').evaluate(el => el.compareDocumentPosition(document.querySelector('.cp fieldset:has([name="cp-deco"])')) & Node.DOCUMENT_POSITION_FOLLOWING), 'presets come first');
 
   await pick(page, 'preset', 'synthwave');
-  await settled(page, { deco: 'synthwave', wall: 'synthwave', dock: 'synthwave' });
-  assert.deepEqual(await attrs(page), { theme: 'dark', deco: 'synthwave', wall: 'synthwave', dock: 'synthwave' }, 'the mode is left alone');
+  await settled(page, { deco: 'synthwave', palette: 'synthwave-night', wall: 'synthwave', dock: 'synthwave' });
+  assert.deepEqual(await attrs(page), { theme: 'dark', deco: 'synthwave', palette: 'synthwave-night', wall: 'synthwave', dock: 'synthwave' }, 'the mode is left alone');
   assert.equal(await checked(page, 'preset'), 'synthwave');
 
   // one choice at a time: the rest stay, and no preset is shown once they no longer add up to one

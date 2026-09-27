@@ -1,0 +1,21 @@
+{{- /* An image fetched and processed at build time: { src, width, height, err } from { src, spec }. src is a URL, or
+       an asset path (assets/<path>) for images kept in the site and for fixtures; spec is an image Process spec such
+       as "fill 320x180 webp center". err says why there is no image, for the caller to warn with or ignore. */ -}}
+{{- $res := "" -}}
+{{- $err := "" -}}
+{{- if findRE `^https?://` .src 1 -}}
+  {{- $got := partial "deskbar/remote.html" .src -}}
+  {{- $res = $got.res -}}
+  {{- $err = $got.err -}}
+{{- else -}}
+  {{- $res = resources.Get .src -}}
+{{- end -}}
+{{- $out := dict -}}
+{{- with $res -}}
+  {{- with try (.Process $.spec) -}}
+    {{- with .Err }}{{ $err = printf "%v" . }}{{ else with .Value }}{{ $out = dict "src" .RelPermalink "width" .Width "height" .Height }}{{ end -}}
+  {{- end -}}
+{{- else -}}
+  {{- $err = $err | default "no such asset" -}}
+{{- end -}}
+{{- return merge $out (dict "err" (cond (isset $out "src") "" $err)) -}}

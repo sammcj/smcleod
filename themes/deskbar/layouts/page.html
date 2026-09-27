@@ -9,7 +9,7 @@
     {{- if $post }}
     <p class="meta"><time datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date.Format "2 Jan 2006" }}</time> · {{ .ReadingTime }} min read</p>
     {{- end }}
-    <h1>{{ .Title }}</h1>
+    <h1{{ if .Params.hideTitle }} class="hide"{{ end }}>{{ .Title }}</h1>
     {{- with .Description }}
     <p class="lede">{{ . }}</p>
     {{- end }}

@@ -2,7 +2,7 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import {
-  parseSite, listDir, resolvePath, entryAt, lookup, tokenise, complete, grep, suggest, COMMANDS,
+  parseSite, listDir, resolvePath, entryAt, lookup, tokenise, complete, grep, suggest, parsePing, pingStats, COMMANDS,
 } from '../assets/js/deskbar/lazy/terminal.js';
 import { SAVERS } from '../assets/js/deskbar/lazy/screensaver.js';
 
@@ -137,4 +137,28 @@ test('every command has usage and a summary', () => {
     assert.equal(typeof args, 'string', name);
     assert.ok(about.length > 5, name);
   }
+});
+
+test('ping takes -c and a host or http(s) URL, and rejects anything else', () => {
+  assert.deepEqual(parsePing(['example.com']), { host: 'example.com', url: 'https://example.com/', count: 4 });
+  assert.deepEqual(parsePing(['-c', '2', 'http://example.com:8080/some/page?q']), { host: 'example.com:8080', url: 'http://example.com:8080/', count: 2 });
+  assert.equal(parsePing(['-c7', 'example.com']).count, 7);
+  assert.equal(parsePing(['example.com', '-c', '99']).count, 20, 'the count is capped');
+  assert.equal(parsePing(['EXAMPLE.com.']).host, 'example.com.');
+  assert.equal(parsePing(['[::1]']).url, 'https://[::1]/');
+  assert.equal(parsePing(['localhost:1313'], 'http://localhost:1313').url, 'http://localhost:1313/', 'this site keeps its scheme');
+  assert.equal(parsePing(['localhost'], 'http://localhost:1313').url, 'https://localhost/', 'another port is another host');
+  assert.equal(parsePing(['https://localhost:1313'], 'http://localhost:1313').url, 'https://localhost:1313/', 'a URL keeps its own');
+  assert.deepEqual(parsePing([]), { error: '' }, 'no host asks for usage');
+  assert.deepEqual(parsePing(['-c', '3']), { error: '' });
+  for (const bad of [['!!!'], ['ftp://example.com'], ['a b'], ['-x', 'example.com'], ['one.com', 'two.com'], ['-c', '0', 'x.com'], ['-c', 'many', 'x.com'], ['x.com', '-c'], ['javascript:alert(1)']]) {
+    assert.ok(parsePing(bad).error, bad.join(' '));
+  }
+});
+
+test('ping sums up sent, received, loss and min/avg/max, ignoring lost replies', () => {
+  assert.deepEqual(pingStats([10, null, 30, 20]), { sent: 4, received: 3, loss: 25, rtt: { min: 10, avg: 20, max: 30 } });
+  assert.deepEqual(pingStats([null, 12.5, null]), { sent: 3, received: 1, loss: 67, rtt: { min: 12.5, avg: 12.5, max: 12.5 } });
+  assert.deepEqual(pingStats([null, null]), { sent: 2, received: 0, loss: 100, rtt: null });
+  assert.deepEqual(pingStats([]), { sent: 0, received: 0, loss: 0, rtt: null }, 'interrupted before the first reply');
 });

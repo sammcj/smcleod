@@ -47,6 +47,7 @@ params:
     relatedCount: 4           # related posts (shared tags) at the end of each post
     searchBodyChars: 3000     # how much of each page's text Spotlight searches
     screensaver: { minutes: 5 }   # idle minutes before the screen saver starts; 0 turns it off
+    appearance: { deco: synthwave, palette: synthwave-sunrise, dock: synthwave }   # starting look for visitors who haven't picked one, and what Reset puts back; any of deco, palette, wall, dock, crt (ids in lib/appearance.js)
     stylesheets:              # extra CSS, e.g. web fonts, loaded after the theme
       - https://fonts.googleapis.com/css2?family=Noto+Sans&display=swap
     icons:                    # desktop icons
@@ -84,6 +85,8 @@ window: photos            # open in a registered app instead of the default wind
 windowWidth: 880          # default window width for this page in any app (px; plain pages default to 680)
 windowHeight: 546         # default window height, likewise; a page with either size opens centred, clamped to the desk
 windowBesidePosts: true   # with a size: no taller than the Posts window, and just right of its home spot when it fits there
+windowTile: 60            # tile to the left: full height, from just right of the desktop icons to 60% of the desk's width
+hideTitle: true           # keep the page's <h1> for screen readers but hide it, for a page whose window title says it all
 math: true                # load MathJax (\( \), \[ \], $$ $$); prose with those delimiters also triggers it
 photos: true              # give this post an album in Photos and a "View photos" chip (so does the gallery shortcode)
 frame: /tiers.html        # with layout: tool, window: tool - embed a standalone HTML file as a tool window
@@ -144,7 +147,7 @@ The screen saver starts after `screensaver.minutes` without input, but never whi
   - **Appearance:** a row of themes, then each part on its own: window style, colours, mode, dock, wallpaper and CRT effect. A theme sets all of them but the mode, which stays the visitor's; the theme shown is the one the current choices add up to. Every choice and theme is data in `assets/js/deskbar/lib/appearance.js` (themes are `PRESETS` there, as `theme` is already the mode setting):
     - Palettes: Haiku, the cleaner Crisp, BeOS, Xfce, Sage, the light Snow, Mint and Peach, the pastel Lilac, Blossom and Lemon, the neon Synthwave, Rosé, Ember, Solar, Lagoon, Cobalt and Racing Green. Mode is light (the default), dark or auto (follows the OS).
     - Window styles: Haiku, BeOS, Flat, Clear, Liquid Ass, Platinum, Clearlooks, Phosphor, Broadsheet, Synthwave and its variants Vector, Memphis and Night Drive, and Pixel. Liquid Ass spoofs Apple's Liquid Glass (over-blurred glass, mismatched corner radii, traffic lights on the left, wobbly buttons); Clear is the same glass without the joke.
-    - Whole looks (`LOOKS`): Platinum (Mac OS 9), Clearlooks (GNOME 2), Phosphor (an amber CRT), Broadsheet (neo-brutalist newsprint), Synthwave and its variants (80s outrun) and Pixel (retro pixel art in Pixelify Sans from `static/fonts/pixelify-sans/`) draw in colours of their own, so Colours is off while one is on, and Mode too for the dark-only ones. Pixel offers its own colour variants there instead.
+    - Whole looks (`LOOKS`): Platinum (Mac OS 9), Clearlooks (GNOME 2), Phosphor (an amber CRT), Broadsheet (neo-brutalist newsprint), Synthwave and its variants (80s outrun) and Pixel (retro pixel art in Pixelify Sans from `static/fonts/pixelify-sans/`) draw in colours of their own, so Colours is off while one is on, and Mode too for the dark-only ones. Pixel and Synthwave offer their own colour variants there instead (Pico, and Synthwave's Sunrise, which keeps the dark chrome around light pages).
     - Docks: Glass, Deskbar and Panel, plus each look's own dock, which goes with any window style.
     - CRT effects: scanlines, the Phosphor tube, an aperture grille, and amber or green monochrome, over any look.
     - A new look is `assets/css/deskbar/looks/<name>.css` plus its lines in `lib/appearance.js`. Scope every rule to `[data-deco=<name>]`, `[data-wall=<name>]`, `[data-dock=<name>]` or its `.cp-deco`, `.cp-wp` and `.cp-dk` thumbnails; its variants are `<name>-<variant>` values in the same file. It builds as its own stylesheet, which head.html links before first paint whenever the stored window style, wallpaper or dock is of its family

@@ -1,0 +1,10 @@
+{{- /* An unmarshalled feed's own artwork, as a list of URLs to try in order: a podcast's itunes:image or an RSS
+       <image> (both unmarshal as "image", as namespaces are dropped), then an Atom logo or icon. */ -}}
+{{- $srcs := slice -}}
+{{- $art := (.channel | default dict).image | default .logo | default .icon -}}
+{{- range cond (reflect.IsSlice $art) $art (slice $art) -}}
+  {{- $u := . -}}
+  {{- if reflect.IsMap . }}{{ $u = index . "-href" | default .url }}{{ end -}}
+  {{- with partial "deskbar/feeds/text.html" $u | strings.TrimSpace }}{{ $srcs = $srcs | append . }}{{ end -}}
+{{- end -}}
+{{- return $srcs -}}

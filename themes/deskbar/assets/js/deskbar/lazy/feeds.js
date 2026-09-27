@@ -1,15 +1,18 @@
 // Feeds (`window: feeds`): a feed reader over the items layouts/feeds.html renders at build time from the site's
 // OPML list (_partials/deskbar/feeds.html). Three panes, after NetNewsWire: feeds with unread counts, items newest
-// first, and a preview with the summary and a link to the article. Container queries fold it to two panes, then
-// one, as the window narrows. Feed text only ever goes in as text nodes. Read state is kept in localStorage.
+// first, and a preview with the summary, the item's picture and a link to the article. Container queries fold it to
+// two panes, then one, as the window narrows. Feed text only ever goes in as text nodes. Feed icons are the site's
+// own copies; item pictures load from their sites, lazily and without a referrer, and drop out if they fail. Read
+// state is kept in localStorage.
 import { h, find, toTop } from '../lib/dom.js';
 import { store } from '../lib/store.js';
 import { arrowTo } from '../lib/keys.js';
 import { plural } from '../lib/format.js';
 
-const WEB = /^https?:\/\//i, KEEP = 800;
+const WEB = /^https?:\/\//i, IMG = /^https:\/\//i, KEEP = 800;
 
-// Items and feeds from the page: <ol class="fd-items"><li data-feed data-date><a href>title</a>...<p class="fd-sum">
+// Items and feeds from the page: <ol class="fd-items"><li data-feed data-date data-image><a href>title</a>...
+// <p class="fd-sum">, and <ul class="fd-feeds"><li data-name data-icon>. icons maps a feed's name to its icon.
 export function readFeeds(nodes) {
   const list = find(nodes, '.fd-items');
   const items = [...(list?.children || [])].map(li => {
@@ -17,13 +20,19 @@ export function readFeeds(nodes) {
     return {
       feed: li.dataset.feed || '', title: a?.textContent.trim() || '', link: a?.getAttribute('href') || '',
       date: new Date(li.dataset.date), summary: li.querySelector('.fd-sum')?.textContent.trim() || '',
+      image: IMG.test(li.dataset.image) ? li.dataset.image : '',
     };
   }).filter(it => it.title && WEB.test(it.link) && !isNaN(it.date));
-  const feeds = [...(find(nodes, '.fd-feeds')?.children || [])].map(li => li.dataset.name).filter(Boolean);
+  const named = [...(find(nodes, '.fd-feeds')?.children || [])].filter(li => li.dataset.name);
+  const feeds = named.map(li => li.dataset.name);
+  const icons = Object.fromEntries(named.filter(li => li.dataset.icon).map(li => [li.dataset.name, li.dataset.icon]));
   // a feed missing from the list still gets a place in the sidebar
   for (const it of items) if (!feeds.includes(it.feed)) feeds.push(it.feed);
-  return { items, feeds, updated: new Date(list?.dataset.updated) };
+  return { items, feeds, icons, updated: new Date(list?.dataset.updated) };
 }
+
+// A picture from another site: loaded only as it nears the screen, sent no referrer, and gone if it fails
+const picture = (src, cls) => h('img', { class: cls, src, alt: '', loading: 'lazy', decoding: 'async', referrerpolicy: 'no-referrer', onerror: e => e.target.remove() });
 
 // Short age for the item list: minutes, hours and days for a week, then the date
 export function ago(d, now = Date.now()) {
@@ -39,9 +48,11 @@ const full = d => d.toLocaleString('en-AU', { weekday: 'short', day: 'numeric', 
 
 export function mount(v, page, { fresh }) {
   if (!fresh) return;
-  let { items, feeds, updated } = readFeeds(page.content());
+  let { items, feeds, icons, updated } = readFeeds(page.content());
   const read = new Set(store.get('feeds-read', []));
   const rows = new Map();
+  // the sidebar is redrawn on every selection, so it keeps its icons rather than reloading them each time
+  const sideIcons = new Map();
   let feed = '', cur = null;
 
   const save = () => store.set('feeds-read', [...read].slice(-KEEP));
@@ -68,7 +79,8 @@ export function mount(v, page, { fresh }) {
         const res = await fetch(page.url, { cache: 'no-cache' });
         if (!res.ok) throw new Error(res.status);
         const doc = new DOMParser().parseFromString(await res.text(), 'text/html');
-        ({ items, feeds, updated } = readFeeds([doc.body]));
+        ({ items, feeds, icons, updated } = readFeeds([doc.body]));
+        sideIcons.clear();
         choose(feeds.includes(feed) ? feed : '');
       } catch {
         status.textContent = "Couldn't refresh. Try again in a moment.";
@@ -87,7 +99,7 @@ export function mount(v, page, { fresh }) {
       return h('button', {
         type: 'button', class: off ? 'fd-feed off' : 'fd-feed', title: off ? 'Not fetched in the latest build' : null,
         'aria-current': name === feed ? 'true' : null, onclick: () => choose(name),
-      }, h('span', {}, label(name)), h('small', {}, unread(name) || ''));
+      }, name && (sideIcons.get(name) || sideIcons.set(name, icon(name)).get(name)), h('span', {}, label(name)), h('small', {}, unread(name) || ''));
     }));
     sel.replaceChildren(...names.map(name => h('option', { value: name, selected: name === feed }, `${label(name)} (${unread(name)})`)));
     const n = unread(feed), a = ago(updated);
@@ -95,11 +107,15 @@ export function mount(v, page, { fresh }) {
     status.textContent = `${plural(shown().length, 'item')}, ${n} unread` + (isNaN(updated) ? '' : `. Fetched ${/^\d+[mhd]$/.test(a) ? a + ' ago' : 'on ' + a}`);
   }
 
+  // A feed's icon, or an empty box of the same size so names line up
+  const icon = name => (icons[name] ? h('img', { class: 'fd-ico', src: icons[name], alt: '' }) : h('i', { class: 'fd-ico' }));
+
   function row(it) {
     const b = h('button', { type: 'button', class: read.has(it.link) ? 'fd-row' : 'fd-row unread', tabindex: '-1', onclick: () => { select(it); show(true); } },
       h('span', { class: 'fd-t' }, it.title),
       it.summary && h('span', { class: 'fd-s' }, it.summary),
-      h('span', { class: 'fd-m' }, h('span', {}, it.feed), h('time', { datetime: it.date.toISOString(), title: full(it.date) }, ago(it.date))));
+      h('span', { class: 'fd-m' }, h('span', {}, icons[it.feed] && icon(it.feed), it.feed), h('time', { datetime: it.date.toISOString(), title: full(it.date) }, ago(it.date))),
+      it.image && picture(it.image, 'fd-th'));
     rows.set(it, b);
     return h('div', { role: 'listitem' }, b);
   }
@@ -111,8 +127,9 @@ export function mount(v, page, { fresh }) {
     }
     const back = h('button', { type: 'button', class: 'tb fd-back', onclick: () => { show(false); rows.get(cur)?.focus(); } }, 'Items');
     pane.replaceChildren(back,
-      h('header', {}, h('p', { class: 'fd-src' }, cur.feed), h('h2', { tabindex: '-1' }, cur.title),
+      h('header', {}, h('p', { class: 'fd-src' }, icons[cur.feed] && icon(cur.feed), cur.feed), h('h2', { tabindex: '-1' }, cur.title),
         h('p', { class: 'fd-when' }, h('time', { datetime: cur.date.toISOString() }, full(cur.date)))),
+      cur.image && picture(cur.image, 'fd-img'),
       h('p', { class: cur.summary ? 'fd-sum' : 'fd-sum fd-none' }, cur.summary || 'This feed gives no summary for the item.'),
       h('a', { class: 'tb fd-open', href: cur.link, target: '_blank', rel: 'noopener' }, 'Open article'));
   }

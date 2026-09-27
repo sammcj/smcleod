@@ -12,13 +12,7 @@
 {{- with $it.feed -}}
   {{- $got := partial "deskbar/feeds/get.html" . -}}
   {{- $doc := $got.doc -}}
-  {{- /* itunes:image and an RSS <image> both unmarshal as "image", as namespaces are dropped */ -}}
-  {{- $art := ($doc.channel | default dict).image | default $doc.logo | default $doc.icon -}}
-  {{- range cond (reflect.IsSlice $art) $art (slice $art) -}}
-    {{- $u := . -}}
-    {{- if reflect.IsMap . }}{{ $u = index . "-href" | default .url }}{{ end -}}
-    {{- with partial "deskbar/feeds/text.html" $u | strings.TrimSpace }}{{ $srcs = $srcs | append . }}{{ end -}}
-  {{- end -}}
+  {{- range partial "deskbar/feeds/art.html" $doc }}{{ $srcs = $srcs | append . }}{{ end -}}
   {{- /* feeds list their newest entry first as a rule, but not always, so the dates decide */ -}}
   {{- $newest := dict -}}
   {{- $ts := 0 -}}
@@ -41,23 +35,8 @@
 {{- with $it.thumb }}{{ $srcs = $srcs | append . }}{{ end -}}
 {{- $out := dict "latest" $latest -}}
 {{- range $srcs -}}
-  {{- $res := "" -}}
-  {{- $err := "" -}}
-  {{- if findRE `^https?://` . 1 -}}
-    {{- $got := partial "deskbar/remote.html" . -}}
-    {{- $res = $got.res -}}
-    {{- $err = $got.err -}}
-  {{- else -}}
-    {{- $res = resources.Get . -}}
-  {{- end -}}
-  {{- with $res -}}
-    {{- with try (.Fill (printf "%s webp Center" $.size)) -}}
-      {{- with .Err }}{{ $err = printf "%v" . }}{{ else with .Value }}{{ $out = merge $out (dict "src" .RelPermalink "width" .Width "height" .Height) }}{{ end -}}
-    {{- end -}}
-  {{- else -}}
-    {{- $err = $err | default "no such asset" -}}
-  {{- end -}}
-  {{- if $out.src }}{{ break }}{{ end -}}
-  {{- warnf "Folder %q: no preview image from %s: %s" $it.name . $err -}}
+  {{- $img := partial "deskbar/feeds/fetch-image.html" (dict "src" . "spec" (printf "fill %s webp center" $.size)) -}}
+  {{- with $img.src }}{{ $out = merge $out (dict "src" . "width" $img.width "height" $img.height) }}{{ break }}{{ end -}}
+  {{- warnf "Folder %q: no preview image from %s: %s" $it.name . $img.err -}}
 {{- end -}}
 {{- return $out -}}

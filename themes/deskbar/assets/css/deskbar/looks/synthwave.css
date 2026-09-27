@@ -17,6 +17,16 @@
   --read-bg: #140c28; --read-fg: #e4ddf5; --code-bg: #22173f;
   --wall-1: #3a1a6e; --wall-2: #25104f; --wall-3: #140833; --wall-glow: rgba(255,62,165,.2); --wall-line: rgba(255,62,165,.18);
 }
+/* Sunrise, its colours variant: the same neon chrome around light pages. The page tokens are scoped to what sits in
+   a window and to the phone's Latest posts, so the panel, frames, tabs, menus and dock keep the night's. */
+:root[data-deco=synthwave][data-palette=synthwave-sunrise] :is(.views, .recent-list) {
+  color-scheme: light;
+  --frame: #ece0ff; --frame-hi: #fbf8ff; --frame-lo: #c6b0ec; --frame-dk: #8f76c4;
+  --content: #fcf7ff; --side: #f3e9ff; --fg: #26124d; --muted: #62508a; --line: #e0cff5; --zebra: rgba(98,40,200,.045);
+  --accent: #b01f6e; --link: #b3126f; --read-bg: #fff7fb; --read-fg: #2a1747; --code-bg: #f1e6ff;
+  /* text that inherits its colour would otherwise keep the body's, computed from the night's --fg */
+  color: var(--fg);
+}
 :root[data-deco=synthwave] ::selection { background: var(--sw-pink); color: var(--sw-ink); }
 :root[data-deco=synthwave] :focus-visible { outline-color: var(--sw-cyan); }
 :root[data-deco=synthwave] #themeBtn { display: none; }
@@ -28,6 +38,8 @@
 }
 @supports not selector(::-webkit-scrollbar) {
   :root[data-deco=synthwave] { scrollbar-color: #b0266f var(--side); }
+  /* the root's track colour is computed there, dark, so Sunrise's pages set their own */
+  :root[data-deco=synthwave][data-palette=synthwave-sunrise] :is(.views, .recent-list) { scrollbar-color: #b0266f var(--side); }
 }
 
 /* the top bar sits on a neon rule */
@@ -69,21 +81,28 @@
 :root[data-deco=synthwave] .rd :is(h1, h2, h3) { font-family: var(--sw-head); letter-spacing: -.01em; }
 :root[data-deco=synthwave] .rd h1 { color: #ff8fcb; text-shadow: 0 0 14px rgba(255,62,165,.45); }
 :root[data-deco=synthwave] .rd h2 { color: var(--sw-cyan); border-bottom: 1px solid; border-image: linear-gradient(90deg, var(--sw-pink), transparent) 1; }
+/* by day the neon is too pale on paper: a deeper pink title with a chroma-split cyan echo, and teal headings */
+:root[data-deco=synthwave][data-palette=synthwave-sunrise] .rd h1 { color: #c0137a; text-shadow: 2px 2px 0 rgba(111,227,255,.7); }
+:root[data-deco=synthwave][data-palette=synthwave-sunrise] .rd h2 { color: #00708f; }
 
 /* Wallpaper: a night sky over a neon floor. The body's layers are the horizon line and its glow, the floor, which
    hides the stars below the horizon, the stars (tiles of four sizes, so they don't line up) and the sky. ::before is
    the sun, striped by a mask and cut at the horizon, and ::after the grid, drawn flat and tipped back in perspective
    from the horizon, fading as it recedes. Both sit behind everything and never take the pointer. */
 .wm[data-wall=synthwave] body, .cp-wp.synthwave, .cp-deco.synthwave { --st: radial-gradient(circle 1.2px, rgba(255,255,255,.85) 40%, transparent); background: linear-gradient(transparent calc(60% - 1px), #ff8ad0 0 calc(60% + 1px), transparent 0), radial-gradient(ellipse 70% 30% at 50% 60%, rgba(255,62,165,.45), transparent 70%), linear-gradient(transparent 60%, #16072f 0, #10052a), var(--st) 37px 11px / 211px 163px, var(--st) 101px 67px / 293px 227px, var(--st) 5px 29px / 373px 181px, radial-gradient(circle 1px, rgba(255,255,255,.5) 40%, transparent) 150px 90px / 157px 283px, linear-gradient(#0b0420, #1c0b3f 30%, #3d1462 50%, #6c1a6c 60%); }
-.wm[data-wall=synthwave] body::before, .wm[data-wall=synthwave] body::after { content: ''; position: fixed; z-index: -1; pointer-events: none; }
-.wm[data-wall=synthwave] body::before { --d: min(46vh, 60vw); left: calc(50% - var(--d) / 2); top: calc(60% - var(--d) * .78); width: var(--d); height: var(--d); border-radius: 50%; background: linear-gradient(#ffe45e 10%, #ff9e4a 38%, #ff4f8b 60%, #e8339f 78%); mask: linear-gradient(#000 48%, transparent 0 50%, #000 0 56%, transparent 0 59%, #000 0 64%, transparent 0 68%, #000 0 72%, transparent 0 75.5%, #000 0 78%, transparent 0); }
-.wm[data-wall=synthwave] body::after { left: -20%; right: -20%; top: 60%; height: 26.5vh; transform-origin: 50% 0; transform: perspective(30vh) rotateX(76deg); background: linear-gradient(rgba(255,62,165,.85) 2px, transparent 0) 0 0 / 100% 3vh, linear-gradient(90deg, transparent calc(50% - 1px), rgba(255,62,165,.85) 0 calc(50% + 1px), transparent 0) 50% 0 / 4vw 100%; mask: linear-gradient(transparent, #000 40%); }
-.wm[data-wall=synthwave] #desk::after { font: italic 700 46px/1 'Space Grotesk', var(--ui); color: transparent; -webkit-text-stroke: 1px rgba(111,227,255,.4); }
+/* Sunrise: the same scene at dawn, a pastel sky over a pale floor */
+.wm[data-wall=synthwave-sunrise] body, .cp-wp.synthwave-sunrise { background: linear-gradient(transparent calc(60% - 1px), #ff4f9e 0 calc(60% + 1px), transparent 0), radial-gradient(ellipse 70% 30% at 50% 60%, rgba(255,120,170,.5), transparent 70%), linear-gradient(transparent 60%, #f3dcff 0, #dcc4ff), linear-gradient(#8f7cf0, #b99af5 25%, #f2a8dc 45%, #ffc6b0 60%); }
+.wm[data-wall|=synthwave] body::before, .wm[data-wall|=synthwave] body::after { content: ''; position: fixed; z-index: -1; pointer-events: none; }
+.wm[data-wall|=synthwave] body::before { --d: min(46vh, 60vw); left: calc(50% - var(--d) / 2); top: calc(60% - var(--d) * .78); width: var(--d); height: var(--d); border-radius: 50%; background: linear-gradient(#ffe45e 10%, #ff9e4a 38%, #ff4f8b 60%, #e8339f 78%); mask: linear-gradient(#000 48%, transparent 0 50%, #000 0 56%, transparent 0 59%, #000 0 64%, transparent 0 68%, #000 0 72%, transparent 0 75.5%, #000 0 78%, transparent 0); }
+.wm[data-wall|=synthwave] body::after { left: -20%; right: -20%; top: 60%; height: 26.5vh; transform-origin: 50% 0; transform: perspective(30vh) rotateX(76deg); background: linear-gradient(rgba(255,62,165,.85) 2px, transparent 0) 0 0 / 100% 3vh, linear-gradient(90deg, transparent calc(50% - 1px), rgba(255,62,165,.85) 0 calc(50% + 1px), transparent 0) 50% 0 / 4vw 100%; mask: linear-gradient(transparent, #000 40%); }
+.wm[data-wall|=synthwave] #desk::after { font: italic 700 46px/1 'Space Grotesk', var(--ui); color: transparent; -webkit-text-stroke: 1px rgba(111,227,255,.4); }
+.wm[data-wall=synthwave-sunrise] body::after { background: linear-gradient(rgba(214,30,140,.7) 2px, transparent 0) 0 0 / 100% 3vh, linear-gradient(90deg, transparent calc(50% - 1px), rgba(214,30,140,.7) 0 calc(50% + 1px), transparent 0) 50% 0 / 4vw 100%; }
+.wm[data-wall=synthwave-sunrise] #desk::after { -webkit-text-stroke-color: rgba(106,31,208,.35); }
 
 /* Control panel thumbnails: the sun over a fan of floor lines, a glowing window, and the neon-rimmed dock */
-.cp-wp.synthwave::before, .cp-deco.synthwave::before { content: ''; position: absolute; }
-.cp-wp.synthwave::after { content: ''; position: absolute; inset: 60% 0 0; background: repeating-conic-gradient(from 90deg at 50% 0, rgba(255,62,165,.8) 0 1.5deg, transparent 0 15deg), linear-gradient(rgba(255,62,165,.8) 1px, transparent 0) 0 3px / 100% 7px; }
-.cp-wp.synthwave::before { left: 24px; top: 5px; width: 28px; height: 28px; border-radius: 50%; background: linear-gradient(#ffe45e 10%, #ff4f8b 60%); mask: linear-gradient(#000 55%, transparent 0 62%, #000 0 70%, transparent 0 77%, #000 0 83%, transparent 0); }
+.cp-wp:is(.synthwave, .synthwave-sunrise)::before, .cp-deco.synthwave::before { content: ''; position: absolute; }
+.cp-wp:is(.synthwave, .synthwave-sunrise)::after { content: ''; position: absolute; inset: 60% 0 0; background: repeating-conic-gradient(from 90deg at 50% 0, rgba(255,62,165,.8) 0 1.5deg, transparent 0 15deg), linear-gradient(rgba(255,62,165,.8) 1px, transparent 0) 0 3px / 100% 7px; }
+.cp-wp:is(.synthwave, .synthwave-sunrise)::before { left: 24px; top: 5px; width: 28px; height: 28px; border-radius: 50%; background: linear-gradient(#ffe45e 10%, #ff4f8b 60%); mask: linear-gradient(#000 55%, transparent 0 62%, #000 0 70%, transparent 0 77%, #000 0 83%, transparent 0); }
 .cp-deco.synthwave::before { background: linear-gradient(90deg, #ff3ea5, #ff7a8a); border: 0; border-radius: 3px 3px 0 0; box-shadow: 0 0 5px rgba(255,62,165,.7); }
 .cp-deco.synthwave::after { background: #211546; border: 1px solid #ff3ea5; border-radius: 0 3px 3px; box-shadow: 0 0 6px rgba(255,62,165,.6); }
 .cp-dk.synthwave::before { background: var(--ic) content-box, rgba(20,8,48,.85); border-color: rgba(255,62,165,.8); border-radius: 4px; box-shadow: 0 0 5px rgba(255,62,165,.7); }

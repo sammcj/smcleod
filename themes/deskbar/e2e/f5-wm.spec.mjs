@@ -283,13 +283,13 @@ test('D17: a landscape phone gets phone mode: one full-screen window, Home in th
   await page.context().close();
 });
 
-test('page windows open centred on the desk, at the front matter windowWidth', async () => {
-  const page = await open(desktop, '/about/');
-  await win(page, 'page:/about/').waitFor();
-  const r = await rectOf(page, 'page:/about/'), d = await deskGeo(page);
-  // each site sets its own width in front matter (the example 880, smcleod.net 884)
-  const want = await page.evaluate(() => fetch('/about/').then(res => res.text()).then(h => +/data-width="?(\d+)/.exec(h)?.[1]));
-  near(r.width, want || 880, 1, 'windowWidth');
+// About pages tile to the left (windowTile), so a plain page stands in
+test('page windows open centred on the desk', async t => {
+  if (!(await needs(t, '/markdown/'))) return;
+  const page = await open(desktop, '/markdown/');
+  await win(page, 'page:/markdown/').waitFor();
+  const r = await rectOf(page, 'page:/markdown/'), d = await deskGeo(page);
+  assert.ok(r.width < d.w, `narrower than the desk (${r.width} of ${d.w})`);
   near(r.x - d.x, (d.w - r.width) / 2, 2, 'centred across');
   near(r.y - d.y, (d.h - r.height) / 2, 2, 'centred down');
   assert.deepEqual(page.errors, []);

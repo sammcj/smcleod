@@ -39,7 +39,7 @@ async function twoWindows(page) {
 }
 
 const FRAME = {
-  'pixel-pico': { light: 'rgb(194, 195, 199)', dark: 'rgb(29, 43, 83)' },
+  'pixel-pico': { light: 'rgb(255, 204, 170)', dark: 'rgb(66, 33, 54)' },
 };
 
 test('each colour set dresses the Pixel window style, light and dark, with titles and text at 4.5:1', async t => {

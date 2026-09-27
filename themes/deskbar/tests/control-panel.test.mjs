@@ -106,14 +106,14 @@ test('listeners hear every change until they stop listening', () => {
 });
 
 // The inline scripts as head.html ships them, run in order against stored settings
-function prePaint(stored) {
+function prePaint(stored, site) {
   const src = [...read('../layouts/_partials/deskbar/head.html').matchAll(/<script>\n([\s\S]*?)<\/script>/g)].map(m => m[1]).join(';');
   const html = { dataset: {}, classList: { add() {}, contains: () => true, remove() {} }, style: { setProperty(k, v) { html[k] = v; } } };
   const written = [];
   const doc = {
     documentElement: html,
     write: s => written.push(s),
-    getElementById: id => (id === 'deskbar-lazy' ? { textContent: JSON.stringify({ 'control-panel': { js: '/a.js', css: '/a.css' }, 'look-demo': { css: '/demo.css' }, 'palette-demo': { css: '/pal.css' }, 'effect-crt': { css: '/crt.css' } }) } : null),
+    getElementById: id => (id === 'deskbar-defaults' && site ? { textContent: JSON.stringify(site) } : id === 'deskbar-lazy' ? { textContent: JSON.stringify({ 'control-panel': { js: '/a.js', css: '/a.css' }, 'look-demo': { css: '/demo.css' }, 'palette-demo': { css: '/pal.css' }, 'effect-crt': { css: '/crt.css' } }) } : null),
   };
   const ls = {
     getItem: k => (k.slice(8) in stored ? JSON.stringify(stored[k.slice(8)]) : null),
@@ -123,6 +123,17 @@ function prePaint(stored) {
   new Function('document', 'localStorage', 'setTimeout', src)(doc, ls, () => {});
   return { dataset: html.dataset, size: html['--rd-size'], written, stored };
 }
+
+test("before first paint, a site's starting look shows for whatever the visitor hasn't chosen", () => {
+  const link = h => `<link rel=stylesheet href="${h}">`;
+  const site = { deco: 'demo', palette: 'demo', dock: 'demo' };
+  const fresh = prePaint({}, site);
+  assert.deepEqual(fresh.dataset, site);
+  assert.deepEqual(fresh.written, [link('/pal.css'), link('/a.css'), link('/demo.css')], "the look's stylesheets load as if chosen");
+  assert.deepEqual(fresh.stored, {}, 'nothing is stored for it');
+  assert.deepEqual(prePaint({ deco: 'haiku', wall: 'dots' }, site).dataset, { deco: 'haiku', palette: 'demo', wall: 'dots', dock: 'demo' }, 'a choice wins');
+  assert.deepEqual(prePaint({}).dataset, {}, 'without one, the core look');
+});
 
 test("before first paint, a visitor from before whole looks came apart keeps the look's dock and tube", () => {
   const old = prePaint({ deco: 'phosphor', wall: 'phosphor', dock: 'panel', lookWas: {} });
@@ -224,8 +235,8 @@ test('every choice offered is a valid setting with styles behind it', () => {
     for (const [v] of opts) {
       set(key, v);
       assert.equal(get(key), v, `${key}=${v} round-trips`);
-      // a look's own colours are the look's (no rule names them), as are its defaults
-      if (attr[key] && v !== DEFAULT[key] && !(key === 'palette' && LOOKS[v])) assert.ok(stylesFor(key, v).includes(`[${attr[key]}=${v}]`), `${key}=${v} has styles`);
+      // a look's own colours (its first) are the look's (no rule names them), as are its defaults
+      if (attr[key] && v !== DEFAULT[key] && !(key === 'palette' && Object.values(LOOKS).some(l => l.colours?.[0][0] === v))) assert.ok(stylesFor(key, v).includes(`[${attr[key]}=${v}]`), `${key}=${v} has styles`);
     }
   }
   // every dock, wallpaper and CRT effect draws its own thumbnail; each default is the base art
@@ -260,11 +271,13 @@ test('each preset names every Appearance choice but the mode, each one offered, 
 
 test('a window style change keeps the palette when it can, and otherwise picks one the style takes', () => {
   assert.equal(paletteFor('flat', 'mint'), 'mint', 'palettes go with the plain styles');
-  assert.equal(paletteFor('synthwave', 'mint'), 'mint', 'a style in its own colours leaves the palette for later');
+  assert.equal(paletteFor('nightdrive', 'mint'), 'mint', 'a style in its own colours leaves the palette for later');
   assert.equal(paletteFor('pixel', 'mint'), 'pixel', "a style with colour variants starts on its own");
   assert.equal(paletteFor('pixel', 'pixel-pico'), 'pixel-pico');
-  assert.equal(paletteFor('haiku', 'pixel-pico'), undefined, "another style's variant goes back to the default");
-  assert.equal(paletteFor('synthwave', 'pixel-pico'), undefined, 'and is dropped under a style in its own colours');
+  assert.equal(paletteFor('haiku', 'pixel-pico'), 'haiku', "another style's variant goes back to the first palette");
+  assert.equal(paletteFor('nightdrive', 'pixel-pico'), 'haiku', 'and to a plain palette under a style in its own colours');
+  assert.equal(paletteFor('synthwave', 'mint'), 'synthwave-night', 'Synthwave starts on its night');
+  assert.equal(paletteFor('synthwave', 'synthwave-sunrise'), 'synthwave-sunrise');
   // every look's stylesheet has a LOOKS entry, so lookSheet asks only for sheets that exist
   const sheets = readdirSync(new URL('../assets/css/deskbar/looks/', import.meta.url)).filter(f => f.endsWith('.css'));
   assert.deepEqual(sheets.map(f => f.slice(0, -4)).sort(), Object.keys(LOOKS).sort());

@@ -137,6 +137,7 @@ export const COMMANDS = {
   theme: ['[light|dark]', 'switch the desktop between light and dark', ['light', 'dark']],
   fortune: ['', 'a quote, picked at random'],
   neofetch: ['', 'facts about this machine'],
+  ping: ['[-c count] <host|url>', 'time HTTP round trips to a web server'],
   screensaver: ['[leaves|sheep]', 'start the screen saver: the one named, or your choice in the Control panel', ['leaves', 'sheep']],
   history: ['[-c]', 'list, or clear (-c), the commands you have typed'],
   echo: ['[text]', 'print text'],
@@ -187,6 +188,40 @@ export function suggest(name) {
   };
   const [best] = visible.map(n => [n, dist(name, n)]).sort((a, b) => a[1] - b[1]);
   return best && best[1] <= Math.max(1, Math.floor(name.length / 3)) ? best[0] : '';
+}
+
+const urlOf = s => { try { return new URL(s); } catch { return null; } };
+
+// ping's arguments: [-c count] and a host or http(s) URL. Returns { host, url, count }, or { error } where an empty
+// error means no host was given. here is the page's origin, so a bare host naming this site keeps its scheme and
+// works on a local http server too.
+export function parsePing(args, here = '') {
+  let count = 4, target = '';
+  for (let i = 0; i < args.length; i++) {
+    const c = /^-c(.*)$/.exec(args[i]);
+    if (c) {
+      const n = c[1] || args[++i] || '';
+      if (!/^[1-9]\d*$/.test(n)) return { error: `ping: invalid count '${n}'` };
+      count = Math.min(+n, 20);
+    } else if (args[i].startsWith('-') || target) return { error: `ping: unexpected argument '${args[i]}'` };
+    else target = args[i];
+  }
+  if (!target) return { error: '' };
+  const scheme = /^[a-z][\w+.-]*:\/\//i.test(target), u = urlOf(scheme ? target : 'https://' + target);
+  if (!u || !/^https?:$/.test(u.protocol) || !/^([a-z\d-]+\.)*[a-z\d-]+\.?$|^\[[\da-f:.]+\]$/i.test(u.hostname)) {
+    return { error: `ping: '${target}' is not a host name or http(s) URL` };
+  }
+  const page = urlOf(here), origin = !scheme && page?.host === u.host ? page.origin : u.origin;
+  return { host: u.host, url: origin + '/', count };
+}
+
+// ping's summary of round trips in ms, null for a lost one
+export function pingStats(times) {
+  const ok = times.filter(t => t !== null);
+  return {
+    sent: times.length, received: ok.length, loss: times.length ? Math.round(100 * (times.length - ok.length) / times.length) : 0,
+    rtt: ok.length ? { min: Math.min(...ok), avg: ok.reduce((a, b) => a + b) / ok.length, max: Math.max(...ok) } : null,
+  };
 }
 
 // Error messages from BeOS's NetPositive browser, for fortune on a site without a quotes page
@@ -407,6 +442,35 @@ function create(v) {
         span('c-g', 'guest@' + HOST), '\n', '-'.repeat(8 + HOST.length), '\n',
         facts.map(([k, val]) => [span('c-y', k), ': ', val, '\n']), '\n',
         h('span', { class: 'sw', 'aria-hidden': 'true' }, [...Array(8)].map(() => h('i'))))));
+    },
+    // Browsers can't send ICMP, so each ping is a timed HEAD request. no-cors lets any server answer, and an
+    // opaque answer (even an error status) still counts as a reply.
+    async ping(say, args) {
+      const p = parsePing(args, location.origin);
+      if ('error' in p) {
+        if (p.error) say(span('c-r', p.error));
+        return say(`usage: ping ${COMMANDS.ping[0]}  (try `, btn(`ping ${location.host || HOST}`), ')');
+      }
+      say(`PING ${p.host} (${p.url}): `, span('c-d', "HTTP round trips, as browsers can't send ICMP"));
+      const times = [];
+      for (let seq = 1; seq <= p.count && say.live(); seq++) {
+        const t0 = performance.now();
+        let ms = null, why = 'no reply';
+        try {
+          await fetch(p.url, { method: 'HEAD', mode: 'no-cors', cache: 'no-store', signal: AbortSignal.timeout(5000) });
+          ms = performance.now() - t0;
+        } catch (err) {
+          if (err.name === 'TimeoutError') why = 'timed out';
+        }
+        times.push(ms);
+        say(ms === null ? span('c-r', `seq=${seq} ${why}`) : `reply from ${p.host}: seq=${seq} time=${ms.toFixed(1)} ms`);
+        // a second apart from the start of each, as ping sends
+        if (seq < p.count) await new Promise(r => setTimeout(r, 1000 - (performance.now() - t0)));
+      }
+      const s = pingStats(times);
+      say(span('c-d', `--- ${p.host} ping statistics ---`));
+      say(`${s.sent} requests transmitted, ${s.received} received, ${s.loss}% loss`);
+      if (s.rtt) say(`round-trip min/avg/max = ${[s.rtt.min, s.rtt.avg, s.rtt.max].map(x => x.toFixed(1)).join('/')} ms`);
     },
     screensaver(say, [name]) {
       const load = window.deskbar?.loadLazy, names = COMMANDS.screensaver[2];

@@ -1,5 +1,5 @@
-// About this desktop (`window: about-desktop`): what built the site and how much the shell weighs, above the
-// page's own text (credits). Loaded on first open through lazyApp (loader.js).
+// About this desktop (`window: about-desktop`): the page's own text, then what built the site, how much the shell
+// weighs and which bundles load on demand. Loaded on first open through lazyApp (loader.js).
 import { h } from '../lib/dom.js';
 
 // Gzipped size of a file, as scripts/size-budget.mjs counts it. The files are already in the browser cache.
@@ -21,11 +21,12 @@ export function shellFiles(doc) {
 
 export const kb = bytes => (bytes / 1024).toFixed(1) + 'KB';
 
-// Each on-demand bundle and whether this visit has loaded it yet, as the loader counts (loader.js)
+// The on-demand bundles, folded to a count, and whether this visit has loaded each yet, as the loader counts (loader.js)
 function lazyList() {
-  const urls = JSON.parse(document.getElementById('deskbar-lazy')?.textContent || '{}');
+  const names = Object.keys(JSON.parse(document.getElementById('deskbar-lazy')?.textContent || '{}'));
   const done = window.deskbar.loaded();
-  return Object.keys(urls).map(name => h('li', {}, name, h('small', {}, done.includes(name) ? ' loaded' : ' not loaded')));
+  return h('details', {}, h('summary', {}, `${names.length} bundles, ${names.filter(n => done.includes(n)).length} loaded so far`),
+    h('ul', {}, names.map(name => h('li', {}, name, h('small', {}, done.includes(name) ? ' loaded' : ' not loaded')))));
 }
 
 async function measure(dd) {
@@ -45,11 +46,10 @@ export function mount(v, page, { fresh }) {
   const facts = h('dl', { class: 'about-facts' },
     h('dt', {}, 'Built with'), h('dd', {}, document.querySelector('meta[name=generator]')?.content || 'unknown'),
     h('dt', {}, 'Shell'), size,
-    h('dt', {}, 'On demand'), h('dd', {}, h('ul', {}, lazyList())),
+    h('dt', {}, 'On demand'), h('dd', {}, lazyList()),
   );
   const body = h('div', { class: 'about-body scroller' }, ...page.content());
-  const header = body.querySelector('.rd > header');
-  if (header) header.after(facts); else body.prepend(facts);
+  (body.querySelector('.rd-body') || body).append(h('h2', {}, 'Under the hood'), facts);
   v.el.append(body);
   measure(size);
   window.deskbar.mountContent(body, page, v);

@@ -18,21 +18,29 @@ const subs = new Set();
 // Choices the theme no longer offers, which visitors may still have stored
 const RETIRED = { dock: 'minimal', deco: 'woodblock', wall: 'woodblock' };
 
+// The site's own starting choices (params.deskbar.appearance, which head.html writes out and shows before first paint
+// to a visitor who hasn't chosen). They are what a visitor starts on and what Reset puts back; they still show as
+// attributes, as only the theme's DEFAULT is the core CSS alone.
+const SITE = (() => {
+  try { return JSON.parse(globalThis.document?.getElementById('deskbar-defaults')?.textContent || '{}'); } catch { return {}; }
+})();
+const start = k => (['palette', 'deco', 'wall', 'dock', 'crt'].includes(k) && typeof SITE[k] === 'string' && SITE[k] ? SITE[k] : DEFAULT[k]);
+
 // Stored values are checked on the way out, since anything can be in localStorage
 function valid(k, v) {
   if (k === 'textSize') return Math.min(24, Math.max(14, Math.round(v) || 18));
-  return typeof v === 'string' && v && v !== RETIRED[k] && (k !== 'readerWidth' || WIDTHS.includes(v)) ? v : DEFAULT[k];
+  return typeof v === 'string' && v && v !== RETIRED[k] && (k !== 'readerWidth' || WIDTHS.includes(v)) ? v : start(k);
 }
 
 export const get = k => valid(k, store.get(k));
 
-// set(k) goes back to the default. Listeners hear every change, whichever control made it.
+// set(k) goes back to the site's starting choice. Listeners hear every change, whichever control made it.
 export function set(k, v) {
   v = valid(k, v);
-  const d = document.documentElement, dflt = v === DEFAULT[k];
-  store.set(k, dflt ? null : v);
+  const d = document.documentElement;
+  store.set(k, v === start(k) ? null : v);
   if (k === 'textSize') d.style.setProperty('--rd-size', v + 'px');
-  else if (dflt) delete d.dataset[ATTR[k]];
+  else if (v === DEFAULT[k]) delete d.dataset[ATTR[k]];
   else d.dataset[ATTR[k]] = v;
   for (const fn of subs) fn(k, v);
   return v;

@@ -158,3 +158,37 @@ test('on a phone the prompt takes typing, and tapping output keeps the keyboard 
   assert.deepEqual(page.errors, []);
   await page.context().close();
 });
+
+test('ping times HTTP round trips, counts failures as lost, and stops on Ctrl+C', async t => {
+  if (!(await needs(t, '/terminal/'))) return;
+  const page = await openTerminal(desktop);
+  // never the network: one host answers (with an error status, which is still a reply), one refuses
+  await page.route('https://up.test/**', r => r.fulfill({ status: 404, body: '' }));
+  await page.route('https://down.test/**', r => r.abort());
+
+  await run(page, 'ping');
+  assert.match(await lastLine(page).textContent(), /^usage: ping \[-c count\] <host\|url> {2}\(try ping /);
+  await run(page, 'ping -c x up.test');
+  assert.match(await out(page).locator('.ln').nth(-2).textContent(), /invalid count 'x'/);
+
+  await run(page, 'ping -c 2 https://up.test/some/page');
+  await out(page).locator('.ln', { hasText: 'round-trip min/avg/max' }).waitFor();
+  const text = await out(page).textContent();
+  assert.match(text, /PING up\.test \(https:\/\/up\.test\/\): HTTP round trips/);
+  assert.match(text, /reply from up\.test: seq=1 time=[\d.]+ ms/);
+  assert.match(text, /reply from up\.test: seq=2 time=[\d.]+ ms/);
+  assert.match(text, /2 requests transmitted, 2 received, 0% loss/);
+
+  await run(page, 'ping -c 1 down.test');
+  await out(page).locator('.ln', { hasText: '1 requests transmitted, 0 received, 100% loss' }).waitFor();
+  assert.match(await out(page).locator('.ln').nth(-3).textContent(), /^seq=1 no reply$/);
+
+  await run(page, 'ping -c 20 up.test');
+  await out(page).locator('.ln', { hasText: 'seq=1 time=' }).last().waitFor();
+  await input(page).press('Control+c');
+  const lines = await out(page).locator('.ln').count();
+  await page.waitForTimeout(1500);
+  assert.equal(await out(page).locator('.ln').count(), lines, 'nothing more after Ctrl+C');
+  assert.deepEqual(page.errors, []);
+  await page.context().close();
+});

@@ -22,6 +22,7 @@
 import { h } from '../lib/dom.js';
 import { createWindow, findView, focusView, renderTabs, deskRect, tabH, allViews, activeView, iconsRight, clearOfIcons, arrange, postsHome } from '../wm/windows.js';
 import { S } from '../wm/state.js';
+import { snapRect, GAP } from '../wm/snap.js';
 import * as router from '../router.js';
 
 export function scrollToAnchor(v, id) {
@@ -51,9 +52,14 @@ function large(d, th) {
 // Front matter windowWidth and windowHeight replace the app's default size for that page, re-centred on the desk.
 // windowBesidePosts caps the height at the Posts window's and opens it just right of that window's home spot, top
 // edges level, when the width fits there. A window that would cover the desktop icons starts just right of them
-// instead, when it fits there.
+// instead, when it fits there. windowTile (a percentage) tiles it to the left instead: full height, from just right of
+// the icons to that share of the desk's width, like a left snap that leaves the icons in reach.
 function geometry(app, page) {
   const d = deskRect(), th = tabH(), g = (app.size === 'large' ? large : app.geometry)?.(d, th, page) || {};
+  if (page.tile) {
+    const s = snapRect('l', page.tile / 100, d, th), edge = iconsRight(), x = Math.max(s.x, edge ? edge + GAP : 0);
+    return { ...s, x, w: Math.max(Math.min(d.w - x - GAP, 320), s.x + s.w - x) };
+  }
   if (page.width || page.height) {
     const p = page.besidePosts && postsHome(), x = p && p.x + p.w + 12;
     g.w = Math.min(d.w - 20, page.width || g.w || 680);

@@ -1,15 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Atom fixture for the Feeds app (assets/feeds.opml). Covers several links with rels, an HTML summary, content without
-     a summary, published beside updated, a time zone offset and an HTML title. -->
+     a summary, published beside updated, a time zone offset and an HTML title. Pictures: an Atom image enclosure beside
+     an audio one, and a relative <img> in content. The icon is missing, so the feed has none. -->
 <feed xmlns="http://www.w3.org/2005/Atom">
   <title>Example Blog</title>
   <link href="https://blog.example.org/feed.xml" rel="self"/>
   <link href="https://blog.example.org/"/>
   <id>https://blog.example.org/</id>
+  <icon>feeds/no-such-icon.png</icon>
   <updated>2026-09-21T00:00:00Z</updated>
   <entry>
     <title>Atom entry one</title>
     <link rel="enclosure" href="https://blog.example.org/one.mp3"/>
+    <link rel="enclosure" type="image/png" href="https://img.example.org/one.png"/>
     <link rel="alternate" href="https://blog.example.org/one/"/>
     <id>https://blog.example.org/one/</id>
     <updated>2026-09-19T09:00:00+10:00</updated>
@@ -21,7 +24,7 @@
     <id>https://blog.example.org/two/</id>
     <published>2026-09-12T00:00:00Z</published>
     <updated>2026-09-21T00:00:00Z</updated>
-    <content type="html">&lt;p&gt;Only content, no summary.&lt;/p&gt;</content>
+    <content type="html">&lt;p&gt;&lt;img src="/two.png" alt=""&gt;Only content, no summary.&lt;/p&gt;</content>
   </entry>
   <entry>
     <title type="html">Tom &amp;amp; Jerry</title>

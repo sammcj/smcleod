@@ -23,7 +23,12 @@ test('an on-demand app loads only when opened, then survives routing and Back/Fo
   assert.match(await facts(page).textContent(), /Hugo \d/);
   await facts(page).locator('dd', { hasText: /KB gzipped, in \d files/ }).waitFor();
   assert.match(await facts(page).textContent(), /about-desktop loaded/);
-  assert.equal(await win(page, 'about-desktop').locator('.rd h2', { hasText: 'Credits' }).count(), 1, 'page text follows the facts');
+  assert.match(await facts(page).locator('summary').textContent(), /^\d+ bundles, [1-9]\d* loaded so far$/, 'the bundle list folded to a count');
+  assert.equal(await facts(page).locator('details').getAttribute('open'), null);
+  assert.ok(await win(page, 'about-desktop').evaluate(v => {
+    const credits = [...v.querySelectorAll('.rd h2')].find(e => e.textContent.includes('Credits'));
+    return !!(credits && credits.compareDocumentPosition(v.querySelector('.about-facts')) & Node.DOCUMENT_POSITION_FOLLOWING);
+  }), 'the facts follow the page text');
   assert.equal(await win(page, 'about-desktop').locator('.lazy-note').count(), 0);
   assert.equal(await win(page, 'about-desktop').locator('.view').getAttribute('aria-busy'), null);
   await shot(page, 'lazy-about-desktop');

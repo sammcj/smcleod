@@ -26,7 +26,11 @@
 {{- /* Visitor settings (settings.js) apply before first paint. The wm class switches CSS into desktop mode; it is
        dropped again if the shell script fails to load, leaving a plain readable page. Before D39 a whole look brought
        its dock (and Phosphor its tube) without storing them; deskbar:lookWas marks a visitor from then, whose look's
-       dock and tube are stored once here so it looks as it did. */}}
+       dock and tube are stored once here so it looks as it did. params.deskbar.appearance is the site's starting look
+       (deskbar-defaults), shown for any part the visitor hasn't chosen. */}}
+{{- with site.Params.deskbar.appearance }}
+<script type="application/json" id="deskbar-defaults">{{ . | jsonify | safeJS }}</script>
+{{- end }}
 {{- with partialCached "deskbar/lazy.html" site }}
 <script type="application/json" id="deskbar-lazy">{{ . | jsonify | safeJS }}</script>
 {{- end }}
@@ -34,8 +38,9 @@
 (()=>{const d=document.documentElement,g=k=>{try{return JSON.parse(localStorage.getItem('deskbar:'+k))}catch{return null}};
 const t=g('theme'),s=g('textSize');if(t)d.dataset.theme=t;if(s)d.style.setProperty('--rd-size',s+'px');
 const w=g('readerWidth'),f=g('readerFont');if(w)d.dataset.rdWidth=w;if(f)d.dataset.rdFont=f;
-for(const k of['palette','deco','wall','dock','crt']){const v=g(k);if(v)d.dataset[k]=v}
-try{const o=d.dataset.deco,p=(k,v)=>{localStorage.setItem('deskbar:'+k,JSON.stringify(v));d.dataset[k]=v};if(g('lookWas')){if(/^(liquid|platinum|clearlooks|phosphor|broadsheet|synthwave|vector|memphis|nightdrive|pixel)$/.test(o)){if(!g('dock')||g('dock')==='panel'&&/^(clearlooks|phosphor)$/.test(o))p('dock',o);if(o==='phosphor'&&!g('crt'))p('crt','tube')}localStorage.removeItem('deskbar:lookWas')}}catch{}
+const a=(()=>{try{return JSON.parse(document.getElementById('deskbar-defaults').textContent)}catch{return{}}})();
+for(const k of['palette','deco','wall','dock','crt']){const v=g(k)||a[k];if(v)d.dataset[k]=v}
+try{const o=g('deco'),p=(k,v)=>{localStorage.setItem('deskbar:'+k,JSON.stringify(v));d.dataset[k]=v};if(g('lookWas')){if(/^(liquid|platinum|clearlooks|phosphor|broadsheet|synthwave|vector|memphis|nightdrive|pixel)$/.test(o)){if(!g('dock')||g('dock')==='panel'&&/^(clearlooks|phosphor)$/.test(o))p('dock',o);if(o==='phosphor'&&!g('crt'))p('crt','tube')}localStorage.removeItem('deskbar:lookWas')}}catch{}
 d.classList.add('wm');setTimeout(()=>{if(!d.classList.contains('wm-ready'))d.classList.remove('wm')},8000)})();
 </script>
 {{- $css := slice }}

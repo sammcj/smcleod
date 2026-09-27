@@ -6,3 +6,5 @@
 .about-facts dt { color: var(--muted); }
 .about-facts ul { margin: 0; padding: 0; list-style: none; }
 .about-facts small { color: var(--muted); }
+.about-facts summary { cursor: pointer; }
+.about-facts details ul { margin-top: 4px; }

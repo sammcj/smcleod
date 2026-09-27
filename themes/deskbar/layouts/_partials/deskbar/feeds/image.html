@@ -1,0 +1,38 @@
+{{- /* An unmarshalled feed item's picture, as an https URL for the visitor's browser to load, or "": { item, base },
+       where base (the item's link) resolves a relative URL. The first of: a media:thumbnail, an image media:content
+       or enclosure (either inside a media:group), an Atom image enclosure link, an itunes:image, then the first <img>
+       in the item's HTML that isn't a 1px tracking pixel. Namespaces are dropped, so media:content and Atom's
+       <content> share "content"; only the media one has a url. Plain http is left out, as an https page won't show
+       it without a warning. */ -}}
+{{- $it := .item -}}
+{{- $g := $it.group | default dict -}}
+{{- $src := "" -}}
+{{- /* kind: thumb takes any -url, media an image -url, link an image enclosure -href, art an -href */ -}}
+{{- range slice (slice "thumb" $g.thumbnail) (slice "thumb" $it.thumbnail) (slice "media" $g.content) (slice "media" $it.content) (slice "media" $it.enclosure) (slice "link" $it.link) (slice "art" $it.image) -}}
+  {{- $kind := index . 0 -}}
+  {{- $v := index . 1 -}}
+  {{- range cond (reflect.IsSlice $v) $v (slice $v) -}}
+    {{- if not (reflect.IsMap .) }}{{ continue }}{{ end -}}
+    {{- $image := or (eq (index . "-medium") "image") (hasPrefix (index . "-type" | default "") "image/") -}}
+    {{- if eq $kind "thumb" }}{{ $src = index . "-url" | default "" -}}
+    {{- else if and (eq $kind "media") $image }}{{ $src = index . "-url" | default "" -}}
+    {{- else if and (eq $kind "link") (eq (index . "-rel") "enclosure") $image }}{{ $src = index . "-href" | default "" -}}
+    {{- else if eq $kind "art" }}{{ $src = index . "-href" | default "" }}{{ end -}}
+    {{- if $src }}{{ break }}{{ end -}}
+  {{- end -}}
+  {{- if $src }}{{ break }}{{ end -}}
+{{- end -}}
+{{- if not $src -}}
+  {{- range slice $it.encoded $it.content $it.description $it.summary -}}
+    {{- range findRE `(?i)<img\b[^>]*>` (partial "deskbar/feeds/text.html" .) 5 -}}
+      {{- if findRE `(?i)\s(width|height)=["']?1\b` . 1 }}{{ continue }}{{ end -}}
+      {{- with findRESubmatch `(?i)\ssrc=["']([^"']+)["']` . 1 }}{{ $src = index (index . 0) 1 | htmlUnescape | strings.TrimSpace }}{{ break }}{{ end -}}
+    {{- end -}}
+    {{- if $src }}{{ break }}{{ end -}}
+  {{- end -}}
+{{- end -}}
+{{- if and $src .base (not (findRE `^[a-zA-Z][\w+.-]*:` $src 1)) -}}
+  {{- with try ((urls.Parse .base).ResolveReference (urls.Parse $src)) }}{{ with .Value }}{{ $src = .String }}{{ end }}{{ end -}}
+{{- end -}}
+{{- if not (findRE `^https://` $src 1) }}{{ $src = "" }}{{ end -}}
+{{- return $src -}}

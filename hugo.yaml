@@ -35,6 +35,9 @@ params:
     timeZone: Australia/Melbourne
     # minutes without input before the screen saver starts (never over a reader window); 0 turns it off
     screensaver: { minutes: 1 }
+    # the starting look for a visitor who hasn't chosen one (values as in the theme's lib/appearance.js): Synthwave
+    # Sunrise over the theme's default Rings wallpaper
+    appearance: { deco: synthwave, palette: synthwave-sunrise, dock: synthwave }
     # Feeds app: subscriptions are assets/feeds.opml (a NetNewsWire export as is); exclude drops feeds by xmlUrl
     feeds:
       perFeed: 5
@@ -48,7 +51,8 @@ params:
       - { page: /tools }
       - { page: /favourites }
       - { page: /projects }
-      - { name: About, url: /about/, icon: person }
+      - { name: Sam, url: /about/, icon: person }
+      - { page: /about-desktop }
       - { page: /control-panel }
       - { page: /chiptunes }
     dock:

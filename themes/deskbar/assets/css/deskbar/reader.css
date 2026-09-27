@@ -7,6 +7,7 @@
 .rd { max-width: calc(var(--rd-measure) + 56px); margin: 0 auto; padding: 36px 28px 96px; font: var(--rd-size)/1.68 var(--serif); color: var(--read-fg); user-select: text; -webkit-user-select: text; }
 .rd h1, .rd h2, .rd h3, .rd h4 { font-family: var(--ui); line-height: 1.25; color: var(--fg); }
 .rd header h1 { font-size: 1.85em; margin: .2em 0 .4em; letter-spacing: -.01em; }
+.rd header h1.hide { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); }
 .rd h2 { font-size: 1.3em; margin: 2em 0 .5em; padding-bottom: .25em; border-bottom: 2px solid var(--tab); }
 .rd h3 { font-size: 1.08em; margin: 1.6em 0 .4em; }
 .rd .meta { font: 600 13px var(--ui); color: var(--muted); text-transform: uppercase; letter-spacing: .05em; margin: 0; }

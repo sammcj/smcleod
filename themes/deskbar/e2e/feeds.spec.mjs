@@ -5,6 +5,7 @@
 // Skips on a site without /feeds/.
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
+import { readFileSync } from 'node:fs';
 import { env, useBrowser, open, needs, shot, win, desktop, phone } from './lib.mjs';
 
 useBrowser();
@@ -167,8 +168,49 @@ test('feed markup is shown as text, never run', async t => {
   assert.equal(await w.locator('.fd-pane .fd-sum').textContent(), 'Write <img src=x onerror=alert(1)> in a post.');
   await w.locator('.fd-row', { hasText: 'Haiku R1/beta6 released' }).click();
   assert.equal(await w.locator('.fd-pane .fd-sum').textContent(), 'Release notes & downloads.', 'script bodies are dropped');
-  assert.equal(await w.locator('.view img, .view script').count(), 0);
+  assert.equal(await w.locator('.view :is(img:not(.fd-ico, .fd-th, .fd-img), script, [onerror])').count(), 0, "only the app's own images");
   assert.notEqual(await page.title(), 'pwned');
+  assert.deepEqual(page.errors, []);
+  await page.context().close();
+});
+
+test("feeds show their icons, and items their pictures, loaded from the item's site without a referrer", async t => {
+  if (!(await needs(t, url)) || !(await fixtures())) return t.skip('needs the example fixtures');
+  // the pictures are routed before the app opens, so none slips past to the network
+  const page = await open(desktop, '/');
+  const png = readFileSync(new URL('../exampleSite/assets/previews/art.png', import.meta.url));
+  const asked = [];
+  await page.route('https://img.example.org/**', r => {
+    asked.push({ url: r.request().url(), referer: r.request().headers().referer });
+    r.fulfill({ contentType: 'image/png', body: png });
+  });
+  await page.evaluate(u => window.deskbar.go(u), url);
+  const w = win(page, 'feeds');
+  await w.locator('.view[data-loaded]').waitFor();
+  const feed = name => w.locator('.fd-feed', { hasText: name });
+  assert.match(await feed('Example News').locator('img.fd-ico').getAttribute('src'), /^\/.*\.webp$/, "the feed's artwork, shrunk and kept here");
+  assert.equal(await feed('Example Blog').locator('img').count(), 0, 'no artwork, no icon');
+  assert.equal(await feed('Example Blog').locator('i.fd-ico').count(), 1, 'but the space for one, so names line up');
+
+  // a picture that fails to load (the <img> in the Markup item, the relative one in Atom entry two) drops out
+  await page.waitForFunction(() => [...document.querySelectorAll('.fd-th')].every(i => i.complete && i.naturalWidth));
+  const pictured = await w.locator('.fd-row:has(.fd-th) .fd-t').allTextContents();
+  assert.deepEqual(pictured, ['Haiku R1/beta6 released', 'Atom entry one', 'A relative link'],
+    'media:thumbnail, an Atom image enclosure and an RSS enclosure; not a tracking pixel or plain http');
+  assert.deepEqual(asked.map(a => a.url).sort(), ['https://img.example.org/haiku.png', 'https://img.example.org/one.png', 'https://img.example.org/relative.png']);
+  assert.ok(asked.every(a => !a.referer), 'no referrer sent');
+  const row = w.locator('.fd-row', { hasText: 'Haiku R1/beta6 released' });
+  const [text, th] = [await row.locator('.fd-t').boundingBox(), await row.locator('.fd-th').boundingBox()];
+  assert.ok(th.x > text.x + text.width - 1, 'the picture sits right of the text');
+
+  await row.click();
+  const img = w.locator('.fd-pane .fd-img');
+  await page.waitForFunction(el => el.complete && el.naturalWidth, await img.elementHandle());
+  assert.equal(await img.getAttribute('src'), 'https://img.example.org/haiku.png');
+  assert.equal(await w.locator('.fd-pane .fd-src img.fd-ico').count(), 1);
+  await w.locator('.fd-row', { hasText: 'Kernel notes' }).click();
+  assert.equal(await w.locator('.fd-pane .fd-img').count(), 0, 'an item without a picture has none');
+  await shot(page, 'feeds-pictures');
   assert.deepEqual(page.errors, []);
   await page.context().close();
 });
@@ -218,6 +260,10 @@ test('without JavaScript the Feeds page lists the latest items and the feeds', a
   assert.ok(await links.first().isVisible());
   for (const href of await links.evaluateAll(as => as.map(a => a.getAttribute('href')))) assert.match(href, /^https?:\/\//);
   assert.ok((await page.locator('#content .fd-feeds li').count()) > 0);
-  if (await fixtures()) assert.equal(await page.locator('.fd-feeds li', { hasText: 'Offline Feed' }).count(), 0, 'a feed with nothing to show is left out');
+  if (await fixtures()) {
+    assert.equal(await page.locator('.fd-feeds li', { hasText: 'Offline Feed' }).count(), 0, 'a feed with nothing to show is left out');
+    assert.equal(await page.locator('.fd-feeds li', { hasText: 'Example News' }).locator('img.fd-icon').count(), 1, "feed icons are the site's own");
+    assert.equal(await page.locator('.fd-items img').count(), 0, 'item pictures wait for the app');
+  }
   await ctx.close();
 });

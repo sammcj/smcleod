@@ -26,7 +26,8 @@ lazyApp({
 });
 lazyApp({ kind: 'photos', size: 'large' });
 lazyApp({ kind: 'mail', geometry: (d, th) => ({ w: fitW(d, 620), h: Math.min(d.h - th - 16, 560), x: Math.max(10, (d.w - fitW(d, 620)) / 2), y: th + 30 }) });
-lazyApp({ kind: 'about-desktop' });
+// About this desktop reads like a page but carries more, so it opens at the Posts window's height, top edges level
+lazyApp({ kind: 'about-desktop', geometry: d => { const p = postsHome(), w = fitW(d, 820); return { w, h: p.h, x: Math.max(10, (d.w - w) / 2), y: p.y }; } });
 lazyApp({ kind: 'sketch', size: 'large' });
 lazyApp({ kind: 'chiptunes', geometry: () => ({ w: 400, h: 480 }) });
 lazyApp({ kind: 'terminal', size: 'large' });

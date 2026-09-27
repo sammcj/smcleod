@@ -18,6 +18,24 @@ export function useBrowser() {
       env.base = env.server.url;
     }
     env.browser = await chromium.launch({ executablePath: process.env.CHROMIUM_PATH || undefined, args: ['--no-sandbox'] });
+    // The specs assume the theme's own default look, so a site's starting look (params.deskbar.appearance) is left
+    // out of its pages unless a context asks for it with { siteLook: true }
+    const DEFAULTS = /<script[^>]*id="?deskbar-defaults"?[^>]*>[^<]*<\/script>/;
+    if (!DEFAULTS.test(await (await fetch(env.base + '/')).text())) return;
+    const launch = env.browser.newContext.bind(env.browser);
+    env.browser.newContext = async ({ siteLook, ...opts } = {}) => {
+      const ctx = await launch(opts);
+      if (!siteLook) await ctx.route(u => u.href.startsWith(env.base), async r => {
+        if (r.request().resourceType() !== 'document') return r.fallback();
+        // a test may close its page mid-request
+        try {
+          const res = await r.fetch();
+          if (!res.headers()['content-type']?.includes('html')) return await r.fulfill({ response: res });
+          await r.fulfill({ response: res, body: (await res.text()).replace(DEFAULTS, '') });
+        } catch { /* closed */ }
+      });
+      return ctx;
+    };
   });
   after(async () => {
     await env.browser?.close();
@@ -55,6 +73,8 @@ export async function open(viewport, path = '/', init, ctxOpts = {}) {
   // A site's Google Fonts swap in whenever they arrive, reflowing the desktop icons after windows were placed beside
   // them, so every page keeps its fallback fonts
   await ctx.route(/^https:\/\/fonts\.(googleapis|gstatic)\.com\//, r => r.abort());
+  // fixtures point at example.org hosts (the Feeds app's pictures), which tests never reach
+  await ctx.route(/^https?:\/\/([\w-]+\.)*example\.org\//, r => r.abort());
   if (init) await ctx.addInitScript(init);
   const page = await ctx.newPage();
   trackErrors(page);

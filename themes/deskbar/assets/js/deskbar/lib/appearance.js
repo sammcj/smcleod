@@ -27,17 +27,20 @@ export const DOCKS = [['glass', 'Glass'], ['deskbar', 'Deskbar'], ['panel', 'Pan
   ['pixel', 'Hotbar'], ['pixel-cartridge', 'Cartridges']];
 export const WALLS = [['rings', 'Rings'], ['plain', 'Plain'], ['grid', 'Grid'], ['dots', 'Dots'], ['hills', 'Hills'], ['liquid', 'Liquid'], ['clear', 'Clear'],
   ['platinum', 'Platinum'], ['clearlooks', 'Clearlooks'], ['phosphor', 'Phosphor'], ['broadsheet', 'Broadsheet'], ['synthwave', 'Synthwave'],
-  ['vector', 'Vector'], ['memphis', 'Memphis'], ['nightdrive', 'Night Drive'],
+  ['synthwave-sunrise', 'Sunrise'], ['vector', 'Vector'], ['memphis', 'Memphis'], ['nightdrive', 'Night Drive'],
   ['pixel', 'Pixel hills'], ['pixel-pico', 'Pico']];
 export const CRTS = [['off', 'Off'], ['scanlines', 'Scanlines'], ['tube', 'Tube'], ['grille', 'Aperture grille'], ['amber', 'Amber'], ['green', 'Green']];
 
 // Window styles drawn in colours of their own, so the palettes don't reach them. colours: what the Colours group
 // offers instead while one is on, the first being the style's own (palette values that only apply under it); with
-// none, Colours is off. dark: the style has no light mode, so Mode is off too.
+// none, Colours is off. dark: the style sets its own mode (dark chrome, even around Synthwave's light Sunrise pages),
+// so Mode is off too.
 export const LOOKS = {
   platinum: {}, clearlooks: {}, broadsheet: {},
-  phosphor: { dark: true }, synthwave: { dark: true }, vector: { dark: true }, memphis: { dark: true }, nightdrive: { dark: true },
-  pixel: { colours: [['pixel', 'Pixel', '#ffcd4d #f5ead0 #3a8adf'], ['pixel-pico', 'Pico', '#ff77a8 #c2c3c7 #1d2b53']] },
+  phosphor: { dark: true }, vector: { dark: true }, memphis: { dark: true }, nightdrive: { dark: true },
+  // the look's own colours can't be named synthwave, which is already a palette
+  synthwave: { dark: true, colours: [['synthwave-night', 'Synthwave', '#ff3ea5 #211546 #3a1a6e'], ['synthwave-sunrise', 'Sunrise', '#ff3ea5 #fcf7ff #f2a8dc']] },
+  pixel: { colours: [['pixel', 'Pixel', '#ffcd4d #f5ead0 #3a8adf'], ['pixel-pico', 'Pico', '#29adff #ffccaa #1d2b53']] },
 };
 
 // Every Appearance setting but the mode, which stays the visitor's. A preset names each one, so picking it gives the
@@ -57,7 +60,8 @@ export const PRESETS = [
   { id: 'clearlooks', label: 'Clearlooks', ...whole('clearlooks') },
   { id: 'phosphor', label: 'Phosphor', ...whole('phosphor'), crt: 'tube' },
   { id: 'broadsheet', label: 'Broadsheet', ...whole('broadsheet') },
-  { id: 'synthwave', label: 'Synthwave', ...whole('synthwave') },
+  { id: 'synthwave', label: 'Synthwave', ...whole('synthwave'), palette: 'synthwave-night' },
+  { id: 'synthwave-sunrise', label: 'Synthwave Sunrise', ...whole('synthwave'), palette: 'synthwave-sunrise', wall: 'synthwave-sunrise' },
   { id: 'vector', label: 'Vector', ...whole('vector') },
   { id: 'memphis', label: 'Memphis', ...whole('memphis') },
   { id: 'nightdrive', label: 'Night Drive', ...whole('nightdrive') },

@@ -78,6 +78,20 @@ test('the Control panel is as tall as the Posts window at its home spot, top edg
   }
 });
 
+test('a page with windowTile opens tiled to the left, full height, clear of the desktop icons', async t => {
+  const html = await (await fetch(env.base + '/about/')).text();
+  if (!/data-tile="?60/.test(html)) return t.skip('no /about/ with windowTile: 60 on this site');
+  for (const vp of [desktop, laptop]) {
+    const page = await opened(vp, '/about/', 'page:/about/');
+    const { win: w, desk, dock, icons } = await layout(page, 'page:/about/');
+    const at = `${vp.width}x${vp.height}`;
+    assert.ok(w.l >= icons.r && w.l <= icons.r + 12, `starts just right of the icons: ${at}`);
+    assert.ok(Math.abs(w.r - (desk.l + desk.w * 0.6)) <= 8, `ends at 60% of the desk: ${at}`);
+    assert.ok(w.b <= dock.t && dock.t - w.b <= 30, `reaches down to the dock: ${at}`);
+    await page.context().close();
+  }
+});
+
 test('a large app on a phone still fills the screen', async () => {
   const [[path, key]] = await present(LARGE);
   const page = await opened(phone, path, key);

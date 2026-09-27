@@ -1,15 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- RSS 2.0 fixture for the Feeds app (assets/feeds.opml). Covers markup in summaries, a relative link, a long summary,
-     dc:date, more items than perFeed keeps, and an undated item, which is dropped. -->
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:dc="http://purl.org/dc/elements/1.1/">
+     dc:date, more items than perFeed keeps, and an undated item, which is dropped. Pictures: a media:thumbnail, an
+     image enclosure, an <img> that resolves against the item and fails to load, a 1px tracking pixel and a plain http
+     enclosure, which are both skipped; the channel <image> is an asset path, so the feed gets an icon. -->
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:media="http://search.yahoo.com/mrss/">
   <channel>
     <title>Example News</title>
     <link>https://news.example.org/</link>
     <atom:link href="https://news.example.org/feed.xml" rel="self" type="application/rss+xml"/>
     <description>News for the deskbar demo</description>
+    <image><url>previews/art.png</url><title>Example News</title><link>https://news.example.org/</link></image>
     <item>
       <title>Haiku R1/beta6 released</title>
       <link>https://news.example.org/2026/09/haiku-beta6/</link>
+      <media:thumbnail url="https://img.example.org/haiku.png" width="120" height="90"/>
       <pubDate>Sun, 20 Sep 2026 10:00:00 +0000</pubDate>
       <description><![CDATA[<p>Release <b>notes</b> &amp; downloads.</p><script>document.title = 'pwned'</script>]]></description>
     </item>
@@ -22,6 +26,7 @@
     <item>
       <title>A relative link</title>
       <link>/2026/09/relative/</link>
+      <enclosure url="https://img.example.org/relative.png" type="image/png" length="68"/>
       <pubDate>Mon, 14 Sep 2026 08:00:00 +0000</pubDate>
       <description>Links without a host resolve against the feed's site.</description>
     </item>
@@ -29,12 +34,13 @@
       <title>A long summary</title>
       <link>https://news.example.org/2026/09/long/</link>
       <pubDate>Thu, 10 Sep 2026 08:00:00 +0000</pubDate>
-      <description>This summary runs well past the length the Feeds app keeps, so the build cuts it at a word boundary and adds three dots. The quick brown fox jumps over the lazy dog, and then does it again, and again, because a fixture needs words. Packing a lot of words into one paragraph like this is how feeds that send the whole article look. The end of this sentence should never reach the page at all.</description>
+      <description>&lt;img src="https://img.example.org/pixel.gif" width="1" height="1"&gt;This summary runs well past the length the Feeds app keeps, so the build cuts it at a word boundary and adds three dots. The quick brown fox jumps over the lazy dog, and then does it again, and again, because a fixture needs words. Packing a lot of words into one paragraph like this is how feeds that send the whole article look. The end of this sentence should never reach the page at all.</description>
     </item>
     <item>
       <title>Kernel notes</title>
       <link>https://news.example.org/2026/09/kernel/</link>
       <dc:date>2026-09-05T08:00:00Z</dc:date>
+      <enclosure url="http://img.example.org/kernel.png" type="image/png" length="68"/>
       <description>Dated with dc:date rather than pubDate.</description>
     </item>
     <item>

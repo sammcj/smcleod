@@ -5,7 +5,11 @@ window: about-desktop
 deskbarHidden: true
 ---
 
-This site is a desktop in the browser: windows, a dock and apps in plain JavaScript and CSS, with no framework. Hugo builds it as a static site, so every post keeps its own URL, its feed and a plain page that reads without JavaScript.
+This site is a small desktop in the browser, built as my own Hugo theme in plain JavaScript and CSS with no framework. Posts, apps and tools open in windows you can drag, snap and stack. Hugo builds it as a static site, so every post keeps its own URL, its feed and a plain page that reads without JavaScript.
+
+- The [Control panel](/control-panel/) swaps in other looks.
+- The core shell is capped at 45KB gzipped. Everything else loads on first use.
+- The source, theme included, is on [GitHub](https://github.com/sammcj/smcleod).
 
 ## How it was designed
 

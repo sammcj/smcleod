@@ -95,12 +95,13 @@ export const paneUrl = (base, id) => (id === PANES[0].id ? base : `${base}?pane=
 // The preset the current settings add up to, if any
 export const presetOf = get => PRESETS.find(p => KEYS.every(k => get(k) === p[k]));
 // The palette a window style change leaves: the same one if the new style offers it, else the style's own colours,
-// or the default for one that takes the palettes. A style drawn in its own colours keeps a plain palette for the
+// or the first palette (the theme's own, named rather than left to a site's starting palette, which may be another
+// look's colours) for one that takes the palettes. A style drawn in its own colours keeps a plain palette for the
 // next style and drops another look's colours.
 export function paletteFor(deco, palette) {
-  if (ownsColours(deco)) return PALETTES.some(o => o[0] === palette) ? palette : undefined;
+  if (ownsColours(deco)) return PALETTES.some(o => o[0] === palette) ? palette : PALETTES[0][0];
   const opts = coloursFor(deco);
-  return opts.some(o => o[0] === palette) ? palette : LOOKS[deco] ? opts[0][0] : undefined;
+  return opts.some(o => o[0] === palette) ? palette : opts[0][0];
 }
 
 function group([key, legend, opts, art]) {

@@ -1,5 +1,6 @@
 {{- /* The Feeds app's items, fetched and parsed at build time, since browsers can't read other sites' feeds (CORS).
-       Returns { feeds: [{ name, site, url, count }], items: [{ feed, title, link, date, summary }] }, newest first.
+       Returns { feeds: [{ name, site, url, count, icon }], items: [{ feed, title, link, date, summary, image }] },
+       newest first.
 
        The feed list is the site's assets/feeds.opml, as feed readers export it (NetNewsWire: File > Export
        Subscriptions). Hugo's data loader rejects .opml, hence assets. Folders are flattened, and feeds whose
@@ -7,7 +8,9 @@
        (assets/<path>), for fixtures and offline builds. RSS 2.0, RSS 1.0 and Atom parse. A feed that fails to fetch
        or parse is left out with a warning, so one broken feed never stops the build, and so is one with no items. Items without a title, link or
        date are dropped, and summaries are plain text. Every feed keeps its newest perFeed items, with no overall cap,
-       so busy feeds never crowd a quiet one out. Remote responses are cached like any resources.GetRemote call: set
+       so busy feeds never crowd a quiet one out. A feed's icon is its artwork (feeds/art.html) shrunk to a 64px WebP
+       here, or none when it has none or it won't load. An item's image (feeds/image.html) is left at its URL for the
+       visitor's browser to load. Remote responses are cached like any resources.GetRemote call: set
        caches.getresource.maxAge (e.g. 6h) or local builds keep the first copy for ever.
        params.deskbar.feeds: { perFeed, summaryChars, exclude } */ -}}
 {{- $cfg := site.Params.deskbar.feeds | default dict -}}
@@ -56,10 +59,15 @@
     {{- /* script and style bodies are text to plainify, so they go first; truncate is avoided, as it returns HTML */ -}}
     {{- $text = $text | replaceRE `(?is)<(script|style|noscript)\b.*?</(script|style|noscript)>` " " | plainify | htmlUnescape | replaceRE `\s+` " " | strings.TrimSpace -}}
     {{- if gt (strings.RuneCount $text) $chars }}{{ $text = printf "%s..." (substr $text 0 $chars | replaceRE `\s+\S*$` "") }}{{ end -}}
-    {{- $items = $items | append (dict "feed" $name "title" $title "link" $link "date" $when "ts" $when.Unix "summary" $text) -}}
+    {{- $image := partial "deskbar/feeds/image.html" (dict "item" . "base" $link) -}}
+    {{- $items = $items | append (dict "feed" $name "title" $title "link" $link "date" $when "ts" $when.Unix "summary" $text "image" $image) -}}
   {{- end -}}
   {{- $items = first $per (sort $items "ts" "desc") -}}
-  {{- if $items }}{{ $feeds = $feeds | append (dict "name" $name "site" $site "url" $f.url "count" (len $items)) }}{{ end -}}
+  {{- if $items -}}
+    {{- $icon := "" -}}
+    {{- range partial "deskbar/feeds/art.html" $doc }}{{ with (partial "deskbar/feeds/fetch-image.html" (dict "src" . "spec" "fit 64x64 webp")).src }}{{ $icon = . }}{{ break }}{{ end }}{{ end -}}
+    {{- $feeds = $feeds | append (dict "name" $name "site" $site "url" $f.url "count" (len $items) "icon" $icon) -}}
+  {{- end -}}
   {{- /* item by item: appending a whole list to one that has changed type nests it rather than merging */ -}}
   {{- range $items }}{{ $all = $all | append . }}{{ end -}}
 {{- end -}}

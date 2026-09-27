@@ -1,7 +1,7 @@
 # Items for the Projects folder (content/projects.md), shown as a list
 - name: deskbar
   url: https://github.com/sammcj/smcleod/tree/main/themes/deskbar
-  description: A Hugo theme that turns a site into a small desktop
+  description: My Hugo theme that turns the smcleod.net site into a small desktop
   meta: [HTML, 12 stars]
 - name: window-notes
   url: https://github.com/example/window-notes
