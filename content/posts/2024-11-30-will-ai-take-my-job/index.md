@@ -1,7 +1,7 @@
 ---
 title: "Will AI Take My Job?"
 date: 2024-11-29T22:00:02+00:00
-tags: ["ai", "llm", "tech", "jobs", "capitalism", "profit", "automation", "work", "economy"]
+tags: ["AI", "LLM", "tech", "jobs", "capitalism", "profit", "automation", "work", "economy"]
 author: "Sam McLeod"
 draft: false
 description: "It's probably not so much AI itself you have to fear."

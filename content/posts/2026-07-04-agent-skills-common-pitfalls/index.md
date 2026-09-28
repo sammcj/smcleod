@@ -4,7 +4,7 @@ date: 2026-07-04T01:00:00+10:00
 thumbnail: thumbnail.png
 images: ["thumbnail.png"]
 thumbnailIcon: thumbnail-icon.svg
-tags: ['ai', 'llm', 'agentic coding', 'agents', 'skills', 'claude', 'claude code']
+tags: ['AI', 'LLM', 'agentic coding', 'agents', 'skills', 'claude', 'claude code']
 author: 'Sam McLeod'
 draft: false
 description: 'The top pitfalls I keep seeing when reviewing Agent Skills, and what to do instead'

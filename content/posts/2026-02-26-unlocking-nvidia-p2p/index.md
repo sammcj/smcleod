@@ -6,8 +6,8 @@ images: ["thumbnail.png"]
 thumbnailIcon: thumbnail-icon.svg
 tags:
   [
-    'ai',
-    'llm',
+    'AI',
+    'LLM',
     'tech',
     'vllm',
     'llama.cpp',
@@ -15,7 +15,7 @@ tags:
     'awq',
     'cuda',
     'nvidia',
-    'gpu',
+    'GPU',
     'performance',
     'optimisation',
   ]

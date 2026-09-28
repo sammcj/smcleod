@@ -3,10 +3,10 @@ author: "Sam McLeod"
 description: "LLM vRAM Estimator"
 tags:
 - vram
-- llm
+- LLM
 - ollama
 - llama
-- ai
+- AI
 - cuda
 - metal
 - gguf
@@ -14,7 +14,7 @@ title: "LLM vRAM Estimator"
 folderWeight: 1
 window: tool
 icon: vram
-categories: ["llm"]
+categories: ["LLM"]
 keywords: ["vram", "llm", "ollama", "llama", "ai", "cuda", "metal", "gguf"]
 toc: false
 aliases:

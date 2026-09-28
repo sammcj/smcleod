@@ -4,7 +4,7 @@ date: 2026-04-28T01:00:00+10:00
 thumbnail: thumbnail.png
 images: ["thumbnail.png"]
 thumbnailIcon: thumbnail-icon.svg
-tags: ['ai', 'llm', 'mlx', 'quantisation', 'qwen']
+tags: ['AI', 'LLM', 'mlx', 'quantisation', 'qwen']
 author: 'Sam McLeod'
 draft: false
 description: 'Using KL divergence to rank MLX quantisations of Qwen 3.6 (27B dense and 35B-A3B MoE)'

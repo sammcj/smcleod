@@ -12,12 +12,12 @@ cover:
   #caption: "<text>"
   #relative: false # To use relative path for cover image, used in hugo Page-bundles
 tags:
-- Agile
-- Culture
-- Humour
-- Software Development
+- agile
+- culture
+- humour
+- software development
 - Manifesto
-- Enterprise
+- enterprise
 # series: ["AI", "Code"]
 toc:
   enable: true

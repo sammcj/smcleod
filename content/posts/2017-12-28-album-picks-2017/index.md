@@ -1,6 +1,6 @@
 ---
 author: "Sam McLeod"
-categories: [ music ]
+categories: [ Music ]
 date: "2017-12-28T00:00:00Z"
 aliases:
   - /music/2017/12/28/album-picks-2017/

@@ -6,7 +6,7 @@ author: Sam McLeod
 description: "My Z-Shell configuration, scripts and hacks"
 keywords: ["zsh", "bash", "scripting", "linux", "macOS"]
 tags: ["zsh", "bash", "scripting", "linux", "macOS"]
-categories: ["zsh", "scripting", "linux", "macOS"]
+categories: ["Zsh", "Scripting", "Linux", "macOS"]
 series: ["ZSH", "Code"]
 cover:
   image: "colour_vertical_icon_wbg_wide.png"

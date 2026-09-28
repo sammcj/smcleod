@@ -7,7 +7,7 @@ description: "My Z-Shell configuration, scripts and hacks"
 keywords: ["zsh", "bash", "scripting", "linux", "macOS"]
 
 tags: ["zsh", "bash", "scripting", "linux", "macOS"]
-categories: ["zsh", "scripting", "linux", "macOS"]
+categories: ["Zsh", "Scripting", "Linux", "macOS"]
 series: ["ZSH", "Code"]
 
 images: ["zsh-part-two.gif"]

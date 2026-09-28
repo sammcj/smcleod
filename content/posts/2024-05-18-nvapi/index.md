@@ -3,7 +3,7 @@ title: "NVApi - Nvidia GPU Monitoring API"
 date: 2024-05-18T11:30:03+00:00
 # weight: 1
 # aliases: ["/first"]
-tags: ["AI", "Nvidia", "GPU", "Monitoring", "API", "Go", "Golang"]
+tags: ["AI", "nvidia", "GPU", "Monitoring", "API", "Go", "golang"]
 author: "Sam McLeod"
 draft: false
 description: "Nvidia GPU Monitoring API"

@@ -5,7 +5,7 @@ lastmod: 2023-11-14T00:00:00+00:00
 author: Sam McLeod
 description: "This reusable snippet will generate a menu of targets from the Makefile. It will use `fzf` if it is installed, otherwise it will use a numbered menu."
 keywords: ["tech", "linux", "makefile", "make", "programming"]
-tags: ["Linux", "Programming"]
+tags: ["linux", "programming"]
 categories: ["Tech", "Linux"]
 series: ["Fun With Makefiles"]
 images: ["makefile-menu.png"]

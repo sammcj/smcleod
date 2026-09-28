@@ -1,6 +1,6 @@
 ---
 author: "Sam McLeod"
-categories: [ hardware ]
+categories: [ Hardware ]
 date: "2021-07-11T14:00:00Z"
 aliases:
   - /hardware/2021/07/11/silvia-upgrade/

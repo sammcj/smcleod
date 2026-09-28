@@ -6,7 +6,7 @@ author: Sam McLeod
 description: "How frequent deployments give teams regular wins, and why that matters for their energy and sustainability."
 keywords: [ "Delivery", "deployment", "frequency", "energy", "wins", "DevOps", "Agile", "Leadership", "management" ]
 
-tags: [ "Delivery", "health", "wins", "DevOps", "Agile", "Leadership", "management" ]
+tags: [ "Delivery", "health", "wins", "DevOps", "agile", "Leadership", "management" ]
 categories: [ "DevOps", "Leadership", "Health" ]
 series: []
 

@@ -12,7 +12,7 @@ cover:
   #caption: "<text>"
   #relative: false # To use relative path for cover image, used in hugo Page-bundles
 tags:
-- Tech
+- tech
 - LLM
 - AI
 - Code

@@ -115,7 +115,7 @@ The servers themselves don't need to be particularly powerful which will help us
 ![SuperMicro SuperServer 1028R-WTNRT]({{< ref "/" >}}/img/san/sm.jpg)
 ![SuperMicro SuperServer 1028R-WTNRT - mobo]({{< ref "/" >}}/img/san/mobo.jpg)
 ![1.2TB Intel SSD DC P3600 Series]({{< ref "/" >}}/img/san/intel.jpg)
-![SuperMicro DOM]({{< ref "/" >}}/img/san/dom.jpg)
+![SuperMicro DOM](dom.jpg)
 ![SanDisk Extreme Pro SSD 480GB]({{< ref "/" >}}/img/san/ssd.jpg)
 
 ## AHCI vs NVMe

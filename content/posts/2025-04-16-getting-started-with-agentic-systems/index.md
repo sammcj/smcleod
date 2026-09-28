@@ -4,7 +4,7 @@ date: 2025-04-16T01:10:00+10:00
 thumbnail: thumbnail.png
 images: ["thumbnail.png"]
 thumbnailIcon: thumbnail-icon.svg
-tags: ["ai", "llm", "tech", "agentic", "coding", "learning", "engineering", "tutorials"]
+tags: ["AI", "LLM", "tech", "agentic", "coding", "learning", "engineering", "tutorials"]
 author: "Sam McLeod"
 draft: false
 description: "A curated learning path for engineers looking to gain practical experience with AI and agentic systems."

@@ -5,8 +5,8 @@ lastmod: 2023-05-29T08:53:24+10:00
 author: Sam McLeod
 description: "Shallow clones are faster and smaller"
 keywords: ["Git", "Scripting", "ZSH", "Bash", "Shell"]
-tags: ["Git", "Scripting", "ZSH", "Bash", "Shell"]
-categories: ["Scripting", "ZSH", "Git"]
+tags: ["git", "scripting", "zsh", "bash", "Shell"]
+categories: ["Scripting", "Zsh", "Git"]
 series: ["ZSH"]
 
 toc:

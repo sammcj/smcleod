@@ -4,7 +4,7 @@ date: 2026-03-05T01:00:00+10:00
 thumbnail: thumbnail.png
 images: ["thumbnail.png"]
 thumbnailIcon: thumbnail-icon.svg
-tags: ['ai', 'claude', 'agentic-coding', 'claude-code', 'tips', 'productivity']
+tags: ['AI', 'claude', 'agentic coding', 'claude code', 'tips', 'productivity']
 author: 'Sam McLeod'
 draft: false
 description: 'I spend a lot of my time helping people who are getting started with Claude Code. These are the key things I find myself repeating.'
@@ -210,7 +210,7 @@ Planning mode (`shift+tab` to toggle) keeps the agent in read-only exploration m
 
 This is valuable for anything beyond a simple, targeted fix. The plan itself is an artefact you can inspect and refine with Claude, when you're ready Claude will offer to start a fresh session to act upon the plan.
 
-**[TLDR](/posts/2025-04-28-agentic-coding-dev-flow/): plan first, act second, iterate.**
+**[TLDR]({{< ref "posts/2025-04-28-agentic-coding-dev-flow" >}}): plan first, act second, iterate.**
 
 ### Embrace starting fresh sessions
 

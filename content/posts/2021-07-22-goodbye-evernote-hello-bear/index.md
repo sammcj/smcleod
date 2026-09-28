@@ -1,6 +1,6 @@
 ---
 author: "Sam McLeod"
-categories: [ software ]
+categories: [ Software ]
 date: "2021-07-22T19:00:00Z"
 aliases:
   - /software/2021/07/22/goodbye-evernote-hello-bear/

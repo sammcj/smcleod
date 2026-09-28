@@ -4,7 +4,7 @@ date: 2025-03-20T21:00:01+10:00
 thumbnail: thumbnail.png
 images: ["thumbnail.png"]
 thumbnailIcon: thumbnail-icon.svg
-tags: ["ai","llm","tech","anthropic","aws","cline","programming","vertex","gcp","agentic","agentic-coding"]
+tags: ["AI","LLM","tech","anthropic","aws","cline","programming","vertex","gcp","agentic","agentic coding"]
 author: "Sam McLeod"
 draft: false
 description: "What is prompt caching and why is it so important for Agentic coding?"

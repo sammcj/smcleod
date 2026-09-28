@@ -42,7 +42,7 @@ Essentially the most common STONITH agent type in use is probably those that con
 
 ---
 
-_The following was v1 of the devices design, a post on the update v2/v3 design can be found [here](https://smcleod.net/tech/2016/07/04/update-rcd-stonith-design.html)_
+_The following was v1 of the devices design, a post on the update v2/v3 design can be found [here]({{< ref "posts/2016-07-04-update-rcd-stonith-design" >}})_
 
 [Adam Coy's](https://www.linkedin.com/pub/adam-coy/5/989/888) slightly modified version of the circuit that includes an indicator LED and an [optocoupler](https://en.wikipedia.org/wiki/Opto-isolator):
 

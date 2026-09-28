@@ -4,7 +4,7 @@ date: 2024-06-01T01:00:10+00:00
 lastmod: 2024-07-14T01:00:10+00:00
 # weight: 1
 # aliases: ["/first"]
-tags: ["Markdown", "Go", "Golang", "Ollama", "AI", "LLM", "LMStudio"]
+tags: ["Markdown", "Go", "golang", "ollama", "AI", "LLM", "LMStudio"]
 author: "Sam McLeod"
 draft: false
 description: "Gollama is a Go-based client for Ollama for managing models."

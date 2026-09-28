@@ -3,7 +3,7 @@ title: "LLM Parameter Playground"
 date: 2024-07-20T01:00:10+00:00
 # weight: 1
 # aliases: ["/first"]
-tags: ["ai", "tools","llm", "tech", "playground", "parameters", "inference"]
+tags: ["AI", "tools","LLM", "tech", "playground", "parameters", "inference"]
 author: "Sam McLeod"
 draft: false
 description: "A web app to explore the effects of different inference parameters on LLMs."

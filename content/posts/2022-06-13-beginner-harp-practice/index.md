@@ -1,6 +1,6 @@
 ---
 author: "Sam McLeod"
-categories: [ music ]
+categories: [ Music ]
 date: "2022-06-13T13:00:00Z"
 aliases:
   - /music/2022/06/13/beginner-harp-practice/

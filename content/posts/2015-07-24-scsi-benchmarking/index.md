@@ -102,6 +102,6 @@ root@dev-samm:/mnt  # ioping pmt3/
 4096 bytes from pmt3/ (ext4 /dev/xvde1): request=3 time=0.9 ms
 ```
 
-![](https://smcleod.net/images/san/lcmcpcmk.png)
+![](/img/san/lcmcpcmk.png)
 
-![](https://smcleod.net/images/san/supermicrox2.jpg)
+![](/img/san/supermicrox2.jpg)
