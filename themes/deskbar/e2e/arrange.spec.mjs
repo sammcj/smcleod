@@ -90,3 +90,17 @@ test('with Posts open, folders tile to its right, including one opened as the fi
   assert.deepEqual(first.errors, []);
   await first.context().close();
 });
+
+test('folders side by side share one height: the tallest asked for', async t => {
+  if (!(await needs(t, '/links/', '/projects/'))) return;
+  const page = await open(desktop, '/');
+  await win(page, 'tracker').locator('.ctl.close').click();
+  await openFolder(page, '/links/');
+  await openFolder(page, '/projects/');
+  // Links asks for a taller window than Projects
+  const [l, p] = [await withTab(page, 'folder:/links/'), await withTab(page, 'folder:/projects/')];
+  assert.equal(l.y, p.y, `side by side (${JSON.stringify([l, p])})`);
+  assert.equal(p.height, l.height, 'one height for the row');
+  assert.deepEqual(page.errors, []);
+  await page.context().close();
+});

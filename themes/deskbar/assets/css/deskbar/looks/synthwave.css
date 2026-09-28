@@ -51,9 +51,12 @@
 :root[data-deco=synthwave] .views { border: 1px solid var(--line); border-radius: 0 3px 3px; overflow: hidden; }
 :root[data-deco=synthwave] .win :is(.tab, .th) { border: 1px solid var(--sw-edge); border-bottom: 0; border-radius: 6px 6px 0 0; box-shadow: none; }
 :root[data-deco=synthwave] .win.active .tab { color: var(--sw-ink); background: linear-gradient(90deg, var(--sw-pink), #ff7a8a); border-color: var(--sw-pink); box-shadow: 0 -2px 12px rgba(255,62,165,.45); }
-:root[data-deco=synthwave] .win.active .tab:not(.on) { background: var(--tab-dim); }
+/* stacked tabs stand apart, and those behind the front one are unlit: indigo with a pink edge and pink capitals */
+:root[data-deco=synthwave] .tabs.multi .tab { margin-right: 3px; }
+:root[data-deco=synthwave] .win.active .tab:not(.on) { color: var(--tab-hi); background: var(--tab-in); border-color: var(--tab-lo); box-shadow: none; }
+:root[data-deco=synthwave] .win.active .tab:not(.on) .ctl:not(:hover) { color: inherit; }
 /* cyan would all but vanish on the pink tab */
-:root[data-deco=synthwave] .win.active .tab .tt:focus-visible { outline-color: var(--sw-ink); }
+:root[data-deco=synthwave] .win.active .tab.on .tt:focus-visible { outline-color: var(--sw-ink); }
 :root[data-deco=synthwave] .tab .tt { font-family: var(--sw-head); font-size: 11.5px; letter-spacing: .08em; text-transform: uppercase; }
 :root[data-deco=synthwave] .win .ctl:hover { background: rgba(26,11,58,.2); }
 :root[data-deco=synthwave] .win .ctl.close:hover { color: #fff; background: var(--sw-ink); }

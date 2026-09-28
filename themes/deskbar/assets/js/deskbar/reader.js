@@ -1,14 +1,14 @@
-// Reader windows. Posts share one reader with back/forward (D8) and open in the reading layout (D7):
-// Tracker snapped to the left quarter, the reader in the right three quarters, and Escape puts Tracker back (D36).
+// Reader windows. Posts share one reader with back/forward (D8) and open in the reading layout (D7): Tracker joined
+// to the reader (D40), a quarter and three quarters of the desk, and Escape puts Tracker back (D36).
 // Posts dragged out of Tracker get post windows of their own (openPosts, D32). Other pages use makeReader through the
 // page app (apps/page.js), one window each.
-import { S, emit, on as onWm, geoOf } from './wm/state.js';
+import { S, emit, on as onWm } from './wm/state.js';
 import { h, svgBtn, stroke, SHARE, MARKDOWN, copyText, OWN_KEYS, toTop, scrollerOf } from './lib/dom.js';
 import { trail, visit } from './lib/trail.js';
 import { clampSplit } from './wm/snap.js';
 import {
   createWindow, findView, allViews, focusView, focus, renderTabs, snapTo, relayout, deskRect, tabH, isPhone, transition,
-  closeView, place, clampTab, morph, forgetPlace,
+  closeView, morph, forgetPlace, pairUp,
 } from './wm/windows.js';
 import { ensureTracker } from './tracker.js';
 import { textSize, get, set, on, nextWidth } from './settings.js';
@@ -128,17 +128,17 @@ function readerGeo() {
   return { w, h: d.h - tabH() - 16, x: (d.w - w) / 2, y: tabH() + 8 };
 }
 
-export function readingLayout(rw) {
+// Tracker and the reader joined across the desk (D40), Tracker taking split of it; a group the visitor has resized
+// keeps its seam. Closing the reader puts Tracker back where it was (wm/windows.js leaveGroup).
+export function readingLayout(rw, split = 0.25) {
   if (isPhone()) return;
   const tv = ensureTracker({ focus: false });
   const tw = tv.win;
-  if (tw !== rw) {
+  if (tw === rw) snapTo(rw, 'max');
+  else {
     if (tw.views[tw.active] !== tv) { tw.active = tw.views.indexOf(tv); renderTabs(tw); }
-    tw.min = false;
-    S.split = clampSplit(0.25, deskRect().w);
-    snapTo(tw, 'l');
+    pairUp(tw, rw, clampSplit(split, deskRect().w));
   }
-  snapTo(rw, tw === rw ? 'max' : 'r');
   relayout();
   focus(rw);
 }
@@ -176,7 +176,7 @@ export function showPost(page, { hash, pop, keep, replace, into, own, geo, from,
     // the reading layout is about to take a Posts window that is on screen, so Escape can put it back (D36)
     const tv = !solo && !isPhone() && findView('tracker');
     // hist, at: the history entry this post was pushed as, so Escape can step back over it (router.backTo)
-    const back = tv && !tv.win.min ? { win: tv.win, geo: geoOf(tv.win), split: S.split, route: tv.route(), path: from, title: was, hist: !pop && !replace && history.length, at: router.currentPath() } : null;
+    const back = tv && !tv.win.min ? { win: tv.win, route: tv.route(), path: from, title: was, hist: !pop && !replace && history.length, at: router.currentPath() } : null;
     v = makeReader(solo ? into || 'post:' + ++posts : 'reader', 'doc', true);
     v.back = back;
     const win = createWindow(v, solo ? geo || size() : readerGeo());
@@ -207,8 +207,9 @@ function pageKeys(e) {
   by.scrollBy({ top: (e.shiftKey ? -1 : 1) * (by.clientHeight - (by === sc ? 60 : 160)), behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'instant' : 'smooth' });
 }
 
-// D36: Escape in the reader, or in the Posts window beside it, closes the post and puts the Posts window back where
-// and how big it was before the reading layout took it, with the address it was opened from. A post opened any
+// D36: Escape in the reader, or in the Posts window beside it, closes the post, which puts the Posts window back where
+// and how big it was before the reading layout took it while the two are still joined (D40), with the address it was
+// opened from. A post opened any
 // other way, or in a window of its own (D32), leaves Escape alone. So does an open menu, dialog or lightbox, Home
 // (D24), a Tracker closed or moved to another window since, and another tab of a stack either of them is in.
 function escKeys(e) {
@@ -227,18 +228,12 @@ function escKeys(e) {
   });
 }
 
-// However the post closes (Escape, its close button, q or w), the Posts window goes back where and how big it was,
-// with the address the post was opened from, under the same conditions as Escape. A Tracker moved on to another
-// place keeps the address closing the reader gave it (main.js afterClose).
+// However the post closes (Escape, its close button, q or w), the Posts window, back where it was as the reader left
+// its group, comes to the front with the address the post was opened from, under the same conditions as Escape. A
+// Tracker moved on to another place keeps the address closing the reader gave it (main.js afterClose).
 function putBack(v) {
   const back = v.back, tv = findView('tracker'), tw = back?.win;
   if (!back || isPhone() || S.home || tv?.win !== tw || !S.wins.includes(tw)) return;
-  Object.assign(tw, back.geo, { min: false, active: Math.min(back.geo.active, tw.views.length - 1) });
-  S.split = back.split;
-  renderTabs(tw);
-  place(tw);
-  clampTab(tw);
-  relayout();
   focus(tw);
   if (back.path && tv.route() === back.route) router.replace(back.path, back.title);
 }

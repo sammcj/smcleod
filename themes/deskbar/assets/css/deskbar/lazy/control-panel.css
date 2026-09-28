@@ -28,6 +28,8 @@
 /* Flat decorator: no bevels, rounded corners and a soft shadow */
 [data-deco=flat] :is(.tab, .th), [data-deco=flat] .win.active .tab { border: 0; border-radius: 7px 7px 0 0; padding-left: 10px; box-shadow: none; }
 [data-deco=flat] .tabs.multi .tab { margin-right: 2px; }
+/* tabs behind the front one sit lower, so it stands tallest where colours alone differ little */
+[data-deco=flat] .tabs.multi .tab:not(.on) { align-self: flex-end; height: calc(var(--tab-h) - 3px); }
 [data-deco=flat] .ctl { border-radius: 50%; }
 [data-deco=flat] .frame, [data-deco=flat] .win.active .frame { padding: 0; border: 1px solid var(--frame-lo); border-radius: 0 7px 7px 7px; box-shadow: 0 6px 18px rgba(0,0,0,.18); }
 [data-deco=flat] .win.active .frame { border-color: var(--tab-lo); box-shadow: 0 16px 40px rgba(0,0,0,.36); }
@@ -88,7 +90,7 @@
 /* the tab is glass too, with the palette's tab colour showing through as a tint. Liquid Ass floats it as a pill on
    the frame's rim, clear of its big corner curves; Clear joins it to the frame's top edge */
 :root:is([data-deco=liquid], [data-deco=clear]) .win :is(.tab, .th) { gap: 0; padding: 0 12px 0 5px; border: 1px solid var(--lq-rim); color: light-dark(#333, #ddd); background: light-dark(rgba(255,255,255,.72), rgba(40,42,50,.76)); box-shadow: var(--lq-shine); backdrop-filter: var(--lq-blur); -webkit-backdrop-filter: var(--lq-blur); }
-:root[data-deco=liquid] .win.active .tab { color: #1f1f1f; background: linear-gradient(rgba(255,255,255,.55), rgba(255,255,255,.05)), color-mix(in srgb, var(--tab) 70%, transparent); }
+:root[data-deco=liquid] .win.active .tab.on { color: #1f1f1f; background: linear-gradient(rgba(255,255,255,.55), rgba(255,255,255,.05)), color-mix(in srgb, var(--tab) 70%, transparent); }
 :root:is([data-deco=liquid], [data-deco=clear]) .tabs.multi .tab { margin-right: 4px; }
 :root[data-deco=liquid] .tab .tt { margin-left: 5px; }
 :root[data-deco=liquid] .win .tabs { left: 34px; right: 34px; bottom: calc(100% - 13px); z-index: 1; }
@@ -108,7 +110,7 @@
 :root[data-deco=liquid] .win .ctl.close { order: -3; }
 :root[data-deco=liquid] .win .ctl.min { order: -2; --lq-c: #febc2e; }
 :root[data-deco=liquid] .win .ctl.max { order: -1; --lq-c: #28c840; }
-:root[data-deco=liquid] .win:not(.active) .ctl { --lq-c: rgba(140,140,150,.6); }
+:root[data-deco=liquid] :is(.win:not(.active), .tab:not(.on)) .ctl { --lq-c: rgba(140,140,150,.6); }
 :root[data-deco=liquid] .ctl svg { width: 7px; height: 7px; opacity: 0; }
 :root[data-deco=liquid] :is(.tab:hover, .tab:focus-within) .ctl svg { opacity: 1; }
 /* Clear: a window on its own has its tab across the whole top, a title bar joined to the frame, so the window is one

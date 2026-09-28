@@ -102,11 +102,12 @@ test('desktop: tag links open Tracker at the tag, dock opens a page window, them
   await page.waitForURL(u => u.pathname === pageURL);
   await page.locator(`.view[data-key="page:${pageURL}"] .rd h1`).first().waitFor();
   assert.equal(await page.locator('.view[data-key="reader"]').count(), 1);
-  // the split handle stays above the snapped pair but under a floating window raised over them
-  const [dz, pz, rz] = await page.evaluate(k => [
-    '#divider', `.win:has(.view[data-key="${k}"])`, '.win:has(.view[data-key="reader"])',
-  ].map(s => +getComputedStyle(document.querySelector(s)).zIndex), `page:${pageURL}`);
-  assert.ok(dz >= rz && dz < pz, `divider z ${dz} sits between the reader (${rz}) and the page window (${pz})`);
+  // D40: the reading layout's seam belongs to the reader's window, so a floating window raised over the pair covers it
+  assert.ok(await win(page, 'reader').locator('.seam').isVisible(), 'Tracker and the reader are joined');
+  assert.ok(await page.locator('#divider').isHidden(), 'no snap divider for a joined pair');
+  const [pz, rz] = await page.evaluate(k => [`.win:has(.view[data-key="${k}"])`, '.win:has(.view[data-key="reader"])']
+    .map(s => +getComputedStyle(document.querySelector(s)).zIndex), `page:${pageURL}`);
+  assert.ok(pz > rz, `the page window (${pz}) is over the reader (${rz})`);
 
   const theme = await page.evaluate(() => getComputedStyle(document.body).colorScheme);
   await page.click('#themeBtn');

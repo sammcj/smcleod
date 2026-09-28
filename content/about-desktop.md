@@ -7,7 +7,7 @@ deskbarHidden: true
 
 This site is a small desktop in the browser, built as my own Hugo theme in plain JavaScript and CSS with no framework. Posts, apps and tools open in windows you can drag, snap and stack. Hugo builds it as a static site, so every post keeps its own URL, its feed and a plain page that reads without JavaScript.
 
-I've enjoyed trying out window management ideas along the way. Grab a window by its title tab and drop it on another window's tab, and the two join into one tabbed window. Drag a tab away to pull it back out. Drag a window to a screen edge to snap it, press `a` to tile every open window, or drag a post out of the Posts window to open it on its own.
+I've enjoyed trying out window management ideas along the way. Grab a window by its title tab and drop it on another window's tab, and the two stack into one tabbed window. Drag a tab away to pull it back out. Drop it on the side edge of another window instead and the two join side by side, moving together until you press the clip between them. Drag a window to a screen edge to snap it, press `a` to tile every open window, or drag a post out of the Posts window to open it on its own.
 
 - The [Control panel](/control-panel/) swaps in other looks.
 - The core shell is capped at 45KB gzipped. Everything else loads on first use.

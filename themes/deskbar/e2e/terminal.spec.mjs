@@ -79,7 +79,7 @@ test('history walks with up and down and survives a reload; Tab completes', asyn
   await input(page).fill('c');
   await input(page).press('Tab');
   await lastLine(page).filter({ hasText: 'clear' }).waitFor();
-  assert.deepEqual((await lastLine(page).locator('span span').allTextContents()).sort(), ['cat', 'cd', 'clear'], 'candidates listed');
+  assert.deepEqual((await lastLine(page).locator('span span').allTextContents()).sort(), ['cat', 'cd', 'clear', 'cowsay'], 'candidates listed');
 
   await run(page, 'history');
   assert.match(await out(page).textContent(), /1 {2}echo one\s+2 {2}echo two/);
@@ -155,6 +155,30 @@ test('on a phone the prompt takes typing, and tapping output keeps the keyboard 
   const box = await input(page).boundingBox();
   assert.ok(box && box.y + box.height <= phone.height, 'the prompt is on screen');
   await shot(page, 'terminal-phone');
+  assert.deepEqual(page.errors, []);
+  await page.context().close();
+});
+
+test('dmesg logs this page load from its timing entries, and cowsay draws a cow', async t => {
+  if (!(await needs(t, '/terminal/'))) return;
+  const page = await openTerminal(desktop);
+  await run(page, 'dmesg');
+  await out(page).locator('.ln', { hasText: 'Command line: ' }).waitFor();
+  const lines = (await out(page).locator('.ln').allTextContents()).filter(l => l.startsWith('['));
+  assert.match(lines[0], /^\[ {4}0\.000000\] Booting \S+/);
+  assert.ok(lines.every(l => /^\[ *\d+\.\d{6}\] /.test(l)), 'every line is timestamped');
+  const secs = lines.map(l => parseFloat(l.slice(1)));
+  assert.deepEqual(secs, secs.slice().sort((a, b) => a - b), 'in time order');
+  // the terminal's own bundle, which this page loaded to run the command
+  assert.ok(lines.some(l => /\] \w+: \/js\/deskbar-lazy\/terminal\.[\da-f]{8}\.js [\d.]+ K?i?B/.test(l)), lines.join('\n'));
+  assert.ok(lines.some(l => /\] dom: DOMContentLoaded$/.test(l)));
+  assert.equal(await out(page).locator('.ln .c-g').last().textContent(), lines.at(-1).slice(0, 14), 'the time is coloured');
+
+  await run(page, 'cowsay moo');
+  assert.match(await lastLine(page).textContent(), /^ _____\n< moo >\n -----\n {8}\\ {3}\^__\^/);
+  await run(page, 'cowsay');
+  await out(page).locator('.ln', { hasText: '(oo)' }).nth(1).waitFor();
+  await shot(page, 'terminal-dmesg');
   assert.deepEqual(page.errors, []);
   await page.context().close();
 });

@@ -4,6 +4,8 @@
 // The parsing, path and completion helpers are DOM free so they are unit tested in Node.
 import { h } from '../lib/dom.js';
 import { store } from '../lib/store.js';
+import { bootLog, stamp } from '../lib/dmesg.js';
+import { cowsay } from '../lib/cowsay.js';
 
 const str = v => (typeof v === 'string' ? v : '');
 const strs = v => (Array.isArray(v) ? v.filter(x => typeof x === 'string') : []);
@@ -136,7 +138,9 @@ export const COMMANDS = {
   date: ['', 'the date and time where the site lives'],
   theme: ['[light|dark]', 'switch the desktop between light and dark', ['light', 'dark']],
   fortune: ['', 'a quote, picked at random'],
+  cowsay: ['[text]', 'a cow says it, or something true about this site'],
   neofetch: ['', 'facts about this machine'],
+  dmesg: ['', 'the kernel log: this page load, as it happened'],
   ping: ['[-c count] <host|url>', 'time HTTP round trips to a web server'],
   screensaver: ['[leaves|sheep]', 'start the screen saver: the one named, or your choice in the Control panel', ['leaves', 'sheep']],
   history: ['[-c]', 'list, or clear (-c), the commands you have typed'],
@@ -426,6 +430,20 @@ function create(v) {
       say(q);
       if (who) say(span('c-d', '    ' + who));
     },
+    // Without words the cow says something drawn from the site index, so it is always true of this site
+    async cowsay(say, args) {
+      let text = args.join(' ');
+      if (!text) {
+        const site = await loadSite(), [p] = site.posts, [t] = site.tags.slice().sort((a, b) => b.count - a.count);
+        const first = site.posts.map(x => x.date).filter(Boolean).at(-1);
+        const says = [
+          p && `The newest post here is "${p.title}".`, t && `The most used tag here is ${t.name}, on ${t.count} posts.`,
+          first && `Moo. ${site.posts.length} posts since ${first.slice(0, 4)}, and counting.`,
+        ].filter(Boolean);
+        text = says[Math.floor(Math.random() * says.length)] || 'Moo.';
+      }
+      say(cowsay(text));
+    },
     async neofetch(say) {
       const site = await loadSite(), dates = site.posts.map(p => p.date).filter(Boolean);
       const first = dates.at(-1), years = first ? Math.floor((Date.now() - new Date(first)) / 3.15576e10) : 0;
@@ -442,6 +460,22 @@ function create(v) {
         span('c-g', 'guest@' + HOST), '\n', '-'.repeat(8 + HOST.length), '\n',
         facts.map(([k, val]) => [span('c-y', k), ': ', val, '\n']), '\n',
         h('span', { class: 'sw', 'aria-hidden': 'true' }, [...Array(8)].map(() => h('i'))))));
+    },
+    // Coloured as dmesg --color: green time, the subsystem in yellow, errors in red
+    dmesg(say) {
+      const perf = type => performance.getEntriesByType(type), db = window.deskbar, set = db?.settings;
+      const lines = bootLog({
+        origin: location.origin, host: location.host || HOST, now: performance.now(),
+        generator: document.querySelector('meta[name=generator]')?.content || '',
+        nav: perf('navigation')[0], paints: perf('paint'), resources: perf('resource'),
+        cpus: navigator.hardwareConcurrency, memory: navigator.deviceMemory,
+        screen: { w: screen.width, h: screen.height, dpr: devicePixelRatio },
+        look: set && `${set.get('deco')} window style, ${set.get('palette')} colours, ${set.shown()} theme`,
+        bundles: db?.loaded?.() || [], windows: (db?.wm?.S.wins || []).map(w => w.views[w.active]?.title).filter(Boolean),
+      });
+      for (const l of lines) {
+        say(span('c-g', stamp(l.t)), ' ', l.sys ? [span('c-y', l.sys + ':'), ' '] : '', l.err ? span('c-r', l.msg) : l.msg);
+      }
     },
     // Browsers can't send ICMP, so each ping is a timed HEAD request. no-cors lets any server answer, and an
     // opaque answer (even an error status) still counts as a reply.

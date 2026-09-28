@@ -44,6 +44,19 @@
 .views { position: relative; flex: 1; min-height: 0; border: 1px solid; border-color: var(--frame-lo) var(--frame-hi) var(--frame-hi) var(--frame-lo); background: var(--content); cursor: auto; touch-action: auto; }
 .view { position: absolute; inset: 0; display: flex; flex-direction: column; overflow: hidden; }
 .grip { position: absolute; right: 0; bottom: 0; width: 18px; height: 18px; cursor: nwse-resize; touch-action: none; background: linear-gradient(135deg, transparent 48%, var(--frame-lo) 48% 54%, transparent 54% 64%, var(--frame-lo) 64% 70%, transparent 70% 80%, var(--frame-lo) 80% 86%, transparent 86%); }
+/* D40 joined windows (wm/windows.js drawSeams): a member with a neighbour on its left (gl) carries the seam between
+   them, a bar of frame that bridges the gap (GAP in wm/snap.js) so the two read as one piece. Its clip sits in the tab
+   row over the seam, shaped as each look shapes a stack's handle (.th) with a link in place of the dots, and the tabs
+   either side stop short of it. */
+.seam { display: none; position: absolute; top: 0; bottom: 0; right: 100%; width: 6px; cursor: col-resize; touch-action: none; background: var(--frame); border-block: 1px solid var(--frame-dk); }
+.win.gl > .seam { display: block; }
+.win.gl > .tabs { left: 21px; }
+.win.gr > .tabs { right: 21px; }
+.seam > .clip { position: absolute; top: calc(-1 * var(--tab-h)); left: 50%; width: 36px; height: var(--tab-h); margin-left: -18px; padding: 0; justify-content: center; color: var(--fg); cursor: grab; touch-action: none; }
+.seam > .clip::before { content: none; }
+.clip svg { width: 15px; height: 15px; }
+.clip:hover { color: var(--accent); }
+.clip:focus-visible { outline: 2px solid var(--accent); outline-offset: -3px; }
 .sizer { position: absolute; right: 22px; bottom: 5px; z-index: 1; padding: 1px 6px; font-size: 11px; font-variant-numeric: tabular-nums; background: var(--frame); border: 1px solid var(--frame-dk); border-radius: 2px; box-shadow: inset 1px 1px 0 var(--frame-hi); pointer-events: none; }
 
 /* toolbars and buttons inside windows */

@@ -45,8 +45,10 @@ test('Platinum: pinstriped title bar, three boxes, wallpaper, rainbow apple, ico
 
   // the front window's title bar spans its frame and is pinstriped; the one behind is plain grey without its boxes
   const front = page.locator('.win.active'), back = page.locator('.win:not(.active)');
-  const [tb, fb] = [await box(front.locator('.tab')), await box(front.locator('.frame'))];
-  assert.ok(Math.abs(tb.x - fb.x) <= 1 && Math.abs(tb.width - fb.width) <= 1, `title bar ${JSON.stringify(tb)} over frame ${JSON.stringify(fb)}`);
+  // the full width of its tab row, which is the frame's less the clip of a joined window (D40)
+  const [tb, fb, rb] = [await box(front.locator('.tab')), await box(front.locator('.frame')), await box(front.locator('.tabs'))];
+  assert.ok(Math.abs(tb.x - rb.x) <= 1 && Math.abs(tb.width - rb.width) <= 1, `title bar ${JSON.stringify(tb)} over tab row ${JSON.stringify(rb)}`);
+  assert.ok(rb.x >= fb.x && rb.x + rb.width <= fb.x + fb.width + 1, 'within the frame');
   assert.match(await css(front.locator('.tab'), 'backgroundImage'), /repeating-linear-gradient/, 'pinstripes');
   assert.equal(await css(back.locator('.tab'), 'backgroundImage'), 'none', 'no pinstripes behind');
   assert.equal(await css(back.locator('.ctl.close'), 'visibility'), 'hidden', 'no boxes behind');

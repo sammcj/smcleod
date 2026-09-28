@@ -1,7 +1,7 @@
 // Top panel: task buttons for every window, the window switcher (D30; it also copies a layout link), dock running
 // dots and the clock
 import { S, on } from './state.js';
-import { h, ico, $, copyText, plainClick } from '../lib/dom.js';
+import { h, ico, $, copyText, plainClick, LINK } from '../lib/dom.js';
 import { focus, focusView, minimise, closeWin, activeView, transition, morph } from './windows.js';
 import { encodeLayout, layoutHref } from './layout.js';
 import { currentPath } from '../router.js';
@@ -42,13 +42,16 @@ function swallowRepeat(e, only = () => true) {
   setTimeout(() => { for (const t of PRESS) removeEventListener(t, stop, true); }, 500);
 }
 
-// The address of the page on screen plus ?layout= for every open window (wm/layout.js)
+// The address of the page on screen plus ?layout= for every open window (wm/layout.js). A pair joined across the desk
+// (D40), as the reading layout is, goes as left and right snaps with its split.
 export function layoutLink() {
-  const wins = S.wins.filter(w => !w.min).sort((a, b) => a.z - b.z).map(w => ({ route: activeView(w).route(), snap: w.snap, own: activeView(w).key.startsWith('post:') }));
-  return location.origin + layoutHref(currentPath(), encodeLayout(wins, S.split));
+  const pair = S.wins.find(w => w.group?.fill && w.group.wins.length === 2)?.group, [a, b] = pair?.wins || [];
+  const snap = w => (w === a ? 'l' : w === b ? 'r' : w.snap);
+  const wins = S.wins.filter(w => !w.min).sort((x, y) => x.z - y.z).map(w => ({ route: activeView(w).route(), snap: snap(w), own: activeView(w).key.startsWith('post:') }));
+  return location.origin + layoutHref(currentPath(), encodeLayout(wins, pair ? a.w / (a.w + b.w) : S.split));
 }
 
-const LINK = 'M6.5 9.5l3-3M7.5 4.5l1-1a2.5 2.5 0 0 1 4 4l-1 1M8.5 11.5l-1 1a2.5 2.5 0 0 1-4-4l1-1', TICK = 'M3 8.5l3 3 7-7';
+const TICK = 'M3 8.5l3 3 7-7';
 
 function copyLayout(e) {
   const b = e.currentTarget;

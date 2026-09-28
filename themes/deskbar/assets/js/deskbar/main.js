@@ -44,12 +44,14 @@ import { plainClick } from './lib/dom.js';
 import * as router from './router.js';
 function onResize() {
   const d = deskRect();
-  for (const w of S.wins) {
-    if (w.snap) continue;
-    w.x = Math.min(w.x, d.w - 60);
-    w.y = Math.min(w.y, d.h - 10);
-    place(w);
-    clampTab(w);
+  // a group moves as one (relayout lays it out), and one filling the desk follows it
+  for (const u of new Set(S.wins.filter(w => !w.snap).map(w => w.group || w))) {
+    if (u.fill) continue;
+    u.x = Math.min(u.x, d.w - 60);
+    u.y = Math.min(u.y, d.h - 10);
+    if (u.wins) continue;
+    place(u);
+    clampTab(u);
   }
   // phones ignore the split, and clamping it to a phone's width would lose the 25/75 reading layout for good
   if (!isPhone()) S.split = clampSplit(S.split, d.w);
@@ -83,12 +85,13 @@ async function restoreLayout({ wins, split }) {
     const keep = new Set([primary, ...wins.map(w => key(w.route))]);
     for (const w of S.wins.slice()) if (!w.views.some(v => keep.has(v.route()) || keep.has(v.url))) closeWin(w);
     if (split) S.split = clampSplit(split, deskRect().w);
-    for (const w of wins) {
-      const k = key(w.route), v = allViews().find(x => x.route() === k || x.url === k);
-      if (!v) continue;
-      if (w.snap) snapTo(v.win, w.snap); else unsnap(v.win);
-      focus(v.win);
-    }
+    const views = wins.map(w => allViews().find(x => x.route() === key(w.route) || x.url === key(w.route)));
+    wins.forEach((w, i) => { if (views[i]) { if (w.snap) snapTo(views[i].win, w.snap); else unsnap(views[i].win); } });
+    // layout links name the reading layout as Tracker snapped left and the reader right (wm/panel.js), which join up again
+    const rw = findView('reader')?.win, tw = findView('tracker')?.win;
+    if (rw?.snap === 'r' && tw?.snap === 'l') { unsnap(tw); unsnap(rw); readingLayout(rw, S.split); }
+    // then the link's stacking, bottom to top
+    for (const v of views) if (v) focus(v.win);
     relayout();
   } finally {
     S.booting = false;
@@ -157,7 +160,7 @@ function boot() {
     focus(S.focused || topWin());
     // a post opened on a phone has no layout yet; on the desktop it gets the reading layout (D7)
     const rv = findView('reader');
-    if (!isPhone() && rv && !rv.win.snap && !rv.win.min) readingLayout(rv.win);
+    if (!isPhone() && rv && !rv.win.snap && !rv.win.group && !rv.win.min) readingLayout(rv.win);
     // a desktop that started as a phone gets the Posts window it would have opened with, once, so one the visitor
     // closes stays closed
     if (phoneStart && !isPhone()) { phoneStart = false; showPosts(true); }

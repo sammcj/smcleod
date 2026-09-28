@@ -48,6 +48,7 @@ export const find = (nodes, sel) => nodes.map(n => (n.matches?.(sel) ? n : n.que
 
 // 16px outlined glyphs drawn in more than one bundle
 export const SHARE = 'M8 2v8M5 5l3-3 3 3M6 7H3v7h10V7h-3', MARKDOWN = 'M2 11V5l3 3 3-3v6m4-6v6m-2-2 2 2 2-2';
+export const LINK = 'M6.5 9.5l3-3M7.5 4.5l1-1a2.5 2.5 0 0 1 4 4l-1 1M8.5 11.5l-1 1a2.5 2.5 0 0 1-4-4l1-1';
 
 // Copies text, or a promise of it. Safari only allows a clipboard write straight from the press, so pending text goes
 // in a ClipboardItem, which it resolves later; browsers without ClipboardItem, or refusing it, get writeText.

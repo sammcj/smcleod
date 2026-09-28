@@ -1,13 +1,16 @@
 // Pointer handling for windows: move by a lone tab, a stack's handle or the frame, resize by grip, snap on release,
-// slide tabs, stack windows by dropping a tab or handle on another window's tabs, tear tabs off a stack, and drag the
-// shared divider. Pointer events cover touch too. Also the window keys: q, w, f, a, ? and `.
+// slide tabs, stack windows by dropping a tab or handle on another window's tabs, tear tabs off a stack, join windows
+// side by side and work their seams and clips (D40), and drag the shared divider. Pointer events cover touch too.
+// Also the window keys: q, w, f, a, ? and `.
 import { OWN_KEYS } from '../lib/dom.js';
 import { loadLazy } from '../loader.js';
 import { S } from './state.js';
 import { zoneAt, splitFor, clampSplit } from './snap.js';
+import { dropAt, dragSeam, memberRects, MIN_W } from './group.js';
 import {
   createWindow, renderTabs, clampTab, focus, refresh, place, snapTo, unsnap, toggleMax, relayout,
   drawDivider, preview, deskRect, deskEl, tabH, isPhone, closeView, minimise, focusView, transition, morph, toggleArrange,
+  joinPlan, joinGroup, swapInto, leaveGroup, unjoin, moveGroup, layoutGroup, laidOut,
 } from './windows.js';
 
 function pt(e) {
@@ -45,6 +48,18 @@ export function drag(e, onMove, onEnd) {
 
 let lastTap = { t: 0, w: null };
 
+// D40: a window dragged over another joins its side from a band along that edge, or takes the place of a group member
+// from its middle. Returns what dropping there would do and the frame it would get, which the preview shows.
+// A group only takes a window while it is laid out, and a window pulled from a group (was) doesn't swap back into it.
+function joinAt(ev, p, dw, was) {
+  const el = document.elementFromPoint(ev.clientX, ev.clientY)?.closest('.win'), t = el && S.wins.find(w => w.el === el);
+  const side = t && t !== dw && (!t.group || laidOut(t.group)) && dropAt(p, t, !!t.group && t.group !== was);
+  if (!side) return null;
+  if (side === 'c') return { t, kind: 'swap', r: { x: t.x, y: t.y, w: t.w, h: t.h } };
+  const plan = joinPlan(t, dw, side);
+  return { t, side, kind: 'join', r: memberRects(plan.box, plan.shares)[plan.at] };
+}
+
 // v: the view whose tab was pressed, or null for a stack's handle
 function onTabDown(e, win, v) {
   const idx = win.views.indexOf(v);
@@ -52,9 +67,10 @@ function onTabDown(e, win, v) {
   focus(win);
   if (isPhone() || e.button > 0) return;
   const multi = win.views.length > 1, th = tabH(), otx = win.tabX;
-  // a tab in a stack tears off into its own window; a lone tab or a stack's handle moves the window
+  // a tab in a stack tears off into its own window; a lone tab or a stack's handle moves the window, out of its group
   let mode = multi && v ? 'detach' : !multi && e.shiftKey ? 'slide' : 'move';
-  let dw = win, target = null, zone = null;
+  let dw = win, target = null, zone = null, join = null, from = null;
+  const was = win.group;
   const p0 = pt(e);
   let gx = p0.x - win.x, gy = p0.y - win.y;
   // Haiku slides tabs with shift-drag; press-and-hold gives touch and pen users the same thing. A mouse keeps
@@ -66,16 +82,20 @@ function onTabDown(e, win, v) {
     if (mode === 'slide') { win.tabX = otx + dx; clampTab(win); return; }
     const p = pt(ev);
     if (mode === 'detach') { dw = detachView(v, p); gx = 40; gy = -th / 2; mode = 'move'; }
+    // where it was, for the window it may swap with
+    from ||= { x: dw.x, y: dw.y, w: dw.w, h: dw.h };
     if (dw.snap) { const f = gx / dw.w; unsnap(dw); gx = Math.round(f * dw.w); drawDivider(); }
+    if (dw.group) { leaveGroup(dw); refresh(); }
     const d = deskRect();
     dw.x = Math.round(Math.min(Math.max(p.x - gx, 60 - dw.w), d.w - 60));
     dw.y = Math.round(Math.min(Math.max(p.y - gy, th), d.h - 10));
     place(dw);
     dw.el.classList.add('ghost');
     zone = zoneAt(p, d);
-    preview(zone, dw);
-    const t = zone ? null : document.elementFromPoint(ev.clientX, ev.clientY)?.closest('.tab, .th');
+    const t = zone ? null : document.elementFromPoint(ev.clientX, ev.clientY)?.closest('.tab, .th:not(.clip)');
     mark(t && !dw.el.contains(t) ? t : null);
+    join = zone || target ? null : joinAt(ev, p, dw, was);
+    preview(zone, dw, join?.r, join?.kind);
   }, moved => {
     clearTimeout(hold);
     win.tabsEl.firstChild?.classList.remove('sliding');
@@ -100,6 +120,10 @@ function onTabDown(e, win, v) {
       return;
     }
     if (tgt) { stackInto(dw, S.wins.find(w => w.el.contains(tgt))); return; }
+    if (join) {
+      if (join.kind === 'swap') swapInto(join.t, dw, from); else joinGroup(join.t, dw, join.side);
+      relayout();
+    }
     refresh();
   });
 }
@@ -117,7 +141,7 @@ function stackInto(src, dst) {
   for (const v of src.views) { v.win = dst; dst.views.push(v); dst.viewsEl.append(v.el); }
   dst.active = dst.views.length - 1;
   // a free-floating stack takes the larger of the two sizes, so a post dropped on the compact Posts window isn't squeezed into it
-  if (!dst.snap) {
+  if (!dst.snap && !dst.group) {
     const d = deskRect();
     dst.w = Math.min(Math.max(dst.w, src.w), d.w - dst.x);
     dst.h = Math.min(Math.max(dst.h, src.h), d.h - dst.y);
@@ -129,26 +153,39 @@ function stackInto(src, dst) {
   focus(dst);
 }
 
+// A group member's grip resizes the group: its height, and the width this member has in it. With the rest of its group
+// off screen (minimised) or itself maximised, it resizes on its own and leaves the group, as a frame drag does.
 function onGrip(e, w) {
-  const ow = w.w, oh = w.h;
+  const ow = w.w, oh = w.h, g = w.group && laidOut(w.group) && w.group, gw = g?.w;
   // the size readout Haiku and XFCE show while resizing; screen readers skip it, the size is visual feedback only
   let size;
   drag(e, (dx, dy) => {
     if (w.snap) { w.snap = w.prev = w.unmax = null; renderTabs(w); }
-    w.w = Math.max(300, ow + dx);
-    w.h = Math.max(180, oh + dy);
-    place(w);
-    clampTab(w);
+    if (!g) leaveGroup(w);
+    if (g) {
+      const nw = Math.max(MIN_W, ow + dx);
+      for (const m of g.wins) m.share = m === w ? nw : m.w;
+      Object.assign(g, { w: gw + nw - ow, h: Math.max(180, oh + dy), fill: false });
+      layoutGroup(g);
+    } else {
+      w.w = Math.max(300, ow + dx);
+      w.h = Math.max(180, oh + dy);
+      place(w);
+      clampTab(w);
+    }
     if (!size) { size = document.createElement('div'); size.className = 'sizer'; size.setAttribute('aria-hidden', 'true'); e.target.before(size); }
     size.textContent = `${Math.round(w.w)} × ${Math.round(w.h)}`;
   }, () => { size?.remove(); w.placed = true; refresh(); });
 }
 
+// The frame border of a group member moves the group, as its clip does, or it alone out of a group not laid out
 function onFrameDrag(e, w) {
   const th = tabH();
+  if (w.group && laidOut(w.group)) return onClip(e, w, true);
   let ox = w.x, oy = w.y;
   drag(e, (dx, dy) => {
     if (w.snap) { unsnap(w); ox = w.x; oy = w.y; }
+    leaveGroup(w);
     w.x = ox + dx;
     w.y = Math.max(th, oy + dy);
     place(w);
@@ -159,11 +196,32 @@ function onDivider(e) {
   drag(e, (dx, dy, ev) => { S.split = clampSplit(pt(ev).x / deskRect().w, deskRect().w); relayout(); }, () => relayout());
 }
 
+// D40: a seam trades width between the members either side of it (w is the one to its right)
+function onSeam(e, w) {
+  const g = w.group, i = g.wins.indexOf(w) - 1, widths = g.wins.map(m => m.w);
+  drag(e, dx => {
+    dragSeam(widths, i, dx).forEach((s, j) => { g.wins[j].share = s; });
+    layoutGroup(g);
+  }, () => refresh());
+}
+
+// Dragging a clip moves its group; pressing it unjoins the group there (frame: a frame border, which only moves)
+function onClip(e, w, frame) {
+  const g = w.group, ox = g.x, oy = g.y, th = tabH();
+  focus(w);
+  drag(e, (dx, dy) => moveGroup(g, ox + dx, Math.max(th, oy + dy)), moved => {
+    if (!moved && !frame) unjoin(g, g.wins.indexOf(w));
+    refresh();
+  });
+}
+
 export function initPointer(desk) {
   desk.addEventListener('pointerdown', e => {
     if (e.target.id === 'divider') return onDivider(e);
     const win = S.wins.find(w => w.el.contains(e.target));
     if (!win) return;
+    if (e.target.closest('.clip')) return e.button > 0 || onClip(e, win);
+    if (e.target.classList.contains('seam')) return onSeam(e, win);
     if (e.target.closest('.ctl')) return;
     const tab = e.target.closest('.tab, .th');
     if (tab) return onTabDown(e, win, tab._view);
@@ -176,6 +234,12 @@ export function initPointer(desk) {
     // Enter or Space on a tab title; pointer presses were already handled on pointerdown
     const tt = e.target.closest('.tab .tt');
     if (tt && e.detail === 0) return focusView(tt.closest('.tab')._view);
+    // Enter or Space on a clip unjoins there, as a press does
+    if (e.target.closest('.clip') && e.detail === 0) {
+      const w = S.wins.find(x => x.el.contains(e.target));
+      if (w?.group) unjoin(w.group, w.group.wins.indexOf(w));
+      return;
+    }
     const b = e.target.closest('.tabs .ctl');
     if (!b) return;
     const w = S.wins.find(w => w.el.contains(b));

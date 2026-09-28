@@ -7,14 +7,17 @@
 # Photos opens.
 # Any other post gets an album of its own under "From posts" only by opting in (D26): front matter `photos: true`
 # or the gallery shortcode. Posts with several images are more often screenshots and diagrams than photos.
+- id: rcd-stonith
+  title: Delayed Serial STONITH
+  source: { type: post, slug: 2015-07-21-rcd-stonith }
+  # first in Photos, which opens on it
+  pin: true
 - id: highlands
   title: Highlands Festival of Speed 2018
   source: { type: post, slug: highlands-festival-of-speed-2018 }
 - id: otago
   title: Otago road trip in a Mustang GT
   source: { type: post, slug: new-zealand-otago-trip-in-a-2019-mustang-gt }
-  # first in Photos, which opens on it
-  pin: true
 - id: ferrari-f12
   title: Ferrari F12 Berlinetta
   source: { type: post, slug: ferrari-f12-berlinetta }

@@ -2,8 +2,9 @@
 // A window holds one or more views (stacked tabs). A view is { key, title, icon, el, route() } plus an optional
 // teardown(), which runs when the view closes.
 import { S, emit } from './state.js';
-import { h, ico } from '../lib/dom.js';
+import { h, ico, stroke, LINK } from '../lib/dom.js';
 import { snapRect, sideOf, splitFor, tileRects, overlaps, GAP } from './snap.js';
+import { memberRects, joinBox, leaveBox, MIN_W } from './group.js';
 
 let desk = null, viewIds = 0, phoneMq = null;
 export function initWindows(el) {
@@ -165,17 +166,21 @@ export function renderTabs(win) {
 export function clampTab(win) {
   const t = win.tabsEl.firstChild;
   if (!t || win.views.length > 1) return;
-  win.tabX = Math.max(0, Math.min(win.tabX, win.w - (t.offsetWidth || 0)));
+  // a group member's tab row stops short of the clips on its seams (windows.css)
+  win.tabX = Math.max(0, Math.min(win.tabX, (win.tabsEl.clientWidth || win.w) - (t.offsetWidth || 0)));
   t.style.left = win.tabX + 'px';
 }
 
-// Focusing any window means the visitor has moved on, so a pending Home snapshot is discarded (D24)
+// Focusing any window means the visitor has moved on, so a pending Home snapshot is discarded (D24). The rest of its
+// group on screen comes up with it, just under it.
 export function focus(win) {
   if (win) {
     S.home = null;
     win.min = false;
-    win.z = ++S.z;
-    win.el.style.zIndex = win.z;
+    for (const w of [...(win.group?.wins.filter(m => m !== win && !m.min) || []), win]) {
+      w.z = ++S.z;
+      w.el.style.zIndex = w.z;
+    }
   }
   S.focused = win || null;
   refresh();
@@ -209,17 +214,19 @@ export function refresh() {
   }
   // phones hide the dock behind a full-screen window (see chrome.css)
   document.documentElement.classList.toggle('has-win', S.wins.some(w => !w.el.hidden));
+  // a member back from minimised or maximised takes its slot again, and its seams come back
+  for (const g of groups()) layoutGroup(g);
   drawDivider();
   shade();
   emit('refresh');
 }
 
-// Windows the front window covers fade a little (windows.css), so the one in front stands out. Worked out from the
-// window objects, not the DOM. Left as it is mid-drag, since every drag ends in a refresh or relayout.
+// Windows the front window, or its group, covers fade a little (windows.css), so the one in front stands out. Worked
+// out from the window objects, not the DOM. Left as it is mid-drag, since every drag ends in a refresh or relayout.
 function shade() {
   if (document.body.classList.contains('dragging')) return;
-  const top = !isPhone() && topWin(), th = tabH();
-  for (const w of S.wins) w.el.classList.toggle('under', !!top && w !== top && !w.min && overlaps(w, top, th));
+  const top = !isPhone() && topWin(), tops = top ? top.group?.wins || [top] : [], th = tabH();
+  for (const w of S.wins) w.el.classList.toggle('under', !tops.includes(w) && !w.min && tops.some(t => overlaps(w, t, th)));
 }
 
 // Hiding or removing the window that holds keyboard focus would drop focus to <body>. Hand it to the window
@@ -230,6 +237,7 @@ function passFocus(w, hide) {
   if (had) (topWin()?.tabsEl.querySelector('.tab.on .tt') || document.getElementById('menuBtn'))?.focus({ preventScroll: true });
 }
 
+// A group member minimises on its own: the others keep their places (laidOut) and it comes back to its slot
 export function minimise(w) {
   passFocus(w, () => {
     w.min = true;
@@ -251,6 +259,7 @@ export function closeView(v) {
 }
 
 export function closeWin(w) {
+  leaveGroup(w);
   passFocus(w, () => {
     for (const v of w.views) v.teardown?.();
     w.el.remove();
@@ -260,7 +269,9 @@ export function closeWin(w) {
   emit('closed', w.views);
 }
 
+// A group member maximises on its own and keeps its slot to come back to; snapped anywhere else, it leaves the group
 export function snapTo(w, zone) {
+  if (zone !== 'max') leaveGroup(w);
   if (!w.snap) w.prev = { x: w.x, y: w.y, w: w.w, h: w.h };
   if (zone !== 'max') w.unmax = null;
   w.snap = zone;
@@ -278,6 +289,7 @@ export function unsnap(w) {
   w.prev = null;
   place(w);
   renderTabs(w);
+  if (w.group) layoutGroup(w.group);
 }
 
 // Maximising a half-snapped window remembers the half, so restore goes back to it rather than to free size
@@ -294,16 +306,20 @@ export function toggleMax(w) {
 }
 
 // Tiles wins over area, by default the desk right of the icons (tileRects), in opening order. fill: each takes its
-// whole tile, as the a key does; otherwise a window keeps its own size where that fits, centred along its tile's top,
-// as folders do. animate: false inside a transition the caller already runs (router.js), which a second one would cut short.
+// whole tile, as the a key does; otherwise a window keeps its own width where that fits, centred along its tile's top,
+// as folders do, and the windows in a row take the tallest one's height, so they line up. A group (D40) in wins takes
+// its whole tile. animate: false inside a transition the caller already runs (router.js), which a second one would cut short.
 export function arrange(wins, { fill = false, animate = true, area } = {}) {
   if (isPhone() || !wins.length) return;
   const d = deskRect(), edge = iconsRight(), x = edge ? edge + GAP : 0;
   const rects = tileRects(wins.length, area || { x, y: 0, w: d.w - x, h: d.h }, tabH());
+  const hs = wins.map((w, i) => (fill ? rects[i].h : Math.min(w.h, rects[i].h)));
+  const rowH = r => Math.max(...hs.filter((_, j) => rects[j].y === r.y));
   const update = () => {
     wins.forEach((w, i) => {
       const r = rects[i], ww = fill ? r.w : Math.min(w.w, r.w);
-      Object.assign(w, { x: r.x + Math.round((r.w - ww) / 2), y: r.y, w: ww, h: fill ? r.h : Math.min(w.h, r.h), snap: null, prev: null, unmax: null });
+      if (w.wins) { Object.assign(w, r, { fill: false }); return layoutGroup(w); }
+      Object.assign(w, { x: r.x + Math.round((r.w - ww) / 2), y: r.y, w: ww, h: rowH(r), snap: null, prev: null, unmax: null });
       renderTabs(w);
       place(w);
       clampTab(w);
@@ -311,14 +327,14 @@ export function arrange(wins, { fill = false, animate = true, area } = {}) {
     drawDivider();
     shade();
   };
-  return animate ? morph(wins, update) : update();
+  return animate ? morph(wins.flatMap(u => u.wins || [u]), update) : update();
 }
 
 // Windows an app opens side by side (defineApp `tile`), leaving out any the visitor has moved, resized or snapped
 // (wm/drag.js). An open Posts window anchors the desk: with 400px or more to its right they tile there instead, a
 // lone one included, so opening either one clears the other.
 export function retile(opts) {
-  const pw = findView('tracker')?.win, d = deskRect(), x = pw && !pw.min && !pw.snap && pw.x + pw.w + GAP;
+  const pw = findView('tracker')?.win, d = deskRect(), x = pw && !pw.min && !pw.snap && !pw.group && pw.x + pw.w + GAP;
   const area = x && d.w - x >= 400 ? { x, y: 0, w: d.w - x, h: d.h } : undefined;
   for (const kind of new Set(allViews().map(v => v.tile).filter(Boolean))) {
     const ws = S.wins.filter(w => w !== pw && !w.min && !w.snap && !w.placed && w.views.every(v => v.tile === kind));
@@ -326,24 +342,28 @@ export function retile(opts) {
   }
 }
 
-// The a key (wm/drag.js): tiles every open window, each filling its tile, and the next press puts them back as they
-// were. If windows opened, closed or minimised in between, it tiles afresh instead.
+// The a key (wm/drag.js): tiles every open window, each filling its tile (a group sharing one), and the next press
+// puts them back as they were. If windows opened, closed or minimised in between, it tiles afresh instead.
 let arranged = null;
-const PLACE = ['x', 'y', 'w', 'h', 'snap', 'prev', 'unmax', 'tabX', 'placed'];
+const PLACE = ['x', 'y', 'w', 'h', 'snap', 'prev', 'unmax', 'tabX', 'placed', 'share', 'fill'];
 export function toggleArrange() {
-  const open = S.wins.filter(w => !w.min), was = arranged;
+  const open = S.wins.filter(w => !w.min), units = [...new Set(open.map(w => w.group || w))], was = arranged;
   if (isPhone() || !open.length) return;
   arranged = null;
-  if (was?.length === open.length && was.every(([w]) => open.includes(w))) {
+  if (was?.length === units.length && was.every(([u]) => units.includes(u))) {
     return morph(open, () => {
-      for (const [w, geo] of was) { Object.assign(w, geo); renderTabs(w); place(w); clampTab(w); }
+      for (const [u, geo] of was) {
+        Object.assign(u, geo);
+        if (u.wins) { layoutGroup(u); continue; }
+        renderTabs(u); place(u); clampTab(u);
+      }
       relayout();
     });
   }
-  arranged = open.map(w => [w, Object.fromEntries(PLACE.map(k => [k, w[k]]))]);
+  arranged = units.map(u => [u, Object.fromEntries(PLACE.filter(k => k in u).map(k => [k, u[k]]))]);
   // arranged at the visitor's word, so these count as placed by hand (no more folder tiling)
   for (const w of open) w.placed = true;
-  arrange(open, { fill: true });
+  arrange(units, { fill: true });
 }
 
 export function relayout() {
@@ -355,8 +375,153 @@ export function relayout() {
     place(w);
     clampTab(w);
   }
+  for (const g of groups()) layoutGroup(g);
   drawDivider();
   shade();
+}
+
+// D40 window groups (wm/group.js). A member keeps the place it had before it joined (solo) when it was a window of
+// its own then, and goes back there once the group is down to it: closing a post puts the Posts window back (D36).
+const groups = () => [...new Set(S.wins.map(w => w.group).filter(Boolean))];
+const SOLO = ['x', 'y', 'w', 'h', 'snap', 'prev', 'unmax'];
+const free = { snap: null, prev: null, unmax: null };
+// A group lays out while all of it is on screen: not on a phone (D17), and no member minimised or maximised, which
+// leaves the others where they are and keeps its slot to come back to
+export const laidOut = g => !isPhone() && g.wins.every(w => !w.min && !w.snap && S.wins.includes(w));
+
+export function layoutGroup(g) {
+  if (laidOut(g)) {
+    if (g.fill) Object.assign(g, snapRect('max', 0.5, deskRect(), tabH()));
+    memberRects(g, g.wins.map(w => w.share)).forEach((r, i) => {
+      const w = g.wins[i];
+      Object.assign(w, r);
+      place(w);
+    });
+  }
+  drawSeams(g);
+}
+
+// Each member after the first carries the seam on its left (windows.css): it resizes its neighbours, and its clip
+// unjoins them or, dragged, moves the group (wm/drag.js)
+function drawSeams(g) {
+  const on = laidOut(g) && g.wins.length > 1;
+  g.wins.forEach((w, i) => {
+    w.el.classList.toggle('gl', on && i > 0);
+    w.el.classList.toggle('gr', on && i < g.wins.length - 1);
+    if (on && i && !w.seam) {
+      const clip = h('button', { class: 'th clip', type: 'button', 'aria-label': 'Unjoin windows' });
+      clip.innerHTML = `<svg viewBox="0 0 16 16" aria-hidden="true">${stroke(LINK, 1.6)}</svg>`;
+      w.el.append(w.seam = h('div', { class: 'seam' }, clip));
+    }
+    clampTab(w);
+  });
+}
+
+function ungroup(w) {
+  w.group = w.solo = null;
+  w.el.classList.remove('gl', 'gr');
+}
+
+// Where a group would go if w joined t's side ('l' or 'r'): its box, members and their shares. A fill group keeps
+// the desk and makes room; any other grows, clear of the desktop icons if it was, and w takes what width is left when
+// the desk runs out, the rest shrinking only once w is down to its minimum.
+export function joinPlan(t, w, side) {
+  const edge = iconsRight(), g = t.group;
+  const box = g?.fill ? g : joinBox(g || t, w.w, side, deskRect(), tabH(), GAP, edge && edge + GAP);
+  const wins = (g?.wins || [t]).filter(m => m !== w);
+  // shares are only ratios (pairUp sets fractions), so in pixels here to weigh against w's width
+  const sum = g ? g.wins.reduce((n, m) => n + m.share, 0) : 1, room = g ? g.w - GAP * (g.wins.length - 1) : 0;
+  const shares = wins.map(m => (g ? (m.share * room) / sum : m.w));
+  const i = wins.indexOf(t) + (side === 'r' ? 1 : 0), rest = box.w - GAP * wins.length - shares.reduce((n, s) => n + s, 0);
+  wins.splice(i, 0, w);
+  shares.splice(i, 0, g?.fill || rest < MIN_W ? w.w : Math.min(w.w, rest));
+  return { box, wins, shares, at: i };
+}
+
+// w joins t's side, making t a group first. Joined by hand, so neither tiles with the folders any more (retile).
+export function joinGroup(t, w, side) {
+  leaveGroup(w);
+  const { box, wins, shares } = joinPlan(t, w, side);
+  let g = t.group;
+  if (!g) {
+    g = { wins: [], fill: t.snap === 'max' };
+    t.solo = Object.fromEntries(SOLO.map(k => [k, t[k]]));
+  }
+  Object.assign(g, g.fill ? {} : box, { wins });
+  wins.forEach((m, i) => Object.assign(m, free, { group: g, share: shares[i], placed: true }));
+  w.solo = null;
+  layoutGroup(g);
+  focus(w);
+}
+
+// w takes t's place in its group, and t goes where w was (from)
+export function swapInto(t, w, from) {
+  const g = t.group;
+  leaveGroup(w);
+  g.wins[g.wins.indexOf(t)] = w;
+  Object.assign(w, free, { group: g, share: t.share, solo: null, placed: true });
+  ungroup(t);
+  Object.assign(t, from);
+  renderTabs(t);
+  place(t);
+  clampTab(t);
+  layoutGroup(g);
+  focus(w);
+}
+
+// Takes w out of its group. The others close up; one left on its own goes back to its solo place, if it has one.
+export function leaveGroup(w) {
+  const g = w.group;
+  if (!g) return;
+  const rects = memberRects(g, g.wins.map(m => m.share)), i = g.wins.indexOf(w);
+  g.wins.splice(i, 1);
+  ungroup(w);
+  if (g.wins.length > 1) {
+    if (!g.fill) Object.assign(g, leaveBox(g, rects, i));
+    return layoutGroup(g);
+  }
+  const [last] = g.wins, solo = last.solo;
+  ungroup(last);
+  if (solo) Object.assign(last, solo);
+  renderTabs(last);
+  place(last);
+  clampTab(last);
+  relayout();
+}
+
+// The clip after member i: splits the group there. Both sides stay where they are, as groups of their own or windows.
+export function unjoin(g, i) {
+  for (const wins of [g.wins.slice(0, i), g.wins.slice(i)]) {
+    if (wins.length === 1) { ungroup(wins[0]); continue; }
+    const a = wins[0], z = wins.at(-1), ng = { wins, x: a.x, y: a.y, w: z.x + z.w - a.x, h: a.h, fill: false };
+    for (const w of wins) Object.assign(w, { group: ng, share: w.w });
+    drawSeams(ng);
+  }
+  refresh();
+}
+
+export function moveGroup(g, x, y) {
+  Object.assign(g, { x, y, fill: false });
+  layoutGroup(g);
+}
+
+// The reading layout (D7): a and b side by side across the desk, a taking split of it. The pair stays as the visitor
+// left it when it is already grouped this way.
+export function pairUp(a, b, split) {
+  const g = a.group;
+  if (g && g.wins.length === 2 && g.wins[0] === a && g.wins[1] === b) {
+    // Home (D24) may have minimised or moved either
+    for (const w of g.wins) { unsnap(w); w.min = false; }
+    g.fill = true;
+    return layoutGroup(g);
+  }
+  leaveGroup(a);
+  leaveGroup(b);
+  const ng = { wins: [a, b], fill: true };
+  a.solo = Object.fromEntries(SOLO.map(k => [k, a[k]]));
+  Object.assign(a, free, { group: ng, share: split, min: false });
+  Object.assign(b, free, { group: ng, share: 1 - split, min: false });
+  layoutGroup(ng);
 }
 
 export function drawDivider() {
@@ -373,10 +538,14 @@ export function drawDivider() {
   Object.assign(dv.style, { left: Math.round(d.w * S.split) - 7 + 'px', height: d.h + 'px', zIndex: z });
 }
 
-export function preview(zone, w) {
+// Where a dragged window w would land: snapped to zone, or at the frame r it would join a group at (kind 'join') or
+// take over in one ('swap'), each with its own mark (chrome.css)
+export function preview(zone, w, r, kind) {
   const pv = document.getElementById('snapPreview');
-  pv.hidden = !zone;
-  if (!zone) return;
-  const th = tabH(), r = snapRect(zone, splitFor(S.wins, w, zone, S.split), deskRect(), th);
+  pv.hidden = !zone && !r;
+  pv.className = kind || '';
+  if (pv.hidden) return;
+  const th = tabH();
+  r ||= snapRect(zone, splitFor(S.wins, w, zone, S.split), deskRect(), th);
   Object.assign(pv.style, { left: r.x + 'px', top: r.y - th + 'px', width: r.w + 'px', height: r.h + th + 'px' });
 }

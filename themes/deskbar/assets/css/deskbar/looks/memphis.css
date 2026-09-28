@@ -20,7 +20,7 @@
 :root[data-deco=memphis] ::selection { background: var(--mp-sun); color: var(--sw-ink); }
 :root[data-deco=memphis] :focus-visible { outline-color: var(--mp-sun); }
 /* yellow would barely show on pink, so focus on a pink tab rings in ink */
-:root[data-deco=memphis] :is(.win.active .tab .tt, .sw-tab.on .sw-open):focus-visible { outline-color: var(--sw-ink); }
+:root[data-deco=memphis] :is(.win.active .tab.on .tt, .sw-tab.on .sw-open):focus-visible { outline-color: var(--sw-ink); }
 :root[data-deco=memphis] #themeBtn { display: none; }
 :root[data-deco=memphis] .ticker-h { color: var(--sw-ink); }
 @supports selector(::-webkit-scrollbar) {
@@ -44,8 +44,10 @@
 :root[data-deco=memphis] .win :is(.tab, .th) { border: 2px solid var(--sw-edge); border-bottom: 0; border-radius: 0; box-shadow: none; }
 :root[data-deco=memphis] .win.active :is(.tab, .th) { border-color: var(--mp-dk); }
 :root[data-deco=memphis] .win.active .tab { color: var(--sw-ink); background: var(--sw-pink); box-shadow: 4px 4px 0 var(--sw-cyan); }
-:root[data-deco=memphis] .win.active .tab:not(.on) { background: var(--tab-dim); }
-:root[data-deco=memphis] .tabs.multi .tab { margin-right: -2px; }
+/* stacked tabs stand apart, the front one's shadow showing in the gap; those behind it drop to flat indigo */
+:root[data-deco=memphis] .tabs.multi .tab { margin-right: 6px; }
+:root[data-deco=memphis] .win.active .tab:not(.on) { color: var(--tab-in-fg); background: var(--tab-in); box-shadow: none; }
+:root[data-deco=memphis] .win.active .tab:not(.on) .ctl:not(:hover) { color: inherit; }
 :root[data-deco=memphis] .tab .tt { font-family: var(--sw-head); font-size: 12px; letter-spacing: .08em; text-transform: uppercase; }
 :root[data-deco=memphis] .win .ctl { border-radius: 0; }
 :root[data-deco=memphis] .win .ctl:hover { color: var(--mp-sun); background: var(--sw-ink); }

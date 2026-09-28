@@ -36,8 +36,10 @@ test('Clearlooks: Metacity title bars, two light panels, the window list and pag
   const bg = rgbs(await css(tab, 'backgroundImage'));
   assert.ok(bg.length >= 3 && bg.every(blue), `blue gradient: ${JSON.stringify(bg)}`);
   assert.equal(await css(tab.locator('.tt'), 'color'), 'rgb(255, 255, 255)');
-  const [tb, fb] = [await box(tab), await box(frame)];
-  assert.ok(Math.abs(tb.x - fb.x) <= 1 && Math.abs(tb.width - fb.width) <= 1, `title bar ${JSON.stringify(tb)} over frame ${JSON.stringify(fb)}`);
+  // the full width of its tab row, which is the frame's less the clip of a joined window (D40)
+  const [tb, fb, rb] = [await box(tab), await box(frame), await box(page.locator('.win.active .tabs'))];
+  assert.ok(Math.abs(tb.x - rb.x) <= 1 && Math.abs(tb.width - rb.width) <= 1, `title bar ${JSON.stringify(tb)} over tab row ${JSON.stringify(rb)}`);
+  assert.ok(rb.x >= fb.x && rb.x + rb.width <= fb.x + fb.width + 1, 'within the frame');
   assert.ok(Math.abs(tb.y + tb.height - fb.y) <= 1, 'joined to the frame');
   assert.equal(await css(tab, 'borderTopLeftRadius'), '5px');
   const [title, min, max, close] = await Promise.all(['.tt', '.ctl.min', '.ctl.max', '.ctl.close'].map(s => box(tab.locator(s))));

@@ -85,7 +85,7 @@ test('Tab completes a command name, or lists the candidates after their common p
   assert.deepEqual(complete('neo', site, []), { line: 'neofetch ', options: [] });
   const c = complete('c', site, []);
   assert.equal(c.line, 'c');
-  assert.deepEqual(c.options.sort(), ['cat', 'cd', 'clear']);
+  assert.deepEqual(c.options.sort(), ['cat', 'cd', 'clear', 'cowsay']);
   assert.deepEqual(complete('he', site, []).line, 'help ');
   assert.deepEqual(complete('su', site, []), { line: 'su', options: [] }, 'hidden commands are not offered');
   assert.deepEqual(complete('man hi', site, []).line, 'man history ');
