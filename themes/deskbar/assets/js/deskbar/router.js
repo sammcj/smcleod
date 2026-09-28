@@ -4,12 +4,8 @@
 // tools never replace the site. Anything else that is not a same-origin page URL loads natively.
 import { markExecuted } from './content.js';
 import { plainClick } from './lib/dom.js';
+import { safeDecode } from './lib/format.js';
 import { transition } from './wm/windows.js';
-
-// A hash is typed or pasted by people, so a stray % (#100%) must not throw
-export function safeDecode(s) {
-  try { return decodeURIComponent(s); } catch { return s; }
-}
 
 // Returns the routable parts of href, or null when the browser should handle it
 export function routeFor(href, base) {
@@ -159,13 +155,18 @@ async function resolve(r) {
   return { page, r };
 }
 
+// Resolves once the handler has run: a View Transition runs it a frame later, and without one it has already run.
+// A handler that throws in a View Transition is logged by transition() and this resolves. Without one (start-up,
+// reduced motion, a browser without them) the throw comes straight out of show(), so go() rejects.
+const updated = vt => vt?.updateCallbackDone.catch(() => {});
+
 // pop: shown by Back or Forward rather than a new navigation. opts: go's, passed on to the handler.
 // The handler also gets the path and title being left (from, was), for a view that can put them back.
 function show(page, r, from, pop = false, opts) {
   shown = pageKey(r);
   const was = document.title;
   if (page.docTitle) document.title = page.docTitle;
-  transition(() => (handlers[page.kind] || handlers.page)(page, { hash: safeDecode(r.hash.slice(1)), from, was, pop, ...opts }));
+  return updated(transition(() => (handlers[page.kind] || handlers.page)(page, { hash: safeDecode(r.hash.slice(1)), from, was, pop, ...opts })));
 }
 
 const sameDoc = r => handlers.hash?.(r);
@@ -176,6 +177,7 @@ const sameDoc = r => handlers.hash?.(r);
 // opts.into: the key of a post window of its own (reader.js) that a link was pressed in, or that steps back or forward.
 // That window shows the page, even one another window shows at this address, and its history entry keeps the key
 // so Back and Forward return there. A folder window's key does the same for a folder (apps/index.js).
+// Resolves once the page is in its window, so a caller can then find the window (lazy/quake.js).
 export async function go(href, hint, opts) {
   const asked = routeFor(href, location.href);
   if (!asked) { location.assign(href); return; }
@@ -198,10 +200,10 @@ export async function go(href, hint, opts) {
   }
   if (t !== token) return;
   // a standalone file stays out of history: reloading its address would load the tool in place of the site
-  if (page.frame) return transition(() => (handlers.tool || handlers.page)(page, { hash: '', from }));
+  if (page.frame) return updated(transition(() => (handlers.tool || handlers.page)(page, { hash: '', from })));
   // a hinted place already at this address (the same Tracker place twice) is shown again without a new entry
   if (here || opts?.replace) replace(r.href); else push(r.href, '', opts?.into);
-  show(page, r, from, false, opts);
+  return show(page, r, from, false, opts);
 }
 
 // Loads href for a window beside the page the address names (a shared layout, ?layout=, or posts opened in windows of

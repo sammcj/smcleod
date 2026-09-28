@@ -2,7 +2,7 @@
 // the reading layout as a group, and phones, which never lay one out.
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { useBrowser, open, shot, win, cards, dragTab, desktop, phone, needs } from './lib.mjs';
+import { useBrowser, open, shot, win, cards, dragTab, desktop, phone, needs, settle } from './lib.mjs';
 
 useBrowser();
 
@@ -143,10 +143,10 @@ test('D40: the a key tiles a group as one unit and puts it back', async () => {
   await win(page, 'reader').locator('.rd h1').waitFor();
   const [tb, rb] = [await box(page, 'tracker'), await box(page, 'reader')];
   await page.keyboard.press('a');
-  await page.waitForTimeout(400);
+  await settle(page);
   assert.ok(await win(page, 'reader').locator('.seam').isVisible(), 'still joined');
   await page.keyboard.press('a');
-  await page.waitForTimeout(400);
+  await settle(page);
   assert.deepEqual([await box(page, 'tracker'), await box(page, 'reader')], [tb, rb], 'back as they were');
   assert.deepEqual(page.errors, []);
   await page.context().close();
@@ -160,7 +160,7 @@ test('D40: after Home, opening a post lays the reading pair out again', async ()
   await page.click('#homeBtn');
   await cards(page).nth(1).click();
   await win(page, 'reader').locator('.rd h1').waitFor();
-  await page.waitForTimeout(300);
+  await settle(page);
   assert.deepEqual([await box(page, 'tracker'), await box(page, 'reader')], [tb, rb], 'Posts and the post side by side again');
   assert.deepEqual(page.errors, []);
   await page.context().close();

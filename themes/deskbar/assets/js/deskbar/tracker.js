@@ -2,12 +2,12 @@
 // by year), a sortable list view and an icon view. Places: all posts, years, tags, series, the taxonomy lists, and the
 // menu's groups (Pages, Tools, Photos). Built from the shared post index; search results show as ranked compact rows.
 // The desktop opens it compact beside the icons on first load and on Home (D36, showPosts).
-import { S, on } from './wm/state.js';
+import { S, on, quietly, free } from './wm/state.js';
 import { h, ico, svgBtn, plainClick, toTop } from './lib/dom.js';
 import { store } from './lib/store.js';
 import { fmtDate, shortDate, plural, thumb, mini } from './lib/format.js';
-import { filterPosts } from './index-data.js';
-import { searchPosts } from './search.js';
+import { filterPosts } from './lib/index-data.js';
+import { searchPosts } from './lib/search.js';
 import { createWindow, findView, focusView, renderTabs, place, refresh, deskRect, tabH, isPhone, clearOfIcons, postsHome, retile } from './wm/windows.js';
 import { arrowTo } from './lib/keys.js';
 import { dragOut } from './dragout-trigger.js';
@@ -71,9 +71,6 @@ function hybrid(items, showLatest, label) {
     latest.length ? section('Latest', null, h('div', { class: 'pv-grid' }, latest.map(it => card(it.post)))) : null,
     [...groups].map(([y, its]) => section(y, its.length, h('div', { class: 'rows' }, its.map(row)))));
 }
-
-// the phone home screen's list (phone-home.js), as Tracker shows all posts
-export const postList = posts => hybrid(posts.map(postItem), true);
 
 // Sortable headers hold a button so keyboard users can sort too; aria-sort names the sorted column
 function table(items, st, onSort) {
@@ -304,22 +301,23 @@ export function ensureTracker({ place, url, q, focus = true } = {}) {
 export function showPosts(beneath) {
   let v = findView('tracker');
   if (isPhone() || (beneath && v)) return;
-  const { focused, booting, home } = S, geo = postsHome();
-  S.booting = true;
-  const made = !v;
-  if (made) createWindow(v = makeTracker(), geo);
-  const w = v.win;
-  if (!beneath) {
-    Object.assign(w, geo, { snap: null, prev: null, unmax: null, tabX: 0, min: false, active: w.views.indexOf(v), z: ++S.z });
-    S.focused = w;
-  } else if (focused) {
-    w.z = 1;
-    S.focused = focused;
-  }
-  renderTabs(w);
-  place(w);
-  if (made) retile({ animate: false });
-  Object.assign(S, { booting, home });
+  const { focused, home } = S, geo = postsHome();
+  quietly(() => {
+    const made = !v;
+    if (made) createWindow(v = makeTracker(), geo);
+    const w = v.win;
+    if (!beneath) {
+      Object.assign(w, geo, free, { tabX: 0, min: false, active: w.views.indexOf(v), z: ++S.z });
+      S.focused = w;
+    } else if (focused) {
+      w.z = 1;
+      S.focused = focused;
+    }
+    renderTabs(w);
+    place(w);
+    if (made) retile({ animate: false });
+  });
+  S.home = home;
   refresh();
 }
 

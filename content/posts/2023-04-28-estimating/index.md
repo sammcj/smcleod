@@ -1,6 +1,5 @@
 ---
 title: "Escaping the Time Trap: Why Estimating Effort, Not Time, Leads to Greater Success"
-subtitle: "Estimating is not just difficult, but often a deeply flawed process"
 date: 2023-04-28T06:41:37
 lastmod: 2023-05-17T19:41:37
 author: Sam McLeod
@@ -16,20 +15,10 @@ cover:
   #alt: "<alt text>"
   #caption: "<text>"
   #relative: false # To use relative path for cover image, used in hugo Page-bundles
-hiddenFromHomePage: false
-hiddenFromSearch: false
 toc:
   enable: true
   auto: false
-code:
-  copy: true
-  maxShownLines: 20
 math: false
-lightgallery: false
-readingTime: false
-showFullContent: false
-asciinema: false
-mermaid: true
 draft: false
 ---
 

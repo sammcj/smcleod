@@ -138,6 +138,7 @@ test('double-clicking a desktop or dock icon opens it once, and the second press
     await page.waitForTimeout(gap);
     await page.mouse.down({ clickCount: 2 });
     await page.mouse.up({ clickCount: 2 });
+    // a second press that got through would open or route after a fetch, and nothing marks its absence
     await page.waitForTimeout(600);
     const after = await page.evaluate(() => ({ presses: window.presses, len: history.length, sel: getSelection().toString() }));
     assert.equal(after.presses, 1, `${sel} ${gap}ms: the second press is swallowed`);
@@ -464,7 +465,7 @@ test("D36: closing the post by its close button puts the Posts window back where
   assert.notDeepEqual(await posts.boundingBox(), home, 'the reading layout moved it');
   await reader.locator('.tab.on .ctl.close').click();
   await page.locator('.view[data-key="reader"]').waitFor({ state: 'detached' });
-  await page.waitForTimeout(300);
+  await page.evaluate(() => new Promise(r => requestAnimationFrame(r)));
   assert.deepEqual(await posts.boundingBox(), home, 'back where it was');
   await page.waitForURL(u => u.pathname === '/');
   assert.deepEqual(page.errors, []);

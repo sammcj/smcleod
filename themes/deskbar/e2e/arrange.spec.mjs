@@ -2,7 +2,7 @@
 // open window and a second press puts them back (wm/drag.js). Uses the example site's /links/, /projects/ and /videos/ folders.
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { useBrowser, open, win, desktop, dragTab, needs } from './lib.mjs';
+import { useBrowser, open, win, desktop, dragTab, needs, settle } from './lib.mjs';
 
 useBrowser();
 
@@ -14,7 +14,7 @@ async function openFolder(page, p) {
   await page.evaluate(to => window.deskbar.go(to), p);
   await win(page, 'folder:' + p).locator('.folder li').first().waitFor();
   // the open transition and the tiling finish a frame later
-  await page.waitForTimeout(300);
+  await settle(page);
 }
 
 test('folders opened one after another sit side by side, and one moved by hand stays where it was put', async t => {
@@ -48,12 +48,12 @@ test('the a key tiles every open window, each filling its tile, and puts them ba
   const before = await Promise.all(keys.map(k => box(page, k)));
   await win(page, 'tracker').locator('input[type=search]').focus();
   await page.keyboard.press('a');
-  await page.waitForTimeout(300);
+  await settle(page);
   assert.deepEqual(await Promise.all(keys.map(k => box(page, k))), before, 'nothing moves while typing');
 
   await page.evaluate(() => document.activeElement.blur());
   await page.keyboard.press('a');
-  await page.waitForTimeout(400);
+  await settle(page);
   const boxes = await Promise.all(keys.map(k => withTab(page, k)));
   boxes.forEach((a, i) => boxes.slice(i + 1).forEach(b => assert.ok(!overlap(a, b), 'no two windows overlap')));
   const area = boxes.reduce((n, b) => n + b.width * b.height, 0);
@@ -61,7 +61,7 @@ test('the a key tiles every open window, each filling its tile, and puts them ba
 
   // pressed again, a puts every window back where it was
   await page.keyboard.press('a');
-  await page.waitForTimeout(400);
+  await settle(page);
   assert.deepEqual(await Promise.all(keys.map(k => box(page, k))), before, 'a second press undoes the arrangement');
   assert.deepEqual(page.errors, []);
   await page.context().close();
@@ -84,7 +84,7 @@ test('with Posts open, folders tile to its right, including one opened as the fi
 
   const first = await open(desktop, '/links/');
   await win(first, 'tracker').waitFor();
-  await first.waitForTimeout(300);
+  await settle(first);
   const [tk, f] = [await withTab(first, 'tracker'), await withTab(first, 'folder:/links/')];
   assert.ok(!overlap(tk, f), `Posts opened beneath at first load moves the folder to its right (${JSON.stringify([tk, f])})`);
   assert.deepEqual(first.errors, []);

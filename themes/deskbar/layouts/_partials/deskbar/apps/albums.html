@@ -7,17 +7,13 @@
          { type: urls, items: [{ src, caption }] }   external images, hotlinked
        A reader-section post that opts in (D26, see post-album.html) and shows at least one photo also gets an album
        of its own (auto), named by its slug, unless a listed album already covers it. */ -}}
-{{- $sections := site.Params.deskbar.readerSections | default (slice "posts") -}}
-{{- $posts := (where site.RegularPages "Section" "in" $sections).ByDate.Reverse -}}
+{{- $posts := partialCached "deskbar/posts.html" site -}}
 {{- $imageFile := `(?i)\.(jpe?g|png|gif|webp|avif)$` -}}
 {{- $albums := slice -}}
 {{- $pinned := slice -}}
 {{- $taken := slice -}}
 
-{{- /* hugo.Data replaced site.Data in 0.156; branch so older Hugo still builds */ -}}
-{{- $listed := slice -}}
-{{- if ge hugo.Version "0.156.0" }}{{ $listed = hugo.Data.albums }}{{ else }}{{ $listed = site.Data.albums }}{{ end -}}
-{{- range $listed -}}
+{{- range hugo.Data.albums -}}
   {{- $a := . -}}
   {{- $s := $a.source | default dict -}}
   {{- $album := dict "id" (string $a.id) "title" ($a.title | default $a.id) -}}

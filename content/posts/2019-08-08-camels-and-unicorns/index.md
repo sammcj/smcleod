@@ -1,6 +1,5 @@
 ---
 author: "Sam McLeod"
-readingTime: true
 categories: [ DevOps ]
 date: "2019-08-08T08:10:00Z"
 aliases:
@@ -27,7 +26,7 @@ title: Camels Dressed As Unicorns
 
 In most cases it's clear the organisation doesn't truly know what they want or need and likely don't understand the nuances of the aspects of engineering.
 
-The problem is - they're going to end up with a ‘Camel Dressed As A Unicorn' rather than someone with deep or natural engineering understanding in the areas they most need to help see, discuss, solve problems and deliver effective and lasting solutions.
+The problem is - they're going to end up with a 'Camel Dressed As A Unicorn' rather than someone with deep or natural engineering understanding in the areas they most need to help see, discuss, solve problems and deliver effective and lasting solutions.
 
 From the what I've seen recently companies hiring with 'DevOps Engineer' titles - the organisation (thinks they) want / need a Developer with a little bit of Operations experience - but not a true understanding of Operations or platform engineering.
 

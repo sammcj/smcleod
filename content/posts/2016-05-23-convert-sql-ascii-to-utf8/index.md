@@ -1,6 +1,5 @@
 ---
 author: "Sam McLeod"
-readingTime: true
 categories: [ Tech ]
 date: "2016-05-23T00:00:00Z"
 aliases:
@@ -89,7 +88,7 @@ Running these triggers would be an undesirable side-effect of what should be a s
 
 The original solution was designed to minimise downtime, and these scripts would be ineffective if they were to lock table for anything more than a couple of seconds.
 
-Unfortunately, this is exactly what happens if triggers are diabled per-table while updating the text like this:
+Unfortunately, this is exactly what happens if triggers are disabled per-table while updating the text like this:
 
 ```sql
 ALTER TABLE _some_table_ DISABLE TRIGGER ALL;

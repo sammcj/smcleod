@@ -11,6 +11,4 @@ windowWidth: 945
 windowHeight: 830
 windowBesidePosts: true
 norss: true
-comments: false
-showDate: false
 ---

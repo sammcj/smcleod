@@ -1,6 +1,5 @@
 ---
 author: "Sam McLeod"
-readingTime: true
 categories: [ machine-learning ]
 date: "2022-07-08T07:00:00Z"
 aliases:

@@ -1,6 +1,5 @@
 ---
 title: "Open Budgeting - Subscriptions & Licences"
-subtitle: "Publicly documenting my subscription and license expenses"
 date: 2023-01-05T12:41:37
 lastmod: 2023-01-05T12:41:37
 author: Sam McLeod
@@ -11,28 +10,17 @@ categories: ["saas", "finance"]
 series: ["Open Budgeting"]
 
 images: ["money-au.jpg"]
-featuredimage: "money-au.jpg"
 cover:
   image: "money-au.jpg"
   #alt: "<alt text>"
   #caption: "<text>"
   #relative: false # To use relative path for cover image, used in hugo Page-bundles
 
-hiddenFromHomePage: false
-hiddenFromSearch: false
-
 toc:
   enable: true
   auto: true
 
-code:
-  copy: true
-  maxShownLines: 20
 math: false
-lightgallery: false
-readingTime: false
-showFullContent: false
-asciinema: false
 
 draft: false
 ---

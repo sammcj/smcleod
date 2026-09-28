@@ -18,14 +18,14 @@ export const PALETTES = [
   ['lagoon', 'Lagoon', '#ff8a70 #f0e6d2 #3fb1b8'], ['cobalt', 'Cobalt', '#ff9b3d #e3e9fb #2049c6'], ['racing', 'Racing Green', '#e9a560 #f3f5f0 #1d5039'],
 ];
 export const MODES = [['auto', 'Auto'], ['light', 'Light'], ['dark', 'Dark']];
-export const DECOS = [['haiku', 'Haiku'], ['beos', 'BeOS'], ['flat', 'Flat'], ['clear', 'Clear'], ['liquid', 'Liquid Ass'],
+export const DECOS = [['haiku', 'Haiku'], ['beos', 'BeOS'], ['flat', 'Flat'], ['clear', 'Clear'],
   ['platinum', 'Platinum'], ['clearlooks', 'Clearlooks'], ['phosphor', 'Phosphor'], ['broadsheet', 'Broadsheet'], ['synthwave', 'Synthwave'],
   ['vector', 'Vector'], ['memphis', 'Memphis'], ['nightdrive', 'Night Drive'], ['pixel', 'Pixel']];
-export const DOCKS = [['glass', 'Glass'], ['deskbar', 'Deskbar'], ['panel', 'Panel'], ['liquid', 'Liquid Ass'],
+export const DOCKS = [['glass', 'Glass'], ['deskbar', 'Deskbar'], ['panel', 'Panel'],
   ['platinum', 'Platinum'], ['clearlooks', 'Clearlooks'], ['phosphor', 'Function keys'], ['broadsheet', 'Broadsheet'], ['synthwave', 'Synthwave'],
   ['vector', 'Vector'], ['memphis', 'Memphis'], ['nightdrive', 'Night Drive'],
   ['pixel', 'Hotbar'], ['pixel-cartridge', 'Cartridges']];
-export const WALLS = [['rings', 'Rings'], ['plain', 'Plain'], ['grid', 'Grid'], ['dots', 'Dots'], ['hills', 'Hills'], ['liquid', 'Liquid'], ['clear', 'Clear'],
+export const WALLS = [['rings', 'Rings'], ['plain', 'Plain'], ['grid', 'Grid'], ['dots', 'Dots'], ['hills', 'Hills'], ['clear', 'Clear'],
   ['platinum', 'Platinum'], ['clearlooks', 'Clearlooks'], ['phosphor', 'Phosphor'], ['broadsheet', 'Broadsheet'], ['synthwave', 'Synthwave'],
   ['synthwave-sunrise', 'Sunrise'], ['vector', 'Vector'], ['memphis', 'Memphis'], ['nightdrive', 'Night Drive'],
   ['pixel', 'Pixel hills'], ['pixel-pico', 'Pico']];
@@ -55,13 +55,13 @@ export const PRESETS = [
   { id: 'beos', label: 'BeOS', deco: 'beos', palette: 'beos', wall: 'plain', dock: 'deskbar', crt: 'off' },
   { id: 'xfce', label: 'Xfce', deco: 'flat', palette: 'xfce', wall: 'hills', dock: 'panel', crt: 'off' },
   { id: 'clear', label: 'Clear', deco: 'clear', palette: 'haiku', wall: 'clear', dock: 'glass', crt: 'off' },
-  { id: 'liquid', label: 'Liquid Ass', ...whole('liquid') },
   { id: 'platinum', label: 'Platinum', ...whole('platinum') },
   { id: 'clearlooks', label: 'Clearlooks', ...whole('clearlooks') },
   { id: 'phosphor', label: 'Phosphor', ...whole('phosphor'), crt: 'tube' },
   { id: 'broadsheet', label: 'Broadsheet', ...whole('broadsheet') },
   { id: 'synthwave', label: 'Synthwave', ...whole('synthwave'), palette: 'synthwave-night' },
   { id: 'synthwave-sunrise', label: 'Synthwave Sunrise', ...whole('synthwave'), palette: 'synthwave-sunrise', wall: 'synthwave-sunrise' },
+  { id: 'sunrise-rings', label: 'Sunrise Rings', ...whole('synthwave'), palette: 'synthwave-sunrise', wall: 'rings' },
   { id: 'vector', label: 'Vector', ...whole('vector') },
   { id: 'memphis', label: 'Memphis', ...whole('memphis') },
   { id: 'nightdrive', label: 'Night Drive', ...whole('nightdrive') },

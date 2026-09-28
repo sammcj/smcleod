@@ -1,7 +1,6 @@
 ---
 author: "Sam McLeod"
 toc: true
-readingTime: true
 categories: [ Tech ]
 date: "2015-02-16T00:00:00Z"
 aliases:
@@ -66,7 +65,7 @@ I have been working on various proof-of-concepts which have lead to our decision
   * RAID
   * Cross hardware-replication
   * Easy IP and iSCSI failover using standard tools
-* 1RU rack hight per unit
+* 1RU rack height per unit
 * 100% SSD only - no spindles will be hurt in the making of this journey!
 * Each unit to provide up to 450,000 IOP/s read performance on tier 1 storage
 * Provide up to 2.5GB/s read performance and 1.5GB/s write performance on tier 1 storage

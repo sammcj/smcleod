@@ -1,6 +1,5 @@
 ---
 author: "Sam McLeod"
-readingTime: false
 categories: [ Cars ]
 date: "2020-11-08T16:00:00Z"
 aliases:
@@ -11,7 +10,6 @@ cover:
   #alt: "<alt text>"
   #caption: "<text>"
   #relative: false # To use relative path for cover image, used in hugo Page-bundles
-lightgallery: true
 tags: [photos, cars]
 title: Ferrari F12 Berlinetta
 ---

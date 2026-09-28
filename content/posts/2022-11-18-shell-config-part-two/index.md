@@ -1,6 +1,5 @@
 ---
 title: "Zsh Configuration and Plugins - Part Two"
-subtitle: "The second post in the series on ZSH / shell configuration and customisation"
 date: 2022-11-18T16:32:43+11:00
 lastmod: 2022-11-18T16:32:43+11:00
 author: Sam McLeod
@@ -18,21 +17,11 @@ cover:
   #caption: "<text>"
   #relative: false # To use relative path for cover image, used in hugo Page-bundles
 
-hiddenFromHomePage: false
-hiddenFromSearch: false
-
 toc:
   enable: true
   auto: false
 
-code:
-  copy: true
-  maxShownLines: 20
 math: false
-lightgallery: false
-readingTime: false
-showFullContent: false
-asciinema: false
 
 draft: false
 ---
@@ -547,7 +536,7 @@ Git checkout new branch, git add, git commit, git push in all subdirectories mat
 ```bash
 function git_add_commit_push(){
   if [[ -z $1 ]] || [[ -z "$2" ]] || [[ -z "$3" ]]; then
-    echo 'You must pass three paramters, branchname, commit message, dir match - e.g. "my-branch" "commit message" ABC*';
+    echo 'You must pass three parameters, branchname, commit message, dir match - e.g. "my-branch" "commit message" ABC*';
   fi
   BRANCHNAME="$1"
   COMMITNAME="$2"

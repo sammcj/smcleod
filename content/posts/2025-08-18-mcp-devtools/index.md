@@ -6,28 +6,13 @@ images: ["thumbnail.png"]
 thumbnailIcon: thumbnail-icon.svg
 tags: ["ai", "llm", "tech", "coding", "cline", "claude", "agentic", "agentic coding", "mcp", "security"]
 author: "Sam McLeod"
-showToc: true
-TocOpen: true
 draft: false
-hidemeta: false
-comments: false
 description: "A single, modular MCP server for AI coding agents."
-disableShare: false
-disableHLJS: false
-hideSummary: false
 searchHidden: false
-ShowReadingTime: true
-ShowBreadCrumbs: true
-ShowPostNavLinks: true
-ShowWordCount: true
-ShowRssButtonInSectionTermList: true
-UseHugoToc: true
-mermaid: true
 cover:
   image: "sec-arch.png"
   alt: "Security middleware blocking potentially malicious content"
   # caption: "Optional caption text"
-  relative: true  # Set to true for page bundle images
 ---
 
 [MCP DevTools](https://github.com/sammcj/mcp-devtools) - The one tool that replaced the 10-15 odd NodeJS/Python/Rust MCP servers I had running at any given to for agentic coding tools with a single server that provides tools I consider useful for agents when coding.

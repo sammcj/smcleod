@@ -4,15 +4,7 @@
 {{- $albums := partial "deskbar/apps/albums.html" . }}
 {{- $manifest := resources.FromString "deskbar/albums.json" (jsonify $albums) | fingerprint }}
 <article class="rd photos-doc" data-albums="{{ $manifest.RelPermalink }}">
-  <header>
-    <h1>{{ .Title }}</h1>
-    {{- with .Description }}
-    <p class="lede">{{ . }}</p>
-    {{- end }}
-  </header>
-  {{- with .Content }}
-  <div class="rd-body">{{ . }}</div>
-  {{- end }}
+  {{- partial "deskbar/doc-head.html" . }}
   <ul class="ph-index">
     {{- range $albums }}
     <li><a href="#album-{{ .id }}">{{ .title }}</a> <small>{{ len .items }}</small></li>

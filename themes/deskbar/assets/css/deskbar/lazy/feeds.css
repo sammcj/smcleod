@@ -11,6 +11,10 @@
 .fd-ico { display: inline-block; flex: none; width: 16px; height: 16px; border-radius: 3px; object-fit: contain; vertical-align: -3px; }
 .fd-feed .fd-ico { margin-top: 1px; }
 .fd-m .fd-ico, .fd-src .fd-ico { width: 14px; height: 14px; margin-right: 5px; }
+/* a feed with no icon shows its initial, drawn here so it stays out of the feed name's text */
+.fd-mono::before { content: attr(data-initial); }
+.fd-mono { background: var(--muted); color: var(--content); font: 700 10px/16px var(--ui); text-align: center; }
+.fd-m .fd-mono, .fd-src .fd-mono { font-size: 9px; line-height: 14px; }
 .fd-feed:hover { background: var(--zebra); }
 .fd-feed[aria-current] { background: var(--accent); color: var(--accent-fg); }
 .fd-feed[aria-current] small { color: inherit; }

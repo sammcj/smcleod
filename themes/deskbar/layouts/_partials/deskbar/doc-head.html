@@ -1,0 +1,10 @@
+{{- /* An app or list page's heading, its description as the lede, then its content, if any. Context: the page. */ -}}
+  <header>
+    <h1>{{ .Title }}</h1>
+    {{- with .Description }}
+    <p class="lede">{{ . }}</p>
+    {{- end }}
+  </header>
+  {{- with .Content }}
+  <div class="rd-body">{{ . }}</div>
+  {{- end }}

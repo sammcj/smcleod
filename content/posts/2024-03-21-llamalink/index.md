@@ -17,21 +17,11 @@ tags:
 - AI
 - Code
 series: ["AI", "Code"]
-hiddenFromHomePage: false
-hiddenFromSearch: false
 
 toc:
   enable: true
   auto: true
-code:
-  copy: true
-  maxShownLines: 200
 math: false
-lightgallery: false
-readingTime: true
-showFullContent: true
-asciinema: false
-mermaid: false
 draft: false
 ---
 

@@ -1,6 +1,5 @@
 ---
 author: "Sam McLeod"
-readingTime: true
 categories: [ Tech ]
 date: "2019-08-06T10:30:00Z"
 aliases:
@@ -71,7 +70,7 @@ If you can't answer some of those, no problem - I'm just working on this as an i
 
 #### Clarification on some common role titles and experience terms
 
-Please see my blog post - ['Stop trying to hire with titles like ‘DevOps Engineer' or Cloud Engineer'](https://smcleod.net/tech/2019/08/08/camels-and-unicorns.html)
+Please see my blog post - ['Stop trying to hire with titles like 'DevOps Engineer' or Cloud Engineer'](https://smcleod.net/tech/2019/08/08/camels-and-unicorns.html)
 
 - On 'DevOps' in a title:
 

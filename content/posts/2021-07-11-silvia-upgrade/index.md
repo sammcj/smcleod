@@ -1,6 +1,5 @@
 ---
 author: "Sam McLeod"
-readingTime: true
 categories: [ hardware ]
 date: "2021-07-11T14:00:00Z"
 aliases:
@@ -11,7 +10,6 @@ cover:
   #alt: "<alt text>"
   #caption: "<text>"
   #relative: false # To use relative path for cover image, used in hugo Page-bundles
-lightgallery: true
 tags:
 - coffee
 - hardware

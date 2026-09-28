@@ -7,6 +7,8 @@ import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import { env, useBrowser, open, needs, shot, win, desktop, phone } from './lib.mjs';
+import { feedHref } from '../assets/js/deskbar/lazy/feeds.js';
+import { encodeLayout } from '../assets/js/deskbar/wm/layout.js';
 
 useBrowser();
 
@@ -39,6 +41,7 @@ test('opens from the Applications folder with every item, newest first, all unre
   let sum = 0;
   for (const s of await feeds.locator('small').allTextContents()) sum += Number(s || 0);
   assert.equal(sum, n * 2, 'the feeds add up to All items');
+  assert.equal(await feeds.locator('.fd-ico:is(img, .fd-mono)').count(), await feeds.count() - 1, 'every feed shows an icon, or its initial');
   assert.match(await w.locator('.status').textContent(), new RegExp(`^${n} items?, ${n} unread\\. Fetched `));
   if (await fixtures()) {
     assert.deepEqual(await w.locator('.fd-t').allTextContents(), ['Haiku R1/beta6 released', 'Atom entry one', 'Markup is shown as text',
@@ -161,6 +164,164 @@ test('a feed in the sidebar shows only its items', async t => {
   await page.context().close();
 });
 
+const menu = page => page.locator('.ctx:popover-open');
+const menuItem = (page, name) => menu(page).getByRole('menuitem', { name, exact: true });
+// The window holding the Feeds views, whichever tab is showing, and the feed its showing tab has selected
+const feedsWin = page => page.locator('.win:not([hidden]):has(.view[data-key^="feeds"])');
+const showing = async page => {
+  const v = feedsWin(page).locator('.view:not([hidden])');
+  await v.locator('.fd-feed[aria-current]').waitFor();
+  return v.locator('.fd-feed[aria-current] span').textContent();
+};
+
+test('a feed opens in a new tab of the Feeds window from its menu, Cmd/Ctrl-click or middle-click, never a browser tab', async t => {
+  if (!(await needs(t, url))) return;
+  const { page, w } = await openFeeds();
+  const names = (await w.locator('.fd-feed span').allTextContents()).slice(1);
+  if (names.length < 2) return t.skip('fewer than two feeds');
+  const [a, b] = names;
+  const tabs = feedsWin(page).locator('.tab .tt');
+  const side = name => feedsWin(page).locator('.view:not([hidden]) .fd-feed', { hasText: name });
+
+  await side(a).click({ button: 'right' });
+  await menu(page).waitFor();
+  assert.equal(await menu(page).getAttribute('aria-label'), a);
+  assert.deepEqual(await menu(page).locator('[role=menuitem]').allTextContents(), ['Open', 'Open in new tab', 'Copy link', 'Share…']);
+  await menuItem(page, 'Open in new tab').click();
+  await tabs.nth(1).waitFor();
+  assert.deepEqual(await tabs.allTextContents(), ['Feeds', a], 'a tab named for the feed, in the same window');
+  assert.equal(await showing(page), a);
+  assert.deepEqual(new Set(await feedsWin(page).locator('.view:not([hidden]) .fd-m span').allTextContents()), new Set([a]));
+  assert.equal(new URL(page.url()).searchParams.get('feed'), a, 'the tab has its own address');
+
+  // back in the first tab, which still shows every feed, Cmd/Ctrl-click opens another
+  await tabs.first().click();
+  assert.equal(await showing(page), 'All items');
+  await side(b).click({ modifiers: ['ControlOrMeta'] });
+  await tabs.nth(2).waitFor();
+  assert.equal(await showing(page), b);
+  // and middle-click on a feed that has a tab already shows that tab rather than adding one
+  await tabs.first().click();
+  await side(a).click({ button: 'middle' });
+  await page.waitForFunction(n => document.querySelector('.win:has(.view[data-key^="feeds"]) .tab.on')?.textContent === n, a);
+  assert.equal(await tabs.count(), 3);
+  assert.equal(await showing(page), a);
+  assert.equal(await feedsWin(page).count(), 1, 'every Feeds tab in one window');
+  assert.equal(page.context().pages().length, 1, 'no browser tab opened');
+  await shot(page, 'feeds-tabs');
+  assert.deepEqual(page.errors, []);
+  await page.context().close();
+});
+
+test("an item's menu opens its article, or its feed in a new tab", async t => {
+  if (!(await needs(t, url))) return;
+  const { page, w } = await openFeeds();
+  const row = w.locator('.fd-row').first();
+  const title = await row.locator('.fd-t').textContent(), feed = await row.locator('.fd-m > span').textContent();
+  await row.click({ button: 'right' });
+  await menu(page).waitFor();
+  assert.equal(await menu(page).getAttribute('aria-label'), title);
+  assert.deepEqual(await menu(page).locator('[role=menuitem]').allTextContents(), ['Open', 'Open article', 'Open feed in new tab', 'Copy link', 'Share…']);
+  await menuItem(page, 'Open').click();
+  assert.equal(await w.locator('.fd-pane h2').textContent(), title);
+  const link = await w.locator('.fd-pane a.fd-open').getAttribute('href');
+
+  // the article is on another site, so it opens in a browser tab, as the preview's Open article button does
+  await row.click({ button: 'right' });
+  const [tab] = await Promise.all([page.context().waitForEvent('page'), page.context().waitForEvent('request', r => r.url() === link), menuItem(page, 'Open article').click()]);
+  await tab.close();
+
+  await row.click({ button: 'right' });
+  await menuItem(page, 'Open feed in new tab').click();
+  await feedsWin(page).locator('.tab').nth(1).waitFor();
+  assert.equal(await showing(page), feed);
+  assert.deepEqual(page.errors, []);
+  await page.context().close();
+});
+
+// The feeds the Feeds page lists, read in the page so their names are decoded as the app reads them
+const feedNames = page => page.evaluate(async u => {
+  const doc = new DOMParser().parseFromString(await (await fetch(u)).text(), 'text/html');
+  return [...doc.querySelectorAll('.fd-feeds li')].map(li => li.dataset.name);
+}, url);
+const onTab = (page, name) => page.waitForFunction(n => document.querySelector('.win:has(.view[data-key^="feeds"]) .tab.on')?.textContent === n, name);
+
+test("a feed's address opens Feeds on that feed, in a window of its own until Feeds opens beside it", async t => {
+  if (!(await needs(t, url))) return;
+  const page = await open(desktop, '/');
+  const [name] = await feedNames(page);
+  await page.evaluate(u => window.deskbar.go(u), `${url}?feed=${encodeURIComponent(name)}`);
+  const tabs = feedsWin(page).locator('.tab .tt');
+  await feedsWin(page).locator('.view[data-loaded]').waitFor();
+  assert.deepEqual(await tabs.allTextContents(), [name]);
+  assert.equal(await showing(page), name);
+  await page.evaluate(u => window.deskbar.go(u), url);
+  await tabs.nth(1).waitFor();
+  assert.deepEqual(await tabs.allTextContents(), [name, 'Feeds'], 'the whole list joins it as a tab');
+  assert.equal(await showing(page), 'All items');
+  assert.deepEqual(page.errors, []);
+  await page.context().close();
+});
+
+test("a feed's tab follows the feed picked in it, its name and address with it; an unknown feed renames nothing", async t => {
+  if (!(await needs(t, url))) return;
+  const page = await open(desktop, '/');
+  const names = await feedNames(page);
+  if (names.length < 2) return t.skip('fewer than two feeds');
+  const [a, b] = names;
+  const go = u => page.evaluate(u => window.deskbar.go(u), u);
+  const tabs = feedsWin(page).locator('.tab .tt');
+  const side = name => feedsWin(page).locator('.view:not([hidden]) .fd-feed', { hasText: name });
+  const address = () => { const u = new URL(page.url()); return u.pathname + u.search; };
+  const shownKey = () => page.evaluate(() => document.querySelector('.win.active .view:not([hidden])').dataset.key);
+  await go(feedHref(url, a));
+  await feedsWin(page).locator('.view[data-loaded]').waitFor();
+
+  await side(b).click();
+  assert.equal(await showing(page), b);
+  assert.deepEqual(await tabs.allTextContents(), [b], 'the tab takes the name of the feed it shows');
+  assert.equal(address(), feedHref(url, b), 'and its address, which the address bar follows');
+  await side('All items').click();
+  assert.deepEqual(await tabs.allTextContents(), ['Feeds'], 'every feed: the Feeds page, by name');
+  assert.equal(address(), url, 'and by address');
+
+  // the address it opened with shows that feed in it again
+  await go(feedHref(url, a));
+  await onTab(page, a);
+  assert.equal(await showing(page), a);
+  assert.equal(await tabs.count(), 1);
+  assert.equal(await shownKey(), 'feeds:' + a, 'the same view, not a new one');
+
+  await go(`${url}?feed=${encodeURIComponent('No such feed')}`);
+  await tabs.nth(1).waitFor();
+  await feedsWin(page).locator('.view:not([hidden])[data-loaded]').waitFor();
+  assert.equal(await showing(page), 'All items');
+  assert.deepEqual(await tabs.allTextContents(), [a, 'Feeds'], 'a feed the build lacks names no tab');
+  assert.deepEqual(page.errors, []);
+  await page.context().close();
+});
+
+test('a layout link with two feeds in windows of their own opens them as two windows, where the link put them', async t => {
+  if (!(await needs(t, url))) return;
+  const page = await open(desktop, '/');
+  const names = await feedNames(page);
+  if (names.length < 2) return t.skip('fewer than two feeds');
+  const [a, b] = names;
+  const layout = encodeLayout([{ route: feedHref(url, a), snap: 'l' }, { route: feedHref(url, b), snap: 'r' }], 0.5);
+  await page.goto(`${env.base}/?layout=${layout}`);
+  await page.waitForSelector('html.wm-ready');
+  const wins = page.locator('.win:not([hidden]):has(.view[data-key^="feeds"])');
+  await page.waitForFunction(() => document.querySelectorAll('.win:not([hidden]) .view[data-key^="feeds"][data-loaded]').length === 2);
+  assert.equal(await wins.count(), 2, 'a window each');
+  const box = name => page.evaluate(k => [...document.querySelectorAll('.win')]
+    .find(w => [...w.querySelectorAll('.view')].some(v => v.dataset.key === k)).getBoundingClientRect().toJSON(), 'feeds:' + name);
+  const [left, right] = [await box(a), await box(b)];
+  assert.ok(left.x + left.width <= right.x + 1, `${a} on the left, ${b} on the right`);
+  assert.ok(left.width < desktop.width * 0.6 && right.width < desktop.width * 0.6, 'each on its half');
+  assert.deepEqual(page.errors, []);
+  await page.context().close();
+});
+
 test('feed markup is shown as text, never run', async t => {
   if (!(await needs(t, url)) || !(await fixtures())) return t.skip('needs the example fixtures');
   const { page, w } = await openFeeds();
@@ -189,8 +350,9 @@ test("feeds show their icons, and items their pictures, loaded from the item's s
   await w.locator('.view[data-loaded]').waitFor();
   const feed = name => w.locator('.fd-feed', { hasText: name });
   assert.match(await feed('Example News').locator('img.fd-ico').getAttribute('src'), /^\/.*\.webp$/, "the feed's artwork, shrunk and kept here");
-  assert.equal(await feed('Example Blog').locator('img').count(), 0, 'no artwork, no icon');
-  assert.equal(await feed('Example Blog').locator('i.fd-ico').count(), 1, 'but the space for one, so names line up');
+  assert.equal(await feed('Example Blog').locator('img').count(), 0, 'no artwork, and a local feed has no site to ask for an icon');
+  assert.equal(await feed('Example Blog').locator('.fd-ico.fd-mono').getAttribute('data-initial'), 'E', 'so its initial stands in');
+  assert.equal(await w.locator('.fd-row', { hasText: 'Atom entry one' }).locator('.fd-m .fd-mono').count(), 1, 'in the item list too');
 
   // a picture that fails to load (the <img> in the Markup item, the relative one in Atom entry two) drops out
   await page.waitForFunction(() => [...document.querySelectorAll('.fd-th')].every(i => i.complete && i.naturalWidth));

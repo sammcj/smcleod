@@ -1,6 +1,5 @@
 ---
 author: "Sam McLeod"
-readingTime: true
 categories: [ software ]
 date: "2021-07-22T19:00:00Z"
 aliases:

@@ -1,6 +1,5 @@
 ---
 author: "Sam McLeod"
-readingTime: true
 categories: [ Tech, BestOf, Software ]
 date: "2022-10-19T19:00:00Z"
 aliases:
@@ -16,7 +15,6 @@ tags:
 - software
 series: [ BestOf ]
 title: The Best Of - 2022 Edition
-
 ---
 
 Near the end of each year I note down a summary of the best apps I've enjoyed using throughout the year, here's 2022.

@@ -6,28 +6,13 @@ images: ["thumbnail.png"]
 thumbnailIcon: thumbnail-icon.svg
 tags: ["ai","llm","tech","anthropic","aws","cline","programming","vertex","gcp","agentic","agentic-coding"]
 author: "Sam McLeod"
-showToc: false
-TocOpen: false
 draft: false
-hidemeta: false
-comments: false
 description: "What is prompt caching and why is it so important for Agentic coding?"
-disableShare: false
-disableHLJS: false
-hideSummary: false
 searchHidden: false
-ShowReadingTime: false
-ShowBreadCrumbs: true
-ShowPostNavLinks: true
-ShowWordCount: false
-ShowRssButtonInSectionTermList: true
-UseHugoToc: false
-mermaid: true
 cover:
   image: "cline-1.png"
   alt: "Cline prompt caching indicator"
   # caption: "Optional caption text"
-  relative: false  # Set to true for page bundle images
 ---
 
 Prompt caching is a feature that Anthropic first offered on their API in 2024. It adds a cache for the tokens used

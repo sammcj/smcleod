@@ -2,12 +2,10 @@
    shadows and no blur, chunky pink tabs in Space Grotesk capitals, buttons that press into their shadows, and a flat
    wallpaper of confetti: dots, rings, triangles, crosses and a squiggle. Post text stays plain, for long reads.
    Dark only. */
-@font-face { font-family: 'Space Grotesk'; font-display: swap; font-weight: 700; src: url(../../../fonts/space-grotesk/space-grotesk-700-normal.woff2) format('woff2'); }
 
 :root[data-deco=memphis] {
   color-scheme: dark;
-  --sw-pink: #ff3ea5; --sw-cyan: #6fe3ff; --sw-ink: #1a0b3a; --sw-edge: #4a3580; --mp-sun: #ffe45e; --mp-dk: #0a0418;
-  --sw-head: 'Space Grotesk', var(--ui); --tab-h: 28px;
+  --mp-sun: #ffe45e; --mp-dk: #0a0418; --tab-h: 28px;
   --panel: var(--sw-ink); --panel-fg: #f5eeff; --panel-hover: rgba(255,255,255,.12);
   --frame: #211546; --frame-hi: #3b2a70; --frame-lo: #120a2a; --frame-dk: var(--mp-dk);
   --tab: var(--sw-pink); --tab-hi: var(--sw-pink); --tab-lo: var(--mp-dk); --tab-dim: #e07ab8;

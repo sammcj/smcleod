@@ -31,13 +31,10 @@ env:
 jobs:
   build:
     if: github.repository == 'sammcj/smcleod'
-    strategy:
-      matrix:
-        environment: ['production']
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           submodules: recursive
           persist-credentials: false
@@ -70,27 +67,14 @@ jobs:
           npm ci
           make test
 
-      - name: Setup Python and install uv
-        uses: actions/setup-python@f677139bbe7f9c59b41e40162b753c062f5d49a3 # v5.2.0
-        with:
-          python-version: '3.11'
-
-      - name: Install uv (which provides uvx)
-        run: |
-          python -m pip install --upgrade pip
-          pip install uv
+      - name: Setup uv
+        uses: astral-sh/setup-uv@c18668ad3cf93ea998bef934396af7bb5c839dc7 # v10.2.0
 
       - name: Generate llms.txt files
         run: |
-          # Remove any existing hugo_list.csv
-          rm -f hugo_list.csv
-
-          # Generate Hugo content list
           hugo list all > hugo_list.csv
-
-          # Install and run hugo2llmtxt to generate both files
-          uvx --from hugo2llmtxt hugo2llmtxt hugo_list.csv static/llms.txt false
-          uvx --from hugo2llmtxt hugo2llmtxt hugo_list.csv static/llms-full.txt true
+          uvx hugo2llmtxt@0.1.4 hugo_list.csv static/llms.txt false
+          uvx hugo2llmtxt@0.1.4 hugo_list.csv static/llms-full.txt true
 
       # The Projects folder lists pinned repos. The pinned-items API needs auth, so it's fetched here rather than
       # in the browser. A failed fetch keeps the committed data/pinned.json instead of failing the build.
@@ -105,23 +89,15 @@ jobs:
             --minify \
             --baseURL "${{ env.baseURL }}"
         env:
-          HUGO_ENVIRONMENT: ${{ matrix.environment }}
-          HUGO_ENV: ${{ matrix.environment }}
+          HUGO_ENVIRONMENT: production
+          HUGO_ENV: production
 
       - name: Check built site
         run: make check
 
-      - name: Prepare tag
-        id: prepare_tag
-        if: startsWith(github.ref, 'refs/tags/')
-        run: |
-          TAG_NAME="${GITHUB_REF##refs/tags/}"
-          echo "tag_name=${TAG_NAME}" >> "$GITHUB_OUTPUT"
-          echo "deploy_tag_name=deploy-${TAG_NAME}" >> "$GITHUB_OUTPUT"
-
       - name: Upload artifact
         if: github.event_name != 'pull_request'
-        uses: actions/upload-pages-artifact@56afc609e74202658d3ffba0e8f6dda462b719fa # v3.0.1
+        uses: actions/upload-pages-artifact@fc324d3547104276b827a68afc52ff2a11cc49c9 # v5.0.0
         with:
           path: ./public
 
@@ -139,20 +115,4 @@ jobs:
     steps:
       - name: Deploy to GitHub Pages
         id: deployment
-        uses: actions/deploy-pages@d6db90164ac5ed86f2b6aed7e0febac5b3c0c03e # v4.0.5
-
-  # Deploy job
-  deploy-staging:
-    needs: build
-    if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main' && github.repository == 'sammcj/smcleod-hugo'
-    permissions:
-      pages: write
-      id-token: write
-    runs-on: ubuntu-latest
-    environment:
-      name: github-pages
-      url: ${{ env.baseURL }}
-    steps:
-      - name: Deploy to GitHub Pages
-        id: deployment
-        uses: actions/deploy-pages@d6db90164ac5ed86f2b6aed7e0febac5b3c0c03e # v4.0.5
+        uses: actions/deploy-pages@368f82528645a54fb793d4d04e342629a3f51346 # v5.0.1

@@ -15,11 +15,7 @@ folderWeight: 1
 window: tool
 icon: vram
 categories: ["llm"]
-hideComments: true
 keywords: ["vram", "llm", "ollama", "llama", "ai", "cuda", "metal", "gguf"]
-showdate: false
-hiddenFromHomePage: true
-readingTime: false
 toc: false
 aliases:
   - /vram-calc/

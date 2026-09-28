@@ -1,7 +1,6 @@
 ---
 title: "YAML Anchors and Aliases"
 description: "Using YAML Anchors and Aliases to make config files more DRY"
-subtitle: ""
 date: 2022-11-06T15:52:27+11:00
 lastmod: 2022-11-06T08:52:27+11:00
 author: Sam McLeod
@@ -11,25 +10,12 @@ tags: ["yaml", "DRY"]
 categories: ["Software"]
 series: []
 
-image: "Official_YAML_Logo.png"
-
-featuredimage: "Official_YAML_Logo.png"
 cover:
   image: "Official_YAML_Logo.png"
 
-hiddenFromHomePage: false
-hiddenFromSearch: false
-
 toc: true
-asciinema: false
 math: false
-lightgallery: false
-readingTime: true
-showFullContent: false
 draft: false
-comments: true
-comment:
-  enable: true
 ---
 
 

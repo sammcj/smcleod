@@ -6,28 +6,13 @@ images: ["thumbnail.png"]
 thumbnailIcon: thumbnail-icon.svg
 tags: ["ai", "llm", "tech","coding", "cline", "agentic", "agentic coding"]
 author: "Sam McLeod"
-showToc: true
-TocOpen: true
 draft: false
-hidemeta: false
-comments: false
 description: "The two common themes I see with engineers adopting agentic coding tools"
-disableShare: false
-disableHLJS: false
-hideSummary: false
 searchHidden: false
-ShowReadingTime: true
-ShowBreadCrumbs: true
-ShowPostNavLinks: true
-ShowWordCount: true
-ShowRssButtonInSectionTermList: true
-UseHugoToc: true
-mermaid: true
 cover:
   image: "agentic-coding-adoption-cost-cycle.png"
   alt: "Agentic Coding Adoption Cost Cycle"
   # caption: "Optional caption text"
-  relative: true  # Set to true for page bundle images
 ---
 
 {{< wide-image src="agentic-coding-adoption-cost-cycle.png" alt="Agentic Coding Adoption Cost Cycle" >}}

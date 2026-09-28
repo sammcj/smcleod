@@ -5,11 +5,7 @@ tags:
 - quotes
 title: "Quotes and Musings"
 categories: [ quotes ]
-hideComments: true
 keywords: "quotes"
-showdate: false
-hiddenFromHomePage: true
-readingTime: true
 toc: true
 aliases:
   - /quotes-musings/

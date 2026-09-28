@@ -3,15 +3,14 @@
        [{ name, page?, url?, icon?, items: [{ name?, page?, url?, icon? }] }]. A group's own page or url is its app
        (Tracker links to it); groups that end up with no entries are left out. A group's icon, shown on its
        category, is its own icon, else its page's, else a folder. */ -}}
-{{- $sections := site.Params.deskbar.readerSections | default (slice "posts") -}}
 {{- $groups := slice -}}
-{{- $w := partial "deskbar/launcher-link.html" (dict "item" (dict "name" "All posts" "page" (index $sections 0) "icon" "folder") "class" "mn-it") -}}
-{{- range slice "tags" "series" "categories" -}}
+{{- $w := partial "deskbar/launcher-link.html" (dict "item" (dict "name" "All posts" "page" (index site.Params.deskbar.readerSections 0) "icon" "folder") "class" "mn-it") -}}
+{{- range site.Params.deskbar.taxonomies -}}
   {{- with site.GetPage . -}}
     {{- $w = print $w (partial "deskbar/launcher-link.html" (dict "item" (dict "name" (printf "All %s" (lower .LinkTitle)) "page" .Path "icon" "folder") "class" "mn-it")) -}}
   {{- end -}}
 {{- end -}}
-{{- range first 3 (where site.RegularPages "Section" "in" $sections).ByDate.Reverse -}}
+{{- range first 3 (partialCached "deskbar/posts.html" site) -}}
   {{- $w = print $w (partial "deskbar/launcher-link.html" (dict "item" (dict "page" .Path "icon" "doc") "class" "mn-it")) -}}
 {{- end -}}
 {{- with $w }}{{ $groups = $groups | append (dict "name" "Writing" "body" . "app" false "icon" "write") }}{{ end -}}

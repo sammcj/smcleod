@@ -15,8 +15,9 @@ export const DEFAULT = {
   theme: 'light', palette: 'haiku', deco: 'haiku', wall: 'rings', dock: 'glass', crt: 'off', readerWidth: 'normal', readerFont: 'serif', textSize: 18,
 };
 const subs = new Set();
-// Choices the theme no longer offers, which visitors may still have stored
-const RETIRED = { dock: 'minimal', deco: 'woodblock', wall: 'woodblock' };
+// Choices the theme no longer offers, which visitors may still have stored. head.html's pre-paint script skips the
+// same values (tests/control-panel.test.mjs checks they match).
+export const RETIRED = { dock: ['minimal', 'liquid'], deco: ['woodblock', 'liquid'], wall: ['woodblock', 'liquid'] };
 
 // The site's own starting choices (params.deskbar.appearance, which head.html writes out and shows before first paint
 // to a visitor who hasn't chosen). They are what a visitor starts on and what Reset puts back; they still show as
@@ -29,7 +30,7 @@ const start = k => (['palette', 'deco', 'wall', 'dock', 'crt'].includes(k) && ty
 // Stored values are checked on the way out, since anything can be in localStorage
 function valid(k, v) {
   if (k === 'textSize') return Math.min(24, Math.max(14, Math.round(v) || 18));
-  return typeof v === 'string' && v && v !== RETIRED[k] && (k !== 'readerWidth' || WIDTHS.includes(v)) ? v : start(k);
+  return typeof v === 'string' && v && !RETIRED[k]?.includes(v) && (k !== 'readerWidth' || WIDTHS.includes(v)) ? v : start(k);
 }
 
 export const get = k => valid(k, store.get(k));
@@ -46,8 +47,8 @@ export function set(k, v) {
   return v;
 }
 
-// on(fn(key, value)) returns a function that stops listening
-export const on = fn => (subs.add(fn), () => subs.delete(fn));
+// onSetting(fn(key, value)) returns a function that stops listening; settings.on to lazy modules and site scripts
+export const onSetting = fn => (subs.add(fn), () => subs.delete(fn));
 
 // The theme on screen: the chosen one, or the system's while following it (auto)
 export const shown = () => (isDark() ? 'dark' : 'light');
@@ -56,10 +57,10 @@ const setTheme = t => set('theme', t ?? (shown() === 'dark' ? 'light' : 'dark'))
 
 export const textSize = delta => set('textSize', get('textSize') + delta);
 
-export const settings = { get, set, on, shown };
+export const settings = { get, set, on: onSetting, shown };
 
 export function initSettings() {
-  // head.html shows a retired choice as it was stored; this puts back the default and forgets it
-  for (const k in RETIRED) if (document.documentElement.dataset[ATTR[k]] === RETIRED[k]) set(k);
+  // head.html has already shown the site's starting choice in place of a retired one; this forgets the stored value
+  for (const k in RETIRED) if (RETIRED[k].includes(store.get(k))) set(k);
   document.getElementById('themeBtn')?.addEventListener('click', () => setTheme());
 }

@@ -4,23 +4,9 @@ title: "Generating Diagrams with with AI / LLMs"
 date: 2024-10-08T01:00:10+00:00
 tags: ["ai", "tools", "llm", "tech", "diagrams", "automation", "mermaid"]
 author: "Sam McLeod"
-showToc: true
-TocOpen: false
 draft: false
-hidemeta: false
-comments: false
 description: "Generating diagrams with AI / LLMs"
-disableShare: false
-disableHLJS: false
-hideSummary: false
 searchHidden: false
-ShowReadingTime: false
-ShowBreadCrumbs: true
-ShowPostNavLinks: true
-ShowWordCount: false
-ShowRssButtonInSectionTermList: true
-UseHugoToc: false
-mermaid: true
 cover:
   image: "diagram-gen.png"
   alt: "DiagramGen"

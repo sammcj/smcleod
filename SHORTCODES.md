@@ -1,161 +1,76 @@
-# Sam's Hugo ShortCodes
+# Sam's Hugo Shortcodes
 
-See also
+Templates are in [layouts/shortcodes](layouts/shortcodes). Shortcodes with a `.markdown.md` twin also render into the site's markdown output.
 
-- [layouts/shortcodes](layouts/shortcodes)
-- [head.html](layouts/partials/inject/head.html) for adding the css and js required some of these shortcodes.
+## General
 
-## github.html
-
-Embeds a file from github within a code block.
-
-Can highlight lines etc...
+Highlighted text (overrides Hugo's built-in `highlight`; use fenced code blocks for code):
 
 ```hugo
-{{<github repo="username/repo-name" file="/path/to/file" lang="language" options="highlight-options">}}
+{{< highlight color="#c5ecff" >}}some **words**{{< /highlight >}}
 ```
 
-See [hugh/highlight-shortcode](https://gohugo.io/content-management/syntax-highlighting/#highlight-shortcode) for options.
-
-e.g.
+Static GitHub link styled as a button (no live counts). `button` is one of follow, sponsor, watch, star, fork, template, issue, download:
 
 ```hugo
-{{<github repo="sammcj/smcleod" file="layouts/shortcodes/github.html" lang="language" options="linenos=table,hl_lines=2 5-6,linenostart=2">}}
+{{< github-button button="star" user="sammcj" repo="zsh-bootstrap" count="true" >}}
 ```
 
-## github-button.html
-
-In head.html:
+GitHub gist, rendered in its own frame (optional third argument picks a file):
 
 ```hugo
-{{ if .HasShortcode "github_button" }}
-  <script async defer src="{{ .Site.BaseURL }}js/buttons.js"></script>
-{{ end }}
+{{< gist sammcj 45a32a7df6ea5b4efec7a7dd3bf2fc95 >}}
 ```
 
-Site config.toml:
-
-```toml
-[params.HugoShortcodes.Github]
-  User = 'your_github_login_or_org_name'
-  Repository = 'your_repository_name'
-```
-
-Usage:
+YouTube playlist:
 
 ```hugo
-{{< github-button button="follow"   user="sammcj" >}}
-{{< github-button button="sponsor"  user="sammcj" >}}
-{{< github-button button="watch"    user="sammcj" repo="github-button-hugo-shortcode" count="true" >}}
-{{< github-button button="star"     user="sammcj" repo="github-button-hugo-shortcode" count="true" >}}
-{{< github-button button="fork"     user="sammcj" repo="github-button-hugo-shortcode" count="true" >}}
-{{< github-button button="template" user="sammcj" repo="github-button-hugo-shortcode" >}}
-{{< github-button button="issue"    user="sammcj" repo="github-button-hugo-shortcode" count="true" >}}
-{{< github-button button="download" user="sammcj" repo="github-button-hugo-shortcode" >}}
+{{< youtubepl id="PLt6FXz8iff5hdyNdCTik8HqNhm5y9mwxH" >}}
 ```
 
-## toc.html
-
-Table of contents for a page that has toc disabled.
+Wide image from the page bundle, and wide content (tables) that break out of the post width:
 
 ```hugo
-{{<toc>}}
+{{< wide-image src="diagram.png" alt="Alt text" caption="Optional caption" >}}
+{{< wide-table >}}
+| a | b |
+|---|---|
+{{< /wide-table >}}
 ```
 
-## youtubepl.html
-
-Embeds a youtube playlist.
+Text that types itself out when scrolled into view (readable without JS):
 
 ```hugo
-{{<youtubepl id="PL4cUxeGkcC9gcy9lrvMJ75z9maRw4byYp">}}
+{{< typeit >}}A quote{{< /typeit >}}
 ```
 
-## asciinema.html
-
-Embeds an asciinema recording.
+Inline page script, re-run when the page is routed into a window:
 
 ```hugo
-{{<asciinema id="123456">}}
+{{< script >}}console.log('hi'){{< /script >}}
 ```
 
-## emoji.html
+## Citations
 
-Embeds an emoji.
+`cite-inline` adds a numbered reference with a hover tooltip. `bibliography` wraps the `bibentry` list and loads the citation styles.
 
 ```hugo
-{{<emoji name="smile">}}
+Some claim {{< cite-inline "Benjamin1969" >}}.
+
+{{< bibliography >}}
+{{< bibentry "Benjamin1969" >}}Benjamin, W. (1969). ...{{< /bibentry >}}
+{{< /bibliography >}}
 ```
 
-## colour.html
+## Page-specific
 
-Embeds a colour swatch.
+These render one page's data or app and take no content:
 
-```hugo
-{{<colour name="red" hex="#ff0000">}}
-```
-
-## highlight.html
-
-Highlights words.
-
-```hugo
-Highlight {{< highlighter color="lime" >}}absolutely **any** words {{</ highlighter >}} you want.
-```
-
-## tootstatic.html
-
-Embeds a static Toot from a Mastodon instance.
-
-```hugo
-{{< tootstatic "aus.social" "108739791879133672" >}}
-```
-
-## tootonline.html
-
-Embeds a live Toot from a Mastodon instance.
-
-```hugo
----
-> {{<tootonline "https://aus.social/@s_mcleod/108739791879133672">}}
----
-```
-
-## youtubelite.html
-
-Embeds a youtube video.
-
-```hugo
-{{<youtubelite videoId="RcXstZ4FzyE">}}
-```
-
-## tabs.html
-
-Code with tabs, good for showing different languages.
-
-```hugo
-{{< tabs groupId="config" >}}
-{{% tab name="json" %}}
-\```json
-{
-  "Hello": "World"
-}
-\```
-{{% /tab %}}
-{{% tab name="XML" %}}
-\```xml
-<Hello>World</Hello>
-\```
-{{% /tab %}}
-{{% tab name="properties" %}}
-\```properties
-Hello = World
-\```
-{{% /tab %}}
-{{< /tabs >}}
-## image-gallery.html
-
-Embeds a gallery of images with thumbnails.
-
-```hugo
-{{< image-gallery gallery_dir="dir-with-images" >}}
-```
+- `comparison-table`, `comparison-table-legend` - agentic coding tools table (see CLAUDE.md)
+- `skills-matrix`
+- `contact` - contact form
+- `heatmap` - AI tool ratings
+- `vram-calculator`
+- `quantisationDashboard`
+- `perplexity-chart`
+- `admeds`

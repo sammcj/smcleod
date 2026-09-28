@@ -1,7 +1,7 @@
 // Window lifecycle: create, tabs, focus and z-order, minimise, close, snap and restore.
 // A window holds one or more views (stacked tabs). A view is { key, title, icon, el, route() } plus an optional
 // teardown(), which runs when the view closes.
-import { S, emit } from './state.js';
+import { S, emit, free, pick, SOLO, PLACE } from './state.js';
 import { h, ico, stroke, LINK } from '../lib/dom.js';
 import { snapRect, sideOf, splitFor, tileRects, overlaps, GAP } from './snap.js';
 import { memberRects, joinBox, leaveBox, MIN_W } from './group.js';
@@ -14,7 +14,7 @@ export function initWindows(el) {
 export const deskEl = () => desk;
 
 // D17 phone mode: narrow screens, and phones turned sideways (short and touch driven), where a desktop layout of
-// several windows has no room. The CSS phone blocks repeat this query; tests/f5-shell.test.mjs keeps them in step.
+// several windows has no room. The CSS phone blocks repeat this query; tests/shell.test.mjs keeps them in step.
 export const PHONE = '(max-width: 767px), (max-height: 500px) and (pointer: coarse)';
 export const phoneQuery = () => (phoneMq ||= matchMedia(PHONE));
 export const isPhone = () => phoneQuery().matches;
@@ -96,7 +96,7 @@ export function createWindow(view, geo = {}) {
   const w = Math.min(geo.w || 680, d.w - 20), hh = Math.min(geo.h || 460, d.h - th - 12);
   const off = (S.wins.length % 5) * 28;
   const win = {
-    id: S.nextId++, w, h: hh, z: 0, tabX: 0, views: [], active: 0, min: false, snap: null, prev: null, unmax: null,
+    id: S.nextId++, w, h: hh, z: 0, tabX: 0, views: [], active: 0, min: false, ...free,
     x: Math.round(geo.x ?? Math.max(10, (d.w - w) / 2 - 40 + off)), y: Math.round(geo.y ?? th + 16 + off),
   };
   win.tabsEl = h('div', { class: 'tabs' });
@@ -319,7 +319,7 @@ export function arrange(wins, { fill = false, animate = true, area } = {}) {
     wins.forEach((w, i) => {
       const r = rects[i], ww = fill ? r.w : Math.min(w.w, r.w);
       if (w.wins) { Object.assign(w, r, { fill: false }); return layoutGroup(w); }
-      Object.assign(w, { x: r.x + Math.round((r.w - ww) / 2), y: r.y, w: ww, h: rowH(r), snap: null, prev: null, unmax: null });
+      Object.assign(w, free, { x: r.x + Math.round((r.w - ww) / 2), y: r.y, w: ww, h: rowH(r) });
       renderTabs(w);
       place(w);
       clampTab(w);
@@ -345,7 +345,6 @@ export function retile(opts) {
 // The a key (wm/drag.js): tiles every open window, each filling its tile (a group sharing one), and the next press
 // puts them back as they were. If windows opened, closed or minimised in between, it tiles afresh instead.
 let arranged = null;
-const PLACE = ['x', 'y', 'w', 'h', 'snap', 'prev', 'unmax', 'tabX', 'placed', 'share', 'fill'];
 export function toggleArrange() {
   const open = S.wins.filter(w => !w.min), units = [...new Set(open.map(w => w.group || w))], was = arranged;
   if (isPhone() || !open.length) return;
@@ -360,7 +359,7 @@ export function toggleArrange() {
       relayout();
     });
   }
-  arranged = units.map(u => [u, Object.fromEntries(PLACE.filter(k => k in u).map(k => [k, u[k]]))]);
+  arranged = units.map(u => [u, pick(u, PLACE.filter(k => k in u))]);
   // arranged at the visitor's word, so these count as placed by hand (no more folder tiling)
   for (const w of open) w.placed = true;
   arrange(units, { fill: true });
@@ -383,8 +382,6 @@ export function relayout() {
 // D40 window groups (wm/group.js). A member keeps the place it had before it joined (solo) when it was a window of
 // its own then, and goes back there once the group is down to it: closing a post puts the Posts window back (D36).
 const groups = () => [...new Set(S.wins.map(w => w.group).filter(Boolean))];
-const SOLO = ['x', 'y', 'w', 'h', 'snap', 'prev', 'unmax'];
-const free = { snap: null, prev: null, unmax: null };
 // A group lays out while all of it is on screen: not on a phone (D17), and no member minimised or maximised, which
 // leaves the others where they are and keeps its slot to come back to
 export const laidOut = g => !isPhone() && g.wins.every(w => !w.min && !w.snap && S.wins.includes(w));
@@ -445,7 +442,7 @@ export function joinGroup(t, w, side) {
   let g = t.group;
   if (!g) {
     g = { wins: [], fill: t.snap === 'max' };
-    t.solo = Object.fromEntries(SOLO.map(k => [k, t[k]]));
+    t.solo = pick(t, SOLO);
   }
   Object.assign(g, g.fill ? {} : box, { wins });
   wins.forEach((m, i) => Object.assign(m, free, { group: g, share: shares[i], placed: true }));
@@ -518,7 +515,7 @@ export function pairUp(a, b, split) {
   leaveGroup(a);
   leaveGroup(b);
   const ng = { wins: [a, b], fill: true };
-  a.solo = Object.fromEntries(SOLO.map(k => [k, a[k]]));
+  a.solo = pick(a, SOLO);
   Object.assign(a, free, { group: ng, share: split, min: false });
   Object.assign(b, free, { group: ng, share: 1 - split, min: false });
   layoutGroup(ng);

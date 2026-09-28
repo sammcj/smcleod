@@ -3,21 +3,16 @@
 // keeps post text at 4.5:1 as drawn on screen, and passes axe, on a desktop and a phone.
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { readFileSync } from 'node:fs';
-import { fileURLToPath } from 'node:url';
-import { env, useBrowser, open, needs, shot, win, cards, desktop, phone, axeViolations } from './lib.mjs';
+import { useBrowser, open, needs, shot, win, cards, desktop, phone, seed, css, axeRuns, auditState } from './lib.mjs';
+import { CRTS } from '../assets/js/deskbar/lib/appearance.js';
 
 useBrowser();
 
-const EFFECTS = ['scanlines', 'tube', 'grille', 'amber', 'green'];
+const EFFECTS = CRTS.map(([v]) => v).filter(v => v !== 'off');
 // the effects drawn in two layers, ::before as well as ::after
 const TWO = ['tube', 'grille', 'amber', 'green'];
-const seed = s => `for (const [k, v] of Object.entries(${JSON.stringify(s)})) localStorage.setItem("deskbar:" + k, JSON.stringify(v));`;
 const setCrt = (page, v) => page.evaluate(v => { const d = document.documentElement.dataset; if (v) d.crt = v; else delete d.crt; }, v);
-const layer = (page, pseudo, props) => page.evaluate(([p, ps]) => {
-  const s = getComputedStyle(document.documentElement, p);
-  return Object.fromEntries(ps.map(k => [k, s[k]]));
-}, [pseudo, props]);
+const layer = (page, pseudo, props) => css(page.locator('html'), props, pseudo);
 const rects = page => page.locator('.win:not([hidden]), #panel, #dock').evaluateAll(els => els.map(el => JSON.stringify(el.getBoundingClientRect())));
 const hitsCard = (page, b) => page.evaluate(([x, y]) => !!document.elementFromPoint(x, y)?.closest('.pc'), [b.x + b.width / 2, b.y + b.height / 2]);
 
@@ -145,28 +140,12 @@ test('post text stays at 4.5:1 or better on screen under every effect, in light 
   assert.deepEqual(low, []);
 });
 
-// axe over a post and the Posts window with each effect on, at 1440 and 390, the modes taking turns
-const AXE = readFileSync(fileURLToPath(import.meta.resolve('axe-core/axe.min.js')), 'utf8');
-test('axe: every effect over a post and Posts, on a desktop and a phone', async t => {
+// axe over a post with each effect on, in the viewport and mode pairs lib.mjs axeRuns gives it
+test('axe: every effect over a post', async t => {
   if (!(await needs(t, '/posts/'))) return;
   const found = [];
-  for (const [i, v] of EFFECTS.entries()) {
-    for (const vp of [desktop, phone]) {
-      const theme = (i + vp.width) % 2 ? 'dark' : 'light';
-      const ctx = await env.browser.newContext({ viewport: vp, reducedMotion: 'reduce', colorScheme: theme });
-      await ctx.addInitScript(seed({ crt: v, theme }));
-      const page = await ctx.newPage();
-      await page.goto(env.base + '/posts/');
-      await page.waitForSelector('html.wm-ready');
-      await win(page, 'tracker').locator('a[data-url]').first().click();
-      await win(page, 'reader').locator('.rd h1').waitFor();
-      await page.addScriptTag({ content: AXE });
-      const violations = await axeViolations(page);
-      for (const x of violations.filter(x => ['serious', 'critical'].includes(x.impact))) {
-        for (const n of x.nodes) found.push(`[${v} ${vp.width} ${theme}] ${x.impact} ${x.id}: ${n.target.join(' ')}`);
-      }
-      await ctx.close();
-    }
+  for (const [i, crt] of EFFECTS.entries()) {
+    for (const run of axeRuns(i)) found.push(...await auditState('reader', run, { crt }, `${crt} `));
   }
   assert.deepEqual(found, []);
 });

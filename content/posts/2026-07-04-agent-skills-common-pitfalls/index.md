@@ -6,23 +6,9 @@ images: ["thumbnail.png"]
 thumbnailIcon: thumbnail-icon.svg
 tags: ['ai', 'llm', 'agentic coding', 'agents', 'skills', 'claude', 'claude code']
 author: 'Sam McLeod'
-showToc: true
-TocOpen: false
 draft: false
-hidemeta: false
-comments: false
 description: 'The top pitfalls I keep seeing when reviewing Agent Skills, and what to do instead'
-disableShare: false
-disableHLJS: false
-hideSummary: false
 searchHidden: false
-ShowReadingTime: true
-ShowBreadCrumbs: true
-ShowPostNavLinks: true
-ShowWordCount: true
-ShowRssButtonInSectionTermList: true
-UseHugoToc: true
-mermaid: false
 ---
 
 I write and review a _lot_ of [Agent](https://code.claude.com/docs/en/skills) [Skills](https://agentskills.io), and find myself frequently pushing back in reviews, as many authors assume they're writing "_just another markdown prompt_" without considering that they're actually working with one component of an agentic system.

@@ -1,7 +1,6 @@
 ---
 title: "Github Not-So-Reusable Actions"
 description: "Github Actions Reusable Workflows vs Composite Actions"
-subtitle: ""
 date: 2022-11-06T15:52:27+11:00
 lastmod: 2022-11-08T08:52:27+11:00
 author: Sam McLeod
@@ -16,15 +15,8 @@ cover:
   #caption: "<text>"
   #relative: false # To use relative path for cover image, used in hugo Page-bundles
 
-hiddenFromHomePage: false
-hiddenFromSearch: false
-
 toc: true
-asciinema: false
 math: false
-lightgallery: false
-readingTime: true
-showFullContent: false
 draft: false
 ---
 

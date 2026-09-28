@@ -1,8 +1,6 @@
 ---
 title: "Hardware"
 description: "Hardware I use and like."
-comments: false
-showDate: false
 series: [ BestOf ]
 norss: true
 # Cards from data/hardware.yaml, with product shots from assets/hardware/

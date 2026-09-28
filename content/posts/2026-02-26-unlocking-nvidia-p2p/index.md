@@ -20,23 +20,9 @@ tags:
     'optimisation',
   ]
 author: 'Sam McLeod'
-showToc: true
-TocOpen: true
 draft: false
-hidemeta: false
-comments: false
 summary: 'NVIDIA artificially restricts peer-to-peer (P2P) GPU communication to their enterprise cards. Turns out this is a software limitation, not a hardware one. I patched my drivers to remove it, hacked vLLM to take advantage of it, and got a 15-50% throughput improvement running Qwen 3.5 35b on dual RTX 3090s.'
-disableShare: false
-disableHLJS: false
-hideSummary: false
 searchHidden: false
-ShowReadingTime: true
-ShowBreadCrumbs: true
-ShowPostNavLinks: true
-ShowWordCount: true
-ShowRssButtonInSectionTermList: true
-UseHugoToc: true
-mermaid: false
 # cover:
 #   image: "todo.jpg"
 #   alt: "todo"

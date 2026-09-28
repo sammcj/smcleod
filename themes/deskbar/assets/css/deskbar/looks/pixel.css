@@ -66,6 +66,8 @@
 }
 /* the shell's warning colour is too faint on Pico's cream page */
 :root[data-deco=pixel][data-palette=pixel-pico] .rd { --adm-warning: light-dark(#8a5100, #efb45c); }
+/* the selected Spotlight result has black text by night, which a darkened match would drop under 4.5:1 */
+:root[data-deco=pixel][data-palette=pixel-pico] .sp-opt.on mark { background: light-dark(rgba(0,0,0,.3), rgba(255,255,255,.3)); }
 
 /* Windows: the title bar spans the frame and joins it, so the two read as one box in one ring. The bar is sun yellow
    dithered down to amber, the frame a bevelled slab, and both throw one hard shadow. Tabs paint before the frame, so
@@ -110,7 +112,7 @@
 :root[data-deco=pixel] :is(.tb, .seg):is(.on, :active, [aria-expanded=true], [aria-pressed=true]) { background-clip: padding-box; box-shadow: none; }
 :root[data-deco=pixel] :is(.tb, .seg):active { translate: 0 2px; }
 :root[data-deco=pixel] .seg + .seg { border-left: 0; }
-:root[data-deco=pixel] :is(input:not([type=checkbox], [type=radio], [type=range], .sp-q, .mail-row *), select, textarea) { border: 2px solid transparent; border-image: var(--pk-ring) 2; border-radius: 0; background: var(--content) padding-box; }
+:root[data-deco=pixel] :is(input:not([type=checkbox], [type=radio], [type=range], .sp-q, .term-in, .mail-row *), select, textarea) { border: 2px solid transparent; border-image: var(--pk-ring) 2; border-radius: 0; background: var(--content) padding-box; }
 :root[data-deco=pixel] :is(input:not(.sp-q), select, textarea):focus { outline: 2px solid var(--pk-coral); outline-offset: 0; }
 :root[data-deco=pixel] :is(.cp-opt, .cp-art, .cp-sample) { border-radius: 0 !important; }
 :root[data-deco=pixel] :is(.cp-nav, .places, .mn-cats) { border-right: 2px solid var(--line); }

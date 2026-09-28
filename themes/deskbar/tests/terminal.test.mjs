@@ -2,11 +2,12 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import {
-  parseSite, listDir, resolvePath, entryAt, lookup, tokenise, complete, grep, suggest, parsePing, pingStats, COMMANDS,
+  siteOf, listDir, resolvePath, entryAt, lookup, tokenise, complete, grep, suggest, parsePing, pingStats, COMMANDS,
 } from '../assets/js/deskbar/lazy/terminal.js';
+import { parseIndex } from '../assets/js/deskbar/lib/index-data.js';
 import { SAVERS } from '../assets/js/deskbar/lazy/screensaver.js';
 
-const site = parseSite({
+const site = siteOf(parseIndex({
   sectionURL: '/posts/',
   taxonomyURLs: { tags: '/tags/', categories: '/categories/' },
   posts: [
@@ -22,13 +23,13 @@ const site = parseSite({
     tags: [{ name: 'web', url: '/tags/web/', count: 2 }, { name: 'desktop', url: '/tags/desktop/', count: 2 }, { name: 'linux', url: '/tags/linux/', count: 1 }, { name: 'javascript', url: '/tags/javascript/', count: 1 }],
     categories: [{ name: 'tech', url: '/blog/category/tech/', count: 2 }],
   },
-});
+}));
 
 test('the index parses defensively, newest post first, each with its slug', () => {
   assert.equal(site.posts.length, 4);
   assert.deepEqual(site.posts.map(p => p.slug), ['window-managers', 'static-sites', 'small-javascript', 'haiku-notes']);
   assert.equal(site.categories[0].slug, 'tech', 'term directories are named by their URL slug');
-  assert.deepEqual(parseSite(null), { posts: [], pages: [], tags: [], categories: [], urls: { posts: '/posts/', tags: '', categories: '' } });
+  assert.deepEqual(siteOf(parseIndex(null)), { posts: [], pages: [], tags: [], categories: [], urls: { posts: '/posts/', tags: '', categories: '' } });
 });
 
 test('the tree lists posts by year, tags, categories and pages', () => {

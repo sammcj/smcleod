@@ -1,6 +1,5 @@
 ---
 title: "Fun with Makefiles - Dynamic Menu Generation"
-subtitle: "Menu Magic"
 date: 2023-11-14T00:00:00+00:00
 lastmod: 2023-11-14T00:00:00+00:00
 author: Sam McLeod
@@ -15,20 +14,10 @@ cover:
   #alt: "<alt text>"
   #caption: "<text>"
   #relative: false # To use relative path for cover image, used in hugo Page-bundles
-hiddenFromHomePage: false
-hiddenFromSearch: false
 toc:
   enable: true
   auto: false
-code:
-  copy: true
-  maxShownLines: 200
 math: false
-lightgallery: false
-readingTime: false
-showFullContent: false
-asciinema: false
-mermaid: true
 draft: false
 ---
 

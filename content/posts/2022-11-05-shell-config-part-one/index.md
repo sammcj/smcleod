@@ -1,6 +1,5 @@
 ---
 title: "Zsh Configuration and Plugins - Part One"
-subtitle: "The first in a series of posts on shell configuration / customisation"
 date: 2022-11-06T10:32:43+11:00
 lastmod: 2022-11-06T10:32:43+11:00
 author: Sam McLeod
@@ -16,15 +15,8 @@ cover:
   #relative: false # To use relative path for cover image, used in hugo Page-bundles
 images: ["colour_vertical_icon_wbg_wide.png"]
 
-hiddenFromHomePage: false
-hiddenFromSearch: false
-
 toc: true
 math: false
-lightgallery: false
-readingTime: true
-showFullContent: false
-asciinema: false
 ---
 
 As of 2022, I've been using zsh as my primary shell for 14 years.

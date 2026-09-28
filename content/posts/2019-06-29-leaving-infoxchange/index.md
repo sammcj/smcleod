@@ -1,7 +1,6 @@
 ---
 author: "Sam McLeod"
 
-readingTime: true
 categories: [ Tech ]
 date: "2019-06-29T09:00:00Z"
 aliases:

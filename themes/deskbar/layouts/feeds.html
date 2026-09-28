@@ -4,15 +4,7 @@
 {{- define "main" }}
 {{- $f := partialCached "deskbar/feeds.html" . "deskbar-feeds" }}
 <article class="rd feeds-doc">
-  <header>
-    <h1>{{ .Title }}</h1>
-    {{- with .Description }}
-    <p class="lede">{{ . }}</p>
-    {{- end }}
-  </header>
-  {{- with .Content }}
-  <div class="rd-body">{{ . }}</div>
-  {{- end }}
+  {{- partial "deskbar/doc-head.html" . }}
   <div class="rd-body">
   <h2>Latest</h2>
   <ol class="fd-items" data-updated="{{ now.UTC.Format "2006-01-02T15:04:05Z" }}">

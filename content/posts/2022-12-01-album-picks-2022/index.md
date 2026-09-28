@@ -1,6 +1,5 @@
 ---
 author: "Sam McLeod"
-readingTime: true
 categories: [ Music ]
 series: [ BestOf ]
 date: "2022-10-30T07:00:00Z"
@@ -10,22 +9,16 @@ cover:
   #alt: "<alt text>"
   #caption: "<text>"
   #relative: false # To use relative path for cover image, used in hugo Page-bundles
-featuredimage: backdrop-linn.jpg"
 tags:
 - music
 - bestof
 title: Top album picks for 2022
 
-hiddenFromHomePage: true #TODO:
-hiddenFromSearch: true #TODO:
 norss: true #TODO:
 
-showFullContent: false
 keywords: ["music", "bestof"]
 toc: true
 math: false
-lightgallery: false
-asciinema: false
 
 draft: true #TODO:
 ---

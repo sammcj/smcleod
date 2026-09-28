@@ -1,6 +1,5 @@
 ---
 author: "Sam McLeod"
-readingTime: true
 categories: [ DevOps ]
 date: "2020-11-18T14:00:00Z"
 aliases:
@@ -43,7 +42,7 @@ This team charter is an introductory document that sets the vision, mission, val
 
 _Remember to add your vision and mission statement(s) to your teams landing page on your wiki._
 
-“To enable, empower and add value to the business, coworkers and customers by building, running, maintaining and improving the (cloud) platforms and services including infrastructure, automation, platform integrations and CI/CD tooling used by engineers and applications.”
+"To enable, empower and add value to the business, coworkers and customers by building, running, maintaining and improving the (cloud) platforms and services including infrastructure, automation, platform integrations and CI/CD tooling used by engineers and applications."
 
 #### Team Values
 
@@ -127,6 +126,6 @@ To quote [Grant Sutton](https://www.linkedin.com/in/grant-d-sutton/?originalSubd
 >
 > There were many occasions where the early development that we did either identified problems, or drove changes to the API that wouldn't have happened if we had waited.
 
-_See also: Grant's post on '[Dev Mantras — A Team Charter Anti-Pattern](https://medium.com/digio-australia/dev-mantras-a-team-charter-anti-pattern-7a2b6f8369fa)'_
+_See also: Grant's post on '[Dev Mantras - A Team Charter Anti-Pattern](https://medium.com/digio-australia/dev-mantras-a-team-charter-anti-pattern-7a2b6f8369fa)'_
 
 [^1]: <https://hbr.org/2021/05/high-performing-teams-start-with-a-culture-of-shared-values>

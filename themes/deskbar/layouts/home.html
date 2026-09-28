@@ -1,6 +1,5 @@
 {{- define "main" }}
-{{- $sections := site.Params.deskbar.readerSections | default (slice "posts") }}
-{{- $posts := (where site.RegularPages "Section" "in" $sections).ByDate.Reverse }}
+{{- $posts := partialCached "deskbar/posts.html" site }}
 <article class="rd">
   <header>
     <h1>{{ site.Title }}</h1>
@@ -17,7 +16,7 @@
     <li><a href="{{ .RelPermalink }}">{{ .Title }}</a> <time datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date.Format "2 Jan 2006" }}</time></li>
     {{- end }}
   </ul>
-  {{- with site.GetPage (index $sections 0) }}
+  {{- with site.GetPage (index site.Params.deskbar.readerSections 0) }}
   <p><a href="{{ .RelPermalink }}">All {{ len $posts }} posts</a></p>
   {{- end }}
 </article>

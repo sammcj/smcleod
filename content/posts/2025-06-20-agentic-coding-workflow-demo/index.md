@@ -6,23 +6,9 @@ images: ["thumbnail.png"]
 thumbnailIcon: thumbnail-icon.svg
 tags: ["ai", "llm", "tech", "ollama", "coding", "cline", "agentic", "tutorials", "agentic coding", "demo", "video"]
 author: "Sam McLeod"
-showToc: true
-TocOpen: true
 draft: false
-hidemeta: false
-comments: false
 description: "Recording of a demo and Q&A session on my Agentic Coding workflow and Cline use."
-disableShare: false
-disableHLJS: false
-hideSummary: false
 searchHidden: false
-ShowReadingTime: true
-ShowBreadCrumbs: true
-ShowPostNavLinks: true
-ShowWordCount: true
-ShowRssButtonInSectionTermList: true
-UseHugoToc: true
-mermaid: true
 ---
 
 [Square Peg](https://www.squarepeg.vc/) hosted event on June 20, 2025 where I demonstrated a basic version of my daily Agentic Coding workflow using Cline and MCP tools.

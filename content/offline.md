@@ -1,6 +1,5 @@
 ---
 title: "Offline"
-hiddenFromHomePage: true
 deskbarHidden: true # keeps it out of Tracker and Spotlight
 ---
 

@@ -1,7 +1,7 @@
 [module]
   [module.hugoVersion]
-    # layouts use the template system introduced in 0.146.0 (_partials, home.html, page.html)
-    min = "0.146.0"
+    # layouts use hugo.Data (0.156), site.Language.Locale (0.158) and the template system from 0.146 (_partials)
+    min = "0.158.0"
     extended = false
 
 # The shell's post index. Sites opt in by adding "deskbar" to outputs.home,
@@ -30,10 +30,40 @@
 [params.deskbar]
   # Sections whose pages open in the single reader window; they also feed Tracker and the phone home screen
   readerSections = ["posts"]
+  # Taxonomies the shell lists (index, Tracker, menu). The shell knows only these three, so a site can drop some
+  taxonomies = ["tags", "series", "categories"]
   # IANA time zone for the panel clock; empty uses the visitor's local time
   timeZone = ""
   # Extra stylesheets (e.g. web fonts), loaded after the theme CSS
   stylesheets = []
+  # Emblem for a post's generated thumbnail (thumb-art.html): the first rule with a keyword among the post's tags and
+  # categories wins, so the most specific come first. Names are the keys of data/deskbar/emblems.yaml; "doc" when none
+  # match. A site's thumbRules replaces this whole list.
+  thumbRules = [
+    { emblem = "car", keywords = ["cars", "car", "automotive"] },
+    { emblem = "record", keywords = ["music", "audio"] },
+    { emblem = "camera", keywords = ["photos", "photography"] },
+    { emblem = "house", keywords = ["home automation", "smart home", "iot"] },
+    { emblem = "padlock", keywords = ["security", "privacy"] },
+    { emblem = "gpu", keywords = ["gpu"] },
+    { emblem = "neural", keywords = ["ai", "llm", "ml", "machine learning", "machine-learning"] },
+    { emblem = "container", keywords = ["containers", "docker", "kubernetes", "k8s", "virtualisation", "virtualization"] },
+    { emblem = "disk", keywords = ["storage", "nas", "ssd"] },
+    { emblem = "globe", keywords = ["networking", "network", "dns", "web"] },
+    { emblem = "laptop", keywords = ["apple", "mac", "macos"] },
+    { emblem = "branch", keywords = ["git"] },
+    { emblem = "terminal", keywords = ["shell", "bash", "zsh", "cli"] },
+    { emblem = "code", keywords = ["programming", "code", "coding", "javascript", "css"] },
+    { emblem = "server", keywords = ["linux", "servers", "sysadmin"] },
+    { emblem = "chip", keywords = ["hardware", "electronics", "cpu"] },
+    { emblem = "screen", keywords = ["talks", "talk", "slides", "presentation"] },
+    { emblem = "board", keywords = ["agile", "kanban", "devops"] },
+    { emblem = "chart", keywords = ["data", "analytics", "performance"] },
+    { emblem = "palette", keywords = ["art", "design"] },
+    { emblem = "chat", keywords = ["culture", "communication", "community"] },
+    { emblem = "briefcase", keywords = ["career", "work"] },
+    { emblem = "window", keywords = ["software", "apps"] },
+  ]
 
   [[params.deskbar.icons]]
     name = "Posts"

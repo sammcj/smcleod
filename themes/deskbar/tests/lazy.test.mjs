@@ -64,14 +64,9 @@ test('about-desktop measures gzipped size the way the budget script does', async
   assert.equal(kb(1536), '1.5KB');
 });
 
-test('about-desktop counts the shell script and stylesheet, plus Spotlight when the site has search', () => {
-  const doc = btn => ({
-    getElementById: id => (id === 'searchBtn' ? btn : null),
-    querySelector: sel => (sel.startsWith('script') ? { src: '/js/deskbar.1.js' } : { href: '/css/deskbar.min.2.css' }),
-  });
-  assert.deepEqual(shellFiles(doc(null)), ['/js/deskbar.1.js', '/css/deskbar.min.2.css']);
-  assert.deepEqual(shellFiles(doc({ dataset: { module: '/js/s.js', css: '/css/s.css' } })),
-    ['/js/deskbar.1.js', '/css/deskbar.min.2.css', '/js/s.js', '/css/s.css']);
+test('about-desktop counts the shell script and stylesheet', () => {
+  const doc = { querySelector: sel => (sel.startsWith('script') ? { src: '/js/deskbar.1.js' } : { href: '/css/deskbar.min.2.css' }) };
+  assert.deepEqual(shellFiles(doc), ['/js/deskbar.1.js', '/css/deskbar.min.2.css']);
 });
 
 // Just enough of an element for lazyMount's loading and error notes

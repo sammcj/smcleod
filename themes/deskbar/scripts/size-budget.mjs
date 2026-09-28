@@ -1,7 +1,6 @@
-// Fails when the built shell (theme JS + CSS, gzipped) exceeds the DEV_PLAN budget of 45KB, or any on-demand bundle
+// Fails when the built shell (theme JS + CSS, gzipped) exceeds the budget of 45KB, or any on-demand bundle
 // (loader.js: its JS plus CSS) exceeds 12KB.
 // Measures the bundles the home page links, since fingerprinted builds from earlier runs linger in the output dir.
-// The shell includes the Spotlight code and stylesheet the search button loads on first open (data-module, data-css).
 // On-demand bundles are the ones listed in <script id="deskbar-lazy">.
 // Usage: node scripts/size-budget.mjs <public dir>
 import { readFileSync } from 'node:fs';
@@ -16,10 +15,9 @@ if (!root) {
 }
 
 const html = readFileSync(join(root, 'index.html'), 'utf8');
-const files = [...new Set([...html.matchAll(/(?:src|href|data-module|data-css)="?\/?((?:js|css)\/deskbar[./-][^"\s>]+\.(?:js|css))/g)].map(m => m[1]))];
-const want = /data-module=/.test(html) ? 4 : 2;
-if (files.length < want) {
-  console.error(`expected ${want} deskbar JS and CSS bundles linked from ${root}/index.html, found ${files.length}`);
+const files = [...new Set([...html.matchAll(/(?:src|href)="?\/?((?:js|css)\/deskbar[./-][^"\s>]+\.(?:js|css))/g)].map(m => m[1]))];
+if (files.length < 2) {
+  console.error(`expected the deskbar JS and CSS bundles linked from ${root}/index.html, found ${files.length}`);
   process.exit(1);
 }
 

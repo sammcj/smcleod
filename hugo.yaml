@@ -1,8 +1,6 @@
 baseURL: https://smcleod.net
 locale: en-GB
 title: smcleod.net
-gitRepo: "https://github.com/sammcj/smcleod/tree/main"
-extended: true
 module:
   imports:
     - path: github.com/sammcj/smcleod/deskbar
@@ -12,7 +10,6 @@ module:
   mounts:
     - { source: static, target: static }
     - { source: spikes, target: static/design, files: [theme-concepts.html] }
-pagination.pagerSize: 150
 enableEmoji: true
 enableGitInfo: true
 enableRobotsTXT: true
@@ -35,16 +32,14 @@ params:
     timeZone: Australia/Melbourne
     # minutes without input before the screen saver starts (never over a reader window); 0 turns it off
     screensaver: { minutes: 1 }
-    # the starting look for a visitor who hasn't chosen one (values as in the theme's lib/appearance.js): Synthwave
-    # Sunrise over the theme's default Rings wallpaper
-    appearance: { deco: synthwave, palette: synthwave-sunrise, dock: synthwave }
+    # the starting look for a visitor who hasn't chosen one (values as in the theme's lib/appearance.js): the Sunrise
+    # Rings preset, Synthwave Sunrise over the Rings wallpaper. tests/appearance.test.mjs keeps it matching a preset
+    appearance: { deco: synthwave, palette: synthwave-sunrise, wall: rings, dock: synthwave }
     # Feeds app: subscriptions are assets/feeds.opml (a NetNewsWire export as is); exclude drops feeds by xmlUrl
     feeds:
       perFeed: 5
       exclude: ["https://hnrss.org/replies?id=smcleod"]
     favicon: /favicon-32x32.png
-    stylesheets:
-      - "https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&family=Noto+Sans:wght@400;600;700&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&display=swap"
     icons:
       - { name: Posts, url: /posts/, icon: folder }
       - { page: /photos }
@@ -135,114 +130,7 @@ params:
   description: "The personal blog of Sam McLeod."
   author: Sam McLeod
   images: ["/og-card.jpg"]
-  social:
-    github: "sammcj"
-    linkedin: "sammcj"
 
-menu:
-  main:
-    - identifier: "Posts"
-      pre: ""
-      post: ""
-      name: "Posts"
-      url: "/posts"
-      title: ""
-      weight: 1
-      params:
-        icon: "pen-line"
-    - identifier: "categories"
-      pre: ""
-      post: ""
-      name: "Categories"
-      url: "/categories/"
-      title: ""
-      weight: 2
-      params:
-        icon: "layout-grid"
-    - identifier: "Agentic Coding Tools"
-      pre: ""
-      post: ""
-      name: "Agentic Coding Tools"
-      url: "/agentic-coding-tools/"
-      title: "Rating Agentic Coding Tools"
-      weight: 3
-      params:
-        icon: "bot"
-    - identifier: "tools"
-      pre: ""
-      post: ""
-      name: "Tools"
-      url: ""
-      title: "Tools"
-      weight: 4
-      params:
-        icon: "wrench"
-    - identifier: "vRAM Estimator"
-      parent: "tools"
-      pre: ""
-      post: ""
-      name: "vRAM Estimator"
-      url: "/vram-estimator/"
-      title: "Estimate the vRAM required for your LLMs"
-      weight: 1
-      params:
-        icon: "memory-stick"
-    - identifier: "Tier List Generator"
-      parent: "tools"
-      pre: ""
-      post: ""
-      name: "Tier List Generator"
-      url: "/tools/tiers/"
-      title: "Create and share tier lists"
-      weight: 2
-      params:
-        icon: "trophy"
-    - identifier: "Quantisation Overview"
-      parent: "tools"
-      pre: ""
-      post: ""
-      name: "Quantisation Overview"
-      url: "/tools/quantisation-dashboard/"
-      title: "LLM quantisation overview"
-      weight: 3
-      params:
-        icon: "chart-column"
-    - identifier: "links"
-      pre: ""
-      post: ""
-      name: "Links"
-      url: "/links/"
-      title: "Links to software and services I use"
-      weight: 5
-      params:
-        icon: "link"
-    - identifier: "contact"
-      pre: ""
-      post: ""
-      name: "Contact"
-      url: "/contact/"
-      title: "Contact me"
-      weight: 6
-      params:
-        icon: "message-circle"
-    - identifier: "about"
-      pre: ""
-      post: ""
-      name: "About"
-      url: "/about/"
-      title: "Sam McLeod"
-      weight: 7
-      params:
-        icon: "user"
-    - identifier: "Search"
-      pre: ""
-      post: ""
-      name: "Search"
-      url: "/search/"
-      title: ""
-      weight: 7
-      params:
-        icon: "search"
 markup:
   highlight:
     noClasses: false
@@ -278,7 +166,6 @@ sitemap:
 
 permalinks:
   posts: "/:year/:month/:title"
-  category: "/blog/category/:slug/"
 
 privacy:
   youtube:
@@ -305,11 +192,7 @@ taxonomies:
   social: "socials"
 
 security:
-  enableInlineShortcodes: true
-  exec:
-    allow: ['.*']
   funcs:
     getenv: ['^HUGO_']
   http:
-    methods: ['(?i)GET|POST']
     urls: ['.*']

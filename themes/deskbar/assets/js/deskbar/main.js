@@ -9,14 +9,14 @@
 //                     Lazy modules import only lib/ and reach the shell through window.deskbar, which has
 //                     loadLazy too, so one lazy feature can start another (the terminal's screensaver).
 // - content.js        onMounted(fn({ root, page, view })) after page content and its scripts are in a window
-// - wm/windows.js    wm: { S, findView, minimise, place, clampTab, tabH, refresh } for lazy features that place windows
+// - wm/windows.js    wm: { S, free, findView, minimise, place, clampTab, tabH, refresh } for lazy features that place windows
 // - reader.js         addReaderAddon(fn({ view, page, scroller, win }) => cleanup?, { pages })
 // - router.js         onPop(fn(key) => handled?, { first }) on Back/Forward
 // - settings.js       settings.get(k), set(k, v), on(fn(k, v)) for visitor settings (theme, palette, dock, ...)
 // Site scripts outside the bundle (hooks/body-end.html) get the same functions without load-order worries:
 //   (window.deskbar ||= []).push(api => api.onMounted(...))
 // Functions queued before the shell starts run before the first page is shown; later pushes run at once.
-import { S, on } from './wm/state.js';
+import { S, on, quietly, free } from './wm/state.js';
 import {
   initWindows, relayout, refresh, place, clampTab, focus, focusView, renderTabs, topWin, deskRect, allViews, findView, isPhone, phoneQuery,
   snapTo, unsnap, closeWin, minimise, tabH,
@@ -24,7 +24,7 @@ import {
 import { initPointer } from './wm/drag.js';
 import { initPanel } from './wm/panel.js';
 import { takeLayout, decodeLayout } from './wm/layout.js';
-import { loadIndex } from './index-data.js';
+import { loadIndex } from './lib/index-data.js';
 import { clampSplit } from './wm/snap.js';
 import { initSettings, settings } from './settings.js';
 import { initTracker, initTrackerRoute, showPosts } from './tracker.js';
@@ -78,9 +78,8 @@ async function restoreLayout({ wins, split }) {
   const primary = router.currentPath();
   const opens = await Promise.all(wins.map(w => (key(w.route) === primary ? null : router.loadAside(w.route).catch(() => null))));
   if (router.currentPath() !== primary) return;
-  // part of start-up: no animation, and keyboard focus stays where it is
-  S.booting = true;
-  try {
+  // part of start-up
+  quietly(() => {
     opens.forEach((open, i) => open?.({ own: wins[i].own }));
     const keep = new Set([primary, ...wins.map(w => key(w.route))]);
     for (const w of S.wins.slice()) if (!w.views.some(v => keep.has(v.route()) || keep.has(v.url))) closeWin(w);
@@ -93,9 +92,7 @@ async function restoreLayout({ wins, split }) {
     // then the link's stacking, bottom to top
     for (const v of views) if (v) focus(v.win);
     relayout();
-  } finally {
-    S.booting = false;
-  }
+  });
 }
 
 // Screen saver (lazy/screensaver.js) after params.deskbar.screensaver.minutes (data-saver) without input, or the
@@ -166,11 +163,11 @@ function boot() {
     if (phoneStart && !isPhone()) { phoneStart = false; showPosts(true); }
   });
   // lazy bundles reach the shell through these (loader.js); router and the window functions serve Photos, openPosts
-  // and isPhone the drag-out (lazy/dragout.js) and the context menu
+  // and isPhone the drag-out (lazy/dragout.js) and the context menu. index is the parsed post index, for the terminal.
   const api = {
     defineApp, addReaderAddon, onMounted, mountContent, settings, onPop: router.onPop, go: router.go, loadLazy, loaded, openPosts,
-    router: { push: router.push, replace: router.replace }, focusView, renderTabs, isPhone, push: fn => fn(api),
-    wm: { S, findView, minimise, place, clampTab, tabH, refresh },
+    router: { push: router.push, replace: router.replace }, focusView, renderTabs, isPhone, push: fn => fn(api), index,
+    wm: { S, free, findView, minimise, place, clampTab, tabH, refresh },
   };
   const queued = Array.isArray(window.deskbar) ? window.deskbar : [];
   window.deskbar = api;

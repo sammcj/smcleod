@@ -6,28 +6,13 @@ images: ["thumbnail.png"]
 thumbnailIcon: thumbnail-icon.svg
 tags: ["ai", "llm", "tech", "mcp", "cline", "claude", "agentic", "agentic coding", "mcp", "security"]
 author: "Sam McLeod"
-showToc: true
-TocOpen: false
 draft: false
-hidemeta: false
-comments: false
 summary: "If you're building MCP servers, you should be adding the ability to disable individual tools."
-disableShare: false
-disableHLJS: false
-hideSummary: false
 searchHidden: false
-ShowReadingTime: true
-ShowBreadCrumbs: true
-ShowPostNavLinks: true
-ShowWordCount: true
-ShowRssButtonInSectionTermList: true
-UseHugoToc: true
-mermaid: true
 cover:
   image: "tool-context-usage.png"
   alt: "MCP Server Tool Context Usage"
   # caption: "Optional caption text"
-  relative: true  # Set to true for page bundle images
 ---
 
 **TLDR**: If you're building MCP servers, let users disable individual tools. It's simple to implement and your context window will thank you.

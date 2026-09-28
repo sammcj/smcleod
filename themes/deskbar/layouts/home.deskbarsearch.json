@@ -4,7 +4,7 @@
        Sites opt in by adding "deskbarsearch" to outputs.home; the shell fetches /search.json on first open.
        It is a home output rather than a fingerprinted resource because a resource would have to be built while
        each page renders its panel, and reading every page's .Content from there deadlocks Hugo's page renders. */ -}}
-{{- $sections := site.Params.deskbar.readerSections | default (slice "posts") -}}
+{{- $sections := site.Params.deskbar.readerSections -}}
 {{- $chars := site.Params.deskbar.searchBodyChars | default 3000 -}}
 {{- $entries := slice -}}
 {{- $photosURL := "" -}}

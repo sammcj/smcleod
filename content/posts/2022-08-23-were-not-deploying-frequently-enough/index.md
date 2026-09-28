@@ -1,6 +1,5 @@
 ---
 author: "Sam McLeod"
-readingTime: true
 categories: [ ml, DevOps ]
 date: "2022-08-23T07:00:00Z"
 aliases:
@@ -49,7 +48,7 @@ The first group that I want to address are the large, more traditional enterpris
 
 Research from Accelerate and The State of DevOps shows that enterprises deploy more frequently correlate highly with their software having far less bugs, teams having improved productivity and as a result a more competitive product offering.
 
-Daily deployments help you catch problems early on when they're easier to fix than later down the line when it's harder to fix—and if you can't fix them then there's no way you can prevent bugs from happening again!
+Daily deployments help you catch problems early on when they're easier to fix than later down the line when it's harder to fix-and if you can't fix them then there's no way you can prevent bugs from happening again!
 
 That's why it's so important for all developers not just those at startups who are used to working this way but also those at large enterprises and even their managers! Daily deployments, when done right and with the proper tools, can help everyone get better at what they do.
 

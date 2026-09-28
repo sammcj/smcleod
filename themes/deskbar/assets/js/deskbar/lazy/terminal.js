@@ -6,28 +6,19 @@ import { h } from '../lib/dom.js';
 import { store } from '../lib/store.js';
 import { bootLog, stamp } from '../lib/dmesg.js';
 import { cowsay } from '../lib/cowsay.js';
+import { str, strs } from '../lib/index-data.js';
+import { norm } from '../lib/search.js';
+import { parseSiteIndex } from '../lib/site-search.js';
 
-const str = v => (typeof v === 'string' ? v : '');
-const strs = v => (Array.isArray(v) ? v.filter(x => typeof x === 'string') : []);
-const list = v => (Array.isArray(v) ? v : []);
 const slugOf = url => url.replace(/[?#].*$/, '').replace(/\/+$/, '').split('/').pop() || '';
-// Case and accent insensitive, as Spotlight matches
-export const norm = s => str(s).toLowerCase().normalize('NFKD').replace(/[\u0300-\u036f]/g, '');
 
-// The shell's post index (home.deskbar.json). Parsing drops anything unusable, as a site can override the template.
-export function parseSite(raw) {
-  const ok = x => str(x?.url) && str(x?.title ?? x?.name);
-  const posts = list(raw?.posts).filter(ok).map(p => ({
-    title: p.title, url: p.url, slug: slugOf(p.url), date: /^\d{4}-\d\d-\d\d$/.test(p.date) ? p.date : '',
-    tags: strs(p.tags), categories: strs(p.categories), description: str(p.description),
-  })).sort((a, b) => b.date.localeCompare(a.date));
-  const pages = list(raw?.pages).filter(ok).map(p => ({ title: p.title, url: p.url, slug: slugOf(p.url) }));
-  const terms = name => list(raw?.taxonomies?.[name]).filter(ok)
-    .map(t => ({ name: t.name, url: t.url, slug: slugOf(t.url), count: Number(t.count) || 0 }));
-  const tax = raw?.taxonomyURLs || {};
+// The terminal's tree over the shell's parsed post index (lib/index-data.js parseIndex): everything named by the
+// slug of its URL, as a file or directory
+export function siteOf(index) {
+  const slugged = list => list.map(x => ({ ...x, slug: slugOf(x.url) }));
   return {
-    posts, pages, tags: terms('tags'), categories: terms('categories'),
-    urls: { posts: str(raw?.sectionURL) || '/posts/', tags: str(tax.tags), categories: str(tax.categories) },
+    posts: slugged(index.posts), pages: slugged(index.pages), tags: slugged(index.tags), categories: slugged(index.categories),
+    urls: { posts: index.sectionURL, tags: str(index.taxURLs.tags), categories: str(index.taxURLs.categories) },
   };
 }
 
@@ -246,15 +237,13 @@ const LEAF = String.raw`
 
 // ---- the terminal itself (browser only) ----
 
-// A failed load is forgotten, so the next command tries again and this one reports the error
+// The post index is the one the shell already loaded, which reads as empty rather than failing.
+// A failed site index load is forgotten, so the next grep tries again and this one reports the error.
 const getJSON = url => (url ? fetch(url).then(r => (r.ok ? r.json() : Promise.reject(new Error(`${url}: ${r.status}`)))) : Promise.resolve({}));
 let siteP = null, searchP = null;
-const loadSite = () => (siteP ||= getJSON(document.documentElement.dataset.index).then(parseSite)
-  .catch(err => { siteP = null; throw err; }));
+const loadSite = () => (siteP ||= window.deskbar.index.then(siteOf));
 async function loadSearch() {
-  searchP ||= getJSON(document.getElementById('searchBtn')?.dataset.index).then(raw => list(raw?.entries)
-    .filter(e => str(e?.title) && str(e?.url))
-    .map(e => ({ title: e.title, url: e.url, kind: str(e.kind), date: str(e.date), description: str(e.description), tags: strs(e.tags), body: str(e.body) })))
+  searchP ||= getJSON(document.getElementById('searchBtn')?.dataset.index).then(parseSiteIndex)
     .catch(err => { searchP = null; throw err; });
   const entries = await searchP;
   return entries.length ? entries : (await loadSite()).posts.map(p => ({ ...p, kind: 'post' }));
@@ -604,8 +593,6 @@ function create(v) {
     if (coarse() && document.activeElement === input && !e.target.closest('a, input')) e.preventDefault();
   });
 
-  // warmed now so the first command and Tab answer at once; a failure is tried again then
-  loadSite().catch(() => {});
   print(span('c-d', `deskbar terminal on ${HOST}. Type a command, or tap one below. `), btn('help'), span('c-d', ' lists them all.'));
   return { input, bottom };
 }

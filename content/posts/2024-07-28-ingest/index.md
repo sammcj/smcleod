@@ -3,23 +3,9 @@ title: "Ingest: Streamlining Content Preparation for LLMs"
 date: 2024-07-29T01:00:10+00:00
 tags: ["ai", "tools", "llm", "tech", "cli", "golang", "automation"]
 author: "Sam McLeod"
-showToc: true
-TocOpen: false
 draft: false
-hidemeta: false
-comments: false
 description: "A CLI tool for parsing directories into LLM-friendly markdown"
-disableShare: false
-disableHLJS: false
-hideSummary: false
 searchHidden: false
-ShowReadingTime: false
-ShowBreadCrumbs: true
-ShowPostNavLinks: true
-ShowWordCount: false
-ShowRssButtonInSectionTermList: true
-UseHugoToc: false
-mermaid: false
 cover:
   image: "https://raw.githubusercontent.com/sammcj/ingest/main/screenshot.png"
   alt: "Ingest CLI Screenshot"

@@ -1,6 +1,5 @@
 ---
 author: "Sam McLeod"
-readingTime: false
 categories: [ cats ]
 date: "2020-10-08T15:20:00Z"
 aliases:
@@ -11,7 +10,6 @@ cover:
   #alt: "<alt text>"
   #caption: "<text>"
   #relative: false # To use relative path for cover image, used in hugo Page-bundles
-lightgallery: true
 tags:
 - photos
 title: Rest in Peace Jimothy

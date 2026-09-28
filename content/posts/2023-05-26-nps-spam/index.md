@@ -1,6 +1,5 @@
 ---
 title: "How likely would you be to block a company from asking you to rate everything they do?"
-subtitle: "Very, it turns out..."
 date: 2023-05-26T06:41:37
 lastmod: 2023-05-26T19:41:37
 author: Sam McLeod
@@ -16,20 +15,10 @@ cover:
   #alt: "<alt text>"
   #caption: "<text>"
   #relative: false # To use relative path for cover image, used in hugo Page-bundles
-hiddenFromHomePage: false
-hiddenFromSearch: false
 toc:
   enable: true
   auto: false
-code:
-  copy: true
-  maxShownLines: 20
 math: false
-lightgallery: false
-readingTime: false
-showFullContent: false
-asciinema: false
-mermaid: true
 draft: false
 ---
 

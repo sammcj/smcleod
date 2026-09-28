@@ -35,11 +35,9 @@ To display images at 80% of the browser width (breaking out of the normal conten
 - `alt` (optional): Alt text for accessibility
 - `caption` (optional): Caption text displayed below the image
 
-**Legacy support:** Images with `?c=wide` or `#wide` URL parameters will still work for backwards compatibility.
-
 <a rel="me" href="https://aus.social/@s_mcleod">Mastodon</a>
 
 ## License
 
 - Copyright © 2024 Sam McLeod
-- This project is open source and licensed under [CC BY-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/)
+- This project is open source and licensed under [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/)

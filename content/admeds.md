@@ -3,9 +3,6 @@ title: "ADHD Medications"
 description: "A visual comparison of common ADHD medications"
 author: "Sam McLeod"
 norss: true
-comments: false
-showDate: false
-hiddenFromHomePage: true
 deskbarHidden: true # keeps it out of Tracker and Spotlight
 toc: false
 keywords: [""]

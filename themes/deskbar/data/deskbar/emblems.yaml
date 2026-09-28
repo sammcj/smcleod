@@ -4,6 +4,13 @@
 #   o  outline (thicker in the mini icon so edges survive at 20-32px)    t  thin outline
 #   o3, o5  the dark stroke behind a 3 or 5 unit wide stroke             d  fine detail, left out of the mini icon
 # Ids must not clash with the card's own: bg, sh.
+#
+# grounds: the card's muted backgrounds, top and bottom colour. thumb-seeds.html gives each post one, so changing the
+# list reshuffles every post's ground. Kept in flow style: every "name:" line starting a block is an emblem.
+grounds: [
+  ["#6a8199", "#3a4c60"], ["#8d8170", "#544a3c"], ["#6c8175", "#38483f"], ["#76708a", "#433d54"],
+  ["#5f8586", "#324a4d"], ["#737b83", "#3b4148"], ["#946f60", "#573d33"], ["#838063", "#4b4935"]
+]
 neural:
   defs: >-
     <linearGradient id="glass" x2="0.5" y2="1"><stop stop-color="#e4f0fb" stop-opacity="0.92"/><stop offset="1" stop-color="#8fb6de" stop-opacity="0.8"/></linearGradient><radialGradient id="sb" cx="0.35" cy="0.3" r="0.8"><stop stop-color="#e6f1fc"/><stop offset="0.45" stop-color="#8db6e3"/><stop offset="1" stop-color="#2d5e98"/></radialGradient><radialGradient id="sa" cx="0.35" cy="0.3" r="0.8"><stop stop-color="#fff6d0"/><stop offset="0.45" stop-color="#ffd257"/><stop offset="1" stop-color="#d38708"/></radialGradient>

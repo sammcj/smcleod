@@ -58,6 +58,15 @@ test('an on-demand app works as the first page loaded', async t => {
   await page.context().close();
 });
 
+test('About this desktop lists loaded bundles once the Resource Timing buffer is full', async t => {
+  if (!(await needs(t, about))) return;
+  const page = await open(desktop, '/', () => performance.setResourceTimingBufferSize(1));
+  await go(page, about);
+  await facts(page).waitFor();
+  assert.match(await facts(page).textContent(), /about-desktop loaded/);
+  await page.context().close();
+});
+
 test('an on-demand app shows its loading state, a readable error if loading fails, and retries', async t => {
   if (!(await needs(t, about))) return;
   const page = await open(desktop, '/');

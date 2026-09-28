@@ -1,14 +1,21 @@
-// Screen saver (lazy/screensaver.js, started by main.js after a spell without input). A visitor's own deskbar:saver
-// setting (minutes) overrides the site's, which lets these tests wait seconds rather than minutes.
+// Screen saver (lazy/screensaver.js, started by main.js after a spell without input). The idle watcher runs on
+// setTimeout and the savers on animation frames, so these tests drive time with Playwright's clock rather than wait.
+// The clock goes in once the page has loaded: the timer armed at boot stays a real one-minute timer that never fires
+// during a test, and the next input arms a fake one.
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { env, useBrowser, open, needs, shot, win, path, desktop } from './lib.mjs';
+import { env, useBrowser, open, needs, shot, win, path, desktop, seed } from './lib.mjs';
 
 useBrowser();
 
-const quick = () => localStorage.setItem('deskbar:saver', JSON.stringify(0.02));
+// a visitor's own deskbar:saver (minutes) overrides the site's
+const oneMinute = seed({ saver: 1 });
+const idle = page => page.clock.fastForward(61_000);
 const saver = page => page.locator('.saver');
-const loaded = page => page.evaluate(() => performance.getEntriesByType('resource').some(e => e.name.includes('/js/deskbar-lazy/screensaver.')));
+// the shell's own list of loaded bundles, as the clock replaces performance and so hides Resource Timing
+const loaded = (page, name = 'screensaver') => page.evaluate(n => window.deskbar.loaded().includes(n), name);
+let idx = null;
+const index = async () => (idx ||= await (await fetch(env.base + '/deskbar.json')).json());
 
 // Everything a visitor could see change: address, title, focus, every window's place, stacking and scroll
 const state = page => page.evaluate(() => ({
@@ -22,15 +29,17 @@ const state = page => page.evaluate(() => ({
 test('the screen saver starts after the idle time and any input takes it away, leaving things as they were', async t => {
   if (!(await needs(t, '/links/'))) return;
   // a folder window, since a post or page on screen keeps the saver away
-  const page = await open(desktop, '/links/', quick);
+  const page = await open(desktop, '/links/', oneMinute);
   await page.locator('.win:not([hidden])').first().waitFor();
+  await page.clock.install();
   const posts = page.locator('#icons a').first();
   const box = await posts.boundingBox();
   const x = box.x + box.width / 2, y = box.y + box.height / 2;
   await page.mouse.move(x, y);
   const before = await state(page);
 
-  await saver(page).waitFor({ timeout: 5000 });
+  await idle(page);
+  await saver(page).waitFor();
   await page.waitForFunction(() => document.querySelector('.saver')?.classList.contains('on'));
   assert.equal(await saver(page).getAttribute('aria-hidden'), 'true');
   // a small nudge, like a desk being bumped, is not enough
@@ -41,11 +50,12 @@ test('the screen saver starts after the idle time and any input takes it away, l
   await page.mouse.down();
   await page.mouse.up();
   await saver(page).waitFor({ state: 'detached' });
-  await page.waitForTimeout(300);
+  await page.clock.runFor(300);
   assert.deepEqual(await state(page), before);
 
   // and it comes back after another quiet spell; a key takes it away and does nothing else
-  await saver(page).waitFor({ timeout: 5000 });
+  await idle(page);
+  await saver(page).waitFor();
   await page.keyboard.press('Enter');
   await saver(page).waitFor({ state: 'detached' });
   assert.deepEqual(await state(page), before);
@@ -54,25 +64,44 @@ test('the screen saver starts after the idle time and any input takes it away, l
   const view = await page.locator('.win:not([hidden]) .view').first().boundingBox();
   const vx = view.x + view.width / 2, vy = view.y + view.height / 2;
   await page.mouse.move(vx, vy);
-  await saver(page).waitFor({ timeout: 5000 });
+  await idle(page);
+  await saver(page).waitFor();
   for (let i = 0; i < 6; i++) await page.mouse.wheel(0, 120);
   await page.mouse.click(vx, vy, { button: 'right' });
   await saver(page).waitFor({ state: 'detached' });
-  await page.waitForTimeout(300);
+  await page.clock.runFor(300);
   assert.deepEqual(await state(page), before);
   assert.deepEqual(page.errors, []);
   await page.context().close();
 });
 
-test('the screen saver never starts while a reader window is open', async () => {
+test('a post or page on screen keeps the screen saver away, and a minimised one does not', async t => {
+  if (!(await needs(t, '/about/'))) return;
+  const { posts } = await index();
   // a post as the first page, so the reader is there before the idle timer could fire
-  const html = await (await fetch(env.base + '/')).text();
-  const index = await (await fetch(env.base + /data-index="?([^"\s>]+)/.exec(html)[1])).json();
-  const page = await open(desktop, index.posts[0].url, quick);
-  await win(page, 'reader').locator('.rd h1').waitFor();
-  await page.waitForTimeout(3000);
+  const page = await open(desktop, posts[0].url, oneMinute);
+  const reader = win(page, 'reader');
+  await reader.locator('.rd h1').waitFor();
+  await page.clock.install();
+  await page.mouse.move(700, 450);
+  await idle(page);
+  // real time for a wrongly started import to arrive, as the fake clock moves timers but not the network
+  await page.waitForTimeout(300);
   assert.equal(await saver(page).count(), 0);
   assert.equal(await loaded(page), false, 'nothing is even loaded');
+
+  await reader.locator('.tab.on .ctl.min').click();
+  await idle(page);
+  await saver(page).waitFor();
+  await page.keyboard.press('Escape');
+  await saver(page).waitFor({ state: 'detached' });
+
+  // a page window counts too. The saver's bundle is loaded by now, so a saver would be up as soon as the time passed.
+  await page.evaluate(() => window.deskbar.go('/about/'));
+  await page.locator('.win:not([hidden]) .view.reader[data-key="page:/about/"]').waitFor();
+  await page.mouse.move(600, 400);
+  await idle(page);
+  assert.equal(await saver(page).count(), 0);
   assert.deepEqual(page.errors, []);
   await page.context().close();
 });
@@ -99,15 +128,16 @@ test('the menu entry starts the screen saver without opening its page', async t 
 test('the screen saver moves on a desktop that allows motion, and the terminal starts it on request', async t => {
   if (!(await needs(t, '/terminal/'))) return;
   const page = await open(desktop, '/terminal/', undefined, { reducedMotion: 'no-preference' });
+  await page.clock.install();
   const input = win(page, 'terminal').locator('.term-in');
   await input.fill('screensaver leaves');
   await input.press('Enter');
   await saver(page).waitFor();
-  await page.waitForTimeout(1500);
+  await page.clock.runFor(1500);
   const a = await saver(page).locator('canvas').screenshot();
-  await page.waitForTimeout(400);
+  await page.clock.runFor(400);
   const b = await saver(page).locator('canvas').screenshot();
-  assert.notDeepEqual(a, b, 'leaves fall');
+  assert.ok(!a.equals(b), 'leaves fall');
   await shot(page, 'screensaver');
   await page.mouse.move(100, 100);
   await page.mouse.move(400, 300, { steps: 3 });
@@ -118,16 +148,16 @@ test('the screen saver moves on a desktop that allows motion, and the terminal s
 });
 
 // The sheep saver (lazy/sheep.js), chosen in the Control panel's System pane (deskbar:saverKind)
-const sheepLoaded = page => page.evaluate(() => performance.getEntriesByType('resource').some(e => e.name.includes('/js/deskbar-lazy/sheep.')));
 const canvasShot = page => saver(page).locator('canvas').screenshot();
 
 test('Sheep: the default in the Control panel, the Test button and the idle watcher run it, over the dimmed desktop', async t => {
   if (!(await needs(t, '/control-panel/'))) return;
-  const page = await open(desktop, '/control-panel/?pane=system', undefined, { reducedMotion: 'no-preference' });
+  const page = await open(desktop, '/control-panel/?pane=system', oneMinute, { reducedMotion: 'no-preference' });
   const cp = win(page, 'control-panel');
   await cp.locator('.cp').waitFor();
+  await page.clock.install();
   assert.equal(await cp.locator('input[name="cp-saverKind"]:checked').getAttribute('value'), 'sheep', 'sheep by default');
-  assert.equal(await sheepLoaded(page), false, 'no sheep until asked for');
+  assert.equal(await loaded(page, 'sheep'), false, 'no sheep until asked for');
   // Leaves is kept once picked; Sheep, the default, stores nothing
   await cp.locator('input[name="cp-saverKind"][value="leaves"]').check();
   assert.equal(await page.evaluate(() => localStorage.getItem('deskbar:saverKind')), '"leaves"');
@@ -148,7 +178,7 @@ test('Sheep: the default in the Control panel, the Test button and the idle watc
   // they move (a sheep can stand still for up to 3s, so a few looks over longer than that)
   const looks = new Set();
   for (let i = 0; i < 4; i++) {
-    await page.waitForTimeout(1200);
+    await page.clock.runFor(1200);
     looks.add((await canvasShot(page)).toString('base64'));
   }
   assert.ok(looks.size > 1, 'sheep wander');
@@ -158,9 +188,9 @@ test('Sheep: the default in the Control panel, the Test button and the idle watc
   await saver(page).waitFor({ state: 'detached' });
 
   // the idle watcher runs the choice too
-  await page.evaluate(() => localStorage.setItem('deskbar:saver', JSON.stringify(0.02)));
   await page.mouse.move(420, 320);
-  await page.locator('.saver[data-kind="sheep"]').waitFor({ timeout: 5000 });
+  await idle(page);
+  await page.locator('.saver[data-kind="sheep"]').waitFor();
   await page.keyboard.press('Escape');
   await saver(page).waitFor({ state: 'detached' });
   assert.equal(await cp.locator('.cp-pane:not([hidden])').getAttribute('id'), 'cp-system', 'nothing changed underneath');
@@ -186,8 +216,11 @@ test('Sheep with reduced motion is a still frame of crisp sprites, whose sheet l
   });
   assert.ok(await sheet(), 'the sheet loaded');
   const a = await canvasShot(page);
+  // real time rather than the clock: a sheep can stand still for seconds, so a few frames prove nothing, and
+  // running the clock over the saver changed the picture in ways real time did not
   await page.waitForTimeout(800);
-  assert.deepEqual(await canvasShot(page), a, 'nothing moves');
+  // compared as bytes: assert's diff of two unequal screenshots (every byte inspected) runs out of memory
+  assert.ok((await canvasShot(page)).equals(a), 'nothing moves');
   // drawn whole pixels at a time: only the sheet's own few colours, none blended by smoothing
   const seen = await colours();
   assert.ok(seen.includes('255,246,145,255'), 'cream wool');

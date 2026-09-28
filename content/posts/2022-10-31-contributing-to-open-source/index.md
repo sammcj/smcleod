@@ -1,6 +1,5 @@
 ---
 author: "Sam McLeod"
-readingTime: true
 categories: [ "Culture", "Tech", "Leadership", "Values" ]
 date: "2022-10-30T07:00:00Z"
 images: ["help.jpg"]
@@ -10,8 +9,6 @@ cover:
   #caption: "<text>"
   #relative: false # To use relative path for cover image, used in hugo Page-bundles
 title: Encourage Your Peers To Contribute To Open Source
-hideComments: false
-showFullContent: false
 keywords: ["culture", "opensource", "git", "Leadership", "values"]
 tags: ["culture", "opensource", "git", "Leadership", "values"]
 toc: true

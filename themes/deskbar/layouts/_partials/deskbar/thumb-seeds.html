@@ -1,12 +1,11 @@
 {{- /* Ground picks for generated thumbnails (thumb-art.html), keyed by page path. Each pick starts from a hash of the
        path, then steps past the grounds of the three previous posts so neighbours in Tracker never
        share one. Walking oldest first means a new post never changes an older post's art. Call with
-       partialCached; the count must match the list in thumb-art.html. */ -}}
-{{- $sections := site.Params.deskbar.readerSections | default (slice "posts") -}}
-{{- $grounds := 8 -}}
+       partialCached. The grounds are in data/deskbar/emblems.yaml. */ -}}
+{{- $grounds := len hugo.Data.deskbar.emblems.grounds -}}
 {{- $seeds := dict -}}
 {{- $recent := slice -1 -1 -1 -}}
-{{- range (where site.RegularPages "Section" "in" $sections).ByDate -}}
+{{- range (partialCached "deskbar/posts.html" site).Reverse -}}
   {{- $h := int (hash.FNV32a .Path) -}}
   {{- $ground := -1 -}}
   {{- range $i := seq 0 (sub $grounds 1) -}}

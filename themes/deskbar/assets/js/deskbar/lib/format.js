@@ -7,6 +7,11 @@ export const shortDate = d => d ? day(d).toLocaleDateString('en-AU', { day: 'num
 export const plural = (n, word) => `${n} ${word}${n === 1 ? '' : 's'}`;
 export const excerpt = (s, n = 130) => s.length > n ? s.slice(0, n - 3).replace(/\s+\S*$/, '') + '...' : s;
 
+// A hash or layout link is typed or pasted by people, so a stray % (#100%) must not throw
+export function safeDecode(s) {
+  try { return decodeURIComponent(s); } catch { return s; }
+}
+
 // Every post in the index has a thumbnail (its own image or build-time art, see thumb-art.html) and a mini icon.
 // A thumbnail that fails to load, such as a hotlinked cover that has gone, falls back once to the mini icon.
 function pic(cls, src, fallback) {

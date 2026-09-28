@@ -5,23 +5,9 @@ date: 2024-07-03T01:00:10+00:00
 # aliases: ["/first"]
 tags: ["ai", "tools", "ratings"]
 author: "Sam McLeod"
-showToc: true
-TocOpen: false
 draft: false
-hidemeta: false
-comments: false
 description: "Subjective ratings of the notable AI tools I've tried."
-disableShare: false
-disableHLJS: false
-hideSummary: false
 searchHidden: false
-ShowReadingTime: true
-ShowBreadCrumbs: true
-ShowPostNavLinks: true
-ShowWordCount: true
-ShowRssButtonInSectionTermList: true
-UseHugoToc: true
-mermaid: true
 cover:
   image: ""
   alt: ""

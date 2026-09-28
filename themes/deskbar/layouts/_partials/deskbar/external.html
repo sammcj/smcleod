@@ -1,0 +1,4 @@
+{{- /* Whether a URL is on another site: it has a host and that host isn't the site's. Such links open in a new tab;
+       the site's own pages, absolute or not, stay in the shell as windows. */ -}}
+{{- $host := (urls.Parse .).Host -}}
+{{- return and (ne $host "") (ne $host (urls.Parse site.BaseURL).Host) -}}
