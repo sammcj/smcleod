@@ -221,19 +221,26 @@ function escKeys(e) {
   const tw = back.win, step = back.hist === history.length && router.currentPath() === back.at;
   morph([tw], () => {
     closeView(v);
-    Object.assign(tw, back.geo, { min: false, active: Math.min(back.geo.active, tw.views.length - 1) });
-    S.split = back.split;
-    renderTabs(tw);
-    place(tw);
-    clampTab(tw);
-    relayout();
-    focus(tw);
     tw.tabsEl.querySelector('.tab.on .tt')?.focus({ preventScroll: true });
-    // a Tracker moved on to another place keeps the address closing the reader gave it (main.js afterClose)
-    if (!back.path || tv.route() !== back.route) return;
-    if (step) { router.replace(back.at); router.backTo(back.path, back.title); }
-    else router.replace(back.path, back.title);
+    // putBack gave it the address the post was opened from; a Tracker moved on to another place keeps its own
+    if (step && back.path && tv.route() === back.route) { router.replace(back.at); router.backTo(back.path, back.title); }
   });
+}
+
+// However the post closes (Escape, its close button, q or w), the Posts window goes back where and how big it was,
+// with the address the post was opened from, under the same conditions as Escape. A Tracker moved on to another
+// place keeps the address closing the reader gave it (main.js afterClose).
+function putBack(v) {
+  const back = v.back, tv = findView('tracker'), tw = back?.win;
+  if (!back || isPhone() || S.home || tv?.win !== tw || !S.wins.includes(tw)) return;
+  Object.assign(tw, back.geo, { min: false, active: Math.min(back.geo.active, tw.views.length - 1) });
+  S.split = back.split;
+  renderTabs(tw);
+  place(tw);
+  clampTab(tw);
+  relayout();
+  focus(tw);
+  if (back.path && tv.route() === back.route) router.replace(back.path, back.title);
 }
 
 export function initReader() {
@@ -241,5 +248,10 @@ export function initReader() {
   document.addEventListener('keydown', pageKeys);
   document.addEventListener('keydown', escKeys);
   // Tracker marks the post the shared reader shows, so that goes when the reader does
-  onWm('closed', views => { if (views.some(x => x.key === 'reader')) emit('reading', ''); });
+  onWm('closed', views => {
+    const v = views.find(x => x.key === 'reader');
+    if (!v) return;
+    emit('reading', '');
+    putBack(v);
+  });
 }

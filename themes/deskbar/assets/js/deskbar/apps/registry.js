@@ -20,7 +20,7 @@
 // D12 anchors work the same in every window: a deep link's #hash, and an in-page link to a heading, scroll the
 // view showing that page to the element with that id. A view can set scrollTo(id) to do this its own way.
 import { h } from '../lib/dom.js';
-import { createWindow, findView, focusView, renderTabs, deskRect, tabH, allViews, activeView, iconsRight, clearOfIcons, arrange, postsHome } from '../wm/windows.js';
+import { createWindow, findView, focusView, renderTabs, deskRect, tabH, allViews, activeView, iconsRight, clearOfIcons, retile, postsHome } from '../wm/windows.js';
 import { S } from '../wm/state.js';
 import { snapRect, GAP } from '../wm/snap.js';
 import * as router from '../router.js';
@@ -83,11 +83,10 @@ function open(app, page, opts) {
   Object.assign(v, { page, url: page.url, title: page.title });
   if (fresh) {
     createWindow(v, geometry(app, page));
-    // side by side rather than piled up, leaving out any the visitor has moved, resized or snapped (wm/drag.js)
+    // side by side rather than piled up, and clear of an open Posts window (wm/windows.js retile)
     if (app.tile) {
       v.tile = app.kind;
-      const ws = S.wins.filter(w => !w.min && !w.snap && !w.placed && w.views.every(x => x.tile === app.kind));
-      if (ws.length > 1) arrange(ws, { animate: false });
+      retile({ animate: false });
     }
   } else focusView(v);
   app.mount(v, page, { ...opts, fresh });

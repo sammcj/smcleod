@@ -452,3 +452,20 @@ test('tooltips only on the dock and icon-only panel buttons', async () => {
   assert.deepEqual(page.errors, []);
   await page.context().close();
 });
+
+test("D36: closing the post by its close button puts the Posts window back where it was, clear of the icons", async () => {
+  const page = await open(desktop);
+  const posts = win(page, 'tracker'), reader = win(page, 'reader');
+  await cards(page).first().waitFor();
+  const home = await posts.boundingBox();
+  await cards(page).first().click();
+  await reader.locator('.rd h1').waitFor();
+  assert.notDeepEqual(await posts.boundingBox(), home, 'the reading layout moved it');
+  await reader.locator('.tab.on .ctl.close').click();
+  await page.locator('.view[data-key="reader"]').waitFor({ state: 'detached' });
+  await page.waitForTimeout(300);
+  assert.deepEqual(await posts.boundingBox(), home, 'back where it was');
+  await page.waitForURL(u => u.pathname === '/');
+  assert.deepEqual(page.errors, []);
+  await page.context().close();
+});

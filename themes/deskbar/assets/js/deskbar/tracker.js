@@ -8,7 +8,7 @@ import { store } from './lib/store.js';
 import { fmtDate, shortDate, plural, thumb, mini } from './lib/format.js';
 import { filterPosts } from './index-data.js';
 import { searchPosts } from './search.js';
-import { createWindow, findView, focusView, renderTabs, place, refresh, deskRect, tabH, isPhone, clearOfIcons, postsHome } from './wm/windows.js';
+import { createWindow, findView, focusView, renderTabs, place, refresh, deskRect, tabH, isPhone, clearOfIcons, postsHome, retile } from './wm/windows.js';
 import { arrowTo } from './lib/keys.js';
 import { dragOut } from './dragout-trigger.js';
 import * as router from './router.js';
@@ -288,6 +288,8 @@ export function ensureTracker({ place, url, q, focus = true } = {}) {
   if (!v) {
     const d = deskRect(), w = Math.min(1170, d.w - 140);
     createWindow(v = makeTracker(), place === 'all' ? postsHome() : { w, h: Math.min(696, d.h - tabH() - 36), x: clearOfIcons(118, w, d), y: tabH() + 20 });
+    // folders already open move right of it; inside the router's transition, so it doesn't animate a second time
+    retile({ animate: false });
   } else if (focus) {
     focusView(v);
   }
@@ -304,7 +306,8 @@ export function showPosts(beneath) {
   if (isPhone() || (beneath && v)) return;
   const { focused, booting, home } = S, geo = postsHome();
   S.booting = true;
-  if (!v) createWindow(v = makeTracker(), geo);
+  const made = !v;
+  if (made) createWindow(v = makeTracker(), geo);
   const w = v.win;
   if (!beneath) {
     Object.assign(w, geo, { snap: null, prev: null, unmax: null, tabX: 0, min: false, active: w.views.indexOf(v), z: ++S.z });
@@ -315,6 +318,7 @@ export function showPosts(beneath) {
   }
   renderTabs(w);
   place(w);
+  if (made) retile({ animate: false });
   Object.assign(S, { booting, home });
   refresh();
 }

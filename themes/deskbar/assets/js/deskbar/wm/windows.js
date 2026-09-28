@@ -293,13 +293,13 @@ export function toggleMax(w) {
   focus(w);
 }
 
-// Tiles wins over the desk right of the icons (tileRects), in opening order. fill: each takes its whole tile, as the
-// a key does; otherwise a window keeps its own size where that fits, centred along its tile's top, as folders do.
-// animate: false inside a transition the caller already runs (router.js), which a second one would cut short.
-export function arrange(wins, { fill = false, animate = true } = {}) {
+// Tiles wins over area, by default the desk right of the icons (tileRects), in opening order. fill: each takes its
+// whole tile, as the a key does; otherwise a window keeps its own size where that fits, centred along its tile's top,
+// as folders do. animate: false inside a transition the caller already runs (router.js), which a second one would cut short.
+export function arrange(wins, { fill = false, animate = true, area } = {}) {
   if (isPhone() || !wins.length) return;
   const d = deskRect(), edge = iconsRight(), x = edge ? edge + GAP : 0;
-  const rects = tileRects(wins.length, { x, y: 0, w: d.w - x, h: d.h }, tabH());
+  const rects = tileRects(wins.length, area || { x, y: 0, w: d.w - x, h: d.h }, tabH());
   const update = () => {
     wins.forEach((w, i) => {
       const r = rects[i], ww = fill ? r.w : Math.min(w.w, r.w);
@@ -312,6 +312,18 @@ export function arrange(wins, { fill = false, animate = true } = {}) {
     shade();
   };
   return animate ? morph(wins, update) : update();
+}
+
+// Windows an app opens side by side (defineApp `tile`), leaving out any the visitor has moved, resized or snapped
+// (wm/drag.js). An open Posts window anchors the desk: with 400px or more to its right they tile there instead, a
+// lone one included, so opening either one clears the other.
+export function retile(opts) {
+  const pw = findView('tracker')?.win, d = deskRect(), x = pw && !pw.min && !pw.snap && pw.x + pw.w + GAP;
+  const area = x && d.w - x >= 400 ? { x, y: 0, w: d.w - x, h: d.h } : undefined;
+  for (const kind of new Set(allViews().map(v => v.tile).filter(Boolean))) {
+    const ws = S.wins.filter(w => w !== pw && !w.min && !w.snap && !w.placed && w.views.every(v => v.tile === kind));
+    if (ws.length > 1 || (area && ws.length)) arrange(ws, { ...opts, area });
+  }
 }
 
 // The a key (wm/drag.js): tiles every open window, each filling its tile, and the next press puts them back as they

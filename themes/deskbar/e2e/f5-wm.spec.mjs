@@ -299,7 +299,10 @@ test('page windows open centred on the desk', async t => {
 // Front matter windowWidth and windowHeight size any app's window, not just plain pages
 test('a folder window opens centred at its front matter windowWidth and windowHeight', async t => {
   if (!(await needs(t, '/links/'))) return;
-  const page = await open(desktop, '/links/');
+  // with no Posts window, which would otherwise have folders tile to its right (arrange.spec.mjs)
+  const page = await open(desktop, '/');
+  await win(page, 'tracker').locator('.tab.on .ctl.close').click();
+  await page.evaluate(() => window.deskbar.go('/links/'));
   await win(page, 'folder:/links/').waitFor();
   const r = await rectOf(page, 'folder:/links/'), d = await deskGeo(page);
   const [w, h] = await page.evaluate(() => fetch('/links/').then(res => res.text()).then(s => [/data-width="?(\d+)/, /data-height="?(\d+)/].map(re => +re.exec(s)?.[1])));

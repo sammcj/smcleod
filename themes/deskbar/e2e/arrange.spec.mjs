@@ -66,3 +66,27 @@ test('the a key tiles every open window, each filling its tile, and puts them ba
   assert.deepEqual(page.errors, []);
   await page.context().close();
 });
+
+// The Posts window anchors the desk: folders tile in the room to its right rather than over it
+test('with Posts open, folders tile to its right, including one opened as the first page', async t => {
+  if (!(await needs(t, '/links/', '/projects/'))) return;
+  const page = await open(desktop, '/');
+  await win(page, 'tracker').waitFor();
+  await openFolder(page, '/links/');
+  const posts = await withTab(page, 'tracker'), l = await withTab(page, 'folder:/links/');
+  assert.ok(l.x >= posts.x + posts.width, `a lone folder opens right of Posts (${JSON.stringify([posts, l])})`);
+  await openFolder(page, '/projects/');
+  const [l2, p] = [await withTab(page, 'folder:/links/'), await withTab(page, 'folder:/projects/')];
+  for (const f of [l2, p]) assert.ok(!overlap(posts, f), `clear of Posts (${JSON.stringify([posts, f])})`);
+  assert.ok(!overlap(l2, p), 'and of each other');
+  assert.deepEqual(page.errors, []);
+  await page.context().close();
+
+  const first = await open(desktop, '/links/');
+  await win(first, 'tracker').waitFor();
+  await first.waitForTimeout(300);
+  const [tk, f] = [await withTab(first, 'tracker'), await withTab(first, 'folder:/links/')];
+  assert.ok(!overlap(tk, f), `Posts opened beneath at first load moves the folder to its right (${JSON.stringify([tk, f])})`);
+  assert.deepEqual(first.errors, []);
+  await first.context().close();
+});
