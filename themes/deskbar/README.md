@@ -159,10 +159,10 @@ The screen saver starts after `screensaver.minutes` without input, but never whi
     - Whole looks (`LOOKS`): Platinum (Mac OS 9), Clearlooks (GNOME 2), Phosphor (an amber CRT), Broadsheet (neo-brutalist newsprint), Synthwave and its variants (80s outrun) and Pixel (retro pixel art in Pixelify Sans from `static/fonts/pixelify-sans/`) draw in colours of their own, so Colours is off while one is on, and Mode too for the dark-only ones. Pixel and Synthwave offer their own colour variants there instead (Pico, and Synthwave's Sunrise, which keeps the dark chrome around light pages).
     - Docks: Glass, Deskbar and Panel, plus each look's own dock, which goes with any window style.
     - CRT effects: scanlines, the Phosphor tube, an aperture grille, and amber or green monochrome, over any look.
-    - A new look is `assets/css/deskbar/looks/<name>.css` plus its lines in `lib/appearance.js`. Scope every rule to `[data-deco=<name>]`, `[data-wall=<name>]`, `[data-dock=<name>]` or its `.cp-deco`, `.cp-wp` and `.cp-dk` thumbnails; its variants are `<name>-<variant>` values in the same file. It builds as its own stylesheet, which head.html links before first paint whenever the stored window style, wallpaper or dock is of its family
+    - Adding or changing any of these: [THEMING.md](THEMING.md)
   - **Posts:** the reader's width, text size and font: the theme's serif, sans or mono, or Atkinson Hyperlegible, self-hosted in `static/fonts/` and fetched only once chosen. The reader's A-, A+ and width buttons change the same settings
   - **System:** which screen saver (Leaves or Sheep), a Test screen saver button, and its delay
-- Choices live in localStorage and come back before first paint. Looks other than the defaults are in `assets/css/deskbar/lazy/control-panel.css`, which `head.html` links only when one is chosen (after the core stylesheet, where the app's own load puts it too), as `[data-deco=<name>]`, `.wm[data-wall=<name>] body`, `.wm[data-dock=<name>] #dock` and `:root[data-rd-font=<name>]` rules. Each palette is its own `assets/css/deskbar/palettes/<name>.css`, a `:where(:root)[data-palette=<name>]` token set that head.html links before that stylesheet, and the CRT effects are `assets/css/deskbar/effects/crt.css`, linked last
+- Choices live in localStorage and come back before first paint
 - Page scripts work in windows: the shell re-runs a routed page's `<script>` elements in order, and holds their `load`/`DOMContentLoaded` listeners until the scripts finish. They run in global scope on every mount, so wrap top-level `let`/`const` in a block or IIFE.
 
 ### Extension points
@@ -227,6 +227,8 @@ make build    # example site into .build/public
 make test     # unit tests plus the size budgets (45KB shell, 12KB per on-demand bundle)
 npm install && make e2e   # Playwright browser and axe accessibility tests against the example build
 ```
+
+Design intent and the decision register: [DESIGN.md](DESIGN.md). Adding themes, window styles, palettes, wallpapers, docks and effects: [THEMING.md](THEMING.md).
 
 E2E environment variables:
 

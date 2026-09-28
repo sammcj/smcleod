@@ -17,6 +17,7 @@
 - `DEV_PLAN.md` (local, globally gitignored) tracks current work. Tick an item only when it is fully done.
 - `params.deskbar.appearance` (the site's starting look) must match a preset in the theme's `lib/appearance.js`; `tests/appearance.test.mjs` enforces it.
 - `themes/deskbar/DESIGN.md` holds the design intent, design language, how looks work and the numbered decision register (D1 onwards) that code comments cite. Read it before changing the look or window behaviour, and update it when a decision changes them.
+- `themes/deskbar/THEMING.md` is the how-to for adding or changing themes, window styles, palettes, wallpapers, docks and CRT effects. Keep it in step when that process changes.
 
 ## Content
 
