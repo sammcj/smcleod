@@ -25,8 +25,6 @@
   --line: light-dark(#cfc8b8, #45423b); --zebra: color-mix(in srgb, var(--bs-ink) 4%, transparent);
   --accent: light-dark(#2a3dff, #4a5bff); --accent-fg: #fff; --link: light-dark(#2a3dff, #9ea8ff);
   --read-bg: light-dark(#f8f5ed, #191816); --read-fg: light-dark(#1b1b1b, #e6e1d4); --code-bg: light-dark(#ebe6d9, #282622);
-  --wall-1: light-dark(#4a5bff, #2330a8); --wall-2: light-dark(#2a3dff, #1a2699); --wall-3: light-dark(#1a28b8, #0f1766);
-  --wall-glow: rgba(220,255,58,.18);
   scrollbar-color: var(--bs-ink) var(--bs-paper);
 }
 :root[data-deco=broadsheet] ::selection { background: var(--bs-acid); color: #121212; }
@@ -158,6 +156,8 @@
 }
 @keyframes bs-read { to { background-size: 100% 100%, auto; } }
 
+/* the root colour, which the phone page fades into past its end (chrome.css) */
+.wm[data-wall=broadsheet] { --wall-3: light-dark(#1a28b8, #0f1766); }
 /* Wallpaper: ruled newsprint with a halftone patch fading out under the icons, a cobalt disc, and the site's name set
    huge in outline over it (#desk::after, which the core draws faintly) */
 .wm[data-wall=broadsheet] body { background: radial-gradient(circle 170px at calc(100% - 70px) 56%, var(--bs-cob) 99%, transparent), linear-gradient(var(--bs-rule) 1px, transparent 1px) 0 0 / 24px 24px, linear-gradient(90deg, var(--bs-rule) 1px, transparent 1px) 0 0 / 24px 24px, radial-gradient(300px 280px at 0 var(--panel-h), transparent 30%, var(--bs-paper) 100%), radial-gradient(circle, var(--bs-ink) 1.2px, transparent 1.6px) 0 0 / 7px 7px, var(--bs-paper); }

@@ -13,7 +13,6 @@
   --content: #160e2c; --side: #1c1236; --fg: #ece6ff; --muted: #b6a8dc; --line: #3a2a66; --zebra: rgba(255,255,255,.035);
   --accent: #c2267a; --accent-fg: #fff; --link: var(--sw-cyan);
   --read-bg: #140c28; --read-fg: #e4ddf5; --code-bg: #22173f;
-  --wall-1: #2c1560; --wall-2: #1f0d47; --wall-3: #140833; --wall-glow: rgba(255,62,165,.2); --wall-line: rgba(255,62,165,.18);
 }
 :root[data-deco=memphis] ::selection { background: var(--mp-sun); color: var(--sw-ink); }
 :root[data-deco=memphis] :focus-visible { outline-color: var(--mp-sun); }
@@ -132,6 +131,8 @@
 :root[data-deco=memphis] .rd-pager a { border: 2px solid var(--line); border-radius: 0; box-shadow: 3px 3px 0 var(--mp-dk); }
 :root[data-deco=memphis] .rd-pager a:hover { border-color: var(--sw-cyan); box-shadow: 3px 3px 0 var(--sw-cyan); }
 
+/* the root colour, which the phone page fades into past its end (chrome.css) */
+.wm[data-wall=memphis] { --wall-3: #140833; }
 /* Wallpaper: flat indigo under confetti. Each shape is one gradient on its own tile, sized in primes so the
    scatter takes a long way to repeat, and offset so shapes don't collide or sit under the desktop icons at 1440x900.
    A tile's edge clips what it draws, which bounds the shapes a gradient can't: a triangle is a 60deg conic wedge

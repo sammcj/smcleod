@@ -116,6 +116,24 @@ export const openLook = (vp, path, look, ctxOpts) => {
   const { id, label, ...settings } = found;
   return open(vp, path, seed({ ...settings, ...rest }), ctxOpts);
 };
+// One property of the first element a selector matches
+export const style = (page, sel, prop) => css(page.locator(sel), prop);
+// Follows an in-shell link, as a click on it would
+export const go = (page, url) => page.evaluate(u => window.deskbar.go(u), url);
+
+// The Control panel (control-panel.spec.mjs, appearance.spec.mjs): its window, once built; a choice made in it, and
+// the one showing as checked; the settings shown on <html>; and those stored (nothing for a default)
+export const cp = page => win(page, 'control-panel');
+export const ready = page => cp(page).locator('.cp').waitFor();
+export const pick = (page, key, value) => cp(page).locator(`input[name="cp-${key}"][value="${value}"]`).check();
+export const checked = (page, key) => cp(page).locator(`input[name="cp-${key}"]:checked`).evaluateAll(rs => rs[0]?.value ?? null);
+export const attrs = page => page.evaluate(() => Object.fromEntries(Object.entries(document.documentElement.dataset)
+  .filter(([k]) => ['theme', 'palette', 'deco', 'wall', 'dock', 'crt', 'rdWidth', 'rdFont'].includes(k))));
+const STORED = ['palette', 'theme', 'deco', 'wall', 'dock', 'crt', 'readerWidth', 'readerFont', 'textSize', 'saverKind', 'saver'];
+export const stored = page => page.evaluate(keys => Object.fromEntries(keys.flatMap(k => {
+  const v = localStorage.getItem('deskbar:' + k);
+  return v == null ? [] : [[k, JSON.parse(v)]];
+})), STORED);
 // Waits n animation frames (two by default), by which time what the page just changed has been laid out and drawn
 export const settle = (page, n = 2) => page.evaluate(n => new Promise(done => {
   const f = () => (--n ? requestAnimationFrame(f) : done());

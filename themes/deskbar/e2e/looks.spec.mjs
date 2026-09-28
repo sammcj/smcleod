@@ -57,9 +57,7 @@ const SIGNS = {
   phosphor: [['.win.active .frame', 'borderTopStyle', 'double'], ['#desk::after', 'content', /^"LOGIN: /], ['#dock .dk::before', 'content', 'counter(fk)']],
   broadsheet: [['#panel', 'backgroundColor', 'rgb(18, 18, 18)'], ['.win.active .frame', 'boxShadow', 'rgb(18, 18, 18) 7px 7px 0px 0px']],
   synthwave: [['body::before', 'borderTopLeftRadius', '50%'], ['body::after', 'transform', /^matrix3d/], ['.win.active .tab.on .tt', 'textTransform', 'uppercase']],
-  'synthwave-sunrise': [['body', 'backgroundImage', /rgb\(143, 124, 240\)/], ['.win.active .frame', 'backgroundColor', 'rgb(33, 21, 70)'],
-    ['.win .pc:not(.open)', 'backgroundColor', 'rgb(252, 247, 255)'], ['.win .rd h1', 'color', 'rgb(192, 19, 122)']],
-  'sunrise-rings': [['.win.active .frame', 'backgroundColor', 'rgb(33, 21, 70)'], ['body::before', 'content', 'none'],
+  'synthwave-sunrise': [['.win.active .frame', 'backgroundColor', 'rgb(33, 21, 70)'], ['body::before', 'content', 'none'],
     ['.win .pc:not(.open)', 'backgroundColor', 'rgb(252, 247, 255)'], ['.win .rd h1', 'color', 'rgb(192, 19, 122)']],
   vector: [['.win.active .tab.on', 'clipPath', /^polygon/], ['.win.active .frame', 'borderTopColor', 'rgb(111, 227, 255)']],
   memphis: [['.win.active .frame', 'boxShadow', /rgb\(111, 227, 255\) \d+px \d+px 0px/], ['#dock', 'borderTopLeftRadius', '0px']],
@@ -262,6 +260,92 @@ test('a look window style leaves the dock alone, and colours apply only where th
       same(await styles(page), haiku, Object.keys(PARTS), `${c} under Haiku windows`);
     }
     await apply(page, { deco: 'haiku', palette: 'haiku' });
+  }
+  assert.deepEqual(page.errors, []);
+  await page.context().close();
+});
+
+// Picks in the Control panel, one part at a time (D39): a window style changes only itself, and the colours only when
+// it doesn't offer the ones on. The dock, wallpaper and CRT effect stay as they were, both the settings and what they
+// draw. Two exceptions are left out: a dark-only window style turns a light desktop dark, dock and wallpaper with it,
+// so these run in dark; and the Deskbar and Panel docks are drawn in the window colours, so none of the starts has one.
+const APPEARANCE = ['deco', 'palette', 'wall', 'dock', 'crt', 'theme'];
+const chosen = page => page.evaluate(ks => Object.fromEntries(ks.map(k => [k, window.deskbar.settings.get(k)])), APPEARANCE);
+// A few computed values of the dock and wallpaper that show any restyling; long ones (data URIs) as a short hash
+const drawn = page => page.evaluate(() => {
+  const short = v => v.length < 90 ? v : v.slice(0, 40) + '#' + [...v].reduce((h, c) => Math.imul(h, 31) + c.charCodeAt(0) | 0, 0);
+  const of = (sel, props, pseudo) => {
+    const el = document.querySelector(sel), s = el && getComputedStyle(el, pseudo);
+    return s ? props.map(p => (p === 'borderTopColor' && s.borderTopWidth === '0px' ? '' : short(s[p]))).join(' | ') : null;
+  };
+  const r = document.querySelector('#dock').getBoundingClientRect();
+  return {
+    dock: {
+      box: [r.x, r.y, r.width, r.height].map(Math.round).join(),
+      dock: of('#dock', ['backgroundColor', 'backgroundImage', 'borderTopWidth', 'borderTopColor', 'borderTopLeftRadius', 'boxShadow']),
+      after: of('#dock', ['content', 'backgroundImage'], '::after'),
+      launcher: of('#dock .dk', ['backgroundColor', 'backgroundImage', 'borderTopLeftRadius', 'boxShadow']),
+    },
+    wall: {
+      root: of('html', ['backgroundColor']),
+      body: of('body', ['backgroundColor', 'backgroundImage']),
+      before: of('body', ['content', 'backgroundImage'], '::before'),
+      after: of('body', ['content', 'backgroundImage'], '::after'),
+      name: of('#desk', ['content', 'color', 'webkitTextStroke'], '::after'),
+    },
+  };
+});
+const cpPick = async (page, key, value) => {
+  await win(page, 'control-panel').locator(`input[name="cp-${key}"][value="${value}"]`).check();
+  await page.waitForFunction(([k, v]) => window.deskbar.settings.get(k) === v, [key, value]);
+  await apply(page);
+};
+const offers = (deco, palette) => (ownsColours(deco) ? PALETTES : coloursFor(deco)).some(([v]) => v === palette);
+
+test('picking a window style changes only the window style, and the colours if it offers others', async t => {
+  if (!(await needs(t, '/control-panel/'))) return;
+  // the site's starting look (a look's dock over the plain Rings) with a CRT effect, and two look wallpapers and docks
+  for (const start of [{ preset: 'synthwave-sunrise', crt: 'scanlines' }, { preset: 'pixel-pico' }, { preset: 'platinum' }]) {
+    const page = await openLook(desktop, '/control-panel/', { ...start, theme: 'dark' });
+    await win(page, 'control-panel').locator('.cp').waitFor();
+    await loadSheets(page);
+    await apply(page);
+    let was = await chosen(page), before = await drawn(page);
+    for (const [deco] of DECOS.filter(([d]) => d !== was.deco)) {
+      await cpPick(page, 'deco', deco);
+      const now = await chosen(page), after = await drawn(page), at = `${start.preset}, ${was.deco} to ${deco}`;
+      assert.ok(now.palette === was.palette || !offers(deco, was.palette), `${at}: keeps ${was.palette}, which it offers`);
+      assert.deepEqual(now, { ...was, deco, palette: now.palette }, `${at}: no other setting changes`);
+      assert.deepEqual(after.dock, before.dock, `${at}: the dock as it was`);
+      // a plain wallpaper is drawn in the colours; a look's in its own
+      if (now.palette === was.palette || lookSheet(now.wall)) assert.deepEqual(after.wall, before.wall, `${at}: the wallpaper as it was`);
+      [was, before] = [now, after];
+    }
+    assert.deepEqual(page.errors, []);
+    await page.context().close();
+  }
+});
+
+test('picking a dock or a wallpaper changes only that, under a look window style', async t => {
+  if (!(await needs(t, '/control-panel/'))) return;
+  const page = await openLook(desktop, '/control-panel/', { preset: 'pixel', theme: 'dark' });
+  await win(page, 'control-panel').locator('.cp').waitFor();
+  await loadSheets(page);
+  await apply(page);
+  const frame = () => css(page.locator('.win.active .frame'), ['backgroundColor', 'borderTopColor', 'boxShadow']);
+  const start = await chosen(page), windows = await frame();
+  let before = await drawn(page);
+  for (const [key, other, list] of [['dock', 'wall', DOCKS], ['wall', 'dock', WALLS]]) {
+    for (const [v] of list.filter(([x]) => x !== start[key])) {
+      await cpPick(page, key, v);
+      const after = await drawn(page);
+      assert.deepEqual(await chosen(page), { ...start, [key]: v }, `${key} ${v}: no other setting changes`);
+      assert.deepEqual(after[other], before[other], `${key} ${v}: the ${other} as it was`);
+      assert.deepEqual(await frame(), windows, `${key} ${v}: the windows as they were`);
+      before = after;
+    }
+    await cpPick(page, key, start[key]);
+    before = await drawn(page);
   }
   assert.deepEqual(page.errors, []);
   await page.context().close();

@@ -43,9 +43,11 @@
   --line: light-dark(#d9cbaa, #3d385f); --side: light-dark(#f6ecd4, #2a2747); --zebra: light-dark(rgba(28,26,46,.035), rgba(255,255,255,.03));
   --accent: light-dark(#1e7368, #23796e); --accent-fg: #fff; --link: light-dark(#1e7368, #7fd9ca);
   --read-bg: light-dark(#fcf6e8, #1e1c33); --read-fg: light-dark(#2a2735, #e4dff0); --code-bg: light-dark(#f1e7cf, #2a2745); --hl-com: light-dark(#5e5c52, #9a978a);
-  --wall-1: light-dark(#5ea6ec, #28204f); --wall-2: light-dark(#79c26a, #241f48); --wall-3: light-dark(#3f9a4b, #161334);
   accent-color: var(--accent); scrollbar-color: var(--frame-lo) var(--content);
 }
+/* the plain wallpapers in its colours, at a palette's specificity so a look wallpaper's own --wall-3 outranks them */
+:where(:root)[data-deco=pixel] { --wall-1: light-dark(#5ea6ec, #28204f); --wall-2: light-dark(#79c26a, #241f48); --wall-3: light-dark(#3f9a4b, #161334); }
+:where(:root[data-deco=pixel])[data-palette=pixel-pico] { --wall-1: #29adff; --wall-2: #1d2b53; --wall-3: #000; }
 :root[data-deco=pixel] ::selection { background: var(--pk-sun); color: var(--pk-on-sun); }
 
 /* Pico: after Celeste Classic, a few of PICO-8's colours (and of its hidden second sixteen) rather than all of them.
@@ -62,7 +64,6 @@
   --line: var(--frame); --side: light-dark(#fff1e8, #1d2b53); --zebra: light-dark(rgba(29,43,83,.05), rgba(255,241,232,.05));
   --accent: var(--tab-lo); --accent-fg: light-dark(#fff1e8, #000); --link: var(--tab-lo);
   --read-bg: var(--content); --read-fg: var(--fg); --code-bg: light-dark(#ffe3d1, #1d2b53); --hl-com: var(--muted);
-  --wall-1: #29adff; --wall-2: #1d2b53; --wall-3: #000;
 }
 /* the shell's warning colour is too faint on Pico's cream page */
 :root[data-deco=pixel][data-palette=pixel-pico] .rd { --adm-warning: light-dark(#8a5100, #efb45c); }
@@ -191,7 +192,6 @@
 /* desktop icons carry ink captions; the switcher and the phone home screen are the same tabs and slabs */
 :root[data-deco=pixel] .dicon span { padding: 2px 6px; color: var(--pk-cream); background: var(--pk-ink); border-radius: 0; text-shadow: none; font: 13px/1.2 var(--pk-font); }
 :root[data-deco=pixel] .dicon .ico { filter: drop-shadow(2px 2px 0 var(--pk-shadow)); }
-:root[data-deco=pixel] #desk::after { font: 700 52px/1 var(--pk-font); letter-spacing: 0; color: light-dark(rgba(28,26,46,.14), rgba(245,234,208,.12)); }
 :root[data-deco=pixel] #recent h2 { padding: 4px 12px; color: var(--pk-on-sun); background: var(--pk-sun); border: 2px solid transparent; border-bottom: 0; border-image: var(--pk-ring) 2; font: 700 14px var(--pk-font); }
 :root[data-deco=pixel] .sw-tab { height: 32px; padding: 0 4px 0 8px; border: 2px solid transparent; border-bottom: 0; border-image: var(--pk-ring) 2; background: var(--tab-in) padding-box; box-shadow: inset 2px 2px 0 var(--frame-hi); filter: drop-shadow(4px 4px 0 var(--pk-shadow)); }
 :root[data-deco=pixel] .sw-tab::after { left: -2px; height: 8px; border: 2px solid transparent; border-image: var(--pk-ring) 2; background: var(--frame) padding-box; box-shadow: inset 2px 2px 0 var(--frame-hi); }
@@ -243,6 +243,10 @@
 @keyframes pk-twinkle { to { translate: calc(-256 * var(--px)) 0; } }
 @keyframes pk-drift { to { translate: calc(192 * var(--px)) 0; } }
 @media (min-width: 2200px) { .wm[data-wall^=pixel] { --px: 7px; } }
+/* the site's name in pixel type, and the root colour the phone page fades into past its end (chrome.css) */
+.wm[data-wall^=pixel] #desk::after { font: 700 52px/1 'Pixelify Sans', var(--ui); letter-spacing: 0; color: light-dark(rgba(28,26,46,.14), rgba(245,234,208,.12)); }
+.wm[data-wall=pixel] { --wall-3: light-dark(#3f9a4b, #161334); }
+.wm[data-wall=pixel-pico] { --wall-3: #000; }
 
 /* Pico: PICO-8's night over a snowy summit, after Celeste Classic, with pines below and snow falling one art pixel a
    step. The rock is flat grey with a flat lavender shadow, as a checker dither there was busy at this scale, and the

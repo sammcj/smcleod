@@ -1,14 +1,16 @@
-{{- /* A card's preview in a `view: cards` folder (layouts/folder.html): { src, width, height, latest }, from a data
+{{- /* A card's preview in a `view: cards` folder (layouts/folder.html): { src, width, height, latest, err }, from a data
        item and a Fill size such as "320x180".
        The image is the first that works of: the item's feed artwork (a podcast's itunes:image or <image>, an Atom
        logo), the feed's newest entry's media:thumbnail (a YouTube channel or playlist feed), and the item's thumb.
        latest is the newest entry's title. feed and thumb are URLs, or asset paths (assets/<path>) for images kept in
        the site and for fixtures. The image is cropped to size as WebP, so the page never hotlinks a large original.
        Failures only warn, and a card left without an image shows a monogram, so a dead feed never stops the build.
+       A failed feed comes back as err for the folder to warn about once, as an outage at one host fails all its feeds.
        The feed is read on every build, so a scheduled rebuild keeps a channel's latest video current. */ -}}
 {{- $it := .item -}}
 {{- $srcs := slice -}}
 {{- $latest := "" -}}
+{{- $err := "" -}}
 {{- with $it.feed -}}
   {{- $got := partial "deskbar/feeds/get.html" . -}}
   {{- $doc := $got.doc -}}
@@ -30,10 +32,10 @@
     {{- if reflect.IsSlice $th }}{{ $th = index $th 0 }}{{ end -}}
     {{- if reflect.IsMap $th }}{{ with index $th "-url" }}{{ $srcs = $srcs | append . }}{{ end }}{{ end -}}
   {{- end -}}
-  {{- with $got.err }}{{ warnf "Folder %q: feed %s failed: %s" $it.name $it.feed . }}{{ end -}}
+  {{- $err = $got.err -}}
 {{- end -}}
 {{- with $it.thumb }}{{ $srcs = $srcs | append . }}{{ end -}}
-{{- $out := dict "latest" $latest -}}
+{{- $out := dict "latest" $latest "err" $err -}}
 {{- range $srcs -}}
   {{- $img := partial "deskbar/feeds/fetch-image.html" (dict "src" . "spec" (printf "fill %s webp center" $.size)) -}}
   {{- with $img.src }}{{ $out = merge $out (dict "src" . "width" $img.width "height" $img.height) }}{{ break }}{{ end -}}

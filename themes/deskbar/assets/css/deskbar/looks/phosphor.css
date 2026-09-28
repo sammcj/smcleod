@@ -18,7 +18,6 @@
   --content: var(--bg); --side: #140d00; --fg: var(--p); --muted: var(--p-dim); --line: #4a3104; --zebra: rgba(255,181,46,.04);
   --accent: var(--p); --accent-fg: var(--bg); --link: var(--p-hi); --ctl: var(--p);
   --read-bg: #0f0a02; --read-fg: #f0b24a; --code-bg: #1a1100;
-  --wall-1: #2a1b02; --wall-2: #1a1100; --wall-3: var(--bg); --wall-glow: rgba(255,181,46,.12); --wall-ring: rgba(255,181,46,.05); --wall-line: rgba(255,181,46,.1);
   --hl-kw: var(--p-hi); --hl-str: #e9a33a; --hl-com: #c28418; --hl-num: #ffc864; --hl-fn: #ffe3a8; --hl-type: #f7b955; --hl-bi: #eeac44; --hl-var: #ffcf7a;
   scrollbar-color: var(--p-lo) var(--side);
 }
@@ -126,6 +125,8 @@
 :root[data-deco=phosphor] .term .sw i { background: none; }
 :root[data-deco=phosphor] .term-chip:hover { background: var(--p); color: var(--bg); border-color: var(--p); }
 
+/* the root colour, which the phone page fades into past its end (chrome.css) */
+.wm[data-wall=phosphor] { --wall-3: #0d0900; }
 /* The wallpaper: a dark glass with a warm centre and a burnt-in login prompt */
 .wm[data-wall=phosphor] body { background: radial-gradient(ellipse 75% 70% at 50% 48%, #1d1300, #0d0900 70%, #050300); }
 .wm[data-wall=phosphor] #desk::after { content: 'LOGIN: ' attr(data-name); font: 700 40px/1 var(--mono); letter-spacing: .08em; text-transform: uppercase; color: rgba(255,181,46,.07); }

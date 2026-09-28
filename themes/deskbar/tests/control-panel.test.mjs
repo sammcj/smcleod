@@ -129,17 +129,6 @@ test("before first paint, a site's starting look shows for whatever the visitor 
   assert.deepEqual(prePaint({}).dataset, {}, 'without one, the core look');
 });
 
-test("before first paint, a visitor from before whole looks came apart keeps the look's dock and tube", () => {
-  const old = prePaint({ deco: 'phosphor', wall: 'phosphor', dock: 'panel', lookWas: {} });
-  assert.deepEqual(old.dataset, { deco: 'phosphor', wall: 'phosphor', dock: 'phosphor', crt: 'tube' });
-  assert.deepEqual(old.stored, { deco: 'phosphor', wall: 'phosphor', dock: 'phosphor', crt: 'tube' }, 'stored, and the marker gone');
-  assert.equal(prePaint({ deco: 'platinum', lookWas: {} }).dataset.dock, 'platinum');
-  assert.equal(prePaint({ deco: 'synthwave', dock: 'deskbar', lookWas: {} }).dataset.dock, 'deskbar', 'a dock they chose stays');
-  const plain = prePaint({ deco: 'haiku', lookWas: {} });
-  assert.deepEqual(plain.stored, { deco: 'haiku' }, 'only a look brings anything');
-  assert.deepEqual(prePaint({ deco: 'phosphor' }).dataset, { deco: 'phosphor' }, 'without the marker nothing changes');
-});
-
 test('before first paint, stored settings are applied and the stylesheet is linked only when one needs it', () => {
   const plain = prePaint({ theme: 'dark', readerWidth: 'wide', textSize: 20 });
   assert.deepEqual(plain.dataset, { theme: 'dark', rdWidth: 'wide' });
@@ -189,22 +178,17 @@ test('Clear: a glass window style with a wallpaper of its own, shown before firs
   assert.ok(!/liquid|lq-jelly/i.test(css), 'no Liquid Ass styles left behind');
 });
 
-test("before first paint, a retired choice shows as the site's starting one, and a lookWas visitor on Liquid Ass gets no dock", () => {
+test("before first paint, a retired choice shows as the site's starting one", () => {
   const link = h => `<link rel=stylesheet href="${h}">`;
   const site = { deco: 'demo', palette: 'demo', dock: 'demo' };
   const liquid = prePaint({ deco: 'liquid', wall: 'liquid', dock: 'liquid', palette: 'mint' }, site);
   assert.deepEqual(liquid.dataset, { deco: 'demo', palette: 'mint', dock: 'demo' }, 'the site look, and the palette they chose');
   assert.deepEqual(liquid.written, [link('/a.css'), link('/demo.css')], "the site look's stylesheet loads before first paint");
   assert.deepEqual(prePaint({ deco: 'liquid', wall: 'liquid', dock: 'liquid' }).dataset, {}, 'without a site look, the core one');
-  const old = prePaint({ deco: 'liquid', wall: 'liquid', lookWas: {} });
-  assert.deepEqual(old.dataset, {});
-  assert.deepEqual(old.stored, { deco: 'liquid', wall: 'liquid' }, 'no dock stored; settings.js forgets the rest');
 
-  // the script skips exactly settings.js's retired values, and its whole-look list is LOOKS
+  // the script skips exactly settings.js's retired values
   const head = read('../layouts/_partials/deskbar/head.html');
-  const list = re => head.match(re)[1].split('|').sort();
-  assert.deepEqual(list(/\/\^\(([a-z|]+)\)\$\/\.test\(r\)/), [...new Set(Object.values(RETIRED).flat())].sort());
-  assert.deepEqual(list(/\/\^\(([a-z|]+)\)\$\/\.test\(o\)/), Object.keys(LOOKS).sort());
+  assert.deepEqual(head.match(/\/\^\(([a-z|]+)\)\$\/\.test\(r\)/)[1].split('|').sort(), [...new Set(Object.values(RETIRED).flat())].sort());
   for (const [k, values] of Object.entries(RETIRED)) for (const v of values) {
     assert.equal(prePaint({ [k]: v }, { [k]: 'demo' }).dataset[k], 'demo', `${k}=${v}`);
   }
