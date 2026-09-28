@@ -5,7 +5,7 @@ thumbnail: thumbnail.png
 images: ["thumbnail.png"]
 thumbnailIcon: thumbnail-icon.svg
 lastmod: 2025-11-27T01:00:00+10:00
-tags: ["ai", "llm", "tech", "ollama", "coding", "sampling", "inference", "tutorials", "llama"]
+tags: ["AI", "LLM", "tech", "ollama", "coding", "sampling", "inference", "tutorials", "llama"]
 author: "Sam McLeod"
 draft: false
 description: "A practical guide to LLM sampling parameters for Ollama, llama.cpp, and MLX"

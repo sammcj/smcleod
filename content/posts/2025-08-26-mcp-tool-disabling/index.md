@@ -4,7 +4,7 @@ date: 2025-08-26T01:10:00+10:00
 thumbnail: thumbnail.png
 images: ["thumbnail.png"]
 thumbnailIcon: thumbnail-icon.svg
-tags: ["ai", "llm", "tech", "mcp", "cline", "claude", "agentic", "agentic coding", "mcp", "security"]
+tags: ["AI", "LLM", "tech", "mcp", "cline", "claude", "agentic", "agentic coding", "mcp", "security"]
 author: "Sam McLeod"
 draft: false
 summary: "If you're building MCP servers, you should be adding the ability to disable individual tools."

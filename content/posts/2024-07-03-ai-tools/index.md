@@ -3,7 +3,7 @@ title: "Rating AI Tools"
 date: 2024-07-03T01:00:10+00:00
 # weight: 1
 # aliases: ["/first"]
-tags: ["ai", "tools", "ratings"]
+tags: ["AI", "tools", "ratings"]
 author: "Sam McLeod"
 draft: false
 description: "Subjective ratings of the notable AI tools I've tried."

@@ -2,7 +2,7 @@
 url: "/2024/12/bringing-k/v-context-quantisation-to-ollama/"  # keeps the live URL: Hugo 0.166 no longer keeps "/" from the title in :title slugs
 title: "Bringing K/V Context Quantisation to Ollama"
 date: 2024-12-04T20:00:02+00:00
-tags: ["ai", "llm", "tech", "ollama", "llama","quantisation"]
+tags: ["AI", "LLM", "tech", "ollama", "llama","quantisation"]
 author: "Sam McLeod"
 draft: false
 description: "K/V context cache quantisation has been added to Ollama. This enables significant reductions in VRAM usage, allowing users to realise the potential of expanded context sizes and run larger models at their existing context sizes."

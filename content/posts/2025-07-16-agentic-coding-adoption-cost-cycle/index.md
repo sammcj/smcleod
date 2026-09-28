@@ -4,7 +4,7 @@ date: 2025-07-16T01:10:00+10:00
 thumbnail: thumbnail.png
 images: ["thumbnail.png"]
 thumbnailIcon: thumbnail-icon.svg
-tags: ["ai", "llm", "tech","coding", "cline", "agentic", "agentic coding"]
+tags: ["AI", "LLM", "tech","coding", "cline", "agentic", "agentic coding"]
 author: "Sam McLeod"
 draft: false
 description: "The two common themes I see with engineers adopting agentic coding tools"

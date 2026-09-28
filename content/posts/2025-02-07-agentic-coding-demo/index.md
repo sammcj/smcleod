@@ -5,7 +5,7 @@ date: 2025-02-07T01:00:01+10:00
 thumbnail: thumbnail.png
 images: ["thumbnail.png"]
 thumbnailIcon: thumbnail-icon.svg
-tags: ["ai","llm","tech","deepseek","llama","anthropic","aws","cline","roo code","programming","brownbag"]
+tags: ["AI","LLM","tech","deepseek","llama","anthropic","aws","cline","roo code","programming","brownbag"]
 author: "Sam McLeod"
 draft: false
 description: "Video recording of a brownbag presentation / live demo I ran on Agentic Coding using Cline/Roo Code"

@@ -5,7 +5,7 @@ lastmod: 2023-07-09T07:41:37
 author: Sam McLeod
 description: "Enabling the new AMD P-State Driver on Fedora with Kernel 6.4"
 keywords: ["tech", "linux", "fedora", "amd", "pstate", "kernel", "power", "performance"]
-tags: ["Linux", "Performance"]
+tags: ["linux", "performance"]
 categories: ["Tech", "Linux"]
 series: []
 images: [""]

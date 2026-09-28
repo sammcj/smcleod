@@ -4,7 +4,7 @@ date: 2025-04-03T01:00:01+10:00
 thumbnail: thumbnail.png
 images: ["thumbnail.png"]
 thumbnailIcon: thumbnail-icon.svg
-tags: ["ai","llm","tech","agentic","coding","vibecoding"]
+tags: ["AI","LLM","tech","agentic","coding","vibecoding"]
 author: "Sam McLeod"
 draft: false
 description: "The cost of not leveraging agentic coding is likely far greater than you think."

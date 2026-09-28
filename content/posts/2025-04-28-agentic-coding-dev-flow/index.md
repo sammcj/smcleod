@@ -6,7 +6,7 @@ images: ["thumbnail.png"]
 thumbnailIcon: thumbnail-icon.svg
 lastmod: 2026-07-04T10:00:00+10:00
 url: "/2025/04/my-plan-document-act-review-flow-for-agentic-software-development/"
-tags: ["ai", "llm", "tech", "coding", "agentic", "agentic coding", "agents", "skills", "context engineering", "tutorials"]
+tags: ["AI", "LLM", "tech", "coding", "agentic", "agentic coding", "agents", "skills", "context engineering", "tutorials"]
 author: "Sam McLeod"
 draft: false
 description: "An overview of my Setup, Plan, Act, Review & Iterate workflow for agentic software development."

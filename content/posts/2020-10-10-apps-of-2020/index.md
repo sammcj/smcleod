@@ -19,7 +19,7 @@ series: [ BestOf ]
 
 Near the end of every year I note down a summary of the best apps, hardware & podcasts I've enjoyed throughout the year (and often for some time before).
 
-_This post has been superseded. You can find the latest version of this post [here](/posts/2022-10-19-apps-of-2022/)._
+_This post has been superseded. You can find the latest version of this post [here]({{< ref "posts/2022-10-19-apps-of-2022" >}})._
 
 ## Software and Services
 

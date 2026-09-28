@@ -15,7 +15,6 @@
   --content: #160e2c; --side: #1c1236; --fg: #ece6ff; --muted: #b6a8dc; --line: #3a2a66; --zebra: rgba(255,255,255,.035);
   --accent: #c2267a; --accent-fg: #fff; --link: var(--sw-cyan);
   --read-bg: #140c28; --read-fg: #e4ddf5; --code-bg: #22173f;
-  --wall-1: #1d0c44; --wall-2: #150936; --wall-3: #0d0526; --wall-glow: rgba(111,227,255,.12); --wall-line: rgba(111,227,255,.14);
 }
 :root[data-deco=vector] ::selection { background: var(--sw-cyan); color: var(--sw-ink); }
 :root[data-deco=vector] :focus-visible { outline-color: var(--sw-cyan); }
@@ -91,6 +90,8 @@
 :root[data-deco=vector] .rd h1 { color: var(--sw-cyan); }
 :root[data-deco=vector] .rd h2 { color: #ff8fcb; border-bottom: 1px solid; border-image: linear-gradient(90deg, var(--sw-pink), var(--sw-cyan) 40%, transparent) 1; }
 
+/* the root colour, which the phone page fades into past its end (chrome.css) */
+.wm[data-wall=vector] { --wall-3: #0d0526; }
 /* Wallpaper: flat indigo ruled in a triangle lattice. Each lattice is one tile a triangle wide and two rows high,
    whose corner-to-corner diagonals run at 60 degrees, so the tiles meet exactly whatever the rounding. The fine one
    is pink with cyan rows; a sparser one, four times the size with lit vertices, sits over it. --vx-w scales both

@@ -50,6 +50,7 @@
   {{- end }}
   {{- $cats := slice }}
   {{- range $data }}{{ $cats = $cats | append (.category | default "") }}{{ end }}
+  {{- $failed := slice }}
   {{- range uniq $cats }}
   {{- $cat := . }}
   {{- with $cat }}
@@ -61,6 +62,7 @@
     <li><a href="{{ .url }}"{{ if partial "deskbar/external.html" .url }} target="_blank" rel="noopener"{{ end }}>
       {{- if $cards }}
       {{- $p := partial "deskbar/folder/preview.html" (dict "item" . "size" $size) }}
+      {{- if $p.err }}{{ $failed = $failed | append (dict "name" .name "err" $p.err) }}{{ end }}
       {{- with $p.src }}<img class="thumb" src="{{ . }}" alt="" width="{{ $p.width }}" height="{{ $p.height }}" loading="lazy" decoding="async">
       {{- else }}<span class="thumb mono" style="--hue: {{ mod (hash.FNV32a .name) 360 }}; --w: {{ index (split $size "x") 0 }}; --h: {{ index (split $size "x") 1 }}" aria-hidden="true">{{ substr .name 0 1 | upper }}</span>
       {{- end }}
@@ -77,6 +79,11 @@
     {{- with index $pages (lower .name) }}{{ with site.GetPage . }}<a class="fi-page" href="{{ .RelPermalink }}" aria-label="Read more: {{ .LinkTitle }}">Read more</a>{{ end }}{{ end }}</li>
     {{- end }}{{ end }}
   </ul>
+  {{- end }}
+  {{- /* one warning per cause, as an outage at one host fails every feed on it */}}
+  {{- range uniq (apply $failed "index" "." "err") }}
+  {{- $names := apply (where $failed "err" .) "index" "." "name" }}
+  {{- warnf "Folder %q: %d feeds failed (%s): %s" $.Title (len $names) . (delimit $names ", ") }}
   {{- end }}
   {{- with .Content }}
   <div class="rd-body">{{ . }}</div>

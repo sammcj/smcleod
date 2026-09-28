@@ -4,7 +4,7 @@ date: 2025-03-23T01:00:01+10:00
 thumbnail: thumbnail.png
 images: ["thumbnail.png"]
 thumbnailIcon: thumbnail-icon.svg
-tags: ["ai","llm","tech","culture","art","economics","capitalism","history","creativity","automation"]
+tags: ["AI","LLM","tech","culture","art","economics","capitalism","history","creativity","automation"]
 author: "Sam McLeod"
 draft: false
 description: "The Democratisation Paradox: What History Teaches Us About AI."

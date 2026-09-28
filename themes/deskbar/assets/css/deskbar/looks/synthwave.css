@@ -13,6 +13,9 @@
   --content: #160e2c; --side: #1c1236; --fg: #ece6ff; --muted: #b6a8dc; --line: #3a2a66; --zebra: rgba(255,255,255,.035);
   --accent: #c2267a; --accent-fg: #fff; --link: var(--sw-cyan);
   --read-bg: #140c28; --read-fg: #e4ddf5; --code-bg: #22173f;
+}
+/* the plain wallpapers in its colours, at a palette's specificity so a look wallpaper's own --wall-3 outranks them */
+:where(:root)[data-deco=synthwave] {
   --wall-1: #3a1a6e; --wall-2: #25104f; --wall-3: #140833; --wall-glow: rgba(255,62,165,.2); --wall-line: rgba(255,62,165,.18);
 }
 /* Sunrise, its colours variant: the same neon chrome around light pages. The page tokens are scoped to what sits in
@@ -86,6 +89,8 @@
 :root[data-deco=synthwave][data-palette=synthwave-sunrise] .rd h1 { color: #c0137a; text-shadow: 2px 2px 0 rgba(111,227,255,.7); }
 :root[data-deco=synthwave][data-palette=synthwave-sunrise] .rd h2 { color: #00708f; }
 
+/* the root colour, which the phone page fades into past its end (chrome.css) */
+.wm[data-wall|=synthwave] { --wall-3: #140833; }
 /* Wallpaper: a night sky over a neon floor. The body's layers are the horizon line and its glow, the floor, which
    hides the stars below the horizon, the stars (tiles of four sizes, so they don't line up) and the sky. ::before is
    the sun, striped by a mask and cut at the horizon, and ::after the grid, drawn flat and tipped back in perspective

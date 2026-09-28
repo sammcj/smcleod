@@ -5,7 +5,7 @@ lastmod: 2023-05-17T19:41:37
 author: Sam McLeod
 description: "Effort is non-linear and multi-dimensional. Time (with relation to delivery) is linear and one-dimensional"
 keywords: ["Estimating", "Delivery", "Kanban", "Agile","DevOps"]
-tags: ["Estimating", "Delivery", "Kanban", "Agile","DevOps"]
+tags: ["Estimating", "Delivery", "Kanban", "agile","DevOps"]
 categories: ["Delivery", "Leadership", "DevOps"]
 series: []
 images: ["time-based-estimates.png"]

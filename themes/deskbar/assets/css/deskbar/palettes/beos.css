@@ -9,7 +9,8 @@
   --wall-1: light-dark(#3d73a6, #28496b); --wall-2: light-dark(#336698, #1f3c5a); --wall-3: light-dark(#2a557f, #172e46);
   --wall-glow: rgba(255,255,255,.06);
 }
-/* its panel is light in light mode, so pressed and minimised states need lighter shading than the core's */
-:root[data-palette=beos] .pb:focus-visible { outline-color: var(--accent); }
-:root[data-palette=beos] :is(.task.on, #menuBtn.open) { background: light-dark(rgba(0,0,0,.14), rgba(0,0,0,.35)); }
-:root[data-palette=beos] .task.min { opacity: .8; }
+/* its panel is light in light mode, so pressed and minimised states need lighter shading than the core's. :where() keeps
+   these at the core rules' weight, so a window style such as Clear wins in the same visit as after a reload */
+:where(:root[data-palette=beos]) .pb:focus-visible { outline-color: var(--accent); }
+:where(:root[data-palette=beos]) :is(.task.on, #menuBtn.open) { background: light-dark(rgba(0,0,0,.14), rgba(0,0,0,.35)); }
+:where(:root[data-palette=beos]) .task.min { opacity: .8; }

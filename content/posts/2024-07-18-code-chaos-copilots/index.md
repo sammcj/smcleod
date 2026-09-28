@@ -4,7 +4,7 @@ title: "Code, Chaos, and Copilots (AI/LLM Talk July 2024)"
 date: 2024-07-18T01:00:10+00:00
 # weight: 1
 # aliases: ["/first"]
-tags: ["ai", "tools", "quantisation", "llm", "gguf", "talk", "tech", "keynote", "presentation"]
+tags: ["AI", "tools", "quantisation", "LLM", "gguf", "talk", "tech", "keynote", "presentation"]
 author: "Sam McLeod"
 draft: false
 description: "Integrating AI into Daily Development"

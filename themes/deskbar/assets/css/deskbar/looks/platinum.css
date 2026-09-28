@@ -16,7 +16,6 @@
   --line: light-dark(#ccc, #3c3c42); --side: light-dark(#eee, #2e2e33); --ctl: var(--fg);
   --accent: light-dark(#3333a0, #5050b8); --link: light-dark(#3333a0, #aab0ff);
   --read-bg: light-dark(#fff, #1e1e21); --read-fg: light-dark(#111, #e0e0e0); --code-bg: light-dark(#eee, #2c2c31);
-  --wall-1: #6f6cc0; --wall-2: #4d4a9e; --wall-3: #3c3a86; --wall-glow: rgba(255,255,255,.08); --wall-ring: rgba(255,255,255,.04);
   --p-menu: light-dark(#eee, #36363b);
   --p-stripe: repeating-linear-gradient(var(--frame-hi) 0 1px, var(--frame-lo) 1px 2px);
   --p-bevel: inset 1px 1px var(--frame-hi), inset -1px -1px var(--frame-lo);
@@ -150,6 +149,8 @@
 /* Control panel thumbnails, in Platinum's own colours whatever the current look. The dock's is the strip from the
    left edge with its ridged end. */
 .cp-dk.platinum::before { left: 0; width: 46px; padding: 2px 9px 2px 3px; transform: none; background: repeating-linear-gradient(90deg, #999 0 1px, #fff 1px 2px, transparent 2px 3px) right 2px center / 5px 6px no-repeat, var(--ic) content-box, #ddd; border-color: #000; border-left: 0; border-radius: 0 5px 5px 0; box-shadow: inset 0 1px #fff, 1px 1px 0 rgba(0,0,0,.45); }
+/* the root colour, which the phone page fades into past its end (chrome.css) */
+.wm[data-wall=platinum] { --wall-3: #3c3a86; }
 .wm[data-wall=platinum] body, .cp-wp.platinum, .cp-deco.platinum { background: radial-gradient(3px 3px at 25% 25%, rgba(255,255,255,.09) 50%, transparent 51%) 0 0 / 8px 8px, repeating-linear-gradient(45deg, rgba(0,0,0,.07) 0 2px, transparent 2px 5px), linear-gradient(170deg, light-dark(#6f6cc0, #4f4c98), light-dark(#4d4a9e, #37347a) 55%, light-dark(#3c3a86, #282660)); }
 .cp-deco.platinum::before { width: 52px; border-color: #000; background: linear-gradient(#ddd 0 0) 50% 0 / 16px 100% no-repeat, linear-gradient(#ddd 0 0) 4px 2px / 3px 3px no-repeat, linear-gradient(#333 0 0) 3px 1px / 5px 5px no-repeat, repeating-linear-gradient(#fff 0 1px, #999 1px 2px) 0 1px / 100% 6px no-repeat, #ddd; box-shadow: none; }
 .cp-deco.platinum::after { border-color: #000; border-top: 0; background: linear-gradient(#aaf 0 0) 100% 3px / 4px 8px no-repeat, linear-gradient(#fff 0 0) 3px 0 / calc(100% - 6px) calc(100% - 3px) no-repeat, #ddd; box-shadow: 1px 1px 0 rgba(0,0,0,.5); }

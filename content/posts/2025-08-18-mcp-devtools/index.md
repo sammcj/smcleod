@@ -4,7 +4,7 @@ date: 2025-08-18T01:10:00+10:00
 thumbnail: thumbnail.png
 images: ["thumbnail.png"]
 thumbnailIcon: thumbnail-icon.svg
-tags: ["ai", "llm", "tech", "coding", "cline", "claude", "agentic", "agentic coding", "mcp", "security"]
+tags: ["AI", "LLM", "tech", "coding", "cline", "claude", "agentic", "agentic coding", "mcp", "security"]
 author: "Sam McLeod"
 draft: false
 description: "A single, modular MCP server for AI coding agents."

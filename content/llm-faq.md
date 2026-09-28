@@ -2,7 +2,7 @@
 title: "LLM FAQ"
 description: "Frequently Asked Questions about LLMs and AI"
 aliases: ["llm", "faq", "frequently-asked-questions","llm-faq","ollama-faq"]
-tags: ["ai", "tools", "llm", "tech", "llms", "ollama","llama","faq","ollama faq","llm faq"]
+tags: ["AI", "tools", "LLM", "tech", "llms", "ollama","llama","faq","ollama faq","llm faq"]
 author: "Sam McLeod"
 norss: false
 # cover:

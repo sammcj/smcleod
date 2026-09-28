@@ -194,6 +194,9 @@
 .cp-row .cp-set { margin-bottom: 0; }
 .cp-opts { display: flex; flex-wrap: wrap; gap: 8px; }
 .cp-opt { position: relative; display: grid; justify-items: center; gap: 4px; padding: 5px 5px 3px; border: 1px solid var(--line); border-radius: 4px; background: var(--content); font-size: 12px; cursor: pointer; }
+/* fixed columns so picture cards line up whatever their label length; long labels wrap */
+.cp-opts:not(.seg-opts) { display: grid; grid-template-columns: repeat(auto-fill, 96px); }
+.cp-opts:not(.seg-opts) .cp-opt { align-content: start; text-align: center; line-height: 1.25; }
 .cp-opt:hover { border-color: var(--frame-lo); }
 .cp-opt:has(:checked) { border-color: var(--accent); box-shadow: inset 0 0 0 1px var(--accent); background: color-mix(in srgb, var(--accent) 10%, var(--content)); }
 .cp-opt:has(:checked) > span:last-child::before { content: '✓ ' / ''; }

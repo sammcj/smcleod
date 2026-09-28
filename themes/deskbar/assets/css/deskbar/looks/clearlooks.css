@@ -16,8 +16,6 @@
   --line: light-dark(#d3d0cc, #3e3f3d); --zebra: light-dark(rgba(0,0,0,.035), rgba(255,255,255,.03)); --side: light-dark(#f7f6f5, #2f302e);
   --accent: light-dark(#3465a4, #3b6fbf); --accent-fg: #fff; --link: light-dark(#204a87, #8cb4e8);
   --read-bg: light-dark(#fff, #20211f); --read-fg: light-dark(#1c1c1c, #dededa); --code-bg: light-dark(#f3f2f0, #2c2d2b);
-  --wall-1: light-dark(#3d6ea8, #2b5186); --wall-2: light-dark(#20457a, #173561); --wall-3: light-dark(#173463, #0f2548);
-  --wall-glow: rgba(140,190,255,.2);
   --cl-title: linear-gradient(light-dark(#89aadb, #6f90c4), light-dark(#4c78b9, #3f67a5) 30%, light-dark(#4873b5, #3b62a0) 49%, light-dark(#3e68a8, #30568f) 50%, light-dark(#4570b0, #375d97));
   --cl-title-in: linear-gradient(light-dark(#f3f1ee, #4f504d), light-dark(#e1ded9, #3e3f3c));
   --cl-bd: light-dark(#2f5690, #1b3358); --cl-bd-in: light-dark(#9d9a95, #1e1f1d);
@@ -29,6 +27,8 @@
   accent-color: var(--accent);
 }
 
+/* the root colour, which the phone page fades into past its end (chrome.css) */
+.wm[data-wall=clearlooks] { --wall-3: light-dark(#173463, #0f2548); }
 /* The wallpaper: GNOME 2's blue gradient with a faint foot. Its own colours, as it can be picked with any look. */
 .wm[data-wall=clearlooks] body, .cp-wp.clearlooks, .cp-deco.clearlooks {
   --cl-wall: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 18' fill='%23fff' fill-opacity='.07'%3E%3Cellipse cx='9' cy='12' rx='5.2' ry='5.6'/%3E%3Ccircle cx='3.2' cy='6.2' r='1.6'/%3E%3Ccircle cx='5.8' cy='3.6' r='1.7'/%3E%3Ccircle cx='9.2' cy='2.4' r='1.8'/%3E%3Ccircle cx='12.8' cy='3.4' r='1.9'/%3E%3C/svg%3E") right 8% center / auto 44% no-repeat, radial-gradient(120% 70% at 20% 110%, rgba(140,190,255,.35), transparent 60%), radial-gradient(90% 60% at 90% -10%, rgba(255,255,255,.18), transparent 60%), linear-gradient(160deg, light-dark(#3d6ea8, #2b5186), light-dark(#20457a, #173561) 60%, light-dark(#173463, #0f2548));

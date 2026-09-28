@@ -20,7 +20,6 @@
   --content: #160e2c; --side: #1c1236; --fg: #ece6ff; --muted: #b6a8dc; --line: #3a2a66; --zebra: rgba(255,255,255,.035);
   --accent: #c2267a; --accent-fg: #fff; --link: var(--sw-cyan);
   --read-bg: #140c28; --read-fg: #e4ddf5; --code-bg: #22173f;
-  --wall-1: #2a1356; --wall-2: #1c0b3f; --wall-3: #0e0526; --wall-glow: rgba(255,62,165,.2); --wall-line: rgba(255,62,165,.18);
 }
 :root[data-deco=nightdrive] ::selection { background: var(--sw-pink); color: var(--sw-ink); }
 :root[data-deco=nightdrive] :focus-visible { outline-color: var(--sw-cyan); }
@@ -110,6 +109,8 @@
 :root[data-deco=nightdrive] .rd h2 { padding-bottom: 10px; color: var(--sw-cyan); border-bottom: 0; background: linear-gradient(var(--nd-yellow) 25%, var(--nd-orange) 0 50%, var(--sw-pink) 0 75%, var(--nd-mag) 0) 0 100% / 3.5em 8px no-repeat; }
 :root[data-deco=nightdrive] .rd h3 { color: #ff9ecf; }
 
+/* the root colour, which the phone page fades into past its end (chrome.css) */
+.wm[data-wall=nightdrive] { --wall-3: #0e0526; }
 /* Wallpaper: a flat indigo field with sunset bands across the lower third, thickening as they fall, and fine
    scanlines over all of it. One background on the body, so it sits behind everything and never takes the pointer.
    Literal colours, as the wallpaper can be picked under any window style. */

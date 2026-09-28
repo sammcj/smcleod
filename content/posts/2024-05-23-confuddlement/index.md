@@ -3,7 +3,7 @@ title: "Confuddlement: Download Confluence Spaces as Markdown, Summarise with Ol
 date: 2024-05-23T05:45:10+00:00
 # weight: 1
 # aliases: ["/first"]
-tags: ["Confluence", "Markdown", "Go", "Golang", "Ollama", "AI", "LLM"]
+tags: ["Confluence", "Markdown", "Go", "golang", "ollama", "AI", "LLM"]
 author: "Sam McLeod"
 draft: false
 description: "Download Confluence Spaces as Markdown, Summarise with Ollama"
@@ -71,7 +71,7 @@ Querying the LLM with the prompt 'who is the CEO?'...
 
 ### Running the Program
 
-1. Copy [.env.template](.env.template) to `.env` and update the environment variables.
+1. Copy [.env.template](https://github.com/sammcj/confuddlement/blob/main/.env.template) to `.env` and update the environment variables.
 2. Run the program using the command `go run main.go` or build the program using the command `go build` and run the resulting executable.
 3. The program will fetch Confluence pages and save them as Markdown files in the specified directory.
 

@@ -4,7 +4,7 @@ title: "Understanding AI/LLM Quantisation Through Interactive Visualisations"
 date: 2024-07-17T01:00:10+00:00
 # weight: 1
 # aliases: ["/first"]
-tags: ["ai", "tools", "quantisation", "llm", "gguf", "dashboard"]
+tags: ["AI", "tools", "quantisation", "LLM", "gguf", "dashboard"]
 author: "Sam McLeod"
 draft: false
 description: "AI/LLM Quantisation Visualised"

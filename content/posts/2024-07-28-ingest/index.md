@@ -1,7 +1,7 @@
 ---
 title: "Ingest: Streamlining Content Preparation for LLMs"
 date: 2024-07-29T01:00:10+00:00
-tags: ["ai", "tools", "llm", "tech", "cli", "golang", "automation"]
+tags: ["AI", "tools", "LLM", "tech", "cli", "golang", "automation"]
 author: "Sam McLeod"
 draft: false
 description: "A CLI tool for parsing directories into LLM-friendly markdown"

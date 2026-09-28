@@ -17,7 +17,7 @@ title: AskIzzy
 
 ## Today we launched a mobile website for homeless people
 
-<a href="https://askizzy.org.au"><img src="askizzy.png" style="width: 600px;" />
+[![AskIzzy home page](askizzy.png)](https://askizzy.org.au)
 
 ... and it was launched by [one of Australia's many recent Prime Ministers](http://www.heraldsun.com.au/news/victoria/askizzy-app-connects-the-homeless-to-food-shelter-and-health-services/news-story/bfae67275552be421af4dd54bfd575a6?nk=ebd042d1d2789514c4e8553cb5633711-1454053888)
 

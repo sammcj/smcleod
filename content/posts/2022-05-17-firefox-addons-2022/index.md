@@ -1,6 +1,6 @@
 ---
 author: "Sam McLeod"
-categories: [ software ]
+categories: [ Software ]
 date: "2022-05-17T08:00:00Z"
 lastmod: "2022-11-07T16:52:27+11:00"
 aliases:
