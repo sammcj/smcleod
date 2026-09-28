@@ -1,9 +1,9 @@
 {{- /* Post index for the shell (Tracker and the phone home screen). Kept small: no content, one thumbnail per post (its own
        image or generated art) and a mini icon for list rows (front matter thumbnailIcon or generated art). */ -}}
-{{- $sections := site.Params.deskbar.readerSections | default (slice "posts") -}}
-{{- $taxes := slice "tags" "series" "categories" -}}
+{{- $sections := site.Params.deskbar.readerSections -}}
+{{- $taxes := site.Params.deskbar.taxonomies -}}
 {{- $posts := slice -}}
-{{- range (where site.RegularPages "Section" "in" $sections).ByDate.Reverse -}}
+{{- range partialCached "deskbar/posts.html" site -}}
   {{- $p := . -}}
   {{- $c := partial "deskbar/cover.html" $p -}}
   {{- $thumb := $c.thumb -}}

@@ -2,7 +2,7 @@
 
 The Hugo theme for smcleod.net. It lives in this repo rather than as a published theme. It turns a blog into a small desktop in the browser, after Haiku (BeOS) and XFCE. Posts open in a reader window, Tracker browses posts by year, tag and series, and windows snap, stack and tile. Every page is still a plain HTML document, so it reads fine without JavaScript, in feed readers and on search engines.
 
-- Hugo 0.146.0 or newer (standard edition is enough)
+- Hugo 0.158.0 or newer (standard edition is enough)
 - No runtime dependencies. Shell JS and CSS stay under 45KB gzipped.
 - Phones (under 768px wide, or under 500px tall with touch, as when turned sideways) get one full-screen window at a time with a switcher. The page itself scrolls there, so it runs under a browser's floating toolbar, and the home screen shows it is a desktop: a Latest posts widget (the newest three, and All posts, which opens Tracker) over the desktop icons in a grid, with the dock below
 - The Windows switcher copies a link to the current layout (`?layout=`), which reopens the same windows and snaps
@@ -43,14 +43,15 @@ params:
   description: Site description used for meta tags
   deskbar:
     readerSections: [posts]   # pages in these sections open in the reader and feed Tracker
+    taxonomies: [tags, series, categories]   # the default; the shell knows only these, so a site can only drop some
     favicon: /favicon-32x32.png
     timeZone: Australia/Melbourne   # panel clock; empty uses the visitor's zone
     relatedCount: 4           # related posts (shared tags) at the end of each post
     searchBodyChars: 3000     # how much of each page's text Spotlight searches
     screensaver: { minutes: 5 }   # idle minutes before the screen saver starts; 0 turns it off
     appearance: { deco: synthwave, palette: synthwave-sunrise, dock: synthwave }   # starting look for visitors who haven't picked one, and what Reset puts back; any of deco, palette, wall, dock, crt (ids in lib/appearance.js)
-    stylesheets:              # extra CSS, e.g. web fonts, loaded after the theme
-      - https://fonts.googleapis.com/css2?family=Noto+Sans&display=swap
+    stylesheets:              # extra CSS loaded after the theme's
+      - /css/site.css
     icons:                    # desktop icons
       - { name: Posts, url: /posts/, icon: folder }
       - { name: About, url: /about/, icon: person }
@@ -64,19 +65,24 @@ params:
         items:
           - { page: /tools/demo }   # entries take the page's title and icon unless name or icon is set
       - { name: System, icon: control-panel, items: [{ page: /control-panel }] }
+    tray:                     # panel tray links, before RSS; icon github, linkedin or person, else a link icon
+      - { name: github, url: "https://github.com/you", icon: github }
     thumbRules:               # emblem for generated thumbnails; first rule matching a tag or category wins
       - { emblem: car, keywords: [cars, bmw] }
       - { emblem: code, keywords: [coding, golang, rust] }
 ```
 
-Posts without an image get a generated card: one Haiku-style object (the emblem) on a quiet ground. Posts without `thumbnailIcon` get the bare emblem as their list-row icon. Emblems: `neural windows terminal window code doc branch globe disk container car camera house gpu chip padlock screen laptop server record board chart plug palette chat briefcase` (`doc` when nothing matches). They live in `data/deskbar/emblems.yaml`, which also documents the drawing conventions. Setting `thumbRules` replaces the theme's default rules, so list every rule you want.
+Posts without an image get a generated card: one Haiku-style object (the emblem) on a quiet ground. Posts without `thumbnailIcon` get the bare emblem as their list-row icon. Emblems: `neural windows terminal window code doc branch globe disk container car camera house gpu chip padlock screen laptop server record board chart plug palette chat briefcase` (`doc` when nothing matches). They live in `data/deskbar/emblems.yaml`, which also documents the drawing conventions. Setting `thumbRules` replaces the theme's default rules (in its `hugo.toml`), so list every rule you want.
+
+Fonts are self-hosted in `static/fonts/` (OFL): Noto Sans for the interface, Source Serif 4 and JetBrains Mono for reading and code, plus the looks' own. The first three are Google Fonts' latin, latin-ext and greek subset files, with Google's `unicode-range` per subset. Each file downloads only when text on screen uses it. Their `@font-face` rules are in `assets/css/deskbar/tokens.css`.
 
 Icons: `folder apps favourites projects doc write term person chart image globe git home leaf sheep photos tools theme appearance control-panel sketch music vram compare tiers quantise energy mail feeds videos podcasts hardware software blogs ai search`. External URLs open in a new tab.
 
 Front matter the theme reads:
 
 ```yaml
-cover: cover.jpg          # or { image: cover.jpg, hidden: true }; bundle resource, global asset or URL
+cover: cover.jpg          # or { image: cover.jpg, alt: "What it shows", hidden: true }; bundle resource, global asset or URL
+toc: false                # no Contents in the reader for this page ({ enable: false } works too)
 thumbnail: thumb.png      # card image, centre-cropped to 4:3; falls back to the cover (smart-cropped), then to generated art
 thumbnailIcon: icon.svg   # list-row icon (a bundle resource, shown at 24px), in place of the generated emblem
 icon: person              # window icon for non-post pages
@@ -130,7 +136,7 @@ Sketch is a drawing app: a page with `window: sketch`. It keeps the last drawing
 
 Chiptunes is a media player: a page with `layout: chiptunes` and `window: chiptunes`. It plays `data/chiptunes.yaml`, whose tracks are either song data synthesised live with Web Audio (format at the top of `lazy/chiptunes.js`, songs in `assets/chiptunes/`) or audio URLs hosted outside git, such as GitHub Release assets. The theme ships four AI-composed songs. Opening it plays the first track once the visitor has pressed something on the page (browsers allow sound only then), so a page loaded straight into the player waits for Play. Closing its window stops the sound.
 
-Feeds is a feed reader: a page with `layout: feeds` and `window: feeds`. Hugo fetches the feeds listed in the site's `assets/feeds.opml` at build time, since browsers can't read other sites' feeds, and the page lists the newest items, so it reads without JavaScript too. The list is OPML as feed readers export it (NetNewsWire: File > Export Subscriptions, saved as `assets/feeds.opml`); folders are flattened, `params.deskbar.feeds.exclude` drops feeds by `xmlUrl`, and an `xmlUrl` without a scheme reads a file under `assets/` (the example site's fixtures do this). RSS 2.0, RSS 1.0 and Atom work. A feed that fails to fetch or parse is skipped with a warning, never failing the build, and it is left out of the list, as is a feed with no items. Summaries are plain text. `params.deskbar.feeds: { perFeed: 10, summaryChars: 280 }` are the defaults; every feed keeps its newest `perFeed` items. Items only change when the site is rebuilt, so schedule a rebuild (a cron-triggered deploy) to keep them fresh, and set `caches.getresource.maxAge` (e.g. `6h`), or local builds keep the first copy of each feed for ever. The app has feeds with unread counts, the items and a preview with an Open article link; read state stays in the browser. Refresh refetches the page for whatever the latest build fetched.
+Feeds is a feed reader: a page with `layout: feeds` and `window: feeds`. Hugo fetches the feeds listed in the site's `assets/feeds.opml` at build time, since browsers can't read other sites' feeds, and the page lists the newest items, so it reads without JavaScript too. The list is OPML as feed readers export it (NetNewsWire: File > Export Subscriptions, saved as `assets/feeds.opml`); folders are flattened, `params.deskbar.feeds.exclude` drops feeds by `xmlUrl`, and an `xmlUrl` without a scheme reads a file under `assets/` (the example site's fixtures do this). RSS 2.0, RSS 1.0 and Atom work. A feed that fails to fetch or parse is skipped with a warning, never failing the build, and it is left out of the list, as is a feed with no items. Summaries are plain text. `params.deskbar.feeds: { perFeed: 10, summaryChars: 280 }` are the defaults; every feed keeps its newest `perFeed` items. Items only change when the site is rebuilt, so schedule a rebuild (a cron-triggered deploy) to keep them fresh, and set `caches.getresource.maxAge` (e.g. `6h`), or local builds keep the first copy of each feed for ever. The app has feeds with unread counts, the items and a preview with an Open article link; read state stays in the browser. Each feed has its own address, `/feeds/?feed=<name>`. Cmd/Ctrl-click, middle-click or the context menu's Open in new tab opens a feed as a tab of the Feeds window (or a new window when none is open). A feed's icon is its own artwork, else the site's PNG/JPEG `<link rel=icon>` (ICO and SVG are skipped), else its initial. Refresh refetches the page for whatever the latest build fetched.
 
 Photos lists albums from `data/albums.yaml` plus posts that opt in with `photos: true` or `{{</* gallery */>}}`. An album's `exclude` lists photo numbers (1-based, in source order) to leave out, and `pin: true` puts it first, where Photos opens. The Photos page is whichever page has `layout: photos`; without one there is no in-post lightbox or "View photos" chip.
 
@@ -149,7 +155,7 @@ The screen saver starts after `screensaver.minutes` without input, but never whi
 - Visitors change the desktop in the Control panel, a page with `window: control-panel` (the example site has `content/control-panel.md`, aliased from `/appearance/`). Each pane has an address (`?pane=posts`, `?pane=system`, none for the first), which layout links keep:
   - **Appearance:** a row of themes, then each part on its own: window style, colours, mode, dock, wallpaper and CRT effect. A theme sets all of them but the mode, which stays the visitor's; the theme shown is the one the current choices add up to. Every choice and theme is data in `assets/js/deskbar/lib/appearance.js` (themes are `PRESETS` there, as `theme` is already the mode setting):
     - Palettes: Haiku, the cleaner Crisp, BeOS, Xfce, Sage, the light Snow, Mint and Peach, the pastel Lilac, Blossom and Lemon, the neon Synthwave, Rosé, Ember, Solar, Lagoon, Cobalt and Racing Green. Mode is light (the default), dark or auto (follows the OS).
-    - Window styles: Haiku, BeOS, Flat, Clear, Liquid Ass, Platinum, Clearlooks, Phosphor, Broadsheet, Synthwave and its variants Vector, Memphis and Night Drive, and Pixel. Liquid Ass spoofs Apple's Liquid Glass (over-blurred glass, mismatched corner radii, traffic lights on the left, wobbly buttons); Clear is the same glass without the joke.
+    - Window styles: Haiku, BeOS, Flat, Clear, Platinum, Clearlooks, Phosphor, Broadsheet, Synthwave and its variants Vector, Memphis and Night Drive, and Pixel. Clear is frosted glass with even corners, over a wallpaper of its own.
     - Whole looks (`LOOKS`): Platinum (Mac OS 9), Clearlooks (GNOME 2), Phosphor (an amber CRT), Broadsheet (neo-brutalist newsprint), Synthwave and its variants (80s outrun) and Pixel (retro pixel art in Pixelify Sans from `static/fonts/pixelify-sans/`) draw in colours of their own, so Colours is off while one is on, and Mode too for the dark-only ones. Pixel and Synthwave offer their own colour variants there instead (Pico, and Synthwave's Sunrise, which keeps the dark chrome around light pages).
     - Docks: Glass, Deskbar and Panel, plus each look's own dock, which goes with any window style.
     - CRT effects: scanlines, the Phosphor tube, an aperture grille, and amber or green monochrome, over any look.
@@ -171,15 +177,15 @@ From a site script (e.g. in `hooks/body-end.html`), in any load order:
   api.addReaderAddon(({ view, page, scroller, win }) => () => {}, { pages: false });
   // Back/Forward, before routing; return true if the hook restored the screen itself ({ first: true } to go first)
   api.onPop(key => false);
-  // also: api.go(url) routes to a page; api.mountContent(root, page, view) runs page scripts and onMounted hooks;
+  // also: api.go(url) routes to a page, resolving once it is in its window; api.mountContent(root, page, view) runs page scripts and onMounted hooks;
   // api.loadLazy(name) loads an on-demand bundle, e.g. api.loadLazy('screensaver').then(m => m.start()), and
-  // api.loaded() lists the ones loaded so far
+  // api.loaded() lists the ones loaded so far; api.index resolves to the parsed post index (lib/index-data.js)
   // visitor settings: api.settings.get(key), .set(key, value) (no value resets it), .on((key, value) => {}) returns an unsubscribe
   // keys: theme palette deco wall dock crt readerWidth readerFont textSize; api.settings.shown() is the theme on screen, light or dark
 });
 ```
 
-New window apps live in `assets/js/deskbar/apps/`: add a module that calls `defineApp({ kind, key, geometry, create, mount })` (contract in `apps/registry.js`) and import it from `apps/index.js`. Pages open in an app with `window: <kind>` in front matter.
+New window apps live in `assets/js/deskbar/apps/`: add a module that calls `defineApp({ kind, key, geometry, create, mount })` (contract in `apps/registry.js`) and import it from `apps/index.js`. Pages open in an app with `window: <kind>` in front matter. `stack: true` makes a new view of the app join the frontmost window already holding it as a tab (desktop only); Feeds uses it for per-feed tabs.
 
 Window size: pass `size: 'large'` instead of `geometry` for an application. Its window opens at 80% of the desk width and 90% of its height, starting right of the desktop icon column and centred in the room left. Tools, Photos, Terminal and Sketch use it. A page's `windowWidth`/`windowHeight` still override either. Phones show every window full screen.
 
@@ -211,7 +217,7 @@ export function mount(view, page, { fresh }) {
 loadLazy('context-menu').then(m => m.open(event));
 ```
 
-A failed load, or a mount that throws, shows an error in the window, and opening the app again retries with a fresh mount. The About this desktop app (`lazy/about-desktop.js`) is a working example; Photos, Mail, Find in post, Sketch, Chiptunes, Feeds, the Terminal, the Control panel, the context menu, the screen savers and dragging posts out load the same way.
+A failed load, or a mount that throws, shows an error in the window, and opening the app again retries with a fresh mount. The About this desktop app (`lazy/about-desktop.js`) is a working example; Photos, Mail, Find in post, Sketch, Chiptunes, Feeds, the Terminal, the Control panel, Spotlight search, the context menu, the screen savers and dragging posts out load the same way.
 
 ## Development
 
@@ -225,10 +231,17 @@ npm install && make e2e   # Playwright browser and axe accessibility tests again
 E2E environment variables:
 
 - `SITE_DIR` tests another built site (a `public/` directory) and `BASE_URL` a running one, instead of the example build. Tests that need an example-only page skip when it is missing
-- `AXE_ALL=1` makes the accessibility spec fail on minor and moderate axe findings too, not just serious and critical
+- `AXE_ALL=1` runs axe over the full cross-product of looks, palettes, states, viewports and modes. By default each shell state, effect, look and palette is audited in two viewport and mode pairs that between them cover desktop, phone, light and dark. Looks and palettes split those two pairs between their states, rotating so across the list each state comes up in all four (`e2e/lib.mjs`)
+- `AXE_MINOR=1` makes axe fail on minor and moderate findings too, not just serious and critical
 - `CHROMIUM_PATH` uses an existing Chromium or headless shell
 - `SHOTS_DIR` saves screenshots
-- `ALIAS_PATH` is an alias URL on the site under test; `SCRIPT_PAGE` and `SCRIPT_SELECTOR` name a page whose scripts build its content
+- `SPECS` runs some spec files, e.g. `SPECS=e2e/sketch.spec.mjs`, and `E2E_JOBS` how many at once (8 by default; each file has its own browser and server)
+
+Pages on the site under test, for specs that default to example-site content (a spec skips when its page is missing):
+
+- `POST_PATH` is a post with related posts and a `#focus` heading; `MD_PAGE` a page with Mermaid, maths, footnotes and a definition list
+- `PHOTOS_POST` is a post with 3 or more photos; `GALLERY_POST` a post with a two-photo `gallery` shortcode; `TOOL_LINK_POST` a post linking a standalone HTML file
+- `ALIAS_PATH` is an alias URL; `SCRIPT_PAGE` and `SCRIPT_SELECTOR` name a page whose scripts build its content
 - `MERMAID_PAGE` is a page with a Mermaid flowchart, drawn for real with the self-hosted library
 
 ## Licence

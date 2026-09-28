@@ -19,20 +19,10 @@ tags:
 - Manifesto
 - Enterprise
 # series: ["AI", "Code"]
-hiddenFromHomePage: true
-hiddenFromSearch: true
 toc:
   enable: true
   auto: true
-code:
-  copy: true
-  maxShownLines: 200
 math: false
-lightgallery: false
-readingTime: true
-showFullContent: true
-asciinema: false
-mermaid: false
 draft: true
 ---
 

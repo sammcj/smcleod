@@ -1,5 +1,5 @@
 {{- /* Which window the shell loads this page into. Returned as a dict and written to <main> data attributes. */ -}}
-{{- $sections := site.Params.deskbar.readerSections | default (slice "posts") -}}
+{{- $sections := site.Params.deskbar.readerSections -}}
 {{- $kind := "page" -}}
 {{- $place := "" -}}
 {{- $icon := .Params.icon | default "doc" -}}
@@ -20,8 +20,8 @@
 {{- else if eq .Kind "taxonomy" -}}
   {{- $kind = "tracker" -}}
   {{- $icon = "folder" -}}
-  {{- /* the shell's index carries tags, series and categories (home.deskbar.json); others show all posts */ -}}
-  {{- $place = cond (in (slice "tags" "series" "categories") .Data.Plural) (printf "tax:%s" .Data.Plural) "all" -}}
+  {{- /* the shell's index carries params.deskbar.taxonomies (home.deskbar.json); others show all posts */ -}}
+  {{- $place = cond (in site.Params.deskbar.taxonomies .Data.Plural) (printf "tax:%s" .Data.Plural) "all" -}}
 {{- end -}}
 {{- /* front matter can send a page to any app registered in assets/js/deskbar/apps/ */ -}}
 {{- $kind = .Params.window | default $kind -}}

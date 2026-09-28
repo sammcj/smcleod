@@ -5,8 +5,6 @@
 # Inverse matchs to ensure these aren't ignored
 !*.env.template
 !*.template.env
-!*.eslintrc.js
-!*.prettierrc.js
 !*.config.js
 
 # Typescipt and CDK
@@ -196,9 +194,6 @@ hugo.darwin
 
 # Obsidian
 .obsidian
-
-# Hugo themes
-themes/DoIt/.git
 
 # llms.txt
 hugo_list.csv

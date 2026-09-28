@@ -1,6 +1,5 @@
 ---
 author: "Sam McLeod"
-readingTime: true
 categories: [ Tech, Security-Privacy ]
 date: "2015-02-23T00:00:00Z"
 aliases:

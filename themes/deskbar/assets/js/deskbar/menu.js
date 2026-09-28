@@ -3,7 +3,7 @@
 // search over posts and menu entries, with the full ranked list one tap away in Tracker.
 import { h, ico, $ } from './lib/dom.js';
 import { fmtDate } from './lib/format.js';
-import { searchPosts, matches } from './search.js';
+import { searchPosts, matches } from './lib/search.js';
 import { ensureTracker } from './tracker.js';
 
 export function initMenu(index) {

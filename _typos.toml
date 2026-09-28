@@ -1,0 +1,25 @@
+# Spell check config for .github/workflows/typos.yml. Only list words that are correct in context.
+[files]
+extend-exclude = ["content/**/latex/"]
+
+[default]
+extend-ignore-re = [
+  # YouTube playlist and video ids
+  'id="[A-Za-z0-9_-]+"',
+]
+
+[default.extend-identifiers]
+# macOS app name
+OnyX = "OnyX"
+
+[default.extend-words]
+# `modinfo` output field in the Broadcom post
+parm = "parm"
+# David Autor, cited author
+autor = "autor"
+# Hewlett Packard Enterprise
+hpe = "hpe"
+# htop output ("773 thr")
+thr = "thr"
+# quoted tool output reproducing a Confluence page title
+ilogical = "ilogical"

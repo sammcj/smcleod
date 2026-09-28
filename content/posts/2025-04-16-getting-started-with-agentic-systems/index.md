@@ -6,28 +6,13 @@ images: ["thumbnail.png"]
 thumbnailIcon: thumbnail-icon.svg
 tags: ["ai", "llm", "tech", "agentic", "coding", "learning", "engineering", "tutorials"]
 author: "Sam McLeod"
-showToc: true
-TocOpen: true
 draft: false
-hidemeta: false
-comments: false
 description: "A curated learning path for engineers looking to gain practical experience with AI and agentic systems."
-disableShare: false
-disableHLJS: false
-hideSummary: false
 searchHidden: false
-ShowReadingTime: true
-ShowBreadCrumbs: true
-ShowPostNavLinks: true
-ShowWordCount: true
-ShowRssButtonInSectionTermList: true
-UseHugoToc: true
-mermaid: true
 cover:
   image: "generative-agent-state-diagram.png"
   alt: "Generative Agent State Diagram"
   # caption: "Optional caption text"
-  relative: false  # Set to true for page bundle images
 ---
 
 As agentic systems become increasingly central to modern software development, many engineers are looking to build practical skills but don't know where to start.

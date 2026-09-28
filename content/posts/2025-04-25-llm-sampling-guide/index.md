@@ -7,27 +7,12 @@ thumbnailIcon: thumbnail-icon.svg
 lastmod: 2025-11-27T01:00:00+10:00
 tags: ["ai", "llm", "tech", "ollama", "coding", "sampling", "inference", "tutorials", "llama"]
 author: "Sam McLeod"
-showToc: true
-TocOpen: true
 draft: false
-hidemeta: false
-comments: false
 description: "A practical guide to LLM sampling parameters for Ollama, llama.cpp, and MLX"
-disableShare: false
-disableHLJS: false
-hideSummary: false
 searchHidden: false
-ShowReadingTime: true
-ShowBreadCrumbs: true
-ShowPostNavLinks: true
-ShowWordCount: true
-ShowRssButtonInSectionTermList: true
-UseHugoToc: true
-mermaid: true
 cover:
   image: "sampling-methods-comparison.png"
   alt: "LLM Sampling Methods Comparison"
-  relative: false
 ---
 
 Large Language Models don't generate text deterministically - they use probabilistic sampling to select the next token based on prediction probabilities. How these probabilities are filtered and adjusted before sampling significantly impacts output quality.

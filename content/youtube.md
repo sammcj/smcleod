@@ -1,8 +1,6 @@
 ---
 title: "YouTube Channels"
 description: "Channels and playlists I watch, each with its latest video."
-comments: false
-showDate: false
 series: [ BestOf ]
 norss: true
 # Cards from data/youtube.yaml; the latest videos come from each channel's RSS at build time

@@ -1,9 +1,9 @@
 // Chiptunes (lazy/chiptunes.js): the playlist loads, opening the player after a press plays the first track while a
-// page loaded straight into it waits for Play, Play starts the audio context, and closing the window stops the
-// audio. Skips on a site without /chiptunes/.
+// page loaded straight into it waits for Play, Play starts the audio context, the player rests while paused or
+// minimised, and closing the window stops the audio. Skips on a site without /chiptunes/.
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { useBrowser, open, needs, shot, win, desktop, phone } from './lib.mjs';
+import { useBrowser, open, needs, shot, win, desktop, phone, settle } from './lib.mjs';
 
 useBrowser();
 
@@ -19,6 +19,8 @@ function spyAudio() {
 }
 const contexts = page => page.evaluate(() => window.__audio.map(c => c.state));
 const time = page => win(page, 'chiptunes').locator('.ct-time').textContent();
+// The player draws once per animation frame while it plays, so a few frames are enough to see that it has stopped
+const frames = page => settle(page, 5);
 
 async function openPlayer(viewport = desktop) {
   const page = await open(viewport, url, spyAudio);
@@ -36,7 +38,7 @@ test('the playlist loads with lengths, and nothing plays until Play', async t =>
   assert.equal(await rows.first().locator('.ct-name').textContent(), 'Carburettor Cruise', 'the first track, with no credit');
   assert.equal(await w.locator('.ct-row[aria-current]').count(), 1, 'the first track is cued');
   assert.match(await w.locator('.status').textContent(), /\d+ tracks/);
-  await page.waitForTimeout(500);
+  // the player decides whether to play as it mounts, before the playlist has loaded
   assert.deepEqual(await contexts(page), [], 'no audio context before a click');
   assert.equal(await w.locator('.view').getAttribute('data-state'), 'paused');
   assert.equal(await w.locator('.ct-seek').isDisabled(), true);
@@ -79,9 +81,10 @@ test('Play starts the audio, Pause suspends it, and closing the window stops it'
 
   await w.getByRole('button', { name: 'Pause' }).click();
   await page.waitForFunction(() => window.__audio[0].state === 'suspended');
-  const paused = await time(page);
-  await page.waitForTimeout(1200);
-  assert.equal(await time(page), paused, 'the clock stops while paused');
+  // a suspended context's clock stands still, so the time shown does too
+  const paused = await page.evaluate(() => window.__audio[0].currentTime);
+  await page.waitForTimeout(200);
+  assert.equal(await page.evaluate(() => window.__audio[0].currentTime), paused, 'the clock stops while paused');
 
   const first = await w.locator('.ct-title').textContent();
   await w.getByRole('button', { name: 'Next track' }).click();
@@ -150,6 +153,53 @@ test('plays audio hosted elsewhere, with or without CORS, and moves on when a tr
   assert.equal(await w.locator('.status').textContent(), `${n} tracks`, 'no error shown');
   // and after the last track it wraps round to the first
   await w.locator('.ct-row').first().and(w.locator('[aria-current]')).waitFor({ timeout: 5000 });
+  assert.deepEqual(page.errors, []);
+  await page.context().close();
+});
+
+// Counts the player's 200ms scheduler intervals that are live, and the scope's repaints
+function spyPlayer() {
+  const live = new Set(), si = setInterval, ci = clearInterval;
+  window.__timers = live;
+  window.setInterval = (fn, ms, ...a) => { const id = si(fn, ms, ...a); if (ms === 200) live.add(id); return id; };
+  window.clearInterval = id => { live.delete(id); return ci(id); };
+  window.__paints = 0;
+  const clear = CanvasRenderingContext2D.prototype.clearRect;
+  CanvasRenderingContext2D.prototype.clearRect = function (...a) { if (this.canvas.classList.contains('ct-scope')) window.__paints++; return clear.apply(this, a); };
+}
+
+test('the player rests while paused or minimised, and resumes where it paused', async t => {
+  if (!(await needs(t, url))) return;
+  const page = await open(desktop, url, spyPlayer);
+  const w = win(page, 'chiptunes');
+  await w.locator('.view[data-loaded]').waitFor();
+  await w.getByRole('button', { name: 'Play' }).click();
+  // the seek slider's spoken value changes about once a second, not every frame
+  const said = await w.locator('.ct-seek').evaluate(el => new Promise(done => {
+    let n = 0;
+    const mo = new MutationObserver(list => { n += list.length; });
+    mo.observe(el, { attributes: true, attributeFilter: ['aria-valuetext'] });
+    setTimeout(() => { mo.disconnect(); done(n); }, 1500);
+  }));
+  assert.ok(said <= 3, `${said} aria-valuetext updates in 1.5s`);
+  await w.getByRole('button', { name: 'Pause' }).click();
+  const at = await time(page), secs = t => t.split(' ')[0].split(':').reduce((m, s) => m * 60 + +s, 0);
+  assert.ok(secs(at) >= 1, `played for a while (${at})`);
+  assert.equal(await page.evaluate(() => window.__timers.size), 0, 'no scheduler running while paused');
+  const p0 = await page.evaluate(() => window.__paints);
+  await frames(page);
+  assert.equal(await time(page), at);
+  assert.equal(await page.evaluate(() => window.__paints), p0, 'no painting while paused');
+  // Play paints the place it starts from at once
+  await w.getByRole('button', { name: 'Play' }).click();
+  const resumed = secs(await time(page)) - secs(at);
+  assert.ok(resumed >= 0 && resumed <= 1, 'carries on from where it paused');
+  // minimised: still playing, but the scope is not drawn
+  await w.locator('.tab.on .ctl.min').click();
+  const p1 = await page.evaluate(() => window.__paints);
+  await frames(page);
+  assert.equal(await page.evaluate(() => window.__paints), p1, 'no painting while minimised');
+  assert.equal(await page.locator('.view[data-key="chiptunes"]').getAttribute('data-state'), 'playing');
   assert.deepEqual(page.errors, []);
   await page.context().close();
 });

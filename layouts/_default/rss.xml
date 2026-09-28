@@ -58,10 +58,7 @@
     </image>
     {{- end }}
     <generator>Hugo -- {{ hugo.Version }}</generator>
-    {{- /* Locale replaced LanguageCode in 0.158; branch so older Hugo still builds */}}
-    {{- $lang := "" }}
-    {{- if ge hugo.Version "0.158.0" }}{{ $lang = site.Language.Locale }}{{ else }}{{ $lang = site.LanguageCode }}{{ end }}
-    <language>{{ $lang | default site.Language.Lang }}</language>{{ with $authorEmail }}
+    <language>{{ site.Language.Locale | default site.Language.Lang }}</language>{{ with $authorEmail }}
     <managingEditor>{{.}}{{ with $authorName }} ({{ . }}){{ end }}</managingEditor>{{ end }}{{ with $authorEmail }}
     <webMaster>{{ . }}{{ with $authorName }} ({{ . }}){{ end }}</webMaster>{{ end }}{{ with site.Copyright }}
     <copyright>{{ . | markdownify | plainify | strings.TrimPrefix "© " }}</copyright>{{ end }}{{ if not .Date.IsZero }}

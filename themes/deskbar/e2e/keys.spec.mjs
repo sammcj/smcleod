@@ -2,7 +2,7 @@
 // every shortcut (lazy/shortcuts.js). None fires while a field has the keys.
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { env, useBrowser, open, win, desktop } from './lib.mjs';
+import { env, useBrowser, open, win, desktop, settle } from './lib.mjs';
 
 useBrowser();
 
@@ -15,17 +15,17 @@ test('f maximises the focused window and restores it, but not while typing', asy
 
   await tk.locator('input[type=search]').focus();
   await page.keyboard.press('f');
-  await page.waitForTimeout(300);
+  await settle(page);
   assert.deepEqual(await tk.boundingBox(), before, 'f is just a letter in the search field');
 
   await page.evaluate(() => document.activeElement.blur());
   await page.keyboard.press('f');
-  await page.waitForTimeout(400);
+  await settle(page);
   const max = await tk.boundingBox(), desk = await page.locator('#desk').boundingBox();
   assert.ok(max.width > desk.width - 20 && max.width > before.width, `maximised to the desk (${max.width} of ${desk.width})`);
 
   await page.keyboard.press('f');
-  await page.waitForTimeout(400);
+  await settle(page);
   assert.deepEqual(await tk.boundingBox(), before, 'a second f restores it');
   assert.deepEqual(page.errors, []);
   await page.context().close();
@@ -37,7 +37,7 @@ test('` drops the terminal down across the desk to 60% of the screen, and ` in i
   await page.keyboard.press('`');
   const term = win(page, 'terminal');
   await term.locator('.term input').waitFor();
-  await page.waitForTimeout(300);
+  await settle(page);
   const b = await term.boundingBox(), desk = await page.locator('#desk').boundingBox();
   assert.ok(Math.abs(b.width - desk.width) < 2, `full width (${b.width} of ${desk.width})`);
   assert.ok(Math.abs(b.y + b.height - desktop.height * 0.6) < 3, `bottom at 60% of the screen (${b.y + b.height})`);

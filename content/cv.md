@@ -1,21 +1,15 @@
 ---
 title: "Resumé / CV"
-description: "Sam McLeod"
 aliases: ["cv", "resume", "experience", "jobs", "linkedin"]
 author: "Sam McLeod"
 norss: true
-comments: false
-showDate: false
-subtitle: Sam McLeod
 toc: true
-extra_css:
-  - "css/skills-matrix.css"
+windowWidth: 1100
+windowHeight: 1000
 ---
 <!-- markdownlint-disable MD025 -->
 
 # Sam McLeod
-
-![](/profilephoto/apple-touch-icon.png)
 
 AI Engineering Principal, an early advocate for DevOps culture and practices with a background in platform
 engineering, automation, highly available systems design and team leadership.

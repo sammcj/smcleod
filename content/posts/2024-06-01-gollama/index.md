@@ -6,24 +6,10 @@ lastmod: 2024-07-14T01:00:10+00:00
 # aliases: ["/first"]
 tags: ["Markdown", "Go", "Golang", "Ollama", "AI", "LLM", "LMStudio"]
 author: "Sam McLeod"
-showToc: true
-TocOpen: false
 draft: false
-hidemeta: false
-comments: false
 description: "Gollama is a Go-based client for Ollama for managing models."
 # canonicalURL: "https://canonical.url/to/page"
-disableShare: false
-disableHLJS: false
-hideSummary: false
 searchHidden: false
-ShowReadingTime: true
-ShowBreadCrumbs: true
-ShowPostNavLinks: true
-ShowWordCount: true
-ShowRssButtonInSectionTermList: true
-UseHugoToc: true
-mermaid: true
 cover:
   image: "gollama-v1.0.0.jpg"
   alt: "Gollama TUI"

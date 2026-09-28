@@ -1,8 +1,6 @@
 ---
 title: "AI"
 description: "AI blogs, news and changelogs I read."
-comments: false
-showDate: false
 norss: true
 # Cards from data/blogs_ai.yaml; the latest post comes from each site's RSS at build time
 layout: folder

@@ -22,10 +22,12 @@ test: unit budget
 
 # Browser tests. Needs `npm install`. SITE_DIR tests another built site (served by e2e/serve.mjs) and BASE_URL a running
 # one; either skips the example build. Set CHROMIUM_PATH to use a browser other than Playwright's own, and SPECS to run
-# only some specs (SPECS=e2e/sketch.spec.mjs).
+# only some specs (SPECS=e2e/sketch.spec.mjs). Each spec file runs in its own process with its own Chromium and server
+# port, so E2E_JOBS files run at once.
 SPECS ?= e2e/*.spec.mjs
+E2E_JOBS ?= 8
 e2e: $(if $(BASE_URL)$(SITE_DIR),,build)
-	SITE_DIR="$(or $(SITE_DIR),$(OUT))" node --test --test-concurrency=1 $(SPECS)
+	SITE_DIR="$(or $(SITE_DIR),$(OUT))" node --test --test-concurrency=$(E2E_JOBS) $(SPECS)
 
 # Self-hosted Mermaid (see assets/js/deskbar/lazy/mermaid.js). Copies the npm package's minified ESM build, whose
 # entry loads only the chunks each diagram type needs. Source maps are left out. Bump MERMAID in lazy/mermaid.js to match.

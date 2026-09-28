@@ -18,20 +18,10 @@ tags:
 - WIP
 - DevOps
 series: ["AI"]
-hiddenFromHomePage: false
-hiddenFromSearch: false
 toc:
   enable: true
   auto: false
-code:
-  copy: true
-  maxShownLines: 200
 math: false
-lightgallery: false
-readingTime: true
-showFullContent: true
-asciinema: false
-mermaid: false
 draft: false
 ---
 
@@ -191,7 +181,7 @@ temperature is a parameter that controls the randomness of the LLM's output. A h
 
 To quote [Carlos F. Enguix](carlosfenguix.website):
 
-"Let's assume you set the Top P value as P (0 ≤ P ≤ 1). Now we have a set of words from the previous step with various probabilities. How Top P works is if it finds the smallest group of words whose cumulative probability exceeds the value of P. This way, the number of words in the set can dynamically increase and decrease according to the next word probability distribution. If the value of P is 0, then “Top P” will select the word with the highest probability. This is equivalent to greedy decoding. If the value of P is 1, then “Top P” will select the entire set of words. This is equivalent to sampling from the entire distribution. Range: 0.00 - 1.00 Example: top_p 0.01 Deterministic Value: 0"
+"Let's assume you set the Top P value as P (0 ≤ P ≤ 1). Now we have a set of words from the previous step with various probabilities. How Top P works is if it finds the smallest group of words whose cumulative probability exceeds the value of P. This way, the number of words in the set can dynamically increase and decrease according to the next word probability distribution. If the value of P is 0, then "Top P" will select the word with the highest probability. This is equivalent to greedy decoding. If the value of P is 1, then "Top P" will select the entire set of words. This is equivalent to sampling from the entire distribution. Range: 0.00 - 1.00 Example: top_p 0.01 Deterministic Value: 0"
 
 ### top_k
 

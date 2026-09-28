@@ -1,6 +1,5 @@
 ---
 author: "Sam McLeod"
-readingTime: true
 categories: [ Tech ]
 date: "2015-02-15T00:00:00Z"
 aliases:
@@ -53,9 +52,9 @@ ACTION=="remove", KERNEL=="sdb", RUN+="/bin/sh -c '/opt/xensource/libexec/local-
 There are some limitations with this:
 
 You're passing through the whole disk and can only grant that entire disk to a single VM.
-The udev configuration is volitile and is likely to be lost upon installing XenServer updates.
+The udev configuration is volatile and is likely to be lost upon installing XenServer updates.
 You cannot (to my knowledge) boot from directly attached storage devices.
-What I've actually done is partitioned the SSD RAID array into 4 paritions on the XenServer host, this allows me to carve up the SSD RAID array and present adiquit storage to several VMs on the host.
+What I've actually done is partitioned the SSD RAID array into 4 partitions on the XenServer host, this allows me to carve up the SSD RAID array and present adequate storage to several VMs on the host.
 i.e.
 
 ```shell
@@ -79,14 +78,14 @@ I've then:
 ### Observations
 
 The HP P410i RAID card on the old G6 DL360's I am using for this is far underpowered and is unable to perform anywhere near the SSD's rated speeds.
-Direct disk access is 2-6 times ‘faster' than XenServer's standard LVM or EXT3 storage.
+Direct disk access is 2-6 times 'faster' than XenServer's standard LVM or EXT3 storage.
 There is less than a 10% difference in performance between the SSD RAID array on the VM with the presented disk than directly on the XenServer host.
 XenServer's raw disk performance was exactly the same as Debian 7.
 Remember to ensure your RAID (and disk cache if not in prod) is enabled!
 Points of Note:
 
 This is an old server, we're not talking your latest and greatest hardware here, we're talking giving new life to an old-ish dog so that it may retain its usefulness while remaining cost effective.
-With TRIM being unavailable when using RAID, it is expected that the write performance will decrease somewhat overtime as the disks fill up as the disks will have to perform a ‘READ, ERASE, WRITE' rather than a simple WRITE, To aid the lack of TRIM, I have left more than 25% of the disks unused as we simply don't need 1TB of SSD storage on each of the hosts.
+With TRIM being unavailable when using RAID, it is expected that the write performance will decrease somewhat overtime as the disks fill up as the disks will have to perform a 'READ, ERASE, WRITE' rather than a simple WRITE, To aid the lack of TRIM, I have left more than 25% of the disks unused as we simply don't need 1TB of SSD storage on each of the hosts.
 We have some 1GB cache cards arriving in the following weeks which we will upgrade to from the 512MB cards presently installed - I expect this to significantly further improve performance.
 
 ## Hardware
@@ -96,7 +95,7 @@ We have some 1GB cache cards arriving in the following weeks which we will upgra
 * 96GB DDR3 in dom0, 4GB in domU.
 * HP P410i w/ 512MB cache.
 * 2x 10K 146GB spindles for dom0.
-* ‘HP Genuine'!
+* 'HP Genuine'!
 * Constant 5-6 Watts each + cooling.
 * 2x SanDisk Extreme Pro SSD 480GB in RAID 0
 * SATA III, Read up to 550MB/s, Write up to 515MB/s, Random Read up to 100K IOPS, Random Write up to 90K IOPS.

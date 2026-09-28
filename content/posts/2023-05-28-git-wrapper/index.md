@@ -1,35 +1,20 @@
 ---
 title: "Defaulting git clone to shallow (depth=1)"
-subtitle: "Shallow clones are faster and smaller"
 date: 2023-05-29T08:53:24+10:00
 lastmod: 2023-05-29T08:53:24+10:00
 author: Sam McLeod
-description: ""
+description: "Shallow clones are faster and smaller"
 keywords: ["Git", "Scripting", "ZSH", "Bash", "Shell"]
 tags: ["Git", "Scripting", "ZSH", "Bash", "Shell"]
 categories: ["Scripting", "ZSH", "Git"]
 series: ["ZSH"]
 
-hiddenFromHomePage: false
-hiddenFromSearch: false
-
 toc:
   enable: false
   auto: false
-asciinema: false
 math: false
-lightgallery: false
-readingTime: true
-showFullContent: true
 draft: false
 type: posts
-
-code:
-    maxShownLines: 100
-    copy: true
-
-comment:
-  enable: false
 ---
 
 <!-- markdownlint-disable MD025 -->

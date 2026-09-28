@@ -3,8 +3,8 @@
    Dark mode is the night edition: the same page with cream ink on near-black newsprint and the spot colours kept, so
    the look follows the visitor's theme rather than forcing a light page on them. Acid and tomato only ever carry the
    near-black #121212, and cobalt only white, so those pairs hold 4.5:1 in either edition. */
+/* Space Grotesk 700 is in tokens.css */
 @font-face { font-family: 'Space Grotesk'; font-display: swap; src: url(../../../fonts/space-grotesk/space-grotesk-400-normal.woff2) format('woff2'); }
-@font-face { font-family: 'Space Grotesk'; font-display: swap; font-weight: 700; src: url(../../../fonts/space-grotesk/space-grotesk-700-normal.woff2) format('woff2'); }
 @font-face { font-family: Literata; font-display: swap; font-weight: 200 900; src: url(../../../fonts/literata/literata-variable.woff2) format('woff2'); }
 @font-face { font-family: Literata; font-display: swap; font-weight: 200 900; font-style: italic; src: url(../../../fonts/literata/literata-variable-italic.woff2) format('woff2'); }
 
@@ -61,7 +61,7 @@
 :root[data-deco=broadsheet] :is(.tb, .seg):not(:where(.on, :active, [aria-expanded=true], [aria-pressed=true])) { background: var(--bs-sheet); }
 :root[data-deco=broadsheet] :is(.tb, .segs) { box-shadow: 2px 2px 0 var(--bs-ink); }
 :root[data-deco=broadsheet] :is(.tb, .seg):active { translate: 2px 2px; box-shadow: none; }
-:root[data-deco=broadsheet] :is(input:not([type=checkbox], [type=radio], [type=range], .sp-q, .mail-row *), select, textarea) { border: 2px solid var(--bs-ink); border-radius: 0; background: var(--bs-sheet); }
+:root[data-deco=broadsheet] :is(input:not([type=checkbox], [type=radio], [type=range], .sp-q, .term-in, .mail-row *), select, textarea) { border: 2px solid var(--bs-ink); border-radius: 0; background: var(--bs-sheet); }
 :root[data-deco=broadsheet] :is(.cp-opt, .cp-art, .cp-sample) { border-radius: 0 !important; }
 :root[data-deco=broadsheet] :is(.cp-nav, .places, .mn-cats) { border-right: 2px solid var(--bs-ink); }
 

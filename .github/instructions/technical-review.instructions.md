@@ -1,32 +1,24 @@
 # Technical Review Guidelines for PR Reviews
 
-## Hugo-Specific Checks
+`CLAUDE.md` at the repo root is the source of truth. Where these notes and `CLAUDE.md` disagree, follow `CLAUDE.md`.
 
-### Theme Files
-- **NEVER modify files in `themes/` directory** - these are git submodules/upstream code
-- Theme customisations must go in project-level overrides or custom CSS
-- Flag any changes to theme files immediately
+## Themes
 
-### Asset Pipeline
-- CSS files should use Hugo's asset pipeline with minification
-- Font files must be self-hosted in `/static/fonts/`
-- No CDN dependencies for fonts
-- Verify proper Hugo fingerprinting for cache busting
+- `themes/deskbar/` is this site's own theme and is edited freely. Shell behaviour, apps and generic layouts belong there; site-only markup goes in the root `layouts/`
+- Flag any change to `themes/github.com/` (the upstream `hugo-admonitions` submodule)
+- Changes to the look or window behaviour should keep `themes/deskbar/DESIGN.md` in step
 
-### Configuration
-- Check `hugo.yaml` for correct syntax and indentation
-- Ensure Hugo Extended is specified where needed
+## Configuration
 
-## SCSS/CSS
+- Desktop icons, dock, tray, menu, screen saver and thumbnail emblem rules live under `params.deskbar` in `hugo.yaml`
+- The deploy workflow pins the Hugo version and SHA-pins every action. Keep both pinned when updating
 
-### Dart Sass Compliance
-- Use modern module system: `@use` and `@forward`
-- Avoid deprecated `@import`
-- Use namespaced functions: `map.get()`, `list.join()`, `map.merge()`
-- No global built-in functions (deprecated in Dart Sass 3.0)
+## Content
 
-### Font Configuration
-- Verify font files are in `/static/fonts/`
-- Check @font-face declarations use correct paths
-- Confirm font-display: swap for performance
-- Variable fonts preferred over multiple weight files
+- Old URLs must keep working. A moved or renamed post keeps its `aliases`
+- Bespoke thumbnails come from `assets/thumbnails-src/<bundle>.svg` via `make thumbs`; posts without one get an emblem chosen from their tags
+
+## Checks
+
+- Theme JS, CSS, layout or e2e changes should be run through the browser tests locally (CI doesn't run them). Content-only changes don't need them
+- Changes to `data/` or site tools should pass `make test`

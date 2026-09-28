@@ -1,7 +1,6 @@
 {{- /* Tool ratings heatmap. The script runs on every mount when the page is routed into a window, so it
        is wrapped in a function scope; the tooltip is placed relative to the container, which may scroll. */ -}}
-{{- $ratings := dict }}
-{{- if ge hugo.Version "0.156.0" }}{{ $ratings = hugo.Data.toolRatings }}{{ else }}{{ $ratings = site.Data.toolRatings }}{{ end }}
+{{- $ratings := hugo.Data.toolRatings }}
 <div class="heatmap-container wide-content">
     <div id="heatmap"></div>
     <div id="tooltip"></div>

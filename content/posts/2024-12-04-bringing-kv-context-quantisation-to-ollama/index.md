@@ -4,23 +4,9 @@ title: "Bringing K/V Context Quantisation to Ollama"
 date: 2024-12-04T20:00:02+00:00
 tags: ["ai", "llm", "tech", "ollama", "llama","quantisation"]
 author: "Sam McLeod"
-showToc: true
-TocOpen: false
 draft: false
-hidemeta: false
-comments: false
 description: "K/V context cache quantisation has been added to Ollama. This enables significant reductions in VRAM usage, allowing users to realise the potential of expanded context sizes and run larger models at their existing context sizes."
-disableShare: false
-disableHLJS: false
-hideSummary: false
 searchHidden: false
-ShowReadingTime: true
-ShowBreadCrumbs: true
-ShowPostNavLinks: true
-ShowWordCount: false
-ShowRssButtonInSectionTermList: true
-UseHugoToc: false
-mermaid: true
 cover:
   image: "llm-vram-components.svg"
   alt: "Illustration of the components of a LLM's memory usage"

@@ -1,9 +1,8 @@
 ---
 author: "Sam McLeod"
-readingTime: true
 categories: [ "Tech", "Leadership", "Values", "RemoteWork" ]
 date: "2022-10-20T07:00:00Z"
-updated: "2023-05-31T07:52:26Z"
+lastmod: "2023-05-31T07:52:26Z"
 aliases:
   - /tech/2022/10/20/make-work-visible-dms/
 images: ["silos.jpg"]
@@ -13,7 +12,6 @@ cover:
   #caption: "<text>"
   #relative: false # To use relative path for cover image, used in hugo Page-bundles
 title: Making Work Visible - Avoid DMs
-showFullContent: false
 keywords: ["work", "communication", "culture", "tech", "direct messages", "remotework"]
 tags: ["work", "communication", "culture", "tech", "direct messages", "remotework"]
 toc: true

@@ -20,20 +20,10 @@ tags:
 - ESP32
 - IoT
 series: ["AI"]
-hiddenFromHomePage: false
-hiddenFromSearch: false
 toc:
   enable: true
   auto: false
-code:
-  copy: true
-  maxShownLines: 200
 math: false
-lightgallery: false
-readingTime: true
-showFullContent: true
-asciinema: false
-mermaid: false
 draft: false
 ---
 

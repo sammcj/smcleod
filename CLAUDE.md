@@ -1,6 +1,6 @@
 # Project Instructions for Coding Agents
 
-- NEVER change `themes/github.com/` (hugo-admonitions, an upstream submodule) or `themes/PaperMod/` (unused leftovers).
+- NEVER change `themes/github.com/` (hugo-admonitions, an upstream submodule).
 - `themes/deskbar/` is this site's own theme and is edited freely.
 - NEVER commit or push a git repo unless the user has explicitly requested you to do so.
 - In markdown content always use - for lists, _underscores_ and **bold**
@@ -12,10 +12,11 @@
   - Shell behaviour, apps and generic layouts belong in the theme. Run `make test` from `themes/deskbar/` (`npm ci` once) for its unit tests and JS size budget. Browser tests are under Build and checks.
   - Site-only markup goes in this repo's `layouts/`.
 - `themes/github.com/` holds `hugo-admonitions`, imported via a `go.mod` replace; the theme's example site uses it too.
-- Front matter the theme reads (`thumbnail`, `thumbnailIcon`, `photos`, `layout: photos` and more) is documented in the theme's `README.md`.
+- Front matter the theme reads (`thumbnail`, `thumbnailIcon`, `photos`, `layout: photos` and more) is documented in the theme's `README.md`. Keys from earlier themes (PaperMod/LoveIt, e.g. `ShowToc`, `hiddenFromSearch`, `comments`) were stripped because nothing reads them; use the theme's equivalents (`searchHidden`, `deskbarHidden`, `toc: false`).
 - Desktop icons, dock, tray, menu, screen saver and thumbnail emblem rules live under `params.deskbar` in `hugo.yaml`.
-- `DEV_PLAN.md` tracks the rewrite. Tick an item only when it is fully done.
-- `themes/deskbar/DESIGN.md` holds the design intent, design language and how looks work. Read it before changing the look or window behaviour, and update it when a decision changes them.
+- `DEV_PLAN.md` (local, globally gitignored) tracks current work. Tick an item only when it is fully done.
+- `params.deskbar.appearance` (the site's starting look) must match a preset in the theme's `lib/appearance.js`; `tests/appearance.test.mjs` enforces it.
+- `themes/deskbar/DESIGN.md` holds the design intent, design language, how looks work and the numbered decision register (D1 onwards) that code comments cite. Read it before changing the look or window behaviour, and update it when a decision changes them.
 
 ## Content
 
@@ -31,9 +32,10 @@
 ## Build and checks
 
 - `hugo server` holds the build lock. Side builds need `hugo --noBuildLock -d <dir>`.
-- After building, run `make check PUBLIC=<dir>`. It verifies posts, aliases, RSS, internal links and key pages. Known broken external links are listed in `scripts/known-broken-links.txt`.
+- After building, run `make check PUBLIC=<dir>`. It verifies posts, aliases, RSS, internal links and key pages. Missing link targets already in old content are listed in `scripts/known-broken-links.txt`.
 - Run `make test` at the repo root when `data/` or site tools change. CI runs it, and `tests/folders.test.mjs` pins each card folder's item count.
-- CI (`.github/workflows/deploy.yml`) pins Hugo and SHA-pins its actions. Keep both pinned when updating.
+- CI (`.github/workflows/deploy.yml`) pins Hugo, and every workflow SHA-pins its actions. Keep both pinned when updating.
+- The PR typos job checks `README.md` and `content/`. Add words that are correct in context (names, quoted tool output) to `_typos.toml`.
 - CI runs unit tests and `make check` but no browser tests, as they are too slow there. Run them locally when a change touches theme JS, CSS, layouts or an e2e spec. Content-only changes don't need them.
   - Example site: `make e2e` from `themes/deskbar/`. `SPECS=e2e/<name>.spec.mjs` runs a subset for a focused change.
   - This site: build with `hugo --noBuildLock -d <dir>`, then run `make e2e PUBLIC=<dir>` from the repo root. It sets the real-page paths some specs need.

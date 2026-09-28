@@ -1,6 +1,5 @@
 ---
 author: "Sam McLeod"
-readingTime: true
 categories: [ Tech, BestOf, Software ]
 date: "2020-10-10T16:00:00Z"
 aliases:
@@ -53,7 +52,7 @@ _This post has been superseded. You can find the latest version of this post [he
 - [Evernote](https://evernote.com)
 - [MiniHack](https://itunes.apple.com/au/app/minihack-for-hacker-news/id631108846?mt=8)
 - [Alien Blue](http://www.reddit.com/r/alienblue)
-- [Singal](https://signal.org)
+- [Signal](https://signal.org)
 - [Prompt](https://panic.com/prompt/)
 
 ## Browser Addons

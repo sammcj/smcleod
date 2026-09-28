@@ -1,0 +1,2 @@
+{{- /* The reader sections' pages, newest first. Call with partialCached; .Reverse gives oldest first. */ -}}
+{{- return (where site.RegularPages "Section" "in" site.Params.deskbar.readerSections).ByDate.Reverse -}}

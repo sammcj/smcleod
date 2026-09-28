@@ -3,15 +3,7 @@
 {{- define "main" }}
 {{- $src := .Params.frame | relURL }}
 <article class="rd tool-doc">
-  <header>
-    <h1>{{ .Title }}</h1>
-    {{- with .Description }}
-    <p class="lede">{{ . }}</p>
-    {{- end }}
-  </header>
-  {{- with .Content }}
-  <div class="rd-body">{{ . }}</div>
-  {{- end }}
+  {{- partial "deskbar/doc-head.html" . }}
   <iframe class="tool-frame" src="{{ $src }}" title="{{ .Title }}" loading="lazy"></iframe>
   <p class="tool-open"><a href="{{ $src }}">Open {{ .Title }} on its own page</a></p>
 </article>

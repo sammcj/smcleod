@@ -11,10 +11,9 @@
 ### High Priority Issues
 - Incorrect spelling (non-Australian English)
 - Security vulnerabilities
-- Modifications to theme files
+- Modifications to the upstream `themes/github.com/` submodule
 - Hardcoded secrets or credentials
 - Breaking Hugo build configuration
-- Deprecated Sass syntax
 
 ### Medium Priority Issues
 - AI clichés and marketing language
@@ -38,7 +37,6 @@
 ### In Code Changes
 - [ ] Australian English in all comments and strings
 - [ ] Proper Hugo asset pipeline usage
-- [ ] Modern Sass syntax (if applicable)
 
 ### In Content Changes
 - [ ] Australian English spelling throughout

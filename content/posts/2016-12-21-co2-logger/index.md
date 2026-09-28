@@ -1,10 +1,9 @@
 ---
 title: "MH-Z19 CO2 sensor reader, logger and visualiser"
-subtitle: ""
 date: 2016-12-21T16:37:38+11:00
 lastmod: 2016-12-21T16:37:38+11:00
 author: Sam McLeod
-description: ""
+description: "Python scripts to read, log and plot CO2 readings from an MH-Z19 sensor over UART."
 keywords: ["health","iot","co2"]
 tags: ["health","iot","co2"]
 categories: ["IoT","Health"]
@@ -12,25 +11,12 @@ series: []
 cover:
   image: "https://user-images.githubusercontent.com/862951/52827251-21597e00-3118-11e9-9ebc-ddbbc9fb02a8.jpg"
 
-
-hiddenFromHomePage: false
-hiddenFromSearch: false
-
 toc:
   enable: true
   auto: false
-asciinema: false
 math: false
-lightgallery: true
-readingTime: true
-showFullContent: false
 draft: false
 type: posts
-code:
-    maxShownLines: 20
-    copy: true
-comment:
-  enable: true
 ---
 
 <!-- markdownlint-disable MD025 -->

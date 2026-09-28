@@ -1,0 +1,9 @@
+{{- /* Feed readers resolve relative image URLs against the feed, not the post, so bundle images need absolute URLs */ -}}
+{{- $dest := strings.TrimPrefix "./" .Destination -}}
+{{- $src := "" -}}
+{{- with or (.PageInner.Resources.Get $dest) (resources.Get $dest) -}}
+  {{- $src = .Permalink -}}
+{{- else -}}
+  {{- $src = $dest | absURL -}}
+{{- end -}}
+<img src="{{ $src }}" alt="{{ .PlainText }}"{{ with .Title }} title="{{ . }}"{{ end }}>

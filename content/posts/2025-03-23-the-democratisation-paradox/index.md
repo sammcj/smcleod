@@ -6,23 +6,9 @@ images: ["thumbnail.png"]
 thumbnailIcon: thumbnail-icon.svg
 tags: ["ai","llm","tech","culture","art","economics","capitalism","history","creativity","automation"]
 author: "Sam McLeod"
-showToc: true
-TocOpen: true
 draft: false
-hidemeta: false
-comments: false
 description: "The Democratisation Paradox: What History Teaches Us About AI."
-disableShare: false
-disableHLJS: false
-hideSummary: false
 searchHidden: false
-ShowReadingTime: true
-ShowBreadCrumbs: true
-ShowPostNavLinks: true
-ShowWordCount: true
-ShowRssButtonInSectionTermList: true
-UseHugoToc: false
-mermaid: true
 ---
 
 Every technological revolution has triggered waves of anxiety about the obsolescence of human skills and professions. The current fears that AI will replace artists, eliminate writing jobs, render illustrators obsolete, and devalue creative work follow a well-established historical pattern that's worth examining critically.

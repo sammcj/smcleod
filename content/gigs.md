@@ -3,10 +3,7 @@ title: "Gigs"
 description: "Gigs list"
 author: "Sam McLeod"
 norss: true
-comments: false
-showDate: false
 toc: false
-hiddenFromHomePage: true
 keywords: ["music", "gigs", "bands", "concerts"]
 tags: ["music", "gigs", "bands", "concerts"]
 categories: ["Music"]

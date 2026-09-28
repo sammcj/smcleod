@@ -5,10 +5,7 @@
 {{- $p := . -}}
 {{- $slug := path.Base $p.RelPermalink -}}
 {{- $id := "" -}}
-{{- /* hugo.Data replaced site.Data in 0.156; branch so older Hugo still builds */ -}}
-{{- $listed := slice -}}
-{{- if ge hugo.Version "0.156.0" }}{{ $listed = hugo.Data.albums }}{{ else }}{{ $listed = site.Data.albums }}{{ end -}}
-{{- range $listed -}}
+{{- range hugo.Data.albums -}}
   {{- $s := .source | default dict -}}
   {{- if and (not $id) (eq $s.type "post") (or (eq $s.slug $slug) (and $p.File (eq $p.File.ContentBaseName $s.slug))) -}}
     {{- $id = string .id -}}

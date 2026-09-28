@@ -8,28 +8,13 @@ lastmod: 2026-07-04T10:00:00+10:00
 url: "/2025/04/my-plan-document-act-review-flow-for-agentic-software-development/"
 tags: ["ai", "llm", "tech", "coding", "agentic", "agentic coding", "agents", "skills", "context engineering", "tutorials"]
 author: "Sam McLeod"
-showToc: true
-TocOpen: true
 draft: false
-hidemeta: false
-comments: false
 description: "An overview of my Setup, Plan, Act, Review & Iterate workflow for agentic software development."
-disableShare: false
-disableHLJS: false
-hideSummary: false
 searchHidden: false
-ShowReadingTime: true
-ShowBreadCrumbs: true
-ShowPostNavLinks: true
-ShowWordCount: true
-ShowRssButtonInSectionTermList: true
-UseHugoToc: true
-mermaid: false
 cover:
   image: "setup-plan-act-iterate.svg"
   alt: "Agentic Coding Development Flow"
   # caption: "Optional caption text"
-  relative: false  # Set to true for page bundle images
 ---
 
 I follow a simple, yet effective flow for agentic coding that helps me to efficiently develop software using AI coding agents while keeping them on track, focused on the task at hand and ensuring they have access to the right tools and information.

@@ -45,74 +45,38 @@
   [data-deco=beos] .frame, [data-deco=beos] .win.active .frame { padding: 0; }
 }
 
-/* Liquid Ass: a spoof of Apple's Liquid Glass. Every surface is frosted glass with a shiny rim, blurred and
-   saturated far past taste, no two corners share a radius, shadows pile up, everything is padded even more than
-   Apple pads it, the window buttons are traffic lights on the left, and buttons wobble like jelly. Choosing it in the
-   Control panel also picks its wallpaper and the glass dock.
-   Clear is the same glass without the joke: even corners, the usual padding, one soft shadow and no wobble.
-   In both, text sits on content at 88% or more, so it keeps its contrast whatever shows through. */
-:root:is([data-deco=liquid], [data-deco=clear]) {
-  --lq-blur: blur(26px) saturate(260%) brightness(1.08);
-  --lq-rim: light-dark(rgba(255,255,255,.85), rgba(255,255,255,.4));
-  --lq-shine: inset 2px 2px 1px var(--lq-rim), inset -2px -3px 2px light-dark(rgba(255,255,255,.35), rgba(255,255,255,.12)), inset 0 0 22px light-dark(rgba(255,255,255,.35), rgba(255,255,255,.08));
+/* Clear: every surface is frosted glass with a soft rim, even corners, the usual padding and one soft shadow. Text
+   sits on content at 88% or more, so it keeps its contrast whatever shows through. */
+:root[data-deco=clear] {
+  --lq-blur: blur(22px) saturate(170%);
+  --lq-rim: light-dark(rgba(255,255,255,.7), rgba(255,255,255,.28));
+  --lq-shine: inset 1px 1px 0 var(--lq-rim), inset 0 0 14px light-dark(rgba(255,255,255,.22), rgba(255,255,255,.05));
   --frame: light-dark(rgba(255,255,255,.3), rgba(42,46,58,.38)); --frame-hi: var(--lq-rim);
   --frame-lo: light-dark(rgba(0,0,0,.14), rgba(0,0,0,.4)); --frame-dk: var(--lq-rim);
   --content: light-dark(rgba(255,255,255,.88), rgba(38,40,46,.88)); --side: light-dark(rgba(242,242,247,.9), rgba(30,32,38,.9));
   --panel: light-dark(rgba(255,255,255,.55), rgba(18,20,28,.66)); --panel-fg: light-dark(#141414, #f5f5f5);
   --panel-hover: light-dark(rgba(0,0,0,.08), rgba(255,255,255,.14));
 }
-:root[data-deco=clear] {
-  --lq-blur: blur(22px) saturate(170%);
-  --lq-rim: light-dark(rgba(255,255,255,.7), rgba(255,255,255,.28));
-  --lq-shine: inset 1px 1px 0 var(--lq-rim), inset 0 0 14px light-dark(rgba(255,255,255,.22), rgba(255,255,255,.05));
-}
-:root:is([data-deco=liquid], [data-deco=clear]) :is(#panel, .win .frame, #menu, .ctx, .recent-list) { backdrop-filter: var(--lq-blur); -webkit-backdrop-filter: var(--lq-blur); }
+:root[data-deco=clear] :is(#panel, .win .frame, #menu, .ctx, .recent-list) { backdrop-filter: var(--lq-blur); -webkit-backdrop-filter: var(--lq-blur); }
 /* a faded window would cut its glass off from the desk behind (opacity makes it the backdrop root), and glass shows
    what is behind already */
-:root:is([data-deco=liquid], [data-deco=clear]) .win.under { opacity: 1; }
-:root:is([data-deco=liquid], [data-deco=clear]) #panel { border-bottom: 1px solid var(--lq-rim); box-shadow: inset 0 -1px 0 rgba(255,255,255,.3), 0 10px 30px rgba(0,0,0,.28); }
-:root[data-deco=clear] #panel { box-shadow: inset 0 -1px 0 rgba(255,255,255,.2), 0 4px 16px rgba(0,0,0,.16); }
+:root[data-deco=clear] .win.under { opacity: 1; }
+:root[data-deco=clear] #panel { border-bottom: 1px solid var(--lq-rim); box-shadow: inset 0 -1px 0 rgba(255,255,255,.2), 0 4px 16px rgba(0,0,0,.16); }
 /* dark text on a light panel fades too far at the core's minimised opacity */
-:root:is([data-deco=liquid], [data-deco=clear]) .task.min { opacity: .8; }
-:root:is([data-deco=liquid], [data-deco=clear]) :is(.task.on, #menuBtn.open, .home-btn.on) { background: light-dark(rgba(255,255,255,.6), rgba(255,255,255,.16)); border-color: var(--lq-rim); border-radius: 12px 7px 14px 9px; box-shadow: var(--lq-shine); }
-:root:is([data-deco=liquid], [data-deco=clear]) .win .frame { background: var(--frame) linear-gradient(160deg, rgba(255,255,255,.5), transparent 26% 74%, rgba(255,255,255,.22)); border: 1px solid var(--lq-rim); }
-:root:is([data-deco=liquid], [data-deco=clear]) .views { border: 1px solid light-dark(rgba(255,255,255,.7), rgba(255,255,255,.18)); overflow: hidden; }
-:root[data-deco=liquid] .win .frame { padding: 14px; padding-top: 26px; border-radius: 48px 20px 64px 30px;
-  box-shadow: var(--lq-shine), 0 2px 4px rgba(0,0,0,.18), 0 12px 24px rgba(0,0,0,.22), 0 30px 60px rgba(0,0,0,.26), 0 60px 110px rgba(40,0,90,.3); }
-:root[data-deco=liquid] .win.active .frame { box-shadow: var(--lq-shine), 0 0 0 1px rgba(255,255,255,.25), 0 2px 4px rgba(0,0,0,.2), 0 14px 28px rgba(0,0,0,.28), 0 40px 80px rgba(0,0,0,.34), 0 80px 160px rgba(90,0,160,.38), 0 0 90px rgba(255,90,200,.3); }
-:root[data-deco=liquid] .views { border-radius: 38px 12px 54px 21px; }
-:root[data-deco=liquid] .grip { right: 18px; bottom: 18px; }
+:root[data-deco=clear] .task.min { opacity: .8; }
+:root[data-deco=clear] :is(.task.on, #menuBtn.open, .home-btn.on) { background: light-dark(rgba(255,255,255,.6), rgba(255,255,255,.16)); border-color: var(--lq-rim); border-radius: 7px; box-shadow: var(--lq-shine); }
+:root[data-deco=clear] .win .frame { background: var(--frame) linear-gradient(160deg, rgba(255,255,255,.5), transparent 26% 74%, rgba(255,255,255,.22)); border: 1px solid var(--lq-rim); }
+:root[data-deco=clear] .views { border: 1px solid light-dark(rgba(255,255,255,.7), rgba(255,255,255,.18)); overflow: hidden; }
 :root[data-deco=clear] .win .frame { padding: 5px; border-radius: 12px; box-shadow: var(--lq-shine), 0 6px 20px rgba(0,0,0,.2); }
 :root[data-deco=clear] .win.active .frame { box-shadow: var(--lq-shine), 0 10px 32px rgba(0,0,0,.3); }
 :root[data-deco=clear] .views { border-radius: 8px; }
 /* a fainter white on the window's outer edge and inner rim than the rest of the glass, so windows don't look puffed up */
 :root[data-deco=clear] .win :is(.frame, .tab, .th) { --lq-rim: light-dark(rgba(255,255,255,.42), rgba(255,255,255,.16)); --lq-shine: inset 1px 1px 0 var(--lq-rim), inset 0 0 10px light-dark(rgba(255,255,255,.12), rgba(255,255,255,.03)); }
-/* the tab is glass too, with the palette's tab colour showing through as a tint. Liquid Ass floats it as a pill on
-   the frame's rim, clear of its big corner curves; Clear joins it to the frame's top edge */
-:root:is([data-deco=liquid], [data-deco=clear]) .win :is(.tab, .th) { gap: 0; padding: 0 12px 0 5px; border: 1px solid var(--lq-rim); color: light-dark(#333, #ddd); background: light-dark(rgba(255,255,255,.72), rgba(40,42,50,.76)); box-shadow: var(--lq-shine); backdrop-filter: var(--lq-blur); -webkit-backdrop-filter: var(--lq-blur); }
-:root[data-deco=liquid] .win.active .tab.on { color: #1f1f1f; background: linear-gradient(rgba(255,255,255,.55), rgba(255,255,255,.05)), color-mix(in srgb, var(--tab) 70%, transparent); }
-:root:is([data-deco=liquid], [data-deco=clear]) .tabs.multi .tab { margin-right: 4px; }
-:root[data-deco=liquid] .tab .tt { margin-left: 5px; }
-:root[data-deco=liquid] .win .tabs { left: 34px; right: 34px; bottom: calc(100% - 13px); z-index: 1; }
-:root[data-deco=liquid] .win :is(.tab, .th) { bottom: 0; border-radius: 17px 24px 13px 20px; box-shadow: var(--lq-shine), 0 6px 14px rgba(0,0,0,.25); }
+/* the tab is glass too, with the palette's tab colour showing through as a tint, joined to the frame's top edge */
+:root[data-deco=clear] .win :is(.tab, .th) { gap: 0; padding: 0 12px 0 5px; border: 1px solid var(--lq-rim); color: light-dark(#333, #ddd); background: light-dark(rgba(255,255,255,.72), rgba(40,42,50,.76)); box-shadow: var(--lq-shine); backdrop-filter: var(--lq-blur); -webkit-backdrop-filter: var(--lq-blur); }
+:root[data-deco=clear] .tabs.multi .tab { margin-right: 4px; }
 :root[data-deco=clear] .win .tabs.multi { left: 12px; right: 12px; }
 :root[data-deco=clear] .win :is(.tab, .th) { border-bottom: 0; border-radius: 9px 9px 0 0; }
-/* Liquid Glass pads everything generously, so Liquid Ass pads it a little more */
-:root[data-deco=liquid] .toolbar { gap: 10px; padding: 10px 18px; }
-:root[data-deco=liquid] .tb { height: 32px; padding: 0 16px; }
-:root[data-deco=liquid] :is(input:not([type=checkbox], [type=radio], [type=range]), select) { min-height: 32px; padding-inline: 14px; }
-:root[data-deco=liquid] .mn-it { padding: 8px 22px; }
-:root[data-deco=liquid] .ctx-it { min-height: 36px; padding-inline: 22px; }
-/* titles refract a little, as anything seen through this much glass would */
-:root[data-deco=liquid] .tab .tt { text-shadow: -1px 0 rgba(255,0,140,.35), 1px 0 rgba(0,190,255,.35); }
-/* traffic lights, with a glint, on the left where Apple keeps them; their marks show on hover */
-:root[data-deco=liquid] .win .ctl, :root[data-deco=liquid] .win .ctl:hover { --lq-c: #ff5f57; width: 22px; height: 22px; border-radius: 50%; opacity: 1; color: rgba(0,0,0,.6); background: radial-gradient(circle at 40% 35%, rgba(255,255,255,.85) 0 1.5px, transparent 2.5px), radial-gradient(circle, var(--lq-c) 0 6px, rgba(0,0,0,.28) 6.5px, transparent 7.5px); }
-:root[data-deco=liquid] .win .ctl.close { order: -3; }
-:root[data-deco=liquid] .win .ctl.min { order: -2; --lq-c: #febc2e; }
-:root[data-deco=liquid] .win .ctl.max { order: -1; --lq-c: #28c840; }
-:root[data-deco=liquid] :is(.win:not(.active), .tab:not(.on)) .ctl { --lq-c: rgba(140,140,150,.6); }
-:root[data-deco=liquid] .ctl svg { width: 7px; height: 7px; opacity: 0; }
-:root[data-deco=liquid] :is(.tab:hover, .tab:focus-within) .ctl svg { opacity: 1; }
 /* Clear: a window on its own has its tab across the whole top, a title bar joined to the frame, so the window is one
    pane of glass. The bar is frosted white lit along its top edge, with a hairline where it meets the frame; the
    palette's tab colour is only a wash over the front window's bar, since at full strength it went muddy over the
@@ -136,21 +100,10 @@
 :root[data-deco=clear] .win .ctl:hover { --lq-mk: transparent; --lq-fg: #fff; --lq-bg: color-mix(in srgb, var(--accent) 85%, transparent); }
 :root[data-deco=clear] .win .ctl.close:hover { --lq-bg: #e5484d; }
 :root[data-deco=clear] .win:not(.active) .ctl { opacity: .6; }
-:root:is([data-deco=liquid], [data-deco=clear]) :is(.tb, .seg, input, select) { border-color: var(--lq-rim); }
-:root:is([data-deco=liquid], [data-deco=clear]) :is(.tb, .seg):not(:where(.on, :active, [aria-expanded=true], [aria-pressed=true])) { background: linear-gradient(light-dark(rgba(255,255,255,.85), rgba(255,255,255,.2)), light-dark(rgba(255,255,255,.35), rgba(255,255,255,.04))); }
-:root:is([data-deco=liquid], [data-deco=clear]) .mn-head { background: transparent; border-bottom-color: var(--lq-rim); }
-:root:is([data-deco=liquid], [data-deco=clear]) :is(#menu, .ctx, #recent h2, #desk .recent-list) { border-color: var(--lq-rim); }
-:root[data-deco=liquid] .tb { border-radius: 20px 7px 22px 12px; box-shadow: inset 0 1px 1px var(--lq-rim), 0 3px 8px rgba(0,0,0,.18); }
-:root[data-deco=liquid] :is(input, select) { border-radius: 14px 7px 16px 10px; }
-:root[data-deco=liquid] :not(.seg-opts) > .cp-opt { border-radius: 18px 8px 22px 12px; }
-:root[data-deco=liquid] .cp-art { border-radius: 14px 6px 16px 9px; }
-:root[data-deco=liquid] .seg:first-child { border-radius: 14px 0 0 9px; }
-:root[data-deco=liquid] .seg:last-child { border-radius: 0 11px 16px 0; }
-:root[data-deco=liquid] #menu { top: calc(var(--panel-h) + 6px); border-style: solid; border-width: 1px; border-radius: 26px 12px 34px 18px; box-shadow: var(--lq-shine), 0 20px 50px rgba(0,0,0,.4), 0 50px 120px rgba(90,0,160,.35); }
-:root[data-deco=liquid] .ctx { border-radius: 18px 10px 22px 14px; box-shadow: var(--lq-shine), 0 14px 40px rgba(0,0,0,.4); }
-:root[data-deco=liquid] #recent h2 { border-radius: 14px 19px 0 0; }
-:root[data-deco=liquid] #desk .recent-list { border-radius: 0 28px 34px 22px; box-shadow: var(--lq-shine), 0 20px 50px rgba(0,0,0,.35); }
-:root[data-deco=clear] :is(.task.on, #menuBtn.open, .home-btn.on) { border-radius: 7px; }
+:root[data-deco=clear] :is(.tb, .seg, input, select) { border-color: var(--lq-rim); }
+:root[data-deco=clear] :is(.tb, .seg):not(:where(.on, :active, [aria-expanded=true], [aria-pressed=true])) { background: linear-gradient(light-dark(rgba(255,255,255,.85), rgba(255,255,255,.2)), light-dark(rgba(255,255,255,.35), rgba(255,255,255,.04))); }
+:root[data-deco=clear] .mn-head { background: transparent; border-bottom-color: var(--lq-rim); }
+:root[data-deco=clear] :is(#menu, .ctx, #recent h2, #desk .recent-list) { border-color: var(--lq-rim); }
 :root[data-deco=clear] :is(.tb, input, select) { border-radius: 7px; }
 :root[data-deco=clear] .tb { box-shadow: inset 0 1px 1px var(--lq-rim); }
 :root[data-deco=clear] :not(.seg-opts) > .cp-opt { border-radius: 10px; }
@@ -161,36 +114,19 @@
 :root[data-deco=clear] .ctx { border-radius: 10px; box-shadow: var(--lq-shine), 0 10px 28px rgba(0,0,0,.3); }
 :root[data-deco=clear] #recent h2 { border-radius: 9px 9px 0 0; }
 :root[data-deco=clear] #desk .recent-list { border-radius: 0 12px 12px 12px; box-shadow: var(--lq-shine), 0 10px 28px rgba(0,0,0,.25); }
-/* Liquid Ass's dock: the glass dock gone glassier, its launchers swelling under the pointer. It can go with any window
-   style, so it carries Liquid Ass's rim and shine itself. */
-.wm[data-dock=liquid] #dock { --lq-rim: light-dark(rgba(255,255,255,.85), rgba(255,255,255,.4)); --lq-shine: inset 2px 2px 1px var(--lq-rim), inset -2px -3px 2px light-dark(rgba(255,255,255,.35), rgba(255,255,255,.12)), inset 0 0 22px light-dark(rgba(255,255,255,.35), rgba(255,255,255,.08));
-  padding: 12px 20px; background: light-dark(rgba(255,255,255,.18), rgba(255,255,255,.07)); border: 1px solid var(--lq-rim); border-radius: 30px 46px 24px 54px; backdrop-filter: blur(34px) saturate(340%) brightness(1.15); -webkit-backdrop-filter: blur(34px) saturate(340%) brightness(1.15); box-shadow: var(--lq-shine), 0 10px 20px rgba(0,0,0,.25), 0 40px 80px rgba(0,0,0,.35), 0 0 120px rgba(255,120,220,.4); }
-.wm[data-dock=liquid] :is(.dk, #dock #homeBtn, #dock #winsBtn) { border-radius: 16px 12px 18px 10px; }
-.wm[data-dock=liquid] :is(.dk, #dock #homeBtn, #dock #winsBtn) .ico { transition: transform .25s cubic-bezier(.3, 1.8, .5, 1); }
-.wm[data-dock=liquid] :is(.dk, #dock #homeBtn, #dock #winsBtn):hover .ico { transform: translateY(-8px) scale(1.35); }
-@keyframes lq-jelly { 25% { transform: scale(1.16, .84); } 45% { transform: scale(.88, 1.12); } 62% { transform: scale(1.06, .94); } 80% { transform: scale(.98, 1.02); } }
-@media (prefers-reduced-motion: no-preference) {
-  :root[data-deco=liquid] :is(.tb, .seg, .ctl, .pb, .dk, .cp-opt):hover { animation: lq-jelly .6s ease-out; }
-}
 /* without backdrop blur, see-through glass would be unreadable, so it frosts over instead */
 @supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
-  :root:is([data-deco=liquid], [data-deco=clear]) { --frame: light-dark(rgba(240,241,246,.94), rgba(42,46,58,.95)); --panel: light-dark(rgba(246,247,250,.95), rgba(24,26,34,.96)); --content: light-dark(#fff, #26282b); }
-  :root:is([data-deco=liquid], [data-deco=clear]) .win .tab { background: light-dark(#f3f3f6, #34363e); }
-  .wm[data-dock=liquid] #dock { background: light-dark(rgba(236,236,244,.92), rgba(40,42,52,.94)); }
+  :root[data-deco=clear] { --frame: light-dark(rgba(240,241,246,.94), rgba(42,46,58,.95)); --panel: light-dark(rgba(246,247,250,.95), rgba(24,26,34,.96)); --content: light-dark(#fff, #26282b); }
+  :root[data-deco=clear] .win .tab { background: light-dark(#f3f3f6, #34363e); }
 }
 @media (max-width: 767px), (max-height: 500px) and (pointer: coarse) {
-  :root:is([data-deco=liquid], [data-deco=clear]) .win .frame { padding: 0; }
-  :root:is([data-deco=liquid], [data-deco=clear]) .win .tabs { left: 0; right: 0; bottom: 100%; z-index: auto; }
-  :root[data-deco=liquid] .win .frame { border-radius: 0 0 38px 30px; }
-  :root[data-deco=liquid] .views { border-radius: 0 0 36px 28px; }
-  :root[data-deco=liquid] .win .tab { bottom: 3px; }
+  :root[data-deco=clear] .win .frame { padding: 0; }
+  :root[data-deco=clear] .win .tabs { left: 0; right: 0; bottom: 100%; z-index: auto; }
   :root[data-deco=clear] :is(.win .frame, .views) { border-radius: 0; }
   :root[data-deco=clear] .win .tabs:not(.multi) .tab { border-radius: 0; }
   :root[data-deco=clear] { --tab-h: 36px; }
   :root[data-deco=clear] .win .ctl { width: 44px; height: 30px; }
   :root[data-deco=clear] .tab .tt { font-size: 13px; }
-  :root[data-deco=liquid] .win .ctl, :root[data-deco=liquid] .win .ctl:hover { width: 32px; height: 32px; background: radial-gradient(circle at 42% 36%, rgba(255,255,255,.85) 0 2px, transparent 3px), radial-gradient(circle, var(--lq-c) 0 8px, rgba(0,0,0,.28) 8.5px, transparent 9.5px); }
-  :root[data-deco=liquid] .ctl svg { width: 9px; height: 9px; }
 }
 
 /* Wallpapers, each drawn from the palette's --wall tokens. .cp-wp is the app's thumbnail of each. */
@@ -200,10 +136,8 @@
 .wm[data-wall=plain] body, .cp-wp.plain { background: var(--wall-2); }
 .wm[data-wall=grid] body, .cp-wp.grid { background: linear-gradient(var(--wall-line) 1px, transparent 1px) 0 0 / 32px 32px, linear-gradient(90deg, var(--wall-line) 1px, transparent 1px) 0 0 / 32px 32px, linear-gradient(165deg, var(--wall-1), var(--wall-3)); }
 .wm[data-wall=dots] body, .cp-wp.dots { background: radial-gradient(var(--wall-line) 1.5px, transparent 2px) 0 0 / 20px 20px, radial-gradient(90% 70% at 20% 0%, var(--wall-1), transparent), var(--wall-3); }
-/* Liquid Ass's own (its colours, not the palette's): bright blobs, so the glass has something to smear */
-.wm[data-wall=liquid] body, .cp-wp.liquid, .cp-deco.liquid { background: radial-gradient(38% 46% at 18% 28%, light-dark(#ff7eb6, #a02c66) 0 30%, transparent 70%), radial-gradient(40% 50% at 82% 22%, light-dark(#7ee0ff, #1b6f96) 0 25%, transparent 70%), radial-gradient(45% 50% at 66% 84%, light-dark(#ffd36e, #9a6a10) 0 25%, transparent 70%), radial-gradient(40% 45% at 26% 88%, light-dark(#a88bff, #4f30ad) 0 25%, transparent 70%), linear-gradient(140deg, light-dark(#6d5dfc, #211858), light-dark(#2ec5c5, #0a3645)); }
-/* Clear's own: saturated colour swept into bands, with two fine light arcs, so its glass has something vivid behind
-   it without Liquid Ass's blur of blobs */
+/* Clear's own (its colours, not the palette's): saturated colour swept into bands, with two fine light arcs, so its
+   glass has something vivid behind it */
 .wm[data-wall=clear] body, .cp-wp.clear, .cp-deco.clear { background: radial-gradient(110% 85% at 105% -25%, transparent 62%, light-dark(rgba(255,255,255,.16), rgba(255,255,255,.08)) 62.6%, transparent 65%), radial-gradient(140% 95% at 50% 135%, transparent 57%, light-dark(rgba(255,255,255,.34), rgba(255,255,255,.16)) 57.5%, transparent 59.5%), radial-gradient(130% 80% at 38% 140%, transparent 61%, light-dark(rgba(255,255,255,.22), rgba(255,255,255,.1)) 61.4%, transparent 63%), radial-gradient(70% 60% at 12% 8%, light-dark(rgba(140,190,255,.6), rgba(70,120,220,.4)), transparent 70%), radial-gradient(55% 50% at 92% 96%, light-dark(rgba(45,215,205,.55), rgba(10,140,150,.45)), transparent 70%), radial-gradient(45% 40% at 18% 92%, light-dark(rgba(125,95,255,.5), rgba(80,50,190,.45)), transparent 70%), linear-gradient(160deg, light-dark(#10297a, #070f35) 0%, light-dark(#2150c4, #10286b) 48%, light-dark(#0f86b8, #064a70) 100%); }
 /* what the phone page fades into past its end (chrome.css): the wallpaper's lower edge */
 .wm[data-wall=clear] { --wall-3: light-dark(#1560a0, #07365a); }
@@ -287,8 +221,6 @@
 .cp-deco.beos::after { box-shadow: inset 1px 1px 0 var(--frame-hi), 2px 2px 0 rgba(0,0,0,.35); }
 .cp-deco.flat::before { border: 0; border-radius: 4px 4px 0 0; box-shadow: none; }
 .cp-deco.flat::after { border-color: var(--frame-lo); border-radius: 0 4px 4px 4px; box-shadow: 0 4px 10px rgba(0,0,0,.4); }
-.cp-deco.liquid::before { top: 5px; height: 11px; border: 1px solid rgba(255,255,255,.85); border-radius: 6px 8px 4px 5px; background: radial-gradient(circle at 5px 4.5px, #ff5f57 0 2px, transparent 2.5px), radial-gradient(circle at 11px 4.5px, #febc2e 0 2px, transparent 2.5px), radial-gradient(circle at 17px 4.5px, #28c840 0 2px, transparent 2.5px), rgba(255,255,255,.55); box-shadow: none; }
-.cp-deco.liquid::after { border-color: rgba(255,255,255,.85); border-radius: 12px 6px 14px 9px; background: rgba(255,255,255,.35); box-shadow: inset 1px 1px 1px #fff, 0 6px 12px rgba(0,0,0,.35), 0 0 14px rgba(255,120,220,.6); }
 .cp-deco.clear::before { top: 7px; height: 10px; left: 14px; border: 1px solid rgba(255,255,255,.75); border-bottom: 0; border-radius: 4px 4px 0 0; background: radial-gradient(circle at 5px 5px, #ff5f57 0 2px, transparent 2.5px), radial-gradient(circle at 11px 5px, #febc2e 0 2px, transparent 2.5px), radial-gradient(circle at 17px 5px, #28c840 0 2px, transparent 2.5px), rgba(255,255,255,.5); box-shadow: none; }
 .cp-deco.clear::after { border-color: rgba(255,255,255,.75); border-radius: 5px; background: rgba(255,255,255,.35); box-shadow: inset 1px 1px 0 rgba(255,255,255,.8), 0 4px 10px rgba(0,0,0,.3); }
 .cp-size { display: flex; align-items: center; gap: 10px; }
@@ -301,8 +233,6 @@
 /* dock style: a strip of launchers on the desktop colour */
 .cp-dk { background: var(--wall-2); --ic: repeating-linear-gradient(90deg, #ffcb00 0 6px, transparent 6px 9px, #6fa0e6 9px 15px, transparent 15px 18px); }
 .cp-dk::before { content: ''; position: absolute; left: 50%; bottom: 5px; width: 50px; height: 12px; padding: 2px 3px; transform: translateX(-50%); background: var(--ic) content-box, rgba(42,44,48,.9); border: 1px solid rgba(255,255,255,.25); border-radius: 3px; }
-.cp-dk.liquid { background: radial-gradient(40% 60% at 20% 30%, #ff7eb6, transparent), radial-gradient(40% 60% at 80% 40%, #7ab8ff, transparent), #6a4fd0; }
-.cp-dk.liquid::before { padding: 3px 5px; border-color: rgba(255,255,255,.85); border-radius: 8px 12px 6px 14px; background: var(--ic) content-box, rgba(255,255,255,.28); box-shadow: inset 1px 1px 1px #fff, 0 0 10px rgba(255,120,220,.7); }
 .cp-dk.deskbar::before { bottom: 0; width: 56px; border-color: var(--frame-dk); border-bottom: 0; border-radius: 0; background: var(--ic) content-box, var(--frame); box-shadow: inset 1px 1px 0 var(--frame-hi); }
 /* screen saver: leaves on the dark screen, or a sheep (frame 3 of the sheet, at 1x) by a window on a dimmed desktop */
 .cp-sv.leaves { background: radial-gradient(4px 2.5px at 18px 12px, #8cc152 90%, transparent), radial-gradient(2.5px 4px at 50px 20px, #5e9e3f 90%, transparent), radial-gradient(4px 2.5px at 32px 34px, #d9822b 90%, transparent), radial-gradient(2.5px 4px at 62px 38px, #a4c639 90%, transparent), radial-gradient(ellipse at 50% 35%, #1d3a24, #040604 80%); }

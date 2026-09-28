@@ -1,6 +1,5 @@
 ---
 author: "Sam McLeod"
-readingTime: true
 categories: [ music ]
 date: "2022-06-13T13:00:00Z"
 aliases:
@@ -171,7 +170,7 @@ Other bending practise, Start slow - as you get cleaner start trying it faster (
 
 [Peter Gunn Bass Line](http://www.harptab.com/blues/gunn.shtml)
 
-> “This is the hardest bend practising riff that there is.”
+> "This is the hardest bend practising riff that there is."
 This uses the 3 hole bends, Play it (if you can) until you can do it very fast.
 
 [More bending practice](http://www.youtube.com/watch?v=jF2iATfES8c)
@@ -228,7 +227,7 @@ Easy Blues Riff
 Hoochie Coochie Man Harmonica Tab
 
 ```plaintext
-1 2” 1 2” 2
+1 2" 1 2" 2
 ```
 
 My take on [Modern Blues Harmonica - (Gussow.052)](http://www.youtube.com/watch?v=jLUBcCi335g)
@@ -358,7 +357,7 @@ Gussow - Mojo Riff
 (2) (2) (2)-(2b) (1)-(2)
 ```
 
-Boogie Riff (Something like this, you really have to ‘feel the groove' of this one)
+Boogie Riff (Something like this, you really have to 'feel the groove' of this one)
 
 ```plaintext
 (2) (2), (2) (2), (2) (2), (2) (2), (2) (3) 4 (3) (2)
@@ -386,7 +385,7 @@ Played quite quick when you can.
 (5) (4) (4b) (3) (2) (2b) (2) (2) (2) (123)
 ```
 
-Play each note twice like ‘tah-tah' except for the last 4D
+Play each note twice like 'tah-tah' except for the last 4D
 
 ```plaintext
 2D 3D 4D 5B 6B 5B 4D 3D ::|

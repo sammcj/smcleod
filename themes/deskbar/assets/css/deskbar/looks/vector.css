@@ -2,12 +2,9 @@
    it when focused, angled tabs filled cyan and set in wide-spaced Space Grotesk capitals, a flat panel and dock on
    hairlines, and a flat indigo wallpaper ruled in a fine triangle lattice. Lines stand in for glow, and window
    content is near-white on deep indigo, unlit, for long reads. Dark only. */
-@font-face { font-family: 'Space Grotesk'; font-display: swap; font-weight: 700; src: url(../../../fonts/space-grotesk/space-grotesk-700-normal.woff2) format('woff2'); }
 
 :root[data-deco=vector] {
   color-scheme: dark;
-  --sw-pink: #ff3ea5; --sw-cyan: #6fe3ff; --sw-ink: #1a0b3a; --sw-edge: #4a3580;
-  --sw-head: 'Space Grotesk', var(--ui);
   /* the focused double rule: a gap in the frame's colour, then the pink hairline */
   --vx-rule: inset 0 0 0 2px var(--frame), inset 0 0 0 3px var(--sw-pink);
   --vx-cut: polygon(0 100%, 9px 0, calc(100% - 9px) 0, 100% 100%);

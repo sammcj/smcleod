@@ -1,6 +1,5 @@
 ---
 author: "Sam McLeod"
-readingTime: true
 categories: [ Tech ]
 date: "2018-01-17T00:00:00Z"
 aliases:
@@ -22,7 +21,7 @@ title: Theory of constraints
 
 - Any improvement made after the bottleneck is useless because it will always remain starved waiting for work from the bottleneck.
 
-- Any improvement made before the bottleneck merely results in more ‘work' piling up at the bottleneck.
+- Any improvement made before the bottleneck merely results in more 'work' piling up at the bottleneck.
 
 1. _Identify_ the system's constraint(s) (that which prevents the organisation from obtaining more of the goal in a unit of time)
 2. Decide how to _exploit_ the system's constraint(s) (how to get the most out of the constraint)

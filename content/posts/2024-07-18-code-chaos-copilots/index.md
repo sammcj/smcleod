@@ -6,23 +6,9 @@ date: 2024-07-18T01:00:10+00:00
 # aliases: ["/first"]
 tags: ["ai", "tools", "quantisation", "llm", "gguf", "talk", "tech", "keynote", "presentation"]
 author: "Sam McLeod"
-showToc: false
-TocOpen: false
 draft: false
-hidemeta: false
-comments: false
 description: "Integrating AI into Daily Development"
-disableShare: false
-disableHLJS: false
-hideSummary: false
 searchHidden: false
-ShowReadingTime: false
-ShowBreadCrumbs: true
-ShowPostNavLinks: true
-ShowWordCount: false
-ShowRssButtonInSectionTermList: true
-UseHugoToc: false
-mermaid: false
 cover:
   image: "code-chaos-copilots-screenshot.png"
   alt: ""

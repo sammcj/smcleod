@@ -3,7 +3,7 @@
 ## Blog Post Structure
 
 ### Front Matter
-- Verify all required fields are present: title, date, tags, categories
+- Verify all required fields are present: title, date, tags, and a description or summary
 - Ensure tags are lowercase and meaningful
 
 ### Content Quality

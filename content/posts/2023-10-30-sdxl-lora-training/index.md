@@ -20,20 +20,10 @@ tags:
 - Art
 - StableDiffusion
 series: ["AI/ML"]
-hiddenFromHomePage: false
-hiddenFromSearch: false
 toc:
   enable: false
   auto: false
-code:
-  copy: true
-  maxShownLines: 200
 math: false
-lightgallery: false
-readingTime: false
-showFullContent: true
-asciinema: false
-mermaid: false
 draft: false
 ---
 

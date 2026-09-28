@@ -41,6 +41,7 @@ lazyApp({ kind: 'about-desktop', geometry: d => {
 lazyApp({ kind: 'sketch', size: 'large' });
 lazyApp({ kind: 'chiptunes', geometry: () => ({ w: 400, h: 480 }) });
 lazyApp({ kind: 'terminal', size: 'large' });
-lazyApp({ kind: 'feeds', size: 'large' });
+// Feeds: a feed's own address (?feed=, lazy/feeds.js) is a tab of its own in the Feeds window
+lazyApp({ kind: 'feeds', size: 'large', stack: true, key: page => { const f = new URL(page.url, location.href).searchParams.get('feed'); return f ? 'feeds:' + f : 'feeds'; } });
 // the Control panel is as tall as the Posts window at its home spot, top edges level, and wide enough for rows of cards
 lazyApp({ kind: 'control-panel', geometry: d => { const p = postsHome(), w = fitW(d, 900); return { w, h: p.h, x: Math.max(10, (d.w - w) / 2), y: p.y }; } });

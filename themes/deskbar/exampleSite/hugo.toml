@@ -121,8 +121,8 @@ title = "deskbar demo"
     [[params.deskbar.menu.items]]
       page = "/about-desktop"
 
-# Panel tray links (params.deskbar.tray takes the same shape)
-[[params.socialIcons]]
+# Panel tray links
+[[params.deskbar.tray]]
   name = "github"
   url = "https://github.com/sammcj/smcleod/tree/main/themes/deskbar"
   icon = "github"

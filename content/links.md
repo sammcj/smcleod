@@ -3,11 +3,7 @@ title: "Favourite Tools"
 # "Tools" inside the Favourites folder, which sorts and labels by link title
 linkTitle: "Tools"
 description: "Software and services I use and like."
-excerpt: "Links to things I use."
-subtitle: "Links to things I use."
 # type: pages
-comments: false
-showDate: false
 series: [ BestOf ]
 norss: true
 # The Favourite Tools folder: data/applications.yaml, shown as icons only

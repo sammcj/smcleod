@@ -2,17 +2,25 @@ import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 
-// thumb-art.html looks emblems up by name and silently falls back to doc, so a typo in a rule shows the wrong art
+// thumb-art.html looks emblems up by name and silently falls back to doc, so a typo in a default rule (hugo.toml)
+// shows the wrong art
 const yaml = readFileSync(new URL('../data/deskbar/emblems.yaml', import.meta.url), 'utf8');
-const art = readFileSync(new URL('../layouts/_partials/deskbar/thumb-art.html', import.meta.url), 'utf8');
+const config = readFileSync(new URL('../hugo.toml', import.meta.url), 'utf8');
 const readme = readFileSync(new URL('../README.md', import.meta.url), 'utf8');
 const names = [...yaml.matchAll(/^(\w+):$/gm)].map(m => m[1]);
 
 test('every default thumbnail rule names an emblem, and doc (the fallback) exists', () => {
-  const used = [...art.matchAll(/"emblem" "(\w+)"/g)].map(m => m[1]);
+  const used = [...config.matchAll(/emblem = "(\w+)"/g)].map(m => m[1]);
   assert.ok(used.length > 10);
   assert.deepEqual(used.filter(n => !names.includes(n)), []);
   assert.ok(names.includes('doc'));
+});
+
+test('the card grounds are pairs of colours, outside the emblems', () => {
+  const grounds = yaml.match(/^grounds: \[\n([\s\S]*?)\n\]$/m)[1];
+  const pairs = [...grounds.matchAll(/\["(#[0-9a-f]{6})", "(#[0-9a-f]{6})"\]/g)];
+  assert.equal(pairs.length, 8);
+  assert.ok(!names.includes('grounds'));
 });
 
 test('every emblem has defs and a body, uses only the documented classes and no ids the card uses', () => {

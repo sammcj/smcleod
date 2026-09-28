@@ -1,8 +1,6 @@
 ---
 title: "Podcasts"
 description: "Podcasts I listen to."
-comments: false
-showDate: false
 series: [ BestOf ]
 norss: true
 # Cards from data/podcasts.yaml; artwork and latest episodes come from each show's RSS at build time

@@ -6,27 +6,12 @@ images: ["thumbnail.png"]
 thumbnailIcon: thumbnail-icon.svg
 tags: ['ai', 'llm', 'mlx', 'quantisation', 'qwen']
 author: 'Sam McLeod'
-showToc: true
-TocOpen: true
 draft: false
-hidemeta: false
-comments: false
 description: 'Using KL divergence to rank MLX quantisations of Qwen 3.6 (27B dense and 35B-A3B MoE)'
-disableShare: false
-disableHLJS: false
-hideSummary: false
 searchHidden: false
-ShowReadingTime: true
-ShowBreadCrumbs: true
-ShowPostNavLinks: true
-ShowWordCount: true
-ShowRssButtonInSectionTermList: true
-UseHugoToc: true
-mermaid: false
 cover:
   image: "qwen3.6-quality.png"
   alt: "Quality comparison: KL divergence vs Qwen3.6-27B (bf16)"
-  relative: true
 ---
 
 KL divergence against a known-good reference answers **"how much did this quant change the model's behaviour?"** rather than "how good is this model overall?".

@@ -1,6 +1,8 @@
 {{- define "main" }}
-{{- $sections := site.Params.deskbar.readerSections | default (slice "posts") }}
-{{- $post := in $sections .Section }}
+{{- $post := in site.Params.deskbar.readerSections .Section }}
+{{- /* toc: false, or the older { enable: false }, turns off the reader's Contents (reader.js) */}}
+{{- $toc := .Params.toc }}
+{{- if reflect.IsMap $toc }}{{ $toc = $toc.enable }}{{ end }}
 {{- $album := "" }}
 {{- if $post }}{{ $album = partial "deskbar/apps/post-album.html" . }}{{ end }}
 {{- /* data-md: the page's markdown output (page.markdown.md), which the reader's "Copy as markdown" fetches */}}
@@ -18,10 +20,10 @@
     {{- end }}
     {{- $cover := partial "deskbar/cover.html" . }}
     {{- if and $post $cover.full (not $cover.hidden) }}
-    <img class="cover" src="{{ $cover.full }}" alt="" decoding="async">
+    <img class="cover" src="{{ $cover.full }}" alt="{{ $cover.alt }}" decoding="async">
     {{- end }}
   </header>
-  <div class="rd-body">
+  <div class="rd-body"{{ if eq $toc false }} data-toc="false"{{ end }}>
     {{- .Content }}
   </div>
   {{- if $post }}

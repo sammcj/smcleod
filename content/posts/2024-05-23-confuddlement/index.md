@@ -5,23 +5,10 @@ date: 2024-05-23T05:45:10+00:00
 # aliases: ["/first"]
 tags: ["Confluence", "Markdown", "Go", "Golang", "Ollama", "AI", "LLM"]
 author: "Sam McLeod"
-showToc: true
-TocOpen: false
 draft: false
-hidemeta: false
-comments: false
 description: "Download Confluence Spaces as Markdown, Summarise with Ollama"
 # canonicalURL: "https://canonical.url/to/page"
-disableShare: false
-disableHLJS: false
-hideSummary: false
 searchHidden: false
-ShowReadingTime: true
-ShowBreadCrumbs: true
-ShowPostNavLinks: true
-ShowWordCount: true
-ShowRssButtonInSectionTermList: true
-UseHugoToc: true
 # cover:
 #     image: "https://github.com/sammcj/confuddlement/screenshots/screenshot.png?raw=true" # image path/url
 #     alt: : "placeholder"

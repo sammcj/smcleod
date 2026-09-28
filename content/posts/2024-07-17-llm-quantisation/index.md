@@ -6,27 +6,12 @@ date: 2024-07-17T01:00:10+00:00
 # aliases: ["/first"]
 tags: ["ai", "tools", "quantisation", "llm", "gguf", "dashboard"]
 author: "Sam McLeod"
-showToc: true
-TocOpen: true
 draft: false
-hidemeta: false
-comments: false
 description: "AI/LLM Quantisation Visualised"
-disableShare: false
-disableHLJS: false
-hideSummary: false
 searchHidden: false
-ShowReadingTime: false
-ShowBreadCrumbs: true
-ShowPostNavLinks: true
-ShowWordCount: false
-ShowRssButtonInSectionTermList: true
-UseHugoToc: false
-mermaid: false
 cover:
   image: "quant-neural.png"
   alt: ""
-  relative: true  # Set to true for page bundle images
 ---
 
 AI models ("LLMs" in this case) have inherently large sizes and computational requirements that often pose challenges for deployment and use.

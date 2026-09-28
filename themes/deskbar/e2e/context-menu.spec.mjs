@@ -2,7 +2,7 @@
 // long-press, the Menu key and Shift+F10, each action, the share fallback, and copying a post's markdown.
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { useBrowser, open, shot, win, desktop, phone } from './lib.mjs';
+import { useBrowser, open, needs, shot, win, desktop, phone } from './lib.mjs';
 
 useBrowser();
 
@@ -20,6 +20,18 @@ const clipboard = page => page.evaluate(() => navigator.clipboard.readText());
 const noteText = page => page.locator('.ctx-note.on').textContent();
 const firstPost = page => page.evaluate(async () => (await (await fetch(document.documentElement.dataset.index)).json()).posts[0]);
 const focused = page => page.evaluate(() => document.activeElement?.textContent.trim());
+// The shell opens its menu only from a contextmenu event it cancels, so an event that reaches the window uncancelled
+// means the browser's own menu. nativeMenu(page) starts listening; nativeMenu.shown(page) waits for the next event.
+const nativeMenu = page => page.evaluate(() => {
+  delete window.__native;
+  addEventListener('contextmenu', e => { window.__native = !e.defaultPrevented; }, { once: true });
+});
+nativeMenu.shown = async page => {
+  await page.waitForFunction(() => '__native' in window);
+  return page.evaluate(() => window.__native);
+};
+// With the menu's bundle loaded, a long-press timer that fires opens the menu at once, so its absence is certain
+const menuReady = page => page.evaluate(() => window.deskbar.loadLazy('context-menu'));
 
 async function openPost(viewport, opts) {
   const home = await open(viewport, '/', opts?.init, opts?.ctx);
@@ -78,8 +90,9 @@ test('post text keeps the browser menu, links included, and window chrome gets t
   const para = body.locator('p').first();
   await para.scrollIntoViewIfNeeded();
   const b = await para.boundingBox();
+  await nativeMenu(page);
   await page.mouse.click(b.x + 5, b.y + 5, { button: 'right' });
-  await page.waitForTimeout(300);
+  assert.equal(await nativeMenu.shown(page), true, 'a real right-click on post text');
   assert.equal(await menu(page).count(), 0);
   assert.equal(await prevented('.win .rd h1'), false, 'post title');
   if (await page.locator('.win .rd header a.chip').count()) assert.equal(await prevented('.win .rd header a.chip'), false, 'tag chip');
@@ -221,12 +234,14 @@ test('long-press opens the menu on touch without following the link; a tap or a 
   // phones hide the desktop icons, so the press is on a post on the home screen
   const icon = '#recent a.pc';
   await page.locator(icon).first().waitFor();
+  await menuReady(page);
+  await page.clock.install();
+  // held past the long-press time, so a timer the move failed to stop has fired by the time it returns
   assert.equal(await touchPress(page, icon, 30), true, 'a drag clicks as usual');
-  await page.waitForTimeout(200);
   assert.equal(await menu(page).count(), 0, 'a drag is not a long-press');
 
   assert.equal(await touchPress(page, icon, 0, 300), true, 'a tap clicks');
-  await page.waitForTimeout(400);
+  await page.clock.fastForward(1000);
   assert.equal(await menu(page).count(), 0, 'a tap is not a long-press');
 
   assert.equal(await touchPress(page, icon), false, 'the lifted finger does not open the link');
@@ -289,5 +304,49 @@ test('copying reports a failure visibly', async () => {
   await page.route(/\/index\.md$/, route => route.fulfill({ status: 404, body: '' }));
   await win(page, 'reader').locator('.toolbar').getByRole('button', { name: 'Copy as markdown' }).click();
   await page.locator('.ctx-note.on', { hasText: "Couldn't copy the markdown" }).waitFor();
+  await page.context().close();
+});
+
+test('a long press while drawing in Sketch draws rather than opening the menu', async t => {
+  if (!(await needs(t, '/sketch/'))) return;
+  const page = await open(phone, '/sketch/', undefined, { hasTouch: true, isMobile: true });
+  const over = win(page, 'sketch').locator('.sk-over');
+  await over.waitFor();
+  await menuReady(page);
+  await page.clock.install();
+  const b = await over.boundingBox();
+  const cdp = await page.context().newCDPSession(page);
+  const x = b.x + b.width / 2, y = b.y + b.height / 2;
+  await cdp.send('Input.dispatchTouchEvent', { type: 'touchStart', touchPoints: [{ x, y }] });
+  await page.clock.fastForward(1000);
+  assert.equal(await menu(page).count(), 0, 'no menu mid-stroke');
+  await cdp.send('Input.dispatchTouchEvent', { type: 'touchMove', touchPoints: [{ x: x + 40, y: y + 20 }] });
+  await cdp.send('Input.dispatchTouchEvent', { type: 'touchEnd', touchPoints: [] });
+  await win(page, 'sketch').getByRole('button', { name: 'Undo', exact: true }).and(page.locator(':enabled')).waitFor();
+  assert.equal(await menu(page).count(), 0);
+  assert.deepEqual(page.errors, []);
+  await page.context().close();
+});
+
+test('right-clicking selected terminal text keeps the browser menu, with its Copy', async t => {
+  if (!(await needs(t, '/terminal/'))) return;
+  const page = await open(desktop, '/terminal/');
+  const term = win(page, 'terminal');
+  await term.locator('.term-in').fill('pwd');
+  await term.locator('.term-in').press('Enter');
+  const line = term.locator('.term-out > *').last();
+  await line.waitFor();
+  await line.evaluate(el => getSelection().selectAllChildren(el));
+  const box = await line.boundingBox();
+  await nativeMenu(page);
+  await page.mouse.click(box.x + 4, box.y + box.height / 2, { button: 'right' });
+  assert.equal(await nativeMenu.shown(page), true, 'browser menu');
+  assert.equal(await menu(page).count(), 0);
+  // with nothing selected the terminal window gets the desktop's menu as before
+  await page.keyboard.press('Escape');
+  await page.evaluate(() => getSelection().removeAllRanges());
+  await page.mouse.click(box.x + 4, box.y + box.height / 2, { button: 'right' });
+  await menu(page).waitFor();
+  assert.deepEqual(page.errors, []);
   await page.context().close();
 });

@@ -2,14 +2,10 @@
 title: "Contact"
 window: mail
 icon: mail
-description: "Sam McLeod"
+description: "Send Sam McLeod a message."
 aliases: ["contact", "email"]
 author: "Sam McLeod"
 norss: true
-comments: false
-showDate: false
-subtitle: Sam McLeod
-readingTime: false
 toc:
   enable: false
   auto: false

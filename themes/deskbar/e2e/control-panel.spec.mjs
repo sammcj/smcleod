@@ -4,7 +4,7 @@
 // /appearance/ address. Skips without /control-panel/.
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { env, useBrowser, open, needs, shot, win, cards, path, desktop, phone } from './lib.mjs';
+import { env, useBrowser, open, needs, shot, win, cards, path, desktop, phone, css, seed } from './lib.mjs';
 
 useBrowser();
 
@@ -28,7 +28,7 @@ const setSize = (page, n) => cp(page).locator('#cp-size').evaluate((el, n) => {
   el.value = n;
   el.dispatchEvent(new Event('input', { bubbles: true }));
 }, n);
-const style = (page, sel, prop) => page.locator(sel).first().evaluate((el, p) => getComputedStyle(el)[p], prop);
+const style = (page, sel, prop) => css(page.locator(sel), prop);
 
 test('three panes: Appearance first, then Posts and System, each at its own address', async t => {
   if (!(await needs(t, app))) return;
@@ -183,7 +183,7 @@ test('each palette, decorator and wallpaper applies', async t => {
   }
   assert.equal(panels.size, Object.keys(tabs).length, 'each palette has its own panel');
 
-  const decos = { haiku: ['0', '4px', '0px'], beos: ['-1', '3px', '0px'], flat: ['0', '0px', '7px'], clear: ['0', '5px', '0px'], liquid: ['-3', '26px', '20px'] };
+  const decos = { haiku: ['0', '4px', '0px'], beos: ['-1', '3px', '0px'], flat: ['0', '0px', '7px'], clear: ['0', '5px', '0px'] };
   for (const [d, want] of Object.entries(decos)) {
     await pick(page, 'deco', d);
     const got = [await style(page, '.win.active .ctl.close', 'order'), await style(page, '.win.active .frame', 'paddingTop'),
@@ -192,7 +192,7 @@ test('each palette, decorator and wallpaper applies', async t => {
   }
 
   const walls = new Set();
-  for (const w of ['rings', 'plain', 'grid', 'dots', 'hills', 'liquid']) {
+  for (const w of ['rings', 'plain', 'grid', 'dots', 'hills', 'clear']) {
     await pick(page, 'wall', w);
     walls.add(await style(page, 'body', 'backgroundImage') + (await style(page, 'body', 'backgroundColor')));
   }
@@ -213,62 +213,27 @@ const dockLook = page => page.evaluate(async () => {
 });
 const shape = ({ bg, ...rest }) => rest;
 
-// Liquid Ass, the Apple Liquid Glass spoof: a window style whose preset brings its own wallpaper and dock
 const corners = (page, sel) => page.locator(sel).first().evaluate(el => {
   const s = getComputedStyle(el);
   return [s.borderTopLeftRadius, s.borderTopRightRadius, s.borderBottomRightRadius, s.borderBottomLeftRadius];
 });
-const box = async loc => (await loc.boundingBox()).x;
 
-test('Liquid Ass: traffic lights on the left, glass everywhere, no two corners alike, and back before first paint', async t => {
+// Liquid Ass is retired (RETIRED in settings.js). A visitor who still has it stored sees the site's starting look from
+// the first frame, with no change once the shell starts, and the stored values are forgotten.
+test('a stored Liquid Ass look shows as the starting look from the first frame, then is forgotten', async t => {
   if (!(await needs(t, app))) return;
-  const page = await open(desktop, app, () => localStorage.setItem('deskbar:dock', '"deskbar"'), { reducedMotion: 'no-preference' });
+  const looks = o => Object.fromEntries(Object.entries(o).filter(([k, v]) => ['deco', 'wall', 'dock'].includes(k) && v));
+  const page = await open(desktop, app, () => {
+    for (const k of ['deco', 'wall', 'dock']) localStorage.setItem('deskbar:' + k, '"liquid"');
+    requestAnimationFrame(() => { window.__first = { ...document.documentElement.dataset }; });
+  });
   await ready(page);
-  await pick(page, 'preset', 'liquid');
-  await page.waitForFunction(() => document.documentElement.dataset.dock === 'liquid');
-  assert.deepEqual(await attrs(page), { deco: 'liquid', wall: 'liquid', dock: 'liquid' }, 'the preset brings its wallpaper and dock');
-  assert.equal(await checked(page, 'wall'), 'liquid');
-  assert.equal(await checked(page, 'dock'), 'liquid');
-
-  // red, yellow and green, left of the title
-  const tab = cp(page).locator('.tab.on');
-  const [close, min, max, title] = await Promise.all(['.ctl.close', '.ctl.min', '.ctl.max', '.tt'].map(s => box(tab.locator(s))));
-  assert.ok(close < min && min < max && max < title, `${close} < ${min} < ${max} < ${title}`);
-  const lights = await Promise.all(['close', 'min', 'max'].map(c => style(page, `.win.active .ctl.${c}`, 'backgroundImage')));
-  for (const [l, rgb] of [[lights[0], 'rgb(255, 95, 87)'], [lights[1], 'rgb(254, 188, 46)'], [lights[2], 'rgb(40, 200, 64)']]) assert.ok(l.includes(rgb), l);
-
-  // glass: blurred and saturated behind the frame, panel and dock, and see-through
-  for (const sel of ['.win.active .frame', '#panel', '#dock']) {
-    const f = await style(page, sel, 'backdropFilter');
-    assert.match(f, /blur\(\d+px\) saturate\(/, sel);
-  }
-  assert.match(await style(page, '.win.active .frame', 'backgroundColor'), /^rgba\(.*, 0\.\d+\)$/, 'translucent frame');
-  // over-rounded, every corner different, and not the same between elements
-  const frame = await corners(page, '.win.active .frame'), views = await corners(page, '.win.active .views'), dock = await corners(page, '#dock');
-  for (const [name, c] of [['frame', frame], ['views', views], ['dock', dock]]) {
-    assert.equal(new Set(c).size, 4, `${name}: ${c}`);
-    assert.ok(c.every(r => parseFloat(r) >= 10), `${name} is round: ${c}`);
-  }
-  assert.notDeepEqual(frame, views);
-  assert.notDeepEqual(frame, dock);
-  // shadows, lots of them
-  assert.ok((await style(page, '.win.active .frame', 'boxShadow')).match(/rgba?\(/g).length >= 8, 'excessive');
-  // a wobble on hover, where motion is allowed
-  const btn = cp(page).getByRole('button', { name: 'Reset to defaults' });
-  await btn.hover();
-  assert.equal(await btn.evaluate(el => getComputedStyle(el).animationName), 'lq-jelly');
-  await shot(page, 'liquid-ass');
-
-  // back on reload before first paint, as the other looks are
-  await page.context().addInitScript(() => requestAnimationFrame(() => {
-    const f = document.querySelector('.win .frame');
-    window.__first = { deco: document.documentElement.dataset.deco, filter: f && getComputedStyle(f).backdropFilter };
-  }));
-  await page.reload();
-  await page.waitForSelector('html.wm-ready');
-  const first = await (await page.waitForFunction(() => window.__first)).jsonValue();
-  assert.equal(first.deco, 'liquid');
-  if (first.filter) assert.match(first.filter, /blur/);
+  const first = looks(await page.evaluate(() => window.__first));
+  assert.ok(!Object.values(first).includes('liquid'), JSON.stringify(first));
+  assert.deepEqual(first, looks(await attrs(page)), 'the first frame already shows the settled look');
+  const kept = await stored(page);
+  assert.deepEqual(['deco', 'wall', 'dock'].filter(k => k in kept), [], 'forgotten');
+  for (const k of ['deco', 'wall', 'dock']) assert.ok(await checked(page, k), `${k}: an offered choice is selected`);
   assert.deepEqual(page.errors, []);
   await page.context().close();
 });
@@ -277,7 +242,7 @@ const settled = (page, want) => page.waitForFunction(w => Object.entries(w).ever
 
 test('a theme sets every choice but the mode; each choice then changes on its own, and the theme shown follows', async t => {
   if (!(await needs(t, app))) return;
-  const page = await open(desktop, app, () => localStorage.setItem('deskbar:theme', '"dark"'));
+  const page = await open(desktop, app, seed({ theme: 'dark' }));
   await ready(page);
   assert.equal(await checked(page, 'preset'), 'classic', 'the defaults are Deskbar Classic');
   assert.equal(await cp(page).locator('.cp-presets legend').textContent(), 'Themes');
@@ -366,7 +331,7 @@ test("a whole look's preset loads its stylesheet, sets its own colours and is ba
   await page.context().close();
 });
 
-// Clear: the same glass without the joke, with a title bar joined to the frame and its controls in one capsule
+// Clear: frosted glass, with a title bar joined to the frame and its controls in one capsule
 test('Clear: a glass title bar across the window, its controls together on the right, and a wallpaper of its own', async t => {
   if (!(await needs(t, app))) return;
   const page = await open(desktop, app, () => {
@@ -392,14 +357,11 @@ test('Clear: a glass title bar across the window, its controls together on the r
   assert.ok(Math.abs(min.x + min.width - max.x) <= 1 && Math.abs(max.x + max.width - close.x) <= 1, 'one capsule');
   assert.ok(close.x + close.width <= tb.x + tb.width && close.x + close.width >= tb.x + tb.width - 6, 'at the right end');
 
-  // glass with even corners, one soft shadow and no wobble
+  // glass with even corners and one soft shadow
   assert.match(await style(page, '.win.active .frame', 'backdropFilter'), /blur\(\d+px\) saturate\(/);
   const fc = await corners(page, '.win.active .frame');
   assert.deepEqual(fc.slice(2), ['12px', '12px'], `even lower corners: ${fc}`);
   assert.ok((await style(page, '.win.active .frame', 'boxShadow')).match(/rgba?\(/g).length <= 3, 'restrained');
-  const btn = cp(page).getByRole('button', { name: 'Reset to defaults' });
-  await btn.hover();
-  assert.equal(await btn.evaluate(el => getComputedStyle(el).animationName), 'none');
   await shot(page, 'clear');
 
   // its outer edge is fainter than the rest of its glass
@@ -407,17 +369,6 @@ test('Clear: a glass title bar across the window, its controls together on the r
   await page.waitForFunction(() => !document.querySelector('.win.active .frame').getAnimations().length);
   const edge = await style(page, '.win.active .frame', 'borderLeftColor');
   assert.ok(+edge.match(/[\d.]+(?=\)$)/)[0] < 0.5, `a faint rim: ${edge}`);
-  assert.deepEqual(page.errors, []);
-  await page.context().close();
-});
-
-test('Liquid Ass with reduced motion: no wobble', async t => {
-  if (!(await needs(t, app))) return;
-  const page = await open(desktop, app, () => localStorage.setItem('deskbar:deco', '"liquid"'));
-  await ready(page);
-  const btn = cp(page).getByRole('button', { name: 'Reset to defaults' });
-  await btn.hover();
-  assert.equal(await btn.evaluate(el => getComputedStyle(el).animationName), 'none');
   assert.deepEqual(page.errors, []);
   await page.context().close();
 });
@@ -470,7 +421,7 @@ test('a visitor with the retired Minimal dock stored gets the default dock', asy
   const want = await dockLook(glass);
   await glass.context().close();
 
-  const page = await open(desktop, app, () => localStorage.setItem('deskbar:dock', '"minimal"'));
+  const page = await open(desktop, app, seed({ dock: 'minimal' }));
   await ready(page);
   assert.deepEqual(await dockLook(page), want, 'the glass dock');
   assert.equal(await checked(page, 'dock'), 'glass');
@@ -482,11 +433,7 @@ test('a visitor with the retired Minimal dock stored gets the default dock', asy
 
 test('a visitor from before whole looks came apart keeps Phosphor\'s dock and tube', async t => {
   if (!(await needs(t, app))) return;
-  const page = await open(desktop, app, () => {
-    localStorage.setItem('deskbar:deco', '"phosphor"');
-    localStorage.setItem('deskbar:wall', '"phosphor"');
-    localStorage.setItem('deskbar:lookWas', '{}');
-  });
+  const page = await open(desktop, app, seed({ deco: 'phosphor', wall: 'phosphor', lookWas: {} }));
   await ready(page);
   assert.deepEqual(await attrs(page), { deco: 'phosphor', wall: 'phosphor', dock: 'phosphor', crt: 'tube' });
   assert.equal(await checked(page, 'preset'), 'phosphor', 'the Phosphor theme, whole');
@@ -541,7 +488,7 @@ test("the Posts pane and the reader's toolbar share width, text size and font, l
 
 test('Reset to defaults resets the pane on screen only', async t => {
   if (!(await needs(t, app))) return;
-  const page = await open(desktop, app, () => localStorage.setItem('deskbar:saver', '10'));
+  const page = await open(desktop, app, seed({ saver: 10 }));
   await ready(page);
   for (const [k, v] of Object.entries({ palette: 'sage', theme: 'dark', deco: 'flat', wall: 'hills', dock: 'panel' })) await pick(page, k, v);
   await navTo(page, 'posts');
@@ -574,14 +521,14 @@ test('Reset to defaults resets the pane on screen only', async t => {
 
 test('System: the screen saver delay applies at once, and Test screen saver starts it now', async t => {
   if (!(await needs(t, app))) return;
-  const page = await open(desktop, app + '?pane=system', () => localStorage.setItem('deskbar:saver', '0.05'));
+  const page = await open(desktop, app + '?pane=system', seed({ saver: 1 }));
   await ready(page);
+  // the idle watcher's timers from here on are fake (see screensaver.spec.mjs)
+  await page.clock.install();
   const saver = page.locator('.saver');
   assert.deepEqual(await cp(page).locator('input[name="cp-saver"]').evaluateAll(rs => rs.map(r => r.value)), ['0', '1', '5', '10', '30']);
   await pick(page, 'saver', '0');
   assert.equal(await page.evaluate(() => localStorage.getItem('deskbar:saver')), '0');
-  await page.waitForTimeout(4500);
-  assert.equal(await saver.count(), 0, 'off takes effect without a reload');
 
   // Test starts it even with the saver off, and it goes as usual
   const btn = cp(page).getByRole('button', { name: 'Test screen saver' });
@@ -593,6 +540,13 @@ test('System: the screen saver delay applies at once, and Test screen saver star
   await page.mouse.move(box.x + 200, box.y + 200, { steps: 4 });
   await saver.waitFor({ state: 'detached' });
   assert.equal(await pane(page), 'cp-system');
+
+  // off takes effect without a reload, even for the timer armed by the press that turned it off. The saver's
+  // bundle is loaded by now, so a saver would be up as soon as the time passed.
+  await pick(page, 'saver', '1');
+  await pick(page, 'saver', '0');
+  await page.clock.fastForward(61_000);
+  assert.equal(await saver.count(), 0, 'off takes effect without a reload');
 
   await pick(page, 'saver', '10');
   assert.equal(await page.evaluate(() => localStorage.getItem('deskbar:saver')), '10');
@@ -660,6 +614,73 @@ test('on a phone the panes stack, fill the screen and have touch-sized controls'
   await navTo(page, 'appearance');
   await pick(page, 'deco', 'flat');
   assert.equal(await style(page, '.win.active .frame', 'borderTopRightRadius'), '0px');
+  assert.deepEqual(page.errors, []);
+  await page.context().close();
+});
+
+// ---- The same look whether chosen this visit (stylesheet appended) or restored on reload (in the head)
+
+const PROPS = ['color', 'backgroundColor', 'backgroundImage', 'boxShadow', 'borderRadius', 'padding', 'width', 'height', 'order'];
+// hover styles may transition, so they are read once the element's finite animations have run
+const transitioned = loc => loc.evaluate(el => Promise.all(el.getAnimations({ subtree: true })
+  .filter(a => a.effect?.getComputedTiming().endTime !== Infinity).map(a => a.finished)));
+
+async function chrome(page, sketch) {
+  const reader = win(page, 'reader');
+  await reader.locator('.tab.on .tt').click();
+  await page.mouse.move(2, 400);
+  const out = {};
+  const grab = async (name, loc) => { if (await loc.count()) out[name] = await css(loc, PROPS); };
+  const hovered = async (name, loc) => {
+    await loc.first().hover();
+    await transitioned(loc.first());
+    await grab(name, loc);
+    await page.mouse.move(2, 400);
+    await transitioned(loc.first());
+  };
+  await grab('close', reader.locator('.tab.on .ctl.close'));
+  await grab('frame', reader.locator('.frame'));
+  await grab('tb', reader.locator('.toolbar .tb').first());
+  await grab('tab', reader.locator('.tab.on'));
+  await grab('inactive ctl', win(page, 'tracker').locator('.tab.on .ctl.close'));
+  await grab('seg on', win(page, 'tracker').locator('.seg.on'));
+  await grab('seg', win(page, 'tracker').locator('.seg:not(.on)'));
+  if (sketch) await grab('sketch tool', win(page, 'sketch').locator('.seg[aria-pressed=true]'));
+  await hovered('close hover', reader.locator('.tab.on .ctl.close'));
+  await hovered('min hover', reader.locator('.tab.on .ctl.min'));
+  await page.click('#winsBtn');
+  await page.locator('#switcher .sw-tab').first().waitFor();
+  await grab('switcher ctl', page.locator('#switcher .sw-tab:not(.on) .ctl'));
+  await page.keyboard.press('Escape');
+  return out;
+}
+
+test('Control panel looks are the same chosen in this visit and after a reload', async t => {
+  if (!(await needs(t, app))) return;
+  const sketch = (await fetch(env.base + '/sketch/')).ok;
+  const { posts } = await (await fetch(env.base + '/deskbar.json')).json();
+  const page = await open(desktop, posts[0].url);
+  await win(page, 'reader').locator('.rd h1').waitFor();
+  // a lazy app's stylesheet already in, so control-panel.css lands after it in this visit and before it on reload
+  if (sketch) { await go(page, '/sketch/'); await win(page, 'sketch').locator('.sk-over').waitFor(); }
+  await go(page, app);
+  await ready(page);
+  for (const combo of [{ palette: 'sage', deco: 'flat' }, { palette: 'beos', deco: 'beos' }]) {
+    await go(page, app);
+    for (const [k, v] of Object.entries(combo)) await pick(page, k, v);
+    const now = await chrome(page, sketch);
+    // a fresh load of the post, so the Control panel (and its own copy of the stylesheet) stays closed
+    await page.goto(env.base + posts[0].url);
+    await page.waitForSelector('html.wm-ready');
+    await win(page, 'reader').locator('.rd h1').waitFor();
+    if (sketch) { await go(page, '/sketch/'); await win(page, 'sketch').locator('.sk-over').waitFor(); }
+    const after = await chrome(page, sketch);
+    assert.deepEqual(after, now, `${JSON.stringify(combo)}: reload matches the visit`);
+    if (combo.deco === 'flat') {
+      assert.notEqual(now['seg on'].backgroundColor, now.seg.backgroundColor, 'Flat keeps the pressed view button');
+      assert.equal(now['close hover'].color, 'rgb(255, 255, 255)', 'white cross on the red close box');
+    }
+  }
   assert.deepEqual(page.errors, []);
   await page.context().close();
 });

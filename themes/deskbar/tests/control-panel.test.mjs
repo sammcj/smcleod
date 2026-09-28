@@ -3,9 +3,9 @@
 import { test, beforeEach } from 'node:test';
 import assert from 'node:assert/strict';
 import { existsSync, readFileSync, readdirSync } from 'node:fs';
-import { get, set, on, DEFAULT, initSettings } from '../assets/js/deskbar/settings.js';
+import { get, set, onSetting, DEFAULT, RETIRED, initSettings } from '../assets/js/deskbar/settings.js';
 import { PANES, paneOf, paneUrl, presetOf, paletteFor } from '../assets/js/deskbar/lazy/control-panel.js';
-import { PRESETS, KEYS, LOOKS, PALETTES, coloursFor, ownsColours, lookSheet } from '../assets/js/deskbar/lib/appearance.js';
+import { PRESETS, KEYS, LOOKS, PALETTES, DECOS, WALLS, DOCKS, coloursFor, ownsColours, lookSheet } from '../assets/js/deskbar/lib/appearance.js';
 import { SAVERS } from '../assets/js/deskbar/lazy/screensaver.js';
 
 const read = p => readFileSync(new URL(p, import.meta.url), 'utf8');
@@ -44,34 +44,28 @@ test('nothing stored reads as the defaults, and bad stored values fall back to t
   assert.equal(get('textSize'), 18);
 });
 
-test('the retired Minimal dock reads as the default, and start-up clears it', () => {
-  mem.set('deskbar:dock', '"minimal"');
-  assert.equal(get('dock'), 'glass');
-  // head.html has already shown it as data-dock before the shell starts
-  root.dataset.dock = 'minimal';
-  const heard = [];
-  const off = on((k, v) => heard.push(`${k}=${v}`));
-  initSettings();
-  off();
-  assert.deepEqual(root.dataset, {}, 'no attribute, so the core glass dock shows');
-  assert.equal(mem.size, 0, 'nothing left stored');
-  assert.deepEqual(heard, ['dock=glass']);
+test('retired choices (the Minimal dock, Woodblock, Liquid Ass) read as the defaults, and start-up forgets them', () => {
+  for (const k of ['deco', 'wall', 'dock']) assert.ok(RETIRED[k].includes('liquid'), k);
+  const offered = { deco: DECOS, wall: WALLS, dock: DOCKS };
+  for (const [k, values] of Object.entries(RETIRED)) for (const v of values) {
+    assert.ok(!offered[k].some(o => o[0] === v), `${k}=${v} is no longer offered`);
+    mem.clear();
+    root.dataset = {};
+    mem.set('deskbar:' + k, JSON.stringify(v));
+    assert.equal(get(k), DEFAULT[k], `${k}=${v}`);
+    const heard = [];
+    const off = onSetting((key, val) => heard.push(`${key}=${val}`));
+    initSettings();
+    off();
+    assert.deepEqual(root.dataset, {}, `${k}=${v}: no attribute, so the core look shows`);
+    assert.equal(mem.size, 0, `${k}=${v}: nothing left stored`);
+    assert.deepEqual(heard, [`${k}=${DEFAULT[k]}`]);
+  }
   // a stored choice that is still offered is left alone
   set('dock', 'panel');
   initSettings();
   assert.equal(root.dataset.dock, 'panel');
-});
-
-test('the retired Woodblock look reads as the defaults, and start-up clears it', () => {
-  mem.set('deskbar:deco', '"woodblock"');
-  mem.set('deskbar:wall', '"woodblock"');
-  assert.equal(get('deco'), 'haiku');
-  assert.equal(get('wall'), 'rings');
-  Object.assign(root.dataset, { deco: 'woodblock', wall: 'woodblock' });
-  initSettings();
-  assert.equal(root.dataset.deco, undefined);
-  assert.equal(root.dataset.wall, undefined);
-  assert.equal(mem.size, 0, 'nothing left stored');
+  assert.equal(get('dock'), 'panel');
 });
 
 test('a choice is stored and shown on <html>; the default removes both', () => {
@@ -97,7 +91,7 @@ test('a choice is stored and shown on <html>; the default removes both', () => {
 
 test('listeners hear every change until they stop listening', () => {
   const heard = [];
-  const off = on((k, v) => heard.push(`${k}=${v}`));
+  const off = onSetting((k, v) => heard.push(`${k}=${v}`));
   set('theme', 'dark');
   set('textSize', 40);
   off();
@@ -172,31 +166,48 @@ test("before first paint, a whole look's stylesheet follows the Control panel's,
   assert.deepEqual(prePaint({ wall: 'demo' }).written, [link('/a.css'), link('/demo.css')], 'its wallpaper under another style');
   assert.deepEqual(prePaint({ dock: 'demo' }).written, [link('/a.css'), link('/demo.css')], 'its dock under another style');
   assert.deepEqual(prePaint({ deco: 'haiku', dock: 'demo-bar', wall: 'demo-sky' }).written, [link('/a.css'), link('/demo.css')], "variants are in their family's stylesheet, linked once");
-  assert.deepEqual(prePaint({ deco: 'liquid', wall: 'liquid' }).written, [link('/a.css')], 'Liquid Ass has no stylesheet of its own');
+  assert.deepEqual(prePaint({ deco: 'clear', wall: 'clear' }).written, [link('/a.css')], 'Clear has no stylesheet of its own');
   assert.deepEqual(prePaint({ palette: 'demo', deco: 'demo' }).written, [link('/pal.css'), link('/a.css'), link('/demo.css')]);
   const crt = prePaint({ crt: 'tube', deco: 'demo' });
   assert.deepEqual(crt.dataset, { crt: 'tube', deco: 'demo' });
   assert.deepEqual(crt.written, [link('/a.css'), link('/demo.css'), link('/crt.css')], 'a CRT effect comes last');
 });
 
-test('Liquid Ass: a window style with a wallpaper of its own, shown before first paint, with fallbacks', () => {
+test('Clear: a glass window style with a wallpaper of its own, shown before first paint, with fallbacks', () => {
   const opts = key => PANES[0].groups.find(g => g[0] === key)[2];
-  assert.deepEqual(opts('deco').find(o => o[0] === 'liquid')?.[1], 'Liquid Ass');
-  assert.equal(opts('deco').find(o => o[0] === 'clear')?.[1], 'Clear', 'Liquid Ass without the joke');
-  assert.ok(opts('wall').some(o => o[0] === 'liquid'));
-  const one = prePaint({ deco: 'liquid', wall: 'liquid' });
-  assert.deepEqual(one.dataset, { deco: 'liquid', wall: 'liquid' });
+  assert.equal(opts('deco').find(o => o[0] === 'clear')?.[1], 'Clear');
+  assert.ok(opts('wall').some(o => o[0] === 'clear'));
+  const one = prePaint({ deco: 'clear', wall: 'clear' });
+  assert.deepEqual(one.dataset, { deco: 'clear', wall: 'clear' });
   assert.deepEqual(one.written, ['<link rel=stylesheet href="/a.css">']);
 
   const css = read('../assets/css/deskbar/lazy/control-panel.css');
   // Safari still wants the prefix, and without either the glass turns nearly opaque rather than see-through
   assert.ok(css.match(/(?<!-)backdrop-filter:\s*var\(--lq-blur/g)?.length >= 2, 'glass frames, panel, menus and tabs');
   assert.equal(css.match(/(?<!-)backdrop-filter:/g).length, css.match(/-webkit-backdrop-filter:/g).length, 'each one prefixed too');
-  assert.match(css, /@supports not \(\(backdrop-filter: blur\(1px\)\) or \(-webkit-backdrop-filter: blur\(1px\)\)\) \{\s*:root:is\(\[data-deco=liquid\], \[data-deco=clear\]\)/);
-  // the jelly wobble is only for those who allow motion
-  const motion = css.indexOf('@media (prefers-reduced-motion: no-preference)');
-  assert.ok(motion > 0 && css.indexOf('animation: lq-jelly') > motion, 'inside the no-preference query');
-  assert.equal(css.split('animation: lq-jelly').length, 2, 'and nowhere else');
+  assert.match(css, /@supports not \(\(backdrop-filter: blur\(1px\)\) or \(-webkit-backdrop-filter: blur\(1px\)\)\) \{\s*:root\[data-deco=clear\]/);
+  assert.ok(!/liquid|lq-jelly/i.test(css), 'no Liquid Ass styles left behind');
+});
+
+test("before first paint, a retired choice shows as the site's starting one, and a lookWas visitor on Liquid Ass gets no dock", () => {
+  const link = h => `<link rel=stylesheet href="${h}">`;
+  const site = { deco: 'demo', palette: 'demo', dock: 'demo' };
+  const liquid = prePaint({ deco: 'liquid', wall: 'liquid', dock: 'liquid', palette: 'mint' }, site);
+  assert.deepEqual(liquid.dataset, { deco: 'demo', palette: 'mint', dock: 'demo' }, 'the site look, and the palette they chose');
+  assert.deepEqual(liquid.written, [link('/a.css'), link('/demo.css')], "the site look's stylesheet loads before first paint");
+  assert.deepEqual(prePaint({ deco: 'liquid', wall: 'liquid', dock: 'liquid' }).dataset, {}, 'without a site look, the core one');
+  const old = prePaint({ deco: 'liquid', wall: 'liquid', lookWas: {} });
+  assert.deepEqual(old.dataset, {});
+  assert.deepEqual(old.stored, { deco: 'liquid', wall: 'liquid' }, 'no dock stored; settings.js forgets the rest');
+
+  // the script skips exactly settings.js's retired values, and its whole-look list is LOOKS
+  const head = read('../layouts/_partials/deskbar/head.html');
+  const list = re => head.match(re)[1].split('|').sort();
+  assert.deepEqual(list(/\/\^\(([a-z|]+)\)\$\/\.test\(r\)/), [...new Set(Object.values(RETIRED).flat())].sort());
+  assert.deepEqual(list(/\/\^\(([a-z|]+)\)\$\/\.test\(o\)/), Object.keys(LOOKS).sort());
+  for (const [k, values] of Object.entries(RETIRED)) for (const v of values) {
+    assert.equal(prePaint({ [k]: v }, { [k]: 'demo' }).dataset[k], 'demo', `${k}=${v}`);
+  }
 });
 
 test('three panes, Appearance first, each with its own address', () => {
@@ -282,7 +293,7 @@ test('a window style change keeps the palette when it can, and otherwise picks o
   const sheets = readdirSync(new URL('../assets/css/deskbar/looks/', import.meta.url)).filter(f => f.endsWith('.css'));
   assert.deepEqual(sheets.map(f => f.slice(0, -4)).sort(), Object.keys(LOOKS).sort());
   assert.equal(lookSheet('pixel-pico'), 'look-pixel');
-  assert.equal(lookSheet('liquid'), null, 'Liquid Ass is in the Control panel stylesheet');
+  assert.equal(lookSheet('clear'), null, 'Clear is in the Control panel stylesheet');
   // every look's colour variant is in its own stylesheet, and none is also a palette
   for (const [name, l] of Object.entries(LOOKS)) for (const [v] of l.colours || []) {
     assert.ok(v === name || v.startsWith(name + '-'), v);

@@ -1,43 +1,24 @@
 ---
 title: "Energy, Sustainability and Deployment Frequency"
-subtitle: ""
 date: 2022-12-31T12:03:41+11:00
 lastmod: 2022-12-31T12:03:41+11:00
 author: Sam McLeod
-description: ""
+description: "How frequent deployments give teams regular wins, and why that matters for their energy and sustainability."
 keywords: [ "Delivery", "deployment", "frequency", "energy", "wins", "DevOps", "Agile", "Leadership", "management" ]
 
 tags: [ "Delivery", "health", "wins", "DevOps", "Agile", "Leadership", "management" ]
 categories: [ "DevOps", "Leadership", "Health" ]
 series: []
 
-image: "wins.jpg"
-
-featuredimage: "wins.jpg"
 cover:
   image: "wins.jpg"
-
-
-hiddenFromHomePage: false
-hiddenFromSearch: false
 
 toc:
   enable: true
   auto: false
-asciinema: false
 math: false
-lightgallery: false
-readingTime: true
-showFullContent: false
 draft: false
 type: posts
-
-code:
-  maxShownLines: 20
-  copy: true
-
-comment:
-  enable: false
 ---
 
 <!-- markdownlint-disable MD025 -->

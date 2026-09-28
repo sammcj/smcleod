@@ -1,6 +1,5 @@
 ---
 author: "Sam McLeod"
-readingTime: true
 categories: [ Tech, Talks ]
 date: "2015-05-14T00:00:00Z"
 aliases:

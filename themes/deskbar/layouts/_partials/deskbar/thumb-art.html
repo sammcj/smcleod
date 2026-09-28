@@ -7,58 +7,25 @@
        never hides behind a stale cache. */ -}}
 {{- $p := .page -}}
 {{- $mini := eq .variant "mini" -}}
+{{- $lib := hugo.Data.deskbar.emblems -}}
+{{- $grounds := $lib.grounds -}}
 {{- $seed := index (partialCached "deskbar/thumb-seeds.html" site) $p.Path -}}
 {{- if not $seed -}}
-  {{- $seed = dict "ground" (mod (int (hash.FNV32a $p.Path)) 8) -}}
+  {{- $seed = dict "ground" (mod (int (hash.FNV32a $p.Path)) (len $grounds)) -}}
 {{- end -}}
 
-{{- /* muted grounds, top and bottom; the count must match thumb-seeds.html */ -}}
-{{- $grounds := slice
-  (slice "#6a8199" "#3a4c60") (slice "#8d8170" "#544a3c") (slice "#6c8175" "#38483f") (slice "#76708a" "#433d54")
-  (slice "#5f8586" "#324a4d") (slice "#737b83" "#3b4148") (slice "#946f60" "#573d33") (slice "#838063" "#4b4935")
--}}
-
-{{- /* Emblem by topic: the first rule with a keyword among the post's tags and categories wins, so list the most
-       specific first. params.deskbar.thumbRules replaces the defaults below with a list of
-       { emblem: name, keywords: [lowercase tags or categories] }; names are the keys of data/deskbar/emblems.yaml. */ -}}
+{{- /* Emblem by topic: the first of params.deskbar.thumbRules (defaults in the theme's hugo.toml) with a keyword among
+       the post's tags and categories. */ -}}
 {{- $terms := slice -}}
 {{- range slice "tags" "categories" -}}
   {{- with index $p.Params . -}}
     {{- if reflect.IsSlice . }}{{ range . }}{{ $terms = $terms | append (lower (string .)) }}{{ end }}{{ else }}{{ $terms = $terms | append (lower (string .)) }}{{ end -}}
   {{- end -}}
 {{- end -}}
-{{- $rules := site.Params.deskbar.thumbRules | default (slice
-  (dict "emblem" "car" "keywords" (slice "cars" "car" "automotive"))
-  (dict "emblem" "record" "keywords" (slice "music" "audio"))
-  (dict "emblem" "camera" "keywords" (slice "photos" "photography"))
-  (dict "emblem" "house" "keywords" (slice "home automation" "smart home" "iot"))
-  (dict "emblem" "padlock" "keywords" (slice "security" "privacy"))
-  (dict "emblem" "gpu" "keywords" (slice "gpu"))
-  (dict "emblem" "neural" "keywords" (slice "ai" "llm" "ml" "machine learning" "machine-learning"))
-  (dict "emblem" "container" "keywords" (slice "containers" "docker" "kubernetes" "k8s" "virtualisation" "virtualization"))
-  (dict "emblem" "disk" "keywords" (slice "storage" "nas" "ssd"))
-  (dict "emblem" "globe" "keywords" (slice "networking" "network" "dns" "web"))
-  (dict "emblem" "laptop" "keywords" (slice "apple" "mac" "macos"))
-  (dict "emblem" "branch" "keywords" (slice "git"))
-  (dict "emblem" "terminal" "keywords" (slice "shell" "bash" "zsh" "cli"))
-  (dict "emblem" "code" "keywords" (slice "programming" "code" "coding" "javascript" "css"))
-  (dict "emblem" "server" "keywords" (slice "linux" "servers" "sysadmin"))
-  (dict "emblem" "chip" "keywords" (slice "hardware" "electronics" "cpu"))
-  (dict "emblem" "screen" "keywords" (slice "talks" "talk" "slides" "presentation"))
-  (dict "emblem" "board" "keywords" (slice "agile" "kanban" "devops"))
-  (dict "emblem" "chart" "keywords" (slice "data" "analytics" "performance"))
-  (dict "emblem" "palette" "keywords" (slice "art" "design"))
-  (dict "emblem" "chat" "keywords" (slice "culture" "communication" "community"))
-  (dict "emblem" "briefcase" "keywords" (slice "career" "work"))
-  (dict "emblem" "window" "keywords" (slice "software" "apps"))
-) -}}
 {{- $emblem := "doc" -}}
-{{- range $rules -}}
+{{- range site.Params.deskbar.thumbRules -}}
   {{- if and (eq $emblem "doc") (intersect .keywords $terms) }}{{ $emblem = .emblem }}{{ end -}}
 {{- end -}}
-{{- /* hugo.Data replaced site.Data in 0.156; branch so older Hugo still builds */ -}}
-{{- $lib := dict -}}
-{{- if ge hugo.Version "0.156.0" }}{{ $lib = hugo.Data.deskbar.emblems }}{{ else }}{{ $lib = site.Data.deskbar.emblems }}{{ end -}}
 {{- $e := index $lib $emblem | default $lib.doc -}}
 
 {{- /* Outline widths per variant (see emblems.yaml): the mini icon, drawn at 20-32px, gets heavier outlines and no detail */ -}}

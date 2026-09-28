@@ -1,7 +1,7 @@
 // Context menu, sharing and Copy as markdown. context-menu-trigger.js decides when the shell's menu replaces the
 // browser's and calls openMenu; the reader toolbar calls shareView and copyMarkdown.
 // Window items press the window's own tab controls, so they behave exactly as a click on them does (wm/drag.js).
-import { h, SHARE, MARKDOWN, copyText } from '../lib/dom.js';
+import { h, stroke, SHARE, MARKDOWN, copyText } from '../lib/dom.js';
 
 const abs = u => new URL(u, location.href).href;
 
@@ -25,7 +25,7 @@ function glyph(name) {
   const s = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
   s.setAttribute('viewBox', '0 0 16 16');
   s.setAttribute('aria-hidden', 'true');
-  s.innerHTML = `<path d="${GLYPHS[name]}" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>`;
+  s.innerHTML = stroke(GLYPHS[name], 1.5);
   return s;
 }
 
@@ -97,6 +97,33 @@ function linkItems(a) {
   ]];
 }
 
+// Feeds (lazy/feeds.js): a feed, or an item's feed, opens in a tab of its own in the Feeds window. An item's article
+// is on another site, so it opens in a browser tab, as the preview's Open article button does. Phones show one
+// window at a time (D17).
+function feedItems(b) {
+  const href = b.dataset.href, link = b.dataset.link;
+  const tab = label => !window.deskbar.isPhone() && { label, icon: 'tab', run: () => window.deskbar.go(href) };
+  if (!link) {
+    const name = b.querySelector('span').textContent.trim();
+    return [name, [
+      { label: 'Open', icon: 'open', run: () => b.click() },
+      tab('Open in new tab'),
+      '-',
+      { label: 'Copy link', icon: 'link', run: () => copyLink(href) },
+      { label: 'Share…', icon: 'share', run: () => share(name, href) },
+    ]];
+  }
+  const title = b.querySelector('.fd-t')?.textContent.trim() || link;
+  return [title, [
+    { label: 'Open', icon: 'open', run: () => b.click() },
+    { label: 'Open article', icon: 'open', run: () => open(link, '_blank', 'noopener') },
+    tab('Open feed in new tab'),
+    '-',
+    { label: 'Copy link', icon: 'link', run: () => copyLink(link) },
+    { label: 'Share…', icon: 'share', run: () => share(title, link) },
+  ]];
+}
+
 function windowItems(tab) {
   const v = tab._view, w = v.win, url = v.route();
   // min and max sit on the active tab, or on a stack's handle; either way the tab is shown first
@@ -130,8 +157,9 @@ function desktopItems() {
 }
 
 export function itemsFor(t) {
-  const a = t.closest('a[href]'), win = t.closest('.win');
+  const a = t.closest('a[href]'), win = t.closest('.win'), feed = t.closest(':is(.fd-feed, .fd-row)[data-href]');
   if (a) return linkItems(a);
+  if (feed) return feedItems(feed);
   if (win) return windowItems(t.closest('.tab') || win.querySelector('.tab.on'));
   return desktopItems();
 }

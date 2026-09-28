@@ -1,7 +1,7 @@
 // Top panel: task buttons for every window, the window switcher (D30; it also copies a layout link), dock running
 // dots and the clock
 import { S, on } from './state.js';
-import { h, ico, $, copyText, plainClick, LINK } from '../lib/dom.js';
+import { h, ico, $, copyText, plainClick, stroke, LINK } from '../lib/dom.js';
 import { focus, focusView, minimise, closeWin, activeView, transition, morph } from './windows.js';
 import { encodeLayout, layoutHref } from './layout.js';
 import { currentPath } from '../router.js';
@@ -101,7 +101,7 @@ function drawSwitcher(roll) {
   const link = S.wins.length && navigator.clipboard && h('button', {
     class: 'sw-link', type: 'button', title: 'Copy a link that reopens these windows', style: `--i:${Math.min(tabs.length, 11)}`, onclick: copyLayout,
   });
-  if (link) link.innerHTML = `<svg viewBox="0 0 16 16" aria-hidden="true"><path d="${LINK}" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg><span aria-live="polite">Copy layout link</span>`;
+  if (link) link.innerHTML = `<svg viewBox="0 0 16 16" aria-hidden="true">${stroke(LINK, 1.6)}</svg><span aria-live="polite">Copy layout link</span>`;
   switcher.classList.toggle('roll', !!roll);
   switcher.replaceChildren(...(tabs.length ? tabs : [h('p', { class: 'sw-empty' }, 'No open windows')]), link || '');
   place();

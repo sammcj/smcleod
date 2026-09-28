@@ -9,8 +9,9 @@
 //                                              // a page's windowWidth/windowHeight front matter overrides it
 //   size: 'large',                             // optional, instead of geometry: an application's default size
 //   tile: true,                                // optional; its new windows tile beside the others of the app
+//   stack: true,                               // optional; a new view is a tab in the app's window, not a window
 //   create: (key, page) => view,               // optional; default view is <div class="view app app-<kind>">
-//   mount: (view, page, { hash, from, fresh }) => {}, // show page in view.el; fresh: the window is new
+//   mount: (view, page, { hash, from, fresh }) => {}, // show page in view.el; fresh: the view is new
 // })
 //
 // view.page, view.url and view.title follow the latest page before mount runs. To show the page's own
@@ -20,7 +21,8 @@
 // D12 anchors work the same in every window: a deep link's #hash, and an in-page link to a heading, scroll the
 // view showing that page to the element with that id. A view can set scrollTo(id) to do this its own way.
 import { h } from '../lib/dom.js';
-import { createWindow, findView, focusView, renderTabs, deskRect, tabH, allViews, activeView, iconsRight, clearOfIcons, retile, postsHome } from '../wm/windows.js';
+import { safeDecode } from '../lib/format.js';
+import { createWindow, addView, findView, focusView, renderTabs, deskRect, tabH, allViews, activeView, iconsRight, clearOfIcons, retile, postsHome, isPhone } from '../wm/windows.js';
 import { S } from '../wm/state.js';
 import { snapRect, GAP } from '../wm/snap.js';
 import * as router from '../router.js';
@@ -38,7 +40,7 @@ router.register('hash', r => {
   const v = [S.focused && activeView(S.focused)].find(shows) || allViews().find(shows);
   if (!v) return;
   focusView(v);
-  scrollToAnchor(v, router.safeDecode(r.hash.slice(1)));
+  scrollToAnchor(v, safeDecode(r.hash.slice(1)));
 });
 
 // size: 'large', for applications: about 80% of the desk, starting right of the desktop icon column so the icons
@@ -79,9 +81,18 @@ function open(app, page, opts) {
     v = app.create ? app.create(key, page) : { el: h('div', { class: `view app app-${app.kind}` }), home: page.url.split('?')[0] };
     Object.assign(v, { key, icon: v.icon || page.icon || 'doc' });
     v.route ||= () => v.url;
+    if (app.stack) v.stack = app.kind;
   }
   Object.assign(v, { page, url: page.url, title: page.title });
-  if (fresh) {
+  // a stacking app's new view joins the frontmost window holding one of its views, as a tab. Phones show one window
+  // at a time (D17), so there it gets a window of its own, as it does at start-up: a shared layout (main.js
+  // restoreLayout) names each window it reopens, and folding them into one would lose all but the last one's place.
+  const kin = fresh && app.stack && !S.booting && !isPhone() && S.wins.filter(w => w.views.some(x => x.stack === app.kind)).sort((a, b) => b.z - a.z)[0];
+  if (kin) {
+    addView(kin, v);
+    focusView(v);
+    kin.tabsEl.querySelector('.tab.on .tt')?.focus({ preventScroll: true });
+  } else if (fresh) {
     createWindow(v, geometry(app, page));
     // side by side rather than piled up, and clear of an open Posts window (wm/windows.js retile)
     if (app.tile) {

@@ -2,7 +2,7 @@
 // to the reader (D40), a quarter and three quarters of the desk, and Escape puts Tracker back (D36).
 // Posts dragged out of Tracker get post windows of their own (openPosts, D32). Other pages use makeReader through the
 // page app (apps/page.js), one window each.
-import { S, emit, on as onWm } from './wm/state.js';
+import { S, emit, on } from './wm/state.js';
 import { h, svgBtn, stroke, SHARE, MARKDOWN, copyText, OWN_KEYS, toTop, scrollerOf } from './lib/dom.js';
 import { trail, visit } from './lib/trail.js';
 import { clampSplit } from './wm/snap.js';
@@ -11,7 +11,7 @@ import {
   closeView, morph, forgetPlace, pairUp,
 } from './wm/windows.js';
 import { ensureTracker } from './tracker.js';
-import { textSize, get, set, on, nextWidth } from './settings.js';
+import { textSize, get, set, onSetting, nextWidth } from './settings.js';
 import { mountContent } from './content.js';
 import { loadLazy } from './loader.js';
 import { initContent } from './content/index.js';
@@ -19,7 +19,7 @@ import * as router from './router.js';
 
 // Reader width and text size are the same settings the Control panel's Posts pane changes (settings.js)
 const widthLabel = w => `Reader width: ${w}`;
-on((k, w) => {
+onSetting((k, w) => {
   if (k === 'readerWidth') for (const b of document.querySelectorAll('.tb.width')) { b.title = widthLabel(w); b.setAttribute('aria-label', widthLabel(w)); }
 });
 
@@ -37,8 +37,9 @@ const safely = (fn, ...args) => { try { return fn(...args); } catch (err) { cons
 // Heading text without the "#" link the render hook appends
 const headingLabel = x => [...x.childNodes].filter(n => !n.classList?.contains('hlink')).map(n => n.textContent).join('').trim();
 
+// A page with front matter `toc: false` (data-toc on its .rd-body, layouts/page.html) goes without
 function contents(art, onPick) {
-  const heads = [...art.querySelectorAll('.rd-body h2[id], .rd-body h3[id]')];
+  const heads = [...art.querySelectorAll('.rd-body:not([data-toc="false"]) :is(h2, h3)[id]')];
   if (heads.length < 3) return '';
   return h('select', { 'aria-label': 'Contents', onchange: e => { onPick(e.target.value); e.target.value = ''; } },
     h('option', { value: '' }, 'Contents'),
@@ -243,7 +244,7 @@ export function initReader() {
   document.addEventListener('keydown', pageKeys);
   document.addEventListener('keydown', escKeys);
   // Tracker marks the post the shared reader shows, so that goes when the reader does
-  onWm('closed', views => {
+  on('closed', views => {
     const v = views.find(x => x.key === 'reader');
     if (!v) return;
     emit('reading', '');

@@ -10,15 +10,11 @@ export async function gzSize(url) {
   return (await new Response(res.body.pipeThrough(new CompressionStream('gzip'))).arrayBuffer()).byteLength;
 }
 
-// The shell's script and stylesheet, plus Spotlight's pair, which the search button loads on first open
-export function shellFiles(doc) {
-  const btn = doc.getElementById('searchBtn');
-  return [
-    doc.querySelector('script[type=module][src*="/js/deskbar."]')?.src,
-    doc.querySelector('link[rel=stylesheet][href*="/css/deskbar."]')?.href,
-    btn?.dataset.module, btn?.dataset.css,
-  ].filter(Boolean);
-}
+// The shell's script and stylesheet
+export const shellFiles = doc => [
+  doc.querySelector('script[type=module][src*="/js/deskbar."]')?.src,
+  doc.querySelector('link[rel=stylesheet][href*="/css/deskbar."]')?.href,
+].filter(Boolean);
 
 export const kb = bytes => (bytes / 1024).toFixed(1) + 'KB';
 

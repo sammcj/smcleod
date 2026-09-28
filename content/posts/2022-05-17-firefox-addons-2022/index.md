@@ -1,9 +1,8 @@
 ---
 author: "Sam McLeod"
-readingTime: true
 categories: [ software ]
 date: "2022-05-17T08:00:00Z"
-updated: "2022-11-07T16:52:27+11:00"
+lastmod: "2022-11-07T16:52:27+11:00"
 aliases:
   - /software/2022/05/16/firefox-addons-2022/
 images: ["firefox-logo-collage-1.png"]

@@ -3,7 +3,8 @@
 // first, and a preview with the summary, the item's picture and a link to the article. Container queries fold it to
 // two panes, then one, as the window narrows. Feed text only ever goes in as text nodes. Feed icons are the site's
 // own copies; item pictures load from their sites, lazily and without a referrer, and drop out if they fail. Read
-// state is kept in localStorage.
+// state is kept in localStorage. A feed's own address (?feed=) opens it in a tab of the Feeds window, from its context
+// menu, Cmd/Ctrl-click or middle-click.
 import { h, find, toTop } from '../lib/dom.js';
 import { store } from '../lib/store.js';
 import { arrowTo } from '../lib/keys.js';
@@ -46,8 +47,18 @@ export function ago(d, now = Date.now()) {
 
 const full = d => d.toLocaleString('en-AU', { weekday: 'short', day: 'numeric', month: 'short', year: 'numeric', hour: 'numeric', minute: '2-digit' });
 
+// A feed's own address, which opens it in a tab of its own (apps/index.js keys Feeds views by it), and back
+export const feedHref = (url, name) => `${url.split('?')[0]}?feed=${encodeURIComponent(name)}`;
+export const feedOf = url => new URL(url, 'http://x').searchParams.get('feed') || '';
+
+// The letter that stands in for a feed with no icon
+export const initial = name => name.match(/[\p{L}\p{N}]/u)?.[0].toUpperCase() || '#';
+
 export function mount(v, page, { fresh }) {
-  if (!fresh) return;
+  // a feed's own tab shows its feed again whenever its address opens; apps/registry.js has just given the view the
+  // page's title and address, so the tab is renamed too
+  const own = feedOf(page.url);
+  if (!fresh) return v.pick?.(own);
   let { items, feeds, icons, updated } = readFeeds(page.content());
   const read = new Set(store.get('feeds-read', []));
   const rows = new Map();
@@ -98,7 +109,10 @@ export function mount(v, page, { fresh }) {
       const off = name && !items.some(it => it.feed === name);
       return h('button', {
         type: 'button', class: off ? 'fd-feed off' : 'fd-feed', title: off ? 'Not fetched in the latest build' : null,
-        'aria-current': name === feed ? 'true' : null, onclick: () => choose(name),
+        'aria-current': name === feed ? 'true' : null, 'data-href': name ? feedHref(page.url, name) : null,
+        // as a link would open in a new browser tab, Cmd/Ctrl-click and middle-click open the feed in a tab of the OS
+        onclick: e => (name && (e.metaKey || e.ctrlKey) ? newTab(name) : choose(name)),
+        onauxclick: e => { if (name && e.button === 1) newTab(name); },
       }, name && (sideIcons.get(name) || sideIcons.set(name, icon(name)).get(name)), h('span', {}, label(name)), h('small', {}, unread(name) || ''));
     }));
     sel.replaceChildren(...names.map(name => h('option', { value: name, selected: name === feed }, `${label(name)} (${unread(name)})`)));
@@ -107,14 +121,19 @@ export function mount(v, page, { fresh }) {
     status.textContent = `${plural(shown().length, 'item')}, ${n} unread` + (isNaN(updated) ? '' : `. Fetched ${/^\d+[mhd]$/.test(a) ? a + ' ago' : 'on ' + a}`);
   }
 
-  // A feed's icon, or an empty box of the same size so names line up
-  const icon = name => (icons[name] ? h('img', { class: 'fd-ico', src: icons[name], alt: '' }) : h('i', { class: 'fd-ico' }));
+  // A feed's icon, or its initial in a box of the same size (a feed with no artwork whose site had no icon either)
+  const icon = name => (icons[name] ? h('img', { class: 'fd-ico', src: icons[name], alt: '' }) : h('i', { class: 'fd-ico fd-mono', 'data-initial': initial(name) }));
+  const newTab = name => window.deskbar.go(feedHref(page.url, name));
 
+  // data-href and data-link are for the context menu (lazy/context-menu.js)
   function row(it) {
-    const b = h('button', { type: 'button', class: read.has(it.link) ? 'fd-row' : 'fd-row unread', tabindex: '-1', onclick: () => { select(it); show(true); } },
+    const b = h('button', {
+      type: 'button', class: read.has(it.link) ? 'fd-row' : 'fd-row unread', tabindex: '-1', 'data-href': feedHref(page.url, it.feed), 'data-link': it.link,
+      onclick: () => { select(it); show(true); },
+    },
       h('span', { class: 'fd-t' }, it.title),
       it.summary && h('span', { class: 'fd-s' }, it.summary),
-      h('span', { class: 'fd-m' }, h('span', {}, icons[it.feed] && icon(it.feed), it.feed), h('time', { datetime: it.date.toISOString(), title: full(it.date) }, ago(it.date))),
+      h('span', { class: 'fd-m' }, h('span', {}, icon(it.feed), it.feed), h('time', { datetime: it.date.toISOString(), title: full(it.date) }, ago(it.date))),
       it.image && picture(it.image, 'fd-th'));
     rows.set(it, b);
     return h('div', { role: 'listitem' }, b);
@@ -127,15 +146,27 @@ export function mount(v, page, { fresh }) {
     }
     const back = h('button', { type: 'button', class: 'tb fd-back', onclick: () => { show(false); rows.get(cur)?.focus(); } }, 'Items');
     pane.replaceChildren(back,
-      h('header', {}, h('p', { class: 'fd-src' }, icons[cur.feed] && icon(cur.feed), cur.feed), h('h2', { tabindex: '-1' }, cur.title),
+      h('header', {}, h('p', { class: 'fd-src' }, icon(cur.feed), cur.feed), h('h2', { tabindex: '-1' }, cur.title),
         h('p', { class: 'fd-when' }, h('time', { datetime: cur.date.toISOString() }, full(cur.date)))),
       cur.image && picture(cur.image, 'fd-img'),
       h('p', { class: cur.summary ? 'fd-sum' : 'fd-sum fd-none' }, cur.summary || 'This feed gives no summary for the item.'),
       h('a', { class: 'tb fd-open', href: cur.link, target: '_blank', rel: 'noopener' }, 'Open article'));
   }
 
-  // A feed's items; the rows are rebuilt only here, so selecting keeps focus and scroll
-  function choose(name) {
+  // A feed's items; the rows are rebuilt only here, so selecting keeps focus and scroll. A feed's own tab is named
+  // for the feed it shows, or the page's title for every feed. The visitor's pick in it moves its address too, and the
+  // address bar when that names the tab, so its links and a layout link give what it shows. Opening its address (keep)
+  // leaves the address as opened, even for a feed the build no longer has, which then shows every feed.
+  function choose(name, keep) {
+    if (own) {
+      v.title = name || page.title;
+      window.deskbar.renderTabs(v.win);
+      const was = v.url, url = name ? feedHref(page.url, name) : page.url.split('?')[0];
+      if (!keep && url !== was) {
+        v.url = url;
+        if (location.pathname + location.search === was) window.deskbar.router.replace(url);
+      }
+    }
     feed = name;
     cur = null;
     rows.clear();
@@ -179,6 +210,7 @@ export function mount(v, page, { fresh }) {
     to.scrollIntoView({ block: 'nearest' });
   });
 
-  choose('');
+  if (own) v.pick = name => choose(feeds.includes(name) ? name : '', true);
+  choose(feeds.includes(own) ? own : '', true);
   v.el.dataset.loaded = '';
 }

@@ -5,28 +5,13 @@ date: 2024-05-18T11:30:03+00:00
 # aliases: ["/first"]
 tags: ["AI", "Nvidia", "GPU", "Monitoring", "API", "Go", "Golang"]
 author: "Sam McLeod"
-showToc: true
-TocOpen: false
 draft: false
-hidemeta: false
-comments: false
 description: "Nvidia GPU Monitoring API"
 # canonicalURL: "https://canonical.url/to/page"
-disableShare: false
-disableHLJS: false
-hideSummary: false
 searchHidden: false
-ShowReadingTime: true
-ShowBreadCrumbs: true
-ShowPostNavLinks: true
-ShowWordCount: true
-ShowRssButtonInSectionTermList: true
-UseHugoToc: true
 cover:
     image: "https://github.com/sammcj/NVApi/blob/main/screenshots/home-assistant-integration-2.png?raw=true" # image path/url
     alt: "NVApi integrated with Home Assistant" # alt text
-    caption: "NVApi integrated with Home Assistant" # display caption under cover
-    relative: false # when using page bundles set this to true
     hidden: true # only hide on current single page
 ---
 

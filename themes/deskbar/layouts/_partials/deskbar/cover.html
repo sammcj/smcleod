@@ -1,14 +1,17 @@
 {{- /* Resolves a post's images. "thumb" is front matter `thumbnail` (a page resource name), else the cover; "full" is
        the reader-sized cover. `cover` is a string or PaperMod-style {image: ...}. Values are trimmed and "./"
        stripped because older posts carry both. Posts with neither get generated art (thumb-art.html) in the index.
-       "icon" is front matter `thumbnailIcon` (a page resource, used as is), the list-row icon in place of generated art. */ -}}
+       "icon" is front matter `thumbnailIcon` (a page resource, used as is), the list-row icon in place of generated art.
+       "alt" is the map form's `alt`, the full cover's alt text. */ -}}
 {{- $p := . -}}
 {{- $cover := "" -}}
 {{- $hidden := false -}}
+{{- $alt := "" -}}
 {{- with $p.Params.cover -}}
   {{- if reflect.IsMap . -}}
     {{- $cover = .image | default "" -}}
     {{- $hidden = or .hidden .hiddenInSingle -}}
+    {{- $alt = .alt | default "" -}}
   {{- else -}}
     {{- $cover = . -}}
   {{- end -}}
@@ -38,4 +41,4 @@
 {{- end -}}
 {{- $icon := "" -}}
 {{- with $p.Params.thumbnailIcon }}{{ with $p.Resources.Get (strings.TrimPrefix "./" (strings.TrimSpace .)) }}{{ $icon = .RelPermalink }}{{ end }}{{ end -}}
-{{- return merge $out (dict "hidden" $hidden "icon" $icon) -}}
+{{- return merge $out (dict "hidden" $hidden "icon" $icon "alt" $alt) -}}

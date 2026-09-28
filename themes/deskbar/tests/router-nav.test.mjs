@@ -1,22 +1,10 @@
 // Router navigation against a minimal fake browser: start-up on any URL, redirects, alias stubs and Back hooks.
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
+import { fakeBrowser } from './fake-browser.mjs';
 
-let cur = new URL('https://example.org/tools/tiers.html');
-const assigned = [], pushed = [];
-let popstate = null, reloads = 0;
-globalThis.location = {
-  get href() { return cur.href; }, get pathname() { return cur.pathname; }, get search() { return cur.search; },
-  get hash() { return cur.hash; }, get origin() { return cur.origin; },
-  assign(u) { assigned.push(u); }, reload() { reloads++; },
-};
-globalThis.history = {
-  state: null,
-  pushState(s, _, h) { this.state = s; cur = new URL(h, cur); pushed.push(h); },
-  replaceState(s, _, h) { this.state = s; if (h) cur = new URL(h, cur); },
-};
-globalThis.document = { title: '', addEventListener() {} };
-globalThis.addEventListener = (type, fn) => { if (type === 'popstate') popstate = fn; };
+const browser = fakeBrowser('https://example.org/tools/tiers.html');
+const { assigned, pushed, popstate } = browser;
 
 const el = attrs => ({
   namespaceURI: 'http://www.w3.org/1999/xhtml', attrs,
@@ -90,11 +78,11 @@ test('Back asks every onPop hook in order and stops routing at the first that ha
   router.onPop(key => { calls.push(['first', key]); return false; });
   router.onPop(key => { calls.push(['second', key]); return key === '/posts/cline/'; });
   const before = seen.length;
-  cur = new URL('https://example.org/posts/cline/');
+  browser.cur = new URL('https://example.org/posts/cline/');
   await popstate({ state: { idx: 1 } });
   assert.deepEqual(calls, [['first', '/posts/cline/'], ['second', '/posts/cline/']]);
   assert.equal(seen.length, before, 'a handled pop does not route');
-  assert.equal(reloads, 0);
+  assert.equal(browser.reloads, 0);
 });
 
 test('a cached page shown again gets fresh nodes rather than the ones already placed', () => {
@@ -133,7 +121,7 @@ test('a file with a tool page opens that page, found in the build-time map rathe
 test('an onPop hook registered with first is asked before those already registered', async () => {
   const calls = [];
   router.onPop(() => { calls.push('home'); return true; }, { first: true });
-  cur = new URL('https://example.org/somewhere/');
+  browser.cur = new URL('https://example.org/somewhere/');
   await popstate({ state: { idx: 2 } });
   assert.deepEqual(calls, ['home']);
 });

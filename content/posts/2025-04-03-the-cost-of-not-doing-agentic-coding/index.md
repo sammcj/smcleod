@@ -6,28 +6,13 @@ images: ["thumbnail.png"]
 thumbnailIcon: thumbnail-icon.svg
 tags: ["ai","llm","tech","agentic","coding","vibecoding"]
 author: "Sam McLeod"
-showToc: true
-TocOpen: true
 draft: false
-hidemeta: false
-comments: false
 description: "The cost of not leveraging agentic coding is likely far greater than you think."
-disableShare: false
-disableHLJS: false
-hideSummary: false
 searchHidden: false
-ShowReadingTime: true
-ShowBreadCrumbs: true
-ShowPostNavLinks: true
-ShowWordCount: false
-ShowRssButtonInSectionTermList: true
-UseHugoToc: false
-mermaid: true
 cover:
   image: "productivity-flywheel.svg"
   alt: "Productivity Flywheel"
   # caption: "Optional caption text"
-  relative: false  # Set to true for page bundle images
 ---
 
 Don't ask yourself "_What if my high performing engineers spent $2k/month on agentic coding?_"

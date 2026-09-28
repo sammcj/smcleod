@@ -1,0 +1,28 @@
+{{- /* A site's own icon, for a feed without artwork: the largest raster icon the site's page links to (an
+       apple-touch-icon counts as 180px, as it usually is), then its /favicon.ico in case that is really a PNG, shrunk
+       to a 64px WebP here like feed artwork. Returns its URL here, or "" when none loads. Takes the site's URL.
+       Hugo can't read ICO files, so a site with only those gets none. SVG icons are left out too: a third-party SVG
+       served from this site would run its scripts if opened directly. Only the first three candidates are fetched. */ -}}
+{{- $site := . -}}
+{{- $cands := slice -}}
+{{- with (partial "deskbar/remote.html" $site).res -}}
+  {{- range findRE `(?is)<link\b[^>]*>` .Content -}}
+    {{- $rel := "" }}{{ range findRESubmatch `(?i)\brel\s*=\s*["']?([^"'>]*)` . 1 }}{{ $rel = index . 1 | lower }}{{ end -}}
+    {{- if not (findRE `(^|\s)(icon|apple-touch-icon(-precomposed)?)(\s|$)` $rel 1) }}{{ continue }}{{ end -}}
+    {{- $type := "" }}{{ range findRESubmatch `(?i)\btype\s*=\s*["']?([^"'\s>]+)` . 1 }}{{ $type = index . 1 | lower }}{{ end -}}
+    {{- $href := "" }}{{ range findRESubmatch `(?i)\bhref\s*=\s*(?:"([^"]*)"|'([^']*)'|([^\s"'>]+))` . 1 }}{{ $href = printf "%s%s%s" (index . 1) (index . 2) (index . 3) }}{{ end -}}
+    {{- $href = $href | htmlUnescape | strings.TrimSpace -}}
+    {{- if or (not $href) (findRE `icon|svg` $type 1) (findRE `(?i)^data:|\.(ico|svg)([?#]|$)` $href 1) }}{{ continue }}{{ end -}}
+    {{- $size := cond (hasPrefix $rel "apple") 180 16 -}}
+    {{- range findRESubmatch `(?i)\bsizes\s*=\s*["']?(\d+)` . 1 }}{{ $size = int (index . 1) }}{{ end -}}
+    {{- with try ((urls.Parse $site).ResolveReference (urls.Parse $href)) }}{{ with .Value -}}
+      {{- if in (slice "http" "https") .Scheme }}{{ $cands = $cands | append (dict "src" .String "size" $size) }}{{ end -}}
+    {{- end }}{{ end -}}
+  {{- end -}}
+{{- end -}}
+{{- with urls.Parse $site }}{{ $cands = (sort $cands "size" "desc") | append (dict "src" (printf "%s://%s/favicon.ico" .Scheme .Host) "size" 0) }}{{ end -}}
+{{- $icon := "" -}}
+{{- range first 3 $cands -}}
+  {{- with (partial "deskbar/feeds/fetch-image.html" (dict "src" .src "spec" "fit 64x64 webp")).src }}{{ $icon = . }}{{ break }}{{ end -}}
+{{- end -}}
+{{- return $icon -}}

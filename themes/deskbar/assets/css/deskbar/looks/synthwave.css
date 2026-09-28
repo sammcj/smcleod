@@ -1,12 +1,10 @@
 /* Synthwave: an 80s outrun night. Indigo windows edged in neon magenta, sunset tabs set in Space Grotesk capitals,
    a glowing glass dock, and a striped sun setting over a perspective grid. The neon stays on the chrome: window
-   content is near-white on deep indigo with no glow, for long reads. Dark only. */
-@font-face { font-family: 'Space Grotesk'; font-display: swap; font-weight: 700; src: url(../../../fonts/space-grotesk/space-grotesk-700-normal.woff2) format('woff2'); }
+   content is near-white on deep indigo with no glow, for long reads. The --sw-* colours and heading face are in
+   tokens.css. Dark only. */
 
 :root[data-deco=synthwave] {
   color-scheme: dark;
-  --sw-pink: #ff3ea5; --sw-cyan: #6fe3ff; --sw-ink: #1a0b3a; --sw-edge: #4a3580;
-  --sw-head: 'Space Grotesk', var(--ui);
   --sw-glow: 0 0 6px rgba(255,62,165,.55), 0 0 18px rgba(255,62,165,.3);
   --panel: linear-gradient(#2a1356, #1a0b3a); --panel-fg: #f5eeff; --panel-hover: rgba(255,255,255,.12);
   --frame: #211546; --frame-hi: #3b2a70; --frame-lo: #120a2a; --frame-dk: #0a0418;

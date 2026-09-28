@@ -6,27 +6,12 @@ images: ["thumbnail.png"]
 thumbnailIcon: thumbnail-icon.svg
 tags: ["ai", "llm", "tech", "agentic coding", "mcp", "learning", "software engineering"]
 author: "Sam McLeod"
-showToc: true
-TocOpen: false
 draft: false
-hidemeta: false
-comments: false
 summary: "An observation on functional correctness without domain quality."
-disableShare: false
-disableHLJS: false
-hideSummary: false
 searchHidden: false
-ShowReadingTime: true
-ShowBreadCrumbs: true
-ShowPostNavLinks: true
-ShowWordCount: true
-ShowRssButtonInSectionTermList: true
-UseHugoToc: true
-mermaid: true
 cover:
   image: "facade-of-competence-jpeg-2260.jpg"
   alt: "The Facade of Competence"
-  relative: true  # Set to true for page bundle images
 ---
 
 An observation on functional correctness without domain quality.

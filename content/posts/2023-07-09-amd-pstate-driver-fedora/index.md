@@ -1,6 +1,5 @@
 ---
 title: "Fixing AMD CPU Scaling on Fedora"
-subtitle: "Setting up the new AMD P-State Driver on Fedora with Kernel 6.4"
 date: 2023-07-09T06:41:37
 lastmod: 2023-07-09T07:41:37
 author: Sam McLeod
@@ -15,20 +14,10 @@ cover:
   #alt: "<alt text>"
   #caption: "<text>"
   #relative: false # To use relative path for cover image, used in hugo Page-bundles
-hiddenFromHomePage: false
-hiddenFromSearch: false
 toc:
   enable: true
   auto: false
-code:
-  copy: true
-  maxShownLines: 200
 math: false
-lightgallery: false
-readingTime: false
-showFullContent: false
-asciinema: false
-mermaid: true
 draft: false
 ---
 

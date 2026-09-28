@@ -2,7 +2,7 @@
 url: "/2024/03/superprompter-supercharge-your-text-prompts-for-ai/llm-image-generation/"  # keeps the live URL: Hugo 0.166 no longer keeps "/" from the title in :title slugs
 title: "SuperPrompter - Supercharge your text prompts for AI/LLM image generation"
 author: "Sam McLeod"
-description:
+description: "SuperPrompter, a Python app that uses the SuperPrompt-v1 model to expand short text prompts for AI image generation."
 categories: [ Tech, AI, LLM, Code ]
 keywords: ["tech", "ai", "llm", "code", "github", "SDXL", "gguf", "ggml"]
 date: "2024-03-22"
@@ -18,21 +18,11 @@ tags:
 - AI
 - Code
 series: ["AI", "Code"]
-hiddenFromHomePage: false
-hiddenFromSearch: false
 
 toc:
   enable: true
   auto: true
-code:
-  copy: true
-  maxShownLines: 200
 math: false
-lightgallery: false
-readingTime: true
-showFullContent: true
-asciinema: false
-mermaid: false
 draft: false
 ---
 

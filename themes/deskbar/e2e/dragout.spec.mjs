@@ -3,7 +3,7 @@
 // the toolbar button and the context menu. Runs on any site: addresses come from the shell's post index.
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { env, useBrowser, open, shot, win, cards, path, desktop, phone } from './lib.mjs';
+import { env, useBrowser, open, shot, win, cards, path, desktop, phone, box } from './lib.mjs';
 
 useBrowser();
 
@@ -13,7 +13,6 @@ const posts = async () => (idx ||= await (await fetch(env.base + '/deskbar.json'
 const OWN = '.view[data-key^="post:"]';
 const owns = page => page.locator(`.win:not([hidden]):has(${OWN})`);
 const titles = page => page.locator(`.win:not([hidden]) ${OWN} .rd h1`).allTextContents();
-const box = loc => loc.boundingBox();
 
 // Presses the middle of from, moves past the threshold and on to (x, y) in viewport pixels; mid runs before the release
 async function dragTo(page, from, x, y, mid) {
@@ -26,6 +25,8 @@ async function dragTo(page, from, x, y, mid) {
   await page.mouse.up();
 }
 
+// A drop that wrongly opened or routed a post would do so after a fetch, and nothing marks its absence
+const afterDrop = page => page.waitForTimeout(300);
 const inside = (b, x, y) => b && x >= b.x && x <= b.x + b.width && y >= b.y && y <= b.y + b.height;
 // the desk right of a window, where a drop lands outside it (Tracker starts right of the icons, which may wrap)
 const beside = b => (b.x + b.width + desktop.width) / 2;
@@ -61,7 +62,7 @@ test('the Posts window: a post dropped on the desk opens in its own window where
   // back onto the Posts window: no window, and the release does not click the link
   const second = cards(page).nth(1), sb = await box(second);
   await dragTo(page, second, sb.x + sb.width / 2 + 40, sb.y + sb.height / 2 + 60);
-  await page.waitForTimeout(300);
+  await afterDrop(page);
   assert.equal(await owns(page).count(), 1, 'nothing more opened');
   assert.equal(path(page), list[0].url, 'and nothing was routed');
   assert.deepEqual(page.errors, []);
@@ -76,7 +77,7 @@ test('Tracker: a card dragged out gets its own window; Tracker stays put, and a 
 
   // dropped back inside Tracker: cancelled
   await dragTo(page, card, tb.x + 300, tb.y + 400);
-  await page.waitForTimeout(300);
+  await afterDrop(page);
   assert.equal(await owns(page).count(), 0, 'nothing opens');
   assert.equal(path(page), '/posts/', 'and the click the release makes is not routed');
 
@@ -288,7 +289,7 @@ test('phones: no drag-out (D17)', async () => {
   await rp.waitFor();
   const b = await box(rp);
   await dragTo(page, rp, b.x + b.width / 2, b.y + b.height + 200);
-  await page.waitForTimeout(300);
+  await afterDrop(page);
   assert.equal(await page.locator('.dragout').count(), 0);
   assert.equal(await page.locator(OWN).count(), 0);
   assert.deepEqual(page.errors, []);

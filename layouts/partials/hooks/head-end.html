@@ -63,9 +63,14 @@
 </script>
 {{- if .IsPage }}
 {{- /* first image: front matter images, then bundle images, then the site default (PaperMod's get-page-images) */}}
+{{- /* a front matter image is usually a bundle resource, so resolve it against the page before the site root */}}
+{{- $first := "" }}
+{{- with .Params.images }}{{ if reflect.IsSlice . }}{{ $first = index . 0 }}{{ else }}{{ $first = . }}{{ end }}{{ end }}
+{{- $first = strings.TrimPrefix "./" (strings.TrimSpace (string $first)) }}
 {{- $image := "" }}
-{{- with .Params.images }}{{ $image = index . 0 | absURL }}
-{{- else }}{{ with .Resources.ByType "image" }}{{ $image = (index . 0).Permalink }}
+{{- with $first }}{{ with $.Resources.Get . }}{{ $image = .Permalink }}{{ else }}{{ $image = $first | absURL }}{{ end }}{{ end }}
+{{- if not $image }}
+{{- with .Resources.ByType "image" }}{{ $image = (index . 0).Permalink }}
 {{- else }}{{ with site.Params.images }}{{ $image = index . 0 | absURL }}{{ end }}{{ end }}
 {{- end }}
 <script type="application/ld+json">
@@ -82,16 +87,10 @@
     {{ range $i, $e := .Params.tags }}{{ if $i }}, {{ end }}{{ $e }}{{ end }}
     {{- end }}
   ],
-  "articleBody": {{ .Content | safeJS | htmlUnescape | plainify }},
   "wordCount" : "{{ .WordCount }}",
   "inLanguage": {{ .Language.Lang | default "en-us" }},
-  {{ if .Params.cover.image -}}
-  "image":
-    {{- if (ne .Params.cover.relative true) -}}
-    {{ .Params.cover.image | absURL }},
-    {{- else -}}
-    {{ (path.Join .RelPermalink .Params.cover.image ) | absURL }},
-    {{- end}}
+  {{ with (partial "deskbar/cover.html" .).full -}}
+  "image": {{ . | absURL }},
   {{- else }}
     {{- with $image }}
   "image": {{ . }},

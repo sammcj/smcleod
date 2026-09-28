@@ -1,6 +1,5 @@
 ---
 author: "Sam McLeod"
-readingTime: true
 categories: [ music ]
 date: "2017-12-28T00:00:00Z"
 aliases:
@@ -33,7 +32,7 @@ From [Wikipedia](https://en.wikipedia.org/wiki/Pure_Comedy):
 
 > Most of Pure Comedy was written in 2015. It touches on themes of progress, technology, fame, the environment, politics, aging, social media, human nature, human connection and his own role in it all. Tillman included an 1800-word-long essay about its symbolism and meaning in the release announcement email to his fan club.
 
->> Pure Comedy is the story of a species born with a half-formed brain. The species' only hope for survival, finding itself on a cruel, unpredictable rock surrounded by other species who seem far more adept at this whole thing (and to whom they are delicious), is the reliance on other, slightly older, half-formed brains. This reliance takes on a few different names as their story unfolds, like “love,” “culture,” “family,” etc. Over time, and as their brains prove to be remarkably good at inventing meaning where there is none, the species becomes the purveyor of increasingly bizarre and sophisticated ironies. These ironies are designed to help cope with the species' loathsome vulnerability and to try and reconcile how disproportionate their imagination is to the monotony of their existence.
+>> Pure Comedy is the story of a species born with a half-formed brain. The species' only hope for survival, finding itself on a cruel, unpredictable rock surrounded by other species who seem far more adept at this whole thing (and to whom they are delicious), is the reliance on other, slightly older, half-formed brains. This reliance takes on a few different names as their story unfolds, like "love," "culture," "family," etc. Over time, and as their brains prove to be remarkably good at inventing meaning where there is none, the species becomes the purveyor of increasingly bizarre and sophisticated ironies. These ironies are designed to help cope with the species' loathsome vulnerability and to try and reconcile how disproportionate their imagination is to the monotony of their existence.
 
 ### Ibeyi - [Ash](http://www.ibeyi.fr/)
 

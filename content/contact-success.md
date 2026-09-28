@@ -4,12 +4,6 @@ description: "Message Sent"
 aliases: ["message"]  # /contact/ and /email/ belong to contact.md
 author: "Sam McLeod"
 norss: true
-comments: false
-showDate: false
-subtitle: Message Sent
-readingTime: false
-hiddenFromHomePage: true
-hiddenFromSearch: true
 deskbarHidden: true # keeps it out of Tracker and Spotlight
 toc:
   enable: false

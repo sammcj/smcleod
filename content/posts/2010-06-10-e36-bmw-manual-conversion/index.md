@@ -1,6 +1,5 @@
 ---
 author: "Sam McLeod"
-readingTime: true
 categories: [ Cars ]
 date: "2010-06-10T00:00:00Z"
 aliases:
@@ -90,7 +89,7 @@ To fix this, you need to change the GM code stored in the EWS; this is done thro
 - Choose Recoding
 - Choose the EWS module
 
-9. If you get prompted something along the lines of ‘Are these correct?' when displaying the current GM,SA & VM values - Choose NO.
+9. If you get prompted something along the lines of 'Are these correct?' when displaying the current GM,SA & VM values - Choose NO.
 
 10. Enter your new GM and your original SA & VN (these wont have changed).
 Go through the programming process as normal.
@@ -99,7 +98,7 @@ Go through the programming process as normal.
 Choose exchange control unit
 Determine Control Unit
 
-12. When asked “Is the faulty unit still installed in the car?” choose NO.
+12. When asked "Is the faulty unit still installed in the car?" choose NO.
 
 13. Enter data:
 
@@ -107,7 +106,7 @@ Determine Control Unit
 - Your chassis number.
 - Your replacement programmed control unit part number (Mine was `1429954`).
 
-14. You'll need to click down a few times, then back to ‘Program Control Unit'
+14. You'll need to click down a few times, then back to 'Program Control Unit'
 Enter details are requested (Kms, Chassis number), Start programming! (Make sure your battery is full of juice!)
 
 15. DIS will now walk you through clearing your adaptation values.

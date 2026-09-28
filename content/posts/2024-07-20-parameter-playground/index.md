@@ -5,23 +5,9 @@ date: 2024-07-20T01:00:10+00:00
 # aliases: ["/first"]
 tags: ["ai", "tools","llm", "tech", "playground", "parameters", "inference"]
 author: "Sam McLeod"
-showToc: false
-TocOpen: false
 draft: false
-hidemeta: false
-comments: false
 description: "A web app to explore the effects of different inference parameters on LLMs."
-disableShare: false
-disableHLJS: false
-hideSummary: false
 searchHidden: false
-ShowReadingTime: false
-ShowBreadCrumbs: true
-ShowPostNavLinks: true
-ShowWordCount: false
-ShowRssButtonInSectionTermList: true
-UseHugoToc: false
-mermaid: false
 cover:
   image: "parameter-playground.webp"
   alt: ""

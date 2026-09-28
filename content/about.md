@@ -1,12 +1,7 @@
 ---
 title: "About"
-description: "Sam McLeod"
 author: "Sam McLeod"
 norss: true
-comments: false
-showDate: false
-subtitle: Sam McLeod
-readingTime: false
 hideTitle: true
 windowTile: 60
 toc:
@@ -14,9 +9,9 @@ toc:
   auto: false
 ---
 
-![](/profilephoto/apple-touch-icon.png)
-
 > Hi, I'm Sam 👋🏻
+
+![](/profilephoto/apple-touch-icon.png)
 
 AI engineer, open source contributor and music geek based in Melbourne, Australia.  Around twenty years in tech across platform engineering and technical leadership, with the last five focused heavily on LLMs and AI. I'm an AI Engineering Principal, currently working with [Mantel](https://mantelgroup.com.au).
 

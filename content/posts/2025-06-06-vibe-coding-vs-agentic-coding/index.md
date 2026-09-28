@@ -6,23 +6,9 @@ images: ["thumbnail.png"]
 thumbnailIcon: thumbnail-icon.svg
 tags: ["ai", "llm", "tech", "ollama", "coding", "cline", "agentic", "tutorials", "llama", "agentic coding", "vibe coding"]
 author: "Sam McLeod"
-showToc: true
-TocOpen: true
 draft: false
-hidemeta: false
-comments: false
 description: "From Creative Exploration to Production Quality"
-disableShare: false
-disableHLJS: false
-hideSummary: false
 searchHidden: false
-ShowReadingTime: true
-ShowBreadCrumbs: true
-ShowPostNavLinks: true
-ShowWordCount: true
-ShowRssButtonInSectionTermList: true
-UseHugoToc: true
-mermaid: true
 ---
 
 Picture this: A business leader overhears their engineering team discussing "vibe coding" and immediately imagines developers throwing prompts at ChatGPT until something works, shipping whatever emerges to production. The term alone-"vibe coding"-conjures images of seat-of-the-pants development that would make any CTO break out in a cold sweat.

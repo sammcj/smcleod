@@ -7,23 +7,9 @@ images: ["thumbnail.png"]
 thumbnailIcon: thumbnail-icon.svg
 tags: ["ai","llm","tech","deepseek","llama","anthropic","aws","cline","roo code","programming","brownbag"]
 author: "Sam McLeod"
-showToc: false
-TocOpen: false
 draft: false
-hidemeta: false
-comments: false
 description: "Video recording of a brownbag presentation / live demo I ran on Agentic Coding using Cline/Roo Code"
-disableShare: false
-disableHLJS: false
-hideSummary: false
 searchHidden: false
-ShowReadingTime: false
-ShowBreadCrumbs: true
-ShowPostNavLinks: true
-ShowWordCount: false
-ShowRssButtonInSectionTermList: true
-UseHugoToc: false
-mermaid: false
 ---
 
 <div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;">

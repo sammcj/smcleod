@@ -6,23 +6,9 @@ images: ["thumbnail.png"]
 thumbnailIcon: thumbnail-icon.svg
 tags: ['ai', 'claude', 'agentic-coding', 'claude-code', 'tips', 'productivity']
 author: 'Sam McLeod'
-showToc: true
-TocOpen: true
 draft: false
-hidemeta: false
-comments: false
 description: 'I spend a lot of my time helping people who are getting started with Claude Code. These are the key things I find myself repeating.'
-disableShare: false
-disableHLJS: false
-hideSummary: false
 searchHidden: false
-ShowReadingTime: true
-ShowBreadCrumbs: true
-ShowPostNavLinks: true
-ShowWordCount: true
-ShowRssButtonInSectionTermList: true
-UseHugoToc: true
-mermaid: false
 ---
 
 - **Configuration**

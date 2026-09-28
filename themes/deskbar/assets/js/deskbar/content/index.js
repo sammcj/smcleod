@@ -1,6 +1,6 @@
 // Content rendering in windows: code copy buttons, Mermaid, MathJax and the related posts ticker.
-// Renderers run through onMounted so routed and cached content gets them too; the heavy libraries load
-// from a CDN only when a page needs them.
+// Renderers run through onMounted so routed and cached content gets them too. The heavy libraries load only when a
+// page needs them: Mermaid from the site (lazy/mermaid.js), MathJax from a CDN (cdn.js).
 import { onMounted } from '../content.js';
 import { copyButtons } from './code.js';
 import { mermaidDiagrams } from './mermaid.js';

@@ -1,6 +1,5 @@
 ---
 author: "Sam McLeod"
-readingTime: true
 categories: [ Tech, CICD ]
 date: "2015-03-15T00:00:00Z"
 aliases:
@@ -38,7 +37,7 @@ There's a fine line between bleeding edge and being at the front of the game, if
 
 In addition to CI of modern Kernel images, I've also integrated (optional) patching for GRSecurity fixes - GRSecurity is a great line of defence for the Kernel and prevents applications doing many silly things they shouldn't be allowed to do (Can anyone say Nodes?...).
 
-- Uploads publicly accessable Debian Kernel Packages to packagecloud.io
+- Uploads publicly accessible Debian Kernel Packages to packagecloud.io
 - Includes Kernel Watcher that detects new stable kernel releases and triggers builds.
 - Supports patching the Kernel with GRSecurity
 - Tested with Gitlab-CI and Travis-CI but should work on any CI system.

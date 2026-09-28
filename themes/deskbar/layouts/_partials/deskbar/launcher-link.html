@@ -23,11 +23,8 @@
   {{- end -}}
 {{- end -}}
 {{- if $url -}}
-{{- /* only other sites open in a new tab; the site's own pages and tools, absolute or not, open as windows */ -}}
-{{- $host := (urls.Parse $url).Host -}}
-{{- $ext := and $host (ne $host (urls.Parse site.BaseURL).Host) -}}
 <a class="{{ .class }}" href="{{ $url }}"{{ if eq $.class "dk" }} title="{{ $name }}"{{ end }}
-  {{- if $ext }} target="_blank" rel="noopener"{{ end }}>
+  {{- if partial "deskbar/external.html" $url }} target="_blank" rel="noopener"{{ end }}>
   <svg class="ico" aria-hidden="true"><use href="#i-{{ $icon | default "doc" }}"/></svg><span class="lbl">{{ $name }}</span>
 </a>
 {{- end -}}

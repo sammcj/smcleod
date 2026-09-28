@@ -6,7 +6,7 @@
 // (reader.js openPosts), an optional zone (l r m tl tr bl br, m for maximised), then the window's path. The shell
 // reads it once at load, drops it from the address and reopens the windows. Kept free of the DOM so it is unit
 // tested; anything malformed is skipped rather than failing.
-import { safeDecode } from '../router.js';
+import { safeDecode } from '../lib/format.js';
 
 const MAX_WINS = 8;
 const TOKEN = /^(p)?(tl|tr|bl|br|l|r|m)?(\/(?!\/).*)$/;
