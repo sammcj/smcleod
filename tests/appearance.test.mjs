@@ -9,7 +9,9 @@ import { PRESETS, KEYS } from '../themes/deskbar/assets/js/deskbar/lib/appearanc
 const root = join(import.meta.dirname, '..');
 
 test('the site default look matches a preset', () => {
-  const config = JSON.parse(execFileSync(process.env.HUGO_BIN || 'hugo', ['config', '--format', 'json'], { cwd: root }));
+  // on a fresh checkout Hugo prints "hugo: downloading modules" ahead of the JSON
+  const out = execFileSync(process.env.HUGO_BIN || 'hugo', ['config', '--format', 'json'], { cwd: root, encoding: 'utf8' });
+  const config = JSON.parse(out.slice(out.indexOf('{')));
   const site = config.params.deskbar.appearance;
   // Keys the site leaves out take the theme defaults, which are the first preset (Deskbar Classic)
   const look = Object.fromEntries(KEYS.map(k => [k, site[k] ?? PRESETS[0][k]]));
