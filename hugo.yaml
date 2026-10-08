@@ -154,7 +154,8 @@ markup:
       strikethrough: true
       table: true
       taskList: true
-      typographer: true
+      typographer:
+        disable: true
 
 
   tableOfContents:
