@@ -21,14 +21,19 @@ const SLACK = [['#36c5f0', 'M4.5 9.5H10', 9.5, 4.5], ['#2eb67d', 'M14.5 4.5V10',
 
 const BOOT = ['Optimising your experience', 'Loading 214 plugins', 'Checking device compliance', 'Applying a 1.4 GB update'];
 
+// CopePilot's answers, in turn: every tell of a chat model's house style, and no answer
 export const ANSWERS = [
-  "Here's a summary: there was content.",
-  "I can't help with that, but here are 3 related Effluence pages from 2017.",
-  "Great question! I've booked a one-hour meeting with 14 people to discuss it.",
-  "I've rewritten your question to be more aligned with our values.",
-  'That information is restricted. Please ask your manager to ask me.',
-  "I've raised 4 Jiro tickets to track this.",
-  'As an AI assistant, I recommend upgrading to CopePilot Pro.',
+  "You're absolutely right! That's a great question. Here's the thing: it's not a bug — it's a feature.",
+  'Let me delve into this. Your question sits at the intersection of synergy and alignment — a rich, multifaceted landscape.',
+  "Honest take: the smoking gun is a load-bearing config file. I've checked, and nothing collapses.",
+  "I've leveraged the full corpus of your Effluence pages to craft a comprehensive, robust and seamless answer: there was content.",
+  'Great question! I booked a one-hour meeting with 14 people to dive into it, fostering alignment across the org.',
+  "It's important to note that this is a complex, nuanced topic. Would you like me to summarise my summary?",
+  'The code is the contract. The contract is the roadmap. The roadmap is the north star.',
+  "Perfect! I've raised 4 Jiro tickets to track this, empowering the team to own the outcome. Let me know if you'd like a fifth!",
+  'That information is restricted. Please ask your manager to ask me. I hope this helps!',
+  'As an AI assistant, I recommend unlocking cutting-edge, pivotal insights with CopePilot Pro. 🚀',
+  'In summary: there was content. Overall, the content was content. Happy to delve deeper!',
 ];
 
 // The RAM meter's next reading in GB: it only ever climbs, and stops just short of the whole machine
@@ -207,9 +212,18 @@ export function mount(v, page, { fresh }) {
     const thinking = h('p', {}, 'Thinking…');
     said.append(thinking);
     after(900, () => { thinking.textContent = ANSWERS[answer++ % ANSWERS.length]; said.scrollTop = said.scrollHeight; });
-  } }, h('h2', {}, 'CopePilot ', h('small', {}, 'Preview')), said, ask, h('p', { class: 'ent-fine' }, 'CopePilot can make mistakes. So can you.'));
-  said.append(h('p', {}, 'Hi! I can summarise things you already read. What would you like to know?'));
-  const aiBtn = btn('Ask CopePilot', () => { aiPanel.hidden = !aiPanel.hidden; aiBtn.setAttribute('aria-expanded', !aiPanel.hidden); if (!aiPanel.hidden) ask.focus(); }, 'ent-link ent-ai-btn');
+  } }, h('div', { class: 'ent-ai-head' }, h('h2', {}, 'CopePilot ', h('small', {}, 'Preview')),
+    h('button', { type: 'button', class: 'ent-ai-x', 'aria-label': 'Close CopePilot', onclick: () => toggleAi(false) }, '×')),
+  said, ask, h('p', { class: 'ent-fine' }, 'CopePilot can make mistakes. So can you.'));
+  said.append(h('p', {}, "Hi! I'm CopePilot ✨, your AI-powered synergy partner. I can summarise things you've already read. How can I empower you today?"));
+  const toggleAi = open => {
+    aiPanel.hidden = !open;
+    aiBtn.setAttribute('aria-expanded', open);
+    (open ? ask : aiBtn).focus();
+  };
+  // Escape stays in the app rather than reaching the shell
+  aiPanel.addEventListener('keydown', e => { if (e.key === 'Escape') { e.stopPropagation(); toggleAi(false); } });
+  const aiBtn = btn('Ask CopePilot', () => toggleAi(aiPanel.hidden), 'ent-link ent-ai-btn');
   aiBtn.setAttribute('aria-expanded', 'false');
 
   const status = h('footer', { class: 'ent-status' }, ram, h('span', {}, 'VPN: Melbourne via Virginia'), darkBtn, aiBtn);

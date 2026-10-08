@@ -96,6 +96,18 @@ test('the jokes answer back', async t => {
   await button(page, 'Security').click();
   assert.match(await dialog(page, 'Advanced Enterprise Security').textContent(), /Encrypt messages.*E7 Security add-on/);
   await button(page, 'Stay insecure').click();
+  // CopePilot closes from its own panel, by button or Escape
+  const cope = w.getByRole('form', { name: 'CopePilot' });
+  await button(page, 'Ask CopePilot').click();
+  await cope.getByRole('textbox', { name: 'Ask CopePilot' }).fill('Why is the build slow?');
+  await page.keyboard.press('Enter');
+  await cope.getByText(/You're absolutely right!.*it's not a bug/).waitFor();
+  await cope.getByRole('button', { name: 'Close CopePilot' }).click();
+  await cope.waitFor({ state: 'hidden' });
+  await button(page, 'Ask CopePilot').click();
+  await page.keyboard.press('Escape');
+  await cope.waitFor({ state: 'hidden' });
+  assert.equal(await page.evaluate(() => document.activeElement?.textContent), 'Ask CopePilot');
   await button(page, 'Meeting chats').click();
   assert.equal(await w.locator('.mb-side li[data-kind]:visible').count(), 1, 'one meeting chat');
 
