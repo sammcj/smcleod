@@ -1,0 +1,33 @@
+/* Enterprise Portal's Milo (lazy/enterprise-milo.js): a dotted board with everything placed by hand and nothing aligned */
+.mi-load { margin: auto; color: var(--muted); }
+.mi-zoom { min-width: 5ch; font-variant-numeric: tabular-nums; text-align: center; }
+.mi-people { margin-left: auto; color: var(--muted); font-size: 13px; }
+.mi-stage { position: relative; flex: 1; min-height: 360px; overflow: hidden; container-type: size; background: #f2f2f2 radial-gradient(#c8c8c8 1px, transparent 1.2px) 0 0 / 18px 18px; }
+.mi-board { position: absolute; inset: 0; transform-origin: 30% 30%; }
+.mi-arrow { position: absolute; inset: 0; width: 100%; height: 100%; }
+.mi-frame { position: absolute; left: 34%; top: 30%; width: 34%; height: 36%; border: 2px solid #1a1a1a; rotate: -3deg; }
+.mi-frame span { position: absolute; top: -20px; left: 0; font-size: 12px; font-weight: 600; }
+.mi-scrawl { position: absolute; margin: 0; font-family: "Comic Sans MS", "Chalkboard SE", cursive; white-space: nowrap; }
+.mi-notes { position: absolute; inset: 0; }
+.mi-note { position: absolute; min-height: 72px; padding: 8px; box-shadow: 0 2px 5px rgba(0,0,0,.25); font-size: 13px; }
+.mi-note.y, .mi-sprawl .y { background: #fff27a; }
+.mi-note.p, .mi-sprawl .p { background: #ffc1dc; }
+.mi-note.g, .mi-sprawl .g { background: #c3f0b4; }
+.mi-note.b, .mi-sprawl .b { background: #bfe3ff; }
+/* The far-off leftovers: plain boxes with no shadows, as there are hundreds */
+.mi-sprawl { position: absolute; inset: 0; color: #1a1a1a; }
+.mi-sprawl > div { position: absolute; }
+.mi-sprawl .n { aspect-ratio: 1; padding: .6em; }
+.mi-sprawl .f { border: .15em solid; padding: .3em; font-weight: 600; }
+.mi-sprawl .a { border-top: 12px dashed; transform-origin: 0 0; }
+.mi-sprawl .d { width: 40px; height: 40px; border-radius: 50%; background: #e0457b; box-shadow: 52px 4px #e0457b, 26px 48px #3b7dd8, 90px 40px #3b7dd8; }
+.mi-formats li { padding: 4px 0; }
+.mi-formats li:first-child { font-weight: 600; }
+.mi-formats .off { color: var(--muted); text-decoration: line-through; }
+.mi-cursors { position: absolute; inset: 0; pointer-events: none; }
+.mi-cur { --bg: hsl(calc(var(--i) * 55) 70% 28%); position: absolute; left: 0; top: 0; translate: var(--a); padding: 1px 6px; border-radius: 0 6px 6px 6px; background: var(--bg); color: #fff; font-size: 11px; white-space: nowrap; }
+.mi-cur::before { content: ""; position: absolute; left: -6px; top: -6px; border: 5px solid transparent; border-top-color: var(--bg); border-left-color: var(--bg); }
+@media (prefers-reduced-motion: no-preference) {
+  .mi-cur { animation: mi-fly calc(2.6s + var(--i) * .5s) ease-in-out calc(var(--i) * -.7s) infinite; }
+  @keyframes mi-fly { 33% { translate: var(--b); } 66% { translate: var(--c); } }
+}

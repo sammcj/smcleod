@@ -110,6 +110,8 @@ title = "deskbar demo"
     [[params.deskbar.menu.items]]
       page = "/sketch"
     [[params.deskbar.menu.items]]
+      page = "/enterprise"
+    [[params.deskbar.menu.items]]
       page = "/chiptunes"
     [[params.deskbar.menu.items]]
       page = "/feeds"

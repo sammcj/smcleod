@@ -1,0 +1,49 @@
+/* Enterprise Portal's Effluence (lazy/enterprise-effluence.js): a page tree twelve levels deep beside a page in a fixed
+   column narrower than a phone, centred in whatever room there is */
+.ef-head { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 16px; flex: none; padding: 8px 12px; background: #1868db; color: #fff; }
+.ef-search { display: flex; gap: 6px; margin-left: auto; }
+.ef-search input { width: 200px; }
+.ef-results:not(:empty) { padding: 8px 14px; border-bottom: 1px solid var(--ent-line); background: #f0f5ff; font-size: 13px; }
+.ef-results li { padding: 2px 0; }
+.ef-wrap { display: flex; flex: 1; min-height: 0; }
+.ef-tree { flex: none; width: 230px; padding: 8px 4px; border-right: 1px solid var(--ent-line); overflow: auto; font-size: 12px; }
+.ef-tree ul ul { padding-left: 10px; }
+.ef-tree :is(button, b) { display: block; padding: 2px 4px; text-align: left; }
+.ef-tree button:hover { text-decoration: underline; }
+.ef-scroll { flex: 1; min-width: 0; overflow: auto; }
+.ef-page { width: 340px; max-width: calc(100% - 24px); margin: 0 auto; padding: 16px 0 24px; font-size: 13px; }
+.ef-page h3 { margin: 18px 0 6px; }
+.ef-page ol { padding-left: 22px; list-style: decimal; }
+.ef-page p + p, .ef-page p + ol { margin-top: 8px; }
+.ef-crumbs, .ef-meta { color: var(--muted); font-size: 12px; }
+.ef-title h2 { margin-top: 4px; font-size: 22px; line-height: 1.2; }
+.ef-acts { display: flex; flex-wrap: wrap; gap: 6px; margin: 10px 0; }
+.ef-lozenges { display: flex; flex-wrap: wrap; gap: 4px; }
+.ef-loz { padding: 0 5px; border-radius: 3px; font: 700 11px/18px system-ui, sans-serif; }
+.ef-loz.grey { background: #dfe1e6; color: #253858; }
+.ef-loz.red { background: #ffebe6; color: #ae2a19; }
+.ef-loz.blue { background: #deebff; color: #0747a6; }
+.ef-loz.green { background: #e3fcef; color: #216e4e; }
+.ef-panel { padding: 8px 10px 8px 12px; border-radius: 3px; border-left: 4px solid; }
+.ef-panel.info { background: #deebff; border-color: #0c66e4; }
+.ef-panel.warn { background: #fffae6; border-color: #b38600; }
+.ef-panel.note { background: #eae6ff; border-color: #6e5dc6; }
+.ef-panel.error { background: #ffebe6; border-color: #ae2a19; }
+.ef-red { color: #ae2a19; font-weight: 700; font-size: 16px; }
+.ef-big { font-size: 20px; font-family: Georgia, serif; }
+.ef-page mark { background: #fff0b3; }
+.ef-empty { color: var(--muted); font-style: italic; }
+.ef-table { overflow-x: auto; }
+.ef-table table { border-collapse: collapse; white-space: nowrap; }
+.ef-table :is(th, td) { padding: 4px 8px; border: 1px solid #c1c7d0; text-align: left; }
+.ef-table th { background: #f4f5f7; }
+.ef-expand { color: #0c66e4; text-decoration: underline; }
+.ef-inner { margin: 4px 0 0 14px; }
+.ef-formats li { padding: 3px 0; }
+.ef-likes { color: var(--muted); }
+.ef-comments li { padding: 4px 0; border-bottom: 1px solid var(--ent-line); }
+@media (max-width: 767px), (max-height: 500px) and (pointer: coarse) {
+  .ef-wrap { flex-direction: column; }
+  .ef-tree { width: auto; max-height: 200px; border-right: 0; border-bottom: 1px solid var(--ent-line); }
+  .ef-search { margin-left: 0; }
+}

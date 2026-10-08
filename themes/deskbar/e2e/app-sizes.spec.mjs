@@ -11,6 +11,7 @@ const laptop = { width: 1280, height: 720 };
 // [path, view key]: the example site's apps, then smcleod.net's
 const LARGE = [
   ['/tools/demo/', 'tool:/tools/demo/'], ['/photos/', 'photos'], ['/terminal/', 'terminal'], ['/sketch/', 'sketch'],
+  ['/enterprise/', 'enterprise'],
   ['/agentic-coding-tools/', 'tool:/agentic-coding-tools/'], ['/vram-estimator/', 'tool:/vram-estimator/'],
 ];
 const SMALL = [['/contact/', 'mail', 620], ['/control-panel/', 'control-panel', 900], ['/chiptunes/', 'chiptunes', 400]];
@@ -105,7 +106,8 @@ test('About this desktop opens just right of the Posts window, top edges level, 
     assert.ok(w.r <= desk.l + desk.w, `on the desk: ${at}`);
     await page.context().close();
   }
-  // a Posts window too wide to leave room: against the desk's right edge, covering as little of it as it can
+  // a Posts window too wide to leave room: against the far side of the desk from Posts, covering as little of it as it
+  // can. That is the right edge unless a second column of desktop icons pushes Posts past the middle.
   const page = await opened(desktop, '/', 'tracker');
   const grip = await page.locator('.win:has(.view[data-key="tracker"]) .grip').boundingBox();
   await page.mouse.move(grip.x + 4, grip.y + 4);
@@ -114,9 +116,12 @@ test('About this desktop opens just right of the Posts window, top edges level, 
   await page.mouse.up();
   await page.evaluate(() => window.deskbar.go('/about-desktop/'));
   await page.locator('.win:not([hidden]) .view[data-key="about-desktop"]').waitFor();
-  const { win: posts } = await layout(page, 'tracker'), { win: w, desk } = await layout(page, 'about-desktop');
+  const { win: posts } = await layout(page, 'tracker'), { win: w, desk, icons } = await layout(page, 'about-desktop');
   assert.ok(desk.w - posts.r < 420, `Posts is wide here: ${JSON.stringify(posts)}`);
-  assert.ok(Math.abs(desk.l + desk.w - 10 - w.r) <= 1, `against the right edge: ${JSON.stringify({ w, desk })}`);
+  const far = posts.l + posts.w / 2 < desk.l + desk.w / 2
+    ? Math.abs(desk.l + desk.w - 10 - w.r) <= 1
+    : Math.abs(w.l - (icons.r + 12)) <= 2;
+  assert.ok(far, `against the far side from Posts: ${JSON.stringify({ posts, w, desk, icons })}`);
   assert.ok(Math.abs(w.t - posts.t) <= 1, 'top edges level');
   await page.context().close();
 });

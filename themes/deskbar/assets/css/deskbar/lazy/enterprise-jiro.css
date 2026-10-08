@@ -1,0 +1,61 @@
+/* Enterprise Portal's Jiro (lazy/enterprise-jiro.js): Atlassian's project sidebar, sprint header, grey columns and
+   white cards with a type icon, key, points and assignee */
+.ji { display: flex; flex: 1; min-height: 0; color: #172b4d; }
+.ji-nav { flex: none; width: 200px; padding: 12px 8px; background: #f7f8f9; border-right: 1px solid #dfe1e6; font-size: 13px; }
+.ji-proj { display: flex; align-items: center; gap: 8px; margin-bottom: 14px; }
+.ji-proj i { flex: none; width: 24px; height: 24px; border-radius: 4px; background: linear-gradient(135deg, #0052cc, #2684ff); }
+.ji-proj span { display: grid; }
+.ji-proj small { color: #44546f; font-size: 11px; }
+.ji-nav li > :is(b, button) { display: block; width: 100%; padding: 6px 8px; border-radius: 3px; text-align: left; }
+.ji-nav b { background: #e9f2ff; color: #0c66e4; }
+.ji-link:hover { background: #ebecf0; }
+.ji-main { display: flex; flex-direction: column; flex: 1; min-width: 0; padding: 12px 16px 0; }
+.ji-crumbs { color: #44546f; font-size: 12px; }
+.ji-top { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 12px; margin: 4px 0 12px; }
+.ji-top h2 { font-size: 20px; }
+.ji-left { margin-right: auto; color: #44546f; font-size: 12px; }
+.ji-top .ent-btn.pri { border-color: #0c66e4; background: #0c66e4; }
+.ji-wrap { display: flex; flex: 1; min-height: 0; }
+.ji-board { display: flex; gap: 8px; flex: 1; min-width: 0; padding-bottom: 12px; overflow: auto; }
+.ji-col { flex: none; width: 190px; padding: 8px 6px; border-radius: 6px; background: #f1f2f4; }
+.ji-col h3 { margin: 0 4px 8px; color: #44546f; font-size: 11px; text-transform: uppercase; letter-spacing: .04em; }
+.ji-count { font-weight: 400; }
+.ji-cards { display: flex; flex-direction: column; gap: 6px; }
+.ji-card { display: grid; gap: 10px; width: 100%; padding: 10px; border-radius: 4px; background: #fff; box-shadow: 0 1px 1px rgba(9,30,66,.25), 0 0 1px rgba(9,30,66,.31); text-align: left; font-size: 13px; }
+.ji-card:hover { background: #f7f8f9; }
+.ji-foot { display: flex; align-items: center; gap: 6px; }
+.ji-foot small { color: #44546f; font-weight: 600; }
+.ji-type { width: 14px; height: 14px; border-radius: 2px; }
+.ji-type.story { background: #22a06b; }
+.ji-type.bug { background: #c9372c; border-radius: 50%; }
+.ji-type.task { background: #1d7afc; }
+.ji-pts { margin-left: auto; min-width: 20px; padding: 0 6px; border-radius: 9px; background: #dcdfe4; font: 600 11px/18px system-ui, sans-serif; text-align: center; }
+.ji-who { display: grid; place-items: center; width: 24px; height: 24px; border-radius: 50%; background: #5e4db2; color: #fff; font: 700 10px system-ui, sans-serif; }
+.ji-side { flex: none; width: 300px; margin-left: 8px; padding: 12px; border-left: 1px solid #dfe1e6; overflow: auto; font-size: 13px; }
+.ji-side[hidden] { display: none; }
+.ji-side h3 { margin: 2px 0 6px; font-size: 17px; }
+.ji-key { color: #44546f; font-size: 12px; }
+.ji-label { margin-top: 10px; font-weight: 600; }
+.ji-moves { display: flex; flex-wrap: wrap; gap: 4px; margin-top: 4px; }
+.ji-moves .ent-btn { padding: 3px 8px; font-size: 12px; white-space: normal; text-align: left; }
+.ji-fields { display: grid; grid-template-columns: auto 1fr; gap: 4px 10px; margin: 12px 0 0; }
+.ji-fields dt { color: #44546f; }
+.ji-fields dd { margin: 0; color: #626f86; }
+.ji-star { color: #ae2e24; }
+.ji-form { display: grid; gap: 8px; max-height: 50vh; margin-top: 10px; overflow: auto; font-size: 13px; }
+.ji-form label { display: grid; gap: 2px; }
+.ji-form span { font-weight: 600; }
+/* the move form's 39 fields scroll inside a card held to the window's height, so its buttons stay in reach */
+.ent-modal:has(.ji-drag) { grid-template-rows: minmax(0, 1fr); }
+.ent-modal:has(.ji-drag) .ent-card { display: flex; flex-direction: column; max-height: 100%; }
+.ji-form.ji-drag { flex: 0 1 auto; min-height: 0; max-height: none; padding-right: 4px; }
+[draggable] > .ji-card { cursor: grab; }
+.ji-col.ji-over { background: #e9f2ff; outline: 2px dashed #0c66e4; outline-offset: -2px; }
+@media (prefers-reduced-motion: no-preference) { .ji-col { transition: background-color .15s; } }
+@media (max-width: 767px), (max-height: 500px) and (pointer: coarse) {
+  .ji { flex-direction: column; }
+  .ji-nav { width: auto; border-right: 0; border-bottom: 1px solid #dfe1e6; }
+  .ji-nav ul { display: flex; flex-wrap: wrap; gap: 4px; }
+  .ji-wrap { flex-direction: column; }
+  .ji-side { width: auto; margin: 0; border-left: 0; border-top: 1px solid #dfe1e6; }
+}

@@ -39,6 +39,7 @@ lazyApp({ kind: 'about-desktop', geometry: d => {
   return { w, h, x: pw.x + pw.w / 2 < d.w / 2 ? Math.max(10, d.w - w - 10) : edge, y };
 } });
 lazyApp({ kind: 'sketch', size: 'large' });
+lazyApp({ kind: 'enterprise', size: 'large' });
 lazyApp({ kind: 'chiptunes', geometry: () => ({ w: 400, h: 480 }) });
 lazyApp({ kind: 'terminal', size: 'large' });
 // Feeds: a feed's own address (?feed=, lazy/feeds.js) is a tab of its own in the Feeds window

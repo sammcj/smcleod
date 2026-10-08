@@ -50,6 +50,7 @@ params:
       - { page: /about-desktop }
       - { page: /control-panel }
       - { page: /chiptunes }
+      - { page: /enterprise }
     dock:
       - { page: /tools }
       - { name: Posts, url: /posts/, icon: folder }
@@ -105,6 +106,7 @@ params:
           - { page: /terminal }
           - { page: /screensaver }
           - { page: /sketch }
+          - { page: /enterprise }
           - { page: /chiptunes }
           - { page: /feeds }
           - { page: /tools/old }

@@ -1,0 +1,27 @@
+/* Enterprise Portal's TrustFall Sentinel (lazy/enterprise-sentinel.js): a dark security console, the one dark workspace */
+.ent-sentinel { gap: 12px; padding: 0 0 16px; background: #10172a; color: #e7ecf5; }
+.ent-sentinel > :not(.ts-head) { margin: 0 14px; }
+.ts-head { display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 12px; padding: 10px 14px; background: #d6001c; color: #fff; }
+.ts-restart { padding: 10px 12px; border: 1px solid #f0b429; border-radius: 6px; background: #2b2410; }
+.ts-restart b { font-variant-numeric: tabular-nums; }
+.ts-restart .ent-btn { margin-left: 4px; }
+.ts-stats { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 10px; }
+.ts-stat { padding: 10px 12px; border-radius: 6px; background: #1b2540; }
+.ts-stat h3 { color: #a9b6cf; font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: .04em; }
+.ts-stat b { display: block; margin: 4px 0; font-size: 24px; font-variant-numeric: tabular-nums; }
+.ts-stat p { color: #a9b6cf; font-size: 12px; }
+/* one line, clipped, so the changing path never changes the row's height */
+.ts-stat code { display: block; overflow: hidden; color: #ffcf66; white-space: nowrap; text-overflow: ellipsis; }
+.ts-table { border-collapse: collapse; font-size: 13px; }
+.ts-table :is(th, td) { padding: 6px 10px; border-bottom: 1px solid #2c3858; text-align: left; vertical-align: top; }
+.ts-table th { color: #a9b6cf; }
+.ts-req { display: flex; flex-wrap: wrap; gap: 8px; }
+.ts-req input { flex: 1; min-width: 160px; }
+.ts-cert { color: #a9b6cf; font-size: 12px; }
+.ts-stack { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 10px; align-items: start; }
+.ts-stack > li { padding: 10px 12px; border-radius: 6px; background: #1b2540; }
+.ts-stack summary { cursor: pointer; }
+.ts-stack summary b { font-size: 20px; font-variant-numeric: tabular-nums; }
+.ts-stack details ul { margin-top: 6px; font-size: 12px; }
+.ts-stack code { color: #ffcf66; overflow-wrap: anywhere; }
+.ts-stack p { margin-top: 4px; color: #a9b6cf; font-size: 12px; }

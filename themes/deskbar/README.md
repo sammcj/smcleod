@@ -76,7 +76,7 @@ Posts without an image get a generated card: one Haiku-style object (the emblem)
 
 Fonts are self-hosted in `static/fonts/` (OFL): Noto Sans for the interface, Source Serif 4 and JetBrains Mono for reading and code, plus the looks' own. The first three are Google Fonts' latin, latin-ext and greek subset files, with Google's `unicode-range` per subset. Each file downloads only when text on screen uses it. Their `@font-face` rules are in `assets/css/deskbar/tokens.css`.
 
-Icons: `folder apps favourites projects doc write term person chart image globe git home leaf sheep photos tools theme appearance control-panel sketch music vram compare tiers quantise energy mail feeds videos podcasts hardware software blogs ai search`. External URLs open in a new tab.
+Icons: `folder apps favourites projects doc write term person chart image globe git home leaf sheep photos tools theme appearance control-panel sketch music vram compare tiers quantise energy mail feeds videos podcasts hardware software blogs ai search enterprise`. External URLs open in a new tab.
 
 Front matter the theme reads:
 
@@ -133,6 +133,8 @@ Links to other sites open in a new tab. `view: list` shows rows with the descrip
 Tools always open in a window. A same-origin link to a standalone HTML file opens the tool page that frames it, or else a window framing the file, titled from its `<title>`.
 
 Sketch is a drawing app: a page with `window: sketch`. It keeps the last drawing in localStorage and saves PNGs.
+
+Enterprise Portal is a parody of enterprise software: a page with `window: enterprise`. Each workspace on its rail is a bundle of its own, `lazy/enterprise-<id>.js` with its `.css`, loaded on first visit, and has an address, `?ws=<id>`. A new workspace needs that file pair, a `WORKSPACES` row in `lazy/enterprise.js`, its rail colour in `lazy/enterprise.css` and a `MARKS` entry in `e2e/enterprise.spec.mjs`.
 
 Chiptunes is a media player: a page with `layout: chiptunes` and `window: chiptunes`. It plays `data/chiptunes.yaml`, whose tracks are either song data synthesised live with Web Audio (format at the top of `lazy/chiptunes.js`, songs in `assets/chiptunes/`) or audio URLs hosted outside git, such as GitHub Release assets. The theme ships four AI-composed songs. Opening it plays the first track once the visitor has pressed something on the page (browsers allow sound only then), so a page loaded straight into the player waits for Play. Closing its window stops the sound.
 
