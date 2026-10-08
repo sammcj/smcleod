@@ -11,7 +11,7 @@ const GROUPS = [
     [['f'], 'Maximise or restore the focused window'],
     [['q', 'w'], "Close the focused window's front tab"],
     [['`', '~'], 'Drop the terminal down from the top, and ` again to put it away'],
-    [['Esc'], 'Close a post opened from Tracker, a menu or a dialog'],
+    [['Esc'], "Close a menu, dialog, photo or post opened from Tracker, otherwise the focused window's front tab"],
     [['Shift+F10'], 'Open the context menu'],
   ]],
   ['Tracker and posts', [

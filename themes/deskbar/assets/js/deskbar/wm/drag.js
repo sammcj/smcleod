@@ -279,4 +279,15 @@ export function initPointer(desk) {
     if (k === 'f') { if (!isPhone()) morph([w], () => toggleMax(w)); return; }
     transition(() => closeView(w.views[w.active]));
   });
+  // D43: Escape closes the focused window's front tab as q and w do, but only once nothing inside has used it. On
+  // window, so it runs after every document and element handler (menus, dialogs, Spotlight, the reader's D36 Escape),
+  // and a lightbox still open in the window keeps it even when focus has wandered out of the viewer.
+  window.addEventListener('keydown', e => {
+    if (e.key !== 'Escape' || e.repeat || e.isComposing || e.defaultPrevented || e.ctrlKey || e.metaKey || e.altKey || e.shiftKey) return;
+    if (e.target.closest?.(OWN_KEYS) || document.querySelector(':popover-open, dialog[open]')) return;
+    const w = S.focused;
+    if (!w || w.min || S.home || w.el.querySelector('.lightbox:not([hidden])')) return;
+    e.preventDefault();
+    transition(() => closeView(w.views[w.active]));
+  });
 }

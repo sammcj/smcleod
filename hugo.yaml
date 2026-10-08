@@ -47,10 +47,10 @@ params:
       - { page: /favourites }
       - { page: /projects }
       - { name: Sam, url: /about/, icon: person }
-      - { page: /about-desktop }
       - { page: /control-panel }
       - { page: /chiptunes }
       - { page: /enterprise }
+      - { page: /about-desktop }
     dock:
       - { page: /tools }
       - { name: Posts, url: /posts/, icon: folder }

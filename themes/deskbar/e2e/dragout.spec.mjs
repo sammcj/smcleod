@@ -54,10 +54,6 @@ test('the Posts window: a post dropped on the desk opens in its own window where
   assert.ok(inside(await box(w.locator('.tab.on')), 760, 120), 'its tab lands under the pointer');
   assert.equal(path(page), list[0].url, 'the address names the post on top');
   await shot(page, 'dragout-posts');
-  // D36: Escape puts back a Posts window the reading layout took, which a post window of its own never does
-  await w.locator('.rd h1').click();
-  await page.keyboard.press('Escape');
-  assert.equal(await owns(page).count(), 1, 'Escape leaves a post window of its own open');
 
   // back onto the Posts window: no window, and the release does not click the link
   const second = cards(page).nth(1), sb = await box(second);

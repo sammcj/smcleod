@@ -1,5 +1,5 @@
 // Window keys (wm/drag.js): f maximises the focused window and restores it, ` drops the terminal down, and ? lists
-// every shortcut (lazy/shortcuts.js). None fires while a field has the keys.
+// every shortcut (lazy/shortcuts.js). Escape closes the focused window (D43). None fires while a field has the keys.
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { env, useBrowser, open, win, desktop, settle } from './lib.mjs';
@@ -71,6 +71,29 @@ test('? lists the shortcuts, and ? again or Escape closes the list', async () =>
   await page.waitForFunction(() => document.querySelector('dialog.shortcuts').open);
   await page.keyboard.press('Escape');
   assert.equal(await list.evaluate(d => d.open), false, 'Escape closes it');
+  assert.deepEqual(page.errors, []);
+  await page.context().close();
+});
+
+test('Escape closes the focused window, but only after a field or lightbox inside it has had it (D43)', async t => {
+  if (!(await fetch(env.base + '/photos/')).ok) return t.skip('no /photos/ on this site');
+  const page = await open(desktop, '/photos/');
+  const w = win(page, 'photos');
+  await w.locator('.ph-grid .ph').first().click();
+  const lb = w.locator('.lightbox');
+  await lb.waitFor();
+  await page.keyboard.press('Escape');
+  await lb.waitFor({ state: 'hidden' });
+  assert.ok(await w.isVisible(), 'the first Escape closes only the lightbox');
+  await page.keyboard.press('Escape');
+  await w.waitFor({ state: 'detached' });
+
+  await page.evaluate(() => window.deskbar.go('/posts/'));
+  const tk = win(page, 'tracker');
+  await tk.locator('input[type=search]').focus();
+  await page.keyboard.press('Escape');
+  await settle(page);
+  assert.ok(await tk.isVisible(), 'Escape in a field leaves the window open');
   assert.deepEqual(page.errors, []);
   await page.context().close();
 });

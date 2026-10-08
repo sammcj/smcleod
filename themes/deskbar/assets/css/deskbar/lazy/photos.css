@@ -37,6 +37,8 @@
 .lb-close:hover { background: rgba(255,255,255,.15); }
 .lb-close svg { width: 14px; height: 14px; }
 @media (max-width: 767px), (max-height: 500px) and (pointer: coarse) {
+  /* a phone's window scrolls with the page, so inset: 0 would stretch the viewer down a long album, off screen */
+  .lightbox { position: fixed; inset: var(--panel-h, 0px) 0 0; z-index: 4; }
   .lightbox > img { max-width: 100%; max-height: calc(100% - 110px); }
   .lb-nav { top: auto; bottom: 56px; margin: 0; width: 44px; height: 44px; }
 }

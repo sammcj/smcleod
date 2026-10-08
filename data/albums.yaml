@@ -10,8 +10,58 @@
 - id: rcd-stonith
   title: Delayed Serial STONITH
   source: { type: post, slug: 2015-07-21-rcd-stonith }
+- id: cars-bikes
+  title: Cars and bikes
   # first in Photos, which opens on it
   pin: true
+  # hotlinked from https://gist.github.com/sammcj/9c371e898b9eed1e1165. The older photos come from its comments. The
+  # newer ones are files in the gist, as its comment attachment (user-attachments) links failed to load from this site.
+  source:
+    type: urls
+    items:
+      - { src: "https://cloud.githubusercontent.com/assets/862951/13379102/492e4520-de71-11e5-88d3-0b53c5ecea84.jpg" }
+      - { src: "https://cloud.githubusercontent.com/assets/862951/13379103/492ee20a-de71-11e5-9164-83c5b59233d3.jpg" }
+      - { src: "https://cloud.githubusercontent.com/assets/862951/13379104/492f5348-de71-11e5-90fe-969c198c42f0.JPG" }
+      - { src: "https://cloud.githubusercontent.com/assets/862951/13379105/49319608-de71-11e5-956e-f09c2662c1fc.JPG" }
+      - { src: "https://cloud.githubusercontent.com/assets/862951/13379107/49322758-de71-11e5-9262-0ebb128272f9.JPG" }
+      - { src: "https://cloud.githubusercontent.com/assets/862951/13379106/49322726-de71-11e5-9ff7-06e52a88f282.JPG" }
+      - { src: "https://cloud.githubusercontent.com/assets/862951/13379108/4956e96c-de71-11e5-8ec9-981373a25350.jpg" }
+      - { src: "https://cloud.githubusercontent.com/assets/862951/13379109/49580a68-de71-11e5-9a87-1772046407a0.jpg" }
+      - { src: "https://cloud.githubusercontent.com/assets/862951/13379110/4c60027e-de71-11e5-8e20-85f4b7acdad8.jpg" }
+      - { src: "https://cloud.githubusercontent.com/assets/862951/13379117/703e40e8-de71-11e5-896f-2ff3e2845e23.jpg" }
+      - { src: "https://cloud.githubusercontent.com/assets/862951/13379264/13eac9ac-de75-11e5-9f2a-f48a613b8126.jpg", caption: "1977 Triumph TC 2500" }
+      - { src: "https://gist.githubusercontent.com/sammcj/9c371e898b9eed1e1165/raw/car-59.jpg", caption: "Datsun 100A F/II" }
+      - { src: "https://cloud.githubusercontent.com/assets/862951/13379267/14190c2c-de75-11e5-99e0-d6b3c1aede5a.jpg", caption: "Mirror view" }
+      - { src: "https://cloud.githubusercontent.com/assets/862951/13379280/85f55846-de75-11e5-90c7-b3b720203284.jpg", caption: "Dash" }
+      - { src: "https://cloud.githubusercontent.com/assets/862951/13379281/85f99b90-de75-11e5-9b9b-10cdd3001de1.jpg", caption: "Integra Type R" }
+      - { src: "https://user-images.githubusercontent.com/862951/60068521-76ef0880-9752-11e9-9235-55d1e81641e8.jpeg" }
+      - { src: "https://user-images.githubusercontent.com/862951/60068522-76ef0880-9752-11e9-886d-4e4429add503.jpeg" }
+      - { src: "https://user-images.githubusercontent.com/862951/60068523-77879f00-9752-11e9-96de-632d934f16f7.jpeg" }
+      - { src: "https://cloud.githubusercontent.com/assets/862951/13379198/7d5f272c-de73-11e5-9527-c8fda14006e0.jpg" }
+      - { src: "https://cloud.githubusercontent.com/assets/862951/13379199/7d8b56c6-de73-11e5-9b98-9b41e3046de8.jpg" }
+      - { src: "https://cloud.githubusercontent.com/assets/862951/13379200/7d8cd410-de73-11e5-9c38-9a37ddb73e7f.jpg" }
+      - { src: "https://cloud.githubusercontent.com/assets/862951/13379203/7ddff578-de73-11e5-824c-8be61d0b4904.jpg" }
+      - { src: "https://gist.githubusercontent.com/sammcj/9c371e898b9eed1e1165/raw/car-42.jpg" }
+      - { src: "https://cloud.githubusercontent.com/assets/862951/13379207/7e093d3e-de73-11e5-9e6e-b8cb78f76706.jpg" }
+      - { src: "https://cloud.githubusercontent.com/assets/862951/13379209/7e0d8af6-de73-11e5-9f56-ae4c4480dc93.jpg" }
+      - { src: "https://cloud.githubusercontent.com/assets/862951/13379204/7de79cc4-de73-11e5-8b3e-e50c0595d486.jpg" }
+      - { src: "https://cloud.githubusercontent.com/assets/862951/13379205/7de9d0f2-de73-11e5-9e44-61c6649f9cd9.jpg" }
+      - { src: "https://cloud.githubusercontent.com/assets/862951/13379212/7e302a3e-de73-11e5-871a-0e9925f2809e.jpg" }
+      - { src: "https://cloud.githubusercontent.com/assets/862951/13379208/7e0d3f6a-de73-11e5-8829-03f8ccf08fd0.jpg" }
+      - { src: "https://gist.githubusercontent.com/sammcj/9c371e898b9eed1e1165/raw/car-44.jpg" }
+      - { src: "https://gist.githubusercontent.com/sammcj/9c371e898b9eed1e1165/raw/car-45.jpg" }
+      - { src: "https://gist.githubusercontent.com/sammcj/9c371e898b9eed1e1165/raw/car-46.jpg" }
+      - { src: "https://gist.githubusercontent.com/sammcj/9c371e898b9eed1e1165/raw/car-47.jpg" }
+      - { src: "https://gist.githubusercontent.com/sammcj/9c371e898b9eed1e1165/raw/car-48.jpg" }
+      - { src: "https://gist.githubusercontent.com/sammcj/9c371e898b9eed1e1165/raw/car-49.jpg" }
+      - { src: "https://gist.githubusercontent.com/sammcj/9c371e898b9eed1e1165/raw/car-50.jpg" }
+      - { src: "https://gist.githubusercontent.com/sammcj/9c371e898b9eed1e1165/raw/car-52.jpg" }
+      - { src: "https://gist.githubusercontent.com/sammcj/9c371e898b9eed1e1165/raw/car-53.jpg" }
+      - { src: "https://gist.githubusercontent.com/sammcj/9c371e898b9eed1e1165/raw/car-54.jpg" }
+      - { src: "https://gist.githubusercontent.com/sammcj/9c371e898b9eed1e1165/raw/car-55.jpg" }
+      - { src: "https://gist.githubusercontent.com/sammcj/9c371e898b9eed1e1165/raw/car-56.jpg" }
+      - { src: "https://gist.githubusercontent.com/sammcj/9c371e898b9eed1e1165/raw/car-57.jpg" }
+      - { src: "https://gist.githubusercontent.com/sammcj/9c371e898b9eed1e1165/raw/car-60.jpg" }
 - id: highlands
   title: Highlands Festival of Speed 2018
   source: { type: post, slug: highlands-festival-of-speed-2018 }

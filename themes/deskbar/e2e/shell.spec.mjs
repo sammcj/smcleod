@@ -285,18 +285,18 @@ test('D36: Escape closes a post opened from the Posts window and puts the window
   assert.deepEqual(await posts.boundingBox(), full);
   assert.equal(path(page), '/posts/');
 
-  // a post the page opened with came from no Posts window, so Escape leaves it alone
+  // a post the page opened with came from no Posts window, so Escape just closes it as any window (D43)
   const postURL = await posts.locator('.pc').first().getAttribute('href');
   await page.goto(env.base + postURL);
   await page.waitForSelector('html.wm-ready');
   await reader.locator('.rd h1').click();
   await page.keyboard.press('Escape');
-  assert.equal(await readers.count(), 1);
+  await readers.first().waitFor({ state: 'detached' });
   assert.deepEqual(page.errors, []);
   await page.context().close();
 });
 
-test('D36: Escape leaves the post alone during Home and once Tracker is closed; a Tracker at a new place keeps its address', async () => {
+test('D36: Escape leaves the post alone during Home and just closes it once Tracker is closed; a Tracker at a new place keeps its address', async () => {
   const page = await open(desktop);
   const posts = win(page, 'tracker'), reader = win(page, 'reader'), readers = page.locator('.view[data-key="reader"]');
   await cards(page).first().click();
@@ -321,13 +321,13 @@ test('D36: Escape leaves the post alone during Home and once Tracker is closed; 
   assert.equal(await readers.count(), 0);
   assert.equal(path(page), tagURL, 'the address names the place Tracker shows');
 
-  // Tracker closed after the post opened: nothing to put back
+  // Tracker closed after the post opened: nothing to put back, so Escape just closes the post (D43)
   await posts.locator('.pc, .row').first().click();
   await reader.locator('.rd h1').waitFor();
   await posts.locator('.tab.on .ctl.close').click();
   await reader.locator('.rd h1').click();
   await page.keyboard.press('Escape');
-  assert.equal(await readers.count(), 1, 'Escape leaves the post once Tracker is closed');
+  await readers.first().waitFor({ state: 'detached' });
   assert.deepEqual(page.errors, []);
   await page.context().close();
 });
