@@ -9,11 +9,13 @@
 .mi-frame span { position: absolute; top: -20px; left: 0; font-size: 12px; font-weight: 600; }
 .mi-scrawl { position: absolute; margin: 0; font-family: "Comic Sans MS", "Chalkboard SE", cursive; white-space: nowrap; }
 .mi-notes { position: absolute; inset: 0; }
-.mi-note { position: absolute; min-height: 72px; padding: 8px; box-shadow: 0 2px 5px rgba(0,0,0,.25); font-size: 13px; }
-.mi-note.y, .mi-sprawl .y { background: #fff27a; }
-.mi-note.p, .mi-sprawl .p { background: #ffc1dc; }
-.mi-note.g, .mi-sprawl .g { background: #c3f0b4; }
-.mi-note.b, .mi-sprawl .b { background: #bfe3ff; }
+.mi-note { position: absolute; box-shadow: 0 2px 5px rgba(0,0,0,.25); font-size: 13px; }
+.mi-note button { display: block; width: 100%; min-height: 72px; padding: 8px; color: inherit; font: inherit; text-align: left; cursor: pointer; }
+.mi-note button[aria-pressed=true] { outline: 2px solid #3b7dd8; outline-offset: 3px; }
+.mi-note.y, .mi-sprawl .y, .mi-fn.y { background: #fff27a; }
+.mi-note.p, .mi-sprawl .p, .mi-fn.p { background: #ffc1dc; }
+.mi-note.g, .mi-sprawl .g, .mi-fn.g { background: #c3f0b4; }
+.mi-note.b, .mi-sprawl .b, .mi-fn.b { background: #bfe3ff; }
 /* The far-off leftovers: plain boxes with no shadows, as there are hundreds */
 .mi-sprawl { position: absolute; inset: 0; color: #1a1a1a; }
 .mi-sprawl > div { position: absolute; }
@@ -21,6 +23,27 @@
 .mi-sprawl .f { border: .15em solid; padding: .3em; font-weight: 600; }
 .mi-sprawl .a { border-top: 12px dashed; transform-origin: 0 0; }
 .mi-sprawl .d { width: 40px; height: 40px; border-radius: 50%; background: #e0457b; box-shadow: 52px 4px #e0457b, 26px 48px #3b7dd8, 90px 40px #3b7dd8; }
+.mi-emoji { position: absolute; right: -10px; bottom: -12px; z-index: 1; padding: 2px 7px; border-radius: 99px; background: #fff; box-shadow: 0 1px 3px rgba(0,0,0,.3); font-size: 13px; }
+/* a comment pinned to a sticky or frame: a teardrop avatar pin and its card */
+.mi-comment { position: absolute; left: 62%; top: -22px; z-index: 2; display: flex; align-items: flex-start; gap: 6px; width: 200px; pointer-events: none; }
+.mi-pin { display: grid; place-items: center; flex: none; width: 26px; height: 26px; border-radius: 50% 50% 50% 0; background: #4262ff; color: #fff; font: 700 12px system-ui, sans-serif; }
+.mi-comment p { display: grid; gap: 1px; padding: 6px 9px; border-radius: 8px; background: #fff; box-shadow: 0 2px 8px rgba(0,0,0,.2); color: #1a1a1a; font: 12px/1.3 system-ui, sans-serif; }
+.mi-comment small { color: #595959; font-size: 11px; }
+/* frames past the edge, each one a job for another tool */
+.mi-else { position: absolute; width: 90%; height: 85%; border: 2px solid #1a1a1a; background: #fff; }
+.mi-else h3 { position: absolute; top: -24px; left: 0; font-size: 13px; }
+.mi-else > .mi-comment { top: auto; bottom: 5%; left: auto; right: 3%; }
+.mi-fn { position: absolute; width: 120px; padding: 5px 7px; box-shadow: 0 1px 3px rgba(0,0,0,.2); font-size: 12px; }
+.mi-else .mi-scrawl { font-size: 14px; }
+.mi-line { position: absolute; border-top: 2px dashed #1a1a1a; transform-origin: 0 0; }
+.mi-shot { position: absolute; inset: 8% 6% 18%; margin: 0; }
+.mi-shot div { height: 100%; border: 1px solid #999; filter: blur(1.5px); background: linear-gradient(#fff 0 0) 4% 30% / 26% 14% no-repeat, linear-gradient(#fff 0 0) 37% 30% / 26% 14% no-repeat, linear-gradient(#fff 0 0) 70% 50% / 26% 14% no-repeat, linear-gradient(90deg, #ebecf0 0 31%, transparent 31% 34%, #ebecf0 34% 64%, transparent 64% 67%, #ebecf0 67%) #fff; }
+.mi-shot figcaption { margin-top: 4px; color: #444; font-size: 11px; }
+.mi-bg { position: absolute; inset: 6%; }
+.mi-bg.hype { background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100' preserveAspectRatio='none'%3E%3Cpath d='M0 90C10 85 18 5 28 8S40 80 52 82 75 50 100 45' fill='none' stroke='%231a1a1a' stroke-width='1.5' vector-effect='non-scaling-stroke'/%3E%3C/svg%3E") 0 0 / 100% 100%; }
+.mi-bg.quad { background: linear-gradient(#1a1a1a 0 0) 50% 0 / 2px 100% no-repeat, linear-gradient(#1a1a1a 0 0) 0 50% / 100% 2px no-repeat; }
+.mi-bg.radar { inset: 4% 22%; border-radius: 50%; background: repeating-radial-gradient(circle, transparent 0 calc(12.5% - 2px), #8a8a8a calc(12.5% - 2px) 12.5%); }
+.mi-md { max-height: 160px; padding: 8px; overflow: auto; background: #f4f4f4; font-size: 11px; white-space: pre-wrap; }
 .mi-formats li { padding: 4px 0; }
 .mi-formats li:first-child { font-weight: 600; }
 .mi-formats .off { color: var(--muted); text-decoration: line-through; }
@@ -30,4 +53,6 @@
 @media (prefers-reduced-motion: no-preference) {
   .mi-cur { animation: mi-fly calc(2.6s + var(--i) * .5s) ease-in-out calc(var(--i) * -.7s) infinite; }
   @keyframes mi-fly { 33% { translate: var(--b); } 66% { translate: var(--c); } }
+  .mi-note .mi-comment { animation: mi-pop .15s ease-out; transform-origin: 0 100%; }
+  @keyframes mi-pop { from { scale: .5; } }
 }

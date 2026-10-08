@@ -156,6 +156,25 @@ test('the jokes answer back', async t => {
   await shot(page, 'enterprise-milo-reset');
   await button(page, 'Zoom out too much').click();
   await shot(page, 'enterprise-milo-out');
+  // everything on it should have been somewhere else, and nothing gets out
+  await button(page, 'Reset zoom to just the wrong amount').click();
+  await button(page, 'Convert to…').click();
+  await dialog(page, 'Nothing selected').getByRole('button', { name: 'OK' }).click();
+  await w.locator('.mi-note button', { hasText: 'Synergy?' }).click();
+  assert.equal(await w.locator('.mi-note', { hasText: 'Synergy?' }).locator('.mi-comment span:last-child').textContent(), 'Should have been an email.');
+  await shot(page, 'enterprise-milo-comment');
+  await button(page, 'Convert to…').click();
+  await button(page, 'Export as Markdown').click();
+  assert.match(await dialog(page, 'Exported as Markdown').textContent(), /position:absolute;left:-\d+px/);
+  assert.deepEqual(await audit(page), []);
+  await button(page, 'OK').click();
+  await button(page, 'Frames').click();
+  await button(page, 'Technology radar').click();
+  assert.match(await w.locator('.mi-board').getAttribute('style'), /translate\(-112%, -223%\)/);
+  await shot(page, 'enterprise-milo-radar');
+  await button(page, 'Frames').click();
+  await button(page, 'Hype cycle').click();
+  await shot(page, 'enterprise-milo-hype');
   await button(page, 'Export').click();
   await button(page, 'Export .milo').click();
   assert.match(await dialog(page, 'Exported').textContent(), /\.milo" is ready/);
