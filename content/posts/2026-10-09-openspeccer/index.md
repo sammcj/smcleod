@@ -51,15 +51,31 @@ Each change opens with one tab per artifact: tasks, specs, design and proposal. 
 
 {{< wide-image src="changes.png" alt="A change's tasks tab with per-section progress" >}}
 
+The specs tab renders each delta spec as requirement and scenario cards under their ADDED or MODIFIED heading, with a link to the main spec it changes.
+
+{{< wide-image src="change-specs.png" alt="A change's specs tab showing added requirements as cards" >}}
+
+The proposal and design tabs render as markdown with an outline down the side.
+
+{{< wide-image src="change-proposal.png" alt="A change's proposal tab" >}}
+
+{{< wide-image src="change-design.png" alt="A change's design tab with its outline" >}}
+
 The change list shows active and archived changes together, with active ones first.
 
 ### Specs
 
 Specs show as a filterable tree, with a dot on any spec an active change is modifying. Each spec is broken into requirement cards with their scenarios, BDD keywords highlighted and an outline down the side.
 
-The _History_ tab lists every change with a delta for the spec, and _Diff_ compares the spec between any two git revisions.
-
 {{< wide-image src="specs.png" alt="A spec broken into requirement and scenario cards" >}}
+
+The _History_ tab lists every change with a delta for the spec, newest first. _Show delta_ expands that change's delta in place.
+
+{{< wide-image src="spec-history.png" alt="A spec's history of changes with deltas" >}}
+
+_Diff_ compares the spec between any two git revisions, or a revision and the working copy.
+
+{{< wide-image src="spec-diff.png" alt="A spec diffed between a past revision and the working copy" >}}
 
 ### Timeline
 
