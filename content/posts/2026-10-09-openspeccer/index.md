@@ -4,6 +4,8 @@ date: 2026-10-10T23:00:00+10:00
 tags: ["AI", "LLM", "agentic coding", "agents", "skills", "claude code", "openspec", "spec driven development"]
 author: "Sam McLeod"
 draft: false
+aliases:
+  - /2026/10/openspeccer-a-read-only-openspec-dashboard/
 description: "A lightweight dashboard for OpenSpec projects, shipped as an Agent Skill."
 searchHidden: false
 cover:
