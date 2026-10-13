@@ -1,6 +1,6 @@
 // What only one look does, beyond what looks.spec.mjs checks of them all: Platinum's startup chime, Pixel's night sky
-// and cartridges, Memphis's pressed buttons, Broadsheet's reading bar, Clearlooks' window list and Phosphor's function
-// keys.
+// and cartridges, Memphis's pressed buttons, Broadsheet's reading bar, Clearlooks' window list, Phosphor's function
+// keys and Synthwave's theme button on a phone.
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { useBrowser, open, openLook, needs, box, css, win, cards, desktop, phone } from './lib.mjs';
@@ -43,6 +43,21 @@ test('Pixel: stars twinkle and clouds drift over the dusk sky, and the day sky h
   assert.match(await css(day.locator('body'), 'backgroundImage'), /2f7fd8/, 'the day sky');
   assert.equal(await layer(day, '::before', 'backgroundImage'), 'none', 'no stars by day');
   await day.context().close();
+});
+
+test('Synthwave on a phone: the theme button swaps Sunrise for its night and back, leaving the mode alone', async () => {
+  const page = await openLook(phone, '/', 'synthwave-sunrise');
+  const btn = page.locator('#themeBtn'), html = () => page.evaluate(() => ({ ...document.documentElement.dataset }));
+  await btn.click();
+  assert.equal((await html()).palette, 'synthwave-night');
+  assert.equal((await html()).theme, undefined, 'the mode is left alone');
+  await btn.click();
+  assert.equal((await html()).palette, 'synthwave-sunrise');
+  assert.deepEqual(page.errors, []);
+  await page.context().close();
+  const wide = await openLook(desktop, '/', 'synthwave-sunrise');
+  assert.equal(await wide.locator('#themeBtn').isVisible(), false, 'the desktop keeps it in the Control panel');
+  await wide.context().close();
 });
 
 test('Pixel cartridges: pointing draws one out, and a running app lights its LED', async () => {

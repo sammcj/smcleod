@@ -31,6 +31,11 @@
 :root[data-deco=synthwave] ::selection { background: var(--sw-pink); color: var(--sw-ink); }
 :root[data-deco=synthwave] :focus-visible { outline-color: var(--sw-cyan); }
 :root[data-deco=synthwave] #themeBtn { display: none; }
+/* phones keep it, to swap Sunrise and Synthwave's own night colours (settings.js, D44), as the Control panel is a long
+   way off there; the same query as PHONE in wm/windows.js */
+@media (max-width: 767px), (max-height: 500px) and (pointer: coarse) {
+  :root[data-deco=synthwave]:is([data-palette=synthwave-sunrise], [data-palette=synthwave-night]) #themeBtn { display: flex; }
+}
 :root[data-deco=synthwave] .ticker-h { color: var(--sw-ink); }
 @supports selector(::-webkit-scrollbar) {
   html[data-deco=synthwave] ::-webkit-scrollbar { width: 12px; height: 12px; background: var(--side); }

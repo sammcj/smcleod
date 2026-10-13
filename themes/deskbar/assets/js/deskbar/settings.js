@@ -53,7 +53,11 @@ export const onSetting = fn => (subs.add(fn), () => subs.delete(fn));
 // The theme on screen: the chosen one, or the system's while following it (auto)
 export const shown = () => (isDark() ? 'dark' : 'light');
 
-const setTheme = t => set('theme', t ?? (shown() === 'dark' ? 'light' : 'dark'));
+// Synthwave's chrome is dark whatever the mode, so the theme button, shown under it on phones only (looks/synthwave.css),
+// swaps its light pages (Sunrise) and night ones instead (D44)
+const NIGHT = { 'synthwave-sunrise': 'synthwave-night', 'synthwave-night': 'synthwave-sunrise' };
+const setTheme = t => (get('deco') === 'synthwave' && NIGHT[get('palette')] ? set('palette', NIGHT[get('palette')])
+  : set('theme', t ?? (shown() === 'dark' ? 'light' : 'dark')));
 
 export const textSize = delta => set('textSize', get('textSize') + delta);
 
