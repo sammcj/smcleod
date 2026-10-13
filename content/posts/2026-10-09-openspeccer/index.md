@@ -1,6 +1,6 @@
 ---
 title: "OpenSpeccer - A Read-Only OpenSpec Dashboard"
-date: 2026-10-08T23:00:00+10:00
+date: 2026-10-10T23:00:00+10:00
 tags: ["AI", "LLM", "agentic coding", "agents", "skills", "claude code", "openspec", "spec driven development"]
 author: "Sam McLeod"
 draft: false
