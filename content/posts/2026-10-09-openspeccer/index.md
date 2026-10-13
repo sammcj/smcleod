@@ -1,10 +1,10 @@
 ---
-title: "OpenSpeccer - A Read-Only OpenSpec Dashboard"
+title: "OpenSpeccer - OpenSpec Dashboard"
 date: 2026-10-10T23:00:00+10:00
 tags: ["AI", "LLM", "agentic coding", "agents", "skills", "claude code", "openspec", "spec driven development"]
 author: "Sam McLeod"
 draft: false
-description: "A small, read-only local dashboard for OpenSpec projects, shipped as an Agent Skill."
+description: "A lightweight dashboard for OpenSpec projects, shipped as an Agent Skill."
 searchHidden: false
 cover:
   image: "dashboard.png"
