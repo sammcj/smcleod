@@ -30,15 +30,17 @@ const afterDrop = page => page.waitForTimeout(300);
 const inside = (b, x, y) => b && x >= b.x && x <= b.x + b.width && y >= b.y && y <= b.y + b.height;
 // the desk right of a window, where a drop lands outside it (Tracker starts right of the icons, which may wrap)
 const beside = b => (b.x + b.width + desktop.width) / 2;
+// x, or just right of the Posts window if that reaches past it, so a drop isn't a drop back into it
+const clearOf = async (page, x) => { const b = await box(win(page, 'tracker')); return Math.max(x, Math.ceil(b.x + b.width) + 20); };
 
 test('the Posts window: a post dropped on the desk opens in its own window where it lands; dropped back, nothing opens', async () => {
   const list = await posts();
   const page = await open(desktop);
   const rp = cards(page).first(), tk = win(page, 'tracker');
   await rp.waitFor();
-  const tb = await box(tk);
+  const tb = await box(tk), x = await clearOf(page, 760);
 
-  await dragTo(page, rp, 760, 120, async () => {
+  await dragTo(page, rp, x, 120, async () => {
     await page.locator('.dragout').waitFor();
     assert.match(await page.locator('.dragout').textContent(), new RegExp(list[0].title.slice(0, 12).replace(/[.*+?^${}()|[\]\\]/g, '\\$&')));
     await shot(page, 'dragout-ghost');
@@ -51,7 +53,7 @@ test('the Posts window: a post dropped on the desk opens in its own window where
   assert.deepEqual(await box(tk), tb, 'no reading layout, so the Posts window stays where it was');
   const b = await box(w);
   assert.equal(Math.round(b.width), 680, 'sized like a page window');
-  assert.ok(inside(await box(w.locator('.tab.on')), 760, 120), 'its tab lands under the pointer');
+  assert.ok(inside(await box(w.locator('.tab.on')), x, 120), 'its tab lands under the pointer');
   assert.equal(path(page), list[0].url, 'the address names the post on top');
   await shot(page, 'dragout-posts');
 
@@ -191,7 +193,7 @@ test('each post window has its own Back and Forward, and browser Back returns to
   const list = await posts();
   const page = await open(desktop);
   await cards(page).nth(1).waitFor();
-  await dragTo(page, cards(page).nth(0), 760, 120);
+  await dragTo(page, cards(page).nth(0), await clearOf(page, 760), 120);
   await owns(page).locator('.rd h1').waitFor();
   await dragTo(page, cards(page).nth(1), 1100, 240);
   await page.waitForFunction(() => document.querySelectorAll('.view[data-key^="post:"] .rd h1').length === 2);
@@ -230,7 +232,7 @@ test('a layout link reopens post windows as post windows', async () => {
   const list = await posts();
   const page = await open(desktop);
   await cards(page).nth(1).waitFor();
-  await dragTo(page, cards(page).nth(0), 800, 200);
+  await dragTo(page, cards(page).nth(0), await clearOf(page, 800), 200);
   await owns(page).locator('.rd h1').waitFor();
   await dragTo(page, cards(page).nth(1), 900, 300);
   await page.waitForFunction(() => document.querySelectorAll('.view[data-key^="post:"] .rd h1').length === 2);
@@ -262,7 +264,7 @@ test('Home hides post windows and puts them back where they were', async () => {
   const list = await posts();
   const page = await open(desktop);
   await cards(page).nth(1).waitFor();
-  await dragTo(page, cards(page).nth(0), 800, 200);
+  await dragTo(page, cards(page).nth(0), await clearOf(page, 800), 200);
   await owns(page).locator('.rd h1').waitFor();
   await dragTo(page, cards(page).nth(1), 900, 300);
   await page.waitForFunction(() => document.querySelectorAll('.view[data-key^="post:"] .rd h1').length === 2);
