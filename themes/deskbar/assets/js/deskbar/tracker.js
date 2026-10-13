@@ -12,6 +12,7 @@ import { createWindow, findView, focusView, renderTabs, place, refresh, deskRect
 import { arrowTo } from './lib/keys.js';
 import { dragOut } from './dragout-trigger.js';
 import * as router from './router.js';
+import { readingLayout } from './reader.js';
 
 let index = Promise.resolve(null);
 export const initTracker = p => { index = p; };
@@ -322,5 +323,10 @@ export function showPosts(beneath) {
 }
 
 export function initTrackerRoute() {
-  router.register('tracker', page => { ensureTracker({ place: page.place || 'all', url: page.url }); });
+  router.register('tracker', page => {
+    const fresh = !findView('tracker'), v = ensureTracker({ place: page.place || 'all', url: page.url });
+    // reopened while the shared reader is on screen on its own, it joins it in the reading layout again (D7, D40)
+    const rw = fresh && !isPhone() && findView('reader')?.win;
+    if (rw && rw !== v.win && !rw.min && !rw.group && !rw.snap) { readingLayout(rw); focusView(v); }
+  });
 }

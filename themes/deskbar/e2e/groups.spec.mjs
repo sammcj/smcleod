@@ -166,6 +166,30 @@ test('D40: after Home, opening a post lays the reading pair out again', async ()
   await page.context().close();
 });
 
+test('D40: Posts closed beside a post and reopened joins it again; closing the post puts Posts at its home spot', async () => {
+  const page = await open(desktop);
+  await cards(page).first().waitFor();
+  const home = await box(page, 'tracker');
+  await cards(page).first().click();
+  await win(page, 'reader').locator('.rd h1').waitFor();
+  await settle(page);
+  const [tb, rb] = [await box(page, 'tracker'), await box(page, 'reader')];
+  await win(page, 'tracker').locator('.tab.on .ctl.close').click();
+  await win(page, 'tracker').waitFor({ state: 'detached' });
+  await page.evaluate(() => window.deskbar.go('/posts/'));
+  await win(page, 'tracker').waitFor();
+  await settle(page);
+  assert.ok(await win(page, 'reader').locator('.seam').isVisible(), 'joined again');
+  assert.deepEqual([await box(page, 'tracker'), await box(page, 'reader')], [tb, rb], 'side by side as before');
+  assert.equal(await page.evaluate(() => location.pathname), '/posts/', 'Posts has the address');
+  await win(page, 'reader').locator('.tab.on .ctl.close').click();
+  await win(page, 'reader').waitFor({ state: 'detached' });
+  await settle(page);
+  assert.deepEqual(await box(page, 'tracker'), home, 'Posts goes to its home spot');
+  assert.deepEqual(page.errors, []);
+  await page.context().close();
+});
+
 test('D40: a member moved while the rest of its group is minimised moves out of the group', async () => {
   const page = await open(desktop);
   await cards(page).first().click();
