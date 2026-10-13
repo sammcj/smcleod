@@ -149,6 +149,12 @@ export function render(pane, { after, every, on, dialog, btn }) {
 
   // it scrolls, so keyboard users need to be able to focus it
   const log = h('ol', { class: 'mb-log', tabindex: 0, 'aria-label': 'Messages' });
+  // A room opens on its latest message, and keeps to it as the log is shown or resized until the reader scrolls up.
+  // A hidden log has no height, and its scroll position says nothing about the reader.
+  let stick = true;
+  const toEnd = () => { if (stick) log.scrollTop = log.scrollHeight; };
+  new ResizeObserver(toEnd).observe(log);
+  on(log, 'scroll', () => { if (log.clientHeight) stick = log.scrollTop + log.clientHeight >= log.scrollHeight - 4; });
   const typing = h('p', { class: 'mb-typing' }, 'Darren is typing…');
   const heard = h('p', { class: 'ent-sr', role: 'status' });
   const input = h('input', { class: 'mb-in', 'aria-label': 'Message' });
@@ -158,6 +164,8 @@ export function render(pane, { after, every, on, dialog, btn }) {
     if (!text) return;
     input.value = '';
     log.append(msg('You', text, null, 'Now'));
+    stick = true;
+    toEnd();
     // the reply goes to the room it was sent in, and is read out from a status line that is always there
     const where = title.textContent;
     after(1200, () => {
@@ -176,7 +184,12 @@ export function render(pane, { after, every, on, dialog, btn }) {
     btn('Shared', () => dialog('Shared', ['Files shared here are in SharePoint.', 'Which SharePoint? Yes.']), 'mb-tab'));
   const body = h('div', { class: 'mb-body' });
   const side = h('ul', { class: 'mb-side' });
+  // A phone shows the list or a room, as the mobile app does, rather than both stacked with neither readable
+  // (enterprise-buddies.css)
+  const show = v => { pane.dataset.mb = v; };
+  const back = h('button', { type: 'button', class: 'mb-back', 'aria-label': 'Back to chats', onclick: () => show('list') }, '‹');
   const pick = (name, fill) => {
+    show('room');
     title.textContent = name;
     crest.textContent = initials(name);
     for (const b of side.querySelectorAll('button[data-name]')) b.setAttribute('aria-current', b.dataset.name === name);
@@ -201,6 +214,8 @@ export function render(pane, { after, every, on, dialog, btn }) {
       log.replaceChildren(h('li', { class: 'mb-note' }, "You don't have access to this channel's history. Request it from the channel owner, Former Employee."));
     }
     body.replaceChildren(log, typing, heard, foot);
+    stick = true;
+    toEnd();
   };
   const calendar = () => body.replaceChildren(h('ol', { class: 'mb-cal' }, MEETINGS.map(([t, what, long]) =>
     h('li', {}, h('time', {}, t), h('b', {}, what), h('small', {}, long)))));
@@ -241,7 +256,7 @@ export function render(pane, { after, every, on, dialog, btn }) {
   };
   const apps = {
     Activity: app('Activity', () => dialog('Activity', 'Someone reacted to a message. We can\'t say which one.'), 1),
-    Chat: app('Chat', () => pick('Project Phoenix (7)', room('Project Phoenix (7)', 'chat'))),
+    Chat: app('Chat', () => { pick('Project Phoenix (7)', room('Project Phoenix (7)', 'chat')); show('list'); }),
     Calendar: app('Calendar', () => pick('Calendar', calendar)),
     Calls: app('Calls', () => dialog('Calls', 'Calling is turned off by your organisation. Try a meeting instead.')),
   };
@@ -277,7 +292,7 @@ export function render(pane, { after, every, on, dialog, btn }) {
       h('nav', { class: 'mb-apps', 'aria-label': 'Apps' }, Object.values(apps)),
       h('nav', { class: 'mb-list', 'aria-label': 'Chats and channels' },
         h('h3', {}, 'Chat'), h('div', { class: 'mb-pills', role: 'group', 'aria-label': 'Filter' }, pills), side),
-      h('div', { class: 'mb-main' }, h('div', { class: 'mb-top' }, crest, title, tabs, tools), body)));
+      h('div', { class: 'mb-main' }, h('div', { class: 'mb-top' }, back, crest, title, tabs, tools), body)));
   // the frame's toast asks for a chat by name (pane.dataset.open, then an ent-open event once this has rendered)
   const open = () => {
     // a filter could be hiding the chat asked for

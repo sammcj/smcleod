@@ -1,6 +1,6 @@
 // Enterprise Portal (lazy/enterprise.js): start-up, each workspace loading and passing axe on a desktop and a phone, the
-// jokes that respond to input, workspace addresses, the Sign in button's factors, the survey, and the toast that leaves
-// the window. Skips on a site without /enterprise/.
+// jokes that respond to input, MS Buddies' one pane at a time on a phone, workspace addresses, the Sign in button's
+// factors, the survey, and the toast that leaves the window. Skips on a site without /enterprise/.
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { useBrowser, open, needs, shot, win, go, path, audit, desktop, phone } from './lib.mjs';
@@ -51,6 +51,27 @@ test('every workspace loads and passes axe, and the Posts window makes way', asy
     assert.deepEqual(page.errors, []);
     await page.context().close();
   }
+});
+
+test('MS Buddies on a phone shows the list or a room, one at a time, opened on its latest message', async t => {
+  if (!(await needs(t, url))) return;
+  const page = await open(phone, url);
+  const w = ent(page), list = w.locator('.mb-list'), room = w.locator('.mb-main');
+  await w.locator('.mb-log').waitFor();
+  assert.equal(await list.isVisible(), false, 'it opens on a room');
+  const atEnd = () => w.locator('.mb-log').evaluate(l => l.scrollHeight > l.clientHeight && l.scrollTop + l.clientHeight >= l.scrollHeight - 4);
+  assert.ok(await atEnd(), 'on its latest message');
+  await button(page, 'Back to chats').click();
+  await list.waitFor();
+  assert.equal(await room.isVisible(), false);
+  await w.locator('.mb-side button', { hasText: 'General' }).click();
+  await w.locator('.mb-top h2', { hasText: 'General' }).waitFor();
+  assert.equal(await list.isVisible(), false);
+  assert.ok(await atEnd(), 'a channel too');
+  await w.getByRole('button', { name: 'Chat', exact: true }).click();
+  await list.waitFor();
+  assert.deepEqual(page.errors, []);
+  await page.context().close();
 });
 
 test('each workspace has an address, followed by the address bar', async t => {

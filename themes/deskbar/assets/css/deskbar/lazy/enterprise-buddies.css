@@ -34,6 +34,7 @@
 .mb-crest { display: grid; place-items: center; flex: none; width: 22px; height: 22px; border-radius: 4px; background: var(--mb); color: #fff; font-size: 9px; font-weight: 700; }
 .mb-main { display: flex; flex-direction: column; flex: 1; min-width: 0; background: #fff; }
 .mb-top { display: flex; align-items: center; gap: 12px; padding: 8px 16px 0; border-bottom: 1px solid var(--ent-line); }
+.mb-back { display: none; }
 .mb-top > .mb-crest { width: 30px; height: 30px; font-size: 11px; }
 .mb-top h2 { margin: 0; font-size: 17px; }
 .mb-tabs { display: flex; gap: 14px; align-self: stretch; }
@@ -87,10 +88,18 @@
   .mb-head form { order: 3; flex-basis: 100%; max-width: none; }
   .mb-wrap { flex-direction: column; }
   .mb-apps { flex-direction: row; width: auto; padding: 0; }
-  .mb-app { flex: 1; border-left: 0; border-bottom: 3px solid transparent; }
+  /* a slim tab bar: the icon beside its label, so it costs a row rather than a block */
+  .mb-app { flex: 1; flex-direction: row; justify-content: center; gap: 5px; padding: 6px 0 4px; border-left: 0; border-bottom: 3px solid transparent; }
+  .mb-app svg { width: 18px; height: 18px; }
+  .mb-app small { font-size: 12px; }
+  .mb-app .ent-badge { position: static; min-width: 16px; padding: 0 4px; font-size: 10px; line-height: 16px; }
   .mb-app[aria-current=true] { border-bottom-color: var(--mb); }
   .mb-top { flex-wrap: wrap; gap: 4px 12px; padding: 6px 12px 0; }
   .mb-tools { padding-bottom: 0; }
-  .mb-list { width: auto; max-height: 160px; border-right: 0; border-bottom: 1px solid var(--ent-line); }
-  .mb-log { min-height: 240px; }
+  /* the list or the room a screen tall (enterprise-buddies.js), with search only over the list */
+  .mb-list { flex: 1; width: auto; border-right: 0; }
+  .ent-buddies[data-mb=room] :is(.mb-list, .mb-head form), .ent-buddies[data-mb=list] .mb-main { display: none; }
+  .mb-back { display: grid; place-items: center; width: 32px; height: 32px; margin-left: -8px; border-radius: 4px; color: var(--mb-ink); font-size: 28px; line-height: 1; }
+  .mb-back:hover { background: #ebebeb; }
+  .mb-main { flex: 1; min-height: 0; }
 }
