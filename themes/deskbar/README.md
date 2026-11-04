@@ -50,6 +50,7 @@ params:
     searchBodyChars: 3000     # how much of each page's text Spotlight searches
     screensaver: { minutes: 5 }   # idle minutes before the screen saver starts; 0 turns it off
     appearance: { deco: synthwave, palette: synthwave-sunrise, dock: synthwave }   # starting look for visitors who haven't picked one, and what Reset puts back; any of deco, palette, wall, dock, crt (ids in lib/appearance.js)
+    lookToggle: { preset: classic, name: Deskbar Classic }   # adds a panel and dock button that swaps the starting look and this preset; name is its label. From any other look it goes to the preset. The panel copy alone shows on phones, and neither under 360px
     stylesheets:              # extra CSS loaded after the theme's
       - /css/site.css
     icons:                    # desktop icons
@@ -182,7 +183,7 @@ From a site script (e.g. in `hooks/body-end.html`), in any load order:
   // also: api.go(url) routes to a page, resolving once it is in its window; api.mountContent(root, page, view) runs page scripts and onMounted hooks;
   // api.loadLazy(name) loads an on-demand bundle, e.g. api.loadLazy('screensaver').then(m => m.start()), and
   // api.loaded() lists the ones loaded so far; api.index resolves to the parsed post index (lib/index-data.js)
-  // visitor settings: api.settings.get(key), .set(key, value) (no value resets it), .on((key, value) => {}) returns an unsubscribe
+  // visitor settings: api.settings.get(key), .set(key, value) (no value resets it), .start(key) is the site's starting choice, .on((key, value) => {}) returns an unsubscribe
   // keys: theme palette deco wall dock crt readerWidth readerFont textSize; api.settings.shown() is the theme on screen, light or dark
 });
 ```

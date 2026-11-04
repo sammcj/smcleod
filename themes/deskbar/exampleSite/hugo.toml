@@ -36,6 +36,7 @@ title = "deskbar demo"
   timeZone = "Australia/Melbourne"
   # minutes without input before the screen saver starts (never over a reader window); 0 turns it off
   screensaver = { minutes = 5 }
+  lookToggle = { preset = "phosphor", name = "Phosphor" }   # panel and dock button swapping the starting look and this preset
   # Feeds app (layout: feeds): items kept per feed and summary length. Subscriptions: assets/feeds.opml,
   # less any whose xmlUrl is in exclude
   feeds = { perFeed = 5, summaryChars = 280, exclude = ["feeds/excluded.xml"] }

@@ -151,7 +151,7 @@
   :root[data-deco=phosphor] .tab .tt { line-height: 28px; font-size: 13px; }
   :root[data-deco=phosphor] .win .frame, :root[data-deco=phosphor] .win.active .frame { padding: 0; border-width: 3px 0 0; box-shadow: none; }
   :root[data-deco=phosphor] :is(.win, #switcher) .ctl { min-width: 44px; height: 36px; font-size: 14px; line-height: 36px; }
-  .wm[data-dock=phosphor] #dock { width: auto; margin: 0; bottom: 0; gap: 4px; padding-inline: 4px; font-size: 12px; }
+  .wm[data-dock=phosphor] #dock { width: auto; max-width: none; margin: 0; bottom: 0; gap: 4px; padding-inline: 4px; font-size: 12px; }
   .wm[data-dock=phosphor] #dock :is(.dk, #homeBtn, #winsBtn) { height: 48px; }
   .wm[data-dock=phosphor] #dock :is(.dk .lbl, #winsBtn b), .wm[data-dock=phosphor] #dock :is(#homeBtn, #winsBtn)::after { height: 40px; line-height: 40px; padding-inline: 3px; }
   .wm[data-wall=phosphor] #desk::after { content: none; }

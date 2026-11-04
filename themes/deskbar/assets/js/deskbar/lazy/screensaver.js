@@ -3,7 +3,7 @@
 // touching it, so taking it away leaves every window, focus and scroll as it was. The input that wakes it is
 // swallowed rather than passed to whatever lies underneath.
 // Two savers: leaves tumbling down a dark screen, after Haiku's Leaves saver (here), and sheep wandering the dimmed
-// desktop (lazy/sheep.js, loaded when chosen). Each is a scene { size(W, H), step(dt), draw(g) } this module runs.
+// desktop (lazy/sheep.js, loaded when chosen). Each is a scene (below) this module runs.
 import { h } from '../lib/dom.js';
 import { store } from '../lib/store.js';
 
@@ -25,6 +25,12 @@ export function idle() {
 }
 
 const TAU = Math.PI * 2;
+
+// A scene is { fps, maxScale?, key?, size(W, H), step(dt), draw(g) }. Each canvas update costs the browser a recomposite
+// whatever changed, which took a full core in Firefox at the display's rate, so a scene runs at the lowest rate that
+// looks right, and key() (what it would draw) skips a frame that shows nothing new (D46).
+// The slack is for frame times, which can land just under a whole multiple of the display's.
+export const due = (last, t, fps) => t - last >= 1000 / fps - 2;
 
 // One leaf, drawn once to its own canvas and stamped each frame: a pointed oval with a midrib and stalk
 function leafSprite(hue, light) {
@@ -71,6 +77,7 @@ function leaves() {
     };
   };
   return {
+    fps: 30,
     size(w, hgt) {
       W = w;
       H = hgt;
@@ -114,29 +121,34 @@ export function start(name) {
   const el = h('div', { class: 'saver', 'data-kind': kind, 'aria-hidden': 'true' }, canvas);
   document.body.append(el);
   const g = canvas.getContext('2d');
-  let W = 0, H = 0, sc = null, raf = 0, last = 0;
+  let W = 0, H = 0, sc = null, raf = 0, last = 0, drawn = null;
   const paint = () => {
     g.clearRect(0, 0, W, H);
     sc.draw(g);
   };
   function size() {
-    const r = Math.min(devicePixelRatio || 1, 2);
+    const r = Math.min(devicePixelRatio || 1, sc?.maxScale || 2);
     W = innerWidth;
     H = innerHeight;
     canvas.width = W * r;
     canvas.height = H * r;
+    drawn = null;
     g.setTransform(r, 0, 0, r, 0, 0);
     if (!sc) return;
     sc.size(W, H);
     if (still) paint();
   }
   function frame(t) {
+    raf = requestAnimationFrame(frame);
+    if (!due(last, t, sc.fps)) return;
     // capped, so nothing jumps after the tab was hidden (animation frames pause there)
-    const dt = Math.min(0.05, (t - (last || t)) / 1000);
+    const dt = Math.min(0.2, (t - (last || t)) / 1000);
     last = t;
     sc.step(dt);
+    const k = sc.key?.();
+    if (k !== undefined && k === drawn) return;
+    drawn = k;
     paint();
-    raf = requestAnimationFrame(frame);
   }
   // a scene that arrives after a wake-up has begun (sheep still loading) is not started
   const run = s => {

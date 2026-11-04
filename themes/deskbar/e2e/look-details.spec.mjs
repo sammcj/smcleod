@@ -152,7 +152,7 @@ test('Phosphor: the dock is a bar of numbered function keys along the bottom, un
     assert.equal(await css(key, 'content', '::before'), 'counter(fk)', `${at}: numbered keys`);
     assert.equal(await key.locator('.ico').isVisible(), false, `${at}: labels, not icons`);
     assert.ok(parseFloat(await css(key.locator('.lbl'), 'width')) > 40, `${at}: label shown`);
-    const widths = await dock.locator('.dk').evaluateAll(ks => ks.map(k => Math.round(k.getBoundingClientRect().width)));
+    const widths = await dock.locator('.dk:visible').evaluateAll(ks => ks.map(k => Math.round(k.getBoundingClientRect().width)));
     assert.ok(Math.max(...widths) - Math.min(...widths) <= 1, `${at}: even keys ${widths}`);
     if (vp === desktop) {
       assert.ok(Math.round(db.y + db.height) === vp.height && db.height <= 40, `${at}: a slim bar on the bottom edge`);

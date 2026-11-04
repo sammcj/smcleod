@@ -4,8 +4,8 @@
 // once, so the desktop behind the window is the preview. Each pane has an address, ?pane=<id> (none for the first),
 // which the window's route follows, so a link, a copied layout or Open in new tab comes back to the same pane. The
 // settings live in the shell (settings.js, through window.deskbar.settings), which also serves the panel's theme
-// button and the reader's own controls, and head.html reapplies them before first paint. Loaded on first open
-// through lazyApp (loader.js).
+// button and the reader's own controls, and head.html reapplies them before first paint. Loaded on first open, or the
+// look toggle's first click (settings.js), through loadLazy (loader.js).
 import { h, ico, plainClick } from '../lib/dom.js';
 import { store } from '../lib/store.js';
 import { PALETTES, MODES, DECOS, DOCKS, WALLS, CRTS, LOOKS, KEYS, PRESETS, lookSheet, coloursFor, ownsColours } from '../lib/appearance.js';
@@ -69,7 +69,23 @@ HELLO.platinum = () => {
 const sheet = k => (k ? window.deskbar.loadLazy(k).catch(() => {}) : Promise.resolve());
 // what has to load before an Appearance choice shows whole; a look's colours come with the look's stylesheet
 const sheetFor = (k, v) =>
-  sheet(k === 'palette' ? (PALETTES.some(o => o[0] === v) ? 'palette-' + v : lookSheet(v)) : k === 'crt' ? 'effect-crt' : lookSheet(v));
+  sheet(k === 'palette' ? (PALETTES.some(o => o[0] === v) ? 'palette-' + v : lookSheet(v)) : k === 'crt' ? v !== 'off' && 'effect-crt' : lookSheet(v));
+// A choice applies once its stylesheet has loaded, so a look never shows half-drawn
+const apply = (want, hello) => {
+  HELLO[hello]?.();
+  return Promise.all(Object.entries(want).map(([k, x]) => x && sheetFor(k, x))).then(() => {
+    for (const [k, x] of Object.entries(want)) window.deskbar.settings.set(k, x);
+  });
+};
+// Every Appearance choice but the mode
+const allKeys = value => Object.fromEntries(KEYS.map(k => [k, value(k)]));
+const applyPreset = p => apply(allKeys(k => p[k]), p.deco);
+// The panel and dock's look toggle (look-toggle.html): that preset, or from it the site's starting look (D45)
+export function toggleLook(id) {
+  const s = window.deskbar.settings, p = PRESETS.find(o => o.id === id);
+  if (!p) throw new Error(`no preset "${id}"`);
+  return presetOf(s.get) === p ? apply(allKeys(s.start)) : applyPreset(p);
+}
 const WIDTH = ['readerWidth', 'Width', [['narrow', 'Narrow'], ['normal', 'Normal'], ['wide', 'Wide']]];
 // Sans and Mono are the theme's UI and code fonts, already loaded; Atkinson Hyperlegible loads once chosen
 const FONT = ['readerFont', 'Font', [['serif', 'Serif'], ['sans', 'Sans'], ['atkinson', 'Atkinson Hyperlegible'], ['mono', 'Mono']]];
@@ -162,20 +178,13 @@ function build(v, page) {
     show(a.dataset.pane);
   });
 
-  // A choice applies once its stylesheet has loaded, so a look never shows half-drawn. A preset sets every
-  // Appearance choice but the mode; a window style keeps the rest, bar a palette the new style doesn't offer.
-  const apply = (want, hello) => {
-    HELLO[hello]?.();
-    return Promise.all(Object.entries(want).map(([k, x]) => x && sheetFor(k, x))).then(() => {
-      for (const [k, x] of Object.entries(want)) s.set(k, x);
-    });
-  };
   form.addEventListener('submit', e => e.preventDefault());
   form.addEventListener('change', e => {
     const k = e.target.name?.startsWith('cp-') && e.target.name.slice(3), x = e.target.value;
     if (k === 'saver') store.set(k, +x);
     else if (k === 'saverKind') store.set(k, x === 'sheep' ? null : x);
-    else if (k === 'preset') { const p = PRESETS.find(o => o.id === x); apply(Object.fromEntries(KEYS.map(n => [n, p[n]])), p.deco); }
+    else if (k === 'preset') applyPreset(PRESETS.find(o => o.id === x));
+    // a window style keeps the other choices, bar a palette the new style doesn't offer
     else if (k === 'deco') apply({ deco: x, palette: paletteFor(x, s.get('palette')) }, x);
     else if (KEYS.includes(k)) apply({ [k]: x });
     else if (k) s.set(k, x);
@@ -185,7 +194,7 @@ function build(v, page) {
     for (const r of form.querySelectorAll(`[name="cp-${k}"]`)) r.checked = r.value === x;
   };
   // the panel's theme button and the reader's controls change the same settings while this window is open
-  const sync = k => {
+  const sync = () => {
     for (const g of PANES.flatMap(p => p.groups)) check(g[0], g === SAVER ? String(store.get('saver', +document.documentElement.dataset.saver)) : g === KIND ? kind() : s.get(g[0]));
     check('preset', presetOf(s.get)?.id);
     const deco = s.get('deco'), offer = coloursFor(deco);
@@ -195,8 +204,6 @@ function build(v, page) {
     size.value = s.get('textSize');
     px.textContent = size.value + 'px';
     status.value = '';
-    // a dock of another height changes the room windows have
-    if (k === 'dock') dispatchEvent(new Event('resize'));
   };
   const reset = () => {
     for (const k of shown.keys) {

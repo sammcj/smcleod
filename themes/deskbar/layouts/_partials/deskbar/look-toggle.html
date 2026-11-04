@@ -1,0 +1,7 @@
+{{- /* The button that swaps the site's starting look and the preset in params.deskbar.lookToggle, in the panel ("pb")
+       and the dock ("dk"). Left out without that param. settings.js wires it. */ -}}
+{{- with site.Params.deskbar.lookToggle -}}
+<button class="{{ $ }}" type="button" title="Default or {{ .name }}" aria-label="Toggle default or {{ .name }} theme" data-look="{{ .preset }}" data-shell>
+  <svg class="ico" aria-hidden="true"><use href="#i-appearance"/></svg>{{ if eq $ "dk" }}<span class="lbl">{{ .name }}</span>{{ end }}
+</button>
+{{- end -}}

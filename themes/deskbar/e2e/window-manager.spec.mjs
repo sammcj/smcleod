@@ -120,9 +120,10 @@ test('D5: the grip resizes, with a 300x180 minimum, and unsnaps a snapped window
   const b0 = await w.boundingBox();
 
   const g0 = centre(await grip.boundingBox());
-  await drag(page, g0, { x: g0.x + 120, y: g0.y + 80 });
+  // far enough right that the grip clears the dock, which sits above windows
+  await drag(page, g0, { x: g0.x + 140, y: g0.y + 80 });
   const b1 = await w.boundingBox();
-  near(b1.width, b0.width + 120, 3, 'width grows with the grip');
+  near(b1.width, b0.width + 140, 3, 'width grows with the grip');
   near(b1.height, b0.height + 80, 3, 'height grows with the grip');
   assert.deepEqual([b1.x, b1.y], [b0.x, b0.y], 'top-left corner stays put');
 

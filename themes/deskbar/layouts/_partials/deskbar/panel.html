@@ -15,6 +15,7 @@
   <button id="themeBtn" class="pb" type="button" title="Light or dark" aria-label="Toggle light or dark theme" data-shell>
     <svg class="ico" aria-hidden="true"><use href="#i-theme"/></svg>
   </button>
+  {{- partial "deskbar/look-toggle.html" "pb" }}
   {{- /* search stays the last icon before the clock, whatever the tray holds or a look hides */}}
   {{- partialCached "deskbar/spotlight.html" . }}
   <time id="clock" data-shell data-tz="{{ site.Params.deskbar.timeZone }}"></time>

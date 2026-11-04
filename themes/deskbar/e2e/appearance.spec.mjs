@@ -4,7 +4,9 @@
 // in looks.spec.mjs. Skips without /control-panel/.
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { env, useBrowser, open, needs, shot, win, desktop, css, seed, style, go, cp, ready, pick, checked, attrs, stored } from './lib.mjs';
+import { env, useBrowser, open, needs, shot, win, desktop, phone, css, seed, style, go, cp, ready, pick, checked, attrs, stored } from './lib.mjs';
+
+import { PRESETS, KEYS } from '../assets/js/deskbar/lib/appearance.js';
 
 useBrowser();
 
@@ -373,4 +375,36 @@ test('Control panel looks are the same chosen in this visit and after a reload',
   }
   assert.deepEqual(page.errors, []);
   await page.context().close();
+});
+
+test('the look toggle swaps the starting look and its preset from the panel and the dock, and reload keeps it', async t => {
+  if (!(await needs(t, app))) return;
+  const page = await open(desktop, '/', undefined, { siteLook: true });
+  const panel = page.locator('#panel [data-look]'), dock = page.locator('#dock [data-look]');
+  if (!(await panel.count())) return t.skip('no params.deskbar.lookToggle on this site');
+  const id = await panel.getAttribute('data-look');
+  const { label: _, id: __, ...want } = PRESETS.find(p => p.id === id);
+  const look = () => page.evaluate(ks => Object.fromEntries(ks.map(k => [k, window.deskbar.settings.get(k)])), KEYS);
+  const start = await look();
+  assert.notDeepEqual(start, want);
+
+  await page.evaluate(() => { window.resized = 0; addEventListener('resize', () => window.resized++); });
+  await panel.click();
+  await page.waitForFunction(d => window.deskbar.settings.get('deco') === d, want.deco);
+  assert.deepEqual(await look(), want);
+  assert.ok(await page.evaluate(() => window.resized), 'windows refit to the new dock with the Control panel closed');
+  await page.reload();
+  await page.waitForSelector('html.wm-ready');
+  assert.deepEqual(await look(), want, 'kept on reload');
+
+  await dock.click();
+  await page.waitForFunction(d => window.deskbar.settings.get('deco') === d, start.deco);
+  assert.deepEqual(await look(), start);
+  assert.deepEqual(await stored(page), {}, 'the starting look is stored as nothing');
+  await page.context().close();
+
+  const small = await open(phone, '/', undefined, { siteLook: true });
+  assert.ok(await small.locator('#panel [data-look]').isVisible(), 'a phone keeps the panel button');
+  assert.equal(await small.locator('#dock [data-look]').isVisible(), false, 'and drops the dock one');
+  await small.context().close();
 });

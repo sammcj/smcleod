@@ -36,6 +36,9 @@ export function frame(s) {
   return f[i < f.length ? i : loop + ((i - loop) % (f.length - loop))];
 }
 
+// Which way it faces: the way it came until halfway through a turn
+const facing = s => (s.state === 'turn' && s.a < TIME('turn') / 2 ? -s.dir : s.dir);
+
 // Ledges a sheep can stand on: the top edge of each box (in paint order, bottom first), less the stretches a box
 // painted later covers, and the bottom of the screen. An end is a wall where something covers it or the screen
 // cuts it, rather than a drop.
@@ -121,7 +124,7 @@ export function flock({ W, H, segs, rand = Math.random, still = false, first, sc
     else if (s.y > f.H) land(s, f.segs.at(-1));
   }
 
-  f.step = dt => {
+  const tick = dt => {
     for (const s of f.sheep) {
       s.a += dt;
       if (!s.on) fly(s, dt);
@@ -132,6 +135,12 @@ export function flock({ W, H, segs, rand = Math.random, still = false, first, sc
       wait = 6 + rand() * 10;
       if (f.sheep.length < f.max) f.sheep.push(sheep(20 + rand() * (f.W - 40)));
     }
+  };
+  // Painting runs at the saver's rate but physics can't: a jump loses height to long steps, and at 10 a second one
+  // falls short of a tab it should clear
+  f.step = dt => {
+    const n = Math.ceil(dt * 60);
+    for (let i = 0; i < n; i++) tick(dt / n);
   };
 
   // New ledges (a resize): a sheep whose ledge went falls from where it stood
@@ -168,13 +177,18 @@ function boxes() {
 // The ledges on screen now
 export const ledges = () => surfaces(boxes(), innerWidth, innerHeight);
 
-// The saver's scene { size(W, H), step(dt), draw(g) }, as lazy/screensaver.js runs it, once the sheet has loaded
+// The saver's scene (lazy/screensaver.js), once the sheet has loaded
 export async function scene(still) {
   const img = new Image();
   img.src = new URL('../../' + SHEET, import.meta.url).href;
   await img.decode();
   let f = null, S = 2;
   return {
+    // At 10 frames a second a walking sheep steps one sprite pixel a frame. Pixel art loses nothing at 1x, as the browser
+    // enlarges the canvas.
+    fps: 10,
+    maxScale: 1,
+    key: () => f.sheep.map(s => [Math.round(s.x), Math.round(s.y), frame(s), facing(s)]).join(),
     size(W, H) {
       // whole multiples of the pet's pixels, so they stay crisp
       S = W < 600 ? 1 : 2;
@@ -187,10 +201,10 @@ export async function scene(still) {
       g.imageSmoothingEnabled = false;
       const w = CELL * S;
       for (const s of [...f.sheep].sort((a, b) => a.y - b.y)) {
-        const i = FRAMES.indexOf(frame(s)), face = s.state === 'turn' && s.a < TIME('turn') / 2 ? -s.dir : s.dir;
+        const i = FRAMES.indexOf(frame(s));
         g.save();
         g.translate(Math.round(s.x), Math.round(s.y));
-        if (face > 0) g.scale(-1, 1);
+        if (facing(s) > 0) g.scale(-1, 1);
         g.drawImage(img, (i % 8) * CELL, (i >> 3) * CELL, CELL, CELL, -w / 2, -w, w, w);
         g.restore();
       }

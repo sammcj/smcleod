@@ -2,7 +2,7 @@
 .saver { position: fixed; inset: 0; z-index: 2147483647; background: radial-gradient(ellipse at 50% 35%, #102015, #040604 75%); cursor: none; opacity: 0; transition: opacity 1.2s ease; touch-action: none; }
 /* the sheep wander the desktop itself, dimmed */
 .saver[data-kind=sheep] { background: rgba(4, 7, 14, .6); }
-/* pixel art: a canvas the browser stretches (a screen above 2x) keeps hard pixel edges */
+/* pixel art: the canvas is drawn at 1x and the browser enlarges it, keeping hard pixel edges */
 .saver[data-kind=sheep] canvas { image-rendering: pixelated; }
 .saver.on { opacity: 1; }
 .saver.waking { opacity: 0; transition: none; }

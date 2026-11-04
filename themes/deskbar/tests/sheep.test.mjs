@@ -123,7 +123,7 @@ test('a sheep walking off an open edge falls to the ledge below; at a wall it tu
   // walking right, it passes the edge at 300 and drops to the floor
   Object.assign(s, { x: 290, y: 520, on: segs[0], dir: 1, state: 'walk', t: 99 });
   f.step(1);
-  assert.equal(s.on, null, 'over the edge');
+  assert.notEqual(s.on, segs[0], 'over the edge');
   settle(f, s);
   assert.equal(s.y, H, 'fell to the floor');
   assert.equal(s.state, 'land', 'and lands from 80px, turning round from its back');
@@ -142,11 +142,13 @@ test('a sheep walking off an open edge falls to the ledge below; at a wall it tu
 
   // a tab 24px above its frame's ledge: a sheep walking into it hops up onto it
   const tab = surfaces([{ x: 100, y: 400, w: 400, h: 100 }, { x: 300, y: 376, w: 150, h: 24 }], W, H);
-  const g = flock({ W, H, segs: tab, rand: () => 0.99, first: 200 });
-  settle(g, g.sheep[0]);
-  Object.assign(g.sheep[0], { x: 200, y: 400, on: tab.find(o => o.y === 400), dir: 1, state: 'walk', t: 99 });
-  for (let i = 0; i < 300 && g.sheep[0].on?.y !== 376; i++) g.step(1 / 30);
-  assert.equal(g.sheep[0].y, 376, 'up on the tab');
+  for (const dt of [1 / 30, 1 / 10]) {
+    const g = flock({ W, H, segs: tab, rand: () => 0.99, first: 200 });
+    settle(g, g.sheep[0]);
+    Object.assign(g.sheep[0], { x: 200, y: 400, on: tab.find(o => o.y === 400), dir: 1, state: 'walk', t: 99 });
+    for (let i = 0; i < 300 && g.sheep[0].on?.y !== 376; i++) g.step(dt);
+    assert.equal(g.sheep[0].y, 376, `up on the tab at ${dt}`);
+  }
 });
 
 test('ledges that change (a resize) leave nobody standing on air', () => {
@@ -169,4 +171,16 @@ test('a still flock (reduced motion) is posed on the ledges at once, and stays p
   assert.ok(f.sheep.every(s => s.on && s.state !== 'fall'));
   assert.ok(new Set(f.sheep.map(s => s.state)).size >= 3, 'in different poses');
   check(f, W, H);
+});
+
+test('at the saver\'s 10 frames a second a sheep still lands on its ledge', () => {
+  const W = 800, H = 600, segs = surfaces([{ x: 200, y: 300, w: 300, h: 200 }], W, H);
+  const seen = new Set();
+  const f = flock({ W, H, segs, rand: seeded(3), first: 350 });
+  for (let i = 0; i < 10 * 240; i++) {
+    f.step(1 / 10);
+    seen.add(f.sheep[0].state);
+    check(f, W, H);
+  }
+  assert.ok(seen.has('walk'), 'it landed and walked');
 });

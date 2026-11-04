@@ -122,6 +122,8 @@ button.dicon { background: none; border: 0; font: inherit; color: inherit; curso
   .sw-link { height: 34px; }
 }
 @media (max-width: 400px) { #clock { display: none; } }
+/* under this width the panel has no room for it, and the Control panel still has the themes */
+@media (max-width: 359px) { #panel [data-look] { display: none; } }
 /* D17 phone mode; the same query as PHONE in wm/windows.js */
 @media (max-width: 767px), (max-height: 500px) and (pointer: coarse) {
   :root { --dock-h: 64px; }
@@ -152,13 +154,14 @@ button.dicon { background: none; border: 0; font: inherit; color: inherit; curso
   #icons .dicon { width: auto; }
   #icons .dicon .ico { width: 48px; height: 48px; }
   /* Sticky rather than fixed: it stays just above the browser's toolbar, and the page still runs on beneath it */
-  .wm #dock { position: sticky; left: auto; right: auto; bottom: 6px; transform: none; margin: 0 auto 6px; width: fit-content; }
-  .wm:is([data-dock=panel], [data-dock=deskbar]) #dock { width: auto; margin: 0; bottom: 0; }
+  /* the cap makes its keys shrink on a narrow phone, rather than the dock widening the page */
+  .wm #dock { position: sticky; left: auto; right: auto; bottom: 6px; transform: none; margin: 0 auto 6px; width: fit-content; max-width: calc(100vw - 12px); }
+  .wm:is([data-dock=panel], [data-dock=deskbar]) #dock { width: auto; max-width: none; margin: 0; bottom: 0; }
   /* D17: a full-screen window owns the screen; Home and the Windows switcher in the panel stay reachable */
   .wm.has-win #dock, .wm.has-win #desk > :is(#recent, #icons) { display: none; }
-  /* Home is first in the panel, and the dock's copy stays out, as does the switcher until main.js moves it up */
+  /* Home is first in the panel, and the dock's copy stays out, as does the look toggle (a dock with it runs off a phone) and the switcher until main.js moves it up */
   #panel #panelHome { order: -2; }
-  #dock :is(#homeBtn, #winsBtn) { display: none !important; }
+  #dock :is(#homeBtn, #winsBtn, [data-look]) { display: none !important; }
   /* the switcher shows only when a window is behind the front one or minimised, as both are hidden here */
   .wm:not(:has(.win[hidden])) #panel #winsBtn { display: none; }
   /* full width, like the tab of a phone's full-screen window, and touch sized */

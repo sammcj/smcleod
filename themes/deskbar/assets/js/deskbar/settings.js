@@ -1,6 +1,6 @@
 // Visitor settings, kept in localStorage (lib/store.js). head.html applies the stored ones before first paint.
 // The panel's theme button and the reader's A-/A+ and width buttons change them here, and the Control panel and the
-// Terminal (lazy/) through window.deskbar.settings: { get, set, on, shown }.
+// Terminal (lazy/) through window.deskbar.settings: { get, set, on, shown, start }.
 import { store } from './lib/store.js';
 import { isDark } from './lib/scheme.js';
 
@@ -61,10 +61,14 @@ const setTheme = t => (get('deco') === 'synthwave' && NIGHT[get('palette')] ? se
 
 export const textSize = delta => set('textSize', get('textSize') + delta);
 
-export const settings = { get, set, on: onSetting, shown };
+export const settings = { get, set, on: onSetting, shown, start };
 
 export function initSettings() {
   // head.html has already shown the site's starting choice in place of a retired one; this forgets the stored value
   for (const k in RETIRED) if (RETIRED[k].includes(store.get(k))) set(k);
   document.getElementById('themeBtn')?.addEventListener('click', () => setTheme());
+  // the code that swaps looks and their stylesheets is the Control panel's, so it loads on first use
+  for (const b of document.querySelectorAll('[data-look]')) {
+    b.addEventListener('click', () => window.deskbar.loadLazy('control-panel').then(m => m.toggleLook(b.dataset.look)).catch(err => console.error(err)));
+  }
 }

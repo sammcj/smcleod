@@ -445,3 +445,17 @@ for (const [i, p] of LOOK_PRESETS.entries()) {
     assert.deepEqual(found, []);
   });
 }
+
+test('every dock with seven items fits a 320px phone', async () => {
+  for (const [dock] of DOCKS) {
+    const page = await openLook({ width: 320, height: 740 }, '/', { dock });
+    const at = await page.evaluate(() => {
+      const d = document.getElementById('dock'), keys = () => [...d.querySelectorAll('.dk')].filter(k => k.offsetWidth);
+      while (keys().length < 7) keys()[0].after(keys()[0].cloneNode(true));
+      return { page: document.documentElement.scrollWidth, right: d.getBoundingClientRect().right, narrowest: Math.min(...keys().map(k => k.offsetWidth)) };
+    });
+    assert.ok(at.page <= 320 && at.right <= 320, `${dock}: ${JSON.stringify(at)}`);
+    assert.ok(at.narrowest >= 34, `${dock}: keys keep room for their icons ${JSON.stringify(at)}`);
+    await page.context().close();
+  }
+});

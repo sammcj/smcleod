@@ -141,6 +141,8 @@ function boot() {
   router.register('home', (_, { from }) => { if (from) showHome(from); else refresh(); });
   on('closed', afterClose);
   addEventListener('resize', onResize);
+  // a dock of another height changes the room windows have, whichever control changed it
+  settings.on(k => { if (k === 'dock') dispatchEvent(new Event('resize')); });
   // The window switcher lives in the dock, but phones hide the dock while a window is open, so there it moves to the
   // panel. Home is in both already (home-btn.html).
   const placeChrome = () => {

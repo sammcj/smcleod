@@ -4,9 +4,9 @@ import { test, beforeEach } from 'node:test';
 import assert from 'node:assert/strict';
 import { existsSync, readFileSync, readdirSync } from 'node:fs';
 import { get, set, onSetting, DEFAULT, RETIRED, initSettings } from '../assets/js/deskbar/settings.js';
-import { PANES, paneOf, paneUrl, presetOf, paletteFor } from '../assets/js/deskbar/lazy/control-panel.js';
+import { PANES, paneOf, paneUrl, presetOf, paletteFor, toggleLook } from '../assets/js/deskbar/lazy/control-panel.js';
 import { PRESETS, KEYS, LOOKS, PALETTES, DECOS, WALLS, DOCKS, coloursFor, ownsColours, lookSheet } from '../assets/js/deskbar/lib/appearance.js';
-import { SAVERS } from '../assets/js/deskbar/lazy/screensaver.js';
+import { SAVERS, due } from '../assets/js/deskbar/lazy/screensaver.js';
 
 const read = p => readFileSync(new URL(p, import.meta.url), 'utf8');
 const mem = new Map();
@@ -16,7 +16,7 @@ globalThis.localStorage = {
   removeItem: k => mem.delete(k),
 };
 const root = { dataset: {}, style: { props: {}, setProperty(k, v) { this.props[k] = v; } } };
-globalThis.document = { documentElement: root, getElementById: () => null };
+globalThis.document = { documentElement: root, getElementById: () => null, querySelectorAll: () => [] };
 
 beforeEach(() => {
   mem.clear();
@@ -297,4 +297,49 @@ test('Atkinson Hyperlegible is self-hosted and only fetched once chosen', () => 
   const rules = [...css.replace(/@font-face\s*{[^}]*}/g, '').matchAll(/([^{}]*){([^}]*)}/g)].filter(m => m[2].includes('Atkinson'));
   assert.equal(rules.length, 1, 'one rule names the family');
   assert.match(rules[0][1].trim(), /^:root\[data-rd-font=atkinson\]$/);
+});
+
+test('the look toggle goes to its preset, and from that preset back to the starting look', async () => {
+  const site = { deco: 'phosphor', palette: 'haiku', wall: 'phosphor', dock: 'phosphor', crt: 'tube' };
+  const now = { ...site }, sheets = [];
+  globalThis.window = { deskbar: {
+    settings: { get: k => now[k], set: (k, v) => { now[k] = v; }, start: k => site[k] },
+    loadLazy: async n => { sheets.push(n); },
+  } };
+  const classic = PRESETS.find(p => p.id === 'classic');
+  const look = () => KEYS.map(k => now[k]);
+
+  await toggleLook('classic');
+  assert.deepEqual(look(), KEYS.map(k => classic[k]));
+  sheets.length = 0;
+  await toggleLook('classic');
+  assert.deepEqual(look(), KEYS.map(k => site[k]));
+  assert.ok(sheets.includes('look-phosphor'), 'the starting look\'s stylesheet loads before it applies');
+  assert.ok(sheets.includes('effect-crt'), 'and its CRT effect');
+  sheets.length = 0;
+
+  // any other look goes to the preset, not back to the start
+  Object.assign(now, { deco: 'flat', palette: 'lilac' });
+  await toggleLook('classic');
+  assert.deepEqual(look(), KEYS.map(k => classic[k]));
+  assert.ok(!sheets.includes('effect-crt'), 'a look with the CRT off doesn\'t fetch the effect');
+  await assert.rejects(async () => toggleLook('nonesuch'), /no preset/);
+  delete globalThis.window;
+});
+
+test('a saver frame is due at its scene\'s rate on 60Hz and 120Hz displays', () => {
+  const drawn = (hz, fps) => {
+    let last = 0, n = 0;
+    for (let i = 1; i <= hz; i++) {
+      const t = i * 1000 / hz;
+      if (due(last, t, fps)) { last = t; n++; }
+    }
+    return n;
+  };
+  assert.equal(drawn(60, 20), 20);
+  assert.equal(drawn(120, 20), 20);
+  assert.equal(drawn(60, 30), 30);
+  assert.equal(drawn(120, 30), 30);
+  assert.equal(drawn(60, 10), 10);
+  assert.equal(drawn(120, 10), 10);
 });
